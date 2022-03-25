@@ -20,7 +20,11 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of BlobInventoryPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="BlobInventoryPolicyResource" /> and their operations.
+    /// Each <see cref="BlobInventoryPolicyResource" /> in the collection will belong to the same instance of <see cref="StorageAccountResource" />.
+    /// To get a <see cref="BlobInventoryPolicyCollection" /> instance call the GetBlobInventoryPolicies method from an instance of <see cref="StorageAccountResource" />.
+    /// </summary>
     public partial class BlobInventoryPolicyCollection : ArmCollection, IEnumerable<BlobInventoryPolicyResource>, IAsyncEnumerable<BlobInventoryPolicyResource>
     {
         private readonly ClientDiagnostics _blobInventoryPolicyClientDiagnostics;

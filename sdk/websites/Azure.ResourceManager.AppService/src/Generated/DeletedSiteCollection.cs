@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of DeletedSite and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DeletedSiteResource" /> and their operations.
+    /// Each <see cref="DeletedSiteResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="DeletedSiteCollection" /> instance call the GetDeletedSites method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class DeletedSiteCollection : ArmCollection, IEnumerable<DeletedSiteResource>, IAsyncEnumerable<DeletedSiteResource>
     {
         private readonly ClientDiagnostics _deletedSiteGlobalClientDiagnostics;

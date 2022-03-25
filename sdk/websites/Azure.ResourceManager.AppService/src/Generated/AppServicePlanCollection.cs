@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServicePlan and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="AppServicePlanResource" /> and their operations.
+    /// Each <see cref="AppServicePlanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AppServicePlanCollection" /> instance call the GetAppServicePlans method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class AppServicePlanCollection : ArmCollection, IEnumerable<AppServicePlanResource>, IAsyncEnumerable<AppServicePlanResource>
     {
         private readonly ClientDiagnostics _appServicePlanClientDiagnostics;

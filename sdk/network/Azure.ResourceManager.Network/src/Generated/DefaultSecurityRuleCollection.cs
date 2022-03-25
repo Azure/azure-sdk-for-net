@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of DefaultSecurityRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DefaultSecurityRuleResource" /> and their operations.
+    /// Each <see cref="DefaultSecurityRuleResource" /> in the collection will belong to the same instance of <see cref="NetworkSecurityGroupResource" />.
+    /// To get a <see cref="DefaultSecurityRuleCollection" /> instance call the GetDefaultSecurityRules method from an instance of <see cref="NetworkSecurityGroupResource" />.
+    /// </summary>
     public partial class DefaultSecurityRuleCollection : ArmCollection, IEnumerable<DefaultSecurityRuleResource>, IAsyncEnumerable<DefaultSecurityRuleResource>
     {
         private readonly ClientDiagnostics _defaultSecurityRuleClientDiagnostics;

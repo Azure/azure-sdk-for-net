@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("https://management.azure.com//.default", ArmEnvironment.AzurePublicCloud.DefaultScope);
             Assert.AreEqual("https://management.chinacloudapi.cn/.default", ArmEnvironment.AzureChina.DefaultScope);
             Assert.AreEqual("https://management.usgovcloudapi.net/.default", ArmEnvironment.AzureGovernment.DefaultScope);
-            Assert.AreEqual("https://management.microsoftazure.de/.default", ArmEnvironment.AzureGerman.DefaultScope);
+            Assert.AreEqual("https://management.microsoftazure.de/.default", ArmEnvironment.AzureGermany.DefaultScope);
             Assert.AreEqual("https://foo.com/.default", new ArmEnvironment(new Uri("https://foo.com"), "https://foo.com").DefaultScope);
         }
     }

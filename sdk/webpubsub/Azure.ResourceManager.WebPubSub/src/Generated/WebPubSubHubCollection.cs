@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing collection of WebPubSubHub and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="WebPubSubHubResource" /> and their operations.
+    /// Each <see cref="WebPubSubHubResource" /> in the collection will belong to the same instance of <see cref="WebPubSubResource" />.
+    /// To get a <see cref="WebPubSubHubCollection" /> instance call the GetWebPubSubHubs method from an instance of <see cref="WebPubSubResource" />.
+    /// </summary>
     public partial class WebPubSubHubCollection : ArmCollection, IEnumerable<WebPubSubHubResource>, IAsyncEnumerable<WebPubSubHubResource>
     {
         private readonly ClientDiagnostics _webPubSubHubClientDiagnostics;

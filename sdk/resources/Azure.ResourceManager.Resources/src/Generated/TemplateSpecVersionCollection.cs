@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of TemplateSpecVersion and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="TemplateSpecVersionResource" /> and their operations.
+    /// Each <see cref="TemplateSpecVersionResource" /> in the collection will belong to the same instance of <see cref="TemplateSpecResource" />.
+    /// To get a <see cref="TemplateSpecVersionCollection" /> instance call the GetTemplateSpecVersions method from an instance of <see cref="TemplateSpecResource" />.
+    /// </summary>
     public partial class TemplateSpecVersionCollection : ArmCollection, IEnumerable<TemplateSpecVersionResource>, IAsyncEnumerable<TemplateSpecVersionResource>
     {
         private readonly ClientDiagnostics _templateSpecVersionClientDiagnostics;

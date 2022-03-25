@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceDatabaseBackupShortTermRetentionPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
+    /// To get a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection" /> instance call the GetManagedInstanceDatabaseBackupShortTermRetentionPolicies method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// </summary>
     public partial class ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection : ArmCollection, IEnumerable<ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>, IAsyncEnumerable<ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>
     {
         private readonly ClientDiagnostics _managedInstanceDatabaseBackupShortTermRetentionPolicyManagedBackupShortTermRetentionPoliciesClientDiagnostics;

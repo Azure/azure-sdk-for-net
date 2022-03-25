@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of StorageQueue and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="StorageQueueResource" /> and their operations.
+    /// Each <see cref="StorageQueueResource" /> in the collection will belong to the same instance of <see cref="QueueServiceResource" />.
+    /// To get a <see cref="StorageQueueCollection" /> instance call the GetStorageQueues method from an instance of <see cref="QueueServiceResource" />.
+    /// </summary>
     public partial class StorageQueueCollection : ArmCollection, IEnumerable<StorageQueueResource>, IAsyncEnumerable<StorageQueueResource>
     {
         private readonly ClientDiagnostics _storageQueueQueueClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobVersion and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="JobVersionResource" /> and their operations.
+    /// Each <see cref="JobVersionResource" /> in the collection will belong to the same instance of <see cref="SqlJobResource" />.
+    /// To get a <see cref="JobVersionCollection" /> instance call the GetJobVersions method from an instance of <see cref="SqlJobResource" />.
+    /// </summary>
     public partial class JobVersionCollection : ArmCollection, IEnumerable<JobVersionResource>, IAsyncEnumerable<JobVersionResource>
     {
         private readonly ClientDiagnostics _jobVersionClientDiagnostics;

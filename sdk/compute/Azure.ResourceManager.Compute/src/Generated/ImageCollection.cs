@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of Image and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ImageResource" /> and their operations.
+    /// Each <see cref="ImageResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ImageCollection" /> instance call the GetImages method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ImageCollection : ArmCollection, IEnumerable<ImageResource>, IAsyncEnumerable<ImageResource>
     {
         private readonly ClientDiagnostics _imageClientDiagnostics;

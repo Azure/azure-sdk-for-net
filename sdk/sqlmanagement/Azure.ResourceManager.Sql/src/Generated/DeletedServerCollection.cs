@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of DeletedServer and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DeletedServerResource" /> and their operations.
+    /// Each <see cref="DeletedServerResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="DeletedServerCollection" /> instance call the GetDeletedServers method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class DeletedServerCollection : ArmCollection, IEnumerable<DeletedServerResource>, IAsyncEnumerable<DeletedServerResource>
     {
         private readonly ClientDiagnostics _deletedServerClientDiagnostics;

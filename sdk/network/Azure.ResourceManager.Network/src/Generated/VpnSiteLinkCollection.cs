@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VpnSiteLink and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VpnSiteLinkResource" /> and their operations.
+    /// Each <see cref="VpnSiteLinkResource" /> in the collection will belong to the same instance of <see cref="VpnSiteResource" />.
+    /// To get a <see cref="VpnSiteLinkCollection" /> instance call the GetVpnSiteLinks method from an instance of <see cref="VpnSiteResource" />.
+    /// </summary>
     public partial class VpnSiteLinkCollection : ArmCollection, IEnumerable<VpnSiteLinkResource>, IAsyncEnumerable<VpnSiteLinkResource>
     {
         private readonly ClientDiagnostics _vpnSiteLinkClientDiagnostics;

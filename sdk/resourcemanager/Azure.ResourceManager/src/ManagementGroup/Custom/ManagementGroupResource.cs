@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management.Models;
 
 [assembly:CodeGenSuppressType("SearchOptions")]

@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of VMwareDatastore and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VMwareDatastoreResource" /> and their operations.
+    /// Each <see cref="VMwareDatastoreResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VMwareDatastoreCollection" /> instance call the GetVMwareDatastores method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VMwareDatastoreCollection : ArmCollection, IEnumerable<VMwareDatastoreResource>, IAsyncEnumerable<VMwareDatastoreResource>
     {
         private readonly ClientDiagnostics _vMwareDatastoreDatastoresClientDiagnostics;

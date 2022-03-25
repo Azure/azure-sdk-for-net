@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlotDiagnosticAnalysis and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotDiagnosticAnalysisResource" /> and their operations.
+    /// Each <see cref="SiteSlotDiagnosticAnalysisResource" /> in the collection will belong to the same instance of <see cref="SiteSlotDiagnosticResource" />.
+    /// To get a <see cref="SiteSlotDiagnosticAnalysisCollection" /> instance call the GetSiteSlotDiagnosticAnalyses method from an instance of <see cref="SiteSlotDiagnosticResource" />.
+    /// </summary>
     public partial class SiteSlotDiagnosticAnalysisCollection : ArmCollection, IEnumerable<SiteSlotDiagnosticAnalysisResource>, IAsyncEnumerable<SiteSlotDiagnosticAnalysisResource>
     {
         private readonly ClientDiagnostics _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics;

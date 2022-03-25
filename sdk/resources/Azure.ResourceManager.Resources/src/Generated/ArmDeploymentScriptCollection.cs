@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of ArmDeploymentScript and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ArmDeploymentScriptResource" /> and their operations.
+    /// Each <see cref="ArmDeploymentScriptResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ArmDeploymentScriptCollection" /> instance call the GetArmDeploymentScripts method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ArmDeploymentScriptCollection : ArmCollection, IEnumerable<ArmDeploymentScriptResource>, IAsyncEnumerable<ArmDeploymentScriptResource>
     {
         private readonly ClientDiagnostics _armDeploymentScriptDeploymentScriptsClientDiagnostics;

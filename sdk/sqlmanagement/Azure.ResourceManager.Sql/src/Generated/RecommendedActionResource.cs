@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a RecommendedActionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a RecommendedAction along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecommendedActionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetRecommendedActionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServerDatabaseAdvisorResource" /> using the GetRecommendedAction method.
+    /// </summary>
     public partial class RecommendedActionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RecommendedActionResource"/> instance. </summary>

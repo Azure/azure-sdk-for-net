@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of CustomIPPrefix and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CustomIPPrefixResource" /> and their operations.
+    /// Each <see cref="CustomIPPrefixResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="CustomIPPrefixCollection" /> instance call the GetCustomIPPrefixes method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class CustomIPPrefixCollection : ArmCollection, IEnumerable<CustomIPPrefixResource>, IAsyncEnumerable<CustomIPPrefixResource>
     {
         private readonly ClientDiagnostics _customIPPrefixClientDiagnostics;

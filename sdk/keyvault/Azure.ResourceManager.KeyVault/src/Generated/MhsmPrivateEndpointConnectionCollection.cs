@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of MhsmPrivateEndpointConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="MhsmPrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="MhsmPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ManagedHsmResource" />.
+    /// To get a <see cref="MhsmPrivateEndpointConnectionCollection" /> instance call the GetMhsmPrivateEndpointConnections method from an instance of <see cref="ManagedHsmResource" />.
+    /// </summary>
     public partial class MhsmPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MhsmPrivateEndpointConnectionResource>, IAsyncEnumerable<MhsmPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _mhsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics;

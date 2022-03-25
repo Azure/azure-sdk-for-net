@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerAzureADAdministrator and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerAzureADAdministratorResource" /> and their operations.
+    /// Each <see cref="ServerAzureADAdministratorResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServerAzureADAdministratorCollection" /> instance call the GetServerAzureADAdministrators method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ServerAzureADAdministratorCollection : ArmCollection, IEnumerable<ServerAzureADAdministratorResource>, IAsyncEnumerable<ServerAzureADAdministratorResource>
     {
         private readonly ClientDiagnostics _serverAzureADAdministratorClientDiagnostics;

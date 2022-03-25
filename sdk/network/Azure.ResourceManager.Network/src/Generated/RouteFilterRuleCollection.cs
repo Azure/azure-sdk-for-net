@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of RouteFilterRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="RouteFilterRuleResource" /> and their operations.
+    /// Each <see cref="RouteFilterRuleResource" /> in the collection will belong to the same instance of <see cref="RouteFilterResource" />.
+    /// To get a <see cref="RouteFilterRuleCollection" /> instance call the GetRouteFilterRules method from an instance of <see cref="RouteFilterResource" />.
+    /// </summary>
     public partial class RouteFilterRuleCollection : ArmCollection, IEnumerable<RouteFilterRuleResource>, IAsyncEnumerable<RouteFilterRuleResource>
     {
         private readonly ClientDiagnostics _routeFilterRuleClientDiagnostics;

@@ -17,7 +17,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerDatabaseSchemaTableColumnSensitivityLabel and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> and their operations.
+    /// Each <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> in the collection will belong to the same instance of <see cref="ServerDatabaseSchemaTableColumnResource" />.
+    /// To get a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelCollection" /> instance call the GetServerDatabaseSchemaTableColumnSensitivityLabels method from an instance of <see cref="ServerDatabaseSchemaTableColumnResource" />.
+    /// </summary>
     public partial class ServerDatabaseSchemaTableColumnSensitivityLabelCollection : ArmCollection
     {
         private readonly ClientDiagnostics _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics;

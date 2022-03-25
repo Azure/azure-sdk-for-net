@@ -20,7 +20,11 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of Secret and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SecretResource" /> and their operations.
+    /// Each <see cref="SecretResource" /> in the collection will belong to the same instance of <see cref="VaultResource" />.
+    /// To get a <see cref="SecretCollection" /> instance call the GetSecrets method from an instance of <see cref="VaultResource" />.
+    /// </summary>
     public partial class SecretCollection : ArmCollection, IEnumerable<SecretResource>, IAsyncEnumerable<SecretResource>
     {
         private readonly ClientDiagnostics _secretClientDiagnostics;

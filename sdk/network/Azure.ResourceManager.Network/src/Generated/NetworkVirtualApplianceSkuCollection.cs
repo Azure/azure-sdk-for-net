@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of NetworkVirtualApplianceSku and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="NetworkVirtualApplianceSkuResource" /> and their operations.
+    /// Each <see cref="NetworkVirtualApplianceSkuResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="NetworkVirtualApplianceSkuCollection" /> instance call the GetNetworkVirtualApplianceSkus method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class NetworkVirtualApplianceSkuCollection : ArmCollection, IEnumerable<NetworkVirtualApplianceSkuResource>, IAsyncEnumerable<NetworkVirtualApplianceSkuResource>
     {
         private readonly ClientDiagnostics _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics;

@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteDiagnosticResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteDiagnostic along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteDiagnosticResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteDiagnosticResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteDiagnostic method.
+    /// </summary>
     public partial class SiteDiagnosticResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteDiagnosticResource"/> instance. </summary>

@@ -15,11 +15,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of ArmDeployment and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ArmDeploymentResource" /> and their operations.
+    /// Each <see cref="ArmDeploymentResource" /> in the collection will belong to the same instance of <see cref="ManagementGroupResource" />.
+    /// To get an <see cref="ArmDeploymentCollection" /> instance call the GetArmDeployments method from an instance of <see cref="ManagementGroupResource" />.
+    /// </summary>
     public partial class ArmDeploymentCollection : ArmCollection, IEnumerable<ArmDeploymentResource>, IAsyncEnumerable<ArmDeploymentResource>
     {
         private readonly ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;

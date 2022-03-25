@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A Class representing a QueueServiceResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a QueueService along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="QueueServiceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetQueueServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetQueueService method.
+    /// </summary>
     public partial class QueueServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="QueueServiceResource"/> instance. </summary>

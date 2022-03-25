@@ -16,7 +16,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SitePremierAddon and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SitePremierAddonResource" /> and their operations.
+    /// Each <see cref="SitePremierAddonResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SitePremierAddonCollection" /> instance call the GetSitePremierAddons method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SitePremierAddonCollection : ArmCollection
     {
         private readonly ClientDiagnostics _sitePremierAddonWebAppsClientDiagnostics;

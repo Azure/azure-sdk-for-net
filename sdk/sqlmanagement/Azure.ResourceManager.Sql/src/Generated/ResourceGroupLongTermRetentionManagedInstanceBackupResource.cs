@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ResourceGroupLongTermRetentionManagedInstanceBackupResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ResourceGroupLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupLongTermRetentionManagedInstanceBackupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGroupLongTermRetentionManagedInstanceBackup method.
+    /// </summary>
     public partial class ResourceGroupLongTermRetentionManagedInstanceBackupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/> instance. </summary>

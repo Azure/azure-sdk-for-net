@@ -20,7 +20,11 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of GremlinDatabase and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="GremlinDatabaseResource" /> and their operations.
+    /// Each <see cref="GremlinDatabaseResource" /> in the collection will belong to the same instance of <see cref="DatabaseAccountResource" />.
+    /// To get a <see cref="GremlinDatabaseCollection" /> instance call the GetGremlinDatabases method from an instance of <see cref="DatabaseAccountResource" />.
+    /// </summary>
     public partial class GremlinDatabaseCollection : ArmCollection, IEnumerable<GremlinDatabaseResource>, IAsyncEnumerable<GremlinDatabaseResource>
     {
         private readonly ClientDiagnostics _gremlinDatabaseGremlinResourcesClientDiagnostics;

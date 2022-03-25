@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServiceDomain and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="AppServiceDomainResource" /> and their operations.
+    /// Each <see cref="AppServiceDomainResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AppServiceDomainCollection" /> instance call the GetAppServiceDomains method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class AppServiceDomainCollection : ArmCollection, IEnumerable<AppServiceDomainResource>, IAsyncEnumerable<AppServiceDomainResource>
     {
         private readonly ClientDiagnostics _appServiceDomainDomainsClientDiagnostics;

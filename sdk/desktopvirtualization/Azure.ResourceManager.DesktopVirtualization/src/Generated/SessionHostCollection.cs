@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of SessionHost and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SessionHostResource" /> and their operations.
+    /// Each <see cref="SessionHostResource" /> in the collection will belong to the same instance of <see cref="HostPoolResource" />.
+    /// To get a <see cref="SessionHostCollection" /> instance call the GetSessionHosts method from an instance of <see cref="HostPoolResource" />.
+    /// </summary>
     public partial class SessionHostCollection : ArmCollection, IEnumerable<SessionHostResource>, IAsyncEnumerable<SessionHostResource>
     {
         private readonly ClientDiagnostics _sessionHostClientDiagnostics;

@@ -38,13 +38,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // Construct a new KeyVaultBackupClient or use an existing one.
             KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 #else
-            var client = GetClient(false);
+            var client = Client;
 #endif
 
             // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
             KeyVaultBackupOperation backupOperation = new KeyVaultBackupOperation(client, backupOperationId);
 #if !SNIPPET
-            backupOperation._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
+            backupOperation = InstrumentOperation(backupOperation);
 #endif
 
             // Wait for completion of the BackupOperation.
@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
             KeyVaultRestoreOperation restoreOperation = new KeyVaultRestoreOperation(client, restoreOperationId);
 #if !SNIPPET
-            restoreOperation._operationInternal._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
+            restoreOperation = InstrumentOperation(restoreOperation);
 #endif
 
             // Wait for completion of the RestoreOperation.

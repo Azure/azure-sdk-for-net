@@ -21,7 +21,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of CapacityReservationGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CapacityReservationGroupResource" /> and their operations.
+    /// Each <see cref="CapacityReservationGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="CapacityReservationGroupCollection" /> instance call the GetCapacityReservationGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class CapacityReservationGroupCollection : ArmCollection, IEnumerable<CapacityReservationGroupResource>, IAsyncEnumerable<CapacityReservationGroupResource>
     {
         private readonly ClientDiagnostics _capacityReservationGroupClientDiagnostics;

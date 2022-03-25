@@ -20,7 +20,11 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of GalleryApplicationVersion and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="GalleryApplicationVersionResource" /> and their operations.
+    /// Each <see cref="GalleryApplicationVersionResource" /> in the collection will belong to the same instance of <see cref="GalleryApplicationResource" />.
+    /// To get a <see cref="GalleryApplicationVersionCollection" /> instance call the GetGalleryApplicationVersions method from an instance of <see cref="GalleryApplicationResource" />.
+    /// </summary>
     public partial class GalleryApplicationVersionCollection : ArmCollection, IEnumerable<GalleryApplicationVersionResource>, IAsyncEnumerable<GalleryApplicationVersionResource>
     {
         private readonly ClientDiagnostics _galleryApplicationVersionClientDiagnostics;

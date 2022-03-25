@@ -17,7 +17,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of DdosCustomPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DdosCustomPolicyResource" /> and their operations.
+    /// Each <see cref="DdosCustomPolicyResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="DdosCustomPolicyCollection" /> instance call the GetDdosCustomPolicies method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class DdosCustomPolicyCollection : ArmCollection
     {
         private readonly ClientDiagnostics _ddosCustomPolicyClientDiagnostics;

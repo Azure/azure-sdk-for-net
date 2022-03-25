@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteHostNameBinding and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteHostNameBindingResource" /> and their operations.
+    /// Each <see cref="SiteHostNameBindingResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteHostNameBindingCollection" /> instance call the GetSiteHostNameBindings method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteHostNameBindingCollection : ArmCollection, IEnumerable<SiteHostNameBindingResource>, IAsyncEnumerable<SiteHostNameBindingResource>
     {
         private readonly ClientDiagnostics _siteHostNameBindingWebAppsClientDiagnostics;

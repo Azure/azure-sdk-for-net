@@ -21,7 +21,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of RestorePointGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="RestorePointGroupResource" /> and their operations.
+    /// Each <see cref="RestorePointGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="RestorePointGroupCollection" /> instance call the GetRestorePointGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class RestorePointGroupCollection : ArmCollection, IEnumerable<RestorePointGroupResource>, IAsyncEnumerable<RestorePointGroupResource>
     {
         private readonly ClientDiagnostics _restorePointGroupRestorePointCollectionsClientDiagnostics;

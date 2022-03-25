@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of VirtualNetworkRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualNetworkRuleResource" /> and their operations.
+    /// Each <see cref="VirtualNetworkRuleResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="VirtualNetworkRuleCollection" /> instance call the GetVirtualNetworkRules method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class VirtualNetworkRuleCollection : ArmCollection, IEnumerable<VirtualNetworkRuleResource>, IAsyncEnumerable<VirtualNetworkRuleResource>
     {
         private readonly ClientDiagnostics _virtualNetworkRuleClientDiagnostics;

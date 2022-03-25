@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of LoadBalancingRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="LoadBalancingRuleResource" /> and their operations.
+    /// Each <see cref="LoadBalancingRuleResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
+    /// To get a <see cref="LoadBalancingRuleCollection" /> instance call the GetLoadBalancingRules method from an instance of <see cref="LoadBalancerResource" />.
+    /// </summary>
     public partial class LoadBalancingRuleCollection : ArmCollection, IEnumerable<LoadBalancingRuleResource>, IAsyncEnumerable<LoadBalancingRuleResource>
     {
         private readonly ClientDiagnostics _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics;

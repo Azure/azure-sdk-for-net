@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlotDomainOwnershipIdentifier and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotDomainOwnershipIdentifierResource" /> and their operations.
+    /// Each <see cref="SiteSlotDomainOwnershipIdentifierResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotDomainOwnershipIdentifierCollection" /> instance call the GetSiteSlotDomainOwnershipIdentifiers method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
     public partial class SiteSlotDomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<SiteSlotDomainOwnershipIdentifierResource>, IAsyncEnumerable<SiteSlotDomainOwnershipIdentifierResource>
     {
         private readonly ClientDiagnostics _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics;

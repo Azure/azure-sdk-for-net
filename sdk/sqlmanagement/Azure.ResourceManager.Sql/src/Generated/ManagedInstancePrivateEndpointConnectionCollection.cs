@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstancePrivateEndpointConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstancePrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="ManagedInstancePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedInstancePrivateEndpointConnectionCollection" /> instance call the GetManagedInstancePrivateEndpointConnections method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
     public partial class ManagedInstancePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ManagedInstancePrivateEndpointConnectionResource>, IAsyncEnumerable<ManagedInstancePrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _managedInstancePrivateEndpointConnectionClientDiagnostics;

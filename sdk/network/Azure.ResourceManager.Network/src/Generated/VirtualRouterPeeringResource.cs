@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a VirtualRouterPeeringResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a VirtualRouterPeering along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualRouterPeeringResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetVirtualRouterPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualRouterResource" /> using the GetVirtualRouterPeering method.
+    /// </summary>
     public partial class VirtualRouterPeeringResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualRouterPeeringResource"/> instance. </summary>

@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a OSVersionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an OSVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OSVersionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetOSVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetOSVersion method.
+    /// </summary>
     public partial class OSVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OSVersionResource"/> instance. </summary>

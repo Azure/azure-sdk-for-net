@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A Class representing a ConsumerGroupResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ConsumerGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConsumerGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetConsumerGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubResource" /> using the GetConsumerGroup method.
+    /// </summary>
     public partial class ConsumerGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConsumerGroupResource"/> instance. </summary>

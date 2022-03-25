@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A class representing collection of PrivateEndpointConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="PrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="PrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource" />.
+    /// To get a <see cref="PrivateEndpointConnectionCollection" /> instance call the GetPrivateEndpointConnections method from an instance of <see cref="DeviceUpdateAccountResource" />.
+    /// </summary>
     public partial class PrivateEndpointConnectionCollection : ArmCollection, IEnumerable<PrivateEndpointConnectionResource>, IAsyncEnumerable<PrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _privateEndpointConnectionClientDiagnostics;

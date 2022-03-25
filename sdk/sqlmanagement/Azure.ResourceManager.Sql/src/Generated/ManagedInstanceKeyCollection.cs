@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceKey and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceKeyResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceKeyResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedInstanceKeyCollection" /> instance call the GetManagedInstanceKeys method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
     public partial class ManagedInstanceKeyCollection : ArmCollection, IEnumerable<ManagedInstanceKeyResource>, IAsyncEnumerable<ManagedInstanceKeyResource>
     {
         private readonly ClientDiagnostics _managedInstanceKeyClientDiagnostics;

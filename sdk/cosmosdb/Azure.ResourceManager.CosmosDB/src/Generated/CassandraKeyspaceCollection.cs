@@ -20,7 +20,11 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of CassandraKeyspace and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CassandraKeyspaceResource" /> and their operations.
+    /// Each <see cref="CassandraKeyspaceResource" /> in the collection will belong to the same instance of <see cref="DatabaseAccountResource" />.
+    /// To get a <see cref="CassandraKeyspaceCollection" /> instance call the GetCassandraKeyspaces method from an instance of <see cref="DatabaseAccountResource" />.
+    /// </summary>
     public partial class CassandraKeyspaceCollection : ArmCollection, IEnumerable<CassandraKeyspaceResource>, IAsyncEnumerable<CassandraKeyspaceResource>
     {
         private readonly ClientDiagnostics _cassandraKeyspaceCassandraResourcesClientDiagnostics;

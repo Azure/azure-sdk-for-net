@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of Probe and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ProbeResource" /> and their operations.
+    /// Each <see cref="ProbeResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
+    /// To get a <see cref="ProbeCollection" /> instance call the GetProbes method from an instance of <see cref="LoadBalancerResource" />.
+    /// </summary>
     public partial class ProbeCollection : ArmCollection, IEnumerable<ProbeResource>, IAsyncEnumerable<ProbeResource>
     {
         private readonly ClientDiagnostics _probeLoadBalancerProbesClientDiagnostics;

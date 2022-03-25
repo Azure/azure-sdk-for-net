@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceAzureADOnlyAuthentication and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedInstanceAzureADOnlyAuthenticationCollection" /> instance call the GetManagedInstanceAzureADOnlyAuthentications method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
     public partial class ManagedInstanceAzureADOnlyAuthenticationCollection : ArmCollection, IEnumerable<ManagedInstanceAzureADOnlyAuthenticationResource>, IAsyncEnumerable<ManagedInstanceAzureADOnlyAuthenticationResource>
     {
         private readonly ClientDiagnostics _managedInstanceAzureADOnlyAuthenticationClientDiagnostics;

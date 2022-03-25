@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityOptions checkNameAvailabilityRequest)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(ManagementGroupNameAvailabilityOptions checkNameAvailabilityOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -562,29 +562,29 @@ namespace Azure.ResourceManager.Management
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkNameAvailabilityRequest);
+            content.JsonWriter.WriteObjectValue(checkNameAvailabilityOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks if the specified management group name is valid and unique. </summary>
-        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="checkNameAvailabilityOptions"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityOptions"/> is null. </exception>
+        public async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityOptions checkNameAvailabilityOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
+            Argument.AssertNotNull(checkNameAvailabilityOptions, nameof(checkNameAvailabilityOptions));
 
-            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityRequest);
+            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        ManagementGroupNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = ManagementGroupNameAvailabilityResult.DeserializeManagementGroupNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -593,22 +593,22 @@ namespace Azure.ResourceManager.Management
         }
 
         /// <summary> Checks if the specified management group name is valid and unique. </summary>
-        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="checkNameAvailabilityOptions"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityOptions"/> is null. </exception>
+        public Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityOptions checkNameAvailabilityOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
+            Argument.AssertNotNull(checkNameAvailabilityOptions, nameof(checkNameAvailabilityOptions));
 
-            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityRequest);
+            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        ManagementGroupNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = ManagementGroupNameAvailabilityResult.DeserializeManagementGroupNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

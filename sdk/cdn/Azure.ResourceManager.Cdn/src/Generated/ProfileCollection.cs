@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing collection of Profile and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ProfileResource" /> and their operations.
+    /// Each <see cref="ProfileResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ProfileCollection" /> instance call the GetProfiles method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ProfileCollection : ArmCollection, IEnumerable<ProfileResource>, IAsyncEnumerable<ProfileResource>
     {
         private readonly ClientDiagnostics _profileClientDiagnostics;

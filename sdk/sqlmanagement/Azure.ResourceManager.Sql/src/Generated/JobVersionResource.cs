@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a JobVersionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a JobVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JobVersionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetJobVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlJobResource" /> using the GetJobVersion method.
+    /// </summary>
     public partial class JobVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="JobVersionResource"/> instance. </summary>

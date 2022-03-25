@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a FirewallRuleResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a FirewallRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirewallRuleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetFirewallRule method.
+    /// </summary>
     public partial class FirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FirewallRuleResource"/> instance. </summary>

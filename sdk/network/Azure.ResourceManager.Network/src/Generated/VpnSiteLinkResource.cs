@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a VpnSiteLinkResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a VpnSiteLink along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VpnSiteLinkResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetVpnSiteLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VpnSiteResource" /> using the GetVpnSiteLink method.
+    /// </summary>
     public partial class VpnSiteLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VpnSiteLinkResource"/> instance. </summary>

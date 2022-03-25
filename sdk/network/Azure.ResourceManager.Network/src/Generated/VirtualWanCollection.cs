@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualWan and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualWanResource" /> and their operations.
+    /// Each <see cref="VirtualWanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VirtualWanCollection" /> instance call the GetVirtualWans method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VirtualWanCollection : ArmCollection, IEnumerable<VirtualWanResource>, IAsyncEnumerable<VirtualWanResource>
     {
         private readonly ClientDiagnostics _virtualWanClientDiagnostics;

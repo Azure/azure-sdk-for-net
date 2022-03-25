@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of OSVersion and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="OSVersionResource" /> and their operations.
+    /// Each <see cref="OSVersionResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get an <see cref="OSVersionCollection" /> instance call the GetOSVersions method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class OSVersionCollection : ArmCollection, IEnumerable<OSVersionResource>, IAsyncEnumerable<OSVersionResource>
     {
         private readonly ClientDiagnostics _osVersionCloudServiceOperatingSystemsClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of SyncAgent and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SyncAgentResource" /> and their operations.
+    /// Each <see cref="SyncAgentResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="SyncAgentCollection" /> instance call the GetSyncAgents method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class SyncAgentCollection : ArmCollection, IEnumerable<SyncAgentResource>, IAsyncEnumerable<SyncAgentResource>
     {
         private readonly ClientDiagnostics _syncAgentClientDiagnostics;

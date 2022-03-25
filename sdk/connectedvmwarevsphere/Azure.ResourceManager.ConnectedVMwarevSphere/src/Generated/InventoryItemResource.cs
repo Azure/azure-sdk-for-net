@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A Class representing a InventoryItemResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an InventoryItem along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="InventoryItemResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetInventoryItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VCenterResource" /> using the GetInventoryItem method.
+    /// </summary>
     public partial class InventoryItemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="InventoryItemResource"/> instance. </summary>

@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of LongTermRetentionPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="LongTermRetentionPolicyResource" /> and their operations.
+    /// Each <see cref="LongTermRetentionPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="LongTermRetentionPolicyCollection" /> instance call the GetLongTermRetentionPolicies method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class LongTermRetentionPolicyCollection : ArmCollection, IEnumerable<LongTermRetentionPolicyResource>, IAsyncEnumerable<LongTermRetentionPolicyResource>
     {
         private readonly ClientDiagnostics _longTermRetentionPolicyClientDiagnostics;

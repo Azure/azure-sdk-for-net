@@ -20,7 +20,11 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of BlobContainer and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="BlobContainerResource" /> and their operations.
+    /// Each <see cref="BlobContainerResource" /> in the collection will belong to the same instance of <see cref="BlobServiceResource" />.
+    /// To get a <see cref="BlobContainerCollection" /> instance call the GetBlobContainers method from an instance of <see cref="BlobServiceResource" />.
+    /// </summary>
     public partial class BlobContainerCollection : ArmCollection, IEnumerable<BlobContainerResource>, IAsyncEnumerable<BlobContainerResource>
     {
         private readonly ClientDiagnostics _blobContainerClientDiagnostics;

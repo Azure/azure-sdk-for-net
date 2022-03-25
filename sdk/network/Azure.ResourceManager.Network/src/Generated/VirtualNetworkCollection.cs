@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualNetwork and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualNetworkResource" /> and their operations.
+    /// Each <see cref="VirtualNetworkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VirtualNetworkCollection" /> instance call the GetVirtualNetworks method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VirtualNetworkCollection : ArmCollection, IEnumerable<VirtualNetworkResource>, IAsyncEnumerable<VirtualNetworkResource>
     {
         private readonly ClientDiagnostics _virtualNetworkClientDiagnostics;

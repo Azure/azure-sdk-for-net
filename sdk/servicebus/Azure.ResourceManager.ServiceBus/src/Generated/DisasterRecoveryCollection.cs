@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of DisasterRecovery and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DisasterRecoveryResource" /> and their operations.
+    /// Each <see cref="DisasterRecoveryResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
+    /// To get a <see cref="DisasterRecoveryCollection" /> instance call the GetDisasterRecoveries method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// </summary>
     public partial class DisasterRecoveryCollection : ArmCollection, IEnumerable<DisasterRecoveryResource>, IAsyncEnumerable<DisasterRecoveryResource>
     {
         private readonly ClientDiagnostics _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlotPublicCertificate and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotPublicCertificateResource" /> and their operations.
+    /// Each <see cref="SiteSlotPublicCertificateResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotPublicCertificateCollection" /> instance call the GetSiteSlotPublicCertificates method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
     public partial class SiteSlotPublicCertificateCollection : ArmCollection, IEnumerable<SiteSlotPublicCertificateResource>, IAsyncEnumerable<SiteSlotPublicCertificateResource>
     {
         private readonly ClientDiagnostics _siteSlotPublicCertificateWebAppsClientDiagnostics;

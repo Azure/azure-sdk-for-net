@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ServerDatabaseSchemaTableResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ServerDatabaseSchemaTable along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerDatabaseSchemaTableResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetServerDatabaseSchemaTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServerDatabaseSchemaResource" /> using the GetServerDatabaseSchemaTable method.
+    /// </summary>
     public partial class ServerDatabaseSchemaTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerDatabaseSchemaTableResource"/> instance. </summary>

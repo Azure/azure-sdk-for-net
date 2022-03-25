@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotPrivateAccessResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteSlotPrivateAccess along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotPrivateAccessResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotPrivateAccessResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotPrivateAccess method.
+    /// </summary>
     public partial class SiteSlotPrivateAccessResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotPrivateAccessResource"/> instance. </summary>

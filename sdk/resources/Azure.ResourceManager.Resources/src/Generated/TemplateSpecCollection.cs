@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of TemplateSpec and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="TemplateSpecResource" /> and their operations.
+    /// Each <see cref="TemplateSpecResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="TemplateSpecCollection" /> instance call the GetTemplateSpecs method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class TemplateSpecCollection : ArmCollection, IEnumerable<TemplateSpecResource>, IAsyncEnumerable<TemplateSpecResource>
     {
         private readonly ClientDiagnostics _templateSpecClientDiagnostics;

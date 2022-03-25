@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of SqlServer and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SqlServerResource" /> and their operations.
+    /// Each <see cref="SqlServerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SqlServerCollection" /> instance call the GetSqlServers method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class SqlServerCollection : ArmCollection, IEnumerable<SqlServerResource>, IAsyncEnumerable<SqlServerResource>
     {
         private readonly ClientDiagnostics _sqlServerServersClientDiagnostics;

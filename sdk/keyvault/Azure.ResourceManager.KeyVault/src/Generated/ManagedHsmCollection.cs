@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of ManagedHsm and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedHsmResource" /> and their operations.
+    /// Each <see cref="ManagedHsmResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ManagedHsmCollection" /> instance call the GetManagedHsms method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ManagedHsmCollection : ArmCollection, IEnumerable<ManagedHsmResource>, IAsyncEnumerable<ManagedHsmResource>
     {
         private readonly ClientDiagnostics _managedHsmClientDiagnostics;

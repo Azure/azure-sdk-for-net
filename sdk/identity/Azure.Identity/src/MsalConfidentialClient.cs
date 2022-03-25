@@ -170,7 +170,9 @@ namespace Azure.Identity
         {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
-            var builder = client.AcquireTokenOnBehalfOf(scopes, userAssertionValue);
+            var builder = client
+                .AcquireTokenOnBehalfOf(scopes, userAssertionValue)
+                .WithSendX5C(_includeX5CClaimHeader);
 
             if (!string.IsNullOrEmpty(tenantId))
             {

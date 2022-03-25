@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ApplicationGateway and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ApplicationGatewayResource" /> and their operations.
+    /// Each <see cref="ApplicationGatewayResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ApplicationGatewayCollection" /> instance call the GetApplicationGateways method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ApplicationGatewayCollection : ArmCollection, IEnumerable<ApplicationGatewayResource>, IAsyncEnumerable<ApplicationGatewayResource>
     {
         private readonly ClientDiagnostics _applicationGatewayClientDiagnostics;

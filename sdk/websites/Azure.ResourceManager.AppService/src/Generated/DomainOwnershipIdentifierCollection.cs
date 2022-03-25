@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of DomainOwnershipIdentifier and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DomainOwnershipIdentifierResource" /> and their operations.
+    /// Each <see cref="DomainOwnershipIdentifierResource" /> in the collection will belong to the same instance of <see cref="AppServiceDomainResource" />.
+    /// To get a <see cref="DomainOwnershipIdentifierCollection" /> instance call the GetDomainOwnershipIdentifiers method from an instance of <see cref="AppServiceDomainResource" />.
+    /// </summary>
     public partial class DomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<DomainOwnershipIdentifierResource>, IAsyncEnumerable<DomainOwnershipIdentifierResource>
     {
         private readonly ClientDiagnostics _domainOwnershipIdentifierDomainsClientDiagnostics;

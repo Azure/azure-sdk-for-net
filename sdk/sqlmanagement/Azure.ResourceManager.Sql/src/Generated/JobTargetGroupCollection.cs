@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobTargetGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="JobTargetGroupResource" /> and their operations.
+    /// Each <see cref="JobTargetGroupResource" /> in the collection will belong to the same instance of <see cref="JobAgentResource" />.
+    /// To get a <see cref="JobTargetGroupCollection" /> instance call the GetJobTargetGroups method from an instance of <see cref="JobAgentResource" />.
+    /// </summary>
     public partial class JobTargetGroupCollection : ArmCollection, IEnumerable<JobTargetGroupResource>, IAsyncEnumerable<JobTargetGroupResource>
     {
         private readonly ClientDiagnostics _jobTargetGroupClientDiagnostics;

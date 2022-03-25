@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of BgpConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="BgpConnectionResource" /> and their operations.
+    /// Each <see cref="BgpConnectionResource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
+    /// To get a <see cref="BgpConnectionCollection" /> instance call the GetBgpConnections method from an instance of <see cref="VirtualHubResource" />.
+    /// </summary>
     public partial class BgpConnectionCollection : ArmCollection, IEnumerable<BgpConnectionResource>, IAsyncEnumerable<BgpConnectionResource>
     {
         private readonly ClientDiagnostics _bgpConnectionVirtualHubBgpConnectionClientDiagnostics;

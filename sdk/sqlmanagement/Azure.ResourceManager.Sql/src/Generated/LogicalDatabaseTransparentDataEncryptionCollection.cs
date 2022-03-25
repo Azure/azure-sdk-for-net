@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of LogicalDatabaseTransparentDataEncryption and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> and their operations.
+    /// Each <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="LogicalDatabaseTransparentDataEncryptionCollection" /> instance call the GetLogicalDatabaseTransparentDataEncryptions method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionCollection : ArmCollection, IEnumerable<LogicalDatabaseTransparentDataEncryptionResource>, IAsyncEnumerable<LogicalDatabaseTransparentDataEncryptionResource>
     {
         private readonly ClientDiagnostics _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsClientDiagnostics;

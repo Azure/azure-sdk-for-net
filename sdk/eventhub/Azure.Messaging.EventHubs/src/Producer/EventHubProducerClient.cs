@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString) : this(connectionString, null, null)
         {
@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       EventHubProducerClientOptions clientOptions) : this(connectionString, null, clientOptions)
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName) : this(connectionString, eventHubName, null)
@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName,

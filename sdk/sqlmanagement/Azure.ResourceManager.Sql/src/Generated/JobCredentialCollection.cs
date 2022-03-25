@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobCredential and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="JobCredentialResource" /> and their operations.
+    /// Each <see cref="JobCredentialResource" /> in the collection will belong to the same instance of <see cref="JobAgentResource" />.
+    /// To get a <see cref="JobCredentialCollection" /> instance call the GetJobCredentials method from an instance of <see cref="JobAgentResource" />.
+    /// </summary>
     public partial class JobCredentialCollection : ArmCollection, IEnumerable<JobCredentialResource>, IAsyncEnumerable<JobCredentialResource>
     {
         private readonly ClientDiagnostics _jobCredentialClientDiagnostics;

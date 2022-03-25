@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of VirtualCluster and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualClusterResource" /> and their operations.
+    /// Each <see cref="VirtualClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VirtualClusterCollection" /> instance call the GetVirtualClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VirtualClusterCollection : ArmCollection, IEnumerable<VirtualClusterResource>, IAsyncEnumerable<VirtualClusterResource>
     {
         private readonly ClientDiagnostics _virtualClusterClientDiagnostics;

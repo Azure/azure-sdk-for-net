@@ -19,7 +19,11 @@ using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of PolicyAssignment and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="PolicyAssignmentResource" /> and their operations.
+    /// Each <see cref="PolicyAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get a <see cref="PolicyAssignmentCollection" /> instance call the GetPolicyAssignments method from an instance of <see cref="ArmResource" />.
+    /// </summary>
     public partial class PolicyAssignmentCollection : ArmCollection, IEnumerable<PolicyAssignmentResource>, IAsyncEnumerable<PolicyAssignmentResource>
     {
         private readonly ClientDiagnostics _policyAssignmentClientDiagnostics;

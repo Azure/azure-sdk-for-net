@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a PrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateEndpointConnectionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DiskAccessResource" /> using the GetPrivateEndpointConnection method.
+    /// </summary>
     public partial class PrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateEndpointConnectionResource"/> instance. </summary>

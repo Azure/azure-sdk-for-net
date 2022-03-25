@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a InboundNatRuleResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an InboundNatRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="InboundNatRuleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetInboundNatRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource" /> using the GetInboundNatRule method.
+    /// </summary>
     public partial class InboundNatRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="InboundNatRuleResource"/> instance. </summary>

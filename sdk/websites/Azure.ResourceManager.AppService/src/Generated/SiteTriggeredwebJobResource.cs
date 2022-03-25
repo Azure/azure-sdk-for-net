@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteTriggeredwebJobResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteTriggeredwebJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteTriggeredwebJobResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteTriggeredwebJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteTriggeredwebJob method.
+    /// </summary>
     public partial class SiteTriggeredwebJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteTriggeredwebJobResource"/> instance. </summary>

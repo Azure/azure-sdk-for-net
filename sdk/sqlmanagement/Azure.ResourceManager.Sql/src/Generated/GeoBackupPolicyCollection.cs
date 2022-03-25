@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of GeoBackupPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="GeoBackupPolicyResource" /> and their operations.
+    /// Each <see cref="GeoBackupPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="GeoBackupPolicyCollection" /> instance call the GetGeoBackupPolicies method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class GeoBackupPolicyCollection : ArmCollection, IEnumerable<GeoBackupPolicyResource>, IAsyncEnumerable<GeoBackupPolicyResource>
     {
         private readonly ClientDiagnostics _geoBackupPolicyClientDiagnostics;

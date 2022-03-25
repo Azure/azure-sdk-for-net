@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ServerJobAgentJobExecutionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ServerJobAgentJobExecution along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerJobAgentJobExecutionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetServerJobAgentJobExecutionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlJobResource" /> using the GetServerJobAgentJobExecution method.
+    /// </summary>
     public partial class ServerJobAgentJobExecutionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerJobAgentJobExecutionResource"/> instance. </summary>
