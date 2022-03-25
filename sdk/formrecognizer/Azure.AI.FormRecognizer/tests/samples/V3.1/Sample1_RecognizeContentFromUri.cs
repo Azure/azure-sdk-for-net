@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeContentFromUri
 #if SNIPPET
-            Uri formUri = <formUri>;
+            Uri formUri = new Uri("<formUri>");
 #else
             Uri formUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
 #endif

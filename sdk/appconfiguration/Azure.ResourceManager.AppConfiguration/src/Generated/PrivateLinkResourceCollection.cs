@@ -16,11 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing collection of PrivateLinkResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="PrivateLinkResource" /> and their operations.
+    /// Each <see cref="PrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ConfigurationStoreResource" />.
+    /// To get a <see cref="PrivateLinkResourceCollection" /> instance call the GetPrivateLinkResources method from an instance of <see cref="ConfigurationStoreResource" />.
+    /// </summary>
     public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkResourceClientDiagnostics;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", PrivateLinkResource.ResourceType.Namespace, DiagnosticOptions);
+            _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
-            _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkResourceApiVersion);
+            _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ConfigurationStore.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationStore.ResourceType), nameof(id));
+            if (id.ResourceType != ConfigurationStoreResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationStoreResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class FirewallPolicyRuleCollectionGroupOperationSource : IOperationSource<FirewallPolicyRuleCollectionGroup>
+    internal class FirewallPolicyRuleCollectionGroupOperationSource : IOperationSource<FirewallPolicyRuleCollectionGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        FirewallPolicyRuleCollectionGroup IOperationSource<FirewallPolicyRuleCollectionGroup>.CreateResult(Response response, CancellationToken cancellationToken)
+        FirewallPolicyRuleCollectionGroupResource IOperationSource<FirewallPolicyRuleCollectionGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FirewallPolicyRuleCollectionGroupData.DeserializeFirewallPolicyRuleCollectionGroupData(document.RootElement);
-            return new FirewallPolicyRuleCollectionGroup(_client, data);
+            return new FirewallPolicyRuleCollectionGroupResource(_client, data);
         }
 
-        async ValueTask<FirewallPolicyRuleCollectionGroup> IOperationSource<FirewallPolicyRuleCollectionGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FirewallPolicyRuleCollectionGroupResource> IOperationSource<FirewallPolicyRuleCollectionGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FirewallPolicyRuleCollectionGroupData.DeserializeFirewallPolicyRuleCollectionGroupData(document.RootElement);
-            return new FirewallPolicyRuleCollectionGroup(_client, data);
+            return new FirewallPolicyRuleCollectionGroupResource(_client, data);
         }
     }
 }

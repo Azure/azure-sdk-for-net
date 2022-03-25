@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class to add extension methods to Azure.ResourceManager.ConnectedVMwarevSphere. </summary>
     public static partial class ConnectedVMwarevSphereExtensions
     {
-        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
-            return subscription.GetCachedClient((client) =>
+            return subscriptionResource.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(client, subscription.Id);
+                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
         }
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
         /// Operation Id: ResourcePools_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourcePool" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourcePool> GetResourcePoolsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourcePoolResource> GetResourcePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetResourcePoolsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetResourcePoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
         /// Operation Id: ResourcePools_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourcePool" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourcePool> GetResourcePools(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourcePoolResource> GetResourcePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetResourcePools(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetResourcePools(cancellationToken);
         }
 
         /// <summary>
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
         /// Operation Id: Clusters_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareCluster> GetVMwareClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VMwareClusterResource> GetVMwareClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVMwareClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVMwareClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
         /// Operation Id: Clusters_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareCluster> GetVMwareClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VMwareClusterResource> GetVMwareClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVMwareClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVMwareClusters(cancellationToken);
         }
 
         /// <summary>
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
         /// Operation Id: Hosts_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareHost> GetVMwareHostsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VMwareHostResource> GetVMwareHostsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVMwareHostsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVMwareHostsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
         /// Operation Id: Hosts_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareHost> GetVMwareHosts(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VMwareHostResource> GetVMwareHosts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVMwareHosts(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVMwareHosts(cancellationToken);
         }
 
         /// <summary>
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
         /// Operation Id: Datastores_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareDatastore" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareDatastore> GetVMwareDatastoresAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VMwareDatastoreResource> GetVMwareDatastoresAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVMwareDatastoresAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVMwareDatastoresAsync(cancellationToken);
         }
 
         /// <summary>
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
         /// Operation Id: Datastores_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareDatastore" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareDatastore> GetVMwareDatastores(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VMwareDatastoreResource> GetVMwareDatastores(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVMwareDatastores(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVMwareDatastores(cancellationToken);
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
         /// Operation Id: VCenters_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VCenter" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VCenter> GetVCentersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VCenterResource> GetVCentersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVCentersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVCentersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
         /// Operation Id: VCenters_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VCenter" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VCenter> GetVCenters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VCenterResource> GetVCenters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVCenters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVCenters(cancellationToken);
         }
 
         /// <summary>
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
         /// Operation Id: VirtualMachines_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachine> GetVirtualMachinesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVirtualMachinesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
         /// Operation Id: VirtualMachines_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachine> GetVirtualMachines(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVirtualMachines(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachines(cancellationToken);
         }
 
         /// <summary>
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
         /// Operation Id: VirtualMachineTemplates_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineTemplate> GetVirtualMachineTemplatesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineTemplateResource> GetVirtualMachineTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVirtualMachineTemplatesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineTemplatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
         /// Operation Id: VirtualMachineTemplates_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineTemplate> GetVirtualMachineTemplates(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineTemplateResource> GetVirtualMachineTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVirtualMachineTemplates(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineTemplates(cancellationToken);
         }
 
         /// <summary>
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
         /// Operation Id: VirtualNetworks_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualNetwork> GetVirtualNetworksAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVirtualNetworksAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -227,29 +227,29 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
         /// Operation Id: VirtualNetworks_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualNetwork> GetVirtualNetworks(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualNetworkResource> GetVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVirtualNetworks(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualNetworks(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of ResourcePools in the ResourcePool. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ResourcePools and their operations over a ResourcePool. </returns>
-        public static ResourcePoolCollection GetResourcePools(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of ResourcePoolResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ResourcePoolResources and their operations over a ResourcePoolResource. </returns>
+        public static ResourcePoolCollection GetResourcePools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetResourcePools();
+            return GetExtensionClient(resourceGroupResource).GetResourcePools();
         }
 
         /// <summary>
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
         /// Operation Id: ResourcePools_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public static async Task<Response<ResourcePool>> GetResourcePoolAsync(this ResourceGroup resourceGroup, string resourcePoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourcePoolResource>> GetResourcePoolAsync(this ResourceGroupResource resourceGroupResource, string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetResourcePools().GetAsync(resourcePoolName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetResourcePools().GetAsync(resourcePoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -272,37 +272,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
         /// Operation Id: ResourcePools_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
-        public static Response<ResourcePool> GetResourcePool(this ResourceGroup resourceGroup, string resourcePoolName, CancellationToken cancellationToken = default)
+        public static Response<ResourcePoolResource> GetResourcePool(this ResourceGroupResource resourceGroupResource, string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetResourcePools().Get(resourcePoolName, cancellationToken);
+            return resourceGroupResource.GetResourcePools().Get(resourcePoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VMwareClusters in the VMwareCluster. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VMwareClusters and their operations over a VMwareCluster. </returns>
-        public static VMwareClusterCollection GetVMwareClusters(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of VMwareClusterResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VMwareClusterResources and their operations over a VMwareClusterResource. </returns>
+        public static VMwareClusterCollection GetVMwareClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVMwareClusters();
-        }
-
-        /// <summary>
-        /// Implements cluster GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
-        /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="clusterName"> Name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public static async Task<Response<VMwareCluster>> GetVMwareClusterAsync(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroup.GetVMwareClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetVMwareClusters();
         }
 
         /// <summary>
@@ -310,22 +295,37 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
         /// Operation Id: Clusters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public static Response<VMwareCluster> GetVMwareCluster(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VMwareClusterResource>> GetVMwareClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVMwareClusters().Get(clusterName, cancellationToken);
+            return await resourceGroupResource.GetVMwareClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of VMwareHosts in the VMwareHost. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VMwareHosts and their operations over a VMwareHost. </returns>
-        public static VMwareHostCollection GetVMwareHosts(this ResourceGroup resourceGroup)
+        /// <summary>
+        /// Implements cluster GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public static Response<VMwareClusterResource> GetVMwareCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroup).GetVMwareHosts();
+            return resourceGroupResource.GetVMwareClusters().Get(clusterName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VMwareHostResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VMwareHostResources and their operations over a VMwareHostResource. </returns>
+        public static VMwareHostCollection GetVMwareHosts(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetVMwareHosts();
         }
 
         /// <summary>
@@ -333,14 +333,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
         /// Operation Id: Hosts_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public static async Task<Response<VMwareHost>> GetVMwareHostAsync(this ResourceGroup resourceGroup, string hostName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VMwareHostResource>> GetVMwareHostAsync(this ResourceGroupResource resourceGroupResource, string hostName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVMwareHosts().GetAsync(hostName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVMwareHosts().GetAsync(hostName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -348,37 +348,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
         /// Operation Id: Hosts_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public static Response<VMwareHost> GetVMwareHost(this ResourceGroup resourceGroup, string hostName, CancellationToken cancellationToken = default)
+        public static Response<VMwareHostResource> GetVMwareHost(this ResourceGroupResource resourceGroupResource, string hostName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVMwareHosts().Get(hostName, cancellationToken);
+            return resourceGroupResource.GetVMwareHosts().Get(hostName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VMwareDatastores in the VMwareDatastore. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VMwareDatastores and their operations over a VMwareDatastore. </returns>
-        public static VMwareDatastoreCollection GetVMwareDatastores(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of VMwareDatastoreResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VMwareDatastoreResources and their operations over a VMwareDatastoreResource. </returns>
+        public static VMwareDatastoreCollection GetVMwareDatastores(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVMwareDatastores();
-        }
-
-        /// <summary>
-        /// Implements datastore GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
-        /// Operation Id: Datastores_Get
-        /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="datastoreName"> Name of the datastore. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public static async Task<Response<VMwareDatastore>> GetVMwareDatastoreAsync(this ResourceGroup resourceGroup, string datastoreName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroup.GetVMwareDatastores().GetAsync(datastoreName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetVMwareDatastores();
         }
 
         /// <summary>
@@ -386,22 +371,37 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
         /// Operation Id: Datastores_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="datastoreName"> Name of the datastore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public static Response<VMwareDatastore> GetVMwareDatastore(this ResourceGroup resourceGroup, string datastoreName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VMwareDatastoreResource>> GetVMwareDatastoreAsync(this ResourceGroupResource resourceGroupResource, string datastoreName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVMwareDatastores().Get(datastoreName, cancellationToken);
+            return await resourceGroupResource.GetVMwareDatastores().GetAsync(datastoreName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of VCenters in the VCenter. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VCenters and their operations over a VCenter. </returns>
-        public static VCenterCollection GetVCenters(this ResourceGroup resourceGroup)
+        /// <summary>
+        /// Implements datastore GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
+        /// Operation Id: Datastores_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="datastoreName"> Name of the datastore. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        public static Response<VMwareDatastoreResource> GetVMwareDatastore(this ResourceGroupResource resourceGroupResource, string datastoreName, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroup).GetVCenters();
+            return resourceGroupResource.GetVMwareDatastores().Get(datastoreName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VCenterResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VCenterResources and their operations over a VCenterResource. </returns>
+        public static VCenterCollection GetVCenters(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetVCenters();
         }
 
         /// <summary>
@@ -409,14 +409,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
         /// Operation Id: VCenters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        public static async Task<Response<VCenter>> GetVCenterAsync(this ResourceGroup resourceGroup, string vcenterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VCenterResource>> GetVCenterAsync(this ResourceGroupResource resourceGroupResource, string vcenterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVCenters().GetAsync(vcenterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVCenters().GetAsync(vcenterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -424,37 +424,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
         /// Operation Id: VCenters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
-        public static Response<VCenter> GetVCenter(this ResourceGroup resourceGroup, string vcenterName, CancellationToken cancellationToken = default)
+        public static Response<VCenterResource> GetVCenter(this ResourceGroupResource resourceGroupResource, string vcenterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVCenters().Get(vcenterName, cancellationToken);
+            return resourceGroupResource.GetVCenters().Get(vcenterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachines in the VirtualMachine. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualMachines and their operations over a VirtualMachine. </returns>
-        public static VirtualMachineCollection GetVirtualMachines(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
+        public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualMachines();
-        }
-
-        /// <summary>
-        /// Implements virtual machine GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// Operation Id: VirtualMachines_Get
-        /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public static async Task<Response<VirtualMachine>> GetVirtualMachineAsync(this ResourceGroup resourceGroup, string virtualMachineName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroup.GetVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetVirtualMachines();
         }
 
         /// <summary>
@@ -462,22 +447,37 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public static Response<VirtualMachine> GetVirtualMachine(this ResourceGroup resourceGroup, string virtualMachineName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualMachines().Get(virtualMachineName, cancellationToken);
+            return await resourceGroupResource.GetVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of VirtualMachineTemplates in the VirtualMachineTemplate. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualMachineTemplates and their operations over a VirtualMachineTemplate. </returns>
-        public static VirtualMachineTemplateCollection GetVirtualMachineTemplates(this ResourceGroup resourceGroup)
+        /// <summary>
+        /// Implements virtual machine GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
+        /// Operation Id: VirtualMachines_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualMachineTemplates();
+            return resourceGroupResource.GetVirtualMachines().Get(virtualMachineName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VirtualMachineTemplateResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualMachineTemplateResources and their operations over a VirtualMachineTemplateResource. </returns>
+        public static VirtualMachineTemplateCollection GetVirtualMachineTemplates(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetVirtualMachineTemplates();
         }
 
         /// <summary>
@@ -485,14 +485,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
-        public static async Task<Response<VirtualMachineTemplate>> GetVirtualMachineTemplateAsync(this ResourceGroup resourceGroup, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineTemplateResource>> GetVirtualMachineTemplateAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualMachineTemplates().GetAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualMachineTemplates().GetAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -500,37 +500,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/{virtualMachineTemplateName}
         /// Operation Id: VirtualMachineTemplates_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
-        public static Response<VirtualMachineTemplate> GetVirtualMachineTemplate(this ResourceGroup resourceGroup, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineTemplateResource> GetVirtualMachineTemplate(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualMachineTemplates().Get(virtualMachineTemplateName, cancellationToken);
+            return resourceGroupResource.GetVirtualMachineTemplates().Get(virtualMachineTemplateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworks in the VirtualNetwork. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualNetworks and their operations over a VirtualNetwork. </returns>
-        public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
+        public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualNetworks();
-        }
-
-        /// <summary>
-        /// Implements virtual network GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}
-        /// Operation Id: VirtualNetworks_Get
-        /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        public static async Task<Response<VirtualNetwork>> GetVirtualNetworkAsync(this ResourceGroup resourceGroup, string virtualNetworkName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroup.GetVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetVirtualNetworks();
         }
 
         /// <summary>
@@ -538,203 +523,254 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}
         /// Operation Id: VirtualNetworks_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        public static Response<VirtualNetwork> GetVirtualNetwork(this ResourceGroup resourceGroup, string virtualNetworkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualNetworks().Get(virtualNetworkName, cancellationToken);
+            return await resourceGroupResource.GetVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
-        #region ResourcePool
-        /// <summary> Gets an object representing a ResourcePool along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Implements virtual network GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}
+        /// Operation Id: VirtualNetworks_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        public static Response<VirtualNetworkResource> GetVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetVirtualNetworks().Get(virtualNetworkName, cancellationToken);
+        }
+
+        #region ResourcePoolResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourcePoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourcePoolResource.CreateResourceIdentifier" /> to create a <see cref="ResourcePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourcePool" /> object. </returns>
-        public static ResourcePool GetResourcePool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourcePoolResource" /> object. </returns>
+        public static ResourcePoolResource GetResourcePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ResourcePool.ValidateResourceId(id);
-                return new ResourcePool(client, id);
+                ResourcePoolResource.ValidateResourceId(id);
+                return new ResourcePoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VMwareCluster
-        /// <summary> Gets an object representing a VMwareCluster along with the instance operations that can be performed on it but with no data. </summary>
+        #region VMwareClusterResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VMwareClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareClusterResource.CreateResourceIdentifier" /> to create a <see cref="VMwareClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareCluster" /> object. </returns>
-        public static VMwareCluster GetVMwareCluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMwareClusterResource" /> object. </returns>
+        public static VMwareClusterResource GetVMwareClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VMwareCluster.ValidateResourceId(id);
-                return new VMwareCluster(client, id);
+                VMwareClusterResource.ValidateResourceId(id);
+                return new VMwareClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VMwareHost
-        /// <summary> Gets an object representing a VMwareHost along with the instance operations that can be performed on it but with no data. </summary>
+        #region VMwareHostResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VMwareHostResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareHostResource.CreateResourceIdentifier" /> to create a <see cref="VMwareHostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareHost" /> object. </returns>
-        public static VMwareHost GetVMwareHost(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMwareHostResource" /> object. </returns>
+        public static VMwareHostResource GetVMwareHostResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VMwareHost.ValidateResourceId(id);
-                return new VMwareHost(client, id);
+                VMwareHostResource.ValidateResourceId(id);
+                return new VMwareHostResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VMwareDatastore
-        /// <summary> Gets an object representing a VMwareDatastore along with the instance operations that can be performed on it but with no data. </summary>
+        #region VMwareDatastoreResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VMwareDatastoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareDatastoreResource.CreateResourceIdentifier" /> to create a <see cref="VMwareDatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareDatastore" /> object. </returns>
-        public static VMwareDatastore GetVMwareDatastore(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMwareDatastoreResource" /> object. </returns>
+        public static VMwareDatastoreResource GetVMwareDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VMwareDatastore.ValidateResourceId(id);
-                return new VMwareDatastore(client, id);
+                VMwareDatastoreResource.ValidateResourceId(id);
+                return new VMwareDatastoreResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VCenter
-        /// <summary> Gets an object representing a VCenter along with the instance operations that can be performed on it but with no data. </summary>
+        #region VCenterResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VCenterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VCenterResource.CreateResourceIdentifier" /> to create a <see cref="VCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VCenter" /> object. </returns>
-        public static VCenter GetVCenter(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VCenterResource" /> object. </returns>
+        public static VCenterResource GetVCenterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VCenter.ValidateResourceId(id);
-                return new VCenter(client, id);
+                VCenterResource.ValidateResourceId(id);
+                return new VCenterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualMachine
-        /// <summary> Gets an object representing a VirtualMachine along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualMachineResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
-        public static VirtualMachine GetVirtualMachine(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
+        public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualMachine.ValidateResourceId(id);
-                return new VirtualMachine(client, id);
+                VirtualMachineResource.ValidateResourceId(id);
+                return new VirtualMachineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualMachineTemplate
-        /// <summary> Gets an object representing a VirtualMachineTemplate along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualMachineTemplateResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineTemplateResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineTemplate" /> object. </returns>
-        public static VirtualMachineTemplate GetVirtualMachineTemplate(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineTemplateResource" /> object. </returns>
+        public static VirtualMachineTemplateResource GetVirtualMachineTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualMachineTemplate.ValidateResourceId(id);
-                return new VirtualMachineTemplate(client, id);
+                VirtualMachineTemplateResource.ValidateResourceId(id);
+                return new VirtualMachineTemplateResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualNetwork
-        /// <summary> Gets an object representing a VirtualNetwork along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualNetworkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
-        public static VirtualNetwork GetVirtualNetwork(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualNetworkResource" /> object. </returns>
+        public static VirtualNetworkResource GetVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualNetwork.ValidateResourceId(id);
-                return new VirtualNetwork(client, id);
+                VirtualNetworkResource.ValidateResourceId(id);
+                return new VirtualNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InventoryItem
-        /// <summary> Gets an object representing a InventoryItem along with the instance operations that can be performed on it but with no data. </summary>
+        #region InventoryItemResource
+        /// <summary>
+        /// Gets an object representing an <see cref="InventoryItemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InventoryItemResource.CreateResourceIdentifier" /> to create an <see cref="InventoryItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InventoryItem" /> object. </returns>
-        public static InventoryItem GetInventoryItem(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InventoryItemResource" /> object. </returns>
+        public static InventoryItemResource GetInventoryItemResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InventoryItem.ValidateResourceId(id);
-                return new InventoryItem(client, id);
+                InventoryItemResource.ValidateResourceId(id);
+                return new InventoryItemResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HybridIdentityMetadata
-        /// <summary> Gets an object representing a HybridIdentityMetadata along with the instance operations that can be performed on it but with no data. </summary>
+        #region HybridIdentityMetadataResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridIdentityMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridIdentityMetadata" /> object. </returns>
-        public static HybridIdentityMetadata GetHybridIdentityMetadata(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
+        public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                HybridIdentityMetadata.ValidateResourceId(id);
-                return new HybridIdentityMetadata(client, id);
+                HybridIdentityMetadataResource.ValidateResourceId(id);
+                return new HybridIdentityMetadataResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MachineExtension
-        /// <summary> Gets an object representing a MachineExtension along with the instance operations that can be performed on it but with no data. </summary>
+        #region MachineExtensionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="MachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineExtension" /> object. </returns>
-        public static MachineExtension GetMachineExtension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineExtensionResource" /> object. </returns>
+        public static MachineExtensionResource GetMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineExtension.ValidateResourceId(id);
-                return new MachineExtension(client, id);
+                MachineExtensionResource.ValidateResourceId(id);
+                return new MachineExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GuestAgent
-        /// <summary> Gets an object representing a GuestAgent along with the instance operations that can be performed on it but with no data. </summary>
+        #region GuestAgentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestAgentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="GuestAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestAgent" /> object. </returns>
-        public static GuestAgent GetGuestAgent(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestAgentResource" /> object. </returns>
+        public static GuestAgentResource GetGuestAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GuestAgent.ValidateResourceId(id);
-                return new GuestAgent(client, id);
+                GuestAgentResource.ValidateResourceId(id);
+                return new GuestAgentResource(client, id);
             }
             );
         }

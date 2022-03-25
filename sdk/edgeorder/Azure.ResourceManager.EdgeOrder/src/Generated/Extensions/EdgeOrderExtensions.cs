@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class to add extension methods to Azure.ResourceManager.EdgeOrder. </summary>
     public static partial class EdgeOrderExtensions
     {
-        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
-            return subscription.GetCachedClient((client) =>
+            return subscriptionResource.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(client, subscription.Id);
+                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
         }
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
         /// Operation Id: ListAddressesAtSubscriptionLevel
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AddressResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AddressResource> GetAddressResourcesAsync(this Subscription subscription, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AddressResource> GetAddressResourcesAsync(this SubscriptionResource subscriptionResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetAddressResourcesAsync(filter, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAddressResourcesAsync(filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/addresses
         /// Operation Id: ListAddressesAtSubscriptionLevel
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AddressResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AddressResource> GetAddressResources(this Subscription subscription, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<AddressResource> GetAddressResources(this SubscriptionResource subscriptionResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetAddressResources(filter, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAddressResources(filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -63,18 +63,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
         /// Operation Id: ListProductFamilies
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="productFamiliesRequest"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this Subscription subscription, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this SubscriptionResource subscriptionResource, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
 
-            return GetExtensionClient(subscription).GetProductFamiliesAsync(productFamiliesRequest, expand, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetProductFamiliesAsync(productFamiliesRequest, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -82,18 +82,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
         /// Operation Id: ListProductFamilies
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="productFamiliesRequest"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductFamily> GetProductFamilies(this Subscription subscription, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ProductFamily> GetProductFamilies(this SubscriptionResource subscriptionResource, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
 
-            return GetExtensionClient(subscription).GetProductFamilies(productFamiliesRequest, expand, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetProductFamilies(productFamiliesRequest, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
         /// Operation Id: ListConfigurations
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationsRequest"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this Subscription subscription, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
 
-            return GetExtensionClient(subscription).GetConfigurationsAsync(configurationsRequest, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetConfigurationsAsync(configurationsRequest, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
         /// Operation Id: ListConfigurations
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationsRequest"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductConfiguration> GetConfigurations(this Subscription subscription, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ProductConfiguration> GetConfigurations(this SubscriptionResource subscriptionResource, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
 
-            return GetExtensionClient(subscription).GetConfigurations(configurationsRequest, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetConfigurations(configurationsRequest, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
         /// Operation Id: ListProductFamiliesMetadata
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductFamiliesMetadataDetails" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductFamiliesMetadataDetails> GetProductFamiliesMetadataAsync(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProductFamiliesMetadataDetails> GetProductFamiliesMetadataAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/productFamiliesMetadata
         /// Operation Id: ListProductFamiliesMetadata
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductFamiliesMetadataDetails" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductFamiliesMetadataDetails> GetProductFamiliesMetadata(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ProductFamiliesMetadataDetails> GetProductFamiliesMetadata(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetProductFamiliesMetadata(skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetProductFamiliesMetadata(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -165,13 +165,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
         /// Operation Id: ListOrderAtSubscriptionLevel
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrderResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrderResource> GetOrderResourcesAsync(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<OrderResource> GetOrderResourcesAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetOrderResourcesAsync(skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOrderResourcesAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orders
         /// Operation Id: ListOrderAtSubscriptionLevel
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrderResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrderResource> GetOrderResources(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<OrderResource> GetOrderResources(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetOrderResources(skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOrderResources(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -193,15 +193,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrderItemResource> GetOrderItemResourcesAsync(this Subscription subscription, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<OrderItemResource> GetOrderItemResourcesAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetOrderItemResourcesAsync(filter, expand, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOrderItemResourcesAsync(filter, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -209,32 +209,32 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrderItemResource> GetOrderItemResources(this Subscription subscription, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<OrderItemResource> GetOrderItemResources(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetOrderItemResources(filter, expand, skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOrderItemResources(filter, expand, skipToken, cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of AddressResources in the AddressResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of AddressResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AddressResources and their operations over a AddressResource. </returns>
-        public static AddressResourceCollection GetAddressResources(this ResourceGroup resourceGroup)
+        public static AddressResourceCollection GetAddressResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetAddressResources();
+            return GetExtensionClient(resourceGroupResource).GetAddressResources();
         }
 
         /// <summary>
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
         /// Operation Id: GetAddressByName
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public static async Task<Response<AddressResource>> GetAddressResourceAsync(this ResourceGroup resourceGroup, string addressName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AddressResource>> GetAddressResourceAsync(this ResourceGroupResource resourceGroupResource, string addressName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetAddressResources().GetAsync(addressName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAddressResources().GetAsync(addressName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -257,22 +257,22 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
         /// Operation Id: GetAddressByName
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public static Response<AddressResource> GetAddressResource(this ResourceGroup resourceGroup, string addressName, CancellationToken cancellationToken = default)
+        public static Response<AddressResource> GetAddressResource(this ResourceGroupResource resourceGroupResource, string addressName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetAddressResources().Get(addressName, cancellationToken);
+            return resourceGroupResource.GetAddressResources().Get(addressName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OrderResources in the OrderResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of OrderResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrderResources and their operations over a OrderResource. </returns>
-        public static OrderResourceCollection GetOrderResources(this ResourceGroup resourceGroup)
+        public static OrderResourceCollection GetOrderResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetOrderResources();
+            return GetExtensionClient(resourceGroupResource).GetOrderResources();
         }
 
         /// <summary>
@@ -280,15 +280,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}
         /// Operation Id: GetOrderByName
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
-        public static async Task<Response<OrderResource>> GetOrderResourceAsync(this ResourceGroup resourceGroup, string location, string orderName, CancellationToken cancellationToken = default)
+        public static async Task<Response<OrderResource>> GetOrderResourceAsync(this ResourceGroupResource resourceGroupResource, string location, string orderName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetOrderResources().GetAsync(location, orderName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetOrderResources().GetAsync(location, orderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -296,23 +296,23 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}
         /// Operation Id: GetOrderByName
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
-        public static Response<OrderResource> GetOrderResource(this ResourceGroup resourceGroup, string location, string orderName, CancellationToken cancellationToken = default)
+        public static Response<OrderResource> GetOrderResource(this ResourceGroupResource resourceGroupResource, string location, string orderName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetOrderResources().Get(location, orderName, cancellationToken);
+            return resourceGroupResource.GetOrderResources().Get(location, orderName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OrderItemResources in the OrderItemResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of OrderItemResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrderItemResources and their operations over a OrderItemResource. </returns>
-        public static OrderItemResourceCollection GetOrderItemResources(this ResourceGroup resourceGroup)
+        public static OrderItemResourceCollection GetOrderItemResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetOrderItemResources();
+            return GetExtensionClient(resourceGroupResource).GetOrderItemResources();
         }
 
         /// <summary>
@@ -320,15 +320,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
         /// Operation Id: GetOrderItemByName
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
-        public static async Task<Response<OrderItemResource>> GetOrderItemResourceAsync(this ResourceGroup resourceGroup, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<OrderItemResource>> GetOrderItemResourceAsync(this ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetOrderItemResources().GetAsync(orderItemName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetOrderItemResources().GetAsync(orderItemName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -336,15 +336,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
         /// Operation Id: GetOrderItemByName
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
-        public static Response<OrderItemResource> GetOrderItemResource(this ResourceGroup resourceGroup, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<OrderItemResource> GetOrderItemResource(this ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetOrderItemResources().Get(orderItemName, expand, cancellationToken);
+            return resourceGroupResource.GetOrderItemResources().Get(orderItemName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -352,13 +352,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders
         /// Operation Id: ListOrderAtResourceGroupLevel
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrderResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrderResource> GetOrderResourcesAsync(this ResourceGroup resourceGroup, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<OrderResource> GetOrderResourcesAsync(this ResourceGroupResource resourceGroupResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroup).GetOrderResourcesAsync(skipToken, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetOrderResourcesAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -366,17 +366,20 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orders
         /// Operation Id: ListOrderAtResourceGroupLevel
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrderResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrderResource> GetOrderResources(this ResourceGroup resourceGroup, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<OrderResource> GetOrderResources(this ResourceGroupResource resourceGroupResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroup).GetOrderResources(skipToken, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetOrderResources(skipToken, cancellationToken);
         }
 
         #region AddressResource
-        /// <summary> Gets an object representing a AddressResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AddressResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AddressResource.CreateResourceIdentifier" /> to create an <see cref="AddressResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AddressResource" /> object. </returns>
@@ -392,7 +395,10 @@ namespace Azure.ResourceManager.EdgeOrder
         #endregion
 
         #region OrderResource
-        /// <summary> Gets an object representing a OrderResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OrderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OrderResource.CreateResourceIdentifier" /> to create an <see cref="OrderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OrderResource" /> object. </returns>
@@ -408,7 +414,10 @@ namespace Azure.ResourceManager.EdgeOrder
         #endregion
 
         #region OrderItemResource
-        /// <summary> Gets an object representing a OrderItemResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OrderItemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OrderItemResource.CreateResourceIdentifier" /> to create an <see cref="OrderItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OrderItemResource" /> object. </returns>

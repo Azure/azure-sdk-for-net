@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.TestFramework
             if (baseUri == ArmEnvironment.AzureChina.Endpoint)
                 return ArmEnvironment.AzureChina;
 
-            if (baseUri == ArmEnvironment.AzureGerman.Endpoint)
-                return ArmEnvironment.AzureGerman;
+            if (baseUri == ArmEnvironment.AzureGermany.Endpoint)
+                return ArmEnvironment.AzureGermany;
 
             if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
                 return ArmEnvironment.AzureGovernment;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
+                        _cleanupClient.GetManagementGroupResource(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
                     {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.TestFramework
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {
-                    _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
+                    _cleanupClient.GetManagementGroupResource(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
                 });
             }
 

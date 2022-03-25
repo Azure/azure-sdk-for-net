@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 
 [assembly: CodeGenSuppressType("GenericResourceFilter")]
 [assembly: CodeGenSuppressType("GenericResource")]
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;
         private readonly GenericResourceData _data;
-        private readonly ProviderCollection _providerCollection;
+        private readonly ResourceProviderCollection _providerCollection;
 
         /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class for mocking. </summary>
         protected GenericResource()
@@ -48,10 +47,10 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentException("Only resource in a subscription is supported");
             }
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(Id.ResourceType, out string apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(Client.GetSubscription(subscription));
+            _resourcesRestClient = new ResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiVersion);
+            _providerCollection = new ResourceProviderCollection(Client.GetSubscriptionResource(subscription));
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -193,9 +192,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -223,9 +222,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagValues[key] = value;
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -252,10 +251,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -282,10 +281,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -312,9 +311,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -341,9 +340,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.Properties.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

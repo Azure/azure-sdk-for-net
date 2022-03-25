@@ -96,7 +96,7 @@ Differences between the versions:
 
 Analyzing prebuilt models like business cards, identity documents, invoices, and receipts with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesUri
-    Uri invoiceUri = <invoiceUri>;
+    Uri invoiceUri = new Uri("<invoiceUri>");
     var options = new RecognizeInvoicesOptions() { Locale = "en-US" };
 
     RecognizeInvoicesOperation operation = await client.StartRecognizeInvoicesFromUriAsync(invoiceUri, options);
@@ -222,7 +222,7 @@ Analyzing prebuilt models like business cards, identity documents, invoices, and
 
 Analyzing prebuilt models like business cards, identity documents, invoices, and receipts with `4.0.x`:
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
 
@@ -328,7 +328,7 @@ Analyzing document content with `3.1.x`:
 > NOTE: With version `3.1.x` of the library this method had an optional `Language` parameter to hint at the language for the document, whereas in version `4.0.x` of the library `Locale` is used for this purpose.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-Uri formUri = <formUri>;
+Uri formUri = new Uri("<formUri>");
 
 Response<FormPageCollection> response = await client.StartRecognizeContentFromUriAsync(formUri).WaitForCompletionAsync();
 FormPageCollection formPages = response.Value;
@@ -384,7 +384,7 @@ foreach (FormPage page in formPages)
 
 Analyzing document layout with `4.0.x`:
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
 
@@ -459,7 +459,7 @@ Analyzing general prebuilt document types with `4.0.x`:
 > NOTE: Analyzing a document with the `prebuilt-document` model replaces training without labels in version `3.1.x` of the library.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
 
@@ -579,7 +579,7 @@ Train a custom model with `3.1.x`:
 // For instructions to create a label file for your training forms, please see:
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 string modelName = "My Model with labels";
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -620,7 +620,7 @@ Train a custom model with `4.0.x`:
 // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
 // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // We are selecting the Template build mode in this sample. For more information about the available
@@ -656,7 +656,7 @@ Differences between the versions:
 Analyze a document using a custom model with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
-Uri formUri = <formUri>;
+Uri formUri = new Uri("<formUri>");
 var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
 
 RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri, options);
@@ -714,7 +714,7 @@ foreach (RecognizedForm form in forms)
 Analyze a document using a custom model with `4.0.x`:
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 string modelId = "<modelId>";
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
 

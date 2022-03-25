@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Tests
                 result++;
             return result;
         }
-        protected void CompareMgmtGroups(ManagementGroup expected, ManagementGroup actual)
+        protected void CompareMgmtGroups(ManagementGroupResource expected, ManagementGroupResource actual)
         {
             Assert.AreEqual(expected.Data.DisplayName, actual.Data.DisplayName);
             Assert.AreEqual(expected.Data.Id, actual.Data.Id);
@@ -109,17 +108,17 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNotNull(actual.Data.Children, "Children were null");
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroup(Subscription subscription, string rgName)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName)
         {
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
 
-        protected async Task<ManagementLock> CreateManagementLockObject(ArmResource armResource, string lockName)
+        protected async Task<ManagementLockResource> CreateManagementLockObject(ArmResource armResource, string lockName)
         {
-            ManagementLockData input = new ManagementLockData(new LockLevel("CanNotDelete"));
-            ArmOperation<ManagementLock> lro = await armResource.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, lockName, input);
+            ManagementLockData input = new ManagementLockData(new ManagementLockLevel("CanNotDelete"));
+            ArmOperation<ManagementLockResource> lro = await armResource.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, lockName, input);
             return lro.Value;
         }
 
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Tests
             return virtualNetwork;
         }
 
-        protected async Task<GenericResource> CreateGenericVirtualNetwork(Subscription subscription, ResourceGroup rg, string vnName) // TODO: remove subscription parameter
+        protected async Task<GenericResource> CreateGenericVirtualNetwork(SubscriptionResource subscription, ResourceGroupResource rg, string vnName) // TODO: remove subscription parameter
         {
             GenericResourceData input = ConstructGenericVirtualNetworkData();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
@@ -148,19 +147,19 @@ namespace Azure.ResourceManager.Tests
             return lro.Value;
         }
 
-        protected async Task<ManagementGroup> GetCreatedManagementGroup()
+        protected async Task<ManagementGroupResource> GetCreatedManagementGroup()
         {
             return await Client.GetManagementGroups().GetAsync("TestMgmtGroup");
         }
 
-        protected async Task<PolicyAssignment> CreatePolicyAssignment(ArmResource armResource, string policyAssignmentName, string PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d")
+        protected async Task<PolicyAssignmentResource> CreatePolicyAssignment(ArmResource armResource, string policyAssignmentName, string PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d")
         {
             PolicyAssignmentData input = new PolicyAssignmentData
             {
                 DisplayName = $"Test ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            ArmOperation<PolicyAssignment> lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, input);
+            ArmOperation<PolicyAssignmentResource> lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, input);
             return lro.Value;
         }
 
@@ -185,50 +184,50 @@ namespace Azure.ResourceManager.Tests
                 })
         };
 
-        protected async Task<SubscriptionPolicyDefinition> CreatePolicyDefinitionAtSubscription(Subscription subscription, string policyDefinitionName)
+        protected async Task<SubscriptionPolicyDefinitionResource> CreatePolicyDefinitionAtSubscription(SubscriptionResource subscription, string policyDefinitionName)
         {
             PolicyDefinitionData input = ConstructPolicyDefinitionData(policyDefinitionName);
-            ArmOperation<SubscriptionPolicyDefinition> lro = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, input);
+            ArmOperation<SubscriptionPolicyDefinitionResource> lro = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, input);
             return lro.Value;
         }
 
-        protected async Task<ManagementGroupPolicyDefinition> CreatePolicyDefinitionAtMgmtGroup(ManagementGroup mgmtGroup, string policyDefinitionName)
+        protected async Task<ManagementGroupPolicyDefinitionResource> CreatePolicyDefinitionAtMgmtGroup(ManagementGroupResource mgmtGroup, string policyDefinitionName)
         {
             PolicyDefinitionData input = ConstructPolicyDefinitionData(policyDefinitionName);
-            ArmOperation<ManagementGroupPolicyDefinition> lro = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, input);
+            ArmOperation<ManagementGroupPolicyDefinitionResource> lro = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, input);
             return lro.Value;
         }
 
-        protected async Task<PolicyExemption> CreatePolicyExemption(ArmResource armResource, PolicyAssignment policyAssignment, string policyExemptionName)
+        protected async Task<PolicyExemptionResource> CreatePolicyExemption(ArmResource armResource, PolicyAssignmentResource policyAssignment, string policyExemptionName)
         {
             PolicyExemptionData input = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
-            ArmOperation<PolicyExemption> lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, input);
+            ArmOperation<PolicyExemptionResource> lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, input);
             return lro.Value;
         }
 
-        protected async Task<SubscriptionPolicySetDefinition> CreatePolicySetDefinitionAtSubscription(Subscription subscription, SubscriptionPolicyDefinition policyDefinition, string policySetDefinitionName)
+        protected async Task<SubscriptionPolicySetDefinitionResource> CreatePolicySetDefinitionAtSubscription(SubscriptionResource subscription, SubscriptionPolicyDefinitionResource policyDefinition, string policySetDefinitionName)
         {
             PolicySetDefinitionData input = new PolicySetDefinitionData
             {
                 DisplayName = $"Test ${policySetDefinitionName}",
                 PolicyDefinitions = { new PolicyDefinitionReference(policyDefinition.Id) }
             };
-            ArmOperation<SubscriptionPolicySetDefinition> lro = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, input);
+            ArmOperation<SubscriptionPolicySetDefinitionResource> lro = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, input);
             return lro.Value;
         }
 
-        protected async Task<ManagementGroupPolicySetDefinition> CreatePolicySetDefinitionAtMgmtGroup(ManagementGroup mgmtGroup, ManagementGroupPolicyDefinition policyDefinition, string policySetDefinitionName)
+        protected async Task<ManagementGroupPolicySetDefinitionResource> CreatePolicySetDefinitionAtMgmtGroup(ManagementGroupResource mgmtGroup, ManagementGroupPolicyDefinitionResource policyDefinition, string policySetDefinitionName)
         {
             PolicySetDefinitionData input = new PolicySetDefinitionData
             {
                 DisplayName = $"Test ${policySetDefinitionName}",
                 PolicyDefinitions = { new PolicyDefinitionReference(policyDefinition.Id) }
             };
-            ArmOperation<ManagementGroupPolicySetDefinition> lro = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, input);
+            ArmOperation<ManagementGroupPolicySetDefinitionResource> lro = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, input);
             return lro.Value;
         }
 
-        protected async Task<ResourceLink> CreateResourceLink(Tenant tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
+        protected async Task<ResourceLinkResource> CreateResourceLink(TenantResource tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
         {
             ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
             ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.Tests
             {
                 Properties = properties
             };
-            ArmOperation<ResourceLink> lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ResourceLinkResource> lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(WaitUntil.Completed, data);
             return lro.Value;
         }
     }

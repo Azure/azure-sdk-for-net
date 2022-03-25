@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Avro.Specific;
 using Azure;
 using Azure.Data.SchemaRegistry;
+using Azure.Messaging;
 using Azure.Messaging.EventHubs;
 using TestSchema;
 
@@ -28,13 +29,32 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
-            #region Snippet:SchemaRegistryAvroEncodeDecodeBinaryContent
+            #region Snippet:SchemaRegistryAvroEncodeDecodeMessageContent
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            BinaryContent content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+            MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
             #endregion
+
+            Assert.IsNotNull(deserializedEmployee);
+            Assert.AreEqual("Caketown", deserializedEmployee.Name);
+            Assert.AreEqual(42, deserializedEmployee.Age);
+        }
+
+        [RecordedTest]
+        public async Task CanSerializeAndDeserializeWithSeparateInstances()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee { Age = 42, Name = "Caketown" };
+
+            var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
+            MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
+
+            // validate that we can use the constructor that only takes the client when deserializing since groupName is not necessary
+            serializer = new SchemaRegistryAvroSerializer(client);
+            Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 
             Assert.IsNotNull(deserializedEmployee);
             Assert.AreEqual("Caketown", deserializedEmployee.Name);
@@ -49,7 +69,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee_V2 { Age = 42, Name = "Caketown", City = "Redmond" };
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = await serializer.SerializeAsync<BinaryContent, Employee_V2>(employee);
+            var content = await serializer.SerializeAsync<MessageContent, Employee_V2>(employee);
 
             // deserialize using the old schema, which is forward compatible with the new schema
             // if you swap the old schema and the new schema in your mind, then this can also be thought as a backwards compatible test
@@ -75,7 +95,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee() { Age = 42, Name = "Caketown" };
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+            var content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
             var schemaId = content.ContentType.ToString().Split('+')[1];
 
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
@@ -115,7 +135,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             Assert.That(
-                async () => await serializer.SerializeAsync<BinaryContent, InvalidAvroModel>(invalid),
+                async () => await serializer.SerializeAsync<MessageContent, InvalidAvroModel>(invalid),
                 Throws.InstanceOf<AvroSerializationException>().And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
         }
 
@@ -127,7 +147,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             var employee = new Employee { Age = 42, Name = "Caketown" };
-            var content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+            var content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
             var schemaId = content.ContentType.ToString().Split('+')[1];
 
             Assert.That(
@@ -147,7 +167,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             record.Add("Age", 42);
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = await serializer.SerializeAsync<BinaryContent, GenericRecord>(record);
+            var content = await serializer.SerializeAsync<MessageContent, GenericRecord>(record);
 
             var deserializedObject = await serializer.DeserializeAsync<GenericRecord>(content);
             Assert.IsNotNull(deserializedObject);
@@ -163,7 +183,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var timeZoneInfo = TimeZoneInfo.Utc;
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            Assert.ThrowsAsync<ArgumentException>(async () => await serializer.SerializeAsync<BinaryContent, TimeZoneInfo>(timeZoneInfo));
+            Assert.ThrowsAsync<ArgumentException>(async () => await serializer.SerializeAsync<MessageContent, TimeZoneInfo>(timeZoneInfo));
         }
 
         [RecordedTest]
@@ -173,7 +193,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = new BinaryContent
+            var content = new MessageContent
             {
                 Data = new BinaryData(Array.Empty<byte>()),
                 ContentType = "avro/binary+234234"
@@ -188,7 +208,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            var content = new BinaryContent
+            var content = new MessageContent
             {
                 Data = new BinaryData(Array.Empty<byte>()),
                 ContentType = null
@@ -298,7 +318,28 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             Assert.ThrowsAsync<InvalidOperationException>(
-                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }, messageType: typeof(BinaryContentWithNoConstructor)));
+                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }, messageType: typeof(MessageContentWithNoConstructor)));
+        }
+
+        [RecordedTest]
+        public void SerializingWithoutAutoRegisterThrowsForNonExistentSchema()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryAvroSerializer(client, groupName);
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await serializer.SerializeAsync(new Employee_Unregistered { Age = 42, Name = "Caketown"}));
+        }
+
+        [RecordedTest]
+        public void SerializingWithoutGroupNameThrows()
+        {
+            var client = CreateClient();
+
+            var serializer = new SchemaRegistryAvroSerializer(client);
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }));
         }
 
         private class InvalidAvroModel : ISpecificRecord
@@ -311,9 +352,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             public virtual void Put(int fieldPos, object fieldValue) => throw new NotImplementedException();
         }
 
-        public class BinaryContentWithNoConstructor : BinaryContent
+        public class MessageContentWithNoConstructor : MessageContent
         {
-            internal BinaryContentWithNoConstructor()
+            internal MessageContentWithNoConstructor()
             {
             }
         }

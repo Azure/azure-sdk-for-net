@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class to add extension methods to Azure.ResourceManager.ExtendedLocation. </summary>
     public static partial class ExtendedLocationExtensions
     {
-        private static TenantExtensionClient GetExtensionClient(Tenant tenant)
+        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
         {
-            return tenant.GetCachedClient((client) =>
+            return tenantResource.GetCachedClient((client) =>
             {
-                return new TenantExtensionClient(client, tenant.Id);
+                return new TenantResourceExtensionClient(client, tenantResource.Id);
             }
             );
         }
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /providers/Microsoft.ExtendedLocation/operations
         /// Operation Id: CustomLocations_ListOperations
         /// </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomLocationOperation> GetOperationsCustomLocationsAsync(this Tenant tenant, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CustomLocationOperation> GetOperationsCustomLocationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenant).GetOperationsCustomLocationsAsync(cancellationToken);
+            return GetExtensionClient(tenantResource).GetOperationsCustomLocationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /providers/Microsoft.ExtendedLocation/operations
         /// Operation Id: CustomLocations_ListOperations
         /// </summary>
-        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomLocationOperation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomLocationOperation> GetOperationsCustomLocations(this Tenant tenant, CancellationToken cancellationToken = default)
+        public static Pageable<CustomLocationOperation> GetOperationsCustomLocations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenant).GetOperationsCustomLocations(cancellationToken);
+            return GetExtensionClient(tenantResource).GetOperationsCustomLocations(cancellationToken);
         }
 
-        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
-            return subscription.GetCachedClient((client) =>
+            return subscriptionResource.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(client, subscription.Id);
+                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
         }
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
         /// Operation Id: CustomLocations_ListBySubscription
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomLocation> GetCustomLocationsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CustomLocationResource> GetCustomLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetCustomLocationsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -81,29 +81,29 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ExtendedLocation/customLocations
         /// Operation Id: CustomLocations_ListBySubscription
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomLocation> GetCustomLocations(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CustomLocationResource> GetCustomLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetCustomLocations(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCustomLocations(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of CustomLocations in the CustomLocation. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CustomLocations and their operations over a CustomLocation. </returns>
-        public static CustomLocationCollection GetCustomLocations(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of CustomLocationResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
+        public static CustomLocationCollection GetCustomLocations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetCustomLocations();
+            return GetExtensionClient(resourceGroupResource).GetCustomLocations();
         }
 
         /// <summary>
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static async Task<Response<CustomLocation>> GetCustomLocationAsync(this ResourceGroup resourceGroup, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CustomLocationResource>> GetCustomLocationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCustomLocations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCustomLocations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,27 +126,30 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static Response<CustomLocation> GetCustomLocation(this ResourceGroup resourceGroup, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<CustomLocationResource> GetCustomLocation(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCustomLocations().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetCustomLocations().Get(resourceName, cancellationToken);
         }
 
-        #region CustomLocation
-        /// <summary> Gets an object representing a CustomLocation along with the instance operations that can be performed on it but with no data. </summary>
+        #region CustomLocationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CustomLocationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CustomLocationResource.CreateResourceIdentifier" /> to create a <see cref="CustomLocationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomLocation" /> object. </returns>
-        public static CustomLocation GetCustomLocation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomLocationResource" /> object. </returns>
+        public static CustomLocationResource GetCustomLocationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CustomLocation.ValidateResourceId(id);
-                return new CustomLocation(client, id);
+                CustomLocationResource.ValidateResourceId(id);
+                return new CustomLocationResource(client, id);
             }
             );
         }

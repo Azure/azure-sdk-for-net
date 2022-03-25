@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
         public DatabaseAccountData(AzureLocation location) : base(location)
         {
             DatabaseAccountOfferType = "Standard";
-            IpRules = new ChangeTrackingList<IpAddressOrRange>();
+            IPRules = new ChangeTrackingList<IPAddressOrRange>();
             Capabilities = new ChangeTrackingList<DatabaseAccountCapability>();
             WriteLocations = new ChangeTrackingList<DatabaseAccountLocation>();
             ReadLocations = new ChangeTrackingList<DatabaseAccountLocation>();
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
-        internal DatabaseAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, string databaseAccountOfferType, IList<IpAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountCapability> capabilities, IReadOnlyList<DatabaseAccountLocation> writeLocations, IReadOnlyList<DatabaseAccountLocation> readLocations, IReadOnlyList<DatabaseAccountLocation> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CreateMode? createMode, RestoreParameters restoreParameters, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, Capacity capacity) : base(id, name, resourceType, systemData, tags, location)
+        internal DatabaseAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatabaseAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, string databaseAccountOfferType, IList<IPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<DatabaseAccountCapability> capabilities, IReadOnlyList<DatabaseAccountLocation> writeLocations, IReadOnlyList<DatabaseAccountLocation> readLocations, IReadOnlyList<DatabaseAccountLocation> locations, IReadOnlyList<FailoverPolicy> failoverPolicies, IList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, PublicNetworkAccess? publicNetworkAccess, bool? enableFreeTier, ApiProperties apiProperties, bool? enableAnalyticalStorage, AnalyticalStorageConfiguration analyticalStorageConfiguration, string instanceId, CreateMode? createMode, RestoreParameters restoreParameters, BackupPolicy backupPolicy, IList<CorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<string> networkAclBypassResourceIds, bool? disableLocalAuth, Capacity capacity) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
             ProvisioningState = provisioningState;
             DocumentEndpoint = documentEndpoint;
             DatabaseAccountOfferType = databaseAccountOfferType;
-            IpRules = ipRules;
+            IPRules = ipRules;
             IsVirtualNetworkFilterEnabled = isVirtualNetworkFilterEnabled;
             EnableAutomaticFailover = enableAutomaticFailover;
             ConsistencyPolicy = consistencyPolicy;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> The offer type for the Cosmos DB database account. Default value: Standard. </summary>
         public string DatabaseAccountOfferType { get; }
         /// <summary> List of IpRules. </summary>
-        public IList<IpAddressOrRange> IpRules { get; }
+        public IList<IPAddressOrRange> IPRules { get; }
         /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
         public bool? IsVirtualNetworkFilterEnabled { get; set; }
         /// <summary> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </summary>

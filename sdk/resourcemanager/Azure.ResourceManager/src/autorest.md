@@ -28,6 +28,29 @@ namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - remove-model: "AzureEntityResource"
   - remove-model: "ProxyResource"
@@ -107,7 +130,7 @@ request-path-to-resource-data:
   # tenant does not have name and type
   /: Tenant
   # provider does not have name and type
-  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
+  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: ResourceProvider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
@@ -144,15 +167,39 @@ override-operation-name:
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
   Tags_CreateOrUpdate: CreateOrUpdatePredefinedTag
   Tags_Delete: DeletePredefinedTag
-  Providers_ListAtTenantScope: GetTenantProviders
-  Providers_GetAtTenantScope: GetTenantProvider
+  Providers_ListAtTenantScope: GetTenantResourceProviders
+  Providers_GetAtTenantScope: GetTenantResourceProvider
   Resources_MoveResources: MoveResources
   Resources_ValidateMoveResources: ValidateMoveResources
   Resources_List: GetGenericResources
   Resources_ListByResourceGroup: GetGenericResources
-  Providers_RegisterAtManagementGroupScope: RegisterProvider
+  Providers_RegisterAtManagementGroupScope: RegisterResourceProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider;
+
+no-property-type-replacement: ResourceProviderData;ResourceProvider;
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -237,6 +284,12 @@ directive:
       from: Location
       to: LocationExpanded
   - rename-model:
+      from: Provider
+      to: ResourceProvider
+  - rename-model:
+      from: ProviderListResult
+      to: ResourceProviderListResult
+  - rename-model:
       from: TenantIdDescription
       to: Tenant
   - rename-model:
@@ -265,10 +318,14 @@ directive:
       to: Feature
   - rename-model:
       from: Resource
-      to: TrackedResourceExtended
+      to: TrackedResourceExtendedData
   - rename-model:
       from: ProviderRegistrationRequest
-      to: ProviderRegistrationOptions
+      to: ResourceProviderRegistrationOptions
+  - from: resources.json
+    where: $.definitions.Provider
+    transform:
+      $["x-ms-client-name"] = "ResourceProvider";
   - from: resources.json
     where: $.definitions.Alias
     transform:
@@ -305,6 +362,10 @@ directive:
     where: $.definitions.ParameterDefinitionsValue
     transform:
       $["x-ms-client-name"] = "ArmPolicyParameter";
+  - from: policyDefinitions.json
+    where: $.definitions.ParameterDefinitionsValue.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ArmPolicyParameterType";
   - from: policyAssignments.json
     where: $.definitions.ParameterValuesValue
     transform:
@@ -443,6 +504,26 @@ directive:
     transform: >
       $["x-ms-client-name"] = "ResourceType";
       $["type"] = "string";
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataEffect
+    transform: >
+      $["x-ms-client-name"] = "DataPolicyManifestEffect";
+  - from: locks.json
+    where: $.definitions.ManagementLockProperties.properties.level["x-ms-enum"]
+    transform: >
+      $["name"] = "ManagementLockLevel"
+  - from: subscriptions.json
+    where: $.definitions.Subscription.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: subscriptions.json
+    where: $.definitions.Tenant.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: subscriptions.json
+    where: $.definitions.ManagedByTenant.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```
 
 ### Tag: package-management
@@ -465,7 +546,31 @@ operation-groups-to-omit:
   - ManagementGroupSubscriptions
   - Entities
   - TenantBackfill
-no-property-type-replacement: CheckNameAvailabilityOptions;DescendantParentGroupInfo
+no-property-type-replacement: DescendantParentGroupInfo
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+override-operation-name:
+  ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
   - rename-model:
       from: PatchManagementGroupRequest
@@ -485,7 +590,7 @@ directive:
       $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: CheckNameAvailabilityOptions
+      to: ManagementGroupNameAvailabilityOptions
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -495,6 +600,10 @@ directive:
   - rename-operation:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
+  - from: management.json
+    where: $.parameters.CheckNameAvailabilityParameter
+    transform: >
+      $['name'] = "checkNameAvailabilityOptions"
   - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
@@ -514,8 +623,12 @@ directive:
     where: $.definitions.CheckNameAvailabilityResult.properties.reason
     transform: >
       $['x-ms-enum'] = {
-        name: "NameUnavailableReason"
+        name: "ManagementGroupNameUnavailableReason"
       }
+  - from: management.json
+    where: $.definitions.CheckNameAvailabilityResult
+    transform: >
+      $['x-ms-client-name'] = "ManagementGroupNameAvailabilityResult"
   - from: management.json
     where: $.parameters.SearchParameter
     transform: >
@@ -534,4 +647,32 @@ directive:
     reason: omit operation group does not clean this enum parameter, rename it and then suppress with codegen attribute.
   - remove-model: EntityHierarchyItem
   - remove-model: EntityHierarchyItemProperties
+  - from: management.json
+    where: $.definitions.CreateManagementGroupProperties.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: management.json
+    where: $.definitions.DescendantInfo
+    transform: >
+      $['x-ms-client-name'] = "DescendantData"
+  - from: management.json
+    where: $.definitions.DescendantParentGroupInfo.properties.id
+    transform: >
+      $["x-ms-format"] = "arm-id"
+  - from: management.json
+    where: $.definitions.ManagementGroupDetails.properties.managementGroupAncestorsChain
+    transform: >
+      $["x-ms-client-name"] = "managementGroupAncestorChain"
+  - from: management.json
+    where: $.definitions.ManagementGroupDetails
+    transform: >
+      $["x-ms-client-name"] = "ManagementGroupInfo"
+  - from: management.json
+    where: $.definitions.ParentGroupInfo
+    transform: >
+      $["x-ms-client-name"] = "ParentManagementGroupInfo"
+  - from: management.json
+    where: $.definitions.ManagementGroupProperties.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```

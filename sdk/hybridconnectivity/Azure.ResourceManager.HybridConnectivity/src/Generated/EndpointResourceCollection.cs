@@ -15,11 +15,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary> A class representing collection of EndpointResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="EndpointResource" /> and their operations.
+    /// Each <see cref="EndpointResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get an <see cref="EndpointResourceCollection" /> instance call the GetEndpointResources method from an instance of <see cref="ArmResource" />.
+    /// </summary>
     public partial class EndpointResourceCollection : ArmCollection, IEnumerable<EndpointResource>, IAsyncEnumerable<EndpointResource>
     {
         private readonly ClientDiagnostics _endpointResourceEndpointsClientDiagnostics;
@@ -35,9 +38,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EndpointResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _endpointResourceEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", EndpointResource.ResourceType.Namespace, DiagnosticOptions);
+            _endpointResourceEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", EndpointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EndpointResource.ResourceType, out string endpointResourceEndpointsApiVersion);
-            _endpointResourceEndpointsRestClient = new EndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, endpointResourceEndpointsApiVersion);
+            _endpointResourceEndpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, endpointResourceEndpointsApiVersion);
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceDatabaseBackupShortTermRetentionPolicyOperationSource : IOperationSource<ManagedInstanceDatabaseBackupShortTermRetentionPolicy>
+    internal class ManagedInstanceDatabaseBackupShortTermRetentionPolicyOperationSource : IOperationSource<ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceDatabaseBackupShortTermRetentionPolicy IOperationSource<ManagedInstanceDatabaseBackupShortTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource IOperationSource<ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
-            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(_client, data);
+            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceDatabaseBackupShortTermRetentionPolicy> IOperationSource<ManagedInstanceDatabaseBackupShortTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> IOperationSource<ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
-            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(_client, data);
+            return new ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource(_client, data);
         }
     }
 }

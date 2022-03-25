@@ -4,6 +4,7 @@
 - Added support for service version 2021-06-08.
 - Added pageable versions of PageBlobClient.GetPageRanges() and .GetPageRangesAsync().
 - Added ability to copy source blob tags for BlobBaseClient.SyncCopyFromUri() and .SyncCopyFromUriAsync().
+- Fixed a bug where CopyFromUriOperation was throwing an Exception when the status of the blob copy was aborted or failed.
 
 ## 12.11.0 (2022-03-10)
 - Includes all features from 12.11.0-beta.1, 12.11.0-beta.2, and 12.11.0-beta.3 except SDK-calculated transactional checksums on data transfer.

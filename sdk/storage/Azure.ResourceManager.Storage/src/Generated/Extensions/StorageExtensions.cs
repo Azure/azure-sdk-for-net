@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class to add extension methods to Azure.ResourceManager.Storage. </summary>
     public static partial class StorageExtensions
     {
-        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
-            return subscription.GetCachedClient((client) =>
+            return subscriptionResource.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(client, subscription.Id);
+                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of DeletedAccounts in the DeletedAccount. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DeletedAccounts and their operations over a DeletedAccount. </returns>
-        public static DeletedAccountCollection GetDeletedAccounts(this Subscription subscription)
+        /// <summary> Gets a collection of DeletedAccountResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DeletedAccountResources and their operations over a DeletedAccountResource. </returns>
+        public static DeletedAccountCollection GetDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscription).GetDeletedAccounts();
+            return GetExtensionClient(subscriptionResource).GetDeletedAccounts();
         }
 
         /// <summary>
@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
         /// Operation Id: DeletedAccounts_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
-        public static async Task<Response<DeletedAccount>> GetDeletedAccountAsync(this Subscription subscription, string location, string deletedAccountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeletedAccountResource>> GetDeletedAccountAsync(this SubscriptionResource subscriptionResource, string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            return await subscription.GetDeletedAccounts().GetAsync(location, deletedAccountName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetDeletedAccounts().GetAsync(location, deletedAccountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
         /// Operation Id: DeletedAccounts_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedAccountName"/> is null. </exception>
-        public static Response<DeletedAccount> GetDeletedAccount(this Subscription subscription, string location, string deletedAccountName, CancellationToken cancellationToken = default)
+        public static Response<DeletedAccountResource> GetDeletedAccount(this SubscriptionResource subscriptionResource, string location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            return subscription.GetDeletedAccounts().Get(location, deletedAccountName, cancellationToken);
+            return subscriptionResource.GetDeletedAccounts().Get(location, deletedAccountName, cancellationToken);
         }
 
         /// <summary>
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus
         /// Operation Id: Skus_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageSkuInformation> GetSkusAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<StorageSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetSkusAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus
         /// Operation Id: Skus_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageSkuInformation> GetSkus(this Subscription subscription, CancellationToken cancellationToken = default)
+        public static Pageable<StorageSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetSkus(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSkus(cancellationToken);
         }
 
         /// <summary>
@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability
         /// Operation Id: StorageAccounts_CheckNameAvailability
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accountName, nameof(accountName));
 
-            return await GetExtensionClient(subscription).CheckStorageAccountNameAvailabilityAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckStorageAccountNameAvailabilityAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability
         /// Operation Id: StorageAccounts_CheckNameAvailability
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(this Subscription subscription, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(this SubscriptionResource subscriptionResource, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accountName, nameof(accountName));
 
-            return GetExtensionClient(subscription).CheckStorageAccountNameAvailability(accountName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckStorageAccountNameAvailability(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts
         /// Operation Id: StorageAccounts_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageAccount" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageAccount> GetStorageAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<StorageAccountResource> GetStorageAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetStorageAccountsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStorageAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts
         /// Operation Id: StorageAccounts_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageAccount" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageAccount> GetStorageAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<StorageAccountResource> GetStorageAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetStorageAccounts(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStorageAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts
         /// Operation Id: DeletedAccounts_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedAccount" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedAccount> GetDeletedAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetDeletedAccountsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts
         /// Operation Id: DeletedAccounts_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedAccount" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedAccount> GetDeletedAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetDeletedAccounts(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/usages
         /// Operation Id: Usages_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageUsage> GetUsagesByLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<StorageUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(subscription).GetUsagesByLocationAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -201,34 +201,34 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/usages
         /// Operation Id: Usages_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageUsage> GetUsagesByLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        public static Pageable<StorageUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(subscription).GetUsagesByLocation(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of StorageAccounts in the StorageAccount. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of StorageAccounts and their operations over a StorageAccount. </returns>
-        public static StorageAccountCollection GetStorageAccounts(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of StorageAccountResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of StorageAccountResources and their operations over a StorageAccountResource. </returns>
+        public static StorageAccountCollection GetStorageAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetStorageAccounts();
+            return GetExtensionClient(resourceGroupResource).GetStorageAccounts();
         }
 
         /// <summary>
@@ -236,15 +236,15 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}
         /// Operation Id: StorageAccounts_GetProperties
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="expand"> May be used to expand the properties within account&apos;s properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static async Task<Response<StorageAccount>> GetStorageAccountAsync(this ResourceGroup resourceGroup, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<StorageAccountResource>> GetStorageAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetStorageAccounts().GetAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetStorageAccounts().GetAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -252,284 +252,335 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}
         /// Operation Id: StorageAccounts_GetProperties
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="expand"> May be used to expand the properties within account&apos;s properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static Response<StorageAccount> GetStorageAccount(this ResourceGroup resourceGroup, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
+        public static Response<StorageAccountResource> GetStorageAccount(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetStorageAccounts().Get(accountName, expand, cancellationToken);
+            return resourceGroupResource.GetStorageAccounts().Get(accountName, expand, cancellationToken);
         }
 
-        #region StorageAccount
-        /// <summary> Gets an object representing a StorageAccount along with the instance operations that can be performed on it but with no data. </summary>
+        #region StorageAccountResource
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageAccount" /> object. </returns>
-        public static StorageAccount GetStorageAccount(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageAccountResource" /> object. </returns>
+        public static StorageAccountResource GetStorageAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StorageAccount.ValidateResourceId(id);
-                return new StorageAccount(client, id);
+                StorageAccountResource.ValidateResourceId(id);
+                return new StorageAccountResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DeletedAccount
-        /// <summary> Gets an object representing a DeletedAccount along with the instance operations that can be performed on it but with no data. </summary>
+        #region DeletedAccountResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedAccount" /> object. </returns>
-        public static DeletedAccount GetDeletedAccount(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedAccountResource" /> object. </returns>
+        public static DeletedAccountResource GetDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DeletedAccount.ValidateResourceId(id);
-                return new DeletedAccount(client, id);
+                DeletedAccountResource.ValidateResourceId(id);
+                return new DeletedAccountResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagementPolicy
-        /// <summary> Gets an object representing a ManagementPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementPolicy" /> object. </returns>
-        public static ManagementPolicy GetManagementPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementPolicyResource" /> object. </returns>
+        public static ManagementPolicyResource GetManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagementPolicy.ValidateResourceId(id);
-                return new ManagementPolicy(client, id);
+                ManagementPolicyResource.ValidateResourceId(id);
+                return new ManagementPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BlobInventoryPolicy
-        /// <summary> Gets an object representing a BlobInventoryPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region BlobInventoryPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="BlobInventoryPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlobInventoryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BlobInventoryPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BlobInventoryPolicy" /> object. </returns>
-        public static BlobInventoryPolicy GetBlobInventoryPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BlobInventoryPolicyResource" /> object. </returns>
+        public static BlobInventoryPolicyResource GetBlobInventoryPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BlobInventoryPolicy.ValidateResourceId(id);
-                return new BlobInventoryPolicy(client, id);
+                BlobInventoryPolicyResource.ValidateResourceId(id);
+                return new BlobInventoryPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnection.ValidateResourceId(id);
-                return new PrivateEndpointConnection(client, id);
+                PrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new PrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ObjectReplicationPolicy
-        /// <summary> Gets an object representing a ObjectReplicationPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ObjectReplicationPolicyResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ObjectReplicationPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ObjectReplicationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ObjectReplicationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ObjectReplicationPolicy" /> object. </returns>
-        public static ObjectReplicationPolicy GetObjectReplicationPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ObjectReplicationPolicyResource" /> object. </returns>
+        public static ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ObjectReplicationPolicy.ValidateResourceId(id);
-                return new ObjectReplicationPolicy(client, id);
+                ObjectReplicationPolicyResource.ValidateResourceId(id);
+                return new ObjectReplicationPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LocalUser
-        /// <summary> Gets an object representing a LocalUser along with the instance operations that can be performed on it but with no data. </summary>
+        #region LocalUserResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LocalUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalUserResource.CreateResourceIdentifier" /> to create a <see cref="LocalUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocalUser" /> object. </returns>
-        public static LocalUser GetLocalUser(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LocalUserResource" /> object. </returns>
+        public static LocalUserResource GetLocalUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocalUser.ValidateResourceId(id);
-                return new LocalUser(client, id);
+                LocalUserResource.ValidateResourceId(id);
+                return new LocalUserResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EncryptionScope
-        /// <summary> Gets an object representing a EncryptionScope along with the instance operations that can be performed on it but with no data. </summary>
+        #region EncryptionScopeResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EncryptionScopeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EncryptionScopeResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EncryptionScope" /> object. </returns>
-        public static EncryptionScope GetEncryptionScope(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EncryptionScopeResource" /> object. </returns>
+        public static EncryptionScopeResource GetEncryptionScopeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EncryptionScope.ValidateResourceId(id);
-                return new EncryptionScope(client, id);
+                EncryptionScopeResource.ValidateResourceId(id);
+                return new EncryptionScopeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BlobService
-        /// <summary> Gets an object representing a BlobService along with the instance operations that can be performed on it but with no data. </summary>
+        #region BlobServiceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="BlobServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlobServiceResource.CreateResourceIdentifier" /> to create a <see cref="BlobServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BlobService" /> object. </returns>
-        public static BlobService GetBlobService(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BlobServiceResource" /> object. </returns>
+        public static BlobServiceResource GetBlobServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BlobService.ValidateResourceId(id);
-                return new BlobService(client, id);
+                BlobServiceResource.ValidateResourceId(id);
+                return new BlobServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BlobContainer
-        /// <summary> Gets an object representing a BlobContainer along with the instance operations that can be performed on it but with no data. </summary>
+        #region BlobContainerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="BlobContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlobContainerResource.CreateResourceIdentifier" /> to create a <see cref="BlobContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BlobContainer" /> object. </returns>
-        public static BlobContainer GetBlobContainer(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BlobContainerResource" /> object. </returns>
+        public static BlobContainerResource GetBlobContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BlobContainer.ValidateResourceId(id);
-                return new BlobContainer(client, id);
+                BlobContainerResource.ValidateResourceId(id);
+                return new BlobContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ImmutabilityPolicy
-        /// <summary> Gets an object representing a ImmutabilityPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ImmutabilityPolicyResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ImmutabilityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImmutabilityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ImmutabilityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImmutabilityPolicy" /> object. </returns>
-        public static ImmutabilityPolicy GetImmutabilityPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImmutabilityPolicyResource" /> object. </returns>
+        public static ImmutabilityPolicyResource GetImmutabilityPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ImmutabilityPolicy.ValidateResourceId(id);
-                return new ImmutabilityPolicy(client, id);
+                ImmutabilityPolicyResource.ValidateResourceId(id);
+                return new ImmutabilityPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FileService
-        /// <summary> Gets an object representing a FileService along with the instance operations that can be performed on it but with no data. </summary>
+        #region FileServiceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FileServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FileServiceResource.CreateResourceIdentifier" /> to create a <see cref="FileServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FileService" /> object. </returns>
-        public static FileService GetFileService(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FileServiceResource" /> object. </returns>
+        public static FileServiceResource GetFileServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FileService.ValidateResourceId(id);
-                return new FileService(client, id);
+                FileServiceResource.ValidateResourceId(id);
+                return new FileServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FileShare
-        /// <summary> Gets an object representing a FileShare along with the instance operations that can be performed on it but with no data. </summary>
+        #region FileShareResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FileShareResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FileShareResource.CreateResourceIdentifier" /> to create a <see cref="FileShareResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FileShare" /> object. </returns>
-        public static FileShare GetFileShare(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FileShareResource" /> object. </returns>
+        public static FileShareResource GetFileShareResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FileShare.ValidateResourceId(id);
-                return new FileShare(client, id);
+                FileShareResource.ValidateResourceId(id);
+                return new FileShareResource(client, id);
             }
             );
         }
         #endregion
 
-        #region QueueService
-        /// <summary> Gets an object representing a QueueService along with the instance operations that can be performed on it but with no data. </summary>
+        #region QueueServiceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="QueueServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QueueServiceResource.CreateResourceIdentifier" /> to create a <see cref="QueueServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QueueService" /> object. </returns>
-        public static QueueService GetQueueService(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QueueServiceResource" /> object. </returns>
+        public static QueueServiceResource GetQueueServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                QueueService.ValidateResourceId(id);
-                return new QueueService(client, id);
+                QueueServiceResource.ValidateResourceId(id);
+                return new QueueServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StorageQueue
-        /// <summary> Gets an object representing a StorageQueue along with the instance operations that can be performed on it but with no data. </summary>
+        #region StorageQueueResource
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageQueueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageQueueResource.CreateResourceIdentifier" /> to create a <see cref="StorageQueueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageQueue" /> object. </returns>
-        public static StorageQueue GetStorageQueue(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageQueueResource" /> object. </returns>
+        public static StorageQueueResource GetStorageQueueResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StorageQueue.ValidateResourceId(id);
-                return new StorageQueue(client, id);
+                StorageQueueResource.ValidateResourceId(id);
+                return new StorageQueueResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TableService
-        /// <summary> Gets an object representing a TableService along with the instance operations that can be performed on it but with no data. </summary>
+        #region TableServiceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TableServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TableServiceResource.CreateResourceIdentifier" /> to create a <see cref="TableServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TableService" /> object. </returns>
-        public static TableService GetTableService(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TableServiceResource" /> object. </returns>
+        public static TableServiceResource GetTableServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TableService.ValidateResourceId(id);
-                return new TableService(client, id);
+                TableServiceResource.ValidateResourceId(id);
+                return new TableServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region Table
-        /// <summary> Gets an object representing a Table along with the instance operations that can be performed on it but with no data. </summary>
+        #region TableResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TableResource.CreateResourceIdentifier" /> to create a <see cref="TableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Table" /> object. </returns>
-        public static Table GetTable(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TableResource" /> object. </returns>
+        public static TableResource GetTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                Table.ValidateResourceId(id);
-                return new Table(client, id);
+                TableResource.ValidateResourceId(id);
+                return new TableResource(client, id);
             }
             );
         }

@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of SqlContainer and their operations over its parent. </summary>
-    public partial class SqlContainerCollection : ArmCollection, IEnumerable<SqlContainer>, IAsyncEnumerable<SqlContainer>
+    /// <summary>
+    /// A class representing a collection of <see cref="SqlContainerResource" /> and their operations.
+    /// Each <see cref="SqlContainerResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="SqlContainerCollection" /> instance call the GetSqlContainers method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
+    public partial class SqlContainerCollection : ArmCollection, IEnumerable<SqlContainerResource>, IAsyncEnumerable<SqlContainerResource>
     {
         private readonly ClientDiagnostics _sqlContainerSqlResourcesClientDiagnostics;
         private readonly SqlResourcesRestOperations _sqlContainerSqlResourcesRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SqlContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlContainerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlContainer.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SqlContainer.ResourceType, out string sqlContainerSqlResourcesApiVersion);
-            _sqlContainerSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlContainerSqlResourcesApiVersion);
+            _sqlContainerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlContainerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlContainerResource.ResourceType, out string sqlContainerSqlResourcesApiVersion);
+            _sqlContainerSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlContainerSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != SqlDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlContainer>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(createUpdateSqlContainerParameters, nameof(createUpdateSqlContainerParameters));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<SqlContainer>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<SqlContainerResource>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public virtual ArmOperation<SqlContainer> CreateOrUpdate(WaitUntil waitUntil, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlContainerResource> CreateOrUpdate(WaitUntil waitUntil, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(createUpdateSqlContainerParameters, nameof(createUpdateSqlContainerParameters));
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<SqlContainer>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<SqlContainerResource>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual async Task<Response<SqlContainer>> GetAsync(string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlContainerResource>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _sqlContainerSqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlContainer(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual Response<SqlContainer> Get(string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlContainerResource> Get(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _sqlContainerSqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlContainer(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +184,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: SqlResources_ListSqlContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlContainer> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlContainer>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _sqlContainerSqlResourcesRestClient.ListSqlContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlContainer(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlContainerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,17 +211,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: SqlResources_ListSqlContainers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlContainer> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlContainer> FirstPageFunc(int? pageSizeHint)
+            Page<SqlContainerResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _sqlContainerSqlResourcesRestClient.ListSqlContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlContainer(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlContainerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -292,7 +295,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual async Task<Response<SqlContainer>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlContainerResource>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -302,8 +305,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlContainerSqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SqlContainer>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlContainer(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SqlContainerResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,7 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual Response<SqlContainer> GetIfExists(string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlContainerResource> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
@@ -331,8 +334,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlContainerSqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SqlContainer>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlContainer(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SqlContainerResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -341,7 +344,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        IEnumerator<SqlContainer> IEnumerable<SqlContainer>.GetEnumerator()
+        IEnumerator<SqlContainerResource> IEnumerable<SqlContainerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -351,7 +354,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SqlContainer> IAsyncEnumerable<SqlContainer>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SqlContainerResource> IAsyncEnumerable<SqlContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

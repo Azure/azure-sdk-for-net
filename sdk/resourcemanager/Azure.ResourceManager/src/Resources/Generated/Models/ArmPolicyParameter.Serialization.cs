@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParameterType))
+            if (Optional.IsDefined(ArmPolicyParameterType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ParameterType.Value.ToString());
+                writer.WriteStringValue(ArmPolicyParameterType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AllowedValues))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmPolicyParameter DeserializeArmPolicyParameter(JsonElement element)
         {
-            Optional<ParameterType> type = default;
+            Optional<ArmPolicyParameterType> type = default;
             Optional<IList<BinaryData>> allowedValues = default;
             Optional<BinaryData> defaultValue = default;
             Optional<ParameterDefinitionsValueMetadata> metadata = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ParameterType(property.Value.GetString());
+                    type = new ArmPolicyParameterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allowedValues"))

@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class to add extension methods to Azure.ResourceManager.Sql. </summary>
     public static partial class SqlExtensions
     {
-        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
-            return subscription.GetCachedClient((client) =>
+            return subscriptionResource.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(client, subscription.Id);
+                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of DeletedServers in the DeletedServer. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of DeletedServerResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of DeletedServers and their operations over a DeletedServer. </returns>
-        public static DeletedServerCollection GetDeletedServers(this Subscription subscription, string locationName)
+        /// <returns> An object representing collection of DeletedServerResources and their operations over a DeletedServerResource. </returns>
+        public static DeletedServerCollection GetDeletedServers(this SubscriptionResource subscriptionResource, string locationName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetDeletedServers(locationName);
+            return GetExtensionClient(subscriptionResource).GetDeletedServers(locationName);
         }
 
         /// <summary>
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
         /// Operation Id: DeletedServers_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is null. </exception>
-        public static async Task<Response<DeletedServer>> GetDeletedServerAsync(this Subscription subscription, string locationName, string deletedServerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeletedServerResource>> GetDeletedServerAsync(this SubscriptionResource subscriptionResource, string locationName, string deletedServerName, CancellationToken cancellationToken = default)
         {
-            return await subscription.GetDeletedServers(locationName).GetAsync(deletedServerName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetDeletedServers(locationName).GetAsync(deletedServerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -63,32 +63,32 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}
         /// Operation Id: DeletedServers_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="deletedServerName"> The name of the deleted server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is null. </exception>
-        public static Response<DeletedServer> GetDeletedServer(this Subscription subscription, string locationName, string deletedServerName, CancellationToken cancellationToken = default)
+        public static Response<DeletedServerResource> GetDeletedServer(this SubscriptionResource subscriptionResource, string locationName, string deletedServerName, CancellationToken cancellationToken = default)
         {
-            return subscription.GetDeletedServers(locationName).Get(deletedServerName, cancellationToken);
+            return subscriptionResource.GetDeletedServers(locationName).Get(deletedServerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackups in the SubscriptionLongTermRetentionBackup. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
-        /// <returns> An object representing collection of SubscriptionLongTermRetentionBackups and their operations over a SubscriptionLongTermRetentionBackup. </returns>
-        public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
+        /// <returns> An object representing collection of SubscriptionLongTermRetentionBackupResources and their operations over a SubscriptionLongTermRetentionBackupResource. </returns>
+        public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
             Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
-            return GetExtensionClient(subscription).GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
+            return GetExtensionClient(subscriptionResource).GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
         /// Operation Id: LongTermRetentionBackups_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static async Task<Response<SubscriptionLongTermRetentionBackup>> GetSubscriptionLongTermRetentionBackupAsync(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionLongTermRetentionBackupResource>> GetSubscriptionLongTermRetentionBackupAsync(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return await subscription.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
         /// Operation Id: LongTermRetentionBackups_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
@@ -122,26 +122,26 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static Response<SubscriptionLongTermRetentionBackup> GetSubscriptionLongTermRetentionBackup(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionLongTermRetentionBackupResource> GetSubscriptionLongTermRetentionBackup(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return subscription.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
+            return subscriptionResource.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackups in the SubscriptionLongTermRetentionManagedInstanceBackup. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackups and their operations over a SubscriptionLongTermRetentionManagedInstanceBackup. </returns>
-        public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this Subscription subscription, string locationName, string managedInstanceName, string databaseName)
+        /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackupResources and their operations over a SubscriptionLongTermRetentionManagedInstanceBackupResource. </returns>
+        public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, string databaseName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            return GetExtensionClient(subscription).GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
+            return GetExtensionClient(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
         /// Operation Id: LongTermRetentionManagedInstanceBackups_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static async Task<Response<SubscriptionLongTermRetentionManagedInstanceBackup>> GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(this Subscription subscription, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionLongTermRetentionManagedInstanceBackupResource>> GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return await subscription.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
         /// Operation Id: LongTermRetentionManagedInstanceBackups_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
@@ -175,22 +175,22 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static Response<SubscriptionLongTermRetentionManagedInstanceBackup> GetSubscriptionLongTermRetentionManagedInstanceBackup(this Subscription subscription, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetSubscriptionLongTermRetentionManagedInstanceBackup(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return subscription.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
+            return subscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionUsages in the SubscriptionUsage. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of SubscriptionUsages and their operations over a SubscriptionUsage. </returns>
-        public static SubscriptionUsageCollection GetSubscriptionUsages(this Subscription subscription, string locationName)
+        /// <returns> An object representing collection of SubscriptionUsageResources and their operations over a SubscriptionUsageResource. </returns>
+        public static SubscriptionUsageCollection GetSubscriptionUsages(this SubscriptionResource subscriptionResource, string locationName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetSubscriptionUsages(locationName);
+            return GetExtensionClient(subscriptionResource).GetSubscriptionUsages(locationName);
         }
 
         /// <summary>
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
         /// Operation Id: SubscriptionUsages_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="usageName"/> is null. </exception>
-        public static async Task<Response<SubscriptionUsage>> GetSubscriptionUsageAsync(this Subscription subscription, string locationName, string usageName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionUsageResource>> GetSubscriptionUsageAsync(this SubscriptionResource subscriptionResource, string locationName, string usageName, CancellationToken cancellationToken = default)
         {
-            return await subscription.GetSubscriptionUsages(locationName).GetAsync(usageName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetSubscriptionUsages(locationName).GetAsync(usageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,28 +214,28 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
         /// Operation Id: SubscriptionUsages_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="usageName"> Name of usage metric to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="usageName"/> is null. </exception>
-        public static Response<SubscriptionUsage> GetSubscriptionUsage(this Subscription subscription, string locationName, string usageName, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionUsageResource> GetSubscriptionUsage(this SubscriptionResource subscriptionResource, string locationName, string usageName, CancellationToken cancellationToken = default)
         {
-            return subscription.GetSubscriptionUsages(locationName).Get(usageName, cancellationToken);
+            return subscriptionResource.GetSubscriptionUsages(locationName).Get(usageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlTimeZones in the SqlTimeZone. </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of SqlTimeZoneResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of SqlTimeZones and their operations over a SqlTimeZone. </returns>
-        public static SqlTimeZoneCollection GetSqlTimeZones(this Subscription subscription, string locationName)
+        /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
+        public static SqlTimeZoneCollection GetSqlTimeZones(this SubscriptionResource subscriptionResource, string locationName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetSqlTimeZones(locationName);
+            return GetExtensionClient(subscriptionResource).GetSqlTimeZones(locationName);
         }
 
         /// <summary>
@@ -243,15 +243,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
         /// Operation Id: TimeZones_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public static async Task<Response<SqlTimeZone>> GetSqlTimeZoneAsync(this Subscription subscription, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlTimeZoneResource>> GetSqlTimeZoneAsync(this SubscriptionResource subscriptionResource, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
-            return await subscription.GetSqlTimeZones(locationName).GetAsync(timeZoneId, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetSqlTimeZones(locationName).GetAsync(timeZoneId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -259,15 +259,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}
         /// Operation Id: TimeZones_Get
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public static Response<SqlTimeZone> GetSqlTimeZone(this Subscription subscription, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        public static Response<SqlTimeZoneResource> GetSqlTimeZone(this SubscriptionResource subscriptionResource, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
-            return subscription.GetSqlTimeZones(locationName).Get(timeZoneId, cancellationToken);
+            return subscriptionResource.GetSqlTimeZones(locationName).Get(timeZoneId, cancellationToken);
         }
 
         /// <summary>
@@ -275,12 +275,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
         /// Operation Id: DeletedServers_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedServer> GetDeletedServersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeletedServerResource> GetDeletedServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetDeletedServersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDeletedServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -288,12 +288,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/deletedServers
         /// Operation Id: DeletedServers_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedServer> GetDeletedServers(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeletedServerResource> GetDeletedServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetDeletedServers(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDeletedServers(cancellationToken);
         }
 
         /// <summary>
@@ -301,12 +301,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools
         /// Operation Id: InstancePools_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InstancePool" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<InstancePool> GetInstancePoolsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InstancePoolResource> GetInstancePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetInstancePoolsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetInstancePoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/instancePools
         /// Operation Id: InstancePools_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InstancePool" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<InstancePool> GetInstancePools(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InstancePoolResource> GetInstancePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetInstancePools(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetInstancePools(cancellationToken);
         }
 
         /// <summary>
@@ -327,17 +327,17 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities
         /// Operation Id: Capabilities_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static async Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(this Subscription subscription, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(this SubscriptionResource subscriptionResource, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return await GetExtensionClient(subscription).GetByLocationCapabilityAsync(locationName, include, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetByLocationCapabilityAsync(locationName, include, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -345,17 +345,17 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities
         /// Operation Id: Capabilities_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static Response<LocationCapabilities> GetByLocationCapability(this Subscription subscription, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static Response<LocationCapabilities> GetByLocationCapability(this SubscriptionResource subscriptionResource, string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetByLocationCapability(locationName, include, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetByLocationCapability(locationName, include, cancellationToken);
         }
 
         /// <summary>
@@ -363,19 +363,19 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
         /// Operation Id: LongTermRetentionBackups_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByLocationAsync(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetLongTermRetentionBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -383,19 +383,19 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
         /// Operation Id: LongTermRetentionBackups_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByLocation(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetLongTermRetentionBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
         /// Operation Id: LongTermRetentionBackups_ListByServer
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -411,13 +411,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByServerAsync(this Subscription subscription, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetExtensionClient(subscription).GetLongTermRetentionBackupsByServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
         /// Operation Id: LongTermRetentionBackups_ListByServer
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -433,13 +433,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByServer(this Subscription subscription, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(this SubscriptionResource subscriptionResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetExtensionClient(subscription).GetLongTermRetentionBackupsByServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
         /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByInstance
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -455,13 +455,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(this Subscription subscription, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetExtensionClient(subscription).GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
         /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByInstance
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -477,13 +477,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByInstance(this Subscription subscription, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(this SubscriptionResource subscriptionResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetExtensionClient(subscription).GetLongTermRetentionManagedInstanceBackupsByInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -491,19 +491,19 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
         /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetLongTermRetentionManagedInstanceBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -511,19 +511,19 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
         /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByLocation(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(this SubscriptionResource subscriptionResource, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetLongTermRetentionManagedInstanceBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -531,13 +531,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances
         /// Operation Id: ManagedInstances_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstance> GetManagedInstancesAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetManagedInstancesAsync(expand, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetManagedInstancesAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -545,13 +545,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances
         /// Operation Id: ManagedInstances_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstance> GetManagedInstances(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedInstanceResource> GetManagedInstances(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetManagedInstances(expand, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetManagedInstances(expand, cancellationToken);
         }
 
         /// <summary>
@@ -559,17 +559,17 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/operationsHealth
         /// Operation Id: OperationsHealth_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> An async collection of <see cref="OperationsHealth" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationsHealth> GetOperationsHealthsByLocationAsync(this Subscription subscription, string locationName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<OperationsHealth> GetOperationsHealthsByLocationAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetOperationsHealthsByLocationAsync(locationName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOperationsHealthsByLocationAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -577,17 +577,17 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/operationsHealth
         /// Operation Id: OperationsHealth_ListByLocation
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of <see cref="OperationsHealth" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationsHealth> GetOperationsHealthsByLocation(this Subscription subscription, string locationName, CancellationToken cancellationToken = default)
+        public static Pageable<OperationsHealth> GetOperationsHealthsByLocation(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetOperationsHealthsByLocation(locationName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetOperationsHealthsByLocation(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -595,17 +595,17 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds
         /// Operation Id: SyncGroups_ListSyncDatabaseIds
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(this Subscription subscription, string locationName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -613,17 +613,17 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/syncDatabaseIds
         /// Operation Id: SyncGroups_ListSyncDatabaseIds
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(this Subscription subscription, string locationName, CancellationToken cancellationToken = default)
+        public static Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(subscription).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -631,12 +631,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
         /// Operation Id: VirtualClusters_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualCluster> GetVirtualClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVirtualClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -644,12 +644,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
         /// Operation Id: VirtualClusters_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualCluster> GetVirtualClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualClusterResource> GetVirtualClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetVirtualClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualClusters(cancellationToken);
         }
 
         /// <summary>
@@ -657,13 +657,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
         /// Operation Id: Servers_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServer" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SqlServer> GetSqlServersAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SqlServerResource> GetSqlServersAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetSqlServersAsync(expand, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSqlServersAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -671,13 +671,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers
         /// Operation Id: Servers_List
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServer" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SqlServer> GetSqlServers(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SqlServerResource> GetSqlServers(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscription).GetSqlServers(expand, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSqlServers(expand, cancellationToken);
         }
 
         /// <summary>
@@ -685,15 +685,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
         /// Operation Id: Servers_CheckNameAvailability
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="parameters"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(this Subscription subscription, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            return await GetExtensionClient(subscription).CheckNameAvailabilityServerAsync(parameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityServerAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -701,37 +701,37 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/checkNameAvailability
         /// Operation Id: Servers_CheckNameAvailability
         /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="parameters"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityServer(this Subscription subscription, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityServer(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            return GetExtensionClient(subscription).CheckNameAvailabilityServer(parameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityServer(parameters, cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
-        /// <summary> Gets a collection of InstanceFailoverGroups in the InstanceFailoverGroup. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of InstanceFailoverGroups and their operations over a InstanceFailoverGroup. </returns>
-        public static InstanceFailoverGroupCollection GetInstanceFailoverGroups(this ResourceGroup resourceGroup, string locationName)
+        /// <returns> An object representing collection of InstanceFailoverGroupResources and their operations over a InstanceFailoverGroupResource. </returns>
+        public static InstanceFailoverGroupCollection GetInstanceFailoverGroups(this ResourceGroupResource resourceGroupResource, string locationName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(resourceGroup).GetInstanceFailoverGroups(locationName);
+            return GetExtensionClient(resourceGroupResource).GetInstanceFailoverGroups(locationName);
         }
 
         /// <summary>
@@ -739,15 +739,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
         /// Operation Id: InstanceFailoverGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
-        public static async Task<Response<InstanceFailoverGroup>> GetInstanceFailoverGroupAsync(this ResourceGroup resourceGroup, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<InstanceFailoverGroupResource>> GetInstanceFailoverGroupAsync(this ResourceGroupResource resourceGroupResource, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetInstanceFailoverGroups(locationName).GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetInstanceFailoverGroups(locationName).GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -755,38 +755,23 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
         /// Operation Id: InstanceFailoverGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="failoverGroupName"> The name of the failover group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
-        public static Response<InstanceFailoverGroup> GetInstanceFailoverGroup(this ResourceGroup resourceGroup, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
+        public static Response<InstanceFailoverGroupResource> GetInstanceFailoverGroup(this ResourceGroupResource resourceGroupResource, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetInstanceFailoverGroups(locationName).Get(failoverGroupName, cancellationToken);
+            return resourceGroupResource.GetInstanceFailoverGroups(locationName).Get(failoverGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of InstancePools in the InstancePool. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of InstancePools and their operations over a InstancePool. </returns>
-        public static InstancePoolCollection GetInstancePools(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of InstancePoolResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of InstancePoolResources and their operations over a InstancePoolResource. </returns>
+        public static InstancePoolCollection GetInstancePools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetInstancePools();
-        }
-
-        /// <summary>
-        /// Gets an instance pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
-        /// Operation Id: InstancePools_Get
-        /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
-        public static async Task<Response<InstancePool>> GetInstancePoolAsync(this ResourceGroup resourceGroup, string instancePoolName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroup.GetInstancePools().GetAsync(instancePoolName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetInstancePools();
         }
 
         /// <summary>
@@ -794,31 +779,46 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
         /// Operation Id: InstancePools_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
-        public static Response<InstancePool> GetInstancePool(this ResourceGroup resourceGroup, string instancePoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<InstancePoolResource>> GetInstancePoolAsync(this ResourceGroupResource resourceGroupResource, string instancePoolName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetInstancePools().Get(instancePoolName, cancellationToken);
+            return await resourceGroupResource.GetInstancePools().GetAsync(instancePoolName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackups in the ResourceGroupLongTermRetentionBackup. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <summary>
+        /// Gets an instance pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
+        /// Operation Id: InstancePools_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        public static Response<InstancePoolResource> GetInstancePool(this ResourceGroupResource resourceGroupResource, string instancePoolName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetInstancePools().Get(instancePoolName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceGroupLongTermRetentionBackups and their operations over a ResourceGroupLongTermRetentionBackup. </returns>
-        public static ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
+        /// <returns> An object representing collection of ResourceGroupLongTermRetentionBackupResources and their operations over a ResourceGroupLongTermRetentionBackupResource. </returns>
+        public static ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
             Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
-            return GetExtensionClient(resourceGroup).GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
+            return GetExtensionClient(resourceGroupResource).GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
         /// <summary>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
         /// Operation Id: LongTermRetentionBackups_GetByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
@@ -834,9 +834,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static async Task<Response<ResourceGroupLongTermRetentionBackup>> GetResourceGroupLongTermRetentionBackupAsync(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGroupLongTermRetentionBackupResource>> GetResourceGroupLongTermRetentionBackupAsync(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
         /// Operation Id: LongTermRetentionBackups_GetByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
@@ -852,26 +852,26 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static Response<ResourceGroupLongTermRetentionBackup> GetResourceGroupLongTermRetentionBackup(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGroupLongTermRetentionBackupResource> GetResourceGroupLongTermRetentionBackup(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
+            return resourceGroupResource.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackups in the ResourceGroupLongTermRetentionManagedInstanceBackup. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <summary> Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceGroupLongTermRetentionManagedInstanceBackups and their operations over a ResourceGroupLongTermRetentionManagedInstanceBackup. </returns>
-        public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, string databaseName)
+        /// <returns> An object representing collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources and their operations over a ResourceGroupLongTermRetentionManagedInstanceBackupResource. </returns>
+        public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, string databaseName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            return GetExtensionClient(resourceGroup).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
+            return GetExtensionClient(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
         }
 
         /// <summary>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
         /// Operation Id: LongTermRetentionManagedInstanceBackups_GetByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
@@ -887,9 +887,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackup>> GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource>> GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
         /// Operation Id: LongTermRetentionManagedInstanceBackups_GetByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
@@ -905,33 +905,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static Response<ResourceGroupLongTermRetentionManagedInstanceBackup> GetResourceGroupLongTermRetentionManagedInstanceBackup(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        public static Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource> GetResourceGroupLongTermRetentionManagedInstanceBackup(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
+            return resourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedInstances in the ManagedInstance. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ManagedInstances and their operations over a ManagedInstance. </returns>
-        public static ManagedInstanceCollection GetManagedInstances(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of ManagedInstanceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
+        public static ManagedInstanceCollection GetManagedInstances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetManagedInstances();
-        }
-
-        /// <summary>
-        /// Gets a managed instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// Operation Id: ManagedInstances_Get
-        /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
-        public static async Task<Response<ManagedInstance>> GetManagedInstanceAsync(this ResourceGroup resourceGroup, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroup.GetManagedInstances().GetAsync(managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetManagedInstances();
         }
 
         /// <summary>
@@ -939,28 +923,44 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
         /// Operation Id: ManagedInstances_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
-        public static Response<ManagedInstance> GetManagedInstance(this ResourceGroup resourceGroup, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedInstanceResource>> GetManagedInstanceAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetManagedInstances().Get(managedInstanceName, expand, cancellationToken);
+            return await resourceGroupResource.GetManagedInstances().GetAsync(managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ServerTrustGroups in the ServerTrustGroup. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <summary>
+        /// Gets a managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
+        /// Operation Id: ManagedInstances_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
+        public static Response<ManagedInstanceResource> GetManagedInstance(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetManagedInstances().Get(managedInstanceName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServerTrustGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of ServerTrustGroups and their operations over a ServerTrustGroup. </returns>
-        public static ServerTrustGroupCollection GetServerTrustGroups(this ResourceGroup resourceGroup, string locationName)
+        /// <returns> An object representing collection of ServerTrustGroupResources and their operations over a ServerTrustGroupResource. </returns>
+        public static ServerTrustGroupCollection GetServerTrustGroups(this ResourceGroupResource resourceGroupResource, string locationName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(resourceGroup).GetServerTrustGroups(locationName);
+            return GetExtensionClient(resourceGroupResource).GetServerTrustGroups(locationName);
         }
 
         /// <summary>
@@ -968,15 +968,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}
         /// Operation Id: ServerTrustGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
-        public static async Task<Response<ServerTrustGroup>> GetServerTrustGroupAsync(this ResourceGroup resourceGroup, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServerTrustGroupResource>> GetServerTrustGroupAsync(this ResourceGroupResource resourceGroupResource, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetServerTrustGroups(locationName).GetAsync(serverTrustGroupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetServerTrustGroups(locationName).GetAsync(serverTrustGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -984,38 +984,23 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}
         /// Operation Id: ServerTrustGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
-        public static Response<ServerTrustGroup> GetServerTrustGroup(this ResourceGroup resourceGroup, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public static Response<ServerTrustGroupResource> GetServerTrustGroup(this ResourceGroupResource resourceGroupResource, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetServerTrustGroups(locationName).Get(serverTrustGroupName, cancellationToken);
+            return resourceGroupResource.GetServerTrustGroups(locationName).Get(serverTrustGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualClusters in the VirtualCluster. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualClusters and their operations over a VirtualCluster. </returns>
-        public static VirtualClusterCollection GetVirtualClusters(this ResourceGroup resourceGroup)
+        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
+        public static VirtualClusterCollection GetVirtualClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualClusters();
-        }
-
-        /// <summary>
-        /// Gets a virtual cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}
-        /// Operation Id: VirtualClusters_Get
-        /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
-        public static async Task<Response<VirtualCluster>> GetVirtualClusterAsync(this ResourceGroup resourceGroup, string virtualClusterName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroup.GetVirtualClusters().GetAsync(virtualClusterName, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(resourceGroupResource).GetVirtualClusters();
         }
 
         /// <summary>
@@ -1023,22 +1008,37 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}
         /// Operation Id: VirtualClusters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
-        public static Response<VirtualCluster> GetVirtualCluster(this ResourceGroup resourceGroup, string virtualClusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualClusterResource>> GetVirtualClusterAsync(this ResourceGroupResource resourceGroupResource, string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualClusters().Get(virtualClusterName, cancellationToken);
+            return await resourceGroupResource.GetVirtualClusters().GetAsync(virtualClusterName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of SqlServers in the SqlServer. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SqlServers and their operations over a SqlServer. </returns>
-        public static SqlServerCollection GetSqlServers(this ResourceGroup resourceGroup)
+        /// <summary>
+        /// Gets a virtual cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}
+        /// Operation Id: VirtualClusters_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        public static Response<VirtualClusterResource> GetVirtualCluster(this ResourceGroupResource resourceGroupResource, string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroup).GetSqlServers();
+            return resourceGroupResource.GetVirtualClusters().Get(virtualClusterName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
+        public static SqlServerCollection GetSqlServers(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetSqlServers();
         }
 
         /// <summary>
@@ -1046,15 +1046,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// Operation Id: Servers_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public static async Task<Response<SqlServer>> GetSqlServerAsync(this ResourceGroup resourceGroup, string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlServerResource>> GetSqlServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetSqlServers().GetAsync(serverName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSqlServers().GetAsync(serverName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1062,15 +1062,15 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// Operation Id: Servers_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public static Response<SqlServer> GetSqlServer(this ResourceGroup resourceGroup, string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<SqlServerResource> GetSqlServer(this ResourceGroupResource resourceGroupResource, string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetSqlServers().Get(serverName, expand, cancellationToken);
+            return resourceGroupResource.GetSqlServers().Get(serverName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -1078,19 +1078,19 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
         /// Operation Id: LongTermRetentionBackups_ListByResourceGroupLocation
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(resourceGroup).GetLongTermRetentionBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1098,19 +1098,19 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups
         /// Operation Id: LongTermRetentionBackups_ListByResourceGroupLocation
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByResourceGroupLocation(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(resourceGroup).GetLongTermRetentionBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
         /// Operation Id: LongTermRetentionBackups_ListByResourceGroupServer
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -1126,13 +1126,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByResourceGroupServerAsync(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupServerAsync(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetExtensionClient(resourceGroup).GetLongTermRetentionBackupsByResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1140,7 +1140,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups
         /// Operation Id: LongTermRetentionBackups_ListByResourceGroupServer
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -1148,13 +1148,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByResourceGroupServer(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupServer(this ResourceGroupResource resourceGroupResource, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetExtensionClient(resourceGroup).GetLongTermRetentionBackupsByResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
         /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -1170,13 +1170,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetExtensionClient(resourceGroup).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups
         /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
@@ -1192,13 +1192,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this ResourceGroupResource resourceGroupResource, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetExtensionClient(resourceGroup).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1206,19 +1206,19 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
         /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(resourceGroup).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1226,1191 +1226,1413 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups
         /// Operation Id: LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this ResourceGroup resourceGroup, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            return GetExtensionClient(resourceGroup).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
-        #region RecoverableDatabase
-        /// <summary> Gets an object representing a RecoverableDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region RecoverableDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoverableDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoverableDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RecoverableDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoverableDatabase" /> object. </returns>
-        public static RecoverableDatabase GetRecoverableDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecoverableDatabaseResource" /> object. </returns>
+        public static RecoverableDatabaseResource GetRecoverableDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecoverableDatabase.ValidateResourceId(id);
-                return new RecoverableDatabase(client, id);
+                RecoverableDatabaseResource.ValidateResourceId(id);
+                return new RecoverableDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataMaskingPolicy
-        /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataMaskingPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataMaskingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMaskingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataMaskingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
-        public static DataMaskingPolicy GetDataMaskingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMaskingPolicyResource" /> object. </returns>
+        public static DataMaskingPolicyResource GetDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataMaskingPolicy.ValidateResourceId(id);
-                return new DataMaskingPolicy(client, id);
+                DataMaskingPolicyResource.ValidateResourceId(id);
+                return new DataMaskingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GeoBackupPolicy
-        /// <summary> Gets an object representing a GeoBackupPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region GeoBackupPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GeoBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="GeoBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GeoBackupPolicy" /> object. </returns>
-        public static GeoBackupPolicy GetGeoBackupPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GeoBackupPolicyResource" /> object. </returns>
+        public static GeoBackupPolicyResource GetGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GeoBackupPolicy.ValidateResourceId(id);
-                return new GeoBackupPolicy(client, id);
+                GeoBackupPolicyResource.ValidateResourceId(id);
+                return new GeoBackupPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlDatabase
-        /// <summary> Gets an object representing a SqlDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
-        public static SqlDatabase GetSqlDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
+        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlDatabase.ValidateResourceId(id);
-                return new SqlDatabase(client, id);
+                SqlDatabaseResource.ValidateResourceId(id);
+                return new SqlDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ElasticPool
-        /// <summary> Gets an object representing a ElasticPool along with the instance operations that can be performed on it but with no data. </summary>
+        #region ElasticPoolResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticPoolResource.CreateResourceIdentifier" /> to create an <see cref="ElasticPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticPool" /> object. </returns>
-        public static ElasticPool GetElasticPool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ElasticPoolResource" /> object. </returns>
+        public static ElasticPoolResource GetElasticPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ElasticPool.ValidateResourceId(id);
-                return new ElasticPool(client, id);
+                ElasticPoolResource.ValidateResourceId(id);
+                return new ElasticPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ReplicationLink
-        /// <summary> Gets an object representing a ReplicationLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region ReplicationLinkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationLink" /> object. </returns>
-        public static ReplicationLink GetReplicationLink(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationLinkResource" /> object. </returns>
+        public static ReplicationLinkResource GetReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReplicationLink.ValidateResourceId(id);
-                return new ReplicationLink(client, id);
+                ReplicationLinkResource.ValidateResourceId(id);
+                return new ReplicationLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerCommunicationLink
-        /// <summary> Gets an object representing a ServerCommunicationLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerCommunicationLinkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerCommunicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerCommunicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="ServerCommunicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerCommunicationLink" /> object. </returns>
-        public static ServerCommunicationLink GetServerCommunicationLink(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerCommunicationLinkResource" /> object. </returns>
+        public static ServerCommunicationLinkResource GetServerCommunicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerCommunicationLink.ValidateResourceId(id);
-                return new ServerCommunicationLink(client, id);
+                ServerCommunicationLinkResource.ValidateResourceId(id);
+                return new ServerCommunicationLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceObjective
-        /// <summary> Gets an object representing a ServiceObjective along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServiceObjectiveResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceObjectiveResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceObjectiveResource.CreateResourceIdentifier" /> to create a <see cref="ServiceObjectiveResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceObjective" /> object. </returns>
-        public static ServiceObjective GetServiceObjective(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceObjectiveResource" /> object. </returns>
+        public static ServiceObjectiveResource GetServiceObjectiveResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceObjective.ValidateResourceId(id);
-                return new ServiceObjective(client, id);
+                ServiceObjectiveResource.ValidateResourceId(id);
+                return new ServiceObjectiveResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ExtendedDatabaseBlobAuditingPolicy
-        /// <summary> Gets an object representing a ExtendedDatabaseBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ExtendedDatabaseBlobAuditingPolicyResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedDatabaseBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicy" /> object. </returns>
-        public static ExtendedDatabaseBlobAuditingPolicy GetExtendedDatabaseBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> object. </returns>
+        public static ExtendedDatabaseBlobAuditingPolicyResource GetExtendedDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ExtendedDatabaseBlobAuditingPolicy.ValidateResourceId(id);
-                return new ExtendedDatabaseBlobAuditingPolicy(client, id);
+                ExtendedDatabaseBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new ExtendedDatabaseBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ExtendedServerBlobAuditingPolicy
-        /// <summary> Gets an object representing a ExtendedServerBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ExtendedServerBlobAuditingPolicyResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicy" /> object. </returns>
-        public static ExtendedServerBlobAuditingPolicy GetExtendedServerBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicyResource" /> object. </returns>
+        public static ExtendedServerBlobAuditingPolicyResource GetExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ExtendedServerBlobAuditingPolicy.ValidateResourceId(id);
-                return new ExtendedServerBlobAuditingPolicy(client, id);
+                ExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new ExtendedServerBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerBlobAuditingPolicy
-        /// <summary> Gets an object representing a ServerBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerBlobAuditingPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerBlobAuditingPolicy" /> object. </returns>
-        public static ServerBlobAuditingPolicy GetServerBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerBlobAuditingPolicyResource" /> object. </returns>
+        public static ServerBlobAuditingPolicyResource GetServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerBlobAuditingPolicy.ValidateResourceId(id);
-                return new ServerBlobAuditingPolicy(client, id);
+                ServerBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new ServerBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseBlobAuditingPolicy
-        /// <summary> Gets an object representing a DatabaseBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseBlobAuditingPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseBlobAuditingPolicy" /> object. </returns>
-        public static DatabaseBlobAuditingPolicy GetDatabaseBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseBlobAuditingPolicyResource" /> object. </returns>
+        public static DatabaseBlobAuditingPolicyResource GetDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseBlobAuditingPolicy.ValidateResourceId(id);
-                return new DatabaseBlobAuditingPolicy(client, id);
+                DatabaseBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new DatabaseBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseAdvisor
-        /// <summary> Gets an object representing a ServerDatabaseAdvisor along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseAdvisorResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseAdvisorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseAdvisorResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseAdvisorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseAdvisor" /> object. </returns>
-        public static ServerDatabaseAdvisor GetServerDatabaseAdvisor(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseAdvisorResource" /> object. </returns>
+        public static ServerDatabaseAdvisorResource GetServerDatabaseAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseAdvisor.ValidateResourceId(id);
-                return new ServerDatabaseAdvisor(client, id);
+                ServerDatabaseAdvisorResource.ValidateResourceId(id);
+                return new ServerDatabaseAdvisorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAdvisor
-        /// <summary> Gets an object representing a ServerAdvisor along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerAdvisorResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAdvisorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAdvisorResource.CreateResourceIdentifier" /> to create a <see cref="ServerAdvisorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAdvisor" /> object. </returns>
-        public static ServerAdvisor GetServerAdvisor(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerAdvisorResource" /> object. </returns>
+        public static ServerAdvisorResource GetServerAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerAdvisor.ValidateResourceId(id);
-                return new ServerAdvisor(client, id);
+                ServerAdvisorResource.ValidateResourceId(id);
+                return new ServerAdvisorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAutomaticTuning
-        /// <summary> Gets an object representing a DatabaseAutomaticTuning along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAutomaticTuningResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAutomaticTuningResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAutomaticTuningResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAutomaticTuningResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
-        public static DatabaseAutomaticTuning GetDatabaseAutomaticTuning(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAutomaticTuningResource" /> object. </returns>
+        public static DatabaseAutomaticTuningResource GetDatabaseAutomaticTuningResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAutomaticTuning.ValidateResourceId(id);
-                return new DatabaseAutomaticTuning(client, id);
+                DatabaseAutomaticTuningResource.ValidateResourceId(id);
+                return new DatabaseAutomaticTuningResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSchemaTableColumn
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumn along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseSchemaTableColumnResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseSchemaTableColumnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseSchemaTableColumnResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSchemaTableColumnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumn" /> object. </returns>
-        public static ServerDatabaseSchemaTableColumn GetServerDatabaseSchemaTableColumn(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnResource" /> object. </returns>
+        public static ServerDatabaseSchemaTableColumnResource GetServerDatabaseSchemaTableColumnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSchemaTableColumn.ValidateResourceId(id);
-                return new ServerDatabaseSchemaTableColumn(client, id);
+                ServerDatabaseSchemaTableColumnResource.ValidateResourceId(id);
+                return new ServerDatabaseSchemaTableColumnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchemaTableColumn
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumn along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseSchemaTableColumnResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseSchemaTableColumnResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> object. </returns>
-        public static ManagedInstanceDatabaseSchemaTableColumn GetManagedInstanceDatabaseSchemaTableColumn(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> object. </returns>
+        public static ManagedInstanceDatabaseSchemaTableColumnResource GetManagedInstanceDatabaseSchemaTableColumnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseSchemaTableColumn.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchemaTableColumn(client, id);
+                ManagedInstanceDatabaseSchemaTableColumnResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseSchemaTableColumnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RecommendedAction
-        /// <summary> Gets an object representing a RecommendedAction along with the instance operations that can be performed on it but with no data. </summary>
+        #region RecommendedActionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RecommendedActionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecommendedActionResource.CreateResourceIdentifier" /> to create a <see cref="RecommendedActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecommendedAction" /> object. </returns>
-        public static RecommendedAction GetRecommendedAction(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecommendedActionResource" /> object. </returns>
+        public static RecommendedActionResource GetRecommendedActionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecommendedAction.ValidateResourceId(id);
-                return new RecommendedAction(client, id);
+                RecommendedActionResource.ValidateResourceId(id);
+                return new RecommendedActionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSchema
-        /// <summary> Gets an object representing a ServerDatabaseSchema along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseSchemaResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseSchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSchema" /> object. </returns>
-        public static ServerDatabaseSchema GetServerDatabaseSchema(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaResource" /> object. </returns>
+        public static ServerDatabaseSchemaResource GetServerDatabaseSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSchema.ValidateResourceId(id);
-                return new ServerDatabaseSchema(client, id);
+                ServerDatabaseSchemaResource.ValidateResourceId(id);
+                return new ServerDatabaseSchemaResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchema
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchema along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseSchemaResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchema" /> object. </returns>
-        public static ManagedInstanceDatabaseSchema GetManagedInstanceDatabaseSchema(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaResource" /> object. </returns>
+        public static ManagedInstanceDatabaseSchemaResource GetManagedInstanceDatabaseSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseSchema.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchema(client, id);
+                ManagedInstanceDatabaseSchemaResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseSchemaResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseSecurityAlertPolicy
-        /// <summary> Gets an object representing a DatabaseSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseSecurityAlertPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseSecurityAlertPolicy" /> object. </returns>
-        public static DatabaseSecurityAlertPolicy GetDatabaseSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseSecurityAlertPolicyResource" /> object. </returns>
+        public static DatabaseSecurityAlertPolicyResource GetDatabaseSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseSecurityAlertPolicy.ValidateResourceId(id);
-                return new DatabaseSecurityAlertPolicy(client, id);
+                DatabaseSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new DatabaseSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSchemaTable
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTable along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseSchemaTableResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseSchemaTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseSchemaTableResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSchemaTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSchemaTable" /> object. </returns>
-        public static ServerDatabaseSchemaTable GetServerDatabaseSchemaTable(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableResource" /> object. </returns>
+        public static ServerDatabaseSchemaTableResource GetServerDatabaseSchemaTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSchemaTable.ValidateResourceId(id);
-                return new ServerDatabaseSchemaTable(client, id);
+                ServerDatabaseSchemaTableResource.ValidateResourceId(id);
+                return new ServerDatabaseSchemaTableResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchemaTable
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTable along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseSchemaTableResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchemaTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseSchemaTableResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchemaTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTable" /> object. </returns>
-        public static ManagedInstanceDatabaseSchemaTable GetManagedInstanceDatabaseSchemaTable(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableResource" /> object. </returns>
+        public static ManagedInstanceDatabaseSchemaTableResource GetManagedInstanceDatabaseSchemaTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseSchemaTable.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchemaTable(client, id);
+                ManagedInstanceDatabaseSchemaTableResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseSchemaTableResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseVulnerabilityAssessmentRuleBaseline
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentRuleBaseline along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseVulnerabilityAssessmentRuleBaselineResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
-        public static ServerDatabaseVulnerabilityAssessmentRuleBaseline GetServerDatabaseVulnerabilityAssessmentRuleBaseline(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
+        public static ServerDatabaseVulnerabilityAssessmentRuleBaselineResource GetServerDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseVulnerabilityAssessmentRuleBaseline.ValidateResourceId(id);
-                return new ServerDatabaseVulnerabilityAssessmentRuleBaseline(client, id);
+                ServerDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
+                return new ServerDatabaseVulnerabilityAssessmentRuleBaselineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
-        public static ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
+        public static ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(client, id);
+                ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseVulnerabilityAssessment
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseVulnerabilityAssessmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessment" /> object. </returns>
-        public static ServerDatabaseVulnerabilityAssessment GetServerDatabaseVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentResource" /> object. </returns>
+        public static ServerDatabaseVulnerabilityAssessmentResource GetServerDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseVulnerabilityAssessment.ValidateResourceId(id);
-                return new ServerDatabaseVulnerabilityAssessment(client, id);
+                ServerDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new ServerDatabaseVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseVulnerabilityAssessment
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseVulnerabilityAssessmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessment" /> object. </returns>
-        public static ManagedInstanceDatabaseVulnerabilityAssessment GetManagedInstanceDatabaseVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentResource" /> object. </returns>
+        public static ManagedInstanceDatabaseVulnerabilityAssessmentResource GetManagedInstanceDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseVulnerabilityAssessment.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseVulnerabilityAssessment(client, id);
+                ManagedInstanceDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseVulnerabilityAssessmentScan
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentScan along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseVulnerabilityAssessmentScanResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentScan" /> object. </returns>
-        public static ServerDatabaseVulnerabilityAssessmentScan GetServerDatabaseVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentScanResource" /> object. </returns>
+        public static ServerDatabaseVulnerabilityAssessmentScanResource GetServerDatabaseVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseVulnerabilityAssessmentScan.ValidateResourceId(id);
-                return new ServerDatabaseVulnerabilityAssessmentScan(client, id);
+                ServerDatabaseVulnerabilityAssessmentScanResource.ValidateResourceId(id);
+                return new ServerDatabaseVulnerabilityAssessmentScanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseVulnerabilityAssessmentScan
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentScan along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseVulnerabilityAssessmentScanResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScan" /> object. </returns>
-        public static ManagedInstanceDatabaseVulnerabilityAssessmentScan GetManagedInstanceDatabaseVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScanResource" /> object. </returns>
+        public static ManagedInstanceDatabaseVulnerabilityAssessmentScanResource GetManagedInstanceDatabaseVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseVulnerabilityAssessmentScan.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseVulnerabilityAssessmentScan(client, id);
+                ManagedInstanceDatabaseVulnerabilityAssessmentScanResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseVulnerabilityAssessmentScanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataWarehouseUserActivities
-        /// <summary> Gets an object representing a DataWarehouseUserActivities along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataWarehouseUserActivitiesResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataWarehouseUserActivitiesResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataWarehouseUserActivitiesResource.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivitiesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataWarehouseUserActivities" /> object. </returns>
-        public static DataWarehouseUserActivities GetDataWarehouseUserActivities(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataWarehouseUserActivitiesResource" /> object. </returns>
+        public static DataWarehouseUserActivitiesResource GetDataWarehouseUserActivitiesResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataWarehouseUserActivities.ValidateResourceId(id);
-                return new DataWarehouseUserActivities(client, id);
+                DataWarehouseUserActivitiesResource.ValidateResourceId(id);
+                return new DataWarehouseUserActivitiesResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DeletedServer
-        /// <summary> Gets an object representing a DeletedServer along with the instance operations that can be performed on it but with no data. </summary>
+        #region DeletedServerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedServerResource.CreateResourceIdentifier" /> to create a <see cref="DeletedServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedServer" /> object. </returns>
-        public static DeletedServer GetDeletedServer(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedServerResource" /> object. </returns>
+        public static DeletedServerResource GetDeletedServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DeletedServer.ValidateResourceId(id);
-                return new DeletedServer(client, id);
+                DeletedServerResource.ValidateResourceId(id);
+                return new DeletedServerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EncryptionProtector
-        /// <summary> Gets an object representing a EncryptionProtector along with the instance operations that can be performed on it but with no data. </summary>
+        #region EncryptionProtectorResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EncryptionProtectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EncryptionProtectorResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionProtectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EncryptionProtector" /> object. </returns>
-        public static EncryptionProtector GetEncryptionProtector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EncryptionProtectorResource" /> object. </returns>
+        public static EncryptionProtectorResource GetEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EncryptionProtector.ValidateResourceId(id);
-                return new EncryptionProtector(client, id);
+                EncryptionProtectorResource.ValidateResourceId(id);
+                return new EncryptionProtectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FailoverGroup
-        /// <summary> Gets an object representing a FailoverGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region FailoverGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FailoverGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FailoverGroupResource.CreateResourceIdentifier" /> to create a <see cref="FailoverGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FailoverGroup" /> object. </returns>
-        public static FailoverGroup GetFailoverGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FailoverGroupResource" /> object. </returns>
+        public static FailoverGroupResource GetFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FailoverGroup.ValidateResourceId(id);
-                return new FailoverGroup(client, id);
+                FailoverGroupResource.ValidateResourceId(id);
+                return new FailoverGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FirewallRule
-        /// <summary> Gets an object representing a FirewallRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region FirewallRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRule" /> object. </returns>
-        public static FirewallRule GetFirewallRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FirewallRuleResource" /> object. </returns>
+        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FirewallRule.ValidateResourceId(id);
-                return new FirewallRule(client, id);
+                FirewallRuleResource.ValidateResourceId(id);
+                return new FirewallRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InstanceFailoverGroup
-        /// <summary> Gets an object representing a InstanceFailoverGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region InstanceFailoverGroupResource
+        /// <summary>
+        /// Gets an object representing an <see cref="InstanceFailoverGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstanceFailoverGroupResource.CreateResourceIdentifier" /> to create an <see cref="InstanceFailoverGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstanceFailoverGroup" /> object. </returns>
-        public static InstanceFailoverGroup GetInstanceFailoverGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InstanceFailoverGroupResource" /> object. </returns>
+        public static InstanceFailoverGroupResource GetInstanceFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InstanceFailoverGroup.ValidateResourceId(id);
-                return new InstanceFailoverGroup(client, id);
+                InstanceFailoverGroupResource.ValidateResourceId(id);
+                return new InstanceFailoverGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InstancePool
-        /// <summary> Gets an object representing a InstancePool along with the instance operations that can be performed on it but with no data. </summary>
+        #region InstancePoolResource
+        /// <summary>
+        /// Gets an object representing an <see cref="InstancePoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstancePoolResource.CreateResourceIdentifier" /> to create an <see cref="InstancePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstancePool" /> object. </returns>
-        public static InstancePool GetInstancePool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InstancePoolResource" /> object. </returns>
+        public static InstancePoolResource GetInstancePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InstancePool.ValidateResourceId(id);
-                return new InstancePool(client, id);
+                InstancePoolResource.ValidateResourceId(id);
+                return new InstancePoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobAgent
-        /// <summary> Gets an object representing a JobAgent along with the instance operations that can be performed on it but with no data. </summary>
+        #region JobAgentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="JobAgentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobAgentResource.CreateResourceIdentifier" /> to create a <see cref="JobAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobAgent" /> object. </returns>
-        public static JobAgent GetJobAgent(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobAgentResource" /> object. </returns>
+        public static JobAgentResource GetJobAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobAgent.ValidateResourceId(id);
-                return new JobAgent(client, id);
+                JobAgentResource.ValidateResourceId(id);
+                return new JobAgentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobCredential
-        /// <summary> Gets an object representing a JobCredential along with the instance operations that can be performed on it but with no data. </summary>
+        #region JobCredentialResource
+        /// <summary>
+        /// Gets an object representing a <see cref="JobCredentialResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobCredentialResource.CreateResourceIdentifier" /> to create a <see cref="JobCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobCredential" /> object. </returns>
-        public static JobCredential GetJobCredential(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobCredentialResource" /> object. </returns>
+        public static JobCredentialResource GetJobCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobCredential.ValidateResourceId(id);
-                return new JobCredential(client, id);
+                JobCredentialResource.ValidateResourceId(id);
+                return new JobCredentialResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobExecution
-        /// <summary> Gets an object representing a ServerJobAgentJobExecution along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobExecutionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobExecutionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobExecution" /> object. </returns>
-        public static ServerJobAgentJobExecution GetServerJobAgentJobExecution(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionResource" /> object. </returns>
+        public static ServerJobAgentJobExecutionResource GetServerJobAgentJobExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerJobAgentJobExecution.ValidateResourceId(id);
-                return new ServerJobAgentJobExecution(client, id);
+                ServerJobAgentJobExecutionResource.ValidateResourceId(id);
+                return new ServerJobAgentJobExecutionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobExecutionStep
-        /// <summary> Gets an object representing a ServerJobAgentJobExecutionStep along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobExecutionStepResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobExecutionStepResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobExecutionStepResource.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobExecutionStepResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStep" /> object. </returns>
-        public static ServerJobAgentJobExecutionStep GetServerJobAgentJobExecutionStep(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepResource" /> object. </returns>
+        public static ServerJobAgentJobExecutionStepResource GetServerJobAgentJobExecutionStepResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerJobAgentJobExecutionStep.ValidateResourceId(id);
-                return new ServerJobAgentJobExecutionStep(client, id);
+                ServerJobAgentJobExecutionStepResource.ValidateResourceId(id);
+                return new ServerJobAgentJobExecutionStepResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobExecutionStepTarget
-        /// <summary> Gets an object representing a ServerJobAgentJobExecutionStepTarget along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobExecutionStepTargetResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobExecutionStepTargetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobExecutionStepTargetResource.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobExecutionStepTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepTarget" /> object. </returns>
-        public static ServerJobAgentJobExecutionStepTarget GetServerJobAgentJobExecutionStepTarget(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepTargetResource" /> object. </returns>
+        public static ServerJobAgentJobExecutionStepTargetResource GetServerJobAgentJobExecutionStepTargetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerJobAgentJobExecutionStepTarget.ValidateResourceId(id);
-                return new ServerJobAgentJobExecutionStepTarget(client, id);
+                ServerJobAgentJobExecutionStepTargetResource.ValidateResourceId(id);
+                return new ServerJobAgentJobExecutionStepTargetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlJob
-        /// <summary> Gets an object representing a SqlJob along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlJobResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlJobResource.CreateResourceIdentifier" /> to create a <see cref="SqlJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlJob" /> object. </returns>
-        public static SqlJob GetSqlJob(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlJobResource" /> object. </returns>
+        public static SqlJobResource GetSqlJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlJob.ValidateResourceId(id);
-                return new SqlJob(client, id);
+                SqlJobResource.ValidateResourceId(id);
+                return new SqlJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobVersionStep
-        /// <summary> Gets an object representing a ServerJobAgentJobVersionStep along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobVersionStepResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobVersionStepResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobVersionStepResource.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobVersionStepResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobVersionStep" /> object. </returns>
-        public static ServerJobAgentJobVersionStep GetServerJobAgentJobVersionStep(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobVersionStepResource" /> object. </returns>
+        public static ServerJobAgentJobVersionStepResource GetServerJobAgentJobVersionStepResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerJobAgentJobVersionStep.ValidateResourceId(id);
-                return new ServerJobAgentJobVersionStep(client, id);
+                ServerJobAgentJobVersionStepResource.ValidateResourceId(id);
+                return new ServerJobAgentJobVersionStepResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobStep
-        /// <summary> Gets an object representing a ServerJobAgentJobStep along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobStepResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobStepResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobStepResource.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobStepResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobStep" /> object. </returns>
-        public static ServerJobAgentJobStep GetServerJobAgentJobStep(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobStepResource" /> object. </returns>
+        public static ServerJobAgentJobStepResource GetServerJobAgentJobStepResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerJobAgentJobStep.ValidateResourceId(id);
-                return new ServerJobAgentJobStep(client, id);
+                ServerJobAgentJobStepResource.ValidateResourceId(id);
+                return new ServerJobAgentJobStepResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobTargetGroup
-        /// <summary> Gets an object representing a JobTargetGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region JobTargetGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="JobTargetGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobTargetGroupResource.CreateResourceIdentifier" /> to create a <see cref="JobTargetGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobTargetGroup" /> object. </returns>
-        public static JobTargetGroup GetJobTargetGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobTargetGroupResource" /> object. </returns>
+        public static JobTargetGroupResource GetJobTargetGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobTargetGroup.ValidateResourceId(id);
-                return new JobTargetGroup(client, id);
+                JobTargetGroupResource.ValidateResourceId(id);
+                return new JobTargetGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobVersion
-        /// <summary> Gets an object representing a JobVersion along with the instance operations that can be performed on it but with no data. </summary>
+        #region JobVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="JobVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobVersionResource.CreateResourceIdentifier" /> to create a <see cref="JobVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobVersion" /> object. </returns>
-        public static JobVersion GetJobVersion(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobVersionResource" /> object. </returns>
+        public static JobVersionResource GetJobVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobVersion.ValidateResourceId(id);
-                return new JobVersion(client, id);
+                JobVersionResource.ValidateResourceId(id);
+                return new JobVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SubscriptionLongTermRetentionBackup
-        /// <summary> Gets an object representing a SubscriptionLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionLongTermRetentionBackupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackup" /> object. </returns>
-        public static SubscriptionLongTermRetentionBackup GetSubscriptionLongTermRetentionBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupResource" /> object. </returns>
+        public static SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SubscriptionLongTermRetentionBackup.ValidateResourceId(id);
-                return new SubscriptionLongTermRetentionBackup(client, id);
+                SubscriptionLongTermRetentionBackupResource.ValidateResourceId(id);
+                return new SubscriptionLongTermRetentionBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ResourceGroupLongTermRetentionBackup
-        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroupLongTermRetentionBackupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupLongTermRetentionBackupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackup" /> object. </returns>
-        public static ResourceGroupLongTermRetentionBackup GetResourceGroupLongTermRetentionBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupResource" /> object. </returns>
+        public static ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ResourceGroupLongTermRetentionBackup.ValidateResourceId(id);
-                return new ResourceGroupLongTermRetentionBackup(client, id);
+                ResourceGroupLongTermRetentionBackupResource.ValidateResourceId(id);
+                return new ResourceGroupLongTermRetentionBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SubscriptionLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a SubscriptionLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionLongTermRetentionManagedInstanceBackupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> object. </returns>
-        public static SubscriptionLongTermRetentionManagedInstanceBackup GetSubscriptionLongTermRetentionManagedInstanceBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> object. </returns>
+        public static SubscriptionLongTermRetentionManagedInstanceBackupResource GetSubscriptionLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SubscriptionLongTermRetentionManagedInstanceBackup.ValidateResourceId(id);
-                return new SubscriptionLongTermRetentionManagedInstanceBackup(client, id);
+                SubscriptionLongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
+                return new SubscriptionLongTermRetentionManagedInstanceBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ResourceGroupLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroupLongTermRetentionManagedInstanceBackupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> object. </returns>
-        public static ResourceGroupLongTermRetentionManagedInstanceBackup GetResourceGroupLongTermRetentionManagedInstanceBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> object. </returns>
+        public static ResourceGroupLongTermRetentionManagedInstanceBackupResource GetResourceGroupLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ResourceGroupLongTermRetentionManagedInstanceBackup.ValidateResourceId(id);
-                return new ResourceGroupLongTermRetentionManagedInstanceBackup(client, id);
+                ResourceGroupLongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
+                return new ResourceGroupLongTermRetentionManagedInstanceBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LongTermRetentionPolicy
-        /// <summary> Gets an object representing a LongTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region LongTermRetentionPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LongTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LongTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="LongTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LongTermRetentionPolicy" /> object. </returns>
-        public static LongTermRetentionPolicy GetLongTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LongTermRetentionPolicyResource" /> object. </returns>
+        public static LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LongTermRetentionPolicy.ValidateResourceId(id);
-                return new LongTermRetentionPolicy(client, id);
+                LongTermRetentionPolicyResource.ValidateResourceId(id);
+                return new LongTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MaintenanceWindowOptions
-        /// <summary> Gets an object representing a MaintenanceWindowOptions along with the instance operations that can be performed on it but with no data. </summary>
+        #region MaintenanceWindowOptionsResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceWindowOptionsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceWindowOptionsResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowOptionsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
-        public static MaintenanceWindowOptions GetMaintenanceWindowOptions(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceWindowOptionsResource" /> object. </returns>
+        public static MaintenanceWindowOptionsResource GetMaintenanceWindowOptionsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MaintenanceWindowOptions.ValidateResourceId(id);
-                return new MaintenanceWindowOptions(client, id);
+                MaintenanceWindowOptionsResource.ValidateResourceId(id);
+                return new MaintenanceWindowOptionsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MaintenanceWindows
-        /// <summary> Gets an object representing a MaintenanceWindows along with the instance operations that can be performed on it but with no data. </summary>
+        #region MaintenanceWindowsResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceWindowsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceWindowsResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
-        public static MaintenanceWindows GetMaintenanceWindows(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceWindowsResource" /> object. </returns>
+        public static MaintenanceWindowsResource GetMaintenanceWindowsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MaintenanceWindows.ValidateResourceId(id);
-                return new MaintenanceWindows(client, id);
+                MaintenanceWindowsResource.ValidateResourceId(id);
+                return new MaintenanceWindowsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseBackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseBackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy" /> object. </returns>
-        public static ManagedInstanceDatabaseBackupShortTermRetentionPolicy GetManagedInstanceDatabaseBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource" /> object. </returns>
+        public static ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource GetManagedInstanceDatabaseBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseBackupShortTermRetentionPolicy.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(client, id);
+                ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedRestorableDroppedDbBackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedRestorableDroppedDbBackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy" /> object. </returns>
-        public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicy GetManagedRestorableDroppedDbBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource" /> object. </returns>
+        public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.ValidateResourceId(id);
-                return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(client, id);
+                ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource.ValidateResourceId(id);
+                return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedDatabaseRestoreDetailsResult
-        /// <summary> Gets an object representing a ManagedDatabaseRestoreDetailsResult along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedDatabaseRestoreDetailsResultResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseRestoreDetailsResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseRestoreDetailsResultResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseRestoreDetailsResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailsResult" /> object. </returns>
-        public static ManagedDatabaseRestoreDetailsResult GetManagedDatabaseRestoreDetailsResult(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailsResultResource" /> object. </returns>
+        public static ManagedDatabaseRestoreDetailsResultResource GetManagedDatabaseRestoreDetailsResultResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedDatabaseRestoreDetailsResult.ValidateResourceId(id);
-                return new ManagedDatabaseRestoreDetailsResult(client, id);
+                ManagedDatabaseRestoreDetailsResultResource.ValidateResourceId(id);
+                return new ManagedDatabaseRestoreDetailsResultResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedDatabase
-        /// <summary> Gets an object representing a ManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabase" /> object. </returns>
-        public static ManagedDatabase GetManagedDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDatabaseResource" /> object. </returns>
+        public static ManagedDatabaseResource GetManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedDatabase.ValidateResourceId(id);
-                return new ManagedDatabase(client, id);
+                ManagedDatabaseResource.ValidateResourceId(id);
+                return new ManagedDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedDatabaseSecurityAlertPolicy
-        /// <summary> Gets an object representing a ManagedDatabaseSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedDatabaseSecurityAlertPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicy" /> object. </returns>
-        public static ManagedDatabaseSecurityAlertPolicy GetManagedDatabaseSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> object. </returns>
+        public static ManagedDatabaseSecurityAlertPolicyResource GetManagedDatabaseSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedDatabaseSecurityAlertPolicy.ValidateResourceId(id);
-                return new ManagedDatabaseSecurityAlertPolicy(client, id);
+                ManagedDatabaseSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new ManagedDatabaseSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
-        public static ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" /> object. </returns>
+        public static ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(client, id);
+                ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSchemaTableColumnSensitivityLabel
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseSchemaTableColumnSensitivityLabelResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
-        public static ServerDatabaseSchemaTableColumnSensitivityLabel GetServerDatabaseSchemaTableColumnSensitivityLabel(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> object. </returns>
+        public static ServerDatabaseSchemaTableColumnSensitivityLabelResource GetServerDatabaseSchemaTableColumnSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDatabaseSchemaTableColumnSensitivityLabel.ValidateResourceId(id);
-                return new ServerDatabaseSchemaTableColumnSensitivityLabel(client, id);
+                ServerDatabaseSchemaTableColumnSensitivityLabelResource.ValidateResourceId(id);
+                return new ServerDatabaseSchemaTableColumnSensitivityLabelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedTransparentDataEncryption
-        /// <summary> Gets an object representing a ManagedTransparentDataEncryption along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedTransparentDataEncryptionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedTransparentDataEncryption" /> object. </returns>
-        public static ManagedTransparentDataEncryption GetManagedTransparentDataEncryption(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedTransparentDataEncryptionResource" /> object. </returns>
+        public static ManagedTransparentDataEncryptionResource GetManagedTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedTransparentDataEncryption.ValidateResourceId(id);
-                return new ManagedTransparentDataEncryption(client, id);
+                ManagedTransparentDataEncryptionResource.ValidateResourceId(id);
+                return new ManagedTransparentDataEncryptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceAdministrator
-        /// <summary> Gets an object representing a ManagedInstanceAdministrator along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceAdministratorResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceAdministrator" /> object. </returns>
-        public static ManagedInstanceAdministrator GetManagedInstanceAdministrator(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceAdministratorResource" /> object. </returns>
+        public static ManagedInstanceAdministratorResource GetManagedInstanceAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceAdministrator.ValidateResourceId(id);
-                return new ManagedInstanceAdministrator(client, id);
+                ManagedInstanceAdministratorResource.ValidateResourceId(id);
+                return new ManagedInstanceAdministratorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceAzureADOnlyAuthentication
-        /// <summary> Gets an object representing a ManagedInstanceAzureADOnlyAuthentication along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceAzureADOnlyAuthenticationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceAzureADOnlyAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthentication" /> object. </returns>
-        public static ManagedInstanceAzureADOnlyAuthentication GetManagedInstanceAzureADOnlyAuthentication(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> object. </returns>
+        public static ManagedInstanceAzureADOnlyAuthenticationResource GetManagedInstanceAzureADOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceAzureADOnlyAuthentication.ValidateResourceId(id);
-                return new ManagedInstanceAzureADOnlyAuthentication(client, id);
+                ManagedInstanceAzureADOnlyAuthenticationResource.ValidateResourceId(id);
+                return new ManagedInstanceAzureADOnlyAuthenticationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceEncryptionProtector
-        /// <summary> Gets an object representing a ManagedInstanceEncryptionProtector along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceEncryptionProtectorResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceEncryptionProtectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceEncryptionProtectorResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceEncryptionProtectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtector" /> object. </returns>
-        public static ManagedInstanceEncryptionProtector GetManagedInstanceEncryptionProtector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtectorResource" /> object. </returns>
+        public static ManagedInstanceEncryptionProtectorResource GetManagedInstanceEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceEncryptionProtector.ValidateResourceId(id);
-                return new ManagedInstanceEncryptionProtector(client, id);
+                ManagedInstanceEncryptionProtectorResource.ValidateResourceId(id);
+                return new ManagedInstanceEncryptionProtectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceKey
-        /// <summary> Gets an object representing a ManagedInstanceKey along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceKeyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceKeyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceKey" /> object. </returns>
-        public static ManagedInstanceKey GetManagedInstanceKey(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceKeyResource" /> object. </returns>
+        public static ManagedInstanceKeyResource GetManagedInstanceKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceKey.ValidateResourceId(id);
-                return new ManagedInstanceKey(client, id);
+                ManagedInstanceKeyResource.ValidateResourceId(id);
+                return new ManagedInstanceKeyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceLongTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedInstanceLongTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceLongTermRetentionPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceLongTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicy" /> object. </returns>
-        public static ManagedInstanceLongTermRetentionPolicy GetManagedInstanceLongTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> object. </returns>
+        public static ManagedInstanceLongTermRetentionPolicyResource GetManagedInstanceLongTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceLongTermRetentionPolicy.ValidateResourceId(id);
-                return new ManagedInstanceLongTermRetentionPolicy(client, id);
+                ManagedInstanceLongTermRetentionPolicyResource.ValidateResourceId(id);
+                return new ManagedInstanceLongTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceOperation
-        /// <summary> Gets an object representing a ManagedInstanceOperation along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceOperationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceOperationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceOperationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceOperation" /> object. </returns>
-        public static ManagedInstanceOperation GetManagedInstanceOperation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceOperationResource" /> object. </returns>
+        public static ManagedInstanceOperationResource GetManagedInstanceOperationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceOperation.ValidateResourceId(id);
-                return new ManagedInstanceOperation(client, id);
+                ManagedInstanceOperationResource.ValidateResourceId(id);
+                return new ManagedInstanceOperationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstancePrivateEndpointConnection
-        /// <summary> Gets an object representing a ManagedInstancePrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstancePrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstancePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstancePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstancePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnection" /> object. </returns>
-        public static ManagedInstancePrivateEndpointConnection GetManagedInstancePrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnectionResource" /> object. </returns>
+        public static ManagedInstancePrivateEndpointConnectionResource GetManagedInstancePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstancePrivateEndpointConnection.ValidateResourceId(id);
-                return new ManagedInstancePrivateEndpointConnection(client, id);
+                ManagedInstancePrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new ManagedInstancePrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstancePrivateLink
-        /// <summary> Gets an object representing a ManagedInstancePrivateLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstancePrivateLinkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstancePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstancePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstancePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstancePrivateLink" /> object. </returns>
-        public static ManagedInstancePrivateLink GetManagedInstancePrivateLink(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstancePrivateLinkResource" /> object. </returns>
+        public static ManagedInstancePrivateLinkResource GetManagedInstancePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstancePrivateLink.ValidateResourceId(id);
-                return new ManagedInstancePrivateLink(client, id);
+                ManagedInstancePrivateLinkResource.ValidateResourceId(id);
+                return new ManagedInstancePrivateLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstance
-        /// <summary> Gets an object representing a ManagedInstance along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstance" /> object. </returns>
-        public static ManagedInstance GetManagedInstance(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceResource" /> object. </returns>
+        public static ManagedInstanceResource GetManagedInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstance.ValidateResourceId(id);
-                return new ManagedInstance(client, id);
+                ManagedInstanceResource.ValidateResourceId(id);
+                return new ManagedInstanceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceVulnerabilityAssessment
-        /// <summary> Gets an object representing a ManagedInstanceVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceVulnerabilityAssessmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessment" /> object. </returns>
-        public static ManagedInstanceVulnerabilityAssessment GetManagedInstanceVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessmentResource" /> object. </returns>
+        public static ManagedInstanceVulnerabilityAssessmentResource GetManagedInstanceVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedInstanceVulnerabilityAssessment.ValidateResourceId(id);
-                return new ManagedInstanceVulnerabilityAssessment(client, id);
+                ManagedInstanceVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new ManagedInstanceVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedServerSecurityAlertPolicy
-        /// <summary> Gets an object representing a ManagedServerSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedServerSecurityAlertPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicy" /> object. </returns>
-        public static ManagedServerSecurityAlertPolicy GetManagedServerSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicyResource" /> object. </returns>
+        public static ManagedServerSecurityAlertPolicyResource GetManagedServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedServerSecurityAlertPolicy.ValidateResourceId(id);
-                return new ManagedServerSecurityAlertPolicy(client, id);
+                ManagedServerSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new ManagedServerSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnection.ValidateResourceId(id);
-                return new PrivateEndpointConnection(client, id);
+                PrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new PrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
         #region PrivateLinkResource
-        /// <summary> Gets an object representing a PrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
@@ -2425,465 +2647,552 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region RecoverableManagedDatabase
-        /// <summary> Gets an object representing a RecoverableManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region RecoverableManagedDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoverableManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoverableManagedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RecoverableManagedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoverableManagedDatabase" /> object. </returns>
-        public static RecoverableManagedDatabase GetRecoverableManagedDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecoverableManagedDatabaseResource" /> object. </returns>
+        public static RecoverableManagedDatabaseResource GetRecoverableManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecoverableManagedDatabase.ValidateResourceId(id);
-                return new RecoverableManagedDatabase(client, id);
+                RecoverableManagedDatabaseResource.ValidateResourceId(id);
+                return new RecoverableManagedDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RestorePoint
-        /// <summary> Gets an object representing a RestorePoint along with the instance operations that can be performed on it but with no data. </summary>
+        #region RestorePointResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorePointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorePointResource.CreateResourceIdentifier" /> to create a <see cref="RestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
-        public static RestorePoint GetRestorePoint(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorePointResource" /> object. </returns>
+        public static RestorePointResource GetRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RestorePoint.ValidateResourceId(id);
-                return new RestorePoint(client, id);
+                RestorePointResource.ValidateResourceId(id);
+                return new RestorePointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAutomaticTuning
-        /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerAutomaticTuningResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAutomaticTuningResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAutomaticTuningResource.CreateResourceIdentifier" /> to create a <see cref="ServerAutomaticTuningResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
-        public static ServerAutomaticTuning GetServerAutomaticTuning(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerAutomaticTuningResource" /> object. </returns>
+        public static ServerAutomaticTuningResource GetServerAutomaticTuningResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerAutomaticTuning.ValidateResourceId(id);
-                return new ServerAutomaticTuning(client, id);
+                ServerAutomaticTuningResource.ValidateResourceId(id);
+                return new ServerAutomaticTuningResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAzureADAdministrator
-        /// <summary> Gets an object representing a ServerAzureADAdministrator along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerAzureADAdministratorResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAzureADAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAzureADAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="ServerAzureADAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAzureADAdministrator" /> object. </returns>
-        public static ServerAzureADAdministrator GetServerAzureADAdministrator(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerAzureADAdministratorResource" /> object. </returns>
+        public static ServerAzureADAdministratorResource GetServerAzureADAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerAzureADAdministrator.ValidateResourceId(id);
-                return new ServerAzureADAdministrator(client, id);
+                ServerAzureADAdministratorResource.ValidateResourceId(id);
+                return new ServerAzureADAdministratorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAzureADOnlyAuthentication
-        /// <summary> Gets an object representing a ServerAzureADOnlyAuthentication along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerAzureADOnlyAuthenticationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAzureADOnlyAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAzureADOnlyAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="ServerAzureADOnlyAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAzureADOnlyAuthentication" /> object. </returns>
-        public static ServerAzureADOnlyAuthentication GetServerAzureADOnlyAuthentication(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerAzureADOnlyAuthenticationResource" /> object. </returns>
+        public static ServerAzureADOnlyAuthenticationResource GetServerAzureADOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerAzureADOnlyAuthentication.ValidateResourceId(id);
-                return new ServerAzureADOnlyAuthentication(client, id);
+                ServerAzureADOnlyAuthenticationResource.ValidateResourceId(id);
+                return new ServerAzureADOnlyAuthenticationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDevOpsAuditingSettings
-        /// <summary> Gets an object representing a ServerDevOpsAuditingSettings along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDevOpsAuditingSettingsResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDevOpsAuditingSettingsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDevOpsAuditingSettingsResource.CreateResourceIdentifier" /> to create a <see cref="ServerDevOpsAuditingSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDevOpsAuditingSettings" /> object. </returns>
-        public static ServerDevOpsAuditingSettings GetServerDevOpsAuditingSettings(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDevOpsAuditingSettingsResource" /> object. </returns>
+        public static ServerDevOpsAuditingSettingsResource GetServerDevOpsAuditingSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDevOpsAuditingSettings.ValidateResourceId(id);
-                return new ServerDevOpsAuditingSettings(client, id);
+                ServerDevOpsAuditingSettingsResource.ValidateResourceId(id);
+                return new ServerDevOpsAuditingSettingsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDnsAlias
-        /// <summary> Gets an object representing a ServerDnsAlias along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDnsAliasResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDnsAliasResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDnsAliasResource.CreateResourceIdentifier" /> to create a <see cref="ServerDnsAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDnsAlias" /> object. </returns>
-        public static ServerDnsAlias GetServerDnsAlias(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDnsAliasResource" /> object. </returns>
+        public static ServerDnsAliasResource GetServerDnsAliasResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerDnsAlias.ValidateResourceId(id);
-                return new ServerDnsAlias(client, id);
+                ServerDnsAliasResource.ValidateResourceId(id);
+                return new ServerDnsAliasResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerKey
-        /// <summary> Gets an object representing a ServerKey along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerKeyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerKeyResource.CreateResourceIdentifier" /> to create a <see cref="ServerKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerKey" /> object. </returns>
-        public static ServerKey GetServerKey(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerKeyResource" /> object. </returns>
+        public static ServerKeyResource GetServerKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerKey.ValidateResourceId(id);
-                return new ServerKey(client, id);
+                ServerKeyResource.ValidateResourceId(id);
+                return new ServerKeyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSecurityAlertPolicy
-        /// <summary> Gets an object representing a ServerSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerSecurityAlertPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSecurityAlertPolicy" /> object. </returns>
-        public static ServerSecurityAlertPolicy GetServerSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerSecurityAlertPolicyResource" /> object. </returns>
+        public static ServerSecurityAlertPolicyResource GetServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerSecurityAlertPolicy.ValidateResourceId(id);
-                return new ServerSecurityAlertPolicy(client, id);
+                ServerSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new ServerSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerTrustGroup
-        /// <summary> Gets an object representing a ServerTrustGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerTrustGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerTrustGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerTrustGroupResource.CreateResourceIdentifier" /> to create a <see cref="ServerTrustGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerTrustGroup" /> object. </returns>
-        public static ServerTrustGroup GetServerTrustGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerTrustGroupResource" /> object. </returns>
+        public static ServerTrustGroupResource GetServerTrustGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerTrustGroup.ValidateResourceId(id);
-                return new ServerTrustGroup(client, id);
+                ServerTrustGroupResource.ValidateResourceId(id);
+                return new ServerTrustGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerVulnerabilityAssessment
-        /// <summary> Gets an object representing a ServerVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerVulnerabilityAssessmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="ServerVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerVulnerabilityAssessment" /> object. </returns>
-        public static ServerVulnerabilityAssessment GetServerVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource" /> object. </returns>
+        public static ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerVulnerabilityAssessment.ValidateResourceId(id);
-                return new ServerVulnerabilityAssessment(client, id);
+                ServerVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new ServerVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlAgentConfiguration
-        /// <summary> Gets an object representing a SqlAgentConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlAgentConfigurationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlAgentConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlAgentConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SqlAgentConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
-        public static SqlAgentConfiguration GetSqlAgentConfiguration(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlAgentConfigurationResource" /> object. </returns>
+        public static SqlAgentConfigurationResource GetSqlAgentConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlAgentConfiguration.ValidateResourceId(id);
-                return new SqlAgentConfiguration(client, id);
+                SqlAgentConfigurationResource.ValidateResourceId(id);
+                return new SqlAgentConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SubscriptionUsage
-        /// <summary> Gets an object representing a SubscriptionUsage along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionUsageResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionUsageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionUsageResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionUsageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionUsage" /> object. </returns>
-        public static SubscriptionUsage GetSubscriptionUsage(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionUsageResource" /> object. </returns>
+        public static SubscriptionUsageResource GetSubscriptionUsageResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SubscriptionUsage.ValidateResourceId(id);
-                return new SubscriptionUsage(client, id);
+                SubscriptionUsageResource.ValidateResourceId(id);
+                return new SubscriptionUsageResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SyncAgent
-        /// <summary> Gets an object representing a SyncAgent along with the instance operations that can be performed on it but with no data. </summary>
+        #region SyncAgentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SyncAgentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SyncAgentResource.CreateResourceIdentifier" /> to create a <see cref="SyncAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SyncAgent" /> object. </returns>
-        public static SyncAgent GetSyncAgent(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SyncAgentResource" /> object. </returns>
+        public static SyncAgentResource GetSyncAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SyncAgent.ValidateResourceId(id);
-                return new SyncAgent(client, id);
+                SyncAgentResource.ValidateResourceId(id);
+                return new SyncAgentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SyncGroup
-        /// <summary> Gets an object representing a SyncGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SyncGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SyncGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SyncGroupResource.CreateResourceIdentifier" /> to create a <see cref="SyncGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SyncGroup" /> object. </returns>
-        public static SyncGroup GetSyncGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SyncGroupResource" /> object. </returns>
+        public static SyncGroupResource GetSyncGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SyncGroup.ValidateResourceId(id);
-                return new SyncGroup(client, id);
+                SyncGroupResource.ValidateResourceId(id);
+                return new SyncGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SyncMember
-        /// <summary> Gets an object representing a SyncMember along with the instance operations that can be performed on it but with no data. </summary>
+        #region SyncMemberResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SyncMemberResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SyncMemberResource.CreateResourceIdentifier" /> to create a <see cref="SyncMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SyncMember" /> object. </returns>
-        public static SyncMember GetSyncMember(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SyncMemberResource" /> object. </returns>
+        public static SyncMemberResource GetSyncMemberResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SyncMember.ValidateResourceId(id);
-                return new SyncMember(client, id);
+                SyncMemberResource.ValidateResourceId(id);
+                return new SyncMemberResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlTimeZone
-        /// <summary> Gets an object representing a SqlTimeZone along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlTimeZoneResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlTimeZoneResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlTimeZoneResource.CreateResourceIdentifier" /> to create a <see cref="SqlTimeZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlTimeZone" /> object. </returns>
-        public static SqlTimeZone GetSqlTimeZone(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlTimeZoneResource" /> object. </returns>
+        public static SqlTimeZoneResource GetSqlTimeZoneResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlTimeZone.ValidateResourceId(id);
-                return new SqlTimeZone(client, id);
+                SqlTimeZoneResource.ValidateResourceId(id);
+                return new SqlTimeZoneResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualCluster
-        /// <summary> Gets an object representing a VirtualCluster along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualClusterResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualClusterResource.CreateResourceIdentifier" /> to create a <see cref="VirtualClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualCluster" /> object. </returns>
-        public static VirtualCluster GetVirtualCluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualClusterResource" /> object. </returns>
+        public static VirtualClusterResource GetVirtualClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualCluster.ValidateResourceId(id);
-                return new VirtualCluster(client, id);
+                VirtualClusterResource.ValidateResourceId(id);
+                return new VirtualClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualNetworkRule
-        /// <summary> Gets an object representing a VirtualNetworkRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualNetworkRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkRule" /> object. </returns>
-        public static VirtualNetworkRule GetVirtualNetworkRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualNetworkRuleResource" /> object. </returns>
+        public static VirtualNetworkRuleResource GetVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualNetworkRule.ValidateResourceId(id);
-                return new VirtualNetworkRule(client, id);
+                VirtualNetworkRuleResource.ValidateResourceId(id);
+                return new VirtualNetworkRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkloadClassifier
-        /// <summary> Gets an object representing a WorkloadClassifier along with the instance operations that can be performed on it but with no data. </summary>
+        #region WorkloadClassifierResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkloadClassifierResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadClassifierResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadClassifierResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadClassifier" /> object. </returns>
-        public static WorkloadClassifier GetWorkloadClassifier(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkloadClassifierResource" /> object. </returns>
+        public static WorkloadClassifierResource GetWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkloadClassifier.ValidateResourceId(id);
-                return new WorkloadClassifier(client, id);
+                WorkloadClassifierResource.ValidateResourceId(id);
+                return new WorkloadClassifierResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkloadGroup
-        /// <summary> Gets an object representing a WorkloadGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region WorkloadGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkloadGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadGroupResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadGroup" /> object. </returns>
-        public static WorkloadGroup GetWorkloadGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkloadGroupResource" /> object. </returns>
+        public static WorkloadGroupResource GetWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkloadGroup.ValidateResourceId(id);
-                return new WorkloadGroup(client, id);
+                WorkloadGroupResource.ValidateResourceId(id);
+                return new WorkloadGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LogicalDatabaseTransparentDataEncryption
-        /// <summary> Gets an object representing a LogicalDatabaseTransparentDataEncryption along with the instance operations that can be performed on it but with no data. </summary>
+        #region LogicalDatabaseTransparentDataEncryptionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicalDatabaseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryption" /> object. </returns>
-        public static LogicalDatabaseTransparentDataEncryption GetLogicalDatabaseTransparentDataEncryption(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> object. </returns>
+        public static LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LogicalDatabaseTransparentDataEncryption.ValidateResourceId(id);
-                return new LogicalDatabaseTransparentDataEncryption(client, id);
+                LogicalDatabaseTransparentDataEncryptionResource.ValidateResourceId(id);
+                return new LogicalDatabaseTransparentDataEncryptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a BackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region BackupShortTermRetentionPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="BackupShortTermRetentionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupShortTermRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BackupShortTermRetentionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupShortTermRetentionPolicy" /> object. </returns>
-        public static BackupShortTermRetentionPolicy GetBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupShortTermRetentionPolicyResource" /> object. </returns>
+        public static BackupShortTermRetentionPolicyResource GetBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BackupShortTermRetentionPolicy.ValidateResourceId(id);
-                return new BackupShortTermRetentionPolicy(client, id);
+                BackupShortTermRetentionPolicyResource.ValidateResourceId(id);
+                return new BackupShortTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LedgerDigestUploads
-        /// <summary> Gets an object representing a LedgerDigestUploads along with the instance operations that can be performed on it but with no data. </summary>
+        #region LedgerDigestUploadsResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LedgerDigestUploadsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LedgerDigestUploadsResource.CreateResourceIdentifier" /> to create a <see cref="LedgerDigestUploadsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LedgerDigestUploads" /> object. </returns>
-        public static LedgerDigestUploads GetLedgerDigestUploads(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LedgerDigestUploadsResource" /> object. </returns>
+        public static LedgerDigestUploadsResource GetLedgerDigestUploadsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LedgerDigestUploads.ValidateResourceId(id);
-                return new LedgerDigestUploads(client, id);
+                LedgerDigestUploadsResource.ValidateResourceId(id);
+                return new LedgerDigestUploadsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OutboundFirewallRule
-        /// <summary> Gets an object representing a OutboundFirewallRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region OutboundFirewallRuleResource
+        /// <summary>
+        /// Gets an object representing an <see cref="OutboundFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OutboundFirewallRuleResource.CreateResourceIdentifier" /> to create an <see cref="OutboundFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OutboundFirewallRule" /> object. </returns>
-        public static OutboundFirewallRule GetOutboundFirewallRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OutboundFirewallRuleResource" /> object. </returns>
+        public static OutboundFirewallRuleResource GetOutboundFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OutboundFirewallRule.ValidateResourceId(id);
-                return new OutboundFirewallRule(client, id);
+                OutboundFirewallRuleResource.ValidateResourceId(id);
+                return new OutboundFirewallRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RestorableDroppedDatabase
-        /// <summary> Gets an object representing a RestorableDroppedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region RestorableDroppedDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorableDroppedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableDroppedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDroppedDatabase" /> object. </returns>
-        public static RestorableDroppedDatabase GetRestorableDroppedDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorableDroppedDatabaseResource" /> object. </returns>
+        public static RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RestorableDroppedDatabase.ValidateResourceId(id);
-                return new RestorableDroppedDatabase(client, id);
+                RestorableDroppedDatabaseResource.ValidateResourceId(id);
+                return new RestorableDroppedDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RestorableDroppedManagedDatabase
-        /// <summary> Gets an object representing a RestorableDroppedManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region RestorableDroppedManagedDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorableDroppedManagedDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableDroppedManagedDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedManagedDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDroppedManagedDatabase" /> object. </returns>
-        public static RestorableDroppedManagedDatabase GetRestorableDroppedManagedDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorableDroppedManagedDatabaseResource" /> object. </returns>
+        public static RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RestorableDroppedManagedDatabase.ValidateResourceId(id);
-                return new RestorableDroppedManagedDatabase(client, id);
+                RestorableDroppedManagedDatabaseResource.ValidateResourceId(id);
+                return new RestorableDroppedManagedDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlServer
-        /// <summary> Gets an object representing a SqlServer along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlServerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServer" /> object. </returns>
-        public static SqlServer GetSqlServer(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerResource" /> object. </returns>
+        public static SqlServerResource GetSqlServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlServer.ValidateResourceId(id);
-                return new SqlServer(client, id);
+                SqlServerResource.ValidateResourceId(id);
+                return new SqlServerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerConnectionPolicy
-        /// <summary> Gets an object representing a ServerConnectionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerConnectionPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerConnectionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServerConnectionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerConnectionPolicy" /> object. </returns>
-        public static ServerConnectionPolicy GetServerConnectionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerConnectionPolicyResource" /> object. </returns>
+        public static ServerConnectionPolicyResource GetServerConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerConnectionPolicy.ValidateResourceId(id);
-                return new ServerConnectionPolicy(client, id);
+                ServerConnectionPolicyResource.ValidateResourceId(id);
+                return new ServerConnectionPolicyResource(client, id);
             }
             );
         }

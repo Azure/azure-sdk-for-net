@@ -16,11 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of StaticSiteBuildARMResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="StaticSiteBuildARMResource" /> and their operations.
+    /// Each <see cref="StaticSiteBuildARMResource" /> in the collection will belong to the same instance of <see cref="StaticSiteARMResource" />.
+    /// To get a <see cref="StaticSiteBuildARMResourceCollection" /> instance call the GetStaticSiteBuildARMResources method from an instance of <see cref="StaticSiteARMResource" />.
+    /// </summary>
     public partial class StaticSiteBuildARMResourceCollection : ArmCollection, IEnumerable<StaticSiteBuildARMResource>, IAsyncEnumerable<StaticSiteBuildARMResource>
     {
         private readonly ClientDiagnostics _staticSiteBuildARMResourceStaticSitesClientDiagnostics;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal StaticSiteBuildARMResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteBuildARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildARMResource.ResourceType.Namespace, DiagnosticOptions);
+            _staticSiteBuildARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildARMResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(StaticSiteBuildARMResource.ResourceType, out string staticSiteBuildARMResourceStaticSitesApiVersion);
-            _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteBuildARMResourceStaticSitesApiVersion);
+            _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -113,14 +113,14 @@ using Azure.ResourceManager.Resources.Models;
 
 ```C# Snippet:Changelog_NewCode
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultCollection vaultCollection = resourceGroup.GetVaults();
 VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
 
-ArmOperation<Vault> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
-Vault vault = lro.Value;
+ArmOperation<VaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
+VaultResource vault = lro.Value;
 ```
 
 #### Object Model Changes

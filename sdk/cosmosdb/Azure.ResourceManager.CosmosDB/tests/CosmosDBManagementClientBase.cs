@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected const int DefaultMaxThroughput = 4000;
 
         protected ResourceIdentifier _resourceGroupIdentifier;
-        protected ResourceGroup _resourceGroup;
+        protected ResourceGroupResource _resourceGroup;
         protected string _databaseAccountName;
         protected DatabaseAccountCollection DatabaseAccountCollection { get => _resourceGroup.GetDatabaseAccounts(); }
         public string SubscriptionId { get; set; }
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             JsonPathSanitizers.Add("$..secondaryReadonlyMasterKey");
         }
 
-        protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind)
+        protected async Task<DatabaseAccountResource> CreateDatabaseAccount(string name, DatabaseAccountKind kind)
         {
             return await CreateDatabaseAccount(name, kind, null);
         }
 
-        protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind, DatabaseAccountCapability capability)
+        protected async Task<DatabaseAccountResource> CreateDatabaseAccount(string name, DatabaseAccountKind kind, DatabaseAccountCapability capability)
         {
             var locations = new List<DatabaseAccountLocation>()
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
-                IpRules = { new IpAddressOrRange("23.43.230.120") },
+                IPRules = { new IPAddressOrRange("23.43.230.120") },
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,

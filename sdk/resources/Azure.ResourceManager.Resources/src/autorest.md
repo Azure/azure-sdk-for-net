@@ -51,14 +51,30 @@ override-operation-name:
 
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
-directive:
-  - from: resources.json
-    where: $.definitions.DeploymentExtended
-    transform: $['x-ms-client-name'] = 'Deployment'
-  - from: resources.json
-    where: $.definitions.Deployment
-    transform: $['x-ms-client-name'] = 'DeploymentInput'
 
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
+directive:
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
   # Keep the get method at each scope so that generator can know the possible values of container's parent
@@ -123,31 +139,108 @@ directive:
   - from: deploymentScripts.json
     where: $.definitions.ManagedServiceIdentity.properties.type["x-ms-enum"]
     transform: >
-      $.name = "DeploymentScriptManagedIdentityType"
+      $.name = "ArmDeploymentScriptManagedIdentityType"
   - from: deploymentScripts.json
     where: $.definitions
     transform: >
-      $["ManagedServiceIdentity"]["x-ms-client-name"] = "DeploymentScriptManagedIdentity";
-      $["AzureResourceBase"]["x-ms-client-name"] = "DeploymentScriptResourceBase";
-  - from: managedapplications.json
-    where: $.definitions.Identity
-    transform: >
-      $["x-ms-client-name"] = "ApplicationManagedIdentity";
-      $["properties"]["type"]["x-ms-enum"]["name"] = "ApplicationManagedIdentityType";
+      $["ManagedServiceIdentity"]["x-ms-client-name"] = "ArmDeploymentScriptManagedIdentity";
+      $.ManagedServiceIdentity.properties.tenantId.format = "uuid";
+      $["AzureResourceBase"]["x-ms-client-name"] = "ArmDeploymentScriptResourceBase";
+      $["DeploymentScriptPropertiesBase"]["x-ms-client-name"] = "ArmDeploymentScriptPropertiesBase";
+      $["DeploymentScriptsError"]["x-ms-client-name"] = "ArmDeploymentScriptsError";
+      $.DeploymentScript['x-ms-client-name'] = 'ArmDeploymentScript';
+      $.DeploymentScriptListResult['x-ms-client-name'] = 'ArmDeploymentScriptListResult';
   - from: managedapplications.json
     where: $.definitions
     transform: >
-      $["GenericResource"]["x-ms-client-name"] = "ApplicationResource";
-      $["Resource"]["x-ms-client-name"] = "ApplicationResourceBase";
-      $["Plan"]["x-ms-client-name"] = "ApplicationPlan";
-      $["Sku"]["x-ms-client-name"] = "ApplicationSku";
-      $["ErrorResponse"]["x-ms-client-name"] = "ApplicationErrorResponse";
-      $["OperationListResult"]["x-ms-client-name"] = "ApplicationOperationListResult";
-      $["Operation"]["x-ms-client-name"] = "ApplicationOperation";
+      
+  - from: managedapplications.json
+    where: $.definitions
+    transform: >
+      $["Identity"]["x-ms-client-name"] = "ArmApplicationManagedIdentity";
+      $["Identity"]["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
+      $["Identity"]["properties"]["principalId"]["format"] = "uuid";
+      $["Identity"]["properties"]["tenantId"]["format"] = "uuid";
+      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResource";
+      $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
+      $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
+      $["Sku"]["x-ms-client-name"] = "ArmApplicationSku";
+      $["ErrorResponse"]["x-ms-client-name"] = "ArmApplicationErrorResponse";
+      $["OperationListResult"]["x-ms-client-name"] = "ArmApplicationOperationListResult";
+      $["Operation"]["x-ms-client-name"] = "ArmApplicationOperation";
       $["Operation"]["properties"]["displayOfApplication"] = $["Operation"]["properties"]["display"];
       $["Operation"]["properties"]["display"] = undefined;
       $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
       $["JitRequestDefinitionListResult"]["x-ms-client-name"] = "JitRequestListResult";
+      $["Application"]["x-ms-client-name"] = "ArmApplication";
+      $["ApplicationPackageLockingPolicyDefinition"]["x-ms-client-name"] = "ApplicationPackageLockingPolicy";
+      $["ApplicationBillingDetailsDefinition"]["x-ms-client-name"] = "ApplicationBillingDetails";
+      $["JitApproverDefinition"]["x-ms-client-name"] = "JitApprover";
+      $["DeploymentMode"]["x-ms-enum"]["name"] = "ArmApplicationDeploymentMode";
+      $.Application['x-ms-client-name'] = 'ArmApplication';
+      $.ApplicationDefinition['x-ms-client-name'] = 'ArmApplicationDefinition';
+      $.ApplicationPackageLockingPolicyDefinition['x-ms-client-name'] = 'ArmApplicationPackageLockingPolicy';
+      $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ArmApplicationBillingDetails';
+      $.ApplicationArtifact['x-ms-client-name'] = 'ArmApplicationArtifact';
+      $.ApplicationAuthorization['x-ms-client-name'] = 'ArmApplicationAuthorization';
+      $.ApplicationAuthorization.properties.principalId.format = 'uuid';
+      $.JitAuthorizationPolicies.properties.principalId.format = 'uuid';
+      $.ApplicationClientDetails['x-ms-client-name'] = 'ArmApplicationDetails';
+      $.ApplicationClientDetails.properties.oid.format = 'uuid';
+      $.ApplicationClientDetails.properties.applicationId.format = 'uuid';
+      $.ApplicationDefinitionArtifact['x-ms-client-name'] = 'ArmApplicationDefinitionArtifact';
+      $.ApplicationDefinitionListResult['x-ms-client-name'] = 'ArmApplicationDefinitionListResult';
+      $.ApplicationDeploymentPolicy['x-ms-client-name'] = 'ArmApplicationDeploymentPolicy';
+      $.ApplicationJitAccessPolicy['x-ms-client-name'] = 'ArmApplicationJitAccessPolicy';
+      $.ApplicationListResult['x-ms-client-name'] = 'ArmApplicationListResult';
+      $.ApplicationManagementPolicy['x-ms-client-name'] = 'ArmApplicationManagementPolicy';
+      $.ApplicationNotificationEndpoint['x-ms-client-name'] = 'ArmApplicationNotificationEndpoint';
+      $.ApplicationNotificationPolicy['x-ms-client-name'] = 'ArmApplicationNotificationPolicy';
+      $.ApplicationPackageContact['x-ms-client-name'] = 'ArmApplicationPackageContact';
+      $.ApplicationPackageSupportUrls['x-ms-client-name'] = 'ArmApplicationPackageSupportUrls';
+      $.ApplicationPackageSupportUrls.properties.governmentCloud['x-ms-client-name'] = 'AzureGovernment';
+      $.ApplicationPackageSupportUrls.properties.publicAzure['x-ms-client-name'] = 'AzurePublicCloud';
+      $.ApplicationPolicy['x-ms-client-name'] = 'ArmApplicationPolicy';
+      $.ApplicationPropertiesPatchable['x-ms-client-name'] = 'ArmApplicationPropertiesPatchable';
+      $.ApplicationArtifactName['x-ms-enum'].name = 'ArmApplicationArtifactName';
+      $.ApplicationArtifactType['x-ms-enum'].name = 'ArmApplicationArtifactType';
+      $.ApplicationDefinitionArtifactName['x-ms-enum'].name = 'ArmApplicationDefinitionArtifactName';
+      $.ApplicationLockLevel['x-ms-enum'].name = 'ArmApplicationLockLevel';
+      $.ApplicationManagementMode['x-ms-enum'].name = 'ArmApplicationManagementMode';
+      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
+      $.JitSchedulingPolicy.properties.duration["format"] = "duration";
+      $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
+      $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
+      $.userAssignedResourceIdentity.properties.principalId.format = "uuid";
+      $.userAssignedResourceIdentity.properties.tenantId.format = "uuid";
+      $.userAssignedResourceIdentity["x-ms-client-name"] = "ArmApplicationUserAssignedIdentity";
+      $.ApplicationProperties.properties.applicationDefinitionId["x-ms-format"] = "arm-id";
+      $.ApplicationProperties.properties.managedResourceGroupId["x-ms-format"] = "arm-id";
+      $.ApplicationPropertiesPatchable.properties.applicationDefinitionId["x-ms-format"] = "arm-id";
+      $.ApplicationPropertiesPatchable.properties.managedResourceGroupId["x-ms-format"] = "arm-id";
+  - from: resources.json
+    where: $.definitions
+    transform: >
+      $.DeploymentProperties.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
+      $.DeploymentPropertiesExtended.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
+      $.DeploymentExtended['x-ms-client-name'] = 'ArmDeployment';
+      $.Deployment['x-ms-client-name'] = 'ArmDeploymentInput';
+      $.DeploymentExportResult['x-ms-client-name'] = 'ArmDeploymentExportResult';
+      $.DeploymentExtendedFilter['x-ms-client-name'] = 'ArmDeploymentExtendedFilter';
+      $.DeploymentListResult['x-ms-client-name'] = 'ArmDeploymentListResult';
+      $.DeploymentOperation['x-ms-client-name'] = 'ArmDeploymentOperation';
+      $.DeploymentOperationProperties['x-ms-client-name'] = 'ArmDeploymentOperationProperties';
+      $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
+      $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
+      $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIf';
+      $.DeploymentWhatIfSettings['x-ms-client-name'] = 'ArmDeploymentWhatIfSettings';
+      $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';
+      $.DeploymentProperties['x-ms-client-name'] = 'ArmDeploymentProperties';
+      $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
+      $.Dependency["x-ms-client-name"] = "ArmDependency";
+      $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
+      $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
+      $.DeploymentOperationProperties.properties.duration["format"] = "duration";
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
@@ -157,16 +250,6 @@ directive:
   - from: resources.json
     where: $.definitions.DeploymentWhatIf.properties.location
     transform: $['description'] = 'The location to store the deployment data, only required at the tenant and management group scope.'
-  - from: managedapplications.json
-    where: $.definitions
-    transform: >
-      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
-      $.JitSchedulingPolicy.properties.duration["format"] = "duration";
-  - from: resources.json
-    where: $.definitions
-    transform: >
-      $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
-      $.DeploymentOperationProperties.properties.duration["format"] = "duration";
   - from: resources.json
     where: $.definitions.Alias
     transform:

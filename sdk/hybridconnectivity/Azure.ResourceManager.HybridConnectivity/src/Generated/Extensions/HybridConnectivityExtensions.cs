@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             );
         }
 
-        /// <summary> Gets a collection of EndpointResources in the EndpointResource. </summary>
+        /// <summary> Gets a collection of EndpointResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public static EndpointResourceCollection GetEndpointResources(this ArmResource armResource)
@@ -64,7 +63,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         }
 
         #region EndpointResource
-        /// <summary> Gets an object representing a EndpointResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
