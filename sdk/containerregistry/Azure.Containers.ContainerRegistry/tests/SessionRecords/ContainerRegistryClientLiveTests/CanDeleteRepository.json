@@ -5,9 +5,9 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
-        "traceparent": "00-e981398995e59f4d91ccc054b028ec77-ef1cc750387ddd47-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220307.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "42c2758311230d331b8e5b7ba56da080",
+        "traceparent": "00-499693a38c43774eb0044fe6c190ce12-2fbcdddeca340a4b-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220325.1 (.NET Core 3.1.23; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b60a36083e382f11dad3b62b412d6401",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -22,7 +22,7 @@
         "Connection": "keep-alive",
         "Content-Length": "215",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 23:31:35 GMT",
+        "Date": "Fri, 25 Mar 2022 20:01:46 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -31,7 +31,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://mohitcontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022mohitcontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/hello-world:delete\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "94ff3a91-4ed7-49de-b967-9b41bbc15603"
+        "X-Ms-Correlation-Request-Id": "ae381a30-989b-49f3-963d-0d57606c79a9"
       },
       "ResponseBody": {
         "errors": [
@@ -56,9 +56,9 @@
         "Accept": "application/json",
         "Content-Length": "88",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-e981398995e59f4d91ccc054b028ec77-4926c1a35446f841-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220307.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "c333b651709c713102c2d9f209ffd433",
+        "traceparent": "00-499693a38c43774eb0044fe6c190ce12-8395ed291639714c-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220325.1 (.NET Core 3.1.23; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d82ffea9b40b7a5525bf44527ca15379",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "grant_type=access_token\u0026service=mohitcontainerregistry.azurecr.io\u0026access_token=Sanitized",
@@ -66,15 +66,15 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 23:31:35 GMT",
+        "Date": "Fri, 25 Mar 2022 20:01:46 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "01448f5b-c327-4eef-946f-e95eab5bad67",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.383333"
+        "X-Ms-Correlation-Request-Id": "169c5bb5-cc79-4e32-9527-bbab97621d42",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.8"
       },
       "ResponseBody": {
-        "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikk3QjY6NlQ0QTpUWlYzOllJT046Rk9ESjpOWlRDOjVVUFk6M0JWMzpGRlhPOlE1NEs6M0JCSzpHVFgzIn0.eyJqdGkiOiIzMzI0ZTA4MC05MzdiLTRlZjctODJhNi01OWRhOWJhZjkwMjEiLCJzdWIiOiJlNTFmZmFjYy0zY2YyLTRjNDgtODU2My04YTljOWE0Yjk2NTQiLCJuYmYiOjE2NDY2OTQ5OTUsImV4cCI6MTY0NjcwNjY5NSwiaWF0IjoxNjQ2Njk0OTk1LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJtb2hpdGNvbnRhaW5lcnJlZ2lzdHJ5LmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiY2E3N2JiOTVkODM5NGFiMzg3YzkwZDNhYWEwYjEyYjMiLCJncmFudF90eXBlIjoicmVmcmVzaF90b2tlbiIsImFwcGlkIjoiYjJhYzE3ZmUtNmRkZS00YjFjLThhNjQtOWE3M2FhOWJmNjM4IiwicGVybWlzc2lvbnMiOnsiQWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXSwiTm90QWN0aW9ucyI6bnVsbH0sInJvbGVzIjpbXX0.vlaXpIyKfsEu5bec0mZLvk5AlcMz2Ydr3Nuez6wmpdEDZCTSElnzCEsmOgDawuKbtquTEWb9R-fDFshRNtnBj-lQN6JRjpLMSpkVkFuUHEjT25sd6rQZ_jB_TJbEaAlLhhJOpDoMnd1-P_Spsvh4TcH3NyPYlii7REePnmrY15knK5ESjvB_pb9GSqReHSgO7CXTNdvbQltn_x09WW_mHm2c0zpMM3G-qrvtrviUECrzSEi7qMKeTdEI93hJDGmO6EIwpUISPIuQoSVoel_clSuLER4_iI-IqCPio3b8V3mWvjiuGNzI37kW-PLiKC2sietP99wQtGNajGdufS2vQQ"
+        "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikk3QjY6NlQ0QTpUWlYzOllJT046Rk9ESjpOWlRDOjVVUFk6M0JWMzpGRlhPOlE1NEs6M0JCSzpHVFgzIn0.eyJqdGkiOiI0N2U3YTIyNy1kNmRlLTQ3ZmItYTk4Yi1jMDY4NDkzOTQ3NDgiLCJzdWIiOiI2MTc3ODlhMi1lYWIyLTRmYzctYjM5YS1iODVmZDdlYWQzZGIiLCJuYmYiOjE2NDgyMzc2MDYsImV4cCI6MTY0ODI0OTMwNiwiaWF0IjoxNjQ4MjM3NjA2LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJtb2hpdGNvbnRhaW5lcnJlZ2lzdHJ5LmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiNmRiNTFmYzFhZGVkNDgyODkzN2FhNTRkNzQyZDg0MjUiLCJncmFudF90eXBlIjoicmVmcmVzaF90b2tlbiIsImFwcGlkIjoiMDNiMWEyNDMtZWNjZi00MmUzLWJjZjktNmM4MTEzOWM4ZTA1IiwicGVybWlzc2lvbnMiOnsiQWN0aW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXSwiTm90QWN0aW9ucyI6bnVsbH0sInJvbGVzIjpbXX0.YqFfyismedHMvWlgjNk_6Ey7B-LgRnUG9KMDK_sCw00GCcPsbOZ2UO6EXFt7kd4CJHgGZSzRWWAX3opV5xYZz-fWzvry7Pm4KPmKK0OBcxG0SRkmEtN0WqR_S6YB_6JDkPualdex3ySSAwWRBGpQkuRawbHL9qN8VfRXVEcZBX6IfXu2Le7kLx0xAouY2rfZO1TUUUxTONuXvIpjfFOebvix5vS08Xnxx_IkDX2M9l5I-cp_G9yGAw5Nd6JweT4zHTkbNJHDy9IiDJGGQC1d5VW1csBapm8w0JoouPgTlw3LwzXU_00lcmmFjzXBAanCDP4Z18YZiJh0y24y0qw5Kw"
       }
     },
     {
@@ -84,9 +84,9 @@
         "Accept": "application/json",
         "Content-Length": "140",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-e981398995e59f4d91ccc054b028ec77-f0d62958d8d1e74d-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220307.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "4c0ac904c9e1213d098802afbbc9fb7d",
+        "traceparent": "00-499693a38c43774eb0044fe6c190ce12-2f31cd2825bb5348-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220325.1 (.NET Core 3.1.23; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6ac819be63116ea80a96e54a16da3b41",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "service=mohitcontainerregistry.azurecr.io\u0026scope=repository%3Alibrary%2Fhello-world%3Adelete\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
@@ -94,15 +94,15 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 23:31:35 GMT",
+        "Date": "Fri, 25 Mar 2022 20:01:46 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "5ae87c37-887e-4b43-97fb-92a68a4b837d",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.333333"
+        "X-Ms-Correlation-Request-Id": "1f8e9c6f-a33c-4fe7-bafc-7a5720dcc414",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.583333"
       },
       "ResponseBody": {
-        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikk3QjY6NlQ0QTpUWlYzOllJT046Rk9ESjpOWlRDOjVVUFk6M0JWMzpGRlhPOlE1NEs6M0JCSzpHVFgzIn0.eyJqdGkiOiI1Y2MwNjY2My1kMTM2LTQ0MTEtOGVjMC00NWY4ODUzMzUwZjAiLCJzdWIiOiJlNTFmZmFjYy0zY2YyLTRjNDgtODU2My04YTljOWE0Yjk2NTQiLCJuYmYiOjE2NDY2OTQ5OTUsImV4cCI6MTY0NjY5OTQ5NSwiaWF0IjoxNjQ2Njk0OTk1LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJtb2hpdGNvbnRhaW5lcnJlZ2lzdHJ5LmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiY2E3N2JiOTVkODM5NGFiMzg3YzkwZDNhYWEwYjEyYjMiLCJhY2Nlc3MiOlt7IlR5cGUiOiJyZXBvc2l0b3J5IiwiTmFtZSI6ImxpYnJhcnkvaGVsbG8td29ybGQiLCJBY3Rpb25zIjpbImRlbGV0ZSJdfV0sInJvbGVzIjpbXSwiZ3JhbnRfdHlwZSI6ImFjY2Vzc190b2tlbiIsImFwcGlkIjoiYjJhYzE3ZmUtNmRkZS00YjFjLThhNjQtOWE3M2FhOWJmNjM4In0.NZbdYK3BeOsoPgJ5FjaivyZ65dOivjDED-JU2dDNC4YOM-YpW2-Fs70U1dhu5ZF03n-9aWwuEEbPLYUdWHrcLc9lSoCEtHSQuwfe-gNWasSnJf_0XIBF4n_Rb3E4GXWV39zNIX_8yM_nSfekO6cJHvkhECMMEWiKfPSBhr-7IS0ckIlc4tKIxClBSIqKRqcnii2t7fPEp87Plx_DARDpdENrFsskpjydskCHeG-bJ9xM9aEfNa9g4fdguOqpSa_Omr5OtUc0Ijjzui_I80vBQZgLRw-RG9b7YlMDY53r18rs5kOisJi5YiS4jVp1zBCvYsNpJ3qUbt29zaLK2j5Oiw"
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikk3QjY6NlQ0QTpUWlYzOllJT046Rk9ESjpOWlRDOjVVUFk6M0JWMzpGRlhPOlE1NEs6M0JCSzpHVFgzIn0.eyJqdGkiOiI4NjFjMGJmNi1jZmFmLTQ2YTUtODQ0NS01OTdjYmJmNmJlMzIiLCJzdWIiOiI2MTc3ODlhMi1lYWIyLTRmYzctYjM5YS1iODVmZDdlYWQzZGIiLCJuYmYiOjE2NDgyMzc2MDYsImV4cCI6MTY0ODI0MjEwNiwiaWF0IjoxNjQ4MjM3NjA2LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJtb2hpdGNvbnRhaW5lcnJlZ2lzdHJ5LmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiNmRiNTFmYzFhZGVkNDgyODkzN2FhNTRkNzQyZDg0MjUiLCJhY2Nlc3MiOlt7IlR5cGUiOiJyZXBvc2l0b3J5IiwiTmFtZSI6ImxpYnJhcnkvaGVsbG8td29ybGQiLCJBY3Rpb25zIjpbImRlbGV0ZSJdfV0sInJvbGVzIjpbXSwiZ3JhbnRfdHlwZSI6ImFjY2Vzc190b2tlbiIsImFwcGlkIjoiMDNiMWEyNDMtZWNjZi00MmUzLWJjZjktNmM4MTEzOWM4ZTA1In0.H9vKhE1K2n64KM-fuMxWnhsC1rHyAPn47NlgnCZmEhV4tYuH9T5N2QqunmaSbxdSmUDSVBSVidZXfz3cfoKTf93bFwl3YX_DlKfklZeQuV5o7E5d8O2JTmzeiL5k4EBNFhtdtUMb-jSbJZDBdx7m7ImZ4HGn_kmPOhQBQQMiINcJRte2xD0czjPPBP4QoibslOD4E1Ek5WeveqDqySWEIqml51Z8vbjEBekJqZ0eM9ent49pMJj51eUV_9A4OyHKhdD-avSNZiCPfnw56jedoJWtrYPyb3xI9RPcjgflLBXmlg0yc1zJ6y1nfdZY3ChJaVa3Lpy6BO3C5lWRYTCHCQ"
       }
     },
     {
@@ -111,9 +111,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e981398995e59f4d91ccc054b028ec77-ef1cc750387ddd47-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220307.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "42c2758311230d331b8e5b7ba56da080",
+        "traceparent": "00-499693a38c43774eb0044fe6c190ce12-2fbcdddeca340a4b-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220325.1 (.NET Core 3.1.23; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b60a36083e382f11dad3b62b412d6401",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -128,7 +128,7 @@
         "Connection": "keep-alive",
         "Content-Length": "965",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 23:31:38 GMT",
+        "Date": "Fri, 25 Mar 2022 20:01:51 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -136,25 +136,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "42c2758311230d331b8e5b7ba56da080",
-        "X-Ms-Correlation-Request-Id": "e18f6795-5780-49d6-8000-99bd2d0d8bd6",
+        "X-Ms-Client-Request-Id": "b60a36083e382f11dad3b62b412d6401",
+        "X-Ms-Correlation-Request-Id": "04c08ebc-4d04-45b6-a371-addaad8f3dae",
         "X-Ms-Ratelimit-Remaining-Calls-Per-Second": "8.000000",
-        "X-Ms-Request-Id": "df5045fb-ce26-4835-9b10-b930e72f0441"
+        "X-Ms-Request-Id": "0fb2a739-648b-4f73-b1c5-6dff9452cd27"
       },
       "ResponseBody": {
         "manifestsDeleted": [
-          "sha256:01433e86a06b752f228e3c17394169a5e21a0995f153268a9b36a16d4f2b2184",
-          "sha256:251bb7a536c7cce3437758971aab3a31c6da52fb43ff0654cff5b167c4486409",
+          "sha256:432f982638b3aefab73cc58ab28f5c16e96fdb504e8c134fc58dff4bae8bf338",
           "sha256:7b8b7289d0536a08eabdf71c20246e23f7116641db7e1d278592236ea4dcb30c",
-          "sha256:97a379f4f88575512824f3b352bc03cd75e239179eea0fecc38e597b2209f49a",
+          "sha256:83ada69f673f74b81a3e2ed03edd56fcf190be8b1721f9afc4d25309908d7213",
           "sha256:98c9722322be649df94780d3fbe594fce7996234b259f27eac9428b84050c849",
-          "sha256:b3dd41b5fbccbf0e39bee932466d389214cddcb53fa4ad5d02f29ee4172db8c7",
+          "sha256:995efde2e81b21d1ea7066aa77a59298a62a9e9fbb4b77f36c189774ec9b1089",
+          "sha256:acd65ed93903ec23468247a22d7ea0390f2e5e09b0ea3a93965a24b25b905c1b",
           "sha256:b836bb24a270b9cc935962d8228517fde0f16990e88893d935efcb1b14c0017a",
-          "sha256:c2f204d26b4ea353651385001bb6bc371d8c4edcd9daf61d00ad365d927e00c0",
+          "sha256:bfea6278a0a267fad2634554f4f0c6f31981eea41c553fdf5a83e95a41d40c38",
           "sha256:c7b6944911848ce39b44ed660d95fb54d69bbd531de724c7ce6fc9f743c0b861",
+          "sha256:eb11b1a194ff8e236a01eff392c4e1296a53b0fb4780d8b0382f7996a15d5392",
           "sha256:f130bd2d67e6e9280ac6d0a6c83857bfaf70234e8ef4236876eccfbd30973b1c",
-          "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4",
-          "sha256:fdea2bf76c9a47fc0b81958cb87aa65448012ef36ce051a72a09db398efdf7cc"
+          "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4"
         ],
         "tagsDeleted": [
           "latest",
@@ -171,9 +171,9 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "traceparent": "00-a398bc07d5f75c47a7960ea2e937f9c4-ba9640edf9686845-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220307.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "fed20d958fd513e543503f603840031c",
+        "traceparent": "00-0a2f8e1699c0744193afb13a3e02778f-d3a74707893d6546-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220325.1 (.NET Core 3.1.23; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ab5cc737d09053cae18f9179f9beb239",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -188,7 +188,7 @@
         "Connection": "keep-alive",
         "Content-Length": "196",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 23:31:38 GMT",
+        "Date": "Fri, 25 Mar 2022 20:01:51 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -197,7 +197,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://mohitcontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022mohitcontainerregistry.azurecr.io\u0022,scope=\u0022registry:catalog:*\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "f8ebb5b6-cce2-4c41-a57e-1882ecba3992"
+        "X-Ms-Correlation-Request-Id": "ec551523-7da7-46a7-92e2-4ad6cecbecc6"
       },
       "ResponseBody": {
         "errors": [
@@ -222,9 +222,9 @@
         "Accept": "application/json",
         "Content-Length": "121",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-a398bc07d5f75c47a7960ea2e937f9c4-b304c4fb6cad7a48-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220307.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "db7728ba5462879e7912ba146d82b539",
+        "traceparent": "00-0a2f8e1699c0744193afb13a3e02778f-35d61fc140daae41-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220325.1 (.NET Core 3.1.23; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "286d3d7ff96445f055c1cd74cf0a644b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "service=mohitcontainerregistry.azurecr.io\u0026scope=registry%3Acatalog%3A%2A\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
@@ -232,15 +232,15 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 23:31:38 GMT",
+        "Date": "Fri, 25 Mar 2022 20:01:51 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "a7773ebd-0e46-4a00-b259-bbc995a48552",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.316667"
+        "X-Ms-Correlation-Request-Id": "5b99a0de-902e-42af-a055-83f6eadaa6e2",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.566667"
       },
       "ResponseBody": {
-        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikk3QjY6NlQ0QTpUWlYzOllJT046Rk9ESjpOWlRDOjVVUFk6M0JWMzpGRlhPOlE1NEs6M0JCSzpHVFgzIn0.eyJqdGkiOiI5MzNjMjc3Ni0yYjkwLTQ4ZDQtOWU4NS01Nzk2ODdjYmIyOWUiLCJzdWIiOiJlNTFmZmFjYy0zY2YyLTRjNDgtODU2My04YTljOWE0Yjk2NTQiLCJuYmYiOjE2NDY2OTQ5OTgsImV4cCI6MTY0NjY5OTQ5OCwiaWF0IjoxNjQ2Njk0OTk4LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJtb2hpdGNvbnRhaW5lcnJlZ2lzdHJ5LmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiY2E3N2JiOTVkODM5NGFiMzg3YzkwZDNhYWEwYjEyYjMiLCJhY2Nlc3MiOlt7IlR5cGUiOiJyZWdpc3RyeSIsIk5hbWUiOiJjYXRhbG9nIiwiQWN0aW9ucyI6WyIqIl19XSwicm9sZXMiOltdLCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIiwiYXBwaWQiOiJiMmFjMTdmZS02ZGRlLTRiMWMtOGE2NC05YTczYWE5YmY2MzgifQ.yKzDsAp5REiBSybAXgSMd6xLEvAfzUirCjqBBr6br0HwAzt5L-SFd1GvN2N2EJmOy2xytSo0mvQkPVwKMNouJTvlq6S-oZim1QphjdPZSG5wE7N7-EnGlla8IgtH7nt401jFZ2AWPVAsVeJ4dmoZomGlf3-TIhLuv1JeyT6Om3G3P-EPA2crRp3l9WX7lOl0Dh_QuCWshKtQyYtnxNq4aqaU5CjPaRX7ta0FGMHWBWp1fxBy3z623J7q-Z5E9_Wz_n2S7kqbDapX2jqjdCROiH7TkVPkxorbdGML0DzovEIhP6Q4iJMXWJQeWSARR0PEEKCZZJGMbqTDSJowLrRKEA"
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikk3QjY6NlQ0QTpUWlYzOllJT046Rk9ESjpOWlRDOjVVUFk6M0JWMzpGRlhPOlE1NEs6M0JCSzpHVFgzIn0.eyJqdGkiOiI5MGY0ZDRkNy01YmMyLTRiYjQtYTNmYi1jNDRhODY1M2UwODEiLCJzdWIiOiI2MTc3ODlhMi1lYWIyLTRmYzctYjM5YS1iODVmZDdlYWQzZGIiLCJuYmYiOjE2NDgyMzc2MTEsImV4cCI6MTY0ODI0MjExMSwiaWF0IjoxNjQ4MjM3NjExLCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJtb2hpdGNvbnRhaW5lcnJlZ2lzdHJ5LmF6dXJlY3IuaW8iLCJ2ZXJzaW9uIjoiMS4wIiwicmlkIjoiNmRiNTFmYzFhZGVkNDgyODkzN2FhNTRkNzQyZDg0MjUiLCJhY2Nlc3MiOlt7IlR5cGUiOiJyZWdpc3RyeSIsIk5hbWUiOiJjYXRhbG9nIiwiQWN0aW9ucyI6WyIqIl19XSwicm9sZXMiOltdLCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIiwiYXBwaWQiOiIwM2IxYTI0My1lY2NmLTQyZTMtYmNmOS02YzgxMTM5YzhlMDUifQ.Wos1eejRGo907nJ5D3Voy0UuEqc2_Njg7ZQrDNn5qmA44RHKNUV0arW3V2PlcdeFMpoXBFqwOBtQnZNaf5sPGC4SUr93eEjJrfPoGkjeLvyu1JdyO6_TM3uy1RFfEuC5xZiMKvmi12ZNjP3CykfM9rsWY94wC8kgrpx9uPAJaqmJvX6pEHvXXFiowe-KVaZbsiL_MeWrl48xqyd0JUBhY56fTEs62QxNQZHIMhKNNWr5Cqwu2-F9Is0HeRD8JxkkR5ctNDXKT0-7R8a8EL0ELALI-BGjFuBwgzc-o0PQlIzaehEt6muV3K994s2KXJ2JjLCv6uw_fmnXY7bcESHARA"
       }
     },
     {
@@ -249,9 +249,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a398bc07d5f75c47a7960ea2e937f9c4-ba9640edf9686845-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220307.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "fed20d958fd513e543503f603840031c",
+        "traceparent": "00-0a2f8e1699c0744193afb13a3e02778f-d3a74707893d6546-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.1.0-alpha.20220325.1 (.NET Core 3.1.23; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ab5cc737d09053cae18f9179f9beb239",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -266,7 +266,7 @@
         "Connection": "keep-alive",
         "Content-Length": "69",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 07 Mar 2022 23:31:38 GMT",
+        "Date": "Fri, 25 Mar 2022 20:01:51 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -274,7 +274,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "cd5cf0be-138c-455f-9c55-62943475111a"
+        "X-Ms-Correlation-Request-Id": "95d1531f-4f2b-4f79-8278-9b4ccaddd557"
       },
       "ResponseBody": {
         "repositories": [
@@ -286,10 +286,10 @@
     }
   ],
   "Variables": {
-    "CLIENT_ID": "b2ac17fe-6dde-4b1c-8a64-9a73aa9bf638",
+    "CLIENT_ID": "03b1a243-eccf-42e3-bcf9-6c81139c8e05",
     "CONTAINERREGISTRY_ENDPOINT": "https://mohitcontainerregistry.azurecr.io",
     "CONTAINERREGISTRY_REGISTRY_NAME": "mohitcontainerregistry",
-    "RandomSeed": "81117523",
+    "RandomSeed": "1361900732",
     "RESOURCE_GROUP": "rg-mohitcontainerregistry",
     "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
     "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
