@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="defaultDomain"> The default domain for the tenant. </param>
         /// <param name="tenantType"> The tenant type. Only available for &apos;Home&apos; tenant category. </param>
         /// <param name="tenantBrandingLogoUrl"> The tenant&apos;s branding logo URL. Only available for &apos;Home&apos; tenant category. </param>
-        internal TenantData(string id, string tenantId, TenantCategory? tenantCategory, string country, string countryCode, string displayName, IReadOnlyList<string> domains, string defaultDomain, string tenantType, string tenantBrandingLogoUrl)
+        internal TenantData(string id, Guid? tenantId, TenantCategory? tenantCategory, string country, string countryCode, string displayName, IReadOnlyList<string> domains, string defaultDomain, string tenantType, string tenantBrandingLogoUrl)
         {
             Id = id;
             TenantId = tenantId;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </summary>
         public string Id { get; }
         /// <summary> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> Category of the tenant. </summary>
         public TenantCategory? TenantCategory { get; }
         /// <summary> Country/region name of the address for the tenant. </summary>
