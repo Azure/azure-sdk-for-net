@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class RestApiListResult
+    internal partial class ArmRestApiListResult
     {
-        internal static RestApiListResult DeserializeComputeOperationListResult(JsonElement element)
+        internal static ArmRestApiListResult DeserializeComputeOperationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestApi>> value = default;
+            Optional<IReadOnlyList<AmrRestApi>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestApi> array = new List<RestApi>();
+                    List<AmrRestApi> array = new List<AmrRestApi>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestApi.DeserializeRestApi(item));
+                        array.Add(AmrRestApi.DeserializeRestApi(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new RestApiListResult(Optional.ToList(value));
+            return new ArmRestApiListResult(Optional.ToList(value));
         }
     }
 }

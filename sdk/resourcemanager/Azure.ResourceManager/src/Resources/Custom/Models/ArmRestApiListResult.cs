@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The List Operation operation response. </summary>
-    internal partial class RestApiListResult
+    internal partial class ArmRestApiListResult
     {
         /// <summary> Initializes a new instance of RestApiListResult. </summary>
-        internal RestApiListResult()
+        internal ArmRestApiListResult()
         {
-            Value = new ChangeTrackingList<RestApi>();
+            Value = new ChangeTrackingList<AmrRestApi>();
         }
 
         /// <summary> Initializes a new instance of RestApiListResult. </summary>
         /// <param name="value"> The list of operations. </param>
-        internal RestApiListResult(IReadOnlyList<RestApi> value)
+        internal ArmRestApiListResult(IReadOnlyList<AmrRestApi> value)
         {
             Value = value;
         }
 
         /// <summary> The list of operations. </summary>
-        public IReadOnlyList<RestApi> Value { get; }
+        public IReadOnlyList<AmrRestApi> Value { get; }
     }
 }

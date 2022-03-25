@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class which represents the RestApis for a given azure namespace.
     /// </summary>
-    public partial class RestApiCollection : ArmCollection, IEnumerable<RestApi>, IAsyncEnumerable<RestApi>
+    public partial class ArmRestApiCollection : ArmCollection, IEnumerable<AmrRestApi>, IAsyncEnumerable<AmrRestApi>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _nameSpace;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Represents the REST operations. </summary>
         private RestOperations _restClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RestApiCollection"/> class for mocking. </summary>
-        protected RestApiCollection()
+        /// <summary> Initializes a new instance of the <see cref="ArmRestApiCollection"/> class for mocking. </summary>
+        protected ArmRestApiCollection()
         {
         }
 
         /// <summary> Initializes a new instance of RestApiCollection class. </summary>
         /// <param name="operation"> The resource representing the parent resource. </param>
         /// <param name="nameSpace"> The namespace for the rest apis. </param>
-        internal RestApiCollection(ArmResource operation, string nameSpace)
+        internal ArmRestApiCollection(ArmResource operation, string nameSpace)
             : base(operation.Client, operation.Id)
         {
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, Diagnostics);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a list of operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestApi" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestApi> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AmrRestApi" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AmrRestApi> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RestApi> FirstPageFunc(int? pageSizeHint)
+            Page<AmrRestApi> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArmRestApiCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a list of operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestApi" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestApi> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AmrRestApi" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AmrRestApi> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RestApi>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AmrRestApi>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiCollection.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("ArmRestApiCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        IEnumerator<RestApi> IEnumerable<RestApi>.GetEnumerator()
+        IEnumerator<AmrRestApi> IEnumerable<AmrRestApi>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RestApi> IAsyncEnumerable<RestApi>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AmrRestApi> IAsyncEnumerable<AmrRestApi>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class RestApi
+    public partial class AmrRestApi
     {
-        internal static RestApi DeserializeRestApi(JsonElement element)
+        internal static AmrRestApi DeserializeRestApi(JsonElement element)
         {
             Optional<string> origin = default;
             Optional<string> name = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new RestApi(origin.Value, name.Value, operation.Value, resource.Value, description.Value, provider.Value);
+            return new AmrRestApi(origin.Value, name.Value, operation.Value, resource.Value, description.Value, provider.Value);
         }
     }
 }
