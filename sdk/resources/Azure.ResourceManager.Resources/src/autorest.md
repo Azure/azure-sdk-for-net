@@ -144,6 +144,7 @@ directive:
     where: $.definitions
     transform: >
       $["ManagedServiceIdentity"]["x-ms-client-name"] = "ArmDeploymentScriptManagedIdentity";
+      $.ManagedServiceIdentity.properties.tenantId.format = "uuid";
       $["AzureResourceBase"]["x-ms-client-name"] = "ArmDeploymentScriptResourceBase";
       $["DeploymentScriptPropertiesBase"]["x-ms-client-name"] = "ArmDeploymentScriptPropertiesBase";
       $["DeploymentScriptsError"]["x-ms-client-name"] = "ArmDeploymentScriptsError";
@@ -182,6 +183,8 @@ directive:
       $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ArmApplicationBillingDetails';
       $.ApplicationArtifact['x-ms-client-name'] = 'ArmApplicationArtifact';
       $.ApplicationAuthorization['x-ms-client-name'] = 'ArmApplicationAuthorization';
+      $.ApplicationAuthorization.properties.principalId.format = 'uuid';
+      $.JitAuthorizationPolicies.properties.principalId.format = 'uuid';
       $.ApplicationClientDetails['x-ms-client-name'] = 'ArmApplicationDetails';
       $.ApplicationClientDetails.properties.oid.format = 'uuid';
       $.ApplicationClientDetails.properties.applicationId.format = 'uuid';
@@ -213,6 +216,8 @@ directive:
       $.userAssignedResourceIdentity["x-ms-client-name"] = "ArmApplicationUserAssignedIdentity";
       $.ApplicationProperties.properties.applicationDefinitionId["x-ms-format"] = "arm-id";
       $.ApplicationProperties.properties.managedResourceGroupId["x-ms-format"] = "arm-id";
+      $.ApplicationPropertiesPatchable.properties.applicationDefinitionId["x-ms-format"] = "arm-id";
+      $.ApplicationPropertiesPatchable.properties.managedResourceGroupId["x-ms-format"] = "arm-id";
   - from: resources.json
     where: $.definitions
     transform: >

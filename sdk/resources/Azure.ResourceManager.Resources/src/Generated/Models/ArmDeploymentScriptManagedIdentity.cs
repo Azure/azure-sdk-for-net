@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="armDeploymentScriptManagedIdentityType"> Type of the managed identity. </param>
         /// <param name="tenantId"> ID of the Azure Active Directory. </param>
         /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
-        internal ArmDeploymentScriptManagedIdentity(ArmDeploymentScriptManagedIdentityType? armDeploymentScriptManagedIdentityType, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal ArmDeploymentScriptManagedIdentity(ArmDeploymentScriptManagedIdentityType? armDeploymentScriptManagedIdentityType, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             ArmDeploymentScriptManagedIdentityType = armDeploymentScriptManagedIdentityType;
             TenantId = tenantId;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Type of the managed identity. </summary>
         public ArmDeploymentScriptManagedIdentityType? ArmDeploymentScriptManagedIdentityType { get; set; }
         /// <summary> ID of the Azure Active Directory. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

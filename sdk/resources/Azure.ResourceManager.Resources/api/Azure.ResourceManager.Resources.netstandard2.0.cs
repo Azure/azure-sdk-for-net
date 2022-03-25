@@ -463,8 +463,8 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ArmApplicationAuthorization
     {
-        public ArmApplicationAuthorization(string principalId, string roleDefinitionId) { }
-        public string PrincipalId { get { throw null; } set { } }
+        public ArmApplicationAuthorization(System.Guid principalId, string roleDefinitionId) { }
+        public System.Guid PrincipalId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
     }
     public partial class ArmApplicationDefinitionArtifact
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public ArmDeploymentScriptManagedIdentity() { }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType? ArmDeploymentScriptManagedIdentityType { get { throw null; } set { } }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -881,8 +881,8 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class JitAuthorizationPolicies
     {
-        public JitAuthorizationPolicies(string principalId, string roleDefinitionId) { }
-        public string PrincipalId { get { throw null; } set { } }
+        public JitAuthorizationPolicies(System.Guid principalId, string roleDefinitionId) { }
+        public System.Guid PrincipalId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

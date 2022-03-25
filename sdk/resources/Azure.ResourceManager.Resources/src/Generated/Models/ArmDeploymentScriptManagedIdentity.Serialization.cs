@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ArmDeploymentScriptManagedIdentity DeserializeArmDeploymentScriptManagedIdentity(JsonElement element)
         {
             Optional<ArmDeploymentScriptManagedIdentityType> type = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +56,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))
@@ -74,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmDeploymentScriptManagedIdentity(Optional.ToNullable(type), tenantId.Value, Optional.ToDictionary(userAssignedIdentities));
+            return new ArmDeploymentScriptManagedIdentity(Optional.ToNullable(type), Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

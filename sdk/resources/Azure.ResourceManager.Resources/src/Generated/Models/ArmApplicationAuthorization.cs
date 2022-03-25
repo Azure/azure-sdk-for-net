@@ -15,13 +15,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmApplicationAuthorization. </summary>
         /// <param name="principalId"> The provider&apos;s principal identifier. This is the identity that the provider will use to call ARM to manage the managed application resources. </param>
         /// <param name="roleDefinitionId"> The provider&apos;s role definition identifier. This role will define all the permissions that the provider must have on the managed application&apos;s container resource group. This role definition cannot have permission to delete the resource group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        public ArmApplicationAuthorization(string principalId, string roleDefinitionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public ArmApplicationAuthorization(Guid principalId, string roleDefinitionId)
         {
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
             if (roleDefinitionId == null)
             {
                 throw new ArgumentNullException(nameof(roleDefinitionId));
@@ -32,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The provider&apos;s principal identifier. This is the identity that the provider will use to call ARM to manage the managed application resources. </summary>
-        public string PrincipalId { get; set; }
+        public Guid PrincipalId { get; set; }
         /// <summary> The provider&apos;s role definition identifier. This role will define all the permissions that the provider must have on the managed application&apos;s container resource group. This role definition cannot have permission to delete the resource group. </summary>
         public string RoleDefinitionId { get; set; }
     }

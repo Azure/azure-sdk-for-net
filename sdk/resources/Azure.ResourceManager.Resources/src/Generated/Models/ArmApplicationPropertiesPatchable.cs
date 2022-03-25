@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -18,9 +19,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed resource group Id. </summary>
-        public string ManagedResourceGroupId { get; }
+        public ResourceIdentifier ManagedResourceGroupId { get; }
         /// <summary> The fully qualified path of managed application definition Id. </summary>
-        public string ApplicationDefinitionId { get; }
+        public ResourceIdentifier ApplicationDefinitionId { get; }
         /// <summary> Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string. </summary>
         public BinaryData Parameters { get; }
         /// <summary> Name and value pairs that define the managed application outputs. </summary>
