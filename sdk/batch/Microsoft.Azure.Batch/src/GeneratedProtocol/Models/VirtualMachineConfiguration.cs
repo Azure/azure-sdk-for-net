@@ -94,8 +94,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// different operating systems. You must specify a Compute Node agent
         /// SKU which matches the selected Image reference. To get the list of
         /// supported Compute Node agent SKUs along with their list of verified
-        /// Image references, see the 'List supported Compute Node agent SKUs'
-        /// operation.
+        /// Image references, see the <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.batch.pooloperations.listsupportedimages?view=azure-dotnet">'List supported Compute Node agent SKUs'</see>
+        /// article.
         /// </remarks>
         [JsonProperty(PropertyName = "nodeAgentSKUId")]
         public string NodeAgentSKUId { get; set; }
