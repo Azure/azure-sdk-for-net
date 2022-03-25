@@ -9,12 +9,12 @@ using Azure.Core;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Exposes client options related to logging, telemetry and distributed tracing.
+    /// Exposes client options related to logging, telemetry, and distributed tracing.
     /// </summary>
     public class TokenCredentialDiagnosticsOptions : DiagnosticsOptions
     {
         /// <summary>
-        /// If <c>true</c> we try to log the account identifiers by parsing the received access token.
+        /// If <c>true</c>, we try to log the account identifiers by parsing the received access token.
         ///  The account identifiers we try to log are:
         /// <list type="bullet">
         /// <item><description>The Application or Client Identifier</description></item>

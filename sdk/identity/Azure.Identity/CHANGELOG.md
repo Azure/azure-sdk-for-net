@@ -3,7 +3,11 @@
 ## 1.6.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added a new property under the Diagnostics options availabe on TokenCredentialOptions and all sub-types. If set to true, we try to log the account identifiers by parsing the received access token. The account identifiers we try to log are: The Application or Client Identifier, User Principal Name, Tenant Identifier, Object Identifier of the authenticated user or application
+- Added a new property under the `Diagnostics` options available on `TokenCredentialOptions` and all sub-types. If set to `true`, we try to log the account identifiers by parsing the received access token. The account identifiers we try to log are the:
+  - Application or Client Identifier
+  - User Principal Name
+  - Tenant Identifier
+  - Object Identifier of the authenticated user or app
 
 ### Breaking Changes
 

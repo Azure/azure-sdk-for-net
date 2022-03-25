@@ -19,7 +19,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Initializes the newly created <see cref="RetryOptions"/> with the same settings as the specified retryOptions.
+        /// Initializes the newly created <see cref="RetryOptions"/> with the same settings as the specified <paramref name="retryOptions"/>.
         /// </summary>
         /// <param name="retryOptions">The <see cref="RetryOptions"/> to model the newly created instance on.</param>
         internal RetryOptions(RetryOptions? retryOptions)

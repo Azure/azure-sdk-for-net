@@ -238,10 +238,10 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 All credentials can be configured with diagnostic options, in the same way as other clients in the SDK.
 
-> **CAUTION:** Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs when customizing the output to avoid compromising account security.
+> **CAUTION:** Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs, when customizing the output, to avoid compromising account security.
 
 ``` c#
-var options = new DefaultAzureCredentialOptions
+DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions
 {
     Diagnostics =
     {
@@ -255,7 +255,7 @@ var options = new DefaultAzureCredentialOptions
 When troubleshooting authentication issues, you may also want to enable logging of sensitive information. To enable this type of logging, set the `IsLoggingContentEnabled` property to `true`. To only log details about the account that was used to attempt authentication and authorization, set `IsAccountIdentifierLoggingEnabled` to `true`.
 
 ```c#
-var options = new DefaultAzureCredentialOptions
+DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions
 {
     Diagnostics =
     {
