@@ -265,8 +265,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
-            DownloadCertificateAsync(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken);
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
+            await DownloadCertificateAsync(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.

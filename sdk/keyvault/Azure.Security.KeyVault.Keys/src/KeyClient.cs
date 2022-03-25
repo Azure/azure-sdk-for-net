@@ -1299,8 +1299,8 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string targetAttestationToken, CancellationToken cancellationToken = default) =>
-            ReleaseKeyAsync(new ReleaseKeyOptions(name, targetAttestationToken), cancellationToken);
+        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string targetAttestationToken, CancellationToken cancellationToken = default) =>
+            await ReleaseKeyAsync(new ReleaseKeyOptions(name, targetAttestationToken), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Releases a key.
