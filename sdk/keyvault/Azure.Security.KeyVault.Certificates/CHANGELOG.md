@@ -14,6 +14,10 @@ Changes from both the last release and the last beta include:
 - Added `DownloadCertificateOptions` to pass `X509KeyStorageFlags` appropriate for different host applications. ([#23016](https://github.com/Azure/azure-sdk-for-net/issues/23016))
 - Added certificate version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
 
+### Breaking Changes
+
+- (Since 4.3.0-beta.4) To pass `X509KeyStorageFlags` you must now pass a single required `DownloadCertificateOptions` with a required `certificateName`.
+
 ### Other Changes
 
 - The default service version is now "7.3".

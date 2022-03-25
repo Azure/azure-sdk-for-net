@@ -26,6 +26,10 @@ Changes from both the last release and the last beta include:
 - Attempt to cache key locally from `KeyClient.GetCryptographyClient`. ([#25254](https://github.com/Azure/azure-sdk-for-net/issues/25254))
 - Added key version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
 
+### Breaking Changes
+
+- (Since 4.3.0-beta.7) `KeyClient.ReleaseKey` and `ReleaseKeyAsync` now take `name` and `targetAttestationToken`, or a `ReleaseKeyOptions` with a required `name` and `targetAttestationToken` along with additional properties.
+
 ### Other Changes
 
 - `KeyProperties.Version` is no longer required when calling `KeyClient.UpdateKeyProperties` or `UpdateKeyPropertiesAsync`.
