@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
         /// <returns>The Extension object that was created.</returns>
         public Extension CreateExtension()
         {
-            return SourceControlConfigurationClient.Extensions.Create(
+            return SourceControlConfigurationClient.Extensions.BeginCreate(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
@@ -65,15 +65,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
         /// <summary>
         /// Delete an Extension
         /// </summary>
-        public void DeleteExtension()
+        public void DeleteExtension(bool force = true)
         {
-            SourceControlConfigurationClient.Extensions.Delete(
+            SourceControlConfigurationClient.Extensions.BeginDelete(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
                 extensionName: Extension.Name,
-                forceDelete: true
+                forceDelete: force
             );
         }
 

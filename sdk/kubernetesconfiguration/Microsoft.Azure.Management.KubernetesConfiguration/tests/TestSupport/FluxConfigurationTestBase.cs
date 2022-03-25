@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
         /// <returns>The FluxConfiguration object that was created or updated.</returns>
         public FluxConfiguration CreateFluxConfiguration()
         {
-            return SourceControlConfigurationClient.FluxConfigurations.CreateOrUpdate(
+            return SourceControlConfigurationClient.FluxConfigurations.BeginCreateOrUpdate(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
@@ -64,14 +64,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
         /// <summary>
         /// Delete a FluxConfiguration
         /// </summary>
-        public void DeleteFluxConfiguration()
+        public void DeleteFluxConfiguration(bool force = true)
         {
-            SourceControlConfigurationClient.FluxConfigurations.Delete(
+            SourceControlConfigurationClient.FluxConfigurations.BeginDelete(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                fluxConfigurationName: FluxConfiguration.Name
+                fluxConfigurationName: FluxConfiguration.Name,
+                forceDelete: force
             );
         }
 
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
         /// List FluxConfigurations in a cluster
         /// </summary>
         /// <returns></returns>
-        public IPage<FluxConfiguration> ListSourceControlConfigurations()
+        public IPage<FluxConfiguration> ListFluxConfigurations()
         {
             return SourceControlConfigurationClient.FluxConfigurations.List(
                 resourceGroupName: Cluster.ResourceGroup,

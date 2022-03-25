@@ -9,7 +9,7 @@
     <Version>2.1.0</Version>
     <AssemblyTitle>Microsoft Azure KubernetesConfiguration Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.KubernetesConfiguration</AssemblyName>
-    <PackageTags>KubernetesConfiguration;Kubernetes;Configuration;SourceControlConfigurations;Extensions;</PackageTags>
+    <PackageTags>KubernetesConfiguration;Kubernetes;Configuration;SourceControlConfigurations;Extensions;FluxConfigurations;</PackageTags>
     <PackageReleaseNotes>Release official public api version 2022-03-01</PackageReleaseNotes>
   </PropertyGroup>
 
