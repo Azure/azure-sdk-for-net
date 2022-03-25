@@ -364,7 +364,6 @@ internal partial class ServiceRestClient
 ```
 
 </details>
-&nbsp;
 
 ## Add protocol methods to ConvenienceClient
 
