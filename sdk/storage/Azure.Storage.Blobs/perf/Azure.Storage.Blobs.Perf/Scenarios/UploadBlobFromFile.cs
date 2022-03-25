@@ -41,13 +41,14 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
 
         public override Task CleanupAsync()
         {
+            _stream.Close();
             File.Delete(_filePath);
             return base.CleanupAsync();
         }
 
         public override void Dispose(bool disposing)
         {
-            _stream.Dispose();
+            _stream.Close();
             base.Dispose(disposing);
         }
 
