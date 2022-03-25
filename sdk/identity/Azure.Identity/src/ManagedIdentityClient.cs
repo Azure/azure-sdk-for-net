@@ -55,11 +55,11 @@ namespace Azure.Identity
         private static ManagedIdentitySource SelectManagedIdentitySource(ManagedIdentityClientOptions options)
         {
             return
+                ServiceFabricManagedIdentitySource.TryCreate(options) ??
+                AppServiceV2019ManagedIdentitySource.TryCreate(options) ??
                 AppServiceV2017ManagedIdentitySource.TryCreate(options) ??
                 CloudShellManagedIdentitySource.TryCreate(options) ??
                 AzureArcManagedIdentitySource.TryCreate(options) ??
-                ServiceFabricManagedIdentitySource.TryCreate(options) ??
-                AppServiceV2019ManagedIdentitySource.TryCreate(options) ??
                 TokenExchangeManagedIdentitySource.TryCreate(options) ??
                 new ImdsManagedIdentitySource(options);
         }

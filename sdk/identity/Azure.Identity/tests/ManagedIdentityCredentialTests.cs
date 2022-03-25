@@ -326,6 +326,33 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        public async Task AllAppServiceEnvVarsSetSelects2019Api()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/"  }, { "MSI_SECRET", "mock-msi-secret" }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var response = CreateMockResponse(200, ExpectedToken);
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions { Transport = mockTransport };
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(options: options));
+
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+
+            MockRequest request = mockTransport.Requests[0];
+            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
+
+            string query = request.Uri.Query;
+            Assert.IsTrue(query.Contains("api-version=2019-08-01"));
+            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
+
+            Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
+        }
+
+        [NonParallelizable]
+        [Test]
         public async Task VerifyAppService2019RequestWithClientIdMockAsync()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
