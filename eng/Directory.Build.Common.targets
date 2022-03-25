@@ -174,7 +174,7 @@
     <!-- Add ProjectReferences -->
     <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
   </ItemGroup>
-  
+
   <!--TODO: update build targets - ADO 5668-->
   <PropertyGroup>
     <MgmtCoreShared>$(MSBuildThisFileDirectory)/../sdk/resourcemanager/Azure.ResourceManager/src/Shared</MgmtCoreShared>
@@ -185,7 +185,7 @@
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  LinkBase="Shared/Management" />
   </ItemGroup>
-  
+
   <!--TODO: end-->
 
   <!-- *********** Files needed for LRO ************* -->
@@ -208,13 +208,13 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
   </ItemGroup>
-    
+
     <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
-    
+
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
@@ -268,6 +268,8 @@
 
     <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
   </Target>
+
+  <Import Project="AllowedAzureCorePackageReferences.targets" />
 
   <!-- InheritDoc-->
   <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">

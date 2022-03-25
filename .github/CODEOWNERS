@@ -19,6 +19,7 @@
 
 # PRLabel: %Azure.Core
 /sdk/core/                                      @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
+/eng/AllowedAzureCorePackageReferences.targets  @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                  @schaabs @christothes
@@ -597,7 +598,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/sdk/schemaregistry/            @hmlam
 
 # ServiceLabel: %SignalR %Service Attention
-/sdk/signalr/            @sffamily @chenkennt @Y-Sindo     
+/sdk/signalr/            @sffamily @chenkennt @Y-Sindo
 
 # ServiceLabel: %SQL %Service Attention
 #/<NotInRepo>/            @azureSQLGitHub
@@ -693,7 +694,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @tg-msft
 
-# ######## Eng Sys ######## 
+# ######## Eng Sys ########
 /eng/           @chidozieononiwu @weshaggard @benbp
 /eng/mgmt/      @ArthurMa1978 @m-nash @markcowl
 /**/tests.yml   @chidozieononiwu @weshaggard @benbp
@@ -702,4 +703,4 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @AlexGhiondea @maririos
 /sdk/eventhub/tests.data.yml  @serkantkaraca @sjkwak
-/sdk/servicebus/tests.data.yml @shankarsama @DorothySun216 
+/sdk/servicebus/tests.data.yml @shankarsama @DorothySun216

@@ -1,0 +1,18 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Projects that are currently approved to take a live project reference to Azure.Core -->
+  <ItemGroup>
+    <CanReferenceAzureCoreProject Include="Azure.Core.Tests" />
+    <CanReferenceAzureCoreProject Include="Azure.Core.TestFramework" />
+  </ItemGroup>
+
+  <Target Name="CheckAzureCoreProjectReferences" BeforeTargets="Build" Condition="'$(UseProjectReferenceToAzureClients)' != 'true'">
+    <ItemGroup>
+      <InAllowedSet Include="@(CanReferenceAzureCoreProject)" Condition="'%(Identity)' == '$(MSBuildProjectName)'" />
+      <AzureCoreProjectReference Include="@(ProjectReference)" Condition="'%(Filename)' == 'Azure.Core'" />
+    </ItemGroup>
+
+    <Error Condition="'@(InAllowedSet)' == '' and '@(AzureCoreProjectReference)' != ''" Text="You cannot have a project reference to Azure.Core without approval." />
+  </Target>
+
+</Project>
