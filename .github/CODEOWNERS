@@ -198,6 +198,9 @@
 # PRLabel: %Communication - Calling Server
 /sdk/communication/Azure.Communication.CallingServer/   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
 
+# PRLabel: %Communication - Chat
+/sdk/communication/Azure.Communication.Chat/   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
 # PRLabel: %Communication - Common
 /sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
 
