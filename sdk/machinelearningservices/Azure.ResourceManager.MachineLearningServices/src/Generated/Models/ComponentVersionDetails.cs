@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defines Component definition details.
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command&quot; /&gt;
         /// </param>
-        internal ComponentVersionDetails(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, object componentSpec) : base(description, properties, tags, isAnonymous, isArchived)
+        internal ComponentVersionDetails(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, BinaryData componentSpec) : base(description, properties, tags, isAnonymous, isArchived)
         {
             ComponentSpec = componentSpec;
         }
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defines Component definition details.
         /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command&quot; /&gt;
         /// </summary>
-        public object ComponentSpec { get; set; }
+        public BinaryData ComponentSpec { get; set; }
     }
 }

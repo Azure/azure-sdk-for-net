@@ -13,14 +13,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A Class representing a JobBaseData along with the instance operations that can be performed on it. </summary>
-    public partial class JobBaseData : ArmResource
+    /// <summary>
+    /// A Class representing a JobBaseData along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JobBaseDataResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetJobBaseDataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetJobBaseData method.
+    /// </summary>
+    public partial class JobBaseDataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="JobBaseData"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="JobBaseDataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string id)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}";
@@ -31,28 +35,28 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly JobsRestOperations _jobBaseDataJobsRestClient;
         private readonly JobBaseDataData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="JobBaseData"/> class for mocking. </summary>
-        protected JobBaseData()
+        /// <summary> Initializes a new instance of the <see cref="JobBaseDataResource"/> class for mocking. </summary>
+        protected JobBaseDataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "JobBaseData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "JobBaseDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobBaseData(ArmClient client, JobBaseDataData data) : this(client, data.Id)
+        internal JobBaseDataResource(ArmClient client, JobBaseDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobBaseData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobBaseDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobBaseData(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal JobBaseDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobBaseDataJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, DiagnosticOptions);
+            _jobBaseDataJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string jobBaseDataJobsApiVersion);
-            _jobBaseDataJobsRestClient = new JobsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobBaseDataJobsApiVersion);
+            _jobBaseDataJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobBaseDataJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,16 +92,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Jobs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JobBaseData>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobBaseDataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseData.Get");
+            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataResource.Get");
             scope.Start();
             try
             {
                 var response = await _jobBaseDataJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobBaseData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobBaseDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +116,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Jobs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobBaseData> Get(CancellationToken cancellationToken = default)
+        public virtual Response<JobBaseDataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseData.Get");
+            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataResource.Get");
             scope.Start();
             try
             {
                 var response = _jobBaseDataJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobBaseData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobBaseDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseData.Delete");
+            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseData.Delete");
+            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataResource.Delete");
             scope.Start();
             try
             {
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseData.Cancel");
+            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataResource.Cancel");
             scope.Start();
             try
             {
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseData.Cancel");
+            using var scope = _jobBaseDataJobsClientDiagnostics.CreateScope("JobBaseDataResource.Cancel");
             scope.Start();
             try
             {

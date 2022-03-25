@@ -13,15 +13,19 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A Class representing a DatastoreData along with the instance operations that can be performed on it. </summary>
-    public partial class DatastoreData : ArmResource
+    /// <summary>
+    /// A Class representing a DatastoreData along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatastoreDataResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDatastoreDataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetDatastoreData method.
+    /// </summary>
+    public partial class DatastoreDataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DatastoreData"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DatastoreDataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}";
@@ -32,28 +36,28 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly DatastoresRestOperations _datastoreDataDatastoresRestClient;
         private readonly DatastoreDataData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DatastoreData"/> class for mocking. </summary>
-        protected DatastoreData()
+        /// <summary> Initializes a new instance of the <see cref="DatastoreDataResource"/> class for mocking. </summary>
+        protected DatastoreDataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatastoreData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DatastoreDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatastoreData(ArmClient client, DatastoreDataData data) : this(client, data.Id)
+        internal DatastoreDataResource(ArmClient client, DatastoreDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatastoreData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatastoreDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatastoreData(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DatastoreDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _datastoreDataDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, DiagnosticOptions);
+            _datastoreDataDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string datastoreDataDatastoresApiVersion);
-            _datastoreDataDatastoresRestClient = new DatastoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, datastoreDataDatastoresApiVersion);
+            _datastoreDataDatastoresRestClient = new DatastoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, datastoreDataDatastoresApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,16 +93,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Datastores_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatastoreData>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatastoreDataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreData.Get");
+            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataResource.Get");
             scope.Start();
             try
             {
                 var response = await _datastoreDataDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatastoreData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatastoreDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,16 +117,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: Datastores_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatastoreData> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DatastoreDataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreData.Get");
+            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataResource.Get");
             scope.Start();
             try
             {
                 var response = _datastoreDataDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatastoreData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatastoreDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreData.Delete");
+            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataResource.Delete");
             scope.Start();
             try
             {
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreData.Delete");
+            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataResource.Delete");
             scope.Start();
             try
             {
@@ -191,7 +195,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DatastoreSecrets>> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreData.GetSecrets");
+            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataResource.GetSecrets");
             scope.Start();
             try
             {
@@ -213,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatastoreSecrets> GetSecrets(CancellationToken cancellationToken = default)
         {
-            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreData.GetSecrets");
+            using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataResource.GetSecrets");
             scope.Start();
             try
             {

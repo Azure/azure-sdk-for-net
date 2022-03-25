@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public AmlComputeProperties()
         {
             Errors = new ChangeTrackingList<ErrorResponse>();
-            PropertyBag = new ChangeTrackingDictionary<string, object>();
+            PropertyBag = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
         /// <param name="enableNodePublicIp"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="propertyBag"> A property bag containing additional properties. </param>
-        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, WritableSubResource virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, WritableSubResource subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp, IDictionary<string, object> propertyBag)
+        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, WritableSubResource virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, WritableSubResource subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp, IDictionary<string, BinaryData> propertyBag)
         {
             OsType = osType;
             VmSize = vmSize;
@@ -118,6 +118,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
         public bool? EnableNodePublicIp { get; set; }
         /// <summary> A property bag containing additional properties. </summary>
-        public IDictionary<string, object> PropertyBag { get; }
+        public IDictionary<string, BinaryData> PropertyBag { get; }
     }
 }

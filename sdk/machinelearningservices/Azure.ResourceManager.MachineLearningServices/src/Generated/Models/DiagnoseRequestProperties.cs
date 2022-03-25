@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,34 +17,34 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of DiagnoseRequestProperties. </summary>
         public DiagnoseRequestProperties()
         {
-            Udr = new ChangeTrackingDictionary<string, object>();
-            Nsg = new ChangeTrackingDictionary<string, object>();
-            ResourceLock = new ChangeTrackingDictionary<string, object>();
-            DnsResolution = new ChangeTrackingDictionary<string, object>();
-            StorageAccount = new ChangeTrackingDictionary<string, object>();
-            KeyVault = new ChangeTrackingDictionary<string, object>();
-            ContainerRegistry = new ChangeTrackingDictionary<string, object>();
-            ApplicationInsights = new ChangeTrackingDictionary<string, object>();
-            Others = new ChangeTrackingDictionary<string, object>();
+            Udr = new ChangeTrackingDictionary<string, BinaryData>();
+            Nsg = new ChangeTrackingDictionary<string, BinaryData>();
+            ResourceLock = new ChangeTrackingDictionary<string, BinaryData>();
+            DnsResolution = new ChangeTrackingDictionary<string, BinaryData>();
+            StorageAccount = new ChangeTrackingDictionary<string, BinaryData>();
+            KeyVault = new ChangeTrackingDictionary<string, BinaryData>();
+            ContainerRegistry = new ChangeTrackingDictionary<string, BinaryData>();
+            ApplicationInsights = new ChangeTrackingDictionary<string, BinaryData>();
+            Others = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Setting for diagnosing user defined routing. </summary>
-        public IDictionary<string, object> Udr { get; }
+        public IDictionary<string, BinaryData> Udr { get; }
         /// <summary> Setting for diagnosing network security group. </summary>
-        public IDictionary<string, object> Nsg { get; }
+        public IDictionary<string, BinaryData> Nsg { get; }
         /// <summary> Setting for diagnosing resource lock. </summary>
-        public IDictionary<string, object> ResourceLock { get; }
+        public IDictionary<string, BinaryData> ResourceLock { get; }
         /// <summary> Setting for diagnosing dns resolution. </summary>
-        public IDictionary<string, object> DnsResolution { get; }
+        public IDictionary<string, BinaryData> DnsResolution { get; }
         /// <summary> Setting for diagnosing dependent storage account. </summary>
-        public IDictionary<string, object> StorageAccount { get; }
+        public IDictionary<string, BinaryData> StorageAccount { get; }
         /// <summary> Setting for diagnosing dependent key vault. </summary>
-        public IDictionary<string, object> KeyVault { get; }
+        public IDictionary<string, BinaryData> KeyVault { get; }
         /// <summary> Setting for diagnosing dependent container registry. </summary>
-        public IDictionary<string, object> ContainerRegistry { get; }
+        public IDictionary<string, BinaryData> ContainerRegistry { get; }
         /// <summary> Setting for diagnosing dependent application insights. </summary>
-        public IDictionary<string, object> ApplicationInsights { get; }
+        public IDictionary<string, BinaryData> ApplicationInsights { get; }
         /// <summary> Setting for diagnosing unclassified category of problems. </summary>
-        public IDictionary<string, object> Others { get; }
+        public IDictionary<string, BinaryData> Others { get; }
     }
 }

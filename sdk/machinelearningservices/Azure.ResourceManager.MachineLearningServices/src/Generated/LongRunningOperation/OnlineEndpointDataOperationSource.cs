@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    internal class OnlineEndpointDataOperationSource : IOperationSource<OnlineEndpointData>
+    internal class OnlineEndpointDataOperationSource : IOperationSource<OnlineEndpointDataResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.MachineLearningServices
             _client = client;
         }
 
-        OnlineEndpointData IOperationSource<OnlineEndpointData>.CreateResult(Response response, CancellationToken cancellationToken)
+        OnlineEndpointDataResource IOperationSource<OnlineEndpointDataResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OnlineEndpointDataData.DeserializeOnlineEndpointDataData(document.RootElement);
-            return new OnlineEndpointData(_client, data);
+            return new OnlineEndpointDataResource(_client, data);
         }
 
-        async ValueTask<OnlineEndpointData> IOperationSource<OnlineEndpointData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OnlineEndpointDataResource> IOperationSource<OnlineEndpointDataResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OnlineEndpointDataData.DeserializeOnlineEndpointDataData(document.RootElement);
-            return new OnlineEndpointData(_client, data);
+            return new OnlineEndpointDataResource(_client, data);
         }
     }
 }

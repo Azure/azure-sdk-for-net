@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ComputeInstanceContainer. </summary>
         internal ComputeInstanceContainer()
         {
-            Services = new ChangeTrackingList<object>();
+            Services = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceContainer. </summary>
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="network"> network of this container. </param>
         /// <param name="environment"> Environment information of this container. </param>
         /// <param name="services"> services of this containers. </param>
-        internal ComputeInstanceContainer(string name, Autosave? autosave, string gpu, Network? network, ComputeInstanceEnvironmentInfo environment, IReadOnlyList<object> services)
+        internal ComputeInstanceContainer(string name, Autosave? autosave, string gpu, Network? network, ComputeInstanceEnvironmentInfo environment, IReadOnlyList<BinaryData> services)
         {
             Name = name;
             Autosave = autosave;
@@ -47,6 +48,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Environment information of this container. </summary>
         public ComputeInstanceEnvironmentInfo Environment { get; }
         /// <summary> services of this containers. </summary>
-        public IReadOnlyList<object> Services { get; }
+        public IReadOnlyList<BinaryData> Services { get; }
     }
 }

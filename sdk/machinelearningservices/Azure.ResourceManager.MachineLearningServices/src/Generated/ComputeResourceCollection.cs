@@ -16,11 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of ComputeResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ComputeResource" /> and their operations.
+    /// Each <see cref="ComputeResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
+    /// To get a <see cref="ComputeResourceCollection" /> instance call the GetComputeResources method from an instance of <see cref="WorkspaceResource" />.
+    /// </summary>
     public partial class ComputeResourceCollection : ArmCollection, IEnumerable<ComputeResource>, IAsyncEnumerable<ComputeResource>
     {
         private readonly ClientDiagnostics _computeResourceComputeClientDiagnostics;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ComputeResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _computeResourceComputeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ComputeResource.ResourceType.Namespace, DiagnosticOptions);
+            _computeResourceComputeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ComputeResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ComputeResource.ResourceType, out string computeResourceComputeApiVersion);
-            _computeResourceComputeRestClient = new ComputeRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, computeResourceComputeApiVersion);
+            _computeResourceComputeRestClient = new ComputeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, computeResourceComputeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Workspace.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Workspace.ResourceType), nameof(id));
+            if (id.ResourceType != WorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

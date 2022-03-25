@@ -14,13 +14,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class to add extension methods to Subscription. </summary>
-    internal partial class SubscriptionExtensionClient : ArmResource
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _workspaceClientDiagnostics;
         private WorkspacesRestOperations _workspaceRestClient;
@@ -31,26 +30,26 @@ namespace Azure.ResourceManager.MachineLearningServices
         private ClientDiagnostics _quotasClientDiagnostics;
         private QuotasRestOperations _quotasRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
+        protected SubscriptionResourceExtensionClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", Workspace.ResourceType.Namespace, DiagnosticOptions);
-        private WorkspacesRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Workspace.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private QuotasRestOperations QuotasRestClient => _quotasRestClient ??= new QuotasRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", WorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private WorkspacesRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkspaceResource.ResourceType));
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private QuotasRestOperations QuotasRestClient => _quotasRestClient ??= new QuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -65,17 +64,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Workspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Workspace> GetWorkspacesAsync(string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Workspace>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WorkspaceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetWorkspaces");
+                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = await WorkspaceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Workspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -83,14 +82,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<Workspace>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetWorkspaces");
+                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = await WorkspaceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Workspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -108,17 +107,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Workspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Workspace> GetWorkspaces(string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkspaceResource> GetWorkspaces(string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<Workspace> FirstPageFunc(int? pageSizeHint)
+            Page<WorkspaceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetWorkspaces");
+                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = WorkspaceRestClient.ListBySubscription(Id.SubscriptionId, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Workspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -126,14 +125,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<Workspace> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetWorkspaces");
+                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = WorkspaceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Workspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<MachineLearningServicesUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<MachineLearningServicesUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<MachineLearningServicesUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<MachineLearningServicesUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<VirtualMachineSize>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualMachineSizes");
+                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineSizes");
                 scope.Start();
                 try
                 {
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<VirtualMachineSize> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualMachineSizes");
+                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineSizes");
                 scope.Start();
                 try
                 {
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<UpdateWorkspaceQuotas>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionExtensionClient.UpdateQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateQuotas");
                 scope.Start();
                 try
                 {
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<UpdateWorkspaceQuotas> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionExtensionClient.UpdateQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateQuotas");
                 scope.Start();
                 try
                 {
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             async Task<Page<ResourceQuota>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotas");
                 scope.Start();
                 try
                 {
@@ -373,7 +372,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<ResourceQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotas");
                 scope.Start();
                 try
                 {
@@ -401,7 +400,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Page<ResourceQuota> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotas");
                 scope.Start();
                 try
                 {
@@ -416,7 +415,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<ResourceQuota> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotas");
                 scope.Start();
                 try
                 {

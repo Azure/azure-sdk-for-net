@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -81,7 +82,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WritePropertyName("samplingAlgorithm");
             writer.WriteObjectValue(SamplingAlgorithm);
             writer.WritePropertyName("searchSpace");
-            writer.WriteObjectValue(SearchSpace);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SearchSpace);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(SearchSpace.ToString()).RootElement);
+#endif
             writer.WritePropertyName("trial");
             writer.WriteObjectValue(Trial);
             if (Optional.IsDefined(ComputeId))
@@ -228,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Objective objective = default;
             Optional<IDictionary<string, JobOutput>> outputs = default;
             SamplingAlgorithm samplingAlgorithm = default;
-            object searchSpace = default;
+            BinaryData searchSpace = default;
             TrialComponent trial = default;
             Optional<string> computeId = default;
             Optional<string> displayName = default;
@@ -320,7 +325,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("searchSpace"))
                 {
-                    searchSpace = property.Value.GetObject();
+                    searchSpace = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("trial"))

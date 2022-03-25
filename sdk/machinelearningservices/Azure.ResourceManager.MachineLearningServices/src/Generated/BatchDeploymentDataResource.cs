@@ -14,15 +14,19 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A Class representing a BatchDeploymentData along with the instance operations that can be performed on it. </summary>
-    public partial class BatchDeploymentData : ArmResource
+    /// <summary>
+    /// A Class representing a BatchDeploymentData along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BatchDeploymentDataResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetBatchDeploymentDataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BatchEndpointDataResource" /> using the GetBatchDeploymentData method.
+    /// </summary>
+    public partial class BatchDeploymentDataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BatchDeploymentData"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="BatchDeploymentDataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/deployments/{deploymentName}";
@@ -33,28 +37,28 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly BatchDeploymentsRestOperations _batchDeploymentDataBatchDeploymentsRestClient;
         private readonly BatchDeploymentDataData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="BatchDeploymentData"/> class for mocking. </summary>
-        protected BatchDeploymentData()
+        /// <summary> Initializes a new instance of the <see cref="BatchDeploymentDataResource"/> class for mocking. </summary>
+        protected BatchDeploymentDataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BatchDeploymentData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "BatchDeploymentDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BatchDeploymentData(ArmClient client, BatchDeploymentDataData data) : this(client, data.Id)
+        internal BatchDeploymentDataResource(ArmClient client, BatchDeploymentDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BatchDeploymentData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BatchDeploymentDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BatchDeploymentData(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BatchDeploymentDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _batchDeploymentDataBatchDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, DiagnosticOptions);
+            _batchDeploymentDataBatchDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string batchDeploymentDataBatchDeploymentsApiVersion);
-            _batchDeploymentDataBatchDeploymentsRestClient = new BatchDeploymentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, batchDeploymentDataBatchDeploymentsApiVersion);
+            _batchDeploymentDataBatchDeploymentsRestClient = new BatchDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, batchDeploymentDataBatchDeploymentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,16 +94,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: BatchDeployments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BatchDeploymentData>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchDeploymentDataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.Get");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.Get");
             scope.Start();
             try
             {
                 var response = await _batchDeploymentDataBatchDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchDeploymentData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,16 +118,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: BatchDeployments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BatchDeploymentData> Get(CancellationToken cancellationToken = default)
+        public virtual Response<BatchDeploymentDataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.Get");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.Get");
             scope.Start();
             try
             {
                 var response = _batchDeploymentDataBatchDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchDeploymentData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.Delete");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.Delete");
             scope.Start();
             try
             {
@@ -167,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.Delete");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.Delete");
             scope.Start();
             try
             {
@@ -193,16 +197,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="data"> Batch inference deployment definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BatchDeploymentData>> UpdateAsync(WaitUntil waitUntil, PatchableBatchDeploymentDataData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchDeploymentDataResource>> UpdateAsync(WaitUntil waitUntil, PatchableBatchDeploymentDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.Update");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.Update");
             scope.Start();
             try
             {
                 var response = await _batchDeploymentDataBatchDeploymentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<BatchDeploymentData>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<BatchDeploymentDataResource>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,16 +227,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="data"> Batch inference deployment definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BatchDeploymentData> Update(WaitUntil waitUntil, PatchableBatchDeploymentDataData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchDeploymentDataResource> Update(WaitUntil waitUntil, PatchableBatchDeploymentDataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.Update");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.Update");
             scope.Start();
             try
             {
                 var response = _batchDeploymentDataBatchDeploymentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<BatchDeploymentData>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<BatchDeploymentDataResource>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -253,20 +257,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<BatchDeploymentData>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchDeploymentDataResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.AddTag");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.AddTag");
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _batchDeploymentDataBatchDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BatchDeploymentData(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,20 +288,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<BatchDeploymentData> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<BatchDeploymentDataResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.AddTag");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.AddTag");
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _batchDeploymentDataBatchDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new BatchDeploymentData(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -314,20 +318,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<BatchDeploymentData>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchDeploymentDataResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.SetTags");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.SetTags");
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _batchDeploymentDataBatchDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BatchDeploymentData(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -344,20 +348,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<BatchDeploymentData> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<BatchDeploymentDataResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.SetTags");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.SetTags");
             scope.Start();
             try
             {
-                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _batchDeploymentDataBatchDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new BatchDeploymentData(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -374,19 +378,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<BatchDeploymentData>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchDeploymentDataResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.RemoveTag");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.RemoveTag");
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _batchDeploymentDataBatchDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BatchDeploymentData(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -403,19 +407,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<BatchDeploymentData> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<BatchDeploymentDataResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentData.RemoveTag");
+            using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataResource.RemoveTag");
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _batchDeploymentDataBatchDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new BatchDeploymentData(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -13,14 +13,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A Class representing a ComponentVersionData along with the instance operations that can be performed on it. </summary>
-    public partial class ComponentVersionData : ArmResource
+    /// <summary>
+    /// A Class representing a ComponentVersionData along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ComponentVersionDataResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetComponentVersionDataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ComponentContainerDataResource" /> using the GetComponentVersionData method.
+    /// </summary>
+    public partial class ComponentVersionDataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ComponentVersionData"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ComponentVersionDataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/components/{name}/versions/{version}";
@@ -31,28 +35,28 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly ComponentVersionsRestOperations _componentVersionDataComponentVersionsRestClient;
         private readonly ComponentVersionDataData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ComponentVersionData"/> class for mocking. </summary>
-        protected ComponentVersionData()
+        /// <summary> Initializes a new instance of the <see cref="ComponentVersionDataResource"/> class for mocking. </summary>
+        protected ComponentVersionDataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ComponentVersionData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ComponentVersionDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ComponentVersionData(ArmClient client, ComponentVersionDataData data) : this(client, data.Id)
+        internal ComponentVersionDataResource(ArmClient client, ComponentVersionDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ComponentVersionData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ComponentVersionDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ComponentVersionData(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ComponentVersionDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _componentVersionDataComponentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, DiagnosticOptions);
+            _componentVersionDataComponentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string componentVersionDataComponentVersionsApiVersion);
-            _componentVersionDataComponentVersionsRestClient = new ComponentVersionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, componentVersionDataComponentVersionsApiVersion);
+            _componentVersionDataComponentVersionsRestClient = new ComponentVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, componentVersionDataComponentVersionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,16 +92,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: ComponentVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComponentVersionData>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentVersionDataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _componentVersionDataComponentVersionsClientDiagnostics.CreateScope("ComponentVersionData.Get");
+            using var scope = _componentVersionDataComponentVersionsClientDiagnostics.CreateScope("ComponentVersionDataResource.Get");
             scope.Start();
             try
             {
                 var response = await _componentVersionDataComponentVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComponentVersionData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComponentVersionDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +116,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: ComponentVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComponentVersionData> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ComponentVersionDataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _componentVersionDataComponentVersionsClientDiagnostics.CreateScope("ComponentVersionData.Get");
+            using var scope = _componentVersionDataComponentVersionsClientDiagnostics.CreateScope("ComponentVersionDataResource.Get");
             scope.Start();
             try
             {
                 var response = _componentVersionDataComponentVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComponentVersionData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComponentVersionDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _componentVersionDataComponentVersionsClientDiagnostics.CreateScope("ComponentVersionData.Delete");
+            using var scope = _componentVersionDataComponentVersionsClientDiagnostics.CreateScope("ComponentVersionDataResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _componentVersionDataComponentVersionsClientDiagnostics.CreateScope("ComponentVersionData.Delete");
+            using var scope = _componentVersionDataComponentVersionsClientDiagnostics.CreateScope("ComponentVersionDataResource.Delete");
             scope.Start();
             try
             {

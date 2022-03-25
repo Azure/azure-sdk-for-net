@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,7 +22,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (ComponentSpec != null)
                 {
                     writer.WritePropertyName("componentSpec");
-                    writer.WriteObjectValue(ComponentSpec);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ComponentSpec);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(ComponentSpec.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static ComponentVersionDetails DeserializeComponentVersionDetails(JsonElement element)
         {
-            Optional<object> componentSpec = default;
+            Optional<BinaryData> componentSpec = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -106,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         componentSpec = null;
                         continue;
                     }
-                    componentSpec = property.Value.GetObject();
+                    componentSpec = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"))

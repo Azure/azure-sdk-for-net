@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of OnlineDeploymentData and their operations over its parent. </summary>
-    public partial class OnlineDeploymentDataCollection : ArmCollection, IEnumerable<OnlineDeploymentData>, IAsyncEnumerable<OnlineDeploymentData>
+    /// <summary>
+    /// A class representing a collection of <see cref="OnlineDeploymentDataResource" /> and their operations.
+    /// Each <see cref="OnlineDeploymentDataResource" /> in the collection will belong to the same instance of <see cref="OnlineEndpointDataResource" />.
+    /// To get an <see cref="OnlineDeploymentDataCollection" /> instance call the GetOnlineDeploymentData method from an instance of <see cref="OnlineEndpointDataResource" />.
+    /// </summary>
+    public partial class OnlineDeploymentDataCollection : ArmCollection, IEnumerable<OnlineDeploymentDataResource>, IAsyncEnumerable<OnlineDeploymentDataResource>
     {
         private readonly ClientDiagnostics _onlineDeploymentDataOnlineDeploymentsClientDiagnostics;
         private readonly OnlineDeploymentsRestOperations _onlineDeploymentDataOnlineDeploymentsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OnlineDeploymentDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _onlineDeploymentDataOnlineDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", OnlineDeploymentData.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(OnlineDeploymentData.ResourceType, out string onlineDeploymentDataOnlineDeploymentsApiVersion);
-            _onlineDeploymentDataOnlineDeploymentsRestClient = new OnlineDeploymentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, onlineDeploymentDataOnlineDeploymentsApiVersion);
+            _onlineDeploymentDataOnlineDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", OnlineDeploymentDataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(OnlineDeploymentDataResource.ResourceType, out string onlineDeploymentDataOnlineDeploymentsApiVersion);
+            _onlineDeploymentDataOnlineDeploymentsRestClient = new OnlineDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, onlineDeploymentDataOnlineDeploymentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OnlineEndpointData.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OnlineEndpointData.ResourceType), nameof(id));
+            if (id.ResourceType != OnlineEndpointDataResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OnlineEndpointDataResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<OnlineDeploymentData>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, OnlineDeploymentDataData body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OnlineDeploymentDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, OnlineDeploymentDataData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(body, nameof(body));
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _onlineDeploymentDataOnlineDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<OnlineDeploymentData>(new OnlineDeploymentDataOperationSource(Client), _onlineDeploymentDataOnlineDeploymentsClientDiagnostics, Pipeline, _onlineDeploymentDataOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<OnlineDeploymentDataResource>(new OnlineDeploymentDataOperationSource(Client), _onlineDeploymentDataOnlineDeploymentsClientDiagnostics, Pipeline, _onlineDeploymentDataOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<OnlineDeploymentData> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, OnlineDeploymentDataData body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OnlineDeploymentDataResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, OnlineDeploymentDataData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(body, nameof(body));
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _onlineDeploymentDataOnlineDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<OnlineDeploymentData>(new OnlineDeploymentDataOperationSource(Client), _onlineDeploymentDataOnlineDeploymentsClientDiagnostics, Pipeline, _onlineDeploymentDataOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<OnlineDeploymentDataResource>(new OnlineDeploymentDataOperationSource(Client), _onlineDeploymentDataOnlineDeploymentsClientDiagnostics, Pipeline, _onlineDeploymentDataOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual async Task<Response<OnlineDeploymentData>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OnlineDeploymentDataResource>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = await _onlineDeploymentDataOnlineDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OnlineDeploymentData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OnlineDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<OnlineDeploymentData> Get(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineDeploymentDataResource> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = _onlineDeploymentDataOnlineDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OnlineDeploymentData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OnlineDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +186,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OnlineDeploymentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OnlineDeploymentData> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OnlineDeploymentDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OnlineDeploymentDataResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OnlineDeploymentData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OnlineDeploymentDataResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _onlineDeploymentDataOnlineDeploymentsClientDiagnostics.CreateScope("OnlineDeploymentDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _onlineDeploymentDataOnlineDeploymentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +204,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<OnlineDeploymentData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<OnlineDeploymentDataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _onlineDeploymentDataOnlineDeploymentsClientDiagnostics.CreateScope("OnlineDeploymentDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _onlineDeploymentDataOnlineDeploymentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,17 +231,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OnlineDeploymentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OnlineDeploymentData> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OnlineDeploymentDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OnlineDeploymentDataResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<OnlineDeploymentData> FirstPageFunc(int? pageSizeHint)
+            Page<OnlineDeploymentDataResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _onlineDeploymentDataOnlineDeploymentsClientDiagnostics.CreateScope("OnlineDeploymentDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _onlineDeploymentDataOnlineDeploymentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,14 +249,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<OnlineDeploymentData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<OnlineDeploymentDataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _onlineDeploymentDataOnlineDeploymentsClientDiagnostics.CreateScope("OnlineDeploymentDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _onlineDeploymentDataOnlineDeploymentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OnlineDeploymentDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -327,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual async Task<Response<OnlineDeploymentData>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OnlineDeploymentDataResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -337,8 +340,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = await _onlineDeploymentDataOnlineDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<OnlineDeploymentData>(null, response.GetRawResponse());
-                return Response.FromValue(new OnlineDeploymentData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<OnlineDeploymentDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new OnlineDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -356,7 +359,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<OnlineDeploymentData> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineDeploymentDataResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -366,8 +369,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _onlineDeploymentDataOnlineDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<OnlineDeploymentData>(null, response.GetRawResponse());
-                return Response.FromValue(new OnlineDeploymentData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<OnlineDeploymentDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new OnlineDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -376,7 +379,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        IEnumerator<OnlineDeploymentData> IEnumerable<OnlineDeploymentData>.GetEnumerator()
+        IEnumerator<OnlineDeploymentDataResource> IEnumerable<OnlineDeploymentDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -386,7 +389,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<OnlineDeploymentData> IAsyncEnumerable<OnlineDeploymentData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<OnlineDeploymentDataResource> IAsyncEnumerable<OnlineDeploymentDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

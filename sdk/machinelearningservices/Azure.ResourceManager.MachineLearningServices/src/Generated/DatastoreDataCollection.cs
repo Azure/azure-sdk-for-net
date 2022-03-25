@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of DatastoreData and their operations over its parent. </summary>
-    public partial class DatastoreDataCollection : ArmCollection, IEnumerable<DatastoreData>, IAsyncEnumerable<DatastoreData>
+    /// <summary>
+    /// A class representing a collection of <see cref="DatastoreDataResource" /> and their operations.
+    /// Each <see cref="DatastoreDataResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
+    /// To get a <see cref="DatastoreDataCollection" /> instance call the GetDatastoreData method from an instance of <see cref="WorkspaceResource" />.
+    /// </summary>
+    public partial class DatastoreDataCollection : ArmCollection, IEnumerable<DatastoreDataResource>, IAsyncEnumerable<DatastoreDataResource>
     {
         private readonly ClientDiagnostics _datastoreDataDatastoresClientDiagnostics;
         private readonly DatastoresRestOperations _datastoreDataDatastoresRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DatastoreDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _datastoreDataDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", DatastoreData.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(DatastoreData.ResourceType, out string datastoreDataDatastoresApiVersion);
-            _datastoreDataDatastoresRestClient = new DatastoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, datastoreDataDatastoresApiVersion);
+            _datastoreDataDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", DatastoreDataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DatastoreDataResource.ResourceType, out string datastoreDataDatastoresApiVersion);
+            _datastoreDataDatastoresRestClient = new DatastoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, datastoreDataDatastoresApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Workspace.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Workspace.ResourceType), nameof(id));
+            if (id.ResourceType != WorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<DatastoreData>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DatastoreDetails properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatastoreDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DatastoreDetails properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _datastoreDataDatastoresRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, properties, skipValidation, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<DatastoreData>(Response.FromValue(new DatastoreData(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningServicesArmOperation<DatastoreDataResource>(Response.FromValue(new DatastoreDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<DatastoreData> CreateOrUpdate(WaitUntil waitUntil, string name, DatastoreDetails properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatastoreDataResource> CreateOrUpdate(WaitUntil waitUntil, string name, DatastoreDetails properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -107,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _datastoreDataDatastoresRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, properties, skipValidation, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<DatastoreData>(Response.FromValue(new DatastoreData(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningServicesArmOperation<DatastoreDataResource>(Response.FromValue(new DatastoreDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<DatastoreData>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatastoreDataResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -139,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = await _datastoreDataDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatastoreData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatastoreDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<DatastoreData> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DatastoreDataResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -168,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = _datastoreDataDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatastoreData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatastoreDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,17 +193,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="orderBy"> Order by property (createdtime | modifiedtime | name). </param>
         /// <param name="orderByAsc"> Order by property in ascending order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatastoreData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatastoreData> GetAllAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatastoreDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatastoreDataResource> GetAllAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatastoreData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DatastoreDataResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _datastoreDataDatastoresRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatastoreData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DatastoreDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,14 +211,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<DatastoreData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DatastoreDataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _datastoreDataDatastoresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatastoreData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DatastoreDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,17 +242,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="orderBy"> Order by property (createdtime | modifiedtime | name). </param>
         /// <param name="orderByAsc"> Order by property in ascending order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatastoreData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatastoreData> GetAll(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatastoreDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatastoreDataResource> GetAll(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
-            Page<DatastoreData> FirstPageFunc(int? pageSizeHint)
+            Page<DatastoreDataResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _datastoreDataDatastoresRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatastoreData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DatastoreDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,14 +260,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<DatastoreData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DatastoreDataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _datastoreDataDatastoresClientDiagnostics.CreateScope("DatastoreDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _datastoreDataDatastoresRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatastoreData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DatastoreDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -338,7 +341,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<DatastoreData>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatastoreDataResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -348,8 +351,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = await _datastoreDataDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<DatastoreData>(null, response.GetRawResponse());
-                return Response.FromValue(new DatastoreData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DatastoreDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DatastoreDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -367,7 +370,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<DatastoreData> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DatastoreDataResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -377,8 +380,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _datastoreDataDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DatastoreData>(null, response.GetRawResponse());
-                return Response.FromValue(new DatastoreData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DatastoreDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DatastoreDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -387,7 +390,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        IEnumerator<DatastoreData> IEnumerable<DatastoreData>.GetEnumerator()
+        IEnumerator<DatastoreDataResource> IEnumerable<DatastoreDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -397,7 +400,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DatastoreData> IAsyncEnumerable<DatastoreData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DatastoreDataResource> IAsyncEnumerable<DatastoreDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

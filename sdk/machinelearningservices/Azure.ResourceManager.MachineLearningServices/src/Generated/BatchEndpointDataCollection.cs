@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of BatchEndpointData and their operations over its parent. </summary>
-    public partial class BatchEndpointDataCollection : ArmCollection, IEnumerable<BatchEndpointData>, IAsyncEnumerable<BatchEndpointData>
+    /// <summary>
+    /// A class representing a collection of <see cref="BatchEndpointDataResource" /> and their operations.
+    /// Each <see cref="BatchEndpointDataResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
+    /// To get a <see cref="BatchEndpointDataCollection" /> instance call the GetBatchEndpointData method from an instance of <see cref="WorkspaceResource" />.
+    /// </summary>
+    public partial class BatchEndpointDataCollection : ArmCollection, IEnumerable<BatchEndpointDataResource>, IAsyncEnumerable<BatchEndpointDataResource>
     {
         private readonly ClientDiagnostics _batchEndpointDataBatchEndpointsClientDiagnostics;
         private readonly BatchEndpointsRestOperations _batchEndpointDataBatchEndpointsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BatchEndpointDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _batchEndpointDataBatchEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", BatchEndpointData.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(BatchEndpointData.ResourceType, out string batchEndpointDataBatchEndpointsApiVersion);
-            _batchEndpointDataBatchEndpointsRestClient = new BatchEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, batchEndpointDataBatchEndpointsApiVersion);
+            _batchEndpointDataBatchEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", BatchEndpointDataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BatchEndpointDataResource.ResourceType, out string batchEndpointDataBatchEndpointsApiVersion);
+            _batchEndpointDataBatchEndpointsRestClient = new BatchEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, batchEndpointDataBatchEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Workspace.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Workspace.ResourceType), nameof(id));
+            if (id.ResourceType != WorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<BatchEndpointData>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, BatchEndpointDataData body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchEndpointDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, BatchEndpointDataData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(body, nameof(body));
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _batchEndpointDataBatchEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<BatchEndpointData>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<BatchEndpointData> CreateOrUpdate(WaitUntil waitUntil, string endpointName, BatchEndpointDataData body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchEndpointDataResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, BatchEndpointDataData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(body, nameof(body));
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _batchEndpointDataBatchEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<BatchEndpointData>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual async Task<Response<BatchEndpointData>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchEndpointDataResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = await _batchEndpointDataBatchEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchEndpointData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchEndpointDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual Response<BatchEndpointData> Get(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchEndpointDataResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = _batchEndpointDataBatchEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchEndpointData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchEndpointDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,17 +185,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchEndpointData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchEndpointData> GetAllAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BatchEndpointDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BatchEndpointDataResource> GetAllAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchEndpointData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BatchEndpointDataResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _batchEndpointDataBatchEndpointsClientDiagnostics.CreateScope("BatchEndpointDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _batchEndpointDataBatchEndpointsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -200,14 +203,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<BatchEndpointData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BatchEndpointDataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _batchEndpointDataBatchEndpointsClientDiagnostics.CreateScope("BatchEndpointDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _batchEndpointDataBatchEndpointsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,17 +229,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchEndpointData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchEndpointData> GetAll(int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchEndpointDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BatchEndpointDataResource> GetAll(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<BatchEndpointData> FirstPageFunc(int? pageSizeHint)
+            Page<BatchEndpointDataResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _batchEndpointDataBatchEndpointsClientDiagnostics.CreateScope("BatchEndpointDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _batchEndpointDataBatchEndpointsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,14 +247,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<BatchEndpointData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BatchEndpointDataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _batchEndpointDataBatchEndpointsClientDiagnostics.CreateScope("BatchEndpointDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _batchEndpointDataBatchEndpointsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -325,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual async Task<Response<BatchEndpointData>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchEndpointDataResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -335,8 +338,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = await _batchEndpointDataBatchEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<BatchEndpointData>(null, response.GetRawResponse());
-                return Response.FromValue(new BatchEndpointData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<BatchEndpointDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new BatchEndpointDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -354,7 +357,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual Response<BatchEndpointData> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchEndpointDataResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -364,8 +367,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _batchEndpointDataBatchEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<BatchEndpointData>(null, response.GetRawResponse());
-                return Response.FromValue(new BatchEndpointData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<BatchEndpointDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new BatchEndpointDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -374,7 +377,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        IEnumerator<BatchEndpointData> IEnumerable<BatchEndpointData>.GetEnumerator()
+        IEnumerator<BatchEndpointDataResource> IEnumerable<BatchEndpointDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -384,7 +387,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BatchEndpointData> IAsyncEnumerable<BatchEndpointData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BatchEndpointDataResource> IAsyncEnumerable<BatchEndpointDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

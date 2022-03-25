@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of BatchDeploymentData and their operations over its parent. </summary>
-    public partial class BatchDeploymentDataCollection : ArmCollection, IEnumerable<BatchDeploymentData>, IAsyncEnumerable<BatchDeploymentData>
+    /// <summary>
+    /// A class representing a collection of <see cref="BatchDeploymentDataResource" /> and their operations.
+    /// Each <see cref="BatchDeploymentDataResource" /> in the collection will belong to the same instance of <see cref="BatchEndpointDataResource" />.
+    /// To get a <see cref="BatchDeploymentDataCollection" /> instance call the GetBatchDeploymentData method from an instance of <see cref="BatchEndpointDataResource" />.
+    /// </summary>
+    public partial class BatchDeploymentDataCollection : ArmCollection, IEnumerable<BatchDeploymentDataResource>, IAsyncEnumerable<BatchDeploymentDataResource>
     {
         private readonly ClientDiagnostics _batchDeploymentDataBatchDeploymentsClientDiagnostics;
         private readonly BatchDeploymentsRestOperations _batchDeploymentDataBatchDeploymentsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BatchDeploymentDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _batchDeploymentDataBatchDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", BatchDeploymentData.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(BatchDeploymentData.ResourceType, out string batchDeploymentDataBatchDeploymentsApiVersion);
-            _batchDeploymentDataBatchDeploymentsRestClient = new BatchDeploymentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, batchDeploymentDataBatchDeploymentsApiVersion);
+            _batchDeploymentDataBatchDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", BatchDeploymentDataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BatchDeploymentDataResource.ResourceType, out string batchDeploymentDataBatchDeploymentsApiVersion);
+            _batchDeploymentDataBatchDeploymentsRestClient = new BatchDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, batchDeploymentDataBatchDeploymentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BatchEndpointData.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BatchEndpointData.ResourceType), nameof(id));
+            if (id.ResourceType != BatchEndpointDataResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BatchEndpointDataResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<BatchDeploymentData>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, BatchDeploymentDataData body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchDeploymentDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, BatchDeploymentDataData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(body, nameof(body));
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _batchDeploymentDataBatchDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<BatchDeploymentData>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<BatchDeploymentDataResource>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<BatchDeploymentData> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, BatchDeploymentDataData body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchDeploymentDataResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, BatchDeploymentDataData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(body, nameof(body));
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _batchDeploymentDataBatchDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<BatchDeploymentData>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<BatchDeploymentDataResource>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual async Task<Response<BatchDeploymentData>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchDeploymentDataResource>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = await _batchDeploymentDataBatchDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchDeploymentData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<BatchDeploymentData> Get(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchDeploymentDataResource> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = _batchDeploymentDataBatchDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchDeploymentData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +186,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchDeploymentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchDeploymentData> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BatchDeploymentDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BatchDeploymentDataResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchDeploymentData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BatchDeploymentDataResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _batchDeploymentDataBatchDeploymentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +204,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<BatchDeploymentData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BatchDeploymentDataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _batchDeploymentDataBatchDeploymentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,17 +231,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchDeploymentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchDeploymentData> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchDeploymentDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BatchDeploymentDataResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<BatchDeploymentData> FirstPageFunc(int? pageSizeHint)
+            Page<BatchDeploymentDataResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _batchDeploymentDataBatchDeploymentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,14 +249,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<BatchDeploymentData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BatchDeploymentDataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _batchDeploymentDataBatchDeploymentsClientDiagnostics.CreateScope("BatchDeploymentDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _batchDeploymentDataBatchDeploymentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BatchDeploymentDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -327,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual async Task<Response<BatchDeploymentData>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchDeploymentDataResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -337,8 +340,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = await _batchDeploymentDataBatchDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<BatchDeploymentData>(null, response.GetRawResponse());
-                return Response.FromValue(new BatchDeploymentData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<BatchDeploymentDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -356,7 +359,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<BatchDeploymentData> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchDeploymentDataResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -366,8 +369,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _batchDeploymentDataBatchDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<BatchDeploymentData>(null, response.GetRawResponse());
-                return Response.FromValue(new BatchDeploymentData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<BatchDeploymentDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new BatchDeploymentDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -376,7 +379,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        IEnumerator<BatchDeploymentData> IEnumerable<BatchDeploymentData>.GetEnumerator()
+        IEnumerator<BatchDeploymentDataResource> IEnumerable<BatchDeploymentDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -386,7 +389,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BatchDeploymentData> IAsyncEnumerable<BatchDeploymentData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BatchDeploymentDataResource> IAsyncEnumerable<BatchDeploymentDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

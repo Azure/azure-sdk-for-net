@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public PipelineJob()
         {
             Inputs = new ChangeTrackingDictionary<string, JobInput>();
-            Jobs = new ChangeTrackingDictionary<string, object>();
+            Jobs = new ChangeTrackingDictionary<string, BinaryData>();
             Outputs = new ChangeTrackingDictionary<string, JobOutput>();
             JobType = JobType.Pipeline;
         }
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="jobs"> Jobs construct the Pipeline Job. </param>
         /// <param name="outputs"> Outputs for the pipeline job. </param>
         /// <param name="settings"> Pipeline settings, for things like ContinueRunOnStepFailure etc. </param>
-        internal PipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, IDictionary<string, JobInput> inputs, IDictionary<string, object> jobs, IDictionary<string, JobOutput> outputs, object settings) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
+        internal PipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, IDictionary<string, JobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, JobOutput> outputs, BinaryData settings) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
         {
             Inputs = inputs;
             Jobs = jobs;
@@ -60,10 +61,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Inputs for the pipeline job. </summary>
         public IDictionary<string, JobInput> Inputs { get; set; }
         /// <summary> Jobs construct the Pipeline Job. </summary>
-        public IDictionary<string, object> Jobs { get; set; }
+        public IDictionary<string, BinaryData> Jobs { get; set; }
         /// <summary> Outputs for the pipeline job. </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary> Pipeline settings, for things like ContinueRunOnStepFailure etc. </summary>
-        public object Settings { get; set; }
+        public BinaryData Settings { get; set; }
     }
 }

@@ -13,14 +13,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A Class representing a CodeVersionData along with the instance operations that can be performed on it. </summary>
-    public partial class CodeVersionData : ArmResource
+    /// <summary>
+    /// A Class representing a CodeVersionData along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CodeVersionDataResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCodeVersionDataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CodeContainerDataResource" /> using the GetCodeVersionData method.
+    /// </summary>
+    public partial class CodeVersionDataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CodeVersionData"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CodeVersionDataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}/versions/{version}";
@@ -31,28 +35,28 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly CodeVersionsRestOperations _codeVersionDataCodeVersionsRestClient;
         private readonly CodeVersionDataData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="CodeVersionData"/> class for mocking. </summary>
-        protected CodeVersionData()
+        /// <summary> Initializes a new instance of the <see cref="CodeVersionDataResource"/> class for mocking. </summary>
+        protected CodeVersionDataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CodeVersionData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CodeVersionDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CodeVersionData(ArmClient client, CodeVersionDataData data) : this(client, data.Id)
+        internal CodeVersionDataResource(ArmClient client, CodeVersionDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CodeVersionData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CodeVersionDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CodeVersionData(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CodeVersionDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _codeVersionDataCodeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, DiagnosticOptions);
+            _codeVersionDataCodeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string codeVersionDataCodeVersionsApiVersion);
-            _codeVersionDataCodeVersionsRestClient = new CodeVersionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, codeVersionDataCodeVersionsApiVersion);
+            _codeVersionDataCodeVersionsRestClient = new CodeVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, codeVersionDataCodeVersionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,16 +92,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: CodeVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CodeVersionData>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CodeVersionDataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _codeVersionDataCodeVersionsClientDiagnostics.CreateScope("CodeVersionData.Get");
+            using var scope = _codeVersionDataCodeVersionsClientDiagnostics.CreateScope("CodeVersionDataResource.Get");
             scope.Start();
             try
             {
                 var response = await _codeVersionDataCodeVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CodeVersionData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CodeVersionDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +116,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: CodeVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CodeVersionData> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CodeVersionDataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _codeVersionDataCodeVersionsClientDiagnostics.CreateScope("CodeVersionData.Get");
+            using var scope = _codeVersionDataCodeVersionsClientDiagnostics.CreateScope("CodeVersionDataResource.Get");
             scope.Start();
             try
             {
                 var response = _codeVersionDataCodeVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CodeVersionData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CodeVersionDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _codeVersionDataCodeVersionsClientDiagnostics.CreateScope("CodeVersionData.Delete");
+            using var scope = _codeVersionDataCodeVersionsClientDiagnostics.CreateScope("CodeVersionDataResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _codeVersionDataCodeVersionsClientDiagnostics.CreateScope("CodeVersionData.Delete");
+            using var scope = _codeVersionDataCodeVersionsClientDiagnostics.CreateScope("CodeVersionDataResource.Delete");
             scope.Start();
             try
             {

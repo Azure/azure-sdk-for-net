@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,7 +21,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (StackMetaLearnerKWargs != null)
                 {
                     writer.WritePropertyName("stackMetaLearnerKWargs");
-                    writer.WriteObjectValue(StackMetaLearnerKWargs);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(StackMetaLearnerKWargs);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(StackMetaLearnerKWargs.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -42,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static StackEnsembleSettings DeserializeStackEnsembleSettings(JsonElement element)
         {
-            Optional<object> stackMetaLearnerKWargs = default;
+            Optional<BinaryData> stackMetaLearnerKWargs = default;
             Optional<double> stackMetaLearnerTrainPercentage = default;
             Optional<StackMetaLearnerType> stackMetaLearnerType = default;
             foreach (var property in element.EnumerateObject())
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         stackMetaLearnerKWargs = null;
                         continue;
                     }
-                    stackMetaLearnerKWargs = property.Value.GetObject();
+                    stackMetaLearnerKWargs = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("stackMetaLearnerTrainPercentage"))

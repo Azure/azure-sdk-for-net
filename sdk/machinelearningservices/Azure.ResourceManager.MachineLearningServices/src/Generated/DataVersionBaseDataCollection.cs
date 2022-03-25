@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of DataVersionBaseData and their operations over its parent. </summary>
-    public partial class DataVersionBaseDataCollection : ArmCollection, IEnumerable<DataVersionBaseData>, IAsyncEnumerable<DataVersionBaseData>
+    /// <summary>
+    /// A class representing a collection of <see cref="DataVersionBaseDataResource" /> and their operations.
+    /// Each <see cref="DataVersionBaseDataResource" /> in the collection will belong to the same instance of <see cref="DataContainerDataResource" />.
+    /// To get a <see cref="DataVersionBaseDataCollection" /> instance call the GetDataVersionBaseData method from an instance of <see cref="DataContainerDataResource" />.
+    /// </summary>
+    public partial class DataVersionBaseDataCollection : ArmCollection, IEnumerable<DataVersionBaseDataResource>, IAsyncEnumerable<DataVersionBaseDataResource>
     {
         private readonly ClientDiagnostics _dataVersionBaseDataDataVersionsClientDiagnostics;
         private readonly DataVersionsRestOperations _dataVersionBaseDataDataVersionsRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataVersionBaseDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataVersionBaseDataDataVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", DataVersionBaseData.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(DataVersionBaseData.ResourceType, out string dataVersionBaseDataDataVersionsApiVersion);
-            _dataVersionBaseDataDataVersionsRestClient = new DataVersionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataVersionBaseDataDataVersionsApiVersion);
+            _dataVersionBaseDataDataVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", DataVersionBaseDataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataVersionBaseDataResource.ResourceType, out string dataVersionBaseDataDataVersionsApiVersion);
+            _dataVersionBaseDataDataVersionsRestClient = new DataVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataVersionBaseDataDataVersionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DataContainerData.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataContainerData.ResourceType), nameof(id));
+            if (id.ResourceType != DataContainerDataResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataContainerDataResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataVersionBaseData>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, DataVersionBaseDetails properties, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataVersionBaseDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, DataVersionBaseDetails properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _dataVersionBaseDataDataVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<DataVersionBaseData>(Response.FromValue(new DataVersionBaseData(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningServicesArmOperation<DataVersionBaseDataResource>(Response.FromValue(new DataVersionBaseDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<DataVersionBaseData> CreateOrUpdate(WaitUntil waitUntil, string version, DataVersionBaseDetails properties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataVersionBaseDataResource> CreateOrUpdate(WaitUntil waitUntil, string version, DataVersionBaseDetails properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _dataVersionBaseDataDataVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<DataVersionBaseData>(Response.FromValue(new DataVersionBaseData(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningServicesArmOperation<DataVersionBaseDataResource>(Response.FromValue(new DataVersionBaseDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual async Task<Response<DataVersionBaseData>> GetAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataVersionBaseDataResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = await _dataVersionBaseDataDataVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataVersionBaseData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataVersionBaseDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual Response<DataVersionBaseData> Get(string version, CancellationToken cancellationToken = default)
+        public virtual Response<DataVersionBaseDataResource> Get(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = _dataVersionBaseDataDataVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataVersionBaseData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataVersionBaseDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,17 +189,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataVersionBaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataVersionBaseData> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataVersionBaseDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataVersionBaseDataResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataVersionBaseData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataVersionBaseDataResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataVersionBaseDataDataVersionsClientDiagnostics.CreateScope("DataVersionBaseDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _dataVersionBaseDataDataVersionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataVersionBaseData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataVersionBaseDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +207,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<DataVersionBaseData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataVersionBaseDataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _dataVersionBaseDataDataVersionsClientDiagnostics.CreateScope("DataVersionBaseDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _dataVersionBaseDataDataVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataVersionBaseData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataVersionBaseDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -233,17 +236,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataVersionBaseData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataVersionBaseData> GetAll(string orderBy = null, int? top = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataVersionBaseDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataVersionBaseDataResource> GetAll(string orderBy = null, int? top = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            Page<DataVersionBaseData> FirstPageFunc(int? pageSizeHint)
+            Page<DataVersionBaseDataResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataVersionBaseDataDataVersionsClientDiagnostics.CreateScope("DataVersionBaseDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _dataVersionBaseDataDataVersionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataVersionBaseData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataVersionBaseDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -251,14 +254,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<DataVersionBaseData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataVersionBaseDataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _dataVersionBaseDataDataVersionsClientDiagnostics.CreateScope("DataVersionBaseDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _dataVersionBaseDataDataVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataVersionBaseData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DataVersionBaseDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -332,7 +335,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual async Task<Response<DataVersionBaseData>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataVersionBaseDataResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
@@ -342,8 +345,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = await _dataVersionBaseDataDataVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<DataVersionBaseData>(null, response.GetRawResponse());
-                return Response.FromValue(new DataVersionBaseData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DataVersionBaseDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DataVersionBaseDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -361,7 +364,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual Response<DataVersionBaseData> GetIfExists(string version, CancellationToken cancellationToken = default)
+        public virtual Response<DataVersionBaseDataResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
@@ -371,8 +374,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _dataVersionBaseDataDataVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DataVersionBaseData>(null, response.GetRawResponse());
-                return Response.FromValue(new DataVersionBaseData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DataVersionBaseDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DataVersionBaseDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -381,7 +384,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        IEnumerator<DataVersionBaseData> IEnumerable<DataVersionBaseData>.GetEnumerator()
+        IEnumerator<DataVersionBaseDataResource> IEnumerable<DataVersionBaseDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -391,7 +394,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DataVersionBaseData> IAsyncEnumerable<DataVersionBaseData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataVersionBaseDataResource> IAsyncEnumerable<DataVersionBaseDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

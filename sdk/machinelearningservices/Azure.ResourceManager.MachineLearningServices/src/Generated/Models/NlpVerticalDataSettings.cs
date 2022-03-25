@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="testData"> Test data input. </param>
         /// <param name="trainingDataSettings"> Training data input. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal NlpVerticalDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, object validationData) : base(targetColumnName, testData, trainingDataSettings)
+        internal NlpVerticalDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, BinaryData validationData) : base(targetColumnName, testData, trainingDataSettings)
         {
             ValidationData = validationData;
         }
 
         /// <summary> Validation data inputs. </summary>
-        public object ValidationData { get; set; }
+        public BinaryData ValidationData { get; set; }
     }
 }

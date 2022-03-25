@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of OnlineEndpointData and their operations over its parent. </summary>
-    public partial class OnlineEndpointDataCollection : ArmCollection, IEnumerable<OnlineEndpointData>, IAsyncEnumerable<OnlineEndpointData>
+    /// <summary>
+    /// A class representing a collection of <see cref="OnlineEndpointDataResource" /> and their operations.
+    /// Each <see cref="OnlineEndpointDataResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
+    /// To get an <see cref="OnlineEndpointDataCollection" /> instance call the GetOnlineEndpointData method from an instance of <see cref="WorkspaceResource" />.
+    /// </summary>
+    public partial class OnlineEndpointDataCollection : ArmCollection, IEnumerable<OnlineEndpointDataResource>, IAsyncEnumerable<OnlineEndpointDataResource>
     {
         private readonly ClientDiagnostics _onlineEndpointDataOnlineEndpointsClientDiagnostics;
         private readonly OnlineEndpointsRestOperations _onlineEndpointDataOnlineEndpointsRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OnlineEndpointDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _onlineEndpointDataOnlineEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", OnlineEndpointData.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(OnlineEndpointData.ResourceType, out string onlineEndpointDataOnlineEndpointsApiVersion);
-            _onlineEndpointDataOnlineEndpointsRestClient = new OnlineEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, onlineEndpointDataOnlineEndpointsApiVersion);
+            _onlineEndpointDataOnlineEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", OnlineEndpointDataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(OnlineEndpointDataResource.ResourceType, out string onlineEndpointDataOnlineEndpointsApiVersion);
+            _onlineEndpointDataOnlineEndpointsRestClient = new OnlineEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, onlineEndpointDataOnlineEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Workspace.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Workspace.ResourceType), nameof(id));
+            if (id.ResourceType != WorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<OnlineEndpointData>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, OnlineEndpointDataData body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OnlineEndpointDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, OnlineEndpointDataData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(body, nameof(body));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _onlineEndpointDataOnlineEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<OnlineEndpointData>(new OnlineEndpointDataOperationSource(Client), _onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<OnlineEndpointDataResource>(new OnlineEndpointDataOperationSource(Client), _onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<OnlineEndpointData> CreateOrUpdate(WaitUntil waitUntil, string endpointName, OnlineEndpointDataData body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OnlineEndpointDataResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, OnlineEndpointDataData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(body, nameof(body));
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _onlineEndpointDataOnlineEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<OnlineEndpointData>(new OnlineEndpointDataOperationSource(Client), _onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningServicesArmOperation<OnlineEndpointDataResource>(new OnlineEndpointDataOperationSource(Client), _onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual async Task<Response<OnlineEndpointData>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OnlineEndpointDataResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = await _onlineEndpointDataOnlineEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OnlineEndpointData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OnlineEndpointDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual Response<OnlineEndpointData> Get(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineEndpointDataResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = _onlineEndpointDataOnlineEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OnlineEndpointData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OnlineEndpointDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,17 +191,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="properties"> A set of properties with which to filter the returned models. It is a comma separated string of properties key and/or properties key=value Example: propKey1,propKey2,propKey3=value3 . </param>
         /// <param name="orderBy"> The option to order the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OnlineEndpointData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OnlineEndpointData> GetAllAsync(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OnlineEndpointDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OnlineEndpointDataResource> GetAllAsync(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OnlineEndpointData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OnlineEndpointDataResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _onlineEndpointDataOnlineEndpointsClientDiagnostics.CreateScope("OnlineEndpointDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _onlineEndpointDataOnlineEndpointsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -206,14 +209,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<OnlineEndpointData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<OnlineEndpointDataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _onlineEndpointDataOnlineEndpointsClientDiagnostics.CreateScope("OnlineEndpointDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _onlineEndpointDataOnlineEndpointsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -237,17 +240,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="properties"> A set of properties with which to filter the returned models. It is a comma separated string of properties key and/or properties key=value Example: propKey1,propKey2,propKey3=value3 . </param>
         /// <param name="orderBy"> The option to order the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OnlineEndpointData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OnlineEndpointData> GetAll(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OnlineEndpointDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OnlineEndpointDataResource> GetAll(string name = null, int? count = null, EndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, OrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
-            Page<OnlineEndpointData> FirstPageFunc(int? pageSizeHint)
+            Page<OnlineEndpointDataResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _onlineEndpointDataOnlineEndpointsClientDiagnostics.CreateScope("OnlineEndpointDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _onlineEndpointDataOnlineEndpointsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -255,14 +258,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<OnlineEndpointData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<OnlineEndpointDataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _onlineEndpointDataOnlineEndpointsClientDiagnostics.CreateScope("OnlineEndpointDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _onlineEndpointDataOnlineEndpointsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OnlineEndpointDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -336,7 +339,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual async Task<Response<OnlineEndpointData>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OnlineEndpointDataResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -346,8 +349,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = await _onlineEndpointDataOnlineEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<OnlineEndpointData>(null, response.GetRawResponse());
-                return Response.FromValue(new OnlineEndpointData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<OnlineEndpointDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new OnlineEndpointDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -365,7 +368,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual Response<OnlineEndpointData> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineEndpointDataResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
@@ -375,8 +378,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _onlineEndpointDataOnlineEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<OnlineEndpointData>(null, response.GetRawResponse());
-                return Response.FromValue(new OnlineEndpointData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<OnlineEndpointDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new OnlineEndpointDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -385,7 +388,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        IEnumerator<OnlineEndpointData> IEnumerable<OnlineEndpointData>.GetEnumerator()
+        IEnumerator<OnlineEndpointDataResource> IEnumerable<OnlineEndpointDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -395,7 +398,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<OnlineEndpointData> IAsyncEnumerable<OnlineEndpointData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<OnlineEndpointDataResource> IAsyncEnumerable<OnlineEndpointDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

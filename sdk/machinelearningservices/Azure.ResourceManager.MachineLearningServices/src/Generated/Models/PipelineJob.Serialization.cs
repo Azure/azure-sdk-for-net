@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -43,7 +44,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     foreach (var item in Jobs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                     }
                     writer.WriteEndObject();
                 }
@@ -75,7 +80,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (Settings != null)
                 {
                     writer.WritePropertyName("settings");
-                    writer.WriteObjectValue(Settings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Settings);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -221,9 +230,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static PipelineJob DeserializePipelineJob(JsonElement element)
         {
             Optional<IDictionary<string, JobInput>> inputs = default;
-            Optional<IDictionary<string, object>> jobs = default;
+            Optional<IDictionary<string, BinaryData>> jobs = default;
             Optional<IDictionary<string, JobOutput>> outputs = default;
-            Optional<object> settings = default;
+            Optional<BinaryData> settings = default;
             Optional<string> computeId = default;
             Optional<string> displayName = default;
             Optional<string> experimentName = default;
@@ -267,10 +276,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         jobs = null;
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                     }
                     jobs = dictionary;
                     continue;
@@ -304,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         settings = null;
                         continue;
                     }
-                    settings = property.Value.GetObject();
+                    settings = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("computeId"))

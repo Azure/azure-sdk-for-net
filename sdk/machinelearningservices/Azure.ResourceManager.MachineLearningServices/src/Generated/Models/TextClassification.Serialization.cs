@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -37,7 +38,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings");
-                    writer.WriteObjectValue(FeaturizationSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FeaturizationSettings);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(FeaturizationSettings.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -70,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<ClassificationPrimaryMetrics> primaryMetric = default;
             Optional<NlpVerticalDataSettings> dataSettings = default;
-            Optional<object> featurizationSettings = default;
+            Optional<BinaryData> featurizationSettings = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;
             Optional<LogVerbosity> logVerbosity = default;
             TaskType taskType = default;
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = property.Value.GetObject();
+                    featurizationSettings = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("limitSettings"))

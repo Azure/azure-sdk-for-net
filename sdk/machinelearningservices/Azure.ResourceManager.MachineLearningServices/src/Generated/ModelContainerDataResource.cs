@@ -13,60 +13,64 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A Class representing a EnvironmentContainerData along with the instance operations that can be performed on it. </summary>
-    public partial class EnvironmentContainerData : ArmResource
+    /// <summary>
+    /// A Class representing a ModelContainerData along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ModelContainerDataResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetModelContainerDataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetModelContainerData method.
+    /// </summary>
+    public partial class ModelContainerDataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EnvironmentContainerData"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ModelContainerDataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _environmentContainerDataEnvironmentContainersClientDiagnostics;
-        private readonly EnvironmentContainersRestOperations _environmentContainerDataEnvironmentContainersRestClient;
-        private readonly EnvironmentContainerDataData _data;
+        private readonly ClientDiagnostics _modelContainerDataModelContainersClientDiagnostics;
+        private readonly ModelContainersRestOperations _modelContainerDataModelContainersRestClient;
+        private readonly ModelContainerDataData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="EnvironmentContainerData"/> class for mocking. </summary>
-        protected EnvironmentContainerData()
+        /// <summary> Initializes a new instance of the <see cref="ModelContainerDataResource"/> class for mocking. </summary>
+        protected ModelContainerDataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EnvironmentContainerData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ModelContainerDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EnvironmentContainerData(ArmClient client, EnvironmentContainerDataData data) : this(client, data.Id)
+        internal ModelContainerDataResource(ArmClient client, ModelContainerDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EnvironmentContainerData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ModelContainerDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EnvironmentContainerData(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ModelContainerDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _environmentContainerDataEnvironmentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceType, out string environmentContainerDataEnvironmentContainersApiVersion);
-            _environmentContainerDataEnvironmentContainersRestClient = new EnvironmentContainersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, environmentContainerDataEnvironmentContainersApiVersion);
+            _modelContainerDataModelContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string modelContainerDataModelContainersApiVersion);
+            _modelContainerDataModelContainersRestClient = new ModelContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, modelContainerDataModelContainersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/environments";
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/models";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EnvironmentContainerDataData Data
+        public virtual ModelContainerDataData Data
         {
             get
             {
@@ -82,57 +86,57 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of EnvironmentVersionData in the EnvironmentVersionData. </summary>
-        /// <returns> An object representing collection of EnvironmentVersionData and their operations over a EnvironmentVersionData. </returns>
-        public virtual EnvironmentVersionDataCollection GetAllEnvironmentVersionData()
+        /// <summary> Gets a collection of ModelVersionDataResources in the ModelContainerData. </summary>
+        /// <returns> An object representing collection of ModelVersionDataResources and their operations over a ModelVersionDataResource. </returns>
+        public virtual ModelVersionDataCollection GetAllModelVersionData()
         {
-            return new EnvironmentVersionDataCollection(Client, Id);
+            return GetCachedClient(Client => new ModelVersionDataCollection(Client, Id));
         }
 
         /// <summary>
         /// Get version.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions/{version}
-        /// Operation Id: EnvironmentVersions_Get
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions/{version}
+        /// Operation Id: ModelVersions_Get
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual async Task<Response<EnvironmentVersionData>> GetEnvironmentVersionDataAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ModelVersionDataResource>> GetModelVersionDataAsync(string version, CancellationToken cancellationToken = default)
         {
-            return await GetAllEnvironmentVersionData().GetAsync(version, cancellationToken).ConfigureAwait(false);
+            return await GetAllModelVersionData().GetAsync(version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get version.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions/{version}
-        /// Operation Id: EnvironmentVersions_Get
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions/{version}
+        /// Operation Id: ModelVersions_Get
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual Response<EnvironmentVersionData> GetEnvironmentVersionData(string version, CancellationToken cancellationToken = default)
+        public virtual Response<ModelVersionDataResource> GetModelVersionData(string version, CancellationToken cancellationToken = default)
         {
-            return GetAllEnvironmentVersionData().Get(version, cancellationToken);
+            return GetAllModelVersionData().Get(version, cancellationToken);
         }
 
         /// <summary>
         /// Get container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}
-        /// Operation Id: EnvironmentContainers_Get
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}
+        /// Operation Id: ModelContainers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EnvironmentContainerData>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ModelContainerDataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _environmentContainerDataEnvironmentContainersClientDiagnostics.CreateScope("EnvironmentContainerData.Get");
+            using var scope = _modelContainerDataModelContainersClientDiagnostics.CreateScope("ModelContainerDataResource.Get");
             scope.Start();
             try
             {
-                var response = await _environmentContainerDataEnvironmentContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _modelContainerDataModelContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EnvironmentContainerData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ModelContainerDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,20 +147,20 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary>
         /// Get container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}
-        /// Operation Id: EnvironmentContainers_Get
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}
+        /// Operation Id: ModelContainers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EnvironmentContainerData> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ModelContainerDataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _environmentContainerDataEnvironmentContainersClientDiagnostics.CreateScope("EnvironmentContainerData.Get");
+            using var scope = _modelContainerDataModelContainersClientDiagnostics.CreateScope("ModelContainerDataResource.Get");
             scope.Start();
             try
             {
-                var response = _environmentContainerDataEnvironmentContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _modelContainerDataModelContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EnvironmentContainerData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ModelContainerDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,18 +171,18 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary>
         /// Delete container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}
-        /// Operation Id: EnvironmentContainers_Delete
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}
+        /// Operation Id: ModelContainers_Delete
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _environmentContainerDataEnvironmentContainersClientDiagnostics.CreateScope("EnvironmentContainerData.Delete");
+            using var scope = _modelContainerDataModelContainersClientDiagnostics.CreateScope("ModelContainerDataResource.Delete");
             scope.Start();
             try
             {
-                var response = await _environmentContainerDataEnvironmentContainersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _modelContainerDataModelContainersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new MachineLearningServicesArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -193,18 +197,18 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary>
         /// Delete container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}
-        /// Operation Id: EnvironmentContainers_Delete
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}
+        /// Operation Id: ModelContainers_Delete
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _environmentContainerDataEnvironmentContainersClientDiagnostics.CreateScope("EnvironmentContainerData.Delete");
+            using var scope = _modelContainerDataModelContainersClientDiagnostics.CreateScope("ModelContainerDataResource.Delete");
             scope.Start();
             try
             {
-                var response = _environmentContainerDataEnvironmentContainersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _modelContainerDataModelContainersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new MachineLearningServicesArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);

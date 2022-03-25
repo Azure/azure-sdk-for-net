@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="testData"> Test data input. </param>
         /// <param name="trainingDataSettings"> Training data input. </param>
         /// <param name="validationData"> Settings for the validation dataset. </param>
-        internal ImageDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, object validationData) : base(targetColumnName, testData, trainingDataSettings)
+        internal ImageDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, BinaryData validationData) : base(targetColumnName, testData, trainingDataSettings)
         {
             ValidationData = validationData;
         }
 
         /// <summary> Settings for the validation dataset. </summary>
-        public object ValidationData { get; set; }
+        public BinaryData ValidationData { get; set; }
     }
 }

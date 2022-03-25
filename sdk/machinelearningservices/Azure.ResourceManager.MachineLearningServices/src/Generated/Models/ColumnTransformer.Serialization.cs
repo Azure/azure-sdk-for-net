@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -38,7 +39,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (Parameters != null)
                 {
                     writer.WritePropertyName("parameters");
-                    writer.WriteObjectValue(Parameters);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Parameters);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static ColumnTransformer DeserializeColumnTransformer(JsonElement element)
         {
             Optional<IList<string>> fields = default;
-            Optional<object> parameters = default;
+            Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fields"))
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         parameters = null;
                         continue;
                     }
-                    parameters = property.Value.GetObject();
+                    parameters = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

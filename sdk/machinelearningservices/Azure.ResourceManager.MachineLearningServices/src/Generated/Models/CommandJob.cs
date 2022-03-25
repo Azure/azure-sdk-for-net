@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="outputs"> Mapping of output data bindings used in the job. </param>
         /// <param name="parameters"> Input parameters. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal CommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, JobInput> inputs, CommandJobLimits limits, IDictionary<string, JobOutput> outputs, object parameters, ResourceConfiguration resources) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
+        internal CommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, JobInput> inputs, CommandJobLimits limits, IDictionary<string, JobOutput> outputs, BinaryData parameters, ResourceConfiguration resources) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
         {
             CodeId = codeId;
             Command = command;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Mapping of output data bindings used in the job. </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary> Input parameters. </summary>
-        public object Parameters { get; }
+        public BinaryData Parameters { get; }
         /// <summary> Compute Resource configuration for the job. </summary>
         public ResourceConfiguration Resources { get; set; }
     }

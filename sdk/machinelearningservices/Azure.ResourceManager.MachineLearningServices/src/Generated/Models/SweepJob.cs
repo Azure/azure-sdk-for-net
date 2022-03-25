@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <param name="trial"> Trial component definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objective"/>, <paramref name="samplingAlgorithm"/>, <paramref name="searchSpace"/> or <paramref name="trial"/> is null. </exception>
-        public SweepJob(Objective objective, SamplingAlgorithm samplingAlgorithm, object searchSpace, TrialComponent trial)
+        public SweepJob(Objective objective, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial)
         {
             if (objective == null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="samplingAlgorithm"> The hyperparameter sampling algorithm. </param>
         /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <param name="trial"> Trial component definition. </param>
-        internal SweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, EarlyTerminationPolicy earlyTermination, IDictionary<string, JobInput> inputs, SweepJobLimits limits, Objective objective, IDictionary<string, JobOutput> outputs, SamplingAlgorithm samplingAlgorithm, object searchSpace, TrialComponent trial) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
+        internal SweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, EarlyTerminationPolicy earlyTermination, IDictionary<string, JobInput> inputs, SweepJobLimits limits, Objective objective, IDictionary<string, JobOutput> outputs, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, TrialComponent trial) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
         {
             EarlyTermination = earlyTermination;
             Inputs = inputs;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </summary>
-        public object SearchSpace { get; set; }
+        public BinaryData SearchSpace { get; set; }
         /// <summary> Trial component definition. </summary>
         public TrialComponent Trial { get; set; }
     }

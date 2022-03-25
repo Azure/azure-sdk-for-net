@@ -13,14 +13,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A Class representing a WorkspaceConnection along with the instance operations that can be performed on it. </summary>
-    public partial class WorkspaceConnection : ArmResource
+    /// <summary>
+    /// A Class representing a WorkspaceConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkspaceConnectionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetWorkspaceConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetWorkspaceConnection method.
+    /// </summary>
+    public partial class WorkspaceConnectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WorkspaceConnection"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WorkspaceConnectionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}";
@@ -31,28 +35,28 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly WorkspaceConnectionsRestOperations _workspaceConnectionRestClient;
         private readonly WorkspaceConnectionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceConnection"/> class for mocking. </summary>
-        protected WorkspaceConnection()
+        /// <summary> Initializes a new instance of the <see cref="WorkspaceConnectionResource"/> class for mocking. </summary>
+        protected WorkspaceConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkspaceConnection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "WorkspaceConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WorkspaceConnection(ArmClient client, WorkspaceConnectionData data) : this(client, data.Id)
+        internal WorkspaceConnectionResource(ArmClient client, WorkspaceConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceConnection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkspaceConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WorkspaceConnection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WorkspaceConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, DiagnosticOptions);
+            _workspaceConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string workspaceConnectionApiVersion);
-            _workspaceConnectionRestClient = new WorkspaceConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workspaceConnectionApiVersion);
+            _workspaceConnectionRestClient = new WorkspaceConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,16 +92,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: WorkspaceConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WorkspaceConnection>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkspaceConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _workspaceConnectionClientDiagnostics.CreateScope("WorkspaceConnection.Get");
+            using var scope = _workspaceConnectionClientDiagnostics.CreateScope("WorkspaceConnectionResource.Get");
             scope.Start();
             try
             {
                 var response = await _workspaceConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceConnection(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +116,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: WorkspaceConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WorkspaceConnection> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WorkspaceConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _workspaceConnectionClientDiagnostics.CreateScope("WorkspaceConnection.Get");
+            using var scope = _workspaceConnectionClientDiagnostics.CreateScope("WorkspaceConnectionResource.Get");
             scope.Start();
             try
             {
                 var response = _workspaceConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceConnection(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _workspaceConnectionClientDiagnostics.CreateScope("WorkspaceConnection.Delete");
+            using var scope = _workspaceConnectionClientDiagnostics.CreateScope("WorkspaceConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _workspaceConnectionClientDiagnostics.CreateScope("WorkspaceConnection.Delete");
+            using var scope = _workspaceConnectionClientDiagnostics.CreateScope("WorkspaceConnectionResource.Delete");
             scope.Start();
             try
             {

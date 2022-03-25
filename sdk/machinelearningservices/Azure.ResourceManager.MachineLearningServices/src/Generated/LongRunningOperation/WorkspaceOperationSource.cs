@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    internal class WorkspaceOperationSource : IOperationSource<Workspace>
+    internal class WorkspaceOperationSource : IOperationSource<WorkspaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.MachineLearningServices
             _client = client;
         }
 
-        Workspace IOperationSource<Workspace>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkspaceResource IOperationSource<WorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkspaceData.DeserializeWorkspaceData(document.RootElement);
-            return new Workspace(_client, data);
+            return new WorkspaceResource(_client, data);
         }
 
-        async ValueTask<Workspace> IOperationSource<Workspace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkspaceResource> IOperationSource<WorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkspaceData.DeserializeWorkspaceData(document.RootElement);
-            return new Workspace(_client, data);
+            return new WorkspaceResource(_client, data);
         }
     }
 }

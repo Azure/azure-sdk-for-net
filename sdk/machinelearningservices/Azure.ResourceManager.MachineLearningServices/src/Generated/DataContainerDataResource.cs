@@ -13,14 +13,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A Class representing a DataContainerData along with the instance operations that can be performed on it. </summary>
-    public partial class DataContainerData : ArmResource
+    /// <summary>
+    /// A Class representing a DataContainerData along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataContainerDataResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataContainerDataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetDataContainerData method.
+    /// </summary>
+    public partial class DataContainerDataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataContainerData"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataContainerDataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}";
@@ -31,28 +35,28 @@ namespace Azure.ResourceManager.MachineLearningServices
         private readonly DataContainersRestOperations _dataContainerDataDataContainersRestClient;
         private readonly DataContainerDataData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataContainerData"/> class for mocking. </summary>
-        protected DataContainerData()
+        /// <summary> Initializes a new instance of the <see cref="DataContainerDataResource"/> class for mocking. </summary>
+        protected DataContainerDataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataContainerData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataContainerDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataContainerData(ArmClient client, DataContainerDataData data) : this(client, data.Id)
+        internal DataContainerDataResource(ArmClient client, DataContainerDataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataContainerData"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataContainerDataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataContainerData(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataContainerDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataContainerDataDataContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, DiagnosticOptions);
+            _dataContainerDataDataContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dataContainerDataDataContainersApiVersion);
-            _dataContainerDataDataContainersRestClient = new DataContainersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataContainerDataDataContainersApiVersion);
+            _dataContainerDataDataContainersRestClient = new DataContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataContainerDataDataContainersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -82,11 +86,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DataVersionBaseData in the DataVersionBaseData. </summary>
-        /// <returns> An object representing collection of DataVersionBaseData and their operations over a DataVersionBaseData. </returns>
+        /// <summary> Gets a collection of DataVersionBaseDataResources in the DataContainerData. </summary>
+        /// <returns> An object representing collection of DataVersionBaseDataResources and their operations over a DataVersionBaseDataResource. </returns>
         public virtual DataVersionBaseDataCollection GetAllDataVersionBaseData()
         {
-            return new DataVersionBaseDataCollection(Client, Id);
+            return GetCachedClient(Client => new DataVersionBaseDataCollection(Client, Id));
         }
 
         /// <summary>
@@ -98,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual async Task<Response<DataVersionBaseData>> GetDataVersionBaseDataAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataVersionBaseDataResource>> GetDataVersionBaseDataAsync(string version, CancellationToken cancellationToken = default)
         {
             return await GetAllDataVersionBaseData().GetAsync(version, cancellationToken).ConfigureAwait(false);
         }
@@ -112,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public virtual Response<DataVersionBaseData> GetDataVersionBaseData(string version, CancellationToken cancellationToken = default)
+        public virtual Response<DataVersionBaseDataResource> GetDataVersionBaseData(string version, CancellationToken cancellationToken = default)
         {
             return GetAllDataVersionBaseData().Get(version, cancellationToken);
         }
@@ -123,16 +127,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: DataContainers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataContainerData>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataContainerDataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataContainerDataDataContainersClientDiagnostics.CreateScope("DataContainerData.Get");
+            using var scope = _dataContainerDataDataContainersClientDiagnostics.CreateScope("DataContainerDataResource.Get");
             scope.Start();
             try
             {
                 var response = await _dataContainerDataDataContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataContainerData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataContainerDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,16 +151,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: DataContainers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataContainerData> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataContainerDataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataContainerDataDataContainersClientDiagnostics.CreateScope("DataContainerData.Get");
+            using var scope = _dataContainerDataDataContainersClientDiagnostics.CreateScope("DataContainerDataResource.Get");
             scope.Start();
             try
             {
                 var response = _dataContainerDataDataContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataContainerData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataContainerDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataContainerDataDataContainersClientDiagnostics.CreateScope("DataContainerData.Delete");
+            using var scope = _dataContainerDataDataContainersClientDiagnostics.CreateScope("DataContainerDataResource.Delete");
             scope.Start();
             try
             {
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataContainerDataDataContainersClientDiagnostics.CreateScope("DataContainerData.Delete");
+            using var scope = _dataContainerDataDataContainersClientDiagnostics.CreateScope("DataContainerDataResource.Delete");
             scope.Start();
             try
             {

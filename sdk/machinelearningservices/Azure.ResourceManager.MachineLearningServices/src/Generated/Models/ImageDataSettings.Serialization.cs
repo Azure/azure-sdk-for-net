@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,7 +21,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData");
-                    writer.WriteObjectValue(ValidationData);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ValidationData);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidationData.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -48,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static ImageDataSettings DeserializeImageDataSettings(JsonElement element)
         {
-            Optional<object> validationData = default;
+            Optional<BinaryData> validationData = default;
             string targetColumnName = default;
             Optional<TestDataSettings> testData = default;
             TrainingDataSettings trainingData = default;
@@ -61,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = property.Value.GetObject();
+                    validationData = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"))

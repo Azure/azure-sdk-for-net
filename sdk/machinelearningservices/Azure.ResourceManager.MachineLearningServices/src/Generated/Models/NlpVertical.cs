@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="dataSettings"> Data inputs for AutoMLJob. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        internal NlpVertical(NlpVerticalDataSettings dataSettings, object featurizationSettings, NlpVerticalLimitSettings limitSettings)
+        internal NlpVertical(NlpVerticalDataSettings dataSettings, BinaryData featurizationSettings, NlpVerticalLimitSettings limitSettings)
         {
             DataSettings = dataSettings;
             FeaturizationSettings = featurizationSettings;
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Data inputs for AutoMLJob. </summary>
         public NlpVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
-        public object FeaturizationSettings { get; set; }
+        public BinaryData FeaturizationSettings { get; set; }
         /// <summary> Execution constraints for AutoMLJob. </summary>
         public NlpVerticalLimitSettings LimitSettings { get; set; }
     }

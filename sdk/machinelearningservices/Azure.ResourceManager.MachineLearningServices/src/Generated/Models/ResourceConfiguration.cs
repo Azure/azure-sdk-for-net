@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,14 +17,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ResourceConfiguration. </summary>
         public ResourceConfiguration()
         {
-            Properties = new ChangeTrackingDictionary<string, object>();
+            Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ResourceConfiguration. </summary>
         /// <param name="instanceCount"> Optional number of instances or nodes used by the compute target. </param>
         /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
         /// <param name="properties"> Additional properties bag. </param>
-        internal ResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, object> properties)
+        internal ResourceConfiguration(int? instanceCount, string instanceType, IDictionary<string, BinaryData> properties)
         {
             InstanceCount = instanceCount;
             InstanceType = instanceType;
@@ -35,6 +36,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Optional type of VM used as supported by the compute target. </summary>
         public string InstanceType { get; set; }
         /// <summary> Additional properties bag. </summary>
-        public IDictionary<string, object> Properties { get; set; }
+        public IDictionary<string, BinaryData> Properties { get; set; }
     }
 }

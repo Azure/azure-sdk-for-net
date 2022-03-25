@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    internal class OnlineDeploymentDataOperationSource : IOperationSource<OnlineDeploymentData>
+    internal class OnlineDeploymentDataOperationSource : IOperationSource<OnlineDeploymentDataResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.MachineLearningServices
             _client = client;
         }
 
-        OnlineDeploymentData IOperationSource<OnlineDeploymentData>.CreateResult(Response response, CancellationToken cancellationToken)
+        OnlineDeploymentDataResource IOperationSource<OnlineDeploymentDataResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OnlineDeploymentDataData.DeserializeOnlineDeploymentDataData(document.RootElement);
-            return new OnlineDeploymentData(_client, data);
+            return new OnlineDeploymentDataResource(_client, data);
         }
 
-        async ValueTask<OnlineDeploymentData> IOperationSource<OnlineDeploymentData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OnlineDeploymentDataResource> IOperationSource<OnlineDeploymentDataResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OnlineDeploymentDataData.DeserializeOnlineDeploymentDataData(document.RootElement);
-            return new OnlineDeploymentData(_client, data);
+            return new OnlineDeploymentDataResource(_client, data);
         }
     }
 }

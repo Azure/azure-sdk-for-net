@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Different properties to be passed to transformer.
         /// Input expected is dictionary of key,value pairs in JSON format.
         /// </param>
-        internal ColumnTransformer(IList<string> fields, object parameters)
+        internal ColumnTransformer(IList<string> fields, BinaryData parameters)
         {
             Fields = fields;
             Parameters = parameters;
@@ -37,6 +38,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Different properties to be passed to transformer.
         /// Input expected is dictionary of key,value pairs in JSON format.
         /// </summary>
-        public object Parameters { get; set; }
+        public BinaryData Parameters { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> gpu = default;
             Optional<Network> network = default;
             Optional<ComputeInstanceEnvironmentInfo> environment = default;
-            Optional<IReadOnlyList<object>> services = default;
+            Optional<IReadOnlyList<BinaryData>> services = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -70,10 +71,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     services = array;
                     continue;

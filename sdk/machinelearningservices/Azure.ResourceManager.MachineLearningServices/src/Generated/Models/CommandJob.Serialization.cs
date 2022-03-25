@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -268,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<IDictionary<string, JobInput>> inputs = default;
             Optional<CommandJobLimits> limits = default;
             Optional<IDictionary<string, JobOutput>> outputs = default;
-            Optional<object> parameters = default;
+            Optional<BinaryData> parameters = default;
             Optional<ResourceConfiguration> resources = default;
             Optional<string> computeId = default;
             Optional<string> displayName = default;
@@ -397,7 +398,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         parameters = null;
                         continue;
                     }
-                    parameters = property.Value.GetObject();
+                    parameters = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("resources"))

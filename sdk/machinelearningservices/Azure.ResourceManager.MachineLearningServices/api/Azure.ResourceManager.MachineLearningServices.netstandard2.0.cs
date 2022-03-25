@@ -1,317 +1,279 @@
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    public static partial class ArmClientExtensions
+    public partial class BatchDeploymentDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>, System.Collections.IEnumerable
     {
-        public static Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource GetBatchDeploymentTrackedResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource GetBatchEndpointTrackedResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.CodeContainerResource GetCodeContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.CodeVersionResource GetCodeVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.ComponentContainerResource GetComponentContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.ComponentVersionResource GetComponentVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.ComputeResource GetComputeResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.DatasetContainerResource GetDatasetContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.DatasetVersionResource GetDatasetVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.DatastoreResource GetDatastoreResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource GetEnvironmentContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource GetEnvironmentVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.JobBaseResource GetJobBaseResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.ModelContainerResource GetModelContainerResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.ModelVersionResource GetModelVersionResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource GetOnlineDeploymentTrackedResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource GetOnlineEndpointTrackedResource(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection GetPrivateEndpointConnection(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Workspace GetWorkspace(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.WorkspaceConnection GetWorkspaceConnection(this Azure.ResourceManager.ArmClient armClient, Azure.ResourceManager.ResourceIdentifier id) { throw null; }
-    }
-    public partial class BatchDeploymentTrackedResource : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected BatchDeploymentTrackedResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.BatchDeploymentDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.BatchDeploymentDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.BatchDeploymentUpdateOperation Update(Azure.ResourceManager.MachineLearningServices.Models.PartialBatchDeploymentPartialTrackedResource body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.BatchDeploymentUpdateOperation> UpdateAsync(Azure.ResourceManager.MachineLearningServices.Models.PartialBatchDeploymentPartialTrackedResource body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BatchDeploymentTrackedResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>, System.Collections.IEnumerable
-    {
-        protected BatchDeploymentTrackedResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.BatchDeploymentCreateOrUpdateOperation CreateOrUpdate(string deploymentName, Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResourceData body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.BatchDeploymentCreateOrUpdateOperation> CreateOrUpdateAsync(string deploymentName, Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResourceData body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> Get(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> GetAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> GetIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> GetIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>.GetEnumerator() { throw null; }
+        protected BatchDeploymentDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> Get(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> GetAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> GetIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> GetIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BatchDeploymentTrackedResourceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class BatchDeploymentDataData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BatchDeploymentTrackedResourceData(Azure.ResourceManager.Resources.Models.Location location, Azure.ResourceManager.MachineLearningServices.Models.BatchDeployment properties) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public BatchDeploymentDataData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearningServices.Models.BatchDeploymentDetails properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.BatchDeployment Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.BatchDeploymentDetails Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
     }
-    public partial class BatchEndpointTrackedResource : Azure.ResourceManager.Core.ArmResource
+    public partial class BatchDeploymentDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected BatchEndpointTrackedResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BatchDeploymentDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResourceCollection GetBatchDeploymentTrackedResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableBatchDeploymentDataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableBatchDeploymentDataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class BatchEndpointDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>, System.Collections.IEnumerable
+    {
+        protected BatchEndpointDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.MachineLearningServices.BatchEndpointDataData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.MachineLearningServices.BatchEndpointDataData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> GetAll(int? count = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> GetAllAsync(int? count = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> GetAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> GetIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> GetIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class BatchEndpointDataData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public BatchEndpointDataData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointDetails properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointDetails Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
+    }
+    public partial class BatchEndpointDataResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BatchEndpointDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.BatchEndpointDataData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataCollection GetAllBatchDeploymentData() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource> GetBatchDeploymentData(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource>> GetBatchDeploymentDataAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointUpdateOperation Update(Azure.ResourceManager.MachineLearningServices.Models.PartialBatchEndpointPartialTrackedResource body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointUpdateOperation> UpdateAsync(Azure.ResourceManager.MachineLearningServices.Models.PartialBatchEndpointPartialTrackedResource body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableBatchEndpointDataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableBatchEndpointDataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BatchEndpointTrackedResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>, System.Collections.IEnumerable
+    public partial class CodeContainerDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>, System.Collections.IEnumerable
     {
-        protected BatchEndpointTrackedResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointCreateOrUpdateOperation CreateOrUpdate(string endpointName, Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResourceData body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(string endpointName, Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResourceData body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> GetAll(int? count = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> GetAllAsync(int? count = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> GetAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> GetIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> GetIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>.GetEnumerator() { throw null; }
+        protected CodeContainerDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.CodeContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.CodeContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> GetAll(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> GetAllAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BatchEndpointTrackedResourceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class CodeContainerDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public BatchEndpointTrackedResourceData(Azure.ResourceManager.Resources.Models.Location location, Azure.ResourceManager.MachineLearningServices.Models.BatchEndpoint properties) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentity Identity { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.BatchEndpoint Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public CodeContainerDataData(Azure.ResourceManager.MachineLearningServices.Models.CodeContainerDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.CodeContainerDetails Properties { get { throw null; } set { } }
     }
-    public partial class CodeContainerResource : Azure.ResourceManager.Core.ArmResource
+    public partial class CodeContainerDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected CodeContainerResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.CodeContainerResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CodeContainerDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.CodeContainerDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.CodeContainerDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.CodeContainerDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.CodeVersionResourceCollection GetCodeVersionResources() { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.CodeVersionDataCollection GetAllCodeVersionData() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> GetCodeVersionData(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>> GetCodeVersionDataAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CodeContainerResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>, System.Collections.IEnumerable
+    public partial class CodeVersionDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>, System.Collections.IEnumerable
     {
-        protected CodeContainerResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.CodeContainerCreateOrUpdateOperation CreateOrUpdate(string name, Azure.ResourceManager.MachineLearningServices.Models.CodeContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.CodeContainerCreateOrUpdateOperation> CreateOrUpdateAsync(string name, Azure.ResourceManager.MachineLearningServices.Models.CodeContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.CodeContainerResource> GetAll(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.CodeContainerResource> GetAllAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.CodeContainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.CodeContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>.GetEnumerator() { throw null; }
+        protected CodeVersionDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.CodeVersionDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.CodeVersionDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CodeContainerResourceData : Azure.ResourceManager.Models.Resource
+    public partial class CodeVersionDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public CodeContainerResourceData(Azure.ResourceManager.MachineLearningServices.Models.CodeContainer properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.CodeContainer Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public CodeVersionDataData(Azure.ResourceManager.MachineLearningServices.Models.CodeVersionDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.CodeVersionDetails Properties { get { throw null; } set { } }
     }
-    public partial class CodeVersionResource : Azure.ResourceManager.Core.ArmResource
+    public partial class CodeVersionDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected CodeVersionResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.CodeVersionResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CodeVersionDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.CodeVersionDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.CodeVersionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.CodeVersionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CodeVersionResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>, System.Collections.IEnumerable
+    public partial class ComponentContainerDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>, System.Collections.IEnumerable
     {
-        protected CodeVersionResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.CodeVersionCreateOrUpdateOperation CreateOrUpdate(string version, Azure.ResourceManager.MachineLearningServices.Models.CodeVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.CodeVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string version, Azure.ResourceManager.MachineLearningServices.Models.CodeVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.CodeVersionResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.CodeVersionResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.CodeVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.CodeVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>.GetEnumerator() { throw null; }
+        protected ComponentContainerDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.ComponentContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.ComponentContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> GetAll(string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> GetAllAsync(string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CodeVersionResourceData : Azure.ResourceManager.Models.Resource
+    public partial class ComponentContainerDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public CodeVersionResourceData(Azure.ResourceManager.MachineLearningServices.Models.CodeVersion properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.CodeVersion Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public ComponentContainerDataData(Azure.ResourceManager.MachineLearningServices.Models.ComponentContainerDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ComponentContainerDetails Properties { get { throw null; } set { } }
     }
-    public partial class ComponentContainerResource : Azure.ResourceManager.Core.ArmResource
+    public partial class ComponentContainerDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected ComponentContainerResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.ComponentContainerResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ComponentContainerDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.ComponentContainerDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComponentContainerDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComponentContainerDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.ComponentVersionResourceCollection GetComponentVersionResources() { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.ComponentVersionDataCollection GetAllComponentVersionData() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> GetComponentVersionData(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>> GetComponentVersionDataAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ComponentContainerResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>, System.Collections.IEnumerable
+    public partial class ComponentVersionDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>, System.Collections.IEnumerable
     {
-        protected ComponentContainerResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComponentContainerCreateOrUpdateOperation CreateOrUpdate(string name, Azure.ResourceManager.MachineLearningServices.Models.ComponentContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComponentContainerCreateOrUpdateOperation> CreateOrUpdateAsync(string name, Azure.ResourceManager.MachineLearningServices.Models.ComponentContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource> GetAll(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource> GetAllAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>.GetEnumerator() { throw null; }
+        protected ComponentVersionDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.ComponentVersionDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.ComponentVersionDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ComponentContainerResourceData : Azure.ResourceManager.Models.Resource
+    public partial class ComponentVersionDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public ComponentContainerResourceData(Azure.ResourceManager.MachineLearningServices.Models.ComponentContainer properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ComponentContainer Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public ComponentVersionDataData(Azure.ResourceManager.MachineLearningServices.Models.ComponentVersionDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ComponentVersionDetails Properties { get { throw null; } set { } }
     }
-    public partial class ComponentVersionResource : Azure.ResourceManager.Core.ArmResource
+    public partial class ComponentVersionDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected ComponentVersionResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.ComponentVersionResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ComponentVersionDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.ComponentVersionDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComponentVersionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComponentVersionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ComponentVersionResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>, System.Collections.IEnumerable
+    public partial class ComputeResource : Azure.ResourceManager.ArmResource
     {
-        protected ComponentVersionResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComponentVersionCreateOrUpdateOperation CreateOrUpdate(string version, Azure.ResourceManager.MachineLearningServices.Models.ComponentVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComponentVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string version, Azure.ResourceManager.MachineLearningServices.Models.ComponentVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ComponentVersionResourceData : Azure.ResourceManager.Models.Resource
-    {
-        public ComponentVersionResourceData(Azure.ResourceManager.MachineLearningServices.Models.ComponentVersion properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ComponentVersion Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
-    }
-    public partial class ComputeResource : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected ComputeResource() { }
         public virtual Azure.ResourceManager.MachineLearningServices.ComputeResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComputeDeleteOperation Delete(Azure.ResourceManager.MachineLearningServices.Models.UnderlyingResourceAction underlyingResourceAction, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComputeDeleteOperation> DeleteAsync(Azure.ResourceManager.MachineLearningServices.Models.UnderlyingResourceAction underlyingResourceAction, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string computeName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.UnderlyingResourceAction underlyingResourceAction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.UnderlyingResourceAction underlyingResourceAction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ComputeSecrets> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ComputeSecrets>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.AmlComputeNodeInformation> GetNodes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.AmlComputeNodeInformation> GetNodesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComputeRestartOperation Restart(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComputeRestartOperation> RestartAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComputeStartOperation Start(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComputeStartOperation> StartAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComputeStopOperation Stop(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComputeStopOperation> StopAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComputeUpdateOperation Update(Azure.ResourceManager.MachineLearningServices.Models.ScaleSettingsInformation properties = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComputeUpdateOperation> UpdateAsync(Azure.ResourceManager.MachineLearningServices.Models.ScaleSettingsInformation properties = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ComputeResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.ScaleSettingsInformation properties = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ComputeResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.ScaleSettingsInformation properties = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ComputeResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComputeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComputeResource>, System.Collections.IEnumerable
+    public partial class ComputeResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ComputeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComputeResource>, System.Collections.IEnumerable
     {
         protected ComputeResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string computeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string computeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ComputeCreateOrUpdateOperation CreateOrUpdate(string computeName, Azure.ResourceManager.MachineLearningServices.ComputeResourceData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ComputeCreateOrUpdateOperation> CreateOrUpdateAsync(string computeName, Azure.ResourceManager.MachineLearningServices.ComputeResourceData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ComputeResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string computeName, Azure.ResourceManager.MachineLearningServices.ComputeResourceData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ComputeResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string computeName, Azure.ResourceManager.MachineLearningServices.ComputeResourceData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string computeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string computeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource> Get(string computeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ComputeResource> GetAll(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ComputeResource> GetAllAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -322,606 +284,520 @@ namespace Azure.ResourceManager.MachineLearningServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ComputeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ComputeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ComputeResourceData : Azure.ResourceManager.Models.Resource
+    public partial class ComputeResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public ComputeResourceData() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.Compute Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class DatasetContainerResource : Azure.ResourceManager.Core.ArmResource
+    public partial class DataContainerDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>, System.Collections.IEnumerable
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected DatasetContainerResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.DatasetContainerResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.DatasetContainerDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.DatasetContainerDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.DatasetVersionResourceCollection GetDatasetVersionResources() { throw null; }
-    }
-    public partial class DatasetContainerResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>, System.Collections.IEnumerable
-    {
-        protected DatasetContainerResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.DatasetContainerCreateOrUpdateOperation CreateOrUpdate(string name, Azure.ResourceManager.MachineLearningServices.Models.DatasetContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.DatasetContainerCreateOrUpdateOperation> CreateOrUpdateAsync(string name, Azure.ResourceManager.MachineLearningServices.Models.DatasetContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource> GetAll(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource> GetAllAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>.GetEnumerator() { throw null; }
+        protected DataContainerDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.DataContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.DataContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> GetAll(string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> GetAllAsync(string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DatasetContainerResourceData : Azure.ResourceManager.Models.Resource
+    public partial class DataContainerDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public DatasetContainerResourceData(Azure.ResourceManager.MachineLearningServices.Models.DatasetContainer properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.DatasetContainer Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public DataContainerDataData(Azure.ResourceManager.MachineLearningServices.Models.DataContainerDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.DataContainerDetails Properties { get { throw null; } set { } }
     }
-    public partial class DatasetVersionResource : Azure.ResourceManager.Core.ArmResource
+    public partial class DataContainerDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected DatasetVersionResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.DatasetVersionResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataContainerDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.DataContainerDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.DatasetVersionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.DatasetVersionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataCollection GetAllDataVersionBaseData() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> GetDataVersionBaseData(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>> GetDataVersionBaseDataAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DatasetVersionResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>, System.Collections.IEnumerable
+    public partial class DatastoreDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>, System.Collections.IEnumerable
     {
-        protected DatasetVersionResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.DatasetVersionCreateOrUpdateOperation CreateOrUpdate(string version, Azure.ResourceManager.MachineLearningServices.Models.DatasetVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.DatasetVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string version, Azure.ResourceManager.MachineLearningServices.Models.DatasetVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, string tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, string tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>.GetEnumerator() { throw null; }
+        protected DatastoreDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails properties, bool? skipValidation = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails properties, bool? skipValidation = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> GetAll(string skip = null, int? count = default(int?), bool? isDefault = default(bool?), System.Collections.Generic.IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> GetAllAsync(string skip = null, int? count = default(int?), bool? isDefault = default(bool?), System.Collections.Generic.IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DatasetVersionResourceData : Azure.ResourceManager.Models.Resource
+    public partial class DatastoreDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public DatasetVersionResourceData(Azure.ResourceManager.MachineLearningServices.Models.DatasetVersion properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.DatasetVersion Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public DatastoreDataData(Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails Properties { get { throw null; } set { } }
     }
-    public partial class DatastoreResource : Azure.ResourceManager.Core.ArmResource
+    public partial class DatastoreDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected DatastoreResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.DatastoreResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DatastoreDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.DatastoreDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.DatastoreDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.DatastoreDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.DatastoreSecrets> GetSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.DatastoreSecrets>> GetSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DatastoreResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DatastoreResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DatastoreResource>, System.Collections.IEnumerable
+    public partial class DataVersionBaseDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>, System.Collections.IEnumerable
     {
-        protected DatastoreResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.DatastoreCreateOrUpdateOperation CreateOrUpdate(string name, Azure.ResourceManager.MachineLearningServices.Models.Datastore properties, bool? skipValidation = default(bool?), bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.DatastoreCreateOrUpdateOperation> CreateOrUpdateAsync(string name, Azure.ResourceManager.MachineLearningServices.Models.Datastore properties, bool? skipValidation = default(bool?), bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.DatastoreResource> GetAll(string skip = null, int? count = default(int?), bool? isDefault = default(bool?), System.Collections.Generic.IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.DatastoreResource> GetAllAsync(string skip = null, int? count = default(int?), bool? isDefault = default(bool?), System.Collections.Generic.IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.DatastoreResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DatastoreResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.DatastoreResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DatastoreResource>.GetEnumerator() { throw null; }
+        protected DataVersionBaseDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.DataVersionBaseDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.DataVersionBaseDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, string tags = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, string tags = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DatastoreResourceData : Azure.ResourceManager.Models.Resource
+    public partial class DataVersionBaseDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public DatastoreResourceData(Azure.ResourceManager.MachineLearningServices.Models.Datastore properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.Datastore Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public DataVersionBaseDataData(Azure.ResourceManager.MachineLearningServices.Models.DataVersionBaseDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.DataVersionBaseDetails Properties { get { throw null; } set { } }
     }
-    public partial class EnvironmentContainerResource : Azure.ResourceManager.Core.ArmResource
+    public partial class DataVersionBaseDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected EnvironmentContainerResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataVersionBaseDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResourceCollection GetEnvironmentVersionResources() { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EnvironmentContainerResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>, System.Collections.IEnumerable
+    public partial class EnvironmentContainerDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>, System.Collections.IEnumerable
     {
-        protected EnvironmentContainerResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerCreateOrUpdateOperation CreateOrUpdate(string name, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerCreateOrUpdateOperation> CreateOrUpdateAsync(string name, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource> GetAll(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource> GetAllAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>.GetEnumerator() { throw null; }
+        protected EnvironmentContainerDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> GetAll(string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> GetAllAsync(string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EnvironmentContainerResourceData : Azure.ResourceManager.Models.Resource
+    public partial class EnvironmentContainerDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public EnvironmentContainerResourceData(Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainer properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainer Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public EnvironmentContainerDataData(Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentContainerDetails Properties { get { throw null; } set { } }
     }
-    public partial class EnvironmentVersionResource : Azure.ResourceManager.Core.ArmResource
+    public partial class EnvironmentContainerDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected EnvironmentVersionResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected EnvironmentContainerDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataCollection GetAllEnvironmentVersionData() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> GetEnvironmentVersionData(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>> GetEnvironmentVersionDataAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EnvironmentVersionResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>, System.Collections.IEnumerable
+    public partial class EnvironmentVersionDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>, System.Collections.IEnumerable
     {
-        protected EnvironmentVersionResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersionCreateOrUpdateOperation CreateOrUpdate(string version, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string version, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>.GetEnumerator() { throw null; }
+        protected EnvironmentVersionDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersionDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersionDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EnvironmentVersionResourceData : Azure.ResourceManager.Models.Resource
+    public partial class EnvironmentVersionDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public EnvironmentVersionResourceData(Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersion properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersion Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public EnvironmentVersionDataData(Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersionDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentVersionDetails Properties { get { throw null; } set { } }
     }
-    public partial class JobBaseResource : Azure.ResourceManager.Core.ArmResource
+    public partial class EnvironmentVersionDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected JobBaseResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.JobBaseResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected EnvironmentVersionDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class JobBaseDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>, System.Collections.IEnumerable
+    {
+        protected JobBaseDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string id, Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string id, Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> Get(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> GetAll(string skip = null, string jobType = null, string tag = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> GetAllAsync(string skip = null, string jobType = null, string tag = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>> GetAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> GetIfExists(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>> GetIfExistsAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class JobBaseDataData : Azure.ResourceManager.Models.ResourceData
+    {
+        public JobBaseDataData(Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails Properties { get { throw null; } set { } }
+    }
+    public partial class JobBaseDataResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected JobBaseDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.JobBaseDataData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.JobDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.JobDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string id) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class JobBaseResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.JobBaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.JobBaseResource>, System.Collections.IEnumerable
+    public static partial class MachineLearningServicesExtensions
     {
-        protected JobBaseResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.JobCreateOrUpdateOperation CreateOrUpdate(string id, Azure.ResourceManager.MachineLearningServices.Models.JobBase properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.JobCreateOrUpdateOperation> CreateOrUpdateAsync(string id, Azure.ResourceManager.MachineLearningServices.Models.JobBase properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseResource> Get(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.JobBaseResource> GetAll(string skip = null, string jobType = null, string tag = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.JobBaseResource> GetAllAsync(string skip = null, string jobType = null, string tag = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseResource>> GetAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseResource> GetIfExists(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseResource>> GetIfExistsAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.JobBaseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.JobBaseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.JobBaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.JobBaseResource>.GetEnumerator() { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.BatchDeploymentDataResource GetBatchDeploymentDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource GetBatchEndpointDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource GetCodeContainerDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.CodeVersionDataResource GetCodeVersionDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource GetComponentContainerDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ComponentVersionDataResource GetComponentVersionDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ComputeResource GetComputeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.DataContainerDataResource GetDataContainerDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.DatastoreDataResource GetDatastoreDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.DataVersionBaseDataResource GetDataVersionBaseDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource GetEnvironmentContainerDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.EnvironmentVersionDataResource GetEnvironmentVersionDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.JobBaseDataResource GetJobBaseDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource GetModelContainerDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource GetModelVersionDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource GetOnlineDeploymentDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource GetOnlineEndpointDataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.ResourceQuota> GetQuotas(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.ResourceQuota> GetQuotasAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSize> GetVirtualMachineSizes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSize> GetVirtualMachineSizesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> GetWorkspace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> GetWorkspaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource GetWorkspaceConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.WorkspaceResource GetWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.WorkspaceCollection GetWorkspaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> GetWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> GetWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.UpdateWorkspaceQuotas> UpdateQuotas(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.Models.QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.UpdateWorkspaceQuotas> UpdateQuotasAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.Models.QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ModelContainerDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>, System.Collections.IEnumerable
+    {
+        protected ModelContainerDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.ModelContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.MachineLearningServices.Models.ModelContainerDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> GetAll(string skip = null, int? count = default(int?), Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> GetAllAsync(string skip = null, int? count = default(int?), Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JobBaseResourceData : Azure.ResourceManager.Models.Resource
+    public partial class ModelContainerDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public JobBaseResourceData(Azure.ResourceManager.MachineLearningServices.Models.JobBase properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.JobBase Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public ModelContainerDataData(Azure.ResourceManager.MachineLearningServices.Models.ModelContainerDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelContainerDetails Properties { get { throw null; } set { } }
     }
-    public static partial class ManagementGroupExtensions
+    public partial class ModelContainerDataResource : Azure.ResourceManager.ArmResource
     {
-    }
-    public partial class ModelContainerResource : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected ModelContainerResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.ModelContainerResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ModelContainerDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.ModelContainerDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ModelContainerDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ModelContainerDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.ModelVersionResourceCollection GetModelVersionResources() { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.ModelVersionDataCollection GetAllModelVersionData() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> GetModelVersionData(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>> GetModelVersionDataAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ModelContainerResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>, System.Collections.IEnumerable
+    public partial class ModelVersionDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>, System.Collections.IEnumerable
     {
-        protected ModelContainerResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ModelContainerCreateOrUpdateOperation CreateOrUpdate(string name, Azure.ResourceManager.MachineLearningServices.Models.ModelContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ModelContainerCreateOrUpdateOperation> CreateOrUpdateAsync(string name, Azure.ResourceManager.MachineLearningServices.Models.ModelContainer properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ModelContainerResource> GetAll(string skip = null, int? count = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ModelContainerResource> GetAllAsync(string skip = null, int? count = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.ModelContainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ModelContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>.GetEnumerator() { throw null; }
+        protected ModelVersionDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.ModelVersionDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.MachineLearningServices.Models.ModelVersionDetails properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> GetAll(string skip = null, string orderBy = null, int? top = default(int?), string version = null, string description = null, int? offset = default(int?), string tags = null, string properties = null, string feed = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> GetAllAsync(string skip = null, string orderBy = null, int? top = default(int?), string version = null, string description = null, int? offset = default(int?), string tags = null, string properties = null, string feed = null, Azure.ResourceManager.MachineLearningServices.Models.ListViewType? listViewType = default(Azure.ResourceManager.MachineLearningServices.Models.ListViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ModelContainerResourceData : Azure.ResourceManager.Models.Resource
+    public partial class ModelVersionDataData : Azure.ResourceManager.Models.ResourceData
     {
-        public ModelContainerResourceData(Azure.ResourceManager.MachineLearningServices.Models.ModelContainer properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelContainer Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public ModelVersionDataData(Azure.ResourceManager.MachineLearningServices.Models.ModelVersionDetails properties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelVersionDetails Properties { get { throw null; } set { } }
     }
-    public partial class ModelVersionResource : Azure.ResourceManager.Core.ArmResource
+    public partial class ModelVersionDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected ModelVersionResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.ModelVersionResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ModelVersionDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.ModelVersionDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ModelVersionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ModelVersionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ModelVersionResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>, System.Collections.IEnumerable
+    public partial class OnlineDeploymentDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>, System.Collections.IEnumerable
     {
-        protected ModelVersionResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.ModelVersionCreateOrUpdateOperation CreateOrUpdate(string version, Azure.ResourceManager.MachineLearningServices.Models.ModelVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.ModelVersionCreateOrUpdateOperation> CreateOrUpdateAsync(string version, Azure.ResourceManager.MachineLearningServices.Models.ModelVersion properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.ModelVersionResource> GetAll(string skip = null, string orderBy = null, int? top = default(int?), string version = null, string description = null, int? offset = default(int?), string tags = null, string properties = null, string feed = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.ModelVersionResource> GetAllAsync(string skip = null, string orderBy = null, int? top = default(int?), string version = null, string description = null, int? offset = default(int?), string tags = null, string properties = null, string feed = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionResource> GetIfExists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>> GetIfExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.ModelVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.ModelVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>.GetEnumerator() { throw null; }
+        protected OnlineDeploymentDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> Get(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> GetAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> GetIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> GetIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ModelVersionResourceData : Azure.ResourceManager.Models.Resource
+    public partial class OnlineDeploymentDataData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ModelVersionResourceData(Azure.ResourceManager.MachineLearningServices.Models.ModelVersion properties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelVersion Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public OnlineDeploymentDataData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentDetails properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentDetails Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
     }
-    public partial class OnlineDeploymentTrackedResource : Azure.ResourceManager.Core.ArmResource
+    public partial class OnlineDeploymentDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected OnlineDeploymentTrackedResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected OnlineDeploymentDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, string deploymentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.DeploymentLogs> GetLogs(Azure.ResourceManager.MachineLearningServices.Models.ContainerType? containerType = default(Azure.ResourceManager.MachineLearningServices.Models.ContainerType?), int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.DeploymentLogs>> GetLogsAsync(Azure.ResourceManager.MachineLearningServices.Models.ContainerType? containerType = default(Azure.ResourceManager.MachineLearningServices.Models.ContainerType?), int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.DeploymentSkuResourceType> GetSkus(int? count = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.DeploymentSkuResourceType> GetSkusAsync(int? count = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentUpdateOperation Update(Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineDeploymentPartialTrackedResource body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentUpdateOperation> UpdateAsync(Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineDeploymentPartialTrackedResource body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.SkuResource> GetSkus(int? count = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.SkuResource> GetSkusAsync(int? count = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableOnlineDeploymentDataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableOnlineDeploymentDataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OnlineDeploymentTrackedResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>, System.Collections.IEnumerable
+    public partial class OnlineEndpointDataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>, System.Collections.IEnumerable
     {
-        protected OnlineDeploymentTrackedResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentCreateOrUpdateOperation CreateOrUpdate(string deploymentName, Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResourceData body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentCreateOrUpdateOperation> CreateOrUpdateAsync(string deploymentName, Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResourceData body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> Get(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> GetAll(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> GetAllAsync(string orderBy = null, int? top = default(int?), string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> GetAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> GetIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> GetIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>.GetEnumerator() { throw null; }
+        protected OnlineEndpointDataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> GetAll(string name = null, int? count = default(int?), Azure.ResourceManager.MachineLearningServices.Models.EndpointComputeType? computeType = default(Azure.ResourceManager.MachineLearningServices.Models.EndpointComputeType?), string skip = null, string tags = null, string properties = null, Azure.ResourceManager.MachineLearningServices.Models.OrderString? orderBy = default(Azure.ResourceManager.MachineLearningServices.Models.OrderString?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> GetAllAsync(string name = null, int? count = default(int?), Azure.ResourceManager.MachineLearningServices.Models.EndpointComputeType? computeType = default(Azure.ResourceManager.MachineLearningServices.Models.EndpointComputeType?), string skip = null, string tags = null, string properties = null, Azure.ResourceManager.MachineLearningServices.Models.OrderString? orderBy = default(Azure.ResourceManager.MachineLearningServices.Models.OrderString?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> GetAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> GetIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> GetIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OnlineDeploymentTrackedResourceData : Azure.ResourceManager.Models.TrackedResource
+    public partial class OnlineEndpointDataData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OnlineDeploymentTrackedResourceData(Azure.ResourceManager.Resources.Models.Location location, Azure.ResourceManager.MachineLearningServices.Models.OnlineDeployment properties) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public OnlineEndpointDataData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointDetails properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.OnlineDeployment Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointDetails Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
     }
-    public partial class OnlineEndpointTrackedResource : Azure.ResourceManager.Core.ArmResource
+    public partial class OnlineEndpointDataResource : Azure.ResourceManager.ArmResource
     {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected OnlineEndpointTrackedResource() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResourceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected OnlineEndpointDataResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataCollection GetAllOnlineDeploymentData() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResourceCollection GetOnlineDeploymentTrackedResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource> GetOnlineDeploymentData(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentDataResource>> GetOnlineDeploymentDataAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthToken> GetToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthToken>> GetTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointRegenerateKeysOperation RegenerateKeys(Azure.ResourceManager.MachineLearningServices.Models.KeyType keyType, string keyValue = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointRegenerateKeysOperation> RegenerateKeysAsync(Azure.ResourceManager.MachineLearningServices.Models.KeyType keyType, string keyValue = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointUpdateOperation Update(Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineEndpointPartialTrackedResource body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointUpdateOperation> UpdateAsync(Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineEndpointPartialTrackedResource body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RegenerateKeys(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.KeyType keyType, string keyValue = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RegenerateKeysAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.KeyType keyType, string keyValue = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableOnlineEndpointDataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableOnlineEndpointDataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OnlineEndpointTrackedResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>, System.Collections.IEnumerable
-    {
-        protected OnlineEndpointTrackedResourceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointCreateOrUpdateOperation CreateOrUpdate(string endpointName, Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResourceData body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(string endpointName, Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResourceData body, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> GetAll(string name = null, int? count = default(int?), Azure.ResourceManager.MachineLearningServices.Models.EndpointComputeType? computeType = default(Azure.ResourceManager.MachineLearningServices.Models.EndpointComputeType?), string skip = null, string tags = null, string properties = null, Azure.ResourceManager.MachineLearningServices.Models.OrderString? orderBy = default(Azure.ResourceManager.MachineLearningServices.Models.OrderString?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> GetAllAsync(string name = null, int? count = default(int?), Azure.ResourceManager.MachineLearningServices.Models.EndpointComputeType? computeType = default(Azure.ResourceManager.MachineLearningServices.Models.EndpointComputeType?), string skip = null, string tags = null, string properties = null, Azure.ResourceManager.MachineLearningServices.Models.OrderString? orderBy = default(Azure.ResourceManager.MachineLearningServices.Models.OrderString?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> GetAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> GetIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> GetIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class OnlineEndpointTrackedResourceData : Azure.ResourceManager.Models.TrackedResource
-    {
-        public OnlineEndpointTrackedResourceData(Azure.ResourceManager.Resources.Models.Location location, Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpoint properties) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentity Identity { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.OnlineEndpoint Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
-    }
-    public partial class PrivateEndpointConnection : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected PrivateEndpointConnection() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointConnectionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointConnectionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>, System.Collections.IEnumerable
+    public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected PrivateEndpointConnectionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointConnectionCreateOrUpdateOperation CreateOrUpdate(string privateEndpointConnectionName, Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionData properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(string privateEndpointConnectionName, Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionData properties, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>.GetEnumerator() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionData properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionData properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public static partial class ResourceGroupExtensions
+    public partial class PrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
-        public static Azure.ResourceManager.MachineLearningServices.WorkspaceCollection GetWorkspaces(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-    }
-    public static partial class SubscriptionExtensions
-    {
-        public static Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.ResourceQuota> GetQuotas(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.ResourceQuota> GetQuotasAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.Usage> GetUsages(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.Usage> GetUsagesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSize>> GetVirtualMachineSizes(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSize>>> GetVirtualMachineSizesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetWorkspaceByName(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetWorkspaceByNameAsync(this Azure.ResourceManager.Resources.Subscription subscription, string filter, string expand, int? top, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Workspace> GetWorkspaces(this Azure.ResourceManager.Resources.Subscription subscription, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Workspace> GetWorkspacesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.UpdateWorkspaceQuotas>> UpdateQuotas(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.Models.QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.UpdateWorkspaceQuotas>>> UpdateQuotasAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.Models.QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public static partial class TenantExtensions
-    {
-    }
-    public partial class Workspace : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected Workspace() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.WorkspaceData Data { get { throw null; } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected PrivateEndpointConnectionResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.WorkspaceDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.WorkspaceDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.WorkspaceDiagnoseOperation Diagnose(Azure.ResourceManager.MachineLearningServices.Models.DiagnoseRequestProperties value = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.WorkspaceDiagnoseOperation> DiagnoseAsync(Azure.ResourceManager.MachineLearningServices.Models.DiagnoseRequestProperties value = null, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResourceCollection GetBatchEndpointTrackedResources() { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.CodeContainerResourceCollection GetCodeContainerResources() { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.ComponentContainerResourceCollection GetComponentContainerResources() { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.ComputeResourceCollection GetComputeResources() { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.DatasetContainerResourceCollection GetDatasetContainerResources() { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.DatastoreResourceCollection GetDatastoreResources() { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResourceCollection GetEnvironmentContainerResources() { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.JobBaseResourceCollection GetJobBaseResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListWorkspaceKeysResult> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListWorkspaceKeysResult>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.ModelContainerResourceCollection GetModelContainerResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.NotebookAccessTokenResult> GetNotebookAccessToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.NotebookAccessTokenResult>> GetNotebookAccessTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListNotebookKeysResult> GetNotebookKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListNotebookKeysResult>> GetNotebookKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResourceCollection GetOnlineEndpointTrackedResources() { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.FqdnEndpoints>> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.FqdnEndpoints>>> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.PrivateLinkResource>> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.PrivateLinkResource>>> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListStorageAccountKeysResult> GetStorageAccountKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListStorageAccountKeysResult>> GetStorageAccountKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionCollection GetWorkspaceConnections() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.AmlUserFeature> GetWorkspaceFeatures(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.AmlUserFeature> GetWorkspaceFeaturesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.WorkspacePrepareNotebookOperation PrepareNotebook(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.WorkspacePrepareNotebookOperation> PrepareNotebookAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.WorkspaceResyncKeysOperation ResyncKeys(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.WorkspaceResyncKeysOperation> ResyncKeysAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace> Update(Azure.ResourceManager.MachineLearningServices.Models.WorkspaceUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace>> UpdateAsync(Azure.ResourceManager.MachineLearningServices.Models.WorkspaceUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkspaceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.Workspace>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.Workspace>, System.Collections.IEnumerable
+    public partial class WorkspaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>, System.Collections.IEnumerable
     {
         protected WorkspaceCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.WorkspaceCreateOrUpdateOperation CreateOrUpdate(string workspaceName, Azure.ResourceManager.MachineLearningServices.WorkspaceData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.WorkspaceCreateOrUpdateOperation> CreateOrUpdateAsync(string workspaceName, Azure.ResourceManager.MachineLearningServices.WorkspaceData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace> Get(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Workspace> GetAll(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Workspace> GetAllAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace>> GetAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace> GetIfExists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace>> GetIfExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.Workspace> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.Workspace>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.Workspace> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.Workspace>.GetEnumerator() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.MachineLearningServices.WorkspaceData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.MachineLearningServices.WorkspaceData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> Get(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> GetAll(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> GetAllAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> GetAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> GetIfExists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> GetIfExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkspaceConnection : Azure.ResourceManager.Core.ArmResource
-    {
-        public static readonly Azure.ResourceManager.ResourceType ResourceType;
-        protected WorkspaceConnection() { }
-        public virtual Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.WorkspaceConnectionDeleteOperation Delete(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.WorkspaceConnectionDeleteOperation> DeleteAsync(bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceConnectionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>, System.Collections.IEnumerable
+    public partial class WorkspaceConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>, System.Collections.IEnumerable
     {
         protected WorkspaceConnectionCollection() { }
-        protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
-        public virtual Azure.Response<bool> CheckIfExists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MachineLearningServices.Models.WorkspaceConnectionCreateOperation CreateOrUpdate(string connectionName, Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.MachineLearningServices.Models.WorkspaceConnectionCreateOperation> CreateOrUpdateAsync(string connectionName, Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionData parameters, bool waitForCompletion = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection> Get(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection> GetAll(string target = null, string category = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection> GetAllAsync(string target = null, string category = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>> GetAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection> GetIfExists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>> GetIfExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>.GetEnumerator() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> Get(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> GetAll(string target = null, string category = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> GetAllAsync(string target = null, string category = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>> GetAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> GetIfExists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>> GetIfExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkspaceConnectionData : Azure.ResourceManager.Models.Resource
+    public partial class WorkspaceConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public WorkspaceConnectionData() { }
         public string AuthType { get { throw null; } set { } }
@@ -930,38 +806,125 @@ namespace Azure.ResourceManager.MachineLearningServices
         public string Value { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ValueFormat? ValueFormat { get { throw null; } set { } }
     }
-    public partial class WorkspaceData : Azure.ResourceManager.Models.Resource
+    public partial class WorkspaceConnectionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected WorkspaceConnectionResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class WorkspaceData : Azure.ResourceManager.Models.ResourceData
     {
         public WorkspaceData() { }
         public bool? AllowPublicAccessWhenBehindVnet { get { throw null; } set { } }
         public string ApplicationInsights { get { throw null; } set { } }
         public string ContainerRegistry { get { throw null; } set { } }
+        public int? CosmosDbCollectionsThroughput { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DiscoveryUrl { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.EncryptionProperty Encryption { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public bool? HbiWorkspace { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string ImageBuildCompute { get { throw null; } set { } }
         public string KeyVault { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
-        public string MlFlowTrackingUri { get { throw null; } }
+        public System.Uri MlFlowTrackingUri { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.NotebookResourceInfo NotebookInfo { get { throw null; } }
         public string PrimaryUserAssignedIdentity { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public int? PrivateLinkCount { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get { throw null; } set { } }
         public string ServiceProvisionedResourceGroup { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.SharedPrivateLinkResource> SharedPrivateLinkResources { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
         public string StorageAccount { get { throw null; } set { } }
         public bool? StorageHnsEnabled { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string TenantId { get { throw null; } }
         public string WorkspaceId { get { throw null; } }
+    }
+    public partial class WorkspaceResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected WorkspaceResource() { }
+        public virtual Azure.ResourceManager.MachineLearningServices.WorkspaceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.Models.DiagnoseResponseResult> Diagnose(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.DiagnoseRequestProperties value = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.Models.DiagnoseResponseResult>> DiagnoseAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.DiagnoseRequestProperties value = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.BatchEndpointDataCollection GetAllBatchEndpointData() { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.CodeContainerDataCollection GetAllCodeContainerData() { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.ComponentContainerDataCollection GetAllComponentContainerData() { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.DataContainerDataCollection GetAllDataContainerData() { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.DatastoreDataCollection GetAllDatastoreData() { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataCollection GetAllEnvironmentContainerData() { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.JobBaseDataCollection GetAllJobBaseData() { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.ModelContainerDataCollection GetAllModelContainerData() { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataCollection GetAllOnlineEndpointData() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource> GetBatchEndpointData(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointDataResource>> GetBatchEndpointDataAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource> GetCodeContainerData(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerDataResource>> GetCodeContainerDataAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource> GetComponentContainerData(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerDataResource>> GetComponentContainerDataAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource> GetComputeResource(string computeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> GetComputeResourceAsync(string computeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.ComputeResourceCollection GetComputeResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource> GetDataContainerData(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DataContainerDataResource>> GetDataContainerDataAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource> GetDatastoreData(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreDataResource>> GetDatastoreDataAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource> GetEnvironmentContainerData(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerDataResource>> GetEnvironmentContainerDataAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource> GetJobBaseData(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseDataResource>> GetJobBaseDataAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListWorkspaceKeysResult> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListWorkspaceKeysResult>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource> GetModelContainerData(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerDataResource>> GetModelContainerDataAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.NotebookAccessTokenResult> GetNotebookAccessToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.NotebookAccessTokenResult>> GetNotebookAccessTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListNotebookKeysResult> GetNotebookKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListNotebookKeysResult>> GetNotebookKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource> GetOnlineEndpointData(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointDataResource>> GetOnlineEndpointDataAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.FqdnEndpoints> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.FqdnEndpoints> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.PrivateLinkResource> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.PrivateLinkResource> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListStorageAccountKeysResult> GetStorageAccountKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.ListStorageAccountKeysResult>> GetStorageAccountKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource> GetWorkspaceConnection(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionResource>> GetWorkspaceConnectionAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningServices.WorkspaceConnectionCollection GetWorkspaceConnections() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningServices.Models.AmlUserFeature> GetWorkspaceFeatures(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningServices.Models.AmlUserFeature> GetWorkspaceFeaturesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.Models.NotebookResourceInfo> PrepareNotebook(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.Models.NotebookResourceInfo>> PrepareNotebookAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ResyncKeys(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResyncKeysAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.WorkspaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningServices.WorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearningServices.Models.PatchableWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.MachineLearningServices.Models
@@ -979,18 +942,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class AKS : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
         public AKS() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.AKSProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AKSSchemaProperties Properties { get { throw null; } set { } }
     }
     public partial class AksComputeSecrets : Azure.ResourceManager.MachineLearningServices.Models.ComputeSecrets
     {
         internal AksComputeSecrets() { }
-        public string AdminKubeConfig { get { throw null; } }
-        public string ImagePullSecretName { get { throw null; } }
-        public string UserKubeConfig { get { throw null; } }
-    }
-    public partial class AksComputeSecretsProperties
-    {
-        internal AksComputeSecretsProperties() { }
         public string AdminKubeConfig { get { throw null; } }
         public string ImagePullSecretName { get { throw null; } }
         public string UserKubeConfig { get { throw null; } }
@@ -1003,9 +959,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string ServiceCidr { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
     }
-    public partial class AKSProperties
+    public partial class AKSSchemaProperties
     {
-        public AKSProperties() { }
+        public AKSSchemaProperties() { }
         public int? AgentCount { get { throw null; } set { } }
         public string AgentVmSize { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.AksNetworkingConfiguration AksNetworkingConfiguration { get { throw null; } set { } }
@@ -1056,23 +1012,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public System.DateTimeOffset? AllocationStateTransitionTime { get { throw null; } }
         public int? CurrentNodeCount { get { throw null; } }
         public bool? EnableNodePublicIp { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.ErrorResponse> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ErrorResponse> Errors { get { throw null; } }
         public bool? IsolatedNetwork { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.NodeStateCounts NodeStateCounts { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.OsType? OsType { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> PropertyBag { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> PropertyBag { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.RemoteLoginPortPublicAccess? RemoteLoginPortPublicAccess { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ScaleSettings ScaleSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource Subnet { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public int? TargetNodeCount { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.UserAccountCredentials UserAccountCredentials { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource VirtualMachineImage { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineImageId { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.VmPriority? VmPriority { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
-    }
-    public partial class AmlToken : Azure.ResourceManager.MachineLearningServices.Models.IdentityConfiguration
-    {
-        public AmlToken() { }
     }
     public partial class AmlUserFeature
     {
@@ -1103,16 +1055,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         public AssetBase() { }
         public bool? IsAnonymous { get { throw null; } set { } }
+        public bool? IsArchived { get { throw null; } set { } }
     }
     public partial class AssetContainer : Azure.ResourceManager.MachineLearningServices.Models.ResourceBase
     {
         public AssetContainer() { }
+        public bool? IsArchived { get { throw null; } set { } }
         public string LatestVersion { get { throw null; } }
         public string NextVersion { get { throw null; } }
-    }
-    public partial class AssetReferenceBase
-    {
-        public AssetReferenceBase() { }
     }
     public partial class AssignedUser
     {
@@ -1120,11 +1070,44 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string ObjectId { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    public partial class AutoMLJob : Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails
+    {
+        public AutoMLJob(Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical taskDetails) { }
+        public string EnvironmentId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobOutput> Outputs { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ResourceConfiguration Resources { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical TaskDetails { get { throw null; } set { } }
+    }
+    public partial class AutoMLVertical
+    {
+        public AutoMLVertical() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity? LogVerbosity { get { throw null; } set { } }
+    }
     public partial class AutoPauseProperties
     {
         public AutoPauseProperties() { }
         public int? DelayInMinutes { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Autosave : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.Autosave>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Autosave(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Autosave Local { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Autosave None { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Autosave Remote { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.Autosave other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.Autosave left, Azure.ResourceManager.MachineLearningServices.Models.Autosave right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.Autosave (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.Autosave left, Azure.ResourceManager.MachineLearningServices.Models.Autosave right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AutoScaleProperties
     {
@@ -1133,22 +1116,22 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public int? MaxNodeCount { get { throw null; } set { } }
         public int? MinNodeCount { get { throw null; } set { } }
     }
-    public partial class AzureBlobDatastore : Azure.ResourceManager.MachineLearningServices.Models.Datastore
+    public partial class AzureBlobDatastore : Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails
     {
-        public AzureBlobDatastore(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials, string accountName, string containerName) : base (default(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials)) { }
+        public AzureBlobDatastore(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials) : base (default(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials)) { }
         public string AccountName { get { throw null; } set { } }
         public string ContainerName { get { throw null; } set { } }
         public string Endpoint { get { throw null; } set { } }
         public string Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get { throw null; } set { } }
     }
-    public partial class AzureDataLakeGen1Datastore : Azure.ResourceManager.MachineLearningServices.Models.Datastore
+    public partial class AzureDataLakeGen1Datastore : Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails
     {
         public AzureDataLakeGen1Datastore(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials, string storeName) : base (default(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials)) { }
         public Azure.ResourceManager.MachineLearningServices.Models.ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get { throw null; } set { } }
         public string StoreName { get { throw null; } set { } }
     }
-    public partial class AzureDataLakeGen2Datastore : Azure.ResourceManager.MachineLearningServices.Models.Datastore
+    public partial class AzureDataLakeGen2Datastore : Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails
     {
         public AzureDataLakeGen2Datastore(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials, string accountName, string filesystem) : base (default(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials)) { }
         public string AccountName { get { throw null; } set { } }
@@ -1157,7 +1140,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get { throw null; } set { } }
     }
-    public partial class AzureFileDatastore : Azure.ResourceManager.MachineLearningServices.Models.Datastore
+    public partial class AzureFileDatastore : Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails
     {
         public AzureFileDatastore(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials, string accountName, string fileShareName) : base (default(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials)) { }
         public string AccountName { get { throw null; } set { } }
@@ -1172,111 +1155,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public float? SlackAmount { get { throw null; } set { } }
         public float? SlackFactor { get { throw null; } set { } }
     }
-    public partial class BasicBinding : Azure.ResourceManager.MachineLearningServices.Models.Binding
+    public partial class BatchDeploymentDetails : Azure.ResourceManager.MachineLearningServices.Models.EndpointDeploymentPropertiesBase
     {
-        public BasicBinding() { }
-        public string Destination { get { throw null; } set { } }
-        public string Source { get { throw null; } set { } }
-    }
-    public partial class BatchDeployment : Azure.ResourceManager.MachineLearningServices.Models.EndpointDeploymentPropertiesBase
-    {
-        public BatchDeployment() { }
+        public BatchDeploymentDetails() { }
         public string Compute { get { throw null; } set { } }
         public int? ErrorThreshold { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.BatchLoggingLevel? LoggingLevel { get { throw null; } set { } }
         public int? MaxConcurrencyPerInstance { get { throw null; } set { } }
         public long? MiniBatchSize { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.AssetReferenceBase Model { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.BatchOutputAction? OutputAction { get { throw null; } set { } }
         public string OutputFileName { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.DeploymentProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ResourceConfiguration Resources { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.BatchRetrySettings RetrySettings { get { throw null; } set { } }
     }
-    public partial class BatchDeploymentCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>
+    public partial class BatchEndpointDetails : Azure.ResourceManager.MachineLearningServices.Models.EndpointPropertiesBase
     {
-        protected BatchDeploymentCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BatchDeploymentDeleteOperation : Azure.Operation
-    {
-        protected BatchDeploymentDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BatchDeploymentUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>
-    {
-        protected BatchDeploymentUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchDeploymentTrackedResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BatchEndpoint : Azure.ResourceManager.MachineLearningServices.Models.EndpointPropertiesBase
-    {
-        public BatchEndpoint(Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthMode authMode) : base (default(Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthMode)) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointDefaults Defaults { get { throw null; } set { } }
+        public BatchEndpointDetails(Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthMode authMode) : base (default(Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthMode)) { }
+        public string DefaultsDeploymentName { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.EndpointProvisioningState? ProvisioningState { get { throw null; } }
-    }
-    public partial class BatchEndpointCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>
-    {
-        protected BatchEndpointCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BatchEndpointDefaults
-    {
-        public BatchEndpointDefaults() { }
-        public string DeploymentName { get { throw null; } set { } }
-    }
-    public partial class BatchEndpointDeleteOperation : Azure.Operation
-    {
-        protected BatchEndpointDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BatchEndpointUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>
-    {
-        protected BatchEndpointUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.BatchEndpointTrackedResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BatchLoggingLevel : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.BatchLoggingLevel>
@@ -1321,6 +1218,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public int? MaxRetries { get { throw null; } set { } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
+    public partial class BayesianSamplingAlgorithm : Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm
+    {
+        public BayesianSamplingAlgorithm() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BillingCurrency : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.BillingCurrency>
     {
@@ -1338,32 +1239,30 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.BillingCurrency left, Azure.ResourceManager.MachineLearningServices.Models.BillingCurrency right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Binding
+    public partial class BuildContext
     {
-        public Binding() { }
+        public BuildContext(System.Uri contextUri) { }
+        public System.Uri ContextUri { get { throw null; } set { } }
+        public string DockerfilePath { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BindingType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.BindingType>
+    public readonly partial struct Caching : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.Caching>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public BindingType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.BindingType Basic { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.BindingType other) { throw null; }
+        public Caching(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Caching None { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Caching ReadOnly { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Caching ReadWrite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.Caching other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.BindingType left, Azure.ResourceManager.MachineLearningServices.Models.BindingType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.BindingType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.BindingType left, Azure.ResourceManager.MachineLearningServices.Models.BindingType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.Caching left, Azure.ResourceManager.MachineLearningServices.Models.Caching right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.Caching (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.Caching left, Azure.ResourceManager.MachineLearningServices.Models.Caching right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class BuildContext
-    {
-        public BuildContext(string contextUri) { }
-        public string ContextUri { get { throw null; } set { } }
-        public string DockerfilePath { get { throw null; } set { } }
     }
     public partial class CertificateDatastoreCredentials : Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials
     {
@@ -1379,6 +1278,89 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         public CertificateDatastoreSecrets() { }
         public string Certificate { get { throw null; } set { } }
+    }
+    public partial class Classification : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
+    {
+        public Classification() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels> AllowedModels { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels> BlockedModels { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalDataSettings DataSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalFeaturizationSettings FeaturizationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics? PrimaryMetric { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TrainingSettings TrainingSettings { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClassificationModels : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClassificationModels(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels BernoulliNaiveBayes { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels DecisionTree { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels ExtremeRandomTrees { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels GradientBoosting { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels KNN { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels LightGBM { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels LinearSVM { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels LogisticRegression { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels MultinomialNaiveBayes { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels RandomForest { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels SGD { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels SVM { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels XGBoostClassifier { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels left, Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels left, Azure.ResourceManager.MachineLearningServices.Models.ClassificationModels right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClassificationMultilabelPrimaryMetrics : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClassificationMultilabelPrimaryMetrics(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics Accuracy { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics AUCWeighted { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics AveragePrecisionScoreWeighted { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics IOU { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics NormMacroRecall { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics PrecisionScoreWeighted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClassificationPrimaryMetrics : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClassificationPrimaryMetrics(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics Accuracy { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics AUCWeighted { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics AveragePrecisionScoreWeighted { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics NormMacroRecall { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics PrecisionScoreWeighted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClusterPurpose : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ClusterPurpose>
@@ -1405,189 +1387,59 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string CodeId { get { throw null; } set { } }
         public string ScoringScript { get { throw null; } set { } }
     }
-    public partial class CodeContainer : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
+    public partial class CodeContainerDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
     {
-        public CodeContainer() { }
+        public CodeContainerDetails() { }
     }
-    public partial class CodeContainerCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>
+    public partial class CodeVersionDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
     {
-        protected CodeContainerCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.CodeContainerResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeContainerResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public CodeVersionDetails() { }
+        public System.Uri CodeUri { get { throw null; } set { } }
     }
-    public partial class CodeContainerDeleteOperation : Azure.Operation
+    public partial class ColumnTransformer
     {
-        protected CodeContainerDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public ColumnTransformer() { }
+        public System.Collections.Generic.IList<string> Fields { get { throw null; } set { } }
+        public System.BinaryData Parameters { get { throw null; } set { } }
     }
-    public partial class CodeVersion : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
+    public partial class CommandJob : Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails
     {
-        public CodeVersion() { }
-        public string CodeUri { get { throw null; } set { } }
-    }
-    public partial class CodeVersionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>
-    {
-        protected CodeVersionCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.CodeVersionResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.CodeVersionResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class CodeVersionDeleteOperation : Azure.Operation
-    {
-        protected CodeVersionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class CommandJob : Azure.ResourceManager.MachineLearningServices.Models.JobBase
-    {
-        public CommandJob(string command) { }
+        public CommandJob(string command, string environmentId) { }
         public string CodeId { get { throw null; } set { } }
         public string Command { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration Distribution { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.IdentityConfiguration Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobInput> Inputs { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.CommandJobLimits Limits { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobOutput> Outputs { get { throw null; } set { } }
-        public object Parameters { get { throw null; } }
+        public System.BinaryData Parameters { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ResourceConfiguration Resources { get { throw null; } set { } }
     }
     public partial class CommandJobLimits : Azure.ResourceManager.MachineLearningServices.Models.JobLimits
     {
         public CommandJobLimits() { }
     }
-    public partial class ComponentContainer : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
+    public partial class ComponentContainerDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
     {
-        public ComponentContainer() { }
+        public ComponentContainerDetails() { }
     }
-    public partial class ComponentContainerCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>
+    public partial class ComponentVersionDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
     {
-        protected ComponentContainerCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.ComponentContainerResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentContainerResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ComponentContainerDeleteOperation : Azure.Operation
-    {
-        protected ComponentContainerDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ComponentJob
-    {
-        public ComponentJob() { }
-        public string ComponentId { get { throw null; } set { } }
-        public string ComputeId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobInput> Inputs { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobOutput> Outputs { get { throw null; } set { } }
-        public object Overrides { get { throw null; } set { } }
-    }
-    public partial class Components1D3SwueSchemasComputeresourceAllof1
-    {
-        public Components1D3SwueSchemasComputeresourceAllof1() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.Compute Properties { get { throw null; } set { } }
-    }
-    public partial class ComponentVersion : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
-    {
-        public ComponentVersion() { }
-        public object ComponentSpec { get { throw null; } set { } }
-    }
-    public partial class ComponentVersionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>
-    {
-        protected ComponentVersionCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.ComponentVersionResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComponentVersionResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ComponentVersionDeleteOperation : Azure.Operation
-    {
-        protected ComponentVersionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public ComponentVersionDetails() { }
+        public System.BinaryData ComponentSpec { get { throw null; } set { } }
     }
     public partial class Compute
     {
         public Compute() { }
-        public string ComputeLocation { get { throw null; } set { } }
+        public string ComputeLocation { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public bool? IsAttachedCompute { get { throw null; } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.ErrorResponse> ProvisioningErrors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ErrorResponse> ProvisioningErrors { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceId { get { throw null; } set { } }
-    }
-    public partial class ComputeCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.ComputeResource>
-    {
-        protected ComputeCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.ComputeResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ComputeDeleteOperation : Azure.Operation
-    {
-        protected ComputeDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ComputeInstance : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
@@ -1598,7 +1450,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal ComputeInstanceApplication() { }
         public string DisplayName { get { throw null; } }
-        public string EndpointUri { get { throw null; } }
+        public System.Uri EndpointUri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ComputeInstanceAuthorizationType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceAuthorizationType>
@@ -1623,6 +1475,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string PrivateIpAddress { get { throw null; } }
         public string PublicIpAddress { get { throw null; } }
     }
+    public partial class ComputeInstanceContainer
+    {
+        internal ComputeInstanceContainer() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.Autosave? Autosave { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceEnvironmentInfo Environment { get { throw null; } }
+        public string Gpu { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.Network? Network { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.BinaryData> Services { get { throw null; } }
+    }
     public partial class ComputeInstanceCreatedBy
     {
         internal ComputeInstanceCreatedBy() { }
@@ -1630,12 +1492,40 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string UserName { get { throw null; } }
         public string UserOrgId { get { throw null; } }
     }
+    public partial class ComputeInstanceDataDisk
+    {
+        internal ComputeInstanceDataDisk() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.Caching? Caching { get { throw null; } }
+        public int? DiskSizeGB { get { throw null; } }
+        public int? Lun { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType? StorageAccountType { get { throw null; } }
+    }
+    public partial class ComputeInstanceDataMount
+    {
+        internal ComputeInstanceDataMount() { }
+        public string CreatedBy { get { throw null; } }
+        public string Error { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MountAction? MountAction { get { throw null; } }
+        public System.DateTimeOffset? MountedOn { get { throw null; } }
+        public string MountName { get { throw null; } }
+        public string MountPath { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MountState? MountState { get { throw null; } }
+        public string Source { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.SourceType? SourceType { get { throw null; } }
+    }
+    public partial class ComputeInstanceEnvironmentInfo
+    {
+        internal ComputeInstanceEnvironmentInfo() { }
+        public string Name { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
     public partial class ComputeInstanceLastOperation
     {
         internal ComputeInstanceLastOperation() { }
         public Azure.ResourceManager.MachineLearningServices.Models.OperationName? OperationName { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.OperationStatus? OperationStatus { get { throw null; } }
         public System.DateTimeOffset? OperationTime { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger? OperationTrigger { get { throw null; } }
     }
     public partial class ComputeInstanceProperties
     {
@@ -1644,14 +1534,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.ApplicationSharingPolicy? ApplicationSharingPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceAuthorizationType? ComputeInstanceAuthorizationType { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceConnectivityEndpoints ConnectivityEndpoints { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceContainer> Containers { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceCreatedBy CreatedBy { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.ErrorResponse> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceDataDisk> DataDisks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceDataMount> DataMounts { get { throw null; } }
+        public bool? EnableNodePublicIp { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ErrorResponse> Errors { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceLastOperation LastOperation { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PersonalComputeInstanceSettings PersonalComputeInstanceSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.SetupScripts SetupScripts { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.AssignedUser PersonalComputeInstanceAssignedUser { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.ComputeStartStopSchedule> SchedulesComputeStartStop { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ScriptsToExecute Scripts { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceSshSettings SshSettings { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceState? State { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.WritableSubResource Subnet { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public string VersionsRuntime { get { throw null; } }
         public string VmSize { get { throw null; } set { } }
     }
     public partial class ComputeInstanceSshSettings
@@ -1693,81 +1589,35 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceState left, Azure.ResourceManager.MachineLearningServices.Models.ComputeInstanceState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ComputeRestartOperation : Azure.Operation
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComputePowerAction : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction>
     {
-        protected ComputeRestartOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComputePowerAction(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction Start { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction Stop { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction left, Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction left, Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ComputeSecrets
     {
         internal ComputeSecrets() { }
     }
-    public partial class ComputeStartOperation : Azure.Operation
+    public partial class ComputeStartStopSchedule
     {
-        protected ComputeStartOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ComputeStopOperation : Azure.Operation
-    {
-        protected ComputeStopOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputeType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ComputeType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputeType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType AKS { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType AmlCompute { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType ComputeInstance { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType Databricks { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType DataFactory { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType DataLakeAnalytics { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType HDInsight { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType Kubernetes { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType SynapseSpark { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ComputeType VirtualMachine { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ComputeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ComputeType left, Azure.ResourceManager.MachineLearningServices.Models.ComputeType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ComputeType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ComputeType left, Azure.ResourceManager.MachineLearningServices.Models.ComputeType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ComputeUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.ComputeResource>
-    {
-        protected ComputeUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.ComputeResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ComputeResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        internal ComputeStartStopSchedule() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ComputePowerAction? Action { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus? ProvisioningStatus { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ScheduleBase Schedule { get { throw null; } }
     }
     public partial class ContainerResourceRequirements
     {
@@ -1800,51 +1650,22 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ContainerType left, Azure.ResourceManager.MachineLearningServices.Models.ContainerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CosmosDbSettings
+    public partial class CronSchedule : Azure.ResourceManager.MachineLearningServices.Models.ScheduleBase
     {
-        public CosmosDbSettings() { }
-        public int? CollectionsThroughput { get { throw null; } set { } }
+        public CronSchedule(string expression) { }
+        public string Expression { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.CreatedByType>
+    public partial class CustomModelJobInput : Azure.ResourceManager.MachineLearningServices.Models.JobInput
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.CreatedByType left, Azure.ResourceManager.MachineLearningServices.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.CreatedByType left, Azure.ResourceManager.MachineLearningServices.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
+        public CustomModelJobInput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CredentialsType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.CredentialsType>
+    public partial class CustomModelJobOutput : Azure.ResourceManager.MachineLearningServices.Models.JobOutput
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CredentialsType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CredentialsType AccountKey { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CredentialsType Certificate { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CredentialsType None { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CredentialsType Sas { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.CredentialsType ServicePrincipal { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.CredentialsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.CredentialsType left, Azure.ResourceManager.MachineLearningServices.Models.CredentialsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.CredentialsType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.CredentialsType left, Azure.ResourceManager.MachineLearningServices.Models.CredentialsType right) { throw null; }
-        public override string ToString() { throw null; }
+        public CustomModelJobOutput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class Databricks : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
@@ -1856,16 +1677,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal DatabricksComputeSecrets() { }
         public string DatabricksAccessToken { get { throw null; } }
     }
-    public partial class DatabricksComputeSecretsProperties
-    {
-        internal DatabricksComputeSecretsProperties() { }
-        public string DatabricksAccessToken { get { throw null; } }
-    }
     public partial class DatabricksProperties
     {
         public DatabricksProperties() { }
         public string DatabricksAccessToken { get { throw null; } set { } }
         public string WorkspaceUrl { get { throw null; } set { } }
+    }
+    public partial class DataContainerDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
+    {
+        public DataContainerDetails(Azure.ResourceManager.MachineLearningServices.Models.DataType dataType) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.DataType DataType { get { throw null; } set { } }
     }
     public partial class DataFactory : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
@@ -1874,137 +1695,51 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class DataLakeAnalytics : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
         public DataLakeAnalytics() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.DataLakeAnalyticsProperties Properties { get { throw null; } set { } }
-    }
-    public partial class DataLakeAnalyticsProperties
-    {
-        public DataLakeAnalyticsProperties() { }
         public string DataLakeStoreAccountName { get { throw null; } set { } }
     }
-    public partial class DataPathAssetReference : Azure.ResourceManager.MachineLearningServices.Models.AssetReferenceBase
+    public partial class DataSettings
     {
-        public DataPathAssetReference() { }
-        public string DatastoreId { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-    }
-    public partial class DatasetContainer : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
-    {
-        public DatasetContainer() { }
-    }
-    public partial class DatasetContainerCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>
-    {
-        protected DatasetContainerCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.DatasetContainerResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetContainerResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DatasetContainerDeleteOperation : Azure.Operation
-    {
-        protected DatasetContainerDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DatasetVersion : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
-    {
-        public DatasetVersion(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningServices.Models.UriReference> paths) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.UriReference> Paths { get { throw null; } }
-    }
-    public partial class DatasetVersionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>
-    {
-        protected DatasetVersionCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.DatasetVersionResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatasetVersionResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DatasetVersionDeleteOperation : Azure.Operation
-    {
-        protected DatasetVersionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class Datastore : Azure.ResourceManager.MachineLearningServices.Models.ResourceBase
-    {
-        public Datastore(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials Credentials { get { throw null; } set { } }
-        public bool? IsDefault { get { throw null; } }
-    }
-    public partial class DatastoreCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.DatastoreResource>
-    {
-        protected DatastoreCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.DatastoreResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.DatastoreResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public DataSettings(string targetColumnName, Azure.ResourceManager.MachineLearningServices.Models.TrainingDataSettings trainingDataSettings) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.MLTableJobInput Data { get { throw null; } set { } }
+        public string TargetColumnName { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TestDataSettings TestData { get { throw null; } set { } }
     }
     public partial class DatastoreCredentials
     {
         public DatastoreCredentials() { }
     }
-    public partial class DatastoreDeleteOperation : Azure.Operation
+    public partial class DatastoreDetails : Azure.ResourceManager.MachineLearningServices.Models.ResourceBase
     {
-        protected DatastoreDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public DatastoreDetails(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials) { }
+        public bool? IsDefault { get { throw null; } }
     }
     public partial class DatastoreSecrets
     {
         public DatastoreSecrets() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DatastoreType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.DatastoreType>
+    public readonly partial struct DataType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.DataType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DatastoreType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.DatastoreType AzureBlob { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.DatastoreType AzureDataLakeGen1 { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.DatastoreType AzureDataLakeGen2 { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.DatastoreType AzureFile { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.DatastoreType other) { throw null; }
+        public DataType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.DataType MLTable { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.DataType UriFile { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.DataType UriFolder { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.DataType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.DatastoreType left, Azure.ResourceManager.MachineLearningServices.Models.DatastoreType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.DatastoreType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.DatastoreType left, Azure.ResourceManager.MachineLearningServices.Models.DatastoreType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.DataType left, Azure.ResourceManager.MachineLearningServices.Models.DataType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.DataType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.DataType left, Azure.ResourceManager.MachineLearningServices.Models.DataType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DefaultScaleSettings : Azure.ResourceManager.MachineLearningServices.Models.OnlineScaleSettings
+    public partial class DataVersionBaseDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
     {
-        public DefaultScaleSettings() { }
+        public DataVersionBaseDetails(System.Uri dataUri) { }
+        public System.Uri DataUri { get { throw null; } set { } }
     }
     public partial class DeploymentLogs
     {
@@ -2034,25 +1769,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.DeploymentProvisioningState left, Azure.ResourceManager.MachineLearningServices.Models.DeploymentProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeploymentSkuResourceType
-    {
-        internal DeploymentSkuResourceType() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.SkuCapacity Capacity { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.SkuSetting Sku { get { throw null; } }
-    }
     public partial class DiagnoseRequestProperties
     {
         public DiagnoseRequestProperties() { }
-        public System.Collections.Generic.IDictionary<string, object> ApplicationInsights { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> ContainerRegistry { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> DnsResolution { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> KeyVault { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> Nsg { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> Others { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> ResourceLock { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> StorageAccount { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> Udr { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> ApplicationInsights { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> ContainerRegistry { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> DnsResolution { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> KeyVault { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Nsg { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Others { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> ResourceLock { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> StorageAccount { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Udr { get { throw null; } }
     }
     public partial class DiagnoseResponseResult
     {
@@ -2098,60 +1826,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.DiagnoseResultLevel left, Azure.ResourceManager.MachineLearningServices.Models.DiagnoseResultLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DistributionConfiguration
-    {
-        public DistributionConfiguration() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DistributionType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.DistributionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DistributionType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.DistributionType Mpi { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.DistributionType PyTorch { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.DistributionType TensorFlow { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.DistributionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.DistributionType left, Azure.ResourceManager.MachineLearningServices.Models.DistributionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.DistributionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.DistributionType left, Azure.ResourceManager.MachineLearningServices.Models.DistributionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class EarlyTerminationPolicy
     {
         public EarlyTerminationPolicy() { }
         public int? DelayEvaluation { get { throw null; } set { } }
         public int? EvaluationInterval { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EarlyTerminationPolicyType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType>
+    public partial class EncryptionKeyVaultProperties
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EarlyTerminationPolicyType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType Bandit { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType MedianStopping { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType TruncationSelection { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType left, Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType left, Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicyType right) { throw null; }
-        public override string ToString() { throw null; }
+        public EncryptionKeyVaultProperties(string keyVaultArmId, string keyIdentifier) { }
+        public string IdentityClientId { get { throw null; } set { } }
+        public string KeyIdentifier { get { throw null; } set { } }
+        public string KeyVaultArmId { get { throw null; } set { } }
     }
     public partial class EncryptionProperty
     {
-        public EncryptionProperty(Azure.ResourceManager.MachineLearningServices.Models.EncryptionStatus status, Azure.ResourceManager.MachineLearningServices.Models.KeyVaultProperties keyVaultProperties) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.IdentityForCmk Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
+        public EncryptionProperty(Azure.ResourceManager.MachineLearningServices.Models.EncryptionStatus status, Azure.ResourceManager.MachineLearningServices.Models.EncryptionKeyVaultProperties keyVaultProperties) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.EncryptionKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.EncryptionStatus Status { get { throw null; } set { } }
+        public string UserAssignedIdentity { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionStatus : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.EncryptionStatus>
@@ -2239,8 +1932,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthKeys Keys { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } set { } }
-        public string ScoringUri { get { throw null; } }
-        public string SwaggerUri { get { throw null; } }
+        public System.Uri ScoringUri { get { throw null; } }
+        public System.Uri SwaggerUri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EndpointProvisioningState : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.EndpointProvisioningState>
@@ -2264,33 +1957,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.EndpointProvisioningState left, Azure.ResourceManager.MachineLearningServices.Models.EndpointProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EnvironmentContainer : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
+    public partial class EnvironmentContainerDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
     {
-        public EnvironmentContainer() { }
-    }
-    public partial class EnvironmentContainerCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>
-    {
-        protected EnvironmentContainerCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentContainerResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class EnvironmentContainerDeleteOperation : Azure.Operation
-    {
-        protected EnvironmentContainerDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public EnvironmentContainerDetails() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EnvironmentType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.EnvironmentType>
@@ -2310,9 +1979,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.EnvironmentType left, Azure.ResourceManager.MachineLearningServices.Models.EnvironmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EnvironmentVersion : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
+    public partial class EnvironmentVersionDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
     {
-        public EnvironmentVersion() { }
+        public EnvironmentVersionDetails() { }
         public Azure.ResourceManager.MachineLearningServices.Models.BuildContext Build { get { throw null; } set { } }
         public string CondaFile { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.EnvironmentType? EnvironmentType { get { throw null; } }
@@ -2320,29 +1989,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.InferenceContainerProperties InferenceConfig { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.OperatingSystemType? OsType { get { throw null; } set { } }
     }
-    public partial class EnvironmentVersionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>
+    public partial class ErrorResponse
     {
-        protected EnvironmentVersionCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.EnvironmentVersionResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class EnvironmentVersionDeleteOperation : Azure.Operation
-    {
-        protected EnvironmentVersionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        internal ErrorResponse() { }
+        public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
     }
     public partial class EstimatedVMPrice
     {
@@ -2358,15 +2008,132 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.UnitOfMeasure UnitOfMeasure { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.EstimatedVMPrice> Values { get { throw null; } }
     }
-    public partial class ExternalFqdnResponse
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FeatureLags : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.FeatureLags>
     {
-        internal ExternalFqdnResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.FqdnEndpoints> Value { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FeatureLags(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.FeatureLags Auto { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.FeatureLags None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.FeatureLags other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.FeatureLags left, Azure.ResourceManager.MachineLearningServices.Models.FeatureLags right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.FeatureLags (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.FeatureLags left, Azure.ResourceManager.MachineLearningServices.Models.FeatureLags right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FeaturizationMode : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FeaturizationMode(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode Auto { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode Custom { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode Off { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode left, Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode left, Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FeaturizationSettings
+    {
+        public FeaturizationSettings() { }
+        public string DatasetLanguage { get { throw null; } set { } }
     }
     public partial class FlavorData
     {
         public FlavorData() { }
         public System.Collections.Generic.IDictionary<string, string> Data { get { throw null; } set { } }
+    }
+    public partial class Forecasting : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
+    {
+        public Forecasting() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels> AllowedModels { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels> BlockedModels { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalDataSettings DataSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalFeaturizationSettings FeaturizationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ForecastingSettings ForecastingSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics? PrimaryMetric { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TrainingSettings TrainingSettings { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ForecastingModels : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ForecastingModels(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels Arimax { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels AutoArima { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels Average { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels DecisionTree { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels ElasticNet { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels ExponentialSmoothing { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels ExtremeRandomTrees { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels GradientBoosting { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels KNN { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels LassoLars { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels LightGBM { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels Naive { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels Prophet { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels RandomForest { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels SeasonalAverage { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels SeasonalNaive { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels SGD { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels TCNForecaster { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels XGBoostRegressor { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels left, Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels left, Azure.ResourceManager.MachineLearningServices.Models.ForecastingModels right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ForecastingPrimaryMetrics : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ForecastingPrimaryMetrics(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics NormalizedMeanAbsoluteError { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics NormalizedRootMeanSquaredError { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics R2Score { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics SpearmanCorrelation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.ForecastingPrimaryMetrics right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ForecastingSettings
+    {
+        public ForecastingSettings() { }
+        public string CountryOrRegionForHolidays { get { throw null; } set { } }
+        public int? CvStepSize { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.FeatureLags? FeatureLags { get { throw null; } set { } }
+        public string Frequency { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction? TargetAggregateFunction { get { throw null; } set { } }
+        public string TimeColumnName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> TimeSeriesIdColumnNames { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.UseStl? UseStl { get { throw null; } set { } }
     }
     public partial class FqdnEndpoint
     {
@@ -2408,6 +2175,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.Goal left, Azure.ResourceManager.MachineLearningServices.Models.Goal right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class GridSamplingAlgorithm : Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm
+    {
+        public GridSamplingAlgorithm() { }
+    }
+    public partial class HdfsDatastore : Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails
+    {
+        public HdfsDatastore(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials, string nameNodeAddress) : base (default(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials)) { }
+        public string HdfsServerCertificate { get { throw null; } set { } }
+        public string NameNodeAddress { get { throw null; } set { } }
+        public string Protocol { get { throw null; } set { } }
+    }
     public partial class HDInsight : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
         public HDInsight() { }
@@ -2420,45 +2198,191 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSshCredentials AdministratorAccount { get { throw null; } set { } }
         public int? SshPort { get { throw null; } set { } }
     }
-    public partial class IdAssetReference : Azure.ResourceManager.MachineLearningServices.Models.AssetReferenceBase
+    public partial class ImageClassification : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
     {
-        public IdAssetReference(string assetId) { }
-        public string AssetId { get { throw null; } set { } }
+        public ImageClassification(Azure.ResourceManager.MachineLearningServices.Models.ImageDataSettings dataSettings, Azure.ResourceManager.MachineLearningServices.Models.ImageLimitSettings limitSettings) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageDataSettings DataSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageModelSettingsClassification ModelSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics? PrimaryMetric { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ImageModelDistributionSettingsClassification> SearchSpace { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageSweepSettings SweepSettings { get { throw null; } set { } }
     }
-    public partial class Identity
+    public partial class ImageClassificationMultilabel : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
     {
-        public Identity() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        public ImageClassificationMultilabel(Azure.ResourceManager.MachineLearningServices.Models.ImageDataSettings dataSettings, Azure.ResourceManager.MachineLearningServices.Models.ImageLimitSettings limitSettings) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageDataSettings DataSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageModelSettingsClassification ModelSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics? PrimaryMetric { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ImageModelDistributionSettingsClassification> SearchSpace { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageSweepSettings SweepSettings { get { throw null; } set { } }
     }
-    public partial class IdentityConfiguration
+    public partial class ImageDataSettings : Azure.ResourceManager.MachineLearningServices.Models.DataSettings
     {
-        public IdentityConfiguration() { }
+        public ImageDataSettings(string targetColumnName, Azure.ResourceManager.MachineLearningServices.Models.TrainingDataSettings trainingDataSettings) : base (default(string), default(Azure.ResourceManager.MachineLearningServices.Models.TrainingDataSettings)) { }
+        public System.BinaryData ValidationData { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityConfigurationType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType>
+    public partial class ImageInstanceSegmentation : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityConfigurationType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType AMLToken { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType Managed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType left, Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType left, Azure.ResourceManager.MachineLearningServices.Models.IdentityConfigurationType right) { throw null; }
-        public override string ToString() { throw null; }
+        public ImageInstanceSegmentation(Azure.ResourceManager.MachineLearningServices.Models.ImageDataSettings dataSettings, Azure.ResourceManager.MachineLearningServices.Models.ImageLimitSettings limitSettings) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageDataSettings DataSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageModelSettingsObjectDetection ModelSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics? PrimaryMetric { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ImageModelDistributionSettingsObjectDetection> SearchSpace { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageSweepSettings SweepSettings { get { throw null; } set { } }
     }
-    public partial class IdentityForCmk
+    public partial class ImageLimitSettings
     {
-        public IdentityForCmk() { }
-        public string UserAssignedIdentity { get { throw null; } set { } }
+        public ImageLimitSettings() { }
+        public int? MaxConcurrentTrials { get { throw null; } set { } }
+        public int? MaxTrials { get { throw null; } set { } }
+        public System.TimeSpan? Timeout { get { throw null; } set { } }
+    }
+    public partial class ImageModelDistributionSettings
+    {
+        public ImageModelDistributionSettings() { }
+        public string AmsGradient { get { throw null; } set { } }
+        public string Augmentations { get { throw null; } set { } }
+        public string Beta1 { get { throw null; } set { } }
+        public string Beta2 { get { throw null; } set { } }
+        public string Distributed { get { throw null; } set { } }
+        public string EarlyStopping { get { throw null; } set { } }
+        public string EarlyStoppingDelay { get { throw null; } set { } }
+        public string EarlyStoppingPatience { get { throw null; } set { } }
+        public string EnableOnnxNormalization { get { throw null; } set { } }
+        public string EvaluationFrequency { get { throw null; } set { } }
+        public string GradientAccumulationStep { get { throw null; } set { } }
+        public string LayersToFreeze { get { throw null; } set { } }
+        public string LearningRate { get { throw null; } set { } }
+        public string LearningRateScheduler { get { throw null; } set { } }
+        public string ModelName { get { throw null; } set { } }
+        public string Momentum { get { throw null; } set { } }
+        public string Nesterov { get { throw null; } set { } }
+        public string NumberOfEpochs { get { throw null; } set { } }
+        public string NumberOfWorkers { get { throw null; } set { } }
+        public string Optimizer { get { throw null; } set { } }
+        public string RandomSeed { get { throw null; } set { } }
+        public string SplitRatio { get { throw null; } set { } }
+        public string StepLRGamma { get { throw null; } set { } }
+        public string StepLRStepSize { get { throw null; } set { } }
+        public string TrainingBatchSize { get { throw null; } set { } }
+        public string ValidationBatchSize { get { throw null; } set { } }
+        public string WarmupCosineLRCycles { get { throw null; } set { } }
+        public string WarmupCosineLRWarmupEpochs { get { throw null; } set { } }
+        public string WeightDecay { get { throw null; } set { } }
+    }
+    public partial class ImageModelDistributionSettingsClassification : Azure.ResourceManager.MachineLearningServices.Models.ImageModelDistributionSettings
+    {
+        public ImageModelDistributionSettingsClassification() { }
+        public string TrainingCropSize { get { throw null; } set { } }
+        public string ValidationCropSize { get { throw null; } set { } }
+        public string ValidationResizeSize { get { throw null; } set { } }
+        public string WeightedLoss { get { throw null; } set { } }
+    }
+    public partial class ImageModelDistributionSettingsObjectDetection : Azure.ResourceManager.MachineLearningServices.Models.ImageModelDistributionSettings
+    {
+        public ImageModelDistributionSettingsObjectDetection() { }
+        public string BoxDetectionsPerImage { get { throw null; } set { } }
+        public string BoxScoreThreshold { get { throw null; } set { } }
+        public string ImageSize { get { throw null; } set { } }
+        public string MaxSize { get { throw null; } set { } }
+        public string MinSize { get { throw null; } set { } }
+        public string ModelSize { get { throw null; } set { } }
+        public string MultiScale { get { throw null; } set { } }
+        public string NmsIouThreshold { get { throw null; } set { } }
+        public string TileGridSize { get { throw null; } set { } }
+        public string TileOverlapRatio { get { throw null; } set { } }
+        public string TilePredictionsNmsThreshold { get { throw null; } set { } }
+        public string ValidationIouThreshold { get { throw null; } set { } }
+        public string ValidationMetricType { get { throw null; } set { } }
+    }
+    public partial class ImageModelSettings
+    {
+        public ImageModelSettings() { }
+        public string AdvancedSettings { get { throw null; } set { } }
+        public bool? AmsGradient { get { throw null; } set { } }
+        public string Augmentations { get { throw null; } set { } }
+        public float? Beta1 { get { throw null; } set { } }
+        public float? Beta2 { get { throw null; } set { } }
+        public string CheckpointDatasetId { get { throw null; } set { } }
+        public string CheckpointFilename { get { throw null; } set { } }
+        public int? CheckpointFrequency { get { throw null; } set { } }
+        public string CheckpointRunId { get { throw null; } set { } }
+        public bool? Distributed { get { throw null; } set { } }
+        public bool? EarlyStopping { get { throw null; } set { } }
+        public int? EarlyStoppingDelay { get { throw null; } set { } }
+        public int? EarlyStoppingPatience { get { throw null; } set { } }
+        public bool? EnableOnnxNormalization { get { throw null; } set { } }
+        public int? EvaluationFrequency { get { throw null; } set { } }
+        public int? GradientAccumulationStep { get { throw null; } set { } }
+        public int? LayersToFreeze { get { throw null; } set { } }
+        public float? LearningRate { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler? LearningRateScheduler { get { throw null; } set { } }
+        public string ModelName { get { throw null; } set { } }
+        public float? Momentum { get { throw null; } set { } }
+        public bool? Nesterov { get { throw null; } set { } }
+        public int? NumberOfEpochs { get { throw null; } set { } }
+        public int? NumberOfWorkers { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer? Optimizer { get { throw null; } set { } }
+        public int? RandomSeed { get { throw null; } set { } }
+        public float? SplitRatio { get { throw null; } set { } }
+        public float? StepLRGamma { get { throw null; } set { } }
+        public int? StepLRStepSize { get { throw null; } set { } }
+        public int? TrainingBatchSize { get { throw null; } set { } }
+        public int? ValidationBatchSize { get { throw null; } set { } }
+        public float? WarmupCosineLRCycles { get { throw null; } set { } }
+        public int? WarmupCosineLRWarmupEpochs { get { throw null; } set { } }
+        public float? WeightDecay { get { throw null; } set { } }
+    }
+    public partial class ImageModelSettingsClassification : Azure.ResourceManager.MachineLearningServices.Models.ImageModelSettings
+    {
+        public ImageModelSettingsClassification() { }
+        public int? TrainingCropSize { get { throw null; } set { } }
+        public int? ValidationCropSize { get { throw null; } set { } }
+        public int? ValidationResizeSize { get { throw null; } set { } }
+        public int? WeightedLoss { get { throw null; } set { } }
+    }
+    public partial class ImageModelSettingsObjectDetection : Azure.ResourceManager.MachineLearningServices.Models.ImageModelSettings
+    {
+        public ImageModelSettingsObjectDetection() { }
+        public int? BoxDetectionsPerImage { get { throw null; } set { } }
+        public float? BoxScoreThreshold { get { throw null; } set { } }
+        public int? ImageSize { get { throw null; } set { } }
+        public int? MaxSize { get { throw null; } set { } }
+        public int? MinSize { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelSize? ModelSize { get { throw null; } set { } }
+        public bool? MultiScale { get { throw null; } set { } }
+        public float? NmsIouThreshold { get { throw null; } set { } }
+        public string TileGridSize { get { throw null; } set { } }
+        public float? TileOverlapRatio { get { throw null; } set { } }
+        public float? TilePredictionsNmsThreshold { get { throw null; } set { } }
+        public float? ValidationIouThreshold { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType? ValidationMetricType { get { throw null; } set { } }
+    }
+    public partial class ImageObjectDetection : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
+    {
+        public ImageObjectDetection(Azure.ResourceManager.MachineLearningServices.Models.ImageDataSettings dataSettings, Azure.ResourceManager.MachineLearningServices.Models.ImageLimitSettings limitSettings) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageDataSettings DataSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageModelSettingsObjectDetection ModelSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics? PrimaryMetric { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ImageModelDistributionSettingsObjectDetection> SearchSpace { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageSweepSettings SweepSettings { get { throw null; } set { } }
+    }
+    public partial class ImageSweepLimitSettings
+    {
+        public ImageSweepLimitSettings() { }
+        public int? MaxConcurrentTrials { get { throw null; } set { } }
+        public int? MaxTrials { get { throw null; } set { } }
+    }
+    public partial class ImageSweepSettings
+    {
+        public ImageSweepSettings(Azure.ResourceManager.MachineLearningServices.Models.ImageSweepLimitSettings limits, Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType samplingAlgorithm) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicy EarlyTermination { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ImageSweepLimitSettings Limits { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType SamplingAlgorithm { get { throw null; } set { } }
     }
     public partial class InferenceContainerProperties
     {
@@ -2468,22 +2392,39 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.Route ScoringRoute { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InputDataDeliveryMode : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode>
+    public readonly partial struct InputDeliveryMode : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public InputDataDeliveryMode(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode Download { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode ReadOnlyMount { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode ReadWriteMount { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode other) { throw null; }
+        public InputDeliveryMode(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode Download { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode ReadOnlyMount { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode ReadWriteMount { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InstanceSegmentationPrimaryMetrics : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InstanceSegmentationPrimaryMetrics(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics MeanAveragePrecision { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.InstanceSegmentationPrimaryMetrics right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class InstanceTypeSchema
@@ -2498,141 +2439,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public System.Collections.Generic.IDictionary<string, string> Limits { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Requests { get { throw null; } }
     }
-    public partial class Job : Azure.ResourceManager.MachineLearningServices.Models.JobBase
+    public partial class JobBaseDetails : Azure.ResourceManager.MachineLearningServices.Models.ResourceBase
     {
-        public Job() { }
-    }
-    public partial class JobBase : Azure.ResourceManager.MachineLearningServices.Models.ResourceBase
-    {
-        public JobBase() { }
+        public JobBaseDetails() { }
         public string ComputeId { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ExperimentName { get { throw null; } set { } }
-        public string ParentJobName { get { throw null; } }
+        public bool? IsArchived { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ScheduleBase Schedule { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobService> Services { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.JobStatus? Status { get { throw null; } }
-    }
-    public partial class JobCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.JobBaseResource>
-    {
-        protected JobCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.JobBaseResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.JobBaseResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class JobDeleteOperation : Azure.Operation
-    {
-        protected JobDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class JobInput
     {
         public JobInput() { }
         public string Description { get { throw null; } set { } }
     }
-    public partial class JobInputDataset : Azure.ResourceManager.MachineLearningServices.Models.JobInput
-    {
-        public JobInputDataset(string datasetId) { }
-        public string DatasetId { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode? Mode { get { throw null; } set { } }
-    }
-    public partial class JobInputLiteral : Azure.ResourceManager.MachineLearningServices.Models.JobInput
-    {
-        public JobInputLiteral() { }
-        public string Value { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobInputType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.JobInputType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobInputType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobInputType Dataset { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobInputType Literal { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobInputType Uri { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.JobInputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.JobInputType left, Azure.ResourceManager.MachineLearningServices.Models.JobInputType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.JobInputType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.JobInputType left, Azure.ResourceManager.MachineLearningServices.Models.JobInputType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class JobInputUri : Azure.ResourceManager.MachineLearningServices.Models.JobInput
-    {
-        public JobInputUri(Azure.ResourceManager.MachineLearningServices.Models.UriReference uri) { }
-        public Azure.ResourceManager.MachineLearningServices.Models.InputDataDeliveryMode? Mode { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.UriReference Uri { get { throw null; } set { } }
-    }
     public partial class JobLimits
     {
         public JobLimits() { }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobLimitsType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobLimitsType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType Command { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType Sweep { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType left, Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType left, Azure.ResourceManager.MachineLearningServices.Models.JobLimitsType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class JobOutput
     {
         public JobOutput() { }
         public string Description { get { throw null; } set { } }
-    }
-    public partial class JobOutputDataset : Azure.ResourceManager.MachineLearningServices.Models.JobOutput
-    {
-        public JobOutputDataset() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode? Mode { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobOutputType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.JobOutputType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobOutputType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobOutputType Dataset { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobOutputType Uri { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.JobOutputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.JobOutputType left, Azure.ResourceManager.MachineLearningServices.Models.JobOutputType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.JobOutputType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.JobOutputType left, Azure.ResourceManager.MachineLearningServices.Models.JobOutputType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class JobOutputUri : Azure.ResourceManager.MachineLearningServices.Models.JobOutput
-    {
-        public JobOutputUri() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode? Mode { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.UriReference Uri { get { throw null; } }
     }
     public partial class JobService
     {
@@ -2662,6 +2493,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static Azure.ResourceManager.MachineLearningServices.Models.JobStatus Provisioning { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningServices.Models.JobStatus Queued { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningServices.Models.JobStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.JobStatus Scheduled { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningServices.Models.JobStatus Starting { get { throw null; } }
         public static Azure.ResourceManager.MachineLearningServices.Models.JobStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.JobStatus other) { throw null; }
@@ -2674,25 +2506,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.JobStatus left, Azure.ResourceManager.MachineLearningServices.Models.JobStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.JobType>
+    public partial class KerberosKeytabCredentials : Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobType Base { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobType Command { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobType Pipeline { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.JobType Sweep { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.JobType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.JobType left, Azure.ResourceManager.MachineLearningServices.Models.JobType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.JobType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.JobType left, Azure.ResourceManager.MachineLearningServices.Models.JobType right) { throw null; }
-        public override string ToString() { throw null; }
+        public KerberosKeytabCredentials(Azure.ResourceManager.MachineLearningServices.Models.KerberosKeytabSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm) { }
+        public string KerberosKdcAddress { get { throw null; } set { } }
+        public string KerberosPrincipal { get { throw null; } set { } }
+        public string KerberosRealm { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.KerberosKeytabSecrets Secrets { get { throw null; } set { } }
+    }
+    public partial class KerberosKeytabSecrets : Azure.ResourceManager.MachineLearningServices.Models.DatastoreSecrets
+    {
+        public KerberosKeytabSecrets() { }
+        public string KerberosKeytab { get { throw null; } set { } }
+    }
+    public partial class KerberosPasswordCredentials : Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials
+    {
+        public KerberosPasswordCredentials(Azure.ResourceManager.MachineLearningServices.Models.KerberosPasswordSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm) { }
+        public string KerberosKdcAddress { get { throw null; } set { } }
+        public string KerberosPrincipal { get { throw null; } set { } }
+        public string KerberosRealm { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.KerberosPasswordSecrets Secrets { get { throw null; } set { } }
+    }
+    public partial class KerberosPasswordSecrets : Azure.ResourceManager.MachineLearningServices.Models.DatastoreSecrets
+    {
+        public KerberosPasswordSecrets() { }
+        public string KerberosPassword { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.KeyType>
@@ -2712,19 +2550,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.KeyType left, Azure.ResourceManager.MachineLearningServices.Models.KeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultProperties
-    {
-        public KeyVaultProperties(string keyVaultArmId, string keyIdentifier) { }
-        public string IdentityClientId { get { throw null; } set { } }
-        public string KeyIdentifier { get { throw null; } set { } }
-        public string KeyVaultArmId { get { throw null; } set { } }
-    }
     public partial class Kubernetes : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
         public Kubernetes() { }
         public Azure.ResourceManager.MachineLearningServices.Models.KubernetesProperties Properties { get { throw null; } set { } }
     }
-    public partial class KubernetesOnlineDeployment : Azure.ResourceManager.MachineLearningServices.Models.OnlineDeployment
+    public partial class KubernetesOnlineDeployment : Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentDetails
     {
         public KubernetesOnlineDeployment() { }
         public Azure.ResourceManager.MachineLearningServices.Models.ContainerResourceRequirements ContainerResourceRequirements { get { throw null; } set { } }
@@ -2741,10 +2572,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string ServiceBusConnectionString { get { throw null; } set { } }
         public string VcName { get { throw null; } set { } }
     }
-    public partial class KubernetesSchema
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LearningRateScheduler : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler>
     {
-        public KubernetesSchema() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.KubernetesProperties Properties { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LearningRateScheduler(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler None { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler Step { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler WarmupCosine { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler left, Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler left, Azure.ResourceManager.MachineLearningServices.Models.LearningRateScheduler right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ListNotebookKeysResult
     {
@@ -2757,6 +2602,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal ListStorageAccountKeysResult() { }
         public string UserStorageKey { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ListViewType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ListViewType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ListViewType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ListViewType ActiveOnly { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ListViewType All { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ListViewType ArchivedOnly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ListViewType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ListViewType left, Azure.ResourceManager.MachineLearningServices.Models.ListViewType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ListViewType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ListViewType left, Azure.ResourceManager.MachineLearningServices.Models.ListViewType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ListWorkspaceKeysResult
     {
         internal ListWorkspaceKeysResult() { }
@@ -2765,6 +2629,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.ListNotebookKeysResult NotebookAccessKeys { get { throw null; } }
         public string UserStorageKey { get { throw null; } }
         public string UserStorageResourceId { get { throw null; } }
+    }
+    public partial class LiteralJobInput : Azure.ResourceManager.MachineLearningServices.Models.JobInput
+    {
+        public LiteralJobInput(string value) { }
+        public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadBalancerType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.LoadBalancerType>
@@ -2784,105 +2653,233 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.LoadBalancerType left, Azure.ResourceManager.MachineLearningServices.Models.LoadBalancerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedIdentity : Azure.ResourceManager.MachineLearningServices.Models.IdentityConfiguration
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogVerbosity : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity>
     {
-        public ManagedIdentity() { }
-        public System.Guid? ClientId { get { throw null; } set { } }
-        public System.Guid? ObjectId { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogVerbosity(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity Critical { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity Debug { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity Error { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity Info { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity NotSet { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity left, Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity left, Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class ManagedOnlineDeployment : Azure.ResourceManager.MachineLearningServices.Models.OnlineDeployment
+    public partial class MachineLearningServicesSku
+    {
+        public MachineLearningServicesSku(string name) { }
+        public int? Capacity { get { throw null; } set { } }
+        public string Family { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Size { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSkuTier? Tier { get { throw null; } set { } }
+    }
+    public enum MachineLearningServicesSkuTier
+    {
+        Free = 0,
+        Basic = 1,
+        Standard = 2,
+        Premium = 3,
+    }
+    public partial class MachineLearningServicesUsage
+    {
+        internal MachineLearningServicesUsage() { }
+        public string AmlWorkspaceLocation { get { throw null; } }
+        public long? CurrentValue { get { throw null; } }
+        public string Id { get { throw null; } }
+        public long? Limit { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.UsageName Name { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.UsageUnit? Unit { get { throw null; } }
+        public string UsageType { get { throw null; } }
+    }
+    public partial class ManagedOnlineDeployment : Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentDetails
     {
         public ManagedOnlineDeployment() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedServiceIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType None { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType SystemAssignedUserAssigned { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType left, Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType left, Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MedianStoppingPolicy : Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicy
     {
         public MedianStoppingPolicy() { }
     }
-    public partial class ModelContainer : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
+    public partial class MLFlowModelJobInput : Azure.ResourceManager.MachineLearningServices.Models.JobInput
     {
-        public ModelContainer() { }
+        public MLFlowModelJobInput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
-    public partial class ModelContainerCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>
+    public partial class MLFlowModelJobOutput : Azure.ResourceManager.MachineLearningServices.Models.JobOutput
     {
-        protected ModelContainerCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.ModelContainerResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelContainerResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public MLFlowModelJobOutput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
-    public partial class ModelContainerDeleteOperation : Azure.Operation
+    public partial class MLTableDataVersion : Azure.ResourceManager.MachineLearningServices.Models.DataVersionBaseDetails
     {
-        protected ModelContainerDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public MLTableDataVersion(System.Uri dataUri) : base (default(System.Uri)) { }
+        public System.Collections.Generic.IList<string> ReferencedUris { get { throw null; } set { } }
+    }
+    public partial class MLTableJobInput : Azure.ResourceManager.MachineLearningServices.Models.JobInput
+    {
+        public MLTableJobInput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class MLTableJobOutput : Azure.ResourceManager.MachineLearningServices.Models.JobOutput
+    {
+        public MLTableJobOutput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class ModelContainerDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetContainer
+    {
+        public ModelContainerDetails() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ModelFormat : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ModelFormat>
+    public readonly partial struct ModelSize : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ModelSize>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ModelFormat(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ModelFormat Custom { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ModelFormat MLFlow { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ModelFormat OpenAI { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ModelFormat Triton { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ModelFormat other) { throw null; }
+        public ModelSize(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ModelSize ExtraLarge { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ModelSize Large { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ModelSize Medium { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ModelSize None { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ModelSize Small { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ModelSize other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ModelFormat left, Azure.ResourceManager.MachineLearningServices.Models.ModelFormat right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ModelFormat (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ModelFormat left, Azure.ResourceManager.MachineLearningServices.Models.ModelFormat right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ModelSize left, Azure.ResourceManager.MachineLearningServices.Models.ModelSize right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ModelSize (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ModelSize left, Azure.ResourceManager.MachineLearningServices.Models.ModelSize right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ModelVersion : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ModelType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ModelType>
     {
-        public ModelVersion(string modelUri) { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ModelType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ModelType CustomModel { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ModelType MLFlowModel { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ModelType TritonModel { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ModelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ModelType left, Azure.ResourceManager.MachineLearningServices.Models.ModelType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ModelType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ModelType left, Azure.ResourceManager.MachineLearningServices.Models.ModelType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ModelVersionDetails : Azure.ResourceManager.MachineLearningServices.Models.AssetBase
+    {
+        public ModelVersionDetails() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.FlavorData> Flavors { get { throw null; } set { } }
         public string JobName { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ModelFormat? ModelFormat { get { throw null; } set { } }
-        public string ModelUri { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ModelType? ModelType { get { throw null; } set { } }
+        public System.Uri ModelUri { get { throw null; } set { } }
     }
-    public partial class ModelVersionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MountAction : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.MountAction>
     {
-        protected ModelVersionCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.ModelVersionResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.ModelVersionResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MountAction(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.MountAction Mount { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.MountAction Unmount { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.MountAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.MountAction left, Azure.ResourceManager.MachineLearningServices.Models.MountAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.MountAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.MountAction left, Azure.ResourceManager.MachineLearningServices.Models.MountAction right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class ModelVersionDeleteOperation : Azure.Operation
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MountState : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.MountState>
     {
-        protected ModelVersionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MountState(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.MountState Mounted { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.MountState MountFailed { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.MountState MountRequested { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.MountState Unmounted { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.MountState UnmountFailed { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.MountState UnmountRequested { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.MountState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.MountState left, Azure.ResourceManager.MachineLearningServices.Models.MountState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.MountState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.MountState left, Azure.ResourceManager.MachineLearningServices.Models.MountState right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class Mpi : Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Network : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.Network>
     {
-        public Mpi() { }
-        public int? ProcessCountPerInstance { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Network(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Network Bridge { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Network Host { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.Network other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.Network left, Azure.ResourceManager.MachineLearningServices.Models.Network right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.Network (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.Network left, Azure.ResourceManager.MachineLearningServices.Models.Network right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NlpVerticalDataSettings : Azure.ResourceManager.MachineLearningServices.Models.DataSettings
+    {
+        public NlpVerticalDataSettings(string targetColumnName, Azure.ResourceManager.MachineLearningServices.Models.TrainingDataSettings trainingDataSettings) : base (default(string), default(Azure.ResourceManager.MachineLearningServices.Models.TrainingDataSettings)) { }
+        public System.BinaryData ValidationData { get { throw null; } set { } }
+    }
+    public partial class NlpVerticalLimitSettings
+    {
+        public NlpVerticalLimitSettings() { }
+        public int? MaxConcurrentTrials { get { throw null; } set { } }
+        public int? MaxTrials { get { throw null; } set { } }
+        public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NodeState : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.NodeState>
@@ -2945,117 +2942,49 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.NotebookPreparationError NotebookPreparationError { get { throw null; } }
         public string ResourceId { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ObjectDetectionPrimaryMetrics : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ObjectDetectionPrimaryMetrics(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics MeanAveragePrecision { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.ObjectDetectionPrimaryMetrics right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class Objective
     {
         public Objective(Azure.ResourceManager.MachineLearningServices.Models.Goal goal, string primaryMetric) { }
         public Azure.ResourceManager.MachineLearningServices.Models.Goal Goal { get { throw null; } set { } }
         public string PrimaryMetric { get { throw null; } set { } }
     }
-    public partial class OnlineDeployment : Azure.ResourceManager.MachineLearningServices.Models.EndpointDeploymentPropertiesBase
+    public partial class OnlineDeploymentDetails : Azure.ResourceManager.MachineLearningServices.Models.EndpointDeploymentPropertiesBase
     {
-        public OnlineDeployment() { }
+        public OnlineDeploymentDetails() { }
         public bool? AppInsightsEnabled { get { throw null; } set { } }
         public string InstanceType { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ProbeSettings LivenessProbe { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }
         public string ModelMountPath { get { throw null; } set { } }
+        public bool? PrivateNetworkConnection { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.DeploymentProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ProbeSettings ReadinessProbe { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.OnlineRequestSettings RequestSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.OnlineScaleSettings ScaleSettings { get { throw null; } set { } }
     }
-    public partial class OnlineDeploymentCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>
+    public partial class OnlineEndpointDetails : Azure.ResourceManager.MachineLearningServices.Models.EndpointPropertiesBase
     {
-        protected OnlineDeploymentCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class OnlineDeploymentDeleteOperation : Azure.Operation
-    {
-        protected OnlineDeploymentDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class OnlineDeploymentUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>
-    {
-        protected OnlineDeploymentUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineDeploymentTrackedResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class OnlineEndpoint : Azure.ResourceManager.MachineLearningServices.Models.EndpointPropertiesBase
-    {
-        public OnlineEndpoint(Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthMode authMode) : base (default(Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthMode)) { }
-        public bool? AllowPublicAccess { get { throw null; } set { } }
+        public OnlineEndpointDetails(Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthMode authMode) : base (default(Azure.ResourceManager.MachineLearningServices.Models.EndpointAuthMode)) { }
         public string Compute { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, int> MirrorTraffic { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.EndpointProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, int> Traffic { get { throw null; } set { } }
-    }
-    public partial class OnlineEndpointCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>
-    {
-        protected OnlineEndpointCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class OnlineEndpointDeleteOperation : Azure.Operation
-    {
-        protected OnlineEndpointDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class OnlineEndpointRegenerateKeysOperation : Azure.Operation
-    {
-        protected OnlineEndpointRegenerateKeysOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class OnlineEndpointUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>
-    {
-        protected OnlineEndpointUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.OnlineEndpointTrackedResource>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OnlineRequestSettings
     {
@@ -3063,10 +2992,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public int? MaxConcurrentRequestsPerInstance { get { throw null; } set { } }
         public System.TimeSpan? MaxQueueWait { get { throw null; } set { } }
         public System.TimeSpan? RequestTimeout { get { throw null; } set { } }
-    }
-    public partial class OnlineScaleSettings
-    {
-        public OnlineScaleSettings() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperatingSystemType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.OperatingSystemType>
@@ -3133,6 +3058,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationTrigger : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationTrigger(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger IdleShutdown { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger Schedule { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger left, Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger left, Azure.ResourceManager.MachineLearningServices.Models.OperationTrigger right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OrderString : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.OrderString>
     {
         private readonly object _dummy;
@@ -3171,32 +3115,22 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OutputDataDeliveryMode : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode>
+    public readonly partial struct OutputDeliveryMode : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public OutputDataDeliveryMode(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode ReadWriteMount { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode Upload { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode other) { throw null; }
+        public OutputDeliveryMode(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode ReadWriteMount { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode Upload { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.OutputDataDeliveryMode right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode left, Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class OutputPathAssetReference : Azure.ResourceManager.MachineLearningServices.Models.AssetReferenceBase
-    {
-        public OutputPathAssetReference() { }
-        public string JobId { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-    }
-    public partial class PartialAssetReferenceBase
-    {
-        public PartialAssetReferenceBase() { }
     }
     public partial class PartialBatchDeployment
     {
@@ -3210,36 +3144,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.BatchLoggingLevel? LoggingLevel { get { throw null; } set { } }
         public int? MaxConcurrencyPerInstance { get { throw null; } set { } }
         public long? MiniBatchSize { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialAssetReferenceBase Model { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.BatchOutputAction? OutputAction { get { throw null; } set { } }
         public string OutputFileName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.PartialBatchRetrySettings RetrySettings { get { throw null; } set { } }
-    }
-    public partial class PartialBatchDeploymentPartialTrackedResource
-    {
-        public PartialBatchDeploymentPartialTrackedResource() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialResourceIdentity Identity { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialBatchDeployment Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PartialBatchEndpoint
-    {
-        public PartialBatchEndpoint() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.BatchEndpointDefaults Defaults { get { throw null; } set { } }
-    }
-    public partial class PartialBatchEndpointPartialTrackedResource
-    {
-        public PartialBatchEndpointPartialTrackedResource() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialResourceIdentity Identity { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialBatchEndpoint Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class PartialBatchRetrySettings
     {
@@ -3253,109 +3161,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string CodeId { get { throw null; } set { } }
         public string ScoringScript { get { throw null; } set { } }
     }
-    public partial class PartialContainerResourceRequirements
+    public partial class PartialManagedServiceIdentity
     {
-        public PartialContainerResourceRequirements() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialContainerResourceSettings ContainerResourceLimits { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialContainerResourceSettings ContainerResourceRequests { get { throw null; } set { } }
-    }
-    public partial class PartialContainerResourceSettings
-    {
-        public PartialContainerResourceSettings() { }
-        public string Cpu { get { throw null; } set { } }
-        public string Gpu { get { throw null; } set { } }
-        public string Memory { get { throw null; } set { } }
-    }
-    public partial class PartialDataPathAssetReference : Azure.ResourceManager.MachineLearningServices.Models.PartialAssetReferenceBase
-    {
-        public PartialDataPathAssetReference() { }
-        public string DatastoreId { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-    }
-    public partial class PartialDefaultScaleSettings : Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineScaleSettings
-    {
-        public PartialDefaultScaleSettings() { }
-    }
-    public partial class PartialIdAssetReference : Azure.ResourceManager.MachineLearningServices.Models.PartialAssetReferenceBase
-    {
-        public PartialIdAssetReference() { }
-        public string AssetId { get { throw null; } set { } }
-    }
-    public partial class PartialKubernetesOnlineDeployment : Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineDeployment
-    {
-        public PartialKubernetesOnlineDeployment() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialContainerResourceRequirements ContainerResourceRequirements { get { throw null; } set { } }
-    }
-    public partial class PartialManagedOnlineDeployment : Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineDeployment
-    {
-        public PartialManagedOnlineDeployment() { }
-        public string ModelMountPath { get { throw null; } set { } }
-    }
-    public partial class PartialOnlineDeployment
-    {
-        public PartialOnlineDeployment() { }
-        public bool? AppInsightsEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialProbeSettings LivenessProbe { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialProbeSettings ReadinessProbe { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineRequestSettings RequestSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineScaleSettings ScaleSettings { get { throw null; } set { } }
-    }
-    public partial class PartialOnlineDeploymentPartialTrackedResource
-    {
-        public PartialOnlineDeploymentPartialTrackedResource() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialResourceIdentity Identity { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineDeployment Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public PartialManagedServiceIdentity() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType? ManagedServiceIdentityType { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> UserAssignedIdentities { get { throw null; } }
     }
     public partial class PartialOnlineEndpoint
     {
         public PartialOnlineEndpoint() { }
+        public System.Collections.Generic.IDictionary<string, int> MirrorTraffic { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, int> Traffic { get { throw null; } set { } }
-    }
-    public partial class PartialOnlineEndpointPartialTrackedResource
-    {
-        public PartialOnlineEndpointPartialTrackedResource() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialResourceIdentity Identity { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineEndpoint Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PartialOnlineRequestSettings
-    {
-        public PartialOnlineRequestSettings() { }
-        public int? MaxConcurrentRequestsPerInstance { get { throw null; } set { } }
-        public System.TimeSpan? MaxQueueWait { get { throw null; } set { } }
-        public System.TimeSpan? RequestTimeout { get { throw null; } set { } }
-    }
-    public partial class PartialOnlineScaleSettings
-    {
-        public PartialOnlineScaleSettings() { }
-    }
-    public partial class PartialOutputPathAssetReference : Azure.ResourceManager.MachineLearningServices.Models.PartialAssetReferenceBase
-    {
-        public PartialOutputPathAssetReference() { }
-        public string JobId { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-    }
-    public partial class PartialProbeSettings
-    {
-        public PartialProbeSettings() { }
-        public int? FailureThreshold { get { throw null; } set { } }
-        public System.TimeSpan? InitialDelay { get { throw null; } set { } }
-        public System.TimeSpan? Period { get { throw null; } set { } }
-        public int? SuccessThreshold { get { throw null; } set { } }
-        public System.TimeSpan? Timeout { get { throw null; } set { } }
-    }
-    public partial class PartialResourceIdentity
-    {
-        public PartialResourceIdentity() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     public partial class PartialSku
     {
@@ -3364,15 +3180,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Family { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.SkuTier? Tier { get { throw null; } set { } }
-    }
-    public partial class PartialTargetUtilizationScaleSettings : Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineScaleSettings
-    {
-        public PartialTargetUtilizationScaleSettings() { }
-        public int? MaxInstances { get { throw null; } set { } }
-        public int? MinInstances { get { throw null; } set { } }
-        public System.TimeSpan? PollingInterval { get { throw null; } set { } }
-        public int? TargetUtilizationPercentage { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSkuTier? Tier { get { throw null; } set { } }
     }
     public partial class Password
     {
@@ -3380,49 +3188,73 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class PersonalComputeInstanceSettings
+    public partial class PatchableBatchDeploymentDataData
     {
-        public PersonalComputeInstanceSettings() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.AssignedUser AssignedUser { get { throw null; } set { } }
+        public PatchableBatchDeploymentDataData() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialBatchDeployment Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class PipelineJob : Azure.ResourceManager.MachineLearningServices.Models.JobBase
+    public partial class PatchableBatchEndpointDataData
+    {
+        public PatchableBatchEndpointDataData() { }
+        public string DefaultsDeploymentName { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PatchableOnlineDeploymentDataData
+    {
+        public PatchableOnlineDeploymentDataData() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PatchableOnlineEndpointDataData
+    {
+        public PatchableOnlineEndpointDataData() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineEndpoint Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PatchableWorkspaceData
+    {
+        public PatchableWorkspaceData() { }
+        public string ApplicationInsights { get { throw null; } set { } }
+        public string ContainerRegistry { get { throw null; } set { } }
+        public int? CosmosDbCollectionsThroughput { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string ImageBuildCompute { get { throw null; } set { } }
+        public string PrimaryUserAssignedIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PipelineJob : Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails
     {
         public PipelineJob() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.Binding> Bindings { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.ComponentJob> ComponentJobs { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobInput> Inputs { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Jobs { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobOutput> Outputs { get { throw null; } set { } }
-        public object Settings { get { throw null; } set { } }
+        public System.BinaryData Settings { get { throw null; } set { } }
     }
     public partial class PrivateEndpoint
     {
         public PrivateEndpoint() { }
         public string Id { get { throw null; } }
         public string SubnetArmId { get { throw null; } }
-    }
-    public partial class PrivateEndpointConnectionCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>
-    {
-        protected PrivateEndpointConnectionCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.PrivateEndpointConnection>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PrivateEndpointConnectionDeleteOperation : Azure.Operation
-    {
-        protected PrivateEndpointConnectionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointConnectionProvisioningState>
@@ -3465,22 +3297,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateLinkResource : Azure.ResourceManager.Models.Resource
+    public partial class PrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PrivateLinkResourceListResult
-    {
-        internal PrivateLinkResourceListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.PrivateLinkResource> Value { get { throw null; } }
     }
     public partial class PrivateLinkServiceConnectionState
     {
@@ -3522,6 +3348,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProvisioningStatus : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProvisioningStatus(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus Provisioning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus left, Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus left, Azure.ResourceManager.MachineLearningServices.Models.ProvisioningStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccess>
     {
         private readonly object _dummy;
@@ -3539,17 +3384,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccess left, Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PyTorch : Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration
-    {
-        public PyTorch() { }
-        public int? ProcessCountPerInstance { get { throw null; } set { } }
-    }
     public partial class QuotaBaseProperties
     {
         public QuotaBaseProperties() { }
         public string Id { get { throw null; } set { } }
         public long? Limit { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public string QuotaBasePropertiesType { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.QuotaUnit? Unit { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3569,24 +3409,64 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.QuotaUnit left, Azure.ResourceManager.MachineLearningServices.Models.QuotaUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class RandomSamplingAlgorithm : Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm
+    {
+        public RandomSamplingAlgorithm() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule? Rule { get { throw null; } set { } }
+        public int? Seed { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReferenceType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ReferenceType>
+    public readonly partial struct RandomSamplingAlgorithmRule : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ReferenceType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ReferenceType DataPath { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ReferenceType Id { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ReferenceType OutputPath { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ReferenceType other) { throw null; }
+        public RandomSamplingAlgorithmRule(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule Random { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule Sobol { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ReferenceType left, Azure.ResourceManager.MachineLearningServices.Models.ReferenceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ReferenceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ReferenceType left, Azure.ResourceManager.MachineLearningServices.Models.ReferenceType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule left, Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule left, Azure.ResourceManager.MachineLearningServices.Models.RandomSamplingAlgorithmRule right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecurrenceFrequency : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecurrenceFrequency(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency Day { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency Hour { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency Minute { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency Month { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency Week { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency left, Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency left, Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RecurrencePattern
+    {
+        public RecurrencePattern(System.Collections.Generic.IEnumerable<int> hours, System.Collections.Generic.IEnumerable<int> minutes) { }
+        public System.Collections.Generic.IList<int> Hours { get { throw null; } }
+        public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.Weekday> Weekdays { get { throw null; } set { } }
+    }
+    public partial class RecurrenceSchedule : Azure.ResourceManager.MachineLearningServices.Models.ScheduleBase
+    {
+        public RecurrenceSchedule(Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency frequency, int interval, Azure.ResourceManager.MachineLearningServices.Models.RecurrencePattern pattern) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.RecurrenceFrequency Frequency { get { throw null; } set { } }
+        public int Interval { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.RecurrencePattern Pattern { get { throw null; } set { } }
     }
     public partial class RegistryListCredentialsResult
     {
@@ -3594,6 +3474,63 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.Password> Passwords { get { throw null; } }
         public string Username { get { throw null; } }
+    }
+    public partial class Regression : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
+    {
+        public Regression() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.RegressionModels> AllowedModels { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.RegressionModels> BlockedModels { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalDataSettings DataSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalFeaturizationSettings FeaturizationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics? PrimaryMetric { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TrainingSettings TrainingSettings { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RegressionModels : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.RegressionModels>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RegressionModels(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels DecisionTree { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels ElasticNet { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels ExtremeRandomTrees { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels GradientBoosting { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels KNN { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels LassoLars { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels LightGBM { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels RandomForest { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels SGD { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionModels XGBoostRegressor { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.RegressionModels other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.RegressionModels left, Azure.ResourceManager.MachineLearningServices.Models.RegressionModels right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.RegressionModels (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.RegressionModels left, Azure.ResourceManager.MachineLearningServices.Models.RegressionModels right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RegressionPrimaryMetrics : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RegressionPrimaryMetrics(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics NormalizedMeanAbsoluteError { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics NormalizedRootMeanSquaredError { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics R2Score { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics SpearmanCorrelation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics left, Azure.ResourceManager.MachineLearningServices.Models.RegressionPrimaryMetrics right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RemoteLoginPortPublicAccess : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.RemoteLoginPortPublicAccess>
@@ -3626,42 +3563,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ResourceConfiguration() { }
         public int? InstanceCount { get { throw null; } set { } }
         public string InstanceType { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
-    }
-    public partial class ResourceIdentity
-    {
-        public ResourceIdentity() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceIdentityAssignment : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceIdentityAssignment(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment None { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment left, Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment left, Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityAssignment right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum ResourceIdentityType
-    {
-        SystemAssigned = 0,
-        SystemAssignedUserAssigned = 1,
-        UserAssigned = 2,
-        None = 3,
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Properties { get { throw null; } set { } }
     }
     public partial class ResourceName
     {
@@ -3676,7 +3578,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Id { get { throw null; } }
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ResourceName Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ResourceQuotaType { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.QuotaUnit? Unit { get { throw null; } }
     }
     public partial class Route
@@ -3685,23 +3587,27 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Path { get { throw null; } set { } }
         public int Port { get { throw null; } set { } }
     }
+    public partial class SamplingAlgorithm
+    {
+        public SamplingAlgorithm() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SamplingAlgorithm : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm>
+    public readonly partial struct SamplingAlgorithmType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SamplingAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm Bayesian { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm Grid { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm Random { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm other) { throw null; }
+        public SamplingAlgorithmType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType Bayesian { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType Grid { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType Random { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm left, Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm left, Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType left, Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType left, Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithmType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SasDatastoreCredentials : Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials
@@ -3726,22 +3632,30 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ScaleSettingsInformation() { }
         public Azure.ResourceManager.MachineLearningServices.Models.ScaleSettings ScaleSettings { get { throw null; } set { } }
     }
+    public partial class ScheduleBase
+    {
+        public ScheduleBase() { }
+        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus? ScheduleStatus { get { throw null; } set { } }
+        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public string TimeZone { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScaleType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ScaleType>
+    public readonly partial struct ScheduleStatus : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ScaleType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ScaleType Default { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.ScaleType TargetUtilization { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ScaleType other) { throw null; }
+        public ScheduleStatus(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ScaleType left, Azure.ResourceManager.MachineLearningServices.Models.ScaleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ScaleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ScaleType left, Azure.ResourceManager.MachineLearningServices.Models.ScaleType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus left, Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus left, Azure.ResourceManager.MachineLearningServices.Models.ScheduleStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ScriptReference
@@ -3757,26 +3671,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ScriptsToExecute() { }
         public Azure.ResourceManager.MachineLearningServices.Models.ScriptReference CreationScript { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ScriptReference StartupScript { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SecretsType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.SecretsType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SecretsType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearningServices.Models.SecretsType AccountKey { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.SecretsType Certificate { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.SecretsType Sas { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearningServices.Models.SecretsType ServicePrincipal { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.SecretsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.SecretsType left, Azure.ResourceManager.MachineLearningServices.Models.SecretsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.SecretsType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.SecretsType left, Azure.ResourceManager.MachineLearningServices.Models.SecretsType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceDataAccessAuthIdentity : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ServiceDataAccessAuthIdentity>
@@ -3797,11 +3691,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ServiceDataAccessAuthIdentity left, Azure.ResourceManager.MachineLearningServices.Models.ServiceDataAccessAuthIdentity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceManagedResourcesSettings
-    {
-        public ServiceManagedResourcesSettings() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.CosmosDbSettings CosmosDb { get { throw null; } set { } }
-    }
     public partial class ServicePrincipalDatastoreCredentials : Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials
     {
         public ServicePrincipalDatastoreCredentials(System.Guid clientId, Azure.ResourceManager.MachineLearningServices.Models.ServicePrincipalDatastoreSecrets secrets, System.Guid tenantId) { }
@@ -3816,11 +3705,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public ServicePrincipalDatastoreSecrets() { }
         public string ClientSecret { get { throw null; } set { } }
     }
-    public partial class SetupScripts
-    {
-        public SetupScripts() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.ScriptsToExecute Scripts { get { throw null; } set { } }
-    }
     public partial class SharedPrivateLinkResource
     {
         public SharedPrivateLinkResource() { }
@@ -3830,14 +3714,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string RequestMessage { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.PrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
-    public partial class Sku
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ShortSeriesHandlingConfiguration : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration>
     {
-        public Sku(string name) { }
-        public int? Capacity { get { throw null; } set { } }
-        public string Family { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Size { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.SkuTier? Tier { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ShortSeriesHandlingConfiguration(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration Auto { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration Drop { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration None { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration Pad { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration left, Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration left, Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SkuCapacity
     {
@@ -3846,6 +3741,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public int? Maximum { get { throw null; } }
         public int? Minimum { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.SkuScaleType? ScaleType { get { throw null; } }
+    }
+    public partial class SkuResource
+    {
+        internal SkuResource() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.SkuCapacity Capacity { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.SkuSetting Sku { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SkuScaleType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.SkuScaleType>
@@ -3870,14 +3772,26 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal SkuSetting() { }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.SkuTier? Tier { get { throw null; } }
+        public Azure.ResourceManager.MachineLearningServices.Models.MachineLearningServicesSkuTier? Tier { get { throw null; } }
     }
-    public enum SkuTier
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.SourceType>
     {
-        Free = 0,
-        Basic = 1,
-        Standard = 2,
-        Premium = 3,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.SourceType Dataset { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.SourceType Datastore { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.SourceType URI { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.SourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.SourceType left, Azure.ResourceManager.MachineLearningServices.Models.SourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.SourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.SourceType left, Azure.ResourceManager.MachineLearningServices.Models.SourceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SshPublicAccess : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.SshPublicAccess>
@@ -3926,6 +3840,33 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.SslConfigurationStatus left, Azure.ResourceManager.MachineLearningServices.Models.SslConfigurationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class StackEnsembleSettings
+    {
+        public StackEnsembleSettings() { }
+        public System.BinaryData StackMetaLearnerKWargs { get { throw null; } set { } }
+        public double? StackMetaLearnerTrainPercentage { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType? StackMetaLearnerType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StackMetaLearnerType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StackMetaLearnerType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType ElasticNet { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType ElasticNetCV { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType LogisticRegression { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType LogisticRegressionCV { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType left, Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType left, Azure.ResourceManager.MachineLearningServices.Models.StackMetaLearnerType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.Status>
     {
@@ -3950,17 +3891,53 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.Status left, Azure.ResourceManager.MachineLearningServices.Models.Status right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SweepJob : Azure.ResourceManager.MachineLearningServices.Models.JobBase
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StochasticOptimizer : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer>
     {
-        public SweepJob(Azure.ResourceManager.MachineLearningServices.Models.Objective objective, Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm samplingAlgorithm, object searchSpace) { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StochasticOptimizer(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer Adam { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer Adamw { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer None { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer Sgd { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer left, Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer left, Azure.ResourceManager.MachineLearningServices.Models.StochasticOptimizer right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageAccountType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageAccountType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType PremiumLRS { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType StandardLRS { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType left, Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType left, Azure.ResourceManager.MachineLearningServices.Models.StorageAccountType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SweepJob : Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails
+    {
+        public SweepJob(Azure.ResourceManager.MachineLearningServices.Models.Objective objective, Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm samplingAlgorithm, System.BinaryData searchSpace, Azure.ResourceManager.MachineLearningServices.Models.TrialComponent trial) { }
         public Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicy EarlyTermination { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.IdentityConfiguration Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobInput> Inputs { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.SweepJobLimits Limits { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.Objective Objective { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobOutput> Outputs { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm SamplingAlgorithm { get { throw null; } set { } }
-        public object SearchSpace { get { throw null; } set { } }
+        public System.BinaryData SearchSpace { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.TrialComponent Trial { get { throw null; } set { } }
     }
     public partial class SweepJobLimits : Azure.ResourceManager.MachineLearningServices.Models.JobLimits
@@ -3996,29 +3973,121 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string SystemServiceType { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class TargetUtilizationScaleSettings : Azure.ResourceManager.MachineLearningServices.Models.OnlineScaleSettings
+    public partial class TableVerticalDataSettings : Azure.ResourceManager.MachineLearningServices.Models.DataSettings
     {
-        public TargetUtilizationScaleSettings() { }
-        public int? MaxInstances { get { throw null; } set { } }
-        public int? MinInstances { get { throw null; } set { } }
-        public System.TimeSpan? PollingInterval { get { throw null; } set { } }
-        public int? TargetUtilizationPercentage { get { throw null; } set { } }
+        public TableVerticalDataSettings(string targetColumnName, Azure.ResourceManager.MachineLearningServices.Models.TrainingDataSettings trainingDataSettings) : base (default(string), default(Azure.ResourceManager.MachineLearningServices.Models.TrainingDataSettings)) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.TableVerticalValidationDataSettings ValidationData { get { throw null; } set { } }
+        public string WeightColumnName { get { throw null; } set { } }
     }
-    public partial class TensorFlow : Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration
+    public partial class TableVerticalFeaturizationSettings : Azure.ResourceManager.MachineLearningServices.Models.FeaturizationSettings
     {
-        public TensorFlow() { }
-        public int? ParameterServerCount { get { throw null; } set { } }
-        public int? WorkerCount { get { throw null; } set { } }
+        public TableVerticalFeaturizationSettings() { }
+        public System.Collections.Generic.IList<string> BlockedTransformers { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> ColumnNameAndTypes { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DropColumns { get { throw null; } set { } }
+        public bool? EnableDnnFeaturization { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.FeaturizationMode? Mode { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningServices.Models.ColumnTransformer>> TransformerParams { get { throw null; } set { } }
+    }
+    public partial class TableVerticalLimitSettings
+    {
+        public TableVerticalLimitSettings() { }
+        public bool? EnableEarlyTermination { get { throw null; } set { } }
+        public double? ExitScore { get { throw null; } set { } }
+        public int? MaxConcurrentTrials { get { throw null; } set { } }
+        public int? MaxCoresPerTrial { get { throw null; } set { } }
+        public int? MaxTrials { get { throw null; } set { } }
+        public System.TimeSpan? Timeout { get { throw null; } set { } }
+        public System.TimeSpan? TrialTimeout { get { throw null; } set { } }
+    }
+    public partial class TableVerticalValidationDataSettings : Azure.ResourceManager.MachineLearningServices.Models.ValidationDataSettings
+    {
+        public TableVerticalValidationDataSettings() { }
+        public System.Collections.Generic.IList<string> CvSplitColumnNames { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TargetAggregationFunction : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TargetAggregationFunction(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction left, Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction left, Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TestDataSettings
+    {
+        public TestDataSettings() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.MLTableJobInput Data { get { throw null; } set { } }
+        public double? TestDataSize { get { throw null; } set { } }
+    }
+    public partial class TextClassification : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
+    {
+        public TextClassification() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.NlpVerticalDataSettings DataSettings { get { throw null; } set { } }
+        public System.BinaryData FeaturizationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.NlpVerticalLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics? PrimaryMetric { get { throw null; } set { } }
+    }
+    public partial class TextClassificationMultilabel : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
+    {
+        public TextClassificationMultilabel() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.NlpVerticalDataSettings DataSettings { get { throw null; } set { } }
+        public System.BinaryData FeaturizationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.NlpVerticalLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ClassificationMultilabelPrimaryMetrics? PrimaryMetric { get { throw null; } }
+    }
+    public partial class TextNer : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
+    {
+        public TextNer() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.NlpVerticalDataSettings DataSettings { get { throw null; } set { } }
+        public System.BinaryData FeaturizationSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.NlpVerticalLimitSettings LimitSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ClassificationPrimaryMetrics? PrimaryMetric { get { throw null; } }
+    }
+    public partial class TrainingDataSettings
+    {
+        public TrainingDataSettings(Azure.ResourceManager.MachineLearningServices.Models.MLTableJobInput data) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.MLTableJobInput Data { get { throw null; } set { } }
+    }
+    public partial class TrainingSettings
+    {
+        public TrainingSettings() { }
+        public bool? EnableDnnTraining { get { throw null; } set { } }
+        public bool? EnableModelExplainability { get { throw null; } set { } }
+        public bool? EnableOnnxCompatibleModels { get { throw null; } set { } }
+        public bool? EnableStackEnsemble { get { throw null; } set { } }
+        public bool? EnableVoteEnsemble { get { throw null; } set { } }
+        public System.TimeSpan? EnsembleModelDownloadTimeout { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.StackEnsembleSettings StackEnsembleSettings { get { throw null; } set { } }
     }
     public partial class TrialComponent
     {
-        public TrialComponent(string command) { }
+        public TrialComponent(string command, string environmentId) { }
         public string CodeId { get { throw null; } set { } }
         public string Command { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration Distribution { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ResourceConfiguration Resources { get { throw null; } set { } }
+    }
+    public partial class TritonModelJobInput : Azure.ResourceManager.MachineLearningServices.Models.JobInput
+    {
+        public TritonModelJobInput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class TritonModelJobOutput : Azure.ResourceManager.MachineLearningServices.Models.JobOutput
+    {
+        public TritonModelJobOutput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class TruncationSelectionPolicy : Azure.ResourceManager.MachineLearningServices.Models.EarlyTerminationPolicy
     {
@@ -4066,31 +4135,40 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Id { get { throw null; } }
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.Status? Status { get { throw null; } }
-        public string Type { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.QuotaUnit? Unit { get { throw null; } }
+        public string UpdateWorkspaceQuotasType { get { throw null; } }
     }
-    public partial class UpdateWorkspaceQuotasResult
+    public partial class UriFileDataVersion : Azure.ResourceManager.MachineLearningServices.Models.DataVersionBaseDetails
     {
-        internal UpdateWorkspaceQuotasResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.UpdateWorkspaceQuotas> Value { get { throw null; } }
+        public UriFileDataVersion(System.Uri dataUri) : base (default(System.Uri)) { }
     }
-    public partial class UriReference
+    public partial class UriFileJobInput : Azure.ResourceManager.MachineLearningServices.Models.JobInput
     {
-        public UriReference() { }
-        public string File { get { throw null; } set { } }
-        public string Folder { get { throw null; } set { } }
+        public UriFileJobInput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
-    public partial class Usage
+    public partial class UriFileJobOutput : Azure.ResourceManager.MachineLearningServices.Models.JobOutput
     {
-        internal Usage() { }
-        public string AmlWorkspaceLocation { get { throw null; } }
-        public long? CurrentValue { get { throw null; } }
-        public string Id { get { throw null; } }
-        public long? Limit { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.UsageName Name { get { throw null; } }
-        public string Type { get { throw null; } }
-        public Azure.ResourceManager.MachineLearningServices.Models.UsageUnit? Unit { get { throw null; } }
+        public UriFileJobOutput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class UriFolderDataVersion : Azure.ResourceManager.MachineLearningServices.Models.DataVersionBaseDetails
+    {
+        public UriFolderDataVersion(System.Uri dataUri) : base (default(System.Uri)) { }
+    }
+    public partial class UriFolderJobInput : Azure.ResourceManager.MachineLearningServices.Models.JobInput
+    {
+        public UriFolderJobInput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.InputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class UriFolderJobOutput : Azure.ResourceManager.MachineLearningServices.Models.JobOutput
+    {
+        public UriFolderJobOutput(System.Uri uri) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode? Mode { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class UsageName
     {
@@ -4122,12 +4200,48 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string AdminUserPassword { get { throw null; } set { } }
         public string AdminUserSshPublicKey { get { throw null; } set { } }
     }
-    public partial class UserAssignedIdentity
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UseStl : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.UseStl>
     {
-        public UserAssignedIdentity() { }
-        public string ClientId { get { throw null; } }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UseStl(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.UseStl None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.UseStl other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.UseStl left, Azure.ResourceManager.MachineLearningServices.Models.UseStl right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.UseStl (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.UseStl left, Azure.ResourceManager.MachineLearningServices.Models.UseStl right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ValidationDataSettings
+    {
+        public ValidationDataSettings() { }
+        public Azure.ResourceManager.MachineLearningServices.Models.MLTableJobInput Data { get { throw null; } set { } }
+        public double? ValidationDataSize { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ValidationMetricType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ValidationMetricType(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType Coco { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType CocoVoc { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType None { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType Voc { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType left, Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType left, Azure.ResourceManager.MachineLearningServices.Models.ValidationMetricType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ValueFormat : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ValueFormat>
@@ -4149,14 +4263,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class VirtualMachine : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
         public VirtualMachine() { }
-        public Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSchemaProperties Properties { get { throw null; } set { } }
     }
-    public partial class VirtualMachineProperties
+    public partial class VirtualMachineSchemaProperties
     {
-        public VirtualMachineProperties() { }
+        public VirtualMachineSchemaProperties() { }
         public string Address { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSshCredentials AdministratorAccount { get { throw null; } set { } }
         public bool? IsNotebookInstanceCompute { get { throw null; } set { } }
+        public int? NotebookServerPort { get { throw null; } set { } }
         public int? SshPort { get { throw null; } set { } }
         public string VirtualMachineSize { get { throw null; } set { } }
     }
@@ -4179,11 +4294,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? PremiumIO { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedComputeTypes { get { throw null; } }
         public int? VCPUs { get { throw null; } }
-    }
-    public partial class VirtualMachineSizeListResult
-    {
-        internal VirtualMachineSizeListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningServices.Models.VirtualMachineSize> Value { get { throw null; } }
     }
     public partial class VirtualMachineSshCredentials
     {
@@ -4248,115 +4358,27 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.VMTier left, Azure.ResourceManager.MachineLearningServices.Models.VMTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WorkspaceConnectionCreateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Weekday : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.Weekday>
     {
-        protected WorkspaceConnectionCreateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.WorkspaceConnection Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.WorkspaceConnection>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceConnectionDeleteOperation : Azure.Operation
-    {
-        protected WorkspaceConnectionDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Workspace>
-    {
-        protected WorkspaceCreateOrUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.Workspace Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceDeleteOperation : Azure.Operation
-    {
-        protected WorkspaceDeleteOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceDiagnoseOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Models.DiagnoseResponseResult>
-    {
-        protected WorkspaceDiagnoseOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.Models.DiagnoseResponseResult Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.DiagnoseResponseResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.DiagnoseResponseResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspacePrepareNotebookOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Models.NotebookResourceInfo>
-    {
-        protected WorkspacePrepareNotebookOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.Models.NotebookResourceInfo Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.NotebookResourceInfo>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.Models.NotebookResourceInfo>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceResyncKeysOperation : Azure.Operation
-    {
-        protected WorkspaceResyncKeysOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceUpdateOperation : Azure.Operation<Azure.ResourceManager.MachineLearningServices.Workspace>
-    {
-        protected WorkspaceUpdateOperation() { }
-        public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
-        public override string Id { get { throw null; } }
-        public override Azure.ResourceManager.MachineLearningServices.Workspace Value { get { throw null; } }
-        public override Azure.Response GetRawResponse() { throw null; }
-        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.MachineLearningServices.Workspace>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceUpdateParameters
-    {
-        public WorkspaceUpdateParameters() { }
-        public string Description { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Identity Identity { get { throw null; } set { } }
-        public string ImageBuildCompute { get { throw null; } set { } }
-        public string PrimaryUserAssignedIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.MachineLearningServices.Models.Sku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Weekday(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Weekday Friday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Weekday Monday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Weekday Saturday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Weekday Sunday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Weekday Thursday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Weekday Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearningServices.Models.Weekday Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearningServices.Models.Weekday other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearningServices.Models.Weekday left, Azure.ResourceManager.MachineLearningServices.Models.Weekday right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.Weekday (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.Weekday left, Azure.ResourceManager.MachineLearningServices.Models.Weekday right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

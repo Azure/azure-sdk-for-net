@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    internal class BatchDeploymentDataOperationSource : IOperationSource<BatchDeploymentData>
+    internal class BatchDeploymentDataOperationSource : IOperationSource<BatchDeploymentDataResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.MachineLearningServices
             _client = client;
         }
 
-        BatchDeploymentData IOperationSource<BatchDeploymentData>.CreateResult(Response response, CancellationToken cancellationToken)
+        BatchDeploymentDataResource IOperationSource<BatchDeploymentDataResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BatchDeploymentDataData.DeserializeBatchDeploymentDataData(document.RootElement);
-            return new BatchDeploymentData(_client, data);
+            return new BatchDeploymentDataResource(_client, data);
         }
 
-        async ValueTask<BatchDeploymentData> IOperationSource<BatchDeploymentData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BatchDeploymentDataResource> IOperationSource<BatchDeploymentDataResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BatchDeploymentDataData.DeserializeBatchDeploymentDataData(document.RootElement);
-            return new BatchDeploymentData(_client, data);
+            return new BatchDeploymentDataResource(_client, data);
         }
     }
 }

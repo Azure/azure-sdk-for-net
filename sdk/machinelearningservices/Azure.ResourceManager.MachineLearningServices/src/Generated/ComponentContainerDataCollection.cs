@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing collection of ComponentContainerData and their operations over its parent. </summary>
-    public partial class ComponentContainerDataCollection : ArmCollection, IEnumerable<ComponentContainerData>, IAsyncEnumerable<ComponentContainerData>
+    /// <summary>
+    /// A class representing a collection of <see cref="ComponentContainerDataResource" /> and their operations.
+    /// Each <see cref="ComponentContainerDataResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
+    /// To get a <see cref="ComponentContainerDataCollection" /> instance call the GetComponentContainerData method from an instance of <see cref="WorkspaceResource" />.
+    /// </summary>
+    public partial class ComponentContainerDataCollection : ArmCollection, IEnumerable<ComponentContainerDataResource>, IAsyncEnumerable<ComponentContainerDataResource>
     {
         private readonly ClientDiagnostics _componentContainerDataComponentContainersClientDiagnostics;
         private readonly ComponentContainersRestOperations _componentContainerDataComponentContainersRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ComponentContainerDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _componentContainerDataComponentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ComponentContainerData.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ComponentContainerData.ResourceType, out string componentContainerDataComponentContainersApiVersion);
-            _componentContainerDataComponentContainersRestClient = new ComponentContainersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, componentContainerDataComponentContainersApiVersion);
+            _componentContainerDataComponentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ComponentContainerDataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ComponentContainerDataResource.ResourceType, out string componentContainerDataComponentContainersApiVersion);
+            _componentContainerDataComponentContainersRestClient = new ComponentContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, componentContainerDataComponentContainersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Workspace.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Workspace.ResourceType), nameof(id));
+            if (id.ResourceType != WorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<ComponentContainerData>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, ComponentContainerDetails properties, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ComponentContainerDataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, ComponentContainerDetails properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _componentContainerDataComponentContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<ComponentContainerData>(Response.FromValue(new ComponentContainerData(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningServicesArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<ComponentContainerData> CreateOrUpdate(WaitUntil waitUntil, string name, ComponentContainerDetails properties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ComponentContainerDataResource> CreateOrUpdate(WaitUntil waitUntil, string name, ComponentContainerDetails properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _componentContainerDataComponentContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, properties, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<ComponentContainerData>(Response.FromValue(new ComponentContainerData(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningServicesArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<ComponentContainerData>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentContainerDataResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = await _componentContainerDataComponentContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComponentContainerData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComponentContainerDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<ComponentContainerData> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentContainerDataResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var response = _componentContainerDataComponentContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComponentContainerData(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComponentContainerDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +186,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComponentContainerData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComponentContainerData> GetAllAsync(string skip = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComponentContainerDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentContainerDataResource> GetAllAsync(string skip = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ComponentContainerData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ComponentContainerDataResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _componentContainerDataComponentContainersClientDiagnostics.CreateScope("ComponentContainerDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _componentContainerDataComponentContainersRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComponentContainerData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ComponentContainerDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +204,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<ComponentContainerData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ComponentContainerDataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _componentContainerDataComponentContainersClientDiagnostics.CreateScope("ComponentContainerDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _componentContainerDataComponentContainersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComponentContainerData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ComponentContainerDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -227,17 +230,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComponentContainerData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComponentContainerData> GetAll(string skip = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentContainerDataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentContainerDataResource> GetAll(string skip = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            Page<ComponentContainerData> FirstPageFunc(int? pageSizeHint)
+            Page<ComponentContainerDataResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _componentContainerDataComponentContainersClientDiagnostics.CreateScope("ComponentContainerDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _componentContainerDataComponentContainersRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComponentContainerData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ComponentContainerDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,14 +248,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<ComponentContainerData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ComponentContainerDataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _componentContainerDataComponentContainersClientDiagnostics.CreateScope("ComponentContainerDataCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _componentContainerDataComponentContainersRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ComponentContainerData(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ComponentContainerDataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +329,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<ComponentContainerData>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentContainerDataResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -336,8 +339,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = await _componentContainerDataComponentContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ComponentContainerData>(null, response.GetRawResponse());
-                return Response.FromValue(new ComponentContainerData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ComponentContainerDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ComponentContainerDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -355,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<ComponentContainerData> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentContainerDataResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -365,8 +368,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _componentContainerDataComponentContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ComponentContainerData>(null, response.GetRawResponse());
-                return Response.FromValue(new ComponentContainerData(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ComponentContainerDataResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ComponentContainerDataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -375,7 +378,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        IEnumerator<ComponentContainerData> IEnumerable<ComponentContainerData>.GetEnumerator()
+        IEnumerator<ComponentContainerDataResource> IEnumerable<ComponentContainerDataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -385,7 +388,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ComponentContainerData> IAsyncEnumerable<ComponentContainerData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ComponentContainerDataResource> IAsyncEnumerable<ComponentContainerDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

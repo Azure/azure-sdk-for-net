@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Advances setting to customize StackEnsemble run. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="stackMetaLearnerKWargs"> Optional parameters to pass to the initializer of the meta-learner. </param>
         /// <param name="stackMetaLearnerTrainPercentage"> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </param>
         /// <param name="stackMetaLearnerType"> The meta-learner is a model trained on the output of the individual heterogeneous models. </param>
-        internal StackEnsembleSettings(object stackMetaLearnerKWargs, double? stackMetaLearnerTrainPercentage, StackMetaLearnerType? stackMetaLearnerType)
+        internal StackEnsembleSettings(BinaryData stackMetaLearnerKWargs, double? stackMetaLearnerTrainPercentage, StackMetaLearnerType? stackMetaLearnerType)
         {
             StackMetaLearnerKWargs = stackMetaLearnerKWargs;
             StackMetaLearnerTrainPercentage = stackMetaLearnerTrainPercentage;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Optional parameters to pass to the initializer of the meta-learner. </summary>
-        public object StackMetaLearnerKWargs { get; set; }
+        public BinaryData StackMetaLearnerKWargs { get; set; }
         /// <summary> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </summary>
         public double? StackMetaLearnerTrainPercentage { get; set; }
         /// <summary> The meta-learner is a model trained on the output of the individual heterogeneous models. </summary>
