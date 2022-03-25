@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Properties of the Azure PowerShell script object. </summary>
-    internal partial class AzurePowerShellScriptProperties : DeploymentScriptPropertiesBase
+    internal partial class AzurePowerShellScriptProperties : ArmDeploymentScriptPropertiesBase
     {
         /// <summary> Initializes a new instance of AzurePowerShellScriptProperties. </summary>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
