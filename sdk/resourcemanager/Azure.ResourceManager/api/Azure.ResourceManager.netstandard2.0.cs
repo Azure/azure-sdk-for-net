@@ -1266,6 +1266,15 @@ namespace Azure.ResourceManager.Resources.Models
         public ArmPolicyParameterValue() { }
         public System.BinaryData Value { get { throw null; } set { } }
     }
+    public partial class AzureRoleDefinition
+    {
+        internal AzureRoleDefinition() { }
+        public string Id { get { throw null; } }
+        public bool? IsServiceRole { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Permission> Permissions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Scopes { get { throw null; } }
+    }
     public partial class DataManifestCustomResourceFunctionDefinition
     {
         internal DataManifestCustomResourceFunctionDefinition() { }
@@ -1546,9 +1555,9 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ProviderPermission() { }
         public string ApplicationId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.RoleDefinition ManagedByRoleDefinition { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.AzureRoleDefinition ManagedByRoleDefinition { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.RoleDefinition RoleDefinition { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.AzureRoleDefinition RoleDefinition { get { throw null; } }
     }
     public partial class ProviderPermissionListResult
     {
@@ -1740,15 +1749,6 @@ namespace Azure.ResourceManager.Resources.Models
         NotSpecified = 0,
         PlainText = 1,
         Mask = 2,
-    }
-    public partial class RoleDefinition
-    {
-        internal RoleDefinition() { }
-        public string Id { get { throw null; } }
-        public bool? IsServiceRole { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Permission> Permissions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Scopes { get { throw null; } }
     }
     public enum SpendingLimit
     {

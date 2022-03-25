@@ -528,6 +528,10 @@ directive:
     where: $.definitions.ResourcesMoveInfo.properties.resources.items
     transform: >
       $["x-ms-format"] = "arm-id"
+  - from: resources.json
+    where: $.definitions.RoleDefinition
+    transform: >
+      $["x-ms-client-name"] = "AzureRoleDefinition";
 ```
 
 ### Tag: package-management

@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Role definition properties. </summary>
-    public partial class RoleDefinition
+    public partial class AzureRoleDefinition
     {
-        /// <summary> Initializes a new instance of RoleDefinition. </summary>
-        internal RoleDefinition()
+        /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
+        internal AzureRoleDefinition()
         {
             Permissions = new ChangeTrackingList<Permission>();
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RoleDefinition. </summary>
+        /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="isServiceRole"> If this is a service role. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="scopes"> Role definition assignable scopes. </param>
-        internal RoleDefinition(string id, string name, bool? isServiceRole, IReadOnlyList<Permission> permissions, IReadOnlyList<string> scopes)
+        internal AzureRoleDefinition(string id, string name, bool? isServiceRole, IReadOnlyList<Permission> permissions, IReadOnlyList<string> scopes)
         {
             Id = id;
             Name = name;

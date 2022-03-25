@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class RoleDefinition
+    public partial class AzureRoleDefinition
     {
-        internal static RoleDefinition DeserializeRoleDefinition(JsonElement element)
+        internal static AzureRoleDefinition DeserializeAzureRoleDefinition(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new RoleDefinition(id.Value, name.Value, Optional.ToNullable(isServiceRole), Optional.ToList(permissions), Optional.ToList(scopes));
+            return new AzureRoleDefinition(id.Value, name.Value, Optional.ToNullable(isServiceRole), Optional.ToList(permissions), Optional.ToList(scopes));
         }
     }
 }
