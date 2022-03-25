@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedTransparentDataEncryption and their operations over its parent. </summary>
-    public partial class ManagedTransparentDataEncryptionCollection : ArmCollection, IEnumerable<ManagedTransparentDataEncryption>, IAsyncEnumerable<ManagedTransparentDataEncryption>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedTransparentDataEncryptionResource" /> and their operations.
+    /// Each <see cref="ManagedTransparentDataEncryptionResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
+    /// To get a <see cref="ManagedTransparentDataEncryptionCollection" /> instance call the GetManagedTransparentDataEncryptions method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// </summary>
+    public partial class ManagedTransparentDataEncryptionCollection : ArmCollection, IEnumerable<ManagedTransparentDataEncryptionResource>, IAsyncEnumerable<ManagedTransparentDataEncryptionResource>
     {
         private readonly ClientDiagnostics _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics;
         private readonly ManagedDatabaseTransparentDataEncryptionRestOperations _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedTransparentDataEncryptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedTransparentDataEncryption.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ManagedTransparentDataEncryption.ResourceType, out string managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
-            _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryptionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
+            _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedTransparentDataEncryptionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedTransparentDataEncryptionResource.ResourceType, out string managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
+            _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient = new ManagedDatabaseTransparentDataEncryptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabaseResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database transparent data encryption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedTransparentDataEncryption>> CreateOrUpdateAsync(WaitUntil waitUntil, TransparentDataEncryptionName tdeName, ManagedTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedTransparentDataEncryptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TransparentDataEncryptionName tdeName, ManagedTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedTransparentDataEncryption>(Response.FromValue(new ManagedTransparentDataEncryption(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<ManagedTransparentDataEncryptionResource>(Response.FromValue(new ManagedTransparentDataEncryptionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database transparent data encryption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ManagedTransparentDataEncryption> CreateOrUpdate(WaitUntil waitUntil, TransparentDataEncryptionName tdeName, ManagedTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedTransparentDataEncryptionResource> CreateOrUpdate(WaitUntil waitUntil, TransparentDataEncryptionName tdeName, ManagedTransparentDataEncryptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -101,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ManagedTransparentDataEncryption>(Response.FromValue(new ManagedTransparentDataEncryption(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<ManagedTransparentDataEncryptionResource>(Response.FromValue(new ManagedTransparentDataEncryptionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -120,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedTransparentDataEncryption>> GetAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedTransparentDataEncryptionResource>> GetAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.Get");
             scope.Start();
@@ -129,7 +132,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedTransparentDataEncryption(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedTransparentDataEncryptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +148,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedTransparentDataEncryption> Get(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedTransparentDataEncryptionResource> Get(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.Get");
             scope.Start();
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedTransparentDataEncryption(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedTransparentDataEncryptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,17 +172,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseTransparentDataEncryption_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedTransparentDataEncryption" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedTransparentDataEncryption> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedTransparentDataEncryptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedTransparentDataEncryption>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedTransparentDataEncryptionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedTransparentDataEncryption(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedTransparentDataEncryptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -187,14 +190,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedTransparentDataEncryption>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedTransparentDataEncryptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedTransparentDataEncryption(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedTransparentDataEncryptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +214,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseTransparentDataEncryption_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedTransparentDataEncryption" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedTransparentDataEncryption> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedTransparentDataEncryptionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedTransparentDataEncryptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedTransparentDataEncryption> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedTransparentDataEncryptionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedTransparentDataEncryption(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedTransparentDataEncryptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +232,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedTransparentDataEncryption> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedTransparentDataEncryptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedTransparentDataEncryption(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedTransparentDataEncryptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,7 +303,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedTransparentDataEncryption>> GetIfExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedTransparentDataEncryptionResource>> GetIfExistsAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.GetIfExists");
             scope.Start();
@@ -308,8 +311,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedTransparentDataEncryption>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedTransparentDataEncryption(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedTransparentDataEncryptionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedTransparentDataEncryptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,7 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedTransparentDataEncryption> GetIfExists(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedTransparentDataEncryptionResource> GetIfExists(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics.CreateScope("ManagedTransparentDataEncryptionCollection.GetIfExists");
             scope.Start();
@@ -333,8 +336,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tdeName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedTransparentDataEncryption>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedTransparentDataEncryption(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedTransparentDataEncryptionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedTransparentDataEncryptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -343,7 +346,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ManagedTransparentDataEncryption> IEnumerable<ManagedTransparentDataEncryption>.GetEnumerator()
+        IEnumerator<ManagedTransparentDataEncryptionResource> IEnumerable<ManagedTransparentDataEncryptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -353,7 +356,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedTransparentDataEncryption> IAsyncEnumerable<ManagedTransparentDataEncryption>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedTransparentDataEncryptionResource> IAsyncEnumerable<ManagedTransparentDataEncryptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

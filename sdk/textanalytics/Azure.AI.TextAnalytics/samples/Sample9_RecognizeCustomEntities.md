@@ -50,7 +50,7 @@ var actions = new TextAnalyticsActions()
 {
     RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
     {
-        new RecognizeCustomEntitiesAction(projectName, deploymentName);
+        new RecognizeCustomEntitiesAction(projectName, deploymentName)
     }
 };
 

@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of NamespaceTopicAuthorizationRule and their operations over its parent. </summary>
-    public partial class NamespaceTopicAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceTopicAuthorizationRule>, IAsyncEnumerable<NamespaceTopicAuthorizationRule>
+    /// <summary>
+    /// A class representing a collection of <see cref="NamespaceTopicAuthorizationRuleResource" /> and their operations.
+    /// Each <see cref="NamespaceTopicAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="ServiceBusTopicResource" />.
+    /// To get a <see cref="NamespaceTopicAuthorizationRuleCollection" /> instance call the GetNamespaceTopicAuthorizationRules method from an instance of <see cref="ServiceBusTopicResource" />.
+    /// </summary>
+    public partial class NamespaceTopicAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceTopicAuthorizationRuleResource>, IAsyncEnumerable<NamespaceTopicAuthorizationRuleResource>
     {
         private readonly ClientDiagnostics _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics;
         private readonly TopicAuthorizationRulesRestOperations _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NamespaceTopicAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceTopicAuthorizationRule.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(NamespaceTopicAuthorizationRule.ResourceType, out string namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
-            _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient = new TopicAuthorizationRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
+            _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceTopicAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NamespaceTopicAuthorizationRuleResource.ResourceType, out string namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
+            _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient = new TopicAuthorizationRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, namespaceTopicAuthorizationRuleTopicAuthorizationRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceBusTopic.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusTopic.ResourceType), nameof(id));
+            if (id.ResourceType != ServiceBusTopicResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusTopicResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<NamespaceTopicAuthorizationRule>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NamespaceTopicAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<NamespaceTopicAuthorizationRule>(Response.FromValue(new NamespaceTopicAuthorizationRule(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<NamespaceTopicAuthorizationRuleResource>(Response.FromValue(new NamespaceTopicAuthorizationRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<NamespaceTopicAuthorizationRule> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NamespaceTopicAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, ServiceBusAuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, parameters, cancellationToken);
-                var operation = new ServiceBusArmOperation<NamespaceTopicAuthorizationRule>(Response.FromValue(new NamespaceTopicAuthorizationRule(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<NamespaceTopicAuthorizationRuleResource>(Response.FromValue(new NamespaceTopicAuthorizationRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual async Task<Response<NamespaceTopicAuthorizationRule>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceTopicAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NamespaceTopicAuthorizationRule(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceTopicAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<NamespaceTopicAuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceTopicAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NamespaceTopicAuthorizationRule(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceTopicAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +183,17 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: TopicAuthorizationRules_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceTopicAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NamespaceTopicAuthorizationRule> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NamespaceTopicAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NamespaceTopicAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NamespaceTopicAuthorizationRule>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NamespaceTopicAuthorizationRuleResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceTopicAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceTopicAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +201,14 @@ namespace Azure.ResourceManager.ServiceBus
                     throw;
                 }
             }
-            async Task<Page<NamespaceTopicAuthorizationRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NamespaceTopicAuthorizationRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceTopicAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceTopicAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +225,17 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: TopicAuthorizationRules_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceTopicAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NamespaceTopicAuthorizationRule> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NamespaceTopicAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NamespaceTopicAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NamespaceTopicAuthorizationRule> FirstPageFunc(int? pageSizeHint)
+            Page<NamespaceTopicAuthorizationRuleResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceTopicAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceTopicAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +243,14 @@ namespace Azure.ResourceManager.ServiceBus
                     throw;
                 }
             }
-            Page<NamespaceTopicAuthorizationRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NamespaceTopicAuthorizationRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceTopicAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NamespaceTopicAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,7 +324,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual async Task<Response<NamespaceTopicAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceTopicAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
@@ -331,8 +334,8 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<NamespaceTopicAuthorizationRule>(null, response.GetRawResponse());
-                return Response.FromValue(new NamespaceTopicAuthorizationRule(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<NamespaceTopicAuthorizationRuleResource>(null, response.GetRawResponse());
+                return Response.FromValue(new NamespaceTopicAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -350,7 +353,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<NamespaceTopicAuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceTopicAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
@@ -360,8 +363,8 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<NamespaceTopicAuthorizationRule>(null, response.GetRawResponse());
-                return Response.FromValue(new NamespaceTopicAuthorizationRule(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<NamespaceTopicAuthorizationRuleResource>(null, response.GetRawResponse());
+                return Response.FromValue(new NamespaceTopicAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -370,7 +373,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        IEnumerator<NamespaceTopicAuthorizationRule> IEnumerable<NamespaceTopicAuthorizationRule>.GetEnumerator()
+        IEnumerator<NamespaceTopicAuthorizationRuleResource> IEnumerable<NamespaceTopicAuthorizationRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +383,7 @@ namespace Azure.ResourceManager.ServiceBus
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<NamespaceTopicAuthorizationRule> IAsyncEnumerable<NamespaceTopicAuthorizationRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NamespaceTopicAuthorizationRuleResource> IAsyncEnumerable<NamespaceTopicAuthorizationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

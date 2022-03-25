@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.TestFramework
         {
             if (string.IsNullOrEmpty(endpoint))
             {
-                return ArmEnvironment.AzureCloud;
+                return ArmEnvironment.AzurePublicCloud;
             }
 
             var baseUri = new Uri(endpoint);
 
-            if (baseUri == ArmEnvironment.AzureCloud.BaseUri)
-                return ArmEnvironment.AzureCloud;
+            if (baseUri == ArmEnvironment.AzurePublicCloud.Endpoint)
+                return ArmEnvironment.AzurePublicCloud;
 
-            if (baseUri == ArmEnvironment.AzureChinaCloud.BaseUri)
-                return ArmEnvironment.AzureChinaCloud;
+            if (baseUri == ArmEnvironment.AzureChina.Endpoint)
+                return ArmEnvironment.AzureChina;
 
-            if (baseUri == ArmEnvironment.AzureGermanCloud.BaseUri)
-                return ArmEnvironment.AzureGermanCloud;
+            if (baseUri == ArmEnvironment.AzureGermany.Endpoint)
+                return ArmEnvironment.AzureGermany;
 
-            if (baseUri == ArmEnvironment.AzureUSGovernment.BaseUri)
-                return ArmEnvironment.AzureUSGovernment;
+            if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
+                return ArmEnvironment.AzureGovernment;
 
             return new ArmEnvironment(new Uri(endpoint), TestEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
+                        _cleanupClient.GetManagementGroupResource(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
                     {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.TestFramework
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {
-                    _cleanupClient.GetManagementGroup(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
+                    _cleanupClient.GetManagementGroupResource(new ResourceIdentifier(mgmtGroupId)).Delete(_waitForCleanup);
                 });
             }
 

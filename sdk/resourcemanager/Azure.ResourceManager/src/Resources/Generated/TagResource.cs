@@ -13,12 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a TagResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a TagResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TagResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetTagResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetTagResource method.
+    /// </summary>
     public partial class TagResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TagResource"/> instance. </summary>
@@ -51,9 +55,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TagResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string tagResourceTagsApiVersion);
-            _tagResourceTagsRestClient = new TagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tagResourceTagsApiVersion);
+            _tagResourceTagsRestClient = new TagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tagResourceTagsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

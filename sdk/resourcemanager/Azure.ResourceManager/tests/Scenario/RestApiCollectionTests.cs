@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Tests
         public async Task ListComputeTest()
         {
             bool foundVirtualMachine = false;
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
             var restApiCollection = sub.GetRestApis("Microsoft.Compute");
             await foreach (var restApi in restApiCollection.GetAllAsync())
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Tests
         public async Task ListNetworkTest()
         {
             bool foundPrivateEndpoint = false;
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
             var restApiCollection = sub.GetRestApis("Microsoft.Network");
             await foreach (var restApi in restApiCollection.GetAllAsync())
             {

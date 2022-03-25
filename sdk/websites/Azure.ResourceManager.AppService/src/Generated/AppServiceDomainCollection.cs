@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServiceDomain and their operations over its parent. </summary>
-    public partial class AppServiceDomainCollection : ArmCollection, IEnumerable<AppServiceDomain>, IAsyncEnumerable<AppServiceDomain>
+    /// <summary>
+    /// A class representing a collection of <see cref="AppServiceDomainResource" /> and their operations.
+    /// Each <see cref="AppServiceDomainResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AppServiceDomainCollection" /> instance call the GetAppServiceDomains method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class AppServiceDomainCollection : ArmCollection, IEnumerable<AppServiceDomainResource>, IAsyncEnumerable<AppServiceDomainResource>
     {
         private readonly ClientDiagnostics _appServiceDomainDomainsClientDiagnostics;
         private readonly DomainsRestOperations _appServiceDomainDomainsRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AppServiceDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServiceDomainDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceDomain.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(AppServiceDomain.ResourceType, out string appServiceDomainDomainsApiVersion);
-            _appServiceDomainDomainsRestClient = new DomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceDomainDomainsApiVersion);
+            _appServiceDomainDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceDomainResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppServiceDomainResource.ResourceType, out string appServiceDomainDomainsApiVersion);
+            _appServiceDomainDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceDomainDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppServiceDomain>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppServiceDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNull(domain, nameof(domain));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceDomainDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceDomain>(new AppServiceDomainOperationSource(Client), _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceDomainResource>(new AppServiceDomainOperationSource(Client), _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
-        public virtual ArmOperation<AppServiceDomain> CreateOrUpdate(WaitUntil waitUntil, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServiceDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNull(domain, nameof(domain));
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceDomainDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceDomain>(new AppServiceDomainOperationSource(Client), _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceDomainResource>(new AppServiceDomainOperationSource(Client), _appServiceDomainDomainsClientDiagnostics, Pipeline, _appServiceDomainDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, domain).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual async Task<Response<AppServiceDomain>> GetAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _appServiceDomainDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomain(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual Response<AppServiceDomain> Get(string domainName, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _appServiceDomainDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomain(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +184,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Domains_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceDomain> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceDomain>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceDomainResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceDomainDomainsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +202,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<AppServiceDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceDomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceDomainDomainsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +226,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Domains_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceDomain> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceDomain> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceDomainResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _appServiceDomainDomainsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +244,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<AppServiceDomain> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceDomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceDomainDomainsClientDiagnostics.CreateScope("AppServiceDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _appServiceDomainDomainsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceDomain(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +325,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual async Task<Response<AppServiceDomain>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceDomainResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
@@ -332,8 +335,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _appServiceDomainDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<AppServiceDomain>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomain(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<AppServiceDomainResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +354,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual Response<AppServiceDomain> GetIfExists(string domainName, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceDomainResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
@@ -361,8 +364,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServiceDomainDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domainName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<AppServiceDomain>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceDomain(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<AppServiceDomainResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +374,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<AppServiceDomain> IEnumerable<AppServiceDomain>.GetEnumerator()
+        IEnumerator<AppServiceDomainResource> IEnumerable<AppServiceDomainResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +384,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AppServiceDomain> IAsyncEnumerable<AppServiceDomain>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AppServiceDomainResource> IAsyncEnumerable<AppServiceDomainResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

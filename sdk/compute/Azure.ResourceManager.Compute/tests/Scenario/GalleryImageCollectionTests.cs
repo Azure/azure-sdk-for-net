@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class GalleryImageCollectionTests : ComputeTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private Gallery _gallery;
+        private ResourceGroupResource _resourceGroup;
+        private GalleryResource _gallery;
 
         public GalleryImageCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
-            GalleryImage image = lro.Value;
+            GalleryImageResource image = lro.Value;
             Assert.AreEqual(name, image.Data.Name);
         }
 
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
-            GalleryImage image1 = lro.Value;
-            GalleryImage image2 = await collection.GetAsync(name);
+            GalleryImageResource image1 = lro.Value;
+            GalleryImageResource image2 = await collection.GetAsync(name);
 
             ResourceDataHelper.AssertGalleryImage(image1.Data, image2.Data);
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetGalleryImageCollectionAsync();
             var name = Recording.GenerateAssetName("testImage_");
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, BasicGalleryImageData);
-            GalleryImage image = lro.Value;
+            GalleryImageResource image = lro.Value;
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));
 

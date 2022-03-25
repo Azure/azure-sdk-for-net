@@ -1385,26 +1385,26 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
+        /// <param name="keyName">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// This operation requires the keys/get permission.
         /// </remarks>
         /// <returns>A <see cref="KeyRotationPolicy"/> for the specified key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyRotationPolicy> GetKeyRotationPolicy(string name, CancellationToken cancellationToken = default)
+        public virtual Response<KeyRotationPolicy> GetKeyRotationPolicy(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyRotationPolicy)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute("key", keyName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyRotationPolicy(), cancellationToken, KeysPath, name, "/rotationpolicy");
+                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyRotationPolicy(), cancellationToken, KeysPath, keyName, "/rotationpolicy");
             }
             catch (Exception e)
             {
@@ -1416,26 +1416,26 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
+        /// <param name="keyName">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// This operation requires the keys/get permission.
         /// </remarks>
         /// <returns>A <see cref="KeyRotationPolicy"/> for the specified key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyRotationPolicy>> GetKeyRotationPolicyAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyRotationPolicy>> GetKeyRotationPolicyAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyRotationPolicy)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute("key", keyName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyRotationPolicy(), cancellationToken, KeysPath, name, "/rotationpolicy").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyRotationPolicy(), cancellationToken, KeysPath, keyName, "/rotationpolicy").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1509,28 +1509,28 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Updates the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
+        /// <param name="keyName">The name of the key.</param>
         /// <param name="policy">The <see cref="KeyRotationPolicy"/> to update.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// This operation requires the keys/update permission.
         /// </remarks>
         /// <returns>A <see cref="KeyRotationPolicy"/> for the specified key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="policy"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> or <paramref name="policy"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyRotationPolicy> UpdateKeyRotationPolicy(string name, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
+        public virtual Response<KeyRotationPolicy> UpdateKeyRotationPolicy(string keyName, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(policy, nameof(policy));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyRotationPolicy)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute("key", keyName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Put, policy, () => new KeyRotationPolicy(), cancellationToken, KeysPath, name, "/rotationpolicy");
+                return _pipeline.SendRequest(RequestMethod.Put, policy, () => new KeyRotationPolicy(), cancellationToken, KeysPath, keyName, "/rotationpolicy");
             }
             catch (Exception e)
             {
@@ -1542,28 +1542,28 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Updates the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
+        /// <param name="keyName">The name of the key.</param>
         /// <param name="policy">The <see cref="KeyRotationPolicy"/> to update.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// This operation requires the keys/update permission.
         /// </remarks>
         /// <returns>A <see cref="KeyRotationPolicy"/> for the specified key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="policy"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> or <paramref name="policy"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyRotationPolicy>> UpdateKeyRotationPolicyAsync(string name, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyRotationPolicy>> UpdateKeyRotationPolicyAsync(string keyName, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(policy, nameof(policy));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyRotationPolicy)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute("key", keyName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Put, policy, () => new KeyRotationPolicy(), cancellationToken, KeysPath, name, "/rotationpolicy").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Put, policy, () => new KeyRotationPolicy(), cancellationToken, KeysPath, keyName, "/rotationpolicy").ConfigureAwait(false);
             }
             catch (Exception e)
             {

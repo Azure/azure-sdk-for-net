@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerTrustGroup and their operations over its parent. </summary>
-    public partial class ServerTrustGroupCollection : ArmCollection, IEnumerable<ServerTrustGroup>, IAsyncEnumerable<ServerTrustGroup>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerTrustGroupResource" /> and their operations.
+    /// Each <see cref="ServerTrustGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ServerTrustGroupCollection" /> instance call the GetServerTrustGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class ServerTrustGroupCollection : ArmCollection, IEnumerable<ServerTrustGroupResource>, IAsyncEnumerable<ServerTrustGroupResource>
     {
         private readonly ClientDiagnostics _serverTrustGroupClientDiagnostics;
         private readonly ServerTrustGroupsRestOperations _serverTrustGroupRestClient;
@@ -42,9 +45,9 @@ namespace Azure.ResourceManager.Sql
         internal ServerTrustGroupCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
         {
             _locationName = locationName;
-            _serverTrustGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerTrustGroup.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ServerTrustGroup.ResourceType, out string serverTrustGroupApiVersion);
-            _serverTrustGroupRestClient = new ServerTrustGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverTrustGroupApiVersion);
+            _serverTrustGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerTrustGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerTrustGroupResource.ResourceType, out string serverTrustGroupApiVersion);
+            _serverTrustGroupRestClient = new ServerTrustGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverTrustGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,8 +55,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerTrustGroup>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverTrustGroupName, ServerTrustGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServerTrustGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverTrustGroupName, ServerTrustGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _serverTrustGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ServerTrustGroup>(new ServerTrustGroupOperationSource(Client), _serverTrustGroupClientDiagnostics, Pipeline, _serverTrustGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ServerTrustGroupResource>(new ServerTrustGroupOperationSource(Client), _serverTrustGroupClientDiagnostics, Pipeline, _serverTrustGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,7 +103,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ServerTrustGroup> CreateOrUpdate(WaitUntil waitUntil, string serverTrustGroupName, ServerTrustGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServerTrustGroupResource> CreateOrUpdate(WaitUntil waitUntil, string serverTrustGroupName, ServerTrustGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _serverTrustGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ServerTrustGroup>(new ServerTrustGroupOperationSource(Client), _serverTrustGroupClientDiagnostics, Pipeline, _serverTrustGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ServerTrustGroupResource>(new ServerTrustGroupOperationSource(Client), _serverTrustGroupClientDiagnostics, Pipeline, _serverTrustGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -131,7 +134,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
-        public virtual async Task<Response<ServerTrustGroup>> GetAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerTrustGroupResource>> GetAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
@@ -142,7 +145,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverTrustGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerTrustGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerTrustGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
-        public virtual Response<ServerTrustGroup> Get(string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerTrustGroupResource> Get(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
@@ -171,7 +174,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverTrustGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerTrustGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerTrustGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,17 +189,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerTrustGroups_ListByLocation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerTrustGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerTrustGroup> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerTrustGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerTrustGroup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverTrustGroupRestClient.ListByLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +207,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerTrustGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverTrustGroupRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,17 +231,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerTrustGroups_ListByLocation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerTrustGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerTrustGroup> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerTrustGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServerTrustGroup> FirstPageFunc(int? pageSizeHint)
+            Page<ServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverTrustGroupRestClient.ListByLocation(Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,14 +249,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerTrustGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ServerTrustGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverTrustGroupRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -327,7 +330,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
-        public virtual async Task<Response<ServerTrustGroup>> GetIfExistsAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerTrustGroupResource>> GetIfExistsAsync(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
@@ -337,8 +340,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverTrustGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ServerTrustGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerTrustGroup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerTrustGroupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerTrustGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -356,7 +359,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
-        public virtual Response<ServerTrustGroup> GetIfExists(string serverTrustGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerTrustGroupResource> GetIfExists(string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverTrustGroupName, nameof(serverTrustGroupName));
 
@@ -366,8 +369,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverTrustGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _locationName, serverTrustGroupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ServerTrustGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerTrustGroup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerTrustGroupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerTrustGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -376,7 +379,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ServerTrustGroup> IEnumerable<ServerTrustGroup>.GetEnumerator()
+        IEnumerator<ServerTrustGroupResource> IEnumerable<ServerTrustGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -386,7 +389,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerTrustGroup> IAsyncEnumerable<ServerTrustGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServerTrustGroupResource> IAsyncEnumerable<ServerTrustGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

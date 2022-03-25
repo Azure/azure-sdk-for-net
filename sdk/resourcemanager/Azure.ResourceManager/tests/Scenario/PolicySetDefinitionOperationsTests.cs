@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
+            SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             string policySetDefinitionName = Recording.GenerateAssetName("polSetDef-");
-            SubscriptionPolicySetDefinition policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
+            SubscriptionPolicySetDefinitionResource policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
             await policySetDefinition.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policySetDefinition.GetAsync());
             Assert.AreEqual(404, ex.Status);

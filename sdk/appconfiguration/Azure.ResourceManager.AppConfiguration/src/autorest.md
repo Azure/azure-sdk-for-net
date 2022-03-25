@@ -12,6 +12,7 @@ skip-csproj: true
 no-property-type-replacement: RegenerateKeyOptions
 modelerfour:
   flatten-payloads: false
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -32,6 +33,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  
 directive:
   - rename-model:
       from: ConfigurationStoreUpdateParameters

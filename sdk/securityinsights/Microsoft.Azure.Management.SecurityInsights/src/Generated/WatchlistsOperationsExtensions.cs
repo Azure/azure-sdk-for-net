@@ -33,9 +33,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static IPage<Watchlist> List(this IWatchlistsOperations operations, string resourceGroupName, string workspaceName)
+            /// <param name='skipToken'>
+            /// Skiptoken is only used if a previous operation returned a partial result.
+            /// If a previous response contains a nextLink element, the value of the
+            /// nextLink element will include a skiptoken parameter that specifies a
+            /// starting point to use for subsequent calls. Optional.
+            /// </param>
+            public static IPage<Watchlist> List(this IWatchlistsOperations operations, string resourceGroupName, string workspaceName, string skipToken = default(string))
             {
-                return operations.ListAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,12 +56,18 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
+            /// <param name='skipToken'>
+            /// Skiptoken is only used if a previous operation returned a partial result.
+            /// If a previous response contains a nextLink element, the value of the
+            /// nextLink element will include a skiptoken parameter that specifies a
+            /// starting point to use for subsequent calls. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Watchlist>> ListAsync(this IWatchlistsOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Watchlist>> ListAsync(this IWatchlistsOperations operations, string resourceGroupName, string workspaceName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -122,9 +134,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='watchlistAlias'>
             /// Watchlist Alias
             /// </param>
-            public static void Delete(this IWatchlistsOperations operations, string resourceGroupName, string workspaceName, string watchlistAlias)
+            public static WatchlistsDeleteHeaders Delete(this IWatchlistsOperations operations, string resourceGroupName, string workspaceName, string watchlistAlias)
             {
-                operations.DeleteAsync(resourceGroupName, workspaceName, watchlistAlias).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, workspaceName, watchlistAlias).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,15 +157,23 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IWatchlistsOperations operations, string resourceGroupName, string workspaceName, string watchlistAlias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WatchlistsDeleteHeaders> DeleteAsync(this IWatchlistsOperations operations, string resourceGroupName, string workspaceName, string watchlistAlias, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, watchlistAlias, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, watchlistAlias, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
-            /// Creates or updates a watchlist and its watchlist items (bulk creation, e.g.
-            /// through text/csv content type). To create a Watchlist and its items, we
-            /// should call this endpoint with rawContent and contentType properties.
+            /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g.
+            /// through text/csv content type). To create a Watchlist and its Items, we
+            /// should call this endpoint with either rawContent or a valid SAR URI and
+            /// contentType properties. The rawContent is mainly used for small watchlist
+            /// (content size below 3.8 MB). The SAS URI enables the creation of large
+            /// watchlist, where the content size can go up to 500 MB. The status of
+            /// processing such large file can be polled through the URL returned in
+            /// Azure-AsyncOperation header.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -176,9 +196,14 @@ namespace Microsoft.Azure.Management.SecurityInsights
             }
 
             /// <summary>
-            /// Creates or updates a watchlist and its watchlist items (bulk creation, e.g.
-            /// through text/csv content type). To create a Watchlist and its items, we
-            /// should call this endpoint with rawContent and contentType properties.
+            /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g.
+            /// through text/csv content type). To create a Watchlist and its Items, we
+            /// should call this endpoint with either rawContent or a valid SAR URI and
+            /// contentType properties. The rawContent is mainly used for small watchlist
+            /// (content size below 3.8 MB). The SAS URI enables the creation of large
+            /// watchlist, where the content size can go up to 500 MB. The status of
+            /// processing such large file can be polled through the URL returned in
+            /// Azure-AsyncOperation header.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

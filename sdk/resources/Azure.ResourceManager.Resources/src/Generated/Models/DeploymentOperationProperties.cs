@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The HTTP request message. </summary>
         internal HttpMessage Request { get; }
         /// <summary> HTTP message content. </summary>
-        public object RequestContent
+        public BinaryData RequestContent
         {
             get => Request.Content;
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The HTTP response message. </summary>
         internal HttpMessage Response { get; }
         /// <summary> HTTP message content. </summary>
-        public object ResponseContent
+        public BinaryData ResponseContent
         {
             get => Response.Content;
         }

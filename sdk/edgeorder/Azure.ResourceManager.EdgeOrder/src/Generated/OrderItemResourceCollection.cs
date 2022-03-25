@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> A class representing collection of OrderItemResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="OrderItemResource" /> and their operations.
+    /// Each <see cref="OrderItemResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="OrderItemResourceCollection" /> instance call the GetOrderItemResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class OrderItemResourceCollection : ArmCollection, IEnumerable<OrderItemResource>, IAsyncEnumerable<OrderItemResource>
     {
         private readonly ClientDiagnostics _orderItemResourceClientDiagnostics;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OrderItemResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _orderItemResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", OrderItemResource.ResourceType.Namespace, DiagnosticOptions);
+            _orderItemResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", OrderItemResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OrderItemResource.ResourceType, out string orderItemResourceApiVersion);
-            _orderItemResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderItemResourceApiVersion);
+            _orderItemResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, orderItemResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

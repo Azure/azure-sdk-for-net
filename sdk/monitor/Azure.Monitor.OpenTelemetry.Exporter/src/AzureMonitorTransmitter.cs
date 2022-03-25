@@ -36,6 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
+                // TODO: Add check if offline storage is enabled by user via options
                 _storage = new FileStorage(options.StorageDirectory);
             }
             catch (Exception)
