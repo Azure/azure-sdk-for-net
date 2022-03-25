@@ -373,7 +373,7 @@ Protocol methods will be generated only in internal RestClient even if the `publ
 **(TableClient.cs)**:
 
 ``` C#
-internal partial class TableClient
+public class TableClient
 {
     // ...
     public virtual async Task<Response> DeleteAsync(string table, RequestContext context = null) => await _tableRestClient.DeleteAsync(table, context).ConfigureAwait(false);
@@ -385,7 +385,7 @@ internal partial class TableClient
 **(TableServiceClient.cs)**:
 
 ``` C#
-internal partial class TableServiceClient
+public class TableServiceClient
 {
     // ...
     public virtual async Task<Response> SetPropertiesAsync(RequestContent content, int? timeout = null, RequestContext context = null) => await _serviceRestClient.SetPropertiesAsync(content, timeout, context).ConfigureAwait(false);
