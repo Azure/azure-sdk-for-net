@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Management
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.ManagementGroupChildInfo> Children { get { throw null; } }
         public Azure.ResourceManager.Management.Models.ManagementGroupInfo Details { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
     }
     public partial class ManagementGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Resources
         public string SubscriptionId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.SubscriptionPolicies SubscriptionPolicies { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
     }
     public partial class SubscriptionPolicyDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource>, System.Collections.IEnumerable
     {
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.Resources
         public string Id { get { throw null; } }
         public string TenantBrandingLogoUrl { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.TenantCategory? TenantCategory { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
         public string TenantType { get { throw null; } }
     }
     public partial class TenantPolicyDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource>, System.Collections.IEnumerable
@@ -1372,7 +1372,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ManagedByTenant
     {
         internal ManagedByTenant() { }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagementLockLevel : System.IEquatable<Azure.ResourceManager.Resources.Models.ManagementLockLevel>
