@@ -1,3 +1,4 @@
+      $["x-ms-client-name"] = "PatchMode"
 # Generated code configuration
 
 Run `dotnet build /t:GenerateCode` to generate code.
@@ -544,6 +545,10 @@ directive:
     where: $.definitions.DataManifestResourceFunctionsDefinition.properties.custom
     transform: >
       $["x-ms-client-name"] = "CustomDefinitions"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignmentProperties.properties.notScopes
+    transform: >
+      $["x-ms-client-name"] = "ExcludedScopes"
 ```
 
 ### Tag: package-management

@@ -741,11 +741,11 @@ namespace Azure.ResourceManager.Resources
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.EnforcementMode? EnforcementMode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ExcludedScopes { get { throw null; } }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.NonComplianceMessage> NonComplianceMessages { get { throw null; } }
-        public System.Collections.Generic.IList<string> NotScopes { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue> Parameters { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } set { } }
         public string Scope { get { throw null; } }
