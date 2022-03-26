@@ -191,18 +191,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
         /// Operation Id: Queue_Update
         /// </summary>
-        /// <param name="queue"> Queue properties and metadata to be created with. </param>
+        /// <param name="data"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
-        public virtual async Task<Response<StorageQueueResource>> UpdateAsync(StorageQueueData queue, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<StorageQueueResource>> UpdateAsync(StorageQueueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(queue, nameof(queue));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueResource.Update");
             scope.Start();
             try
             {
-                var response = await _storageQueueQueueRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, queue, cancellationToken).ConfigureAwait(false);
+                var response = await _storageQueueQueueRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,18 +217,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}
         /// Operation Id: Queue_Update
         /// </summary>
-        /// <param name="queue"> Queue properties and metadata to be created with. </param>
+        /// <param name="data"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
-        public virtual Response<StorageQueueResource> Update(StorageQueueData queue, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<StorageQueueResource> Update(StorageQueueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(queue, nameof(queue));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueResource.Update");
             scope.Start();
             try
             {
-                var response = _storageQueueQueueRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, queue, cancellationToken);
+                var response = _storageQueueQueueRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
