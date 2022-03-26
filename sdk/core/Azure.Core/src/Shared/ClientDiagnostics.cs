@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
         }
 
         public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions)
-            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled)
+            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, false)
         {
             _sanitizer = CreateMessageSanitizer(diagnosticsOptions);
         }

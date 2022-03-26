@@ -12,27 +12,36 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
 
 namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
+        private static readonly AsyncLocal<bool> ClientCustomerScopeStarted = new AsyncLocal<bool>()
+        {
+            Value = false
+        };
+
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
+        private readonly bool _suppressNestedClientScopes;
 
-        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind)
+        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientScopes) :
+            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientScopes)
         {
-            var activitySource = GetActivitySource(ns, scopeName);
-
-            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
-
-            _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, null) : null;
         }
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientScopes)
         {
             IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
+            _suppressNestedClientScopes = suppressNestedClientScopes && (kind == ActivityKind.Internal || kind == ActivityKind.Client);
+            // ActivityKind.Internal and Client both can represent public API calls.
+            if (_suppressNestedClientScopes)
+            {
+                IsEnabled &= !ClientCustomerScopeStarted.Value;
+            }
 
             _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs) : null;
         }
@@ -94,7 +103,11 @@ namespace Azure.Core.Pipeline
 
         public void Start()
         {
-            _activityAdapter?.Start();
+            bool? started = _activityAdapter?.Start();
+            if (started.GetValueOrDefault() && _suppressNestedClientScopes)
+            {
+                ClientCustomerScopeStarted.Value = true;
+            }
         }
 
         public void SetStartTime(DateTime dateTime)
@@ -106,6 +119,10 @@ namespace Azure.Core.Pipeline
         {
             // Reverse the Start order
             _activityAdapter?.Dispose();
+            if (_suppressNestedClientScopes)
+            {
+                ClientCustomerScopeStarted.Value = false;
+            }
         }
 
         public void Failed(Exception e)
@@ -265,7 +282,7 @@ namespace Azure.Core.Pipeline
                 _links.Add(linkedActivity);
             }
 
-            public void Start()
+            public bool Start()
             {
                 _currentActivity = StartActivitySourceActivity();
 
@@ -273,7 +290,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
                     {
-                        return;
+                        return false;
                     }
 
                     _currentActivity = new DiagnosticActivity(_activityName)
@@ -299,6 +316,8 @@ namespace Azure.Core.Pipeline
                 }
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+
+                return true;
             }
 
             private Activity? StartActivitySourceActivity()
