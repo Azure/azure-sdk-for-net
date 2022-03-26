@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateExportTemplateRequest(string subscriptionId, string resourceGroupName, ExportTemplateRequest parameters)
+        internal HttpMessage CreateExportTemplateRequest(string subscriptionId, string resourceGroupName, ExportTemplate parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, ExportTemplate parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ExportTemplate(string subscriptionId, string resourceGroupName, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public Response ExportTemplate(string subscriptionId, string resourceGroupName, ExportTemplate parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

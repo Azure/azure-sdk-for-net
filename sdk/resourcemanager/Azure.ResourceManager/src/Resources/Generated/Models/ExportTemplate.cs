@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Export resource group template request parameters. </summary>
-    public partial class ExportTemplateRequest
+    public partial class ExportTemplate
     {
-        /// <summary> Initializes a new instance of ExportTemplateRequest. </summary>
-        public ExportTemplateRequest()
+        /// <summary> Initializes a new instance of ExportTemplate. </summary>
+        public ExportTemplate()
         {
             Resources = new ChangeTrackingList<string>();
         }

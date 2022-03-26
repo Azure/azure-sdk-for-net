@@ -549,6 +549,10 @@ directive:
     where: $.definitions.PolicyAssignmentProperties.properties.notScopes
     transform: >
       $["x-ms-client-name"] = "ExcludedScopes"
+  - from: resources.json
+    where: $.definitions.ExportTemplateRequest
+    transform: >
+      $["x-ms-client-name"] = "ExportTemplate"
 ```
 
 ### Tag: package-management
