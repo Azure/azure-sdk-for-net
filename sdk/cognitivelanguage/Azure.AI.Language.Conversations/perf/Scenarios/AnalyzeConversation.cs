@@ -9,13 +9,13 @@ using CommandLine;
 
 namespace Azure.AI.Language.Conversations.Perf.Scenarios
 {
-    public class AnalyzeConversation : AnalysisScenarioBase<AnalyzeConversation.ConversationAnalysisClient>
+    public class AnalyzeConversation //: AnalysisScenarioBase<AnalyzeConversation.ConversationAnalysisClient>
     {
-        public AnalyzeConversation(ConversationAnalysisClient options) : base(options)
+        public AnalyzeConversation(ConversationAnalysisClient options) //: base(options)
         {
         }
 
-        public override void Run(CancellationToken cancellationToken)
+        /*public override void Run(CancellationToken cancellationToken)
         {
             Client.AnalyzeConversation("We'll have 2 plates of seared salmon nigiri.", TestEnvironment.Project);
         }
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Perf.Scenarios
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             await Client.AnalyzeConversationAsync("We'll have 2 plates of seared salmon nigiri.", TestEnvironment.Project);
-        }
+        }*/
 
         public class ConversationAnalysisClient : PerfOptions
         {
