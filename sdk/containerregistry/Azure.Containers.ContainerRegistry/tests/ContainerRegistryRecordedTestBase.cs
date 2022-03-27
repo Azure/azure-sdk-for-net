@@ -37,6 +37,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 GroupForReplace = "group"
             });
+
+            JsonPathSanitizers.Add("$..access_token");
+            JsonPathSanitizers.Add("$..refresh_token");
         }
 
         public ContainerRegistryClient CreateClient(bool anonymousAccess = false)
