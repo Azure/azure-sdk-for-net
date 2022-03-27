@@ -10,7 +10,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples
     {
-        [SyncOnly]
+        /*[SyncOnly]
         [RecordedTest]
         public void AnalyzeConversation()
         {
@@ -62,6 +62,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
-        }
+        }*/
     }
 }

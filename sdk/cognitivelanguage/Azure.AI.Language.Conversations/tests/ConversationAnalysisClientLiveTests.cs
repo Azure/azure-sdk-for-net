@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Tests
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
-        private static string EnglishText = "We'll have 2 plates of seared salmon nigiri.";
+        /*private static string EnglishText = "We'll have 2 plates of seared salmon nigiri.";
         private static string SpanishText = "Tendremos 2 platos de nigiri de salmón braseado.";
         private static List<string> ExpectedOutput = new List<string>()
         {
@@ -73,6 +73,6 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Assert.That(ex.Status, Is.EqualTo(400));
             Assert.That(ex.ErrorCode, Is.EqualTo("InvalidArgument"));
-        }
+        }*/
     }
 }

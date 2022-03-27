@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples
     {
-        [SyncOnly]
+        /*[SyncOnly]
         [RecordedTest]
         public void AnalyzeConversationOrchestrationPredictionQuestionAnswering()
         {
@@ -258,6 +258,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("FlightBooking"));
-        }
+        }*/
     }
 }

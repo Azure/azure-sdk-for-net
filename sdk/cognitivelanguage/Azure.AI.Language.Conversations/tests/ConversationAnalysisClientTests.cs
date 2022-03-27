@@ -9,7 +9,7 @@ namespace Azure.AI.Language.Conversations.Tests
 {
     public class ConversationAnalysisClientTests
     {
-        public Uri Endpoint => new("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
+        /*public Uri Endpoint => new("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
 
         public ConversationAnalysisClient Client => new(Endpoint, new AzureKeyCredential("test"));
 
@@ -49,6 +49,6 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Assert.That<Response<AnalyzeConversationResult>>(() => Client.AnalyzeConversation("test", null), Throws.ArgumentNullException.WithParamName("project"));
             Assert.That<Task<Response<AnalyzeConversationResult>>>(async () => await Client.AnalyzeConversationAsync("test", null), Throws.ArgumentNullException.WithParamName("project"));
-        }
+        }*/
     }
 }

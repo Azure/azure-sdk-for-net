@@ -10,7 +10,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples
     {
-        [SyncOnly]
+        /*[SyncOnly]
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26379")]
         public void AnalyzeConversationWithLanguage()
@@ -83,6 +83,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Prediction.TopIntent, Is.EqualTo("Order"));
-        }
+        }*/
     }
 }
