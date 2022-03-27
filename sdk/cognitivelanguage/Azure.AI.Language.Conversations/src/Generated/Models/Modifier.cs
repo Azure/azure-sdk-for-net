@@ -11,7 +11,9 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> An optional modifier of a date/time instance. </summary>
+#pragma warning disable AZC0012 // Avoid single word type names
     public readonly partial struct Modifier : IEquatable<Modifier>
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         private readonly string _value;
 

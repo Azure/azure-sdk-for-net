@@ -11,7 +11,9 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The modality (format) of ConversationItem (e.g., Text, Transcript). </summary>
+#pragma warning disable AZC0012 // Avoid single word type names
     public readonly partial struct Modality : IEquatable<Modality>
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         private readonly string _value;
 
