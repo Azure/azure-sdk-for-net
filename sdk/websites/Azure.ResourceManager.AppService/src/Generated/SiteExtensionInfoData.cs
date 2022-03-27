@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="summary"> Summary description. </param>
         /// <param name="description"> Detailed description. </param>
         /// <param name="version"> Version information. </param>
-        /// <param name="extensionUrl"> Extension URL. </param>
-        /// <param name="projectUrl"> Project URL. </param>
-        /// <param name="iconUrl"> Icon URL. </param>
-        /// <param name="licenseUrl"> License URL. </param>
-        /// <param name="feedUrl"> Feed URL. </param>
+        /// <param name="extensionUri"> Extension URL. </param>
+        /// <param name="projectUri"> Project URL. </param>
+        /// <param name="iconUri"> Icon URL. </param>
+        /// <param name="licenseUri"> License URL. </param>
+        /// <param name="feedUri"> Feed URL. </param>
         /// <param name="authors"> List of authors. </param>
         /// <param name="installerCommandLineParams"> Installer command line parameters. </param>
         /// <param name="publishedDateTime"> Published timestamp. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="installedDateTime"> Installed timestamp. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="comment"> Site Extension comment. </param>
-        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, string extensionUrl, string projectUrl, string iconUrl, string licenseUrl, string feedUrl, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedDateTime, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedDateTime, string provisioningState, string comment) : base(id, name, resourceType, systemData, kind)
+        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedDateTime, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedDateTime, string provisioningState, string comment) : base(id, name, resourceType, systemData, kind)
         {
             ExtensionId = extensionId;
             Title = title;
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.AppService
             Summary = summary;
             Description = description;
             Version = version;
-            ExtensionUrl = extensionUrl;
-            ProjectUrl = projectUrl;
-            IconUrl = iconUrl;
-            LicenseUrl = licenseUrl;
-            FeedUrl = feedUrl;
+            ExtensionUri = extensionUri;
+            ProjectUri = projectUri;
+            IconUri = iconUri;
+            LicenseUri = licenseUri;
+            FeedUri = feedUri;
             Authors = authors;
             InstallerCommandLineParams = installerCommandLineParams;
             PublishedDateTime = publishedDateTime;
@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Version information. </summary>
         public string Version { get; set; }
         /// <summary> Extension URL. </summary>
-        public string ExtensionUrl { get; set; }
+        public Uri ExtensionUri { get; set; }
         /// <summary> Project URL. </summary>
-        public string ProjectUrl { get; set; }
+        public Uri ProjectUri { get; set; }
         /// <summary> Icon URL. </summary>
-        public string IconUrl { get; set; }
+        public Uri IconUri { get; set; }
         /// <summary> License URL. </summary>
-        public string LicenseUrl { get; set; }
+        public Uri LicenseUri { get; set; }
         /// <summary> Feed URL. </summary>
-        public string FeedUrl { get; set; }
+        public Uri FeedUri { get; set; }
         /// <summary> List of authors. </summary>
         public IList<string> Authors { get; }
         /// <summary> Installer command line parameters. </summary>

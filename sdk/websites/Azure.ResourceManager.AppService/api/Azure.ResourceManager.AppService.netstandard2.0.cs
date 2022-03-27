@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.AppService
         public bool? Scheduled { get { throw null; } }
         public long? SizeInBytes { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.BackupItemStatus? Status { get { throw null; } }
-        public string StorageAccountUrl { get { throw null; } }
+        public System.Uri StorageAccountUri { get { throw null; } }
         public long? WebsiteSizeInBytes { get { throw null; } }
     }
     public partial class BasicPublishingCredentialsPolicyFtpResource : Azure.ResourceManager.ArmResource
@@ -784,12 +784,12 @@ namespace Azure.ResourceManager.AppService
         public ContinuousWebJobData() { }
         public string DetailedStatus { get { throw null; } set { } }
         public string Error { get { throw null; } set { } }
-        public string ExtraInfoUrl { get { throw null; } set { } }
-        public string LogUrl { get { throw null; } set { } }
+        public System.Uri ExtraInfoUri { get { throw null; } set { } }
+        public System.Uri LogUri { get { throw null; } set { } }
         public string RunCommand { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ContinuousWebJobStatus? Status { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         public bool? UsingSdk { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
     }
@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.AppService
         public bool? AcrUseManagedIdentityCreds { get { throw null; } set { } }
         public string AcrUserManagedIdentityId { get { throw null; } set { } }
         public bool? AlwaysOn { get { throw null; } set { } }
-        public string ApiDefinitionUrl { get { throw null; } set { } }
+        public System.Uri ApiDefinitionUri { get { throw null; } set { } }
         public string ApiManagementConfigId { get { throw null; } set { } }
         public string AppCommandLine { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair> AppSettings { get { throw null; } set { } }
@@ -1849,15 +1849,15 @@ namespace Azure.ResourceManager.AppService
         public int? DownloadCount { get { throw null; } set { } }
         public string ExtensionId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SiteExtensionType? ExtensionType { get { throw null; } set { } }
-        public string ExtensionUrl { get { throw null; } set { } }
-        public string FeedUrl { get { throw null; } set { } }
-        public string IconUrl { get { throw null; } set { } }
+        public System.Uri ExtensionUri { get { throw null; } set { } }
+        public System.Uri FeedUri { get { throw null; } set { } }
+        public System.Uri IconUri { get { throw null; } set { } }
         public System.DateTimeOffset? InstalledDateTime { get { throw null; } set { } }
         public string InstallerCommandLineParams { get { throw null; } set { } }
-        public string LicenseUrl { get { throw null; } set { } }
+        public System.Uri LicenseUri { get { throw null; } set { } }
         public bool? LocalIsLatestVersion { get { throw null; } set { } }
         public string LocalPath { get { throw null; } set { } }
-        public string ProjectUrl { get { throw null; } set { } }
+        public System.Uri ProjectUri { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
         public System.DateTimeOffset? PublishedDateTime { get { throw null; } set { } }
         public string Summary { get { throw null; } set { } }
@@ -3508,7 +3508,7 @@ namespace Azure.ResourceManager.AppService
         public bool? IsGitHubAction { get { throw null; } set { } }
         public bool? IsManualIntegration { get { throw null; } set { } }
         public bool? IsMercurial { get { throw null; } set { } }
-        public string RepoUrl { get { throw null; } set { } }
+        public System.Uri RepoUri { get { throw null; } set { } }
     }
     public partial class SiteSourceControlResource : Azure.ResourceManager.ArmResource
     {
@@ -3813,7 +3813,7 @@ namespace Azure.ResourceManager.AppService
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public string Provider { get { throw null; } }
         public string RepositoryToken { get { throw null; } set { } }
-        public string RepositoryUrl { get { throw null; } set { } }
+        public System.Uri RepositoryUri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SkuDescription Sku { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy? StagingEnvironmentPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StaticSiteTemplateOptions TemplateProperties { get { throw null; } set { } }
@@ -4054,13 +4054,13 @@ namespace Azure.ResourceManager.AppService
     {
         public TriggeredWebJobData() { }
         public string Error { get { throw null; } set { } }
-        public string ExtraInfoUrl { get { throw null; } set { } }
-        public string HistoryUrl { get { throw null; } set { } }
+        public System.Uri ExtraInfoUri { get { throw null; } set { } }
+        public System.Uri HistoryUri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.TriggeredJobRun LatestRun { get { throw null; } set { } }
         public string RunCommand { get { throw null; } set { } }
-        public string SchedulerLogsUrl { get { throw null; } set { } }
+        public System.Uri SchedulerLogsUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
-        public string Url { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         public bool? UsingSdk { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
     }
@@ -4106,10 +4106,10 @@ namespace Azure.ResourceManager.AppService
     {
         public WebJobData() { }
         public string Error { get { throw null; } set { } }
-        public string ExtraInfoUrl { get { throw null; } set { } }
+        public System.Uri ExtraInfoUri { get { throw null; } set { } }
         public string RunCommand { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
-        public string Url { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         public bool? UsingSdk { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
     }
@@ -4199,12 +4199,12 @@ namespace Azure.ResourceManager.AppService
     public partial class WebSiteInstanceStatusData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public WebSiteInstanceStatusData() { }
-        public string ConsoleUrl { get { throw null; } set { } }
+        public System.Uri ConsoleUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.ContainerInfo> Containers { get { throw null; } }
-        public string DetectorUrl { get { throw null; } set { } }
-        public string HealthCheckUrl { get { throw null; } set { } }
+        public System.Uri DetectorUri { get { throw null; } set { } }
+        public System.Uri HealthCheckUri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SiteRuntimeState? State { get { throw null; } set { } }
-        public string StatusUrl { get { throw null; } set { } }
+        public System.Uri StatusUri { get { throw null; } set { } }
     }
     public partial class WebSiteResource : Azure.ResourceManager.ArmResource
     {
@@ -4828,14 +4828,14 @@ namespace Azure.ResourceManager.AppService.Models
         public AzureBlobStorageApplicationLogsConfig() { }
         public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
         public int? RetentionInDays { get { throw null; } set { } }
-        public string SasUrl { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
     }
     public partial class AzureBlobStorageHttpLogsConfig
     {
         public AzureBlobStorageHttpLogsConfig() { }
         public bool? Enabled { get { throw null; } set { } }
         public int? RetentionInDays { get { throw null; } set { } }
-        public string SasUrl { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
     }
     public enum AzureResourceType
     {
@@ -4877,9 +4877,9 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AzureTableStorageApplicationLogsConfig
     {
-        public AzureTableStorageApplicationLogsConfig(string sasUrl) { }
+        public AzureTableStorageApplicationLogsConfig(System.Uri sasUri) { }
         public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
-        public string SasUrl { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
     }
     public enum BackupItemStatus
     {
@@ -4901,7 +4901,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.BackupSchedule BackupSchedule { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DatabaseBackupSetting> Databases { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
-        public string StorageAccountUrl { get { throw null; } set { } }
+        public System.Uri StorageAccountUri { get { throw null; } set { } }
     }
     public enum BackupRestoreOperationType
     {
@@ -5518,7 +5518,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal DomainControlCenterSsoRequest() { }
         public string PostParameterKey { get { throw null; } }
         public string PostParameterValue { get { throw null; } }
-        public string Url { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DomainNotRenewableReasons : System.IEquatable<Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons>
@@ -5721,7 +5721,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal FunctionSecrets() { }
         public string Key { get { throw null; } }
-        public string TriggerUrl { get { throw null; } }
+        public System.Uri TriggerUri { get { throw null; } }
     }
     public partial class GeoRegion : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -5756,7 +5756,7 @@ namespace Azure.ResourceManager.AppService.Models
         public GitHubActionContainerConfiguration() { }
         public string ImageName { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
-        public string ServerUrl { get { throw null; } set { } }
+        public System.Uri ServerUri { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
     public partial class GitHubActionWebAppStackSettings
@@ -6424,7 +6424,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public string Provider { get { throw null; } }
         public string RepositoryToken { get { throw null; } set { } }
-        public string RepositoryUrl { get { throw null; } set { } }
+        public System.Uri RepositoryUri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy? StagingEnvironmentPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StaticSiteTemplateOptions TemplateProperties { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get { throw null; } }
@@ -6455,10 +6455,10 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class PremierAddOnOffer : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public PremierAddOnOffer() { }
-        public string LegalTermsUrl { get { throw null; } set { } }
+        public System.Uri LegalTermsUri { get { throw null; } set { } }
         public string MarketplaceOffer { get { throw null; } set { } }
         public string MarketplacePublisher { get { throw null; } set { } }
-        public string PrivacyPolicyUrl { get { throw null; } set { } }
+        public System.Uri PrivacyPolicyUri { get { throw null; } set { } }
         public string Product { get { throw null; } set { } }
         public bool? PromoCodeRequired { get { throw null; } set { } }
         public int? Quota { get { throw null; } set { } }
@@ -6631,7 +6631,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public RampUpRule() { }
         public string ActionHostName { get { throw null; } set { } }
-        public string ChangeDecisionCallbackUrl { get { throw null; } set { } }
+        public System.Uri ChangeDecisionCallbackUri { get { throw null; } set { } }
         public int? ChangeIntervalInMinutes { get { throw null; } set { } }
         public double? ChangeStep { get { throw null; } set { } }
         public double? MaxReroutePercentage { get { throw null; } set { } }
@@ -6792,7 +6792,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.BackupRestoreOperationType? OperationType { get { throw null; } set { } }
         public bool? Overwrite { get { throw null; } set { } }
         public string SiteName { get { throw null; } set { } }
-        public string StorageAccountUrl { get { throw null; } set { } }
+        public System.Uri StorageAccountUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RouteType : System.IEquatable<Azure.ResourceManager.AppService.Models.RouteType>
@@ -6933,7 +6933,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? AcrUseManagedIdentityCreds { get { throw null; } set { } }
         public string AcrUserManagedIdentityId { get { throw null; } set { } }
         public bool? AlwaysOn { get { throw null; } set { } }
-        public string ApiDefinitionUrl { get { throw null; } set { } }
+        public System.Uri ApiDefinitionUri { get { throw null; } set { } }
         public string ApiManagementConfigId { get { throw null; } set { } }
         public string AppCommandLine { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair> AppSettings { get { throw null; } set { } }
@@ -7303,7 +7303,7 @@ namespace Azure.ResourceManager.AppService.Models
         public StaticSitesWorkflowPreviewRequest() { }
         public string Branch { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties BuildProperties { get { throw null; } set { } }
-        public string RepositoryUrl { get { throw null; } set { } }
+        public System.Uri RepositoryUri { get { throw null; } set { } }
     }
     public partial class StaticSiteTemplateOptions
     {
@@ -7312,7 +7312,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsPrivate { get { throw null; } set { } }
         public string Owner { get { throw null; } set { } }
         public string RepositoryName { get { throw null; } set { } }
-        public string TemplateRepositoryUrl { get { throw null; } set { } }
+        public System.Uri TemplateRepositoryUri { get { throw null; } set { } }
     }
     public partial class StaticSiteUserARMResource : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -7335,7 +7335,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public StaticSiteUserInvitationResponseResource() { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
-        public string InvitationUrl { get { throw null; } }
+        public System.Uri InvitationUri { get { throw null; } }
     }
     public partial class StaticSiteUserProvidedFunctionApp : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -7347,8 +7347,8 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class StaticSiteZipDeploymentARMResource : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public StaticSiteZipDeploymentARMResource() { }
-        public string ApiZipUrl { get { throw null; } set { } }
-        public string AppZipUrl { get { throw null; } set { } }
+        public System.Uri ApiZipUri { get { throw null; } set { } }
+        public System.Uri AppZipUri { get { throw null; } set { } }
         public string DeploymentTitle { get { throw null; } set { } }
         public string FunctionLanguage { get { throw null; } set { } }
         public string Provider { get { throw null; } set { } }
@@ -7436,7 +7436,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string AgreementKey { get { throw null; } }
         public string Content { get { throw null; } }
         public string Title { get { throw null; } }
-        public string Url { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     public partial class TokenStore
     {
@@ -7457,13 +7457,13 @@ namespace Azure.ResourceManager.AppService.Models
         public TriggeredJobRun() { }
         public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
-        public string ErrorUrl { get { throw null; } set { } }
+        public System.Uri ErrorUri { get { throw null; } set { } }
         public string JobName { get { throw null; } set { } }
-        public string OutputUrl { get { throw null; } set { } }
+        public System.Uri OutputUri { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.TriggeredWebJobStatus? Status { get { throw null; } set { } }
         public string Trigger { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         public string WebJobId { get { throw null; } set { } }
         public string WebJobName { get { throw null; } set { } }
     }
@@ -7528,7 +7528,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string ContainerImagePlatform { get { throw null; } set { } }
         public string ContainerImageRepository { get { throw null; } set { } }
         public string ContainerImageTag { get { throw null; } set { } }
-        public string ContainerRegistryBaseUrl { get { throw null; } set { } }
+        public System.Uri ContainerRegistryBaseUri { get { throw null; } set { } }
         public string ContainerRegistryPassword { get { throw null; } set { } }
         public string ContainerRegistryUsername { get { throw null; } set { } }
         public string HostingEnvironment { get { throw null; } set { } }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,18 +25,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="repositoryUrl"> URL for the repository of the static site. </param>
+        /// <param name="repositoryUri"> URL for the repository of the static site. </param>
         /// <param name="branch"> The target branch in the repository. </param>
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
-        internal StaticSitesWorkflowPreviewRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string repositoryUrl, string branch, StaticSiteBuildProperties buildProperties) : base(id, name, resourceType, systemData, kind)
+        internal StaticSitesWorkflowPreviewRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, Uri repositoryUri, string branch, StaticSiteBuildProperties buildProperties) : base(id, name, resourceType, systemData, kind)
         {
-            RepositoryUrl = repositoryUrl;
+            RepositoryUri = repositoryUri;
             Branch = branch;
             BuildProperties = buildProperties;
         }
 
         /// <summary> URL for the repository of the static site. </summary>
-        public string RepositoryUrl { get; set; }
+        public Uri RepositoryUri { get; set; }
         /// <summary> The target branch in the repository. </summary>
         public string Branch { get; set; }
         /// <summary> Build properties to configure on the repository. </summary>

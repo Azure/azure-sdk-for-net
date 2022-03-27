@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                storageContainerUri = null;
                                 continue;
                             }
                             storageContainerUri = new Uri(property0.Value.GetString());

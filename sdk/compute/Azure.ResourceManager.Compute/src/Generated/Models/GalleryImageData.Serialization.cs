@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                privacyStatementUri = null;
                                 continue;
                             }
                             privacyStatementUri = new Uri(property0.Value.GetString());
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                releaseNoteUri = null;
                                 continue;
                             }
                             releaseNoteUri = new Uri(property0.Value.GetString());

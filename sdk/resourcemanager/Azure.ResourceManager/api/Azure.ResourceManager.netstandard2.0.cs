@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.Resources
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Domains { get { throw null; } }
         public string Id { get { throw null; } }
-        public string TenantBrandingLogoUrl { get { throw null; } }
+        public System.Uri TenantBrandingLogoUri { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.TenantCategory? TenantCategory { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public string TenantType { get { throw null; } }

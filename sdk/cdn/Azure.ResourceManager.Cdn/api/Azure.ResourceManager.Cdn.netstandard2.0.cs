@@ -1411,7 +1411,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public PolicySettings() { }
         public string DefaultCustomBlockResponseBody { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get { throw null; } set { } }
-        public string DefaultRedirectUrl { get { throw null; } set { } }
+        public System.Uri DefaultRedirectUri { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicyEnabledState? EnabledState { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicyMode? Mode { get { throw null; } set { } }
     }
@@ -2372,8 +2372,8 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class ValidateProbeInput
     {
-        public ValidateProbeInput(string probeUrl) { }
-        public string ProbeUrl { get { throw null; } }
+        public ValidateProbeInput(System.Uri probeUri) { }
+        public System.Uri ProbeUri { get { throw null; } }
     }
     public partial class ValidateProbeOutput
     {

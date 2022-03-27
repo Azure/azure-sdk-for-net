@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public partial class CostInformation
     {
         internal CostInformation() { }
-        public string BillingInfoUrl { get { throw null; } }
+        public System.Uri BillingInfoUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.BillingMeterDetails> BillingMeterDetails { get { throw null; } }
     }
     public partial class CustomerSubscriptionDetails
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string CarrierDisplayName { get { throw null; } }
         public string CarrierName { get { throw null; } }
         public string TrackingId { get { throw null; } }
-        public string TrackingUrl { get { throw null; } }
+        public System.Uri TrackingUri { get { throw null; } }
     }
     public partial class HierarchyInformation
     {
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal ImageInformation() { }
         public Azure.ResourceManager.EdgeOrder.Models.ImageType? ImageType { get { throw null; } }
-        public string ImageUrl { get { throw null; } }
+        public System.Uri ImageUri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImageType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.ImageType>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal ProductLink() { }
         public Azure.ResourceManager.EdgeOrder.Models.LinkType? LinkType { get { throw null; } }
-        public string LinkUrl { get { throw null; } }
+        public System.Uri LinkUri { get { throw null; } }
     }
     public partial class ProductSpecification
     {
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string CarrierName { get { throw null; } }
         public string SasKeyForLabel { get { throw null; } }
         public string TrackingId { get { throw null; } }
-        public string TrackingUrl { get { throw null; } }
+        public System.Uri TrackingUri { get { throw null; } }
     }
     public partial class ShippingAddress
     {

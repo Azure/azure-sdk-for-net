@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                packageUri = null;
                                 continue;
                             }
                             packageUri = new Uri(property0.Value.GetString());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                setParametersXmlFileUri = null;
                                 continue;
                             }
                             setParametersXmlFileUri = new Uri(property0.Value.GetString());

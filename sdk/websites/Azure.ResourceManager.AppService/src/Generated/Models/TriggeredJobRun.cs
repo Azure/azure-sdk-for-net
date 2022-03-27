@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="startTime"> Start time. </param>
         /// <param name="endTime"> End time. </param>
         /// <param name="duration"> Job duration. </param>
-        /// <param name="outputUrl"> Output URL. </param>
-        /// <param name="errorUrl"> Error URL. </param>
-        /// <param name="url"> Job URL. </param>
+        /// <param name="outputUri"> Output URL. </param>
+        /// <param name="errorUri"> Error URL. </param>
+        /// <param name="uri"> Job URL. </param>
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startTime, DateTimeOffset? endTime, TimeSpan? duration, string outputUrl, string errorUrl, string url, string jobName, string trigger)
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startTime, DateTimeOffset? endTime, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.AppService.Models
             StartTime = startTime;
             EndTime = endTime;
             Duration = duration;
-            OutputUrl = outputUrl;
-            ErrorUrl = errorUrl;
-            Url = url;
+            OutputUri = outputUri;
+            ErrorUri = errorUri;
+            Uri = uri;
             JobName = jobName;
             Trigger = trigger;
         }
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Job duration. </summary>
         public TimeSpan? Duration { get; set; }
         /// <summary> Output URL. </summary>
-        public string OutputUrl { get; set; }
+        public Uri OutputUri { get; set; }
         /// <summary> Error URL. </summary>
-        public string ErrorUrl { get; set; }
+        public Uri ErrorUri { get; set; }
         /// <summary> Job URL. </summary>
-        public string Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Job name. </summary>
         public string JobName { get; set; }
         /// <summary> Job trigger. </summary>

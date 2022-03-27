@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        keyVaultUri = null;
                         continue;
                     }
                     keyVaultUri = new Uri(property.Value.GetString());

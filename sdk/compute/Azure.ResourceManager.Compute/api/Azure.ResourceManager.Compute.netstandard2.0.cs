@@ -2347,11 +2347,11 @@ namespace Azure.ResourceManager.Compute.Models
         public CloudServiceProperties() { }
         public bool? AllowModelOverride { get { throw null; } set { } }
         public string Configuration { get { throw null; } set { } }
-        public string ConfigurationUrl { get { throw null; } set { } }
+        public System.Uri ConfigurationUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.Extension> Extensions { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CloudServiceNetworkProfile NetworkProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.CloudServiceVaultSecretGroup> OSSecrets { get { throw null; } }
-        public string PackageUrl { get { throw null; } set { } }
+        public System.Uri PackageUri { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.CloudServiceRoleProfileProperties> Roles { get { throw null; } }
         public bool? StartCloudService { get { throw null; } set { } }
@@ -2393,13 +2393,13 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class CloudServiceVaultAndSecretReference
     {
         public CloudServiceVaultAndSecretReference() { }
-        public string SecretUrl { get { throw null; } set { } }
+        public System.Uri SecretUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
     }
     public partial class CloudServiceVaultCertificate
     {
         public CloudServiceVaultCertificate() { }
-        public string CertificateUrl { get { throw null; } set { } }
+        public System.Uri CertificateUri { get { throw null; } set { } }
     }
     public partial class CloudServiceVaultSecretGroup
     {
@@ -3315,32 +3315,32 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class KeyForDiskEncryptionSet
     {
-        public KeyForDiskEncryptionSet(string keyUrl) { }
-        public string KeyUrl { get { throw null; } set { } }
+        public KeyForDiskEncryptionSet(System.Uri keyUri) { }
+        public System.Uri KeyUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
     }
     public partial class KeyVaultAndKeyReference
     {
-        public KeyVaultAndKeyReference(Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault, string keyUrl) { }
-        public string KeyUrl { get { throw null; } set { } }
+        public KeyVaultAndKeyReference(Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault, System.Uri keyUri) { }
+        public System.Uri KeyUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
     }
     public partial class KeyVaultAndSecretReference
     {
-        public KeyVaultAndSecretReference(Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault, string secretUrl) { }
-        public string SecretUrl { get { throw null; } set { } }
+        public KeyVaultAndSecretReference(Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault, System.Uri secretUri) { }
+        public System.Uri SecretUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
     }
     public partial class KeyVaultKeyReference
     {
-        public KeyVaultKeyReference(string keyUrl, Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault) { }
-        public string KeyUrl { get { throw null; } set { } }
+        public KeyVaultKeyReference(System.Uri keyUri, Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault) { }
+        public System.Uri KeyUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
     }
     public partial class KeyVaultSecretReference
     {
-        public KeyVaultSecretReference(string secretUrl, Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault) { }
-        public string SecretUrl { get { throw null; } set { } }
+        public KeyVaultSecretReference(System.Uri secretUri, Azure.ResourceManager.Resources.Models.WritableSubResource sourceVault) { }
+        public System.Uri SecretUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
     }
     public partial class LastPatchInstallationSummary
@@ -4935,7 +4935,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VaultCertificate() { }
         public string CertificateStore { get { throw null; } set { } }
-        public string CertificateUrl { get { throw null; } set { } }
+        public System.Uri CertificateUri { get { throw null; } set { } }
     }
     public partial class VaultSecretGroup
     {
@@ -5902,7 +5902,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class WinRMListener
     {
         public WinRMListener() { }
-        public string CertificateUrl { get { throw null; } set { } }
+        public System.Uri CertificateUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ProtocolTypes? Protocol { get { throw null; } set { } }
     }
 }

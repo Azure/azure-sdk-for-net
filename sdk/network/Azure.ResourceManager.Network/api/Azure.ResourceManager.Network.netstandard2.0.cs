@@ -4810,7 +4810,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayCustomError
     {
         public ApplicationGatewayCustomError() { }
-        public string CustomErrorPageUrl { get { throw null; } set { } }
+        public System.Uri CustomErrorPageUri { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode? StatusCode { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5069,7 +5069,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RequestRoutingRules { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetListenerId { get { throw null; } set { } }
-        public string TargetUrl { get { throw null; } set { } }
+        public System.Uri TargetUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> UrlPathMaps { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7347,8 +7347,8 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class GetVpnSitesConfigurationRequest
     {
-        public GetVpnSitesConfigurationRequest(string outputBlobSasUrl) { }
-        public string OutputBlobSasUrl { get { throw null; } }
+        public GetVpnSitesConfigurationRequest(System.Uri outputBlobSasUri) { }
+        public System.Uri OutputBlobSasUri { get { throw null; } }
         public System.Collections.Generic.IList<string> VpnSites { get { throw null; } }
     }
     public partial class HopLink
@@ -8263,12 +8263,12 @@ namespace Azure.ResourceManager.Network.Models
     public partial class P2SVpnConnectionHealth
     {
         internal P2SVpnConnectionHealth() { }
-        public string SasUrl { get { throw null; } }
+        public System.Uri SasUri { get { throw null; } }
     }
     public partial class P2SVpnConnectionHealthRequest
     {
         public P2SVpnConnectionHealthRequest() { }
-        public string OutputBlobSasUrl { get { throw null; } set { } }
+        public System.Uri OutputBlobSasUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VpnUserNamesFilter { get { throw null; } }
     }
     public partial class P2SVpnConnectionRequest
@@ -9598,7 +9598,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal VirtualWanSecurityProvider() { }
         public string Name { get { throw null; } }
-        public string Url { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? VirtualWanSecurityProviderType { get { throw null; } }
     }
     public partial class VirtualWanSecurityProviders
@@ -9759,7 +9759,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public VpnConnectionPacketCaptureStopParameters() { }
         public System.Collections.Generic.IList<string> LinkConnectionNames { get { throw null; } }
-        public string SasUrl { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VpnConnectionStatus : System.IEquatable<Azure.ResourceManager.Network.Models.VpnConnectionStatus>
@@ -9822,7 +9822,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VpnGatewayPacketCaptureStopParameters
     {
         public VpnGatewayPacketCaptureStopParameters() { }
-        public string SasUrl { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VpnGatewayTunnelingProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol>
@@ -9922,12 +9922,12 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VpnPacketCaptureStopParameters
     {
         public VpnPacketCaptureStopParameters() { }
-        public string SasUrl { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
     }
     public partial class VpnProfileResponse
     {
         internal VpnProfileResponse() { }
-        public string ProfileUrl { get { throw null; } }
+        public System.Uri ProfileUri { get { throw null; } }
     }
     public partial class VpnServerConfigRadiusClientRootCertificate
     {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -24,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountUrl))
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl");
-                writer.WriteStringValue(StorageAccountUrl);
+                writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BlobName))
             {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> storageAccountUrl = default;
+            Optional<Uri> storageAccountUrl = default;
             Optional<string> blobName = default;
             Optional<bool> overwrite = default;
             Optional<string> siteName = default;
@@ -144,7 +145,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("storageAccountUrl"))
                         {
-                            storageAccountUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageAccountUrl = null;
+                                continue;
+                            }
+                            storageAccountUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("blobName"))
