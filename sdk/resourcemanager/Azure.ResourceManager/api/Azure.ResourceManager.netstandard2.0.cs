@@ -478,12 +478,12 @@ namespace Azure.ResourceManager.Models
     public partial class SystemData
     {
         public SystemData() { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public Azure.ResourceManager.Models.CreatedByType? CreatedByType { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Models.CreatedByType? LastModifiedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
