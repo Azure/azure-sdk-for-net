@@ -1,10 +1,12 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+- Added `appId` and `userId` parameters  to `CommunicationIdentityClient.GetTokenForTeamsUser` and `CommunicationIdentityClient.GetTokenForTeamsUserAsync`.
+- Removed ServiceVersion.V2021_10_31_preview
 
 ### Bugs Fixed
 

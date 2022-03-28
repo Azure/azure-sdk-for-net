@@ -160,9 +160,11 @@ namespace Azure.Communication.Identity.Samples
 
             var teamsToken = generateTeamsToken().Result;
             var client = CreateClientWithConnectionString();
+            var appId = TestEnvironment.CommunicationAppId;
+            var userId = TestEnvironment.CommunicationUserId;
 
             #region Snippet:GetTokenForTeamsUser
-            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(teamsToken);
+            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(teamsToken, appId, userId);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:GetTokenForTeamsUser
@@ -178,9 +180,11 @@ namespace Azure.Communication.Identity.Samples
 
             var teamsToken = await generateTeamsToken();
             var client = CreateClientWithConnectionString();
+            var appId = TestEnvironment.CommunicationAppId;
+            var userId = TestEnvironment.CommunicationUserId;
 
             #region Snippet:GetTokenForTeamsUserAsync
-            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken);
+            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken, appId, userId);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:GetTokenForTeamsUserAsync

@@ -140,7 +140,7 @@ namespace Azure.Communication.Identity.Tests
             string token = await generateTeamsToken();
 
             CommunicationIdentityClient client = CreateClientWithConnectionString();
-            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token);
+            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
         }
@@ -151,7 +151,7 @@ namespace Azure.Communication.Identity.Tests
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync("");
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync("", TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
             }
             catch (RequestFailedException ex)
             {
@@ -169,7 +169,7 @@ namespace Azure.Communication.Identity.Tests
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(null);
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(null, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
             }
             catch (ArgumentNullException ex)
             {
@@ -185,7 +185,7 @@ namespace Azure.Communication.Identity.Tests
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync("invalid");
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync("invalid", TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
             }
             catch (RequestFailedException ex)
             {
@@ -203,7 +203,7 @@ namespace Azure.Communication.Identity.Tests
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(TestEnvironment.CommunicationExpiredTeamsToken);
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(TestEnvironment.CommunicationExpiredTeamsToken, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
             }
             catch (RequestFailedException ex)
             {

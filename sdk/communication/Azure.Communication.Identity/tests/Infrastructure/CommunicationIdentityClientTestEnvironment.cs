@@ -7,6 +7,8 @@ namespace Azure.Communication.Identity.Tests
 {
     public class CommunicationIdentityClientTestEnvironment : CommunicationTestEnvironment
     {
+        public const string CommunicationClientIdEnvironmentVariableName = "COMMUNICATION_CLIENT_ID";
+        public const string CommunicationObjectIdEnvironmentVariableName = "COMMUNICATION_OBJECT_ID";
         public const string CommunicationMsalUsernameEnvironmentVariableName = "COMMUNICATION_MSAL_USERNAME";
         public const string CommunicationMsalPasswordEnvironmentVariableName  = "COMMUNICATION_MSAL_PASSWORD";
         public const string CommunicationM365AppIdEnvironmentVariableName  = "COMMUNICATION_M365_APP_ID";
@@ -16,6 +18,9 @@ namespace Azure.Communication.Identity.Tests
         public const string CommunicationM365ScopeEnvironmentVariableName  = "COMMUNICATION_M365_SCOPE";
         public const string CommunicationExpiredTeamsTokenEnvironmentVariableName  = "COMMUNICATION_EXPIRED_TEAMS_TOKEN";
         private const string SkipIntIdentityExchangeTokenTestEnvironmentVariableName = "SKIP_INT_IDENTITY_EXCHANGE_TOKEN_TEST";
+
+        public string CommunicationAppId => GetOptionalVariable(CommunicationClientIdEnvironmentVariableName) ?? "Sanitized";
+        public string CommunicationUserId => GetOptionalVariable(CommunicationObjectIdEnvironmentVariableName) ?? "Sanitized";
 
         public string CommunicationMsalUsername => GetOptionalVariable(CommunicationMsalUsernameEnvironmentVariableName) ?? "Sanitized";
 
