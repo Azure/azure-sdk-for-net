@@ -14,7 +14,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new <see cref="RetryOptions"/> instance with default values.
         /// </summary>
-        protected internal RetryOptions() : this(ClientOptions.Default.Retry)
+        internal RetryOptions() : this(ClientOptions.Default.Retry)
         {
         }
 

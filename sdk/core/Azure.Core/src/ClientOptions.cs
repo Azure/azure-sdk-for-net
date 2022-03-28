@@ -36,12 +36,11 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="ClientOptions"/> with the specificed <see cref="DiagnosticsOptions"/> and <see cref="RetryOptions"/>.
+        /// Creates a new instance of <see cref="ClientOptions"/> with the specificed <see cref="DiagnosticsOptions"/>.
         /// </summary>
         /// <param name="diagnostics"><see cref="DiagnosticsOptions"/> to be used for <see cref="Diagnostics"/>.</param>
-        /// <param name="retry"><see cref="RetryOptions"/> to be used for <see cref="Retry"/>.</param>
-        protected ClientOptions(DiagnosticsOptions? diagnostics = default, RetryOptions? retry = default)
-            : this(Default, diagnostics, retry)
+        protected ClientOptions(DiagnosticsOptions? diagnostics)
+            : this(Default, diagnostics, null)
         {
         }
 
