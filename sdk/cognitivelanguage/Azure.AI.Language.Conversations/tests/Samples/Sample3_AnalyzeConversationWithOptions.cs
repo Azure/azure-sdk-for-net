@@ -68,11 +68,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 {
                     foreach (BaseResolution resolution in entity.Resolutions)
                     {
-                        DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                        Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                        Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                        Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                        Console.WriteLine();
+                        if (resolution is DateTimeResolution)
+                        {
+                            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                            Console.WriteLine();
+                        }
                     }
                 }
             }
@@ -140,11 +143,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 {
                     foreach (BaseResolution resolution in entity.Resolutions)
                     {
-                        DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                        Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                        Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                        Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                        Console.WriteLine();
+                        if (resolution is DateTimeResolution)
+                        {
+                            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                            Console.WriteLine();
+                        }
                     }
                 }
             }

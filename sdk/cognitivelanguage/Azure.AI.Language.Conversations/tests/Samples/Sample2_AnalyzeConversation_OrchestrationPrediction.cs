@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             TextConversationItem textConversationItem = new TextConversationItem(
                 participantId: "1",
                 id: "1",
-                text: "Send an email to Carol about the tomorrow's demo.");
+                text: "How are you?");
 #if SNIPPET
             ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             TextConversationItem textConversationItem = new TextConversationItem(
                 participantId: "1",
                 id: "1",
-                text: "Reserve a table for 2 at the Italian restaurant.");
+                text: "Send an email to Carol about the tomorrow's demo");
 
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
                 textConversationItem,
@@ -116,11 +116,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Resolutions:");
                         foreach (BaseResolution resolution in entity.Resolutions)
                         {
-                            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                            Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                            Console.WriteLine();
+                            if (resolution is DateTimeResolution)
+                            {
+                                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                                Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                                Console.WriteLine();
+                            }
                         }
                         Console.WriteLine();
                     }
@@ -176,7 +179,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             TextConversationItem textConversationItem = new TextConversationItem(
                             participantId: "1",
                             id: "1",
-                            text: "Send an email to Carol about the tomorrow's demo.");
+                            text: "How are you?");
 #if SNIPPET
             ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
             Response<AnalyzeConversationResult> response =  await client.AnalyzeConversationAsync(
@@ -224,7 +227,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             TextConversationItem textConversationItem = new TextConversationItem(
                 participantId: "1",
                 id: "1",
-                text: "Reserve a table for 2 at the Italian restaurant.");
+                text: "Send an email to Carol about the tomorrow's demo");
 
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
                 textConversationItem,
@@ -267,11 +270,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Resolutions:");
                         foreach (BaseResolution resolution in entity.Resolutions)
                         {
-                            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                            Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                            Console.WriteLine();
+                            if (resolution is DateTimeResolution)
+                            {
+                                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                                Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                                Console.WriteLine();
+                            }
                         }
                         Console.WriteLine();
                     }
