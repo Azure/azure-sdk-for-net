@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversation
+            #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
             TextConversationItem textConversationItem = new TextConversationItem(
                 participantId: "1",
                 id: "1",
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversation
+            #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageASync
             TextConversationItem textConversationItem = new TextConversationItem(
                 participantId: "1",
                 id: "1",
