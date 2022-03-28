@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function secrets. </summary>
@@ -17,16 +19,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of FunctionSecrets. </summary>
         /// <param name="key"> Secret key. </param>
-        /// <param name="triggerUrl"> Trigger URL. </param>
-        internal FunctionSecrets(string key, string triggerUrl)
+        /// <param name="triggerUri"> Trigger URL. </param>
+        internal FunctionSecrets(string key, Uri triggerUri)
         {
             Key = key;
-            TriggerUrl = triggerUrl;
+            TriggerUri = triggerUri;
         }
 
         /// <summary> Secret key. </summary>
         public string Key { get; }
         /// <summary> Trigger URL. </summary>
-        public string TriggerUrl { get; }
+        public Uri TriggerUri { get; }
     }
 }

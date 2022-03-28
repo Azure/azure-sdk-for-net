@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                vpnPackageUri = null;
                                 continue;
                             }
                             vpnPackageUri = new Uri(property0.Value.GetString());

@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Network.Models
     public partial class GetVpnSitesConfigurationRequest
     {
         /// <summary> Initializes a new instance of GetVpnSitesConfigurationRequest. </summary>
-        /// <param name="outputBlobSasUrl"> The sas-url to download the configurations for vpn-sites. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUrl"/> is null. </exception>
-        public GetVpnSitesConfigurationRequest(string outputBlobSasUrl)
+        /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUri"/> is null. </exception>
+        public GetVpnSitesConfigurationRequest(Uri outputBlobSasUri)
         {
-            if (outputBlobSasUrl == null)
+            if (outputBlobSasUri == null)
             {
-                throw new ArgumentNullException(nameof(outputBlobSasUrl));
+                throw new ArgumentNullException(nameof(outputBlobSasUri));
             }
 
             VpnSites = new ChangeTrackingList<string>();
-            OutputBlobSasUrl = outputBlobSasUrl;
+            OutputBlobSasUri = outputBlobSasUri;
         }
 
         /// <summary> List of resource-ids of the vpn-sites for which config is to be downloaded. </summary>
         public IList<string> VpnSites { get; }
         /// <summary> The sas-url to download the configurations for vpn-sites. </summary>
-        public string OutputBlobSasUrl { get; }
+        public Uri OutputBlobSasUri { get; }
     }
 }

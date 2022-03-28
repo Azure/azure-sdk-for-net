@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string policyExemptionName, PolicyExemptionData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string policyExemptionName, PolicyExemptionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation creates or updates a policy exemption with the given scope and name. Policy exemptions apply to all resources contained within their scope. For example, when you create a policy exemption at resource group scope for a policy assignment at the same or above level, the exemption exempts to all applicable resources in the resource group. </summary>
         /// <param name="scope"> The scope of the policy exemption. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
-        /// <param name="parameters"> Parameters for the policy exemption. </param>
+        /// <param name="data"> Parameters for the policy exemption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="policyExemptionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyExemptionData>> CreateOrUpdateAsync(string scope, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyExemptionData>> CreateOrUpdateAsync(string scope, string policyExemptionName, PolicyExemptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(scope, policyExemptionName, parameters);
+            using var message = CreateCreateOrUpdateRequest(scope, policyExemptionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -156,17 +156,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation creates or updates a policy exemption with the given scope and name. Policy exemptions apply to all resources contained within their scope. For example, when you create a policy exemption at resource group scope for a policy assignment at the same or above level, the exemption exempts to all applicable resources in the resource group. </summary>
         /// <param name="scope"> The scope of the policy exemption. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;), resource group (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos;, or resource (format: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}&apos;. </param>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
-        /// <param name="parameters"> Parameters for the policy exemption. </param>
+        /// <param name="data"> Parameters for the policy exemption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="policyExemptionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyExemptionData> CreateOrUpdate(string scope, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
+        public Response<PolicyExemptionData> CreateOrUpdate(string scope, string policyExemptionName, PolicyExemptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(scope, policyExemptionName, parameters);
+            using var message = CreateCreateOrUpdateRequest(scope, policyExemptionName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -29,20 +30,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="redirectType"> HTTP redirection type. </param>
         /// <param name="targetListener"> Reference to a listener to redirect the request to. </param>
-        /// <param name="targetUrl"> Url to redirect the request to. </param>
+        /// <param name="targetUri"> Url to redirect the request to. </param>
         /// <param name="includePath"> Include path in the redirected url. </param>
         /// <param name="includeQueryString"> Include query string in the redirected url. </param>
         /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
         /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        internal ApplicationGatewayRedirectConfiguration(string id, string name, string etag, string resourceType, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, string targetUrl, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id)
+        internal ApplicationGatewayRedirectConfiguration(string id, string name, string etag, string resourceType, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id)
         {
             Name = name;
             Etag = etag;
             ResourceType = resourceType;
             RedirectType = redirectType;
             TargetListener = targetListener;
-            TargetUrl = targetUrl;
+            TargetUri = targetUri;
             IncludePath = includePath;
             IncludeQueryString = includeQueryString;
             RequestRoutingRules = requestRoutingRules;
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Url to redirect the request to. </summary>
-        public string TargetUrl { get; set; }
+        public Uri TargetUri { get; set; }
         /// <summary> Include path in the redirected url. </summary>
         public bool? IncludePath { get; set; }
         /// <summary> Include query string in the redirected url. </summary>

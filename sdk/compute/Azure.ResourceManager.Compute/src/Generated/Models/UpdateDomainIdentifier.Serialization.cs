@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UpdateDomain : IUtf8JsonSerializable
+    public partial class UpdateDomainIdentifier : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static UpdateDomain DeserializeUpdateDomain(JsonElement element)
+        internal static UpdateDomainIdentifier DeserializeUpdateDomainIdentifier(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new UpdateDomain(id.Value, name.Value);
+            return new UpdateDomainIdentifier(id.Value, name.Value);
         }
     }
 }

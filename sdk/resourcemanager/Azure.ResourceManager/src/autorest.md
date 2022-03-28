@@ -524,6 +524,10 @@ directive:
     where: $.definitions.ManagedByTenant.properties.tenantId
     transform: >
       $['format'] = "uuid"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignment.properties.location
+    transform: >
+      $["x-ms-format"] = "azure-location"
 ```
 
 ### Tag: package-management
