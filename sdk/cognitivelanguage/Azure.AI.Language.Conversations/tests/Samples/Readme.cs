@@ -8,7 +8,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples : ConversationAnalysisTestBase<ConversationAnalysisClient>
     {
-        /*public void CreateConversationAnalysisClient()
+        public void CreateConversationAnalysisClient()
         {
             #region Snippet:ConversationAnalysisClient_Create
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
@@ -28,8 +28,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             try
             {
                 ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
-                Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                    "We'll have 2 plates of seared salmon nigiri.",
+                TextConversationItem textConversationItem = new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo");
+                Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+                    textConversationItem,
                     conversationsProject);
             }
             catch (RequestFailedException ex)
@@ -37,6 +38,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine(ex.ToString());
             }
             #endregion
-        }*/
+        }
     }
 }
