@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProviderInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProviderInfo> GetTenantResourceProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TenantResourceProvider>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
                 scope0.Start();
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ProviderInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TenantResourceProvider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
                 scope0.Start();
@@ -338,10 +338,10 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProviderInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProviderInfo> GetTenantResourceProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ProviderInfo> FirstPageFunc(int? pageSizeHint)
+            Page<TenantResourceProvider> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
                 scope0.Start();
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ProviderInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TenantResourceProvider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
                 scope0.Start();
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<ProviderInfo>> GetTenantResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantResourceProvider>> GetTenantResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<ProviderInfo> GetTenantResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<TenantResourceProvider> GetTenantResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 

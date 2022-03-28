@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
-            string location = default;
+            AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
             ResourceIdentifier id = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))

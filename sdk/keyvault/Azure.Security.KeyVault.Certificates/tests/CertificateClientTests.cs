@@ -112,6 +112,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
+        public void DownloadCertificateParameterValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.DownloadCertificateAsync((string)null));
+            Assert.AreEqual("certificateName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.DownloadCertificateAsync(string.Empty));
+            Assert.AreEqual("certificateName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.DownloadCertificateAsync((DownloadCertificateOptions)null));
+            Assert.AreEqual("options", ex.ParamName);
+        }
+
+        [Test]
         public void DownloadSecretDenied()
         {
             CertificateClientOptions options = new CertificateClientOptions

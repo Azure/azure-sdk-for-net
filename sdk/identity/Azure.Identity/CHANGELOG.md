@@ -8,6 +8,7 @@
   - User Principal Name
   - Tenant Identifier
   - Object Identifier of the authenticated user or app
+- `ManagedIdentityCredential` now attempts to use the newest "2019-08-01" api version for App Service Managed Identity sources. The newer API version will be used if the `IDENTITY_ENDPOINT` and `IDENTITY_HEADER` environment variables are set.
 
 ### Breaking Changes
 

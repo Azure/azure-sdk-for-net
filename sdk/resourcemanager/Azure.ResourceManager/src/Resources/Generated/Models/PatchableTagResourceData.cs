@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The operation type for the patch API. </summary>
-        public TagsPatchOperation? Operation { get; set; }
+        public TagPatchMode? PatchMode { get; set; }
         /// <summary> The set of tags. </summary>
         internal Tag Properties { get; set; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>

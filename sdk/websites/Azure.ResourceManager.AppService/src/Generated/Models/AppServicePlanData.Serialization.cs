@@ -83,24 +83,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("isSpot");
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Optional.IsDefined(SpotExpirationTime))
+            if (Optional.IsDefined(SpotExpirationOn))
             {
-                if (SpotExpirationTime != null)
+                if (SpotExpirationOn != null)
                 {
                     writer.WritePropertyName("spotExpirationTime");
-                    writer.WriteStringValue(SpotExpirationTime.Value, "O");
+                    writer.WriteStringValue(SpotExpirationOn.Value, "O");
                 }
                 else
                 {
                     writer.WriteNull("spotExpirationTime");
                 }
             }
-            if (Optional.IsDefined(FreeOfferExpirationTime))
+            if (Optional.IsDefined(FreeOfferExpirationOn))
             {
-                if (FreeOfferExpirationTime != null)
+                if (FreeOfferExpirationOn != null)
                 {
                     writer.WritePropertyName("freeOfferExpirationTime");
-                    writer.WriteStringValue(FreeOfferExpirationTime.Value, "O");
+                    writer.WriteStringValue(FreeOfferExpirationOn.Value, "O");
                 }
                 else
                 {

@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
         /// Operation Id: Endpoints_Update
         /// </summary>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointResource"/> is null. </exception>
-        public virtual async Task<Response<EndpointResource>> UpdateAsync(EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<EndpointResource>> UpdateAsync(EndpointResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _endpointResourceEndpointsRestClient.UpdateAsync(Id.Parent, Id.Name, endpointResource, cancellationToken).ConfigureAwait(false);
+                var response = await _endpointResourceEndpointsRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,18 +218,18 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
         /// Operation Id: Endpoints_Update
         /// </summary>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointResource"/> is null. </exception>
-        public virtual Response<EndpointResource> Update(EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<EndpointResource> Update(EndpointResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _endpointResourceEndpointsRestClient.Update(Id.Parent, Id.Name, endpointResource, cancellationToken);
+                var response = _endpointResourceEndpointsRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
                 return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

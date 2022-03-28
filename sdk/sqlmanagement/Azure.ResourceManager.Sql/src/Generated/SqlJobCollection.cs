@@ -60,20 +60,20 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> The name of the job to get. </param>
-        /// <param name="parameters"> The requested job state. </param>
+        /// <param name="data"> The requested job state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, SqlJobData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, SqlJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlJobJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlJobJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<SqlJobResource>(Response.FromValue(new SqlJobResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> The name of the job to get. </param>
-        /// <param name="parameters"> The requested job state. </param>
+        /// <param name="data"> The requested job state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<SqlJobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, SqlJobData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SqlJobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, SqlJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlJobJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, parameters, cancellationToken);
+                var response = _sqlJobJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, data, cancellationToken);
                 var operation = new SqlArmOperation<SqlJobResource>(Response.FromValue(new SqlJobResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

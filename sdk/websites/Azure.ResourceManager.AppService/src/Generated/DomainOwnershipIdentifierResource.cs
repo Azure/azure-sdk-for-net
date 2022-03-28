@@ -191,18 +191,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
         /// Operation Id: Domains_UpdateOwnershipIdentifier
         /// </summary>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifier"/> is null. </exception>
-        public virtual async Task<Response<DomainOwnershipIdentifierResource>> UpdateAsync(DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<DomainOwnershipIdentifierResource>> UpdateAsync(DomainOwnershipIdentifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierResource.Update");
             scope.Start();
             try
             {
-                var response = await _domainOwnershipIdentifierDomainsRestClient.UpdateOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifier, cancellationToken).ConfigureAwait(false);
+                var response = await _domainOwnershipIdentifierDomainsRestClient.UpdateOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,18 +217,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
         /// Operation Id: Domains_UpdateOwnershipIdentifier
         /// </summary>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifier"/> is null. </exception>
-        public virtual Response<DomainOwnershipIdentifierResource> Update(DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<DomainOwnershipIdentifierResource> Update(DomainOwnershipIdentifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _domainOwnershipIdentifierDomainsClientDiagnostics.CreateScope("DomainOwnershipIdentifierResource.Update");
             scope.Start();
             try
             {
-                var response = _domainOwnershipIdentifierDomainsRestClient.UpdateOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifier, cancellationToken);
+                var response = _domainOwnershipIdentifierDomainsRestClient.UpdateOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new DomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

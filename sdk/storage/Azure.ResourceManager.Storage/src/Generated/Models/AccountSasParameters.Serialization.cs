@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("signedProtocol");
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SharedAccessStartTime))
+            if (Optional.IsDefined(SharedAccessStartOn))
             {
                 writer.WritePropertyName("signedStart");
-                writer.WriteStringValue(SharedAccessStartTime.Value, "O");
+                writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
             writer.WritePropertyName("signedExpiry");
-            writer.WriteStringValue(SharedAccessExpiryTime, "O");
+            writer.WriteStringValue(SharedAccessExpiryOn, "O");
             if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign");

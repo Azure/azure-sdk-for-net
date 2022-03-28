@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about managed application. </summary>
-    public partial class PatchableArmApplicationData : ArmApplicationResource
+    public partial class PatchableArmApplicationData : ArmApplicationResourceData
     {
         /// <summary> Initializes a new instance of PatchableArmApplicationData. </summary>
         /// <param name="location"> The location. </param>

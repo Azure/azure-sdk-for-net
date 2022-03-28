@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.NotNull(getResult.Status);
                 Assert.AreEqual(model.Status.ContainerInstanceId, getResult.Status.ContainerInstanceId);
                 Assert.AreEqual(model.Status.StorageAccountId, getResult.Status.StorageAccountId);
-                Assert.AreEqual(model.Status.StartTime, getResult.Status.StartTime);
-                Assert.AreEqual(model.Status.EndTime, getResult.Status.EndTime);
-                Assert.AreEqual(model.Status.ExpirationTime, getResult.Status.ExpirationTime);
+                Assert.AreEqual(model.Status.StartOn, getResult.Status.StartOn);
+                Assert.AreEqual(model.Status.EndOn, getResult.Status.EndOn);
+                Assert.AreEqual(model.Status.ExpirationOn, getResult.Status.ExpirationOn);
                 //Assert.AreEqual(model.Status.Error, getResult.Status.Error);
             }
             Assert.AreEqual(model.Outputs.Count, getResult.Outputs.Count);

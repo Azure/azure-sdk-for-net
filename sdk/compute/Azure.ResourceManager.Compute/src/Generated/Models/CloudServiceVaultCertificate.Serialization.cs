@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,22 +16,27 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateUrl))
+            if (Optional.IsDefined(CertificateUri))
             {
                 writer.WritePropertyName("certificateUrl");
-                writer.WriteStringValue(CertificateUrl);
+                writer.WriteStringValue(CertificateUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
 
         internal static CloudServiceVaultCertificate DeserializeCloudServiceVaultCertificate(JsonElement element)
         {
-            Optional<string> certificateUrl = default;
+            Optional<Uri> certificateUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateUrl"))
                 {
-                    certificateUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        certificateUrl = null;
+                        continue;
+                    }
+                    certificateUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

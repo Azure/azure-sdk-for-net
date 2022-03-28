@@ -1,3 +1,4 @@
+      $["x-ms-client-name"] = "PatchMode"
 # Generated code configuration
 
 Run `dotnet build /t:GenerateCode` to generate code.
@@ -408,7 +409,7 @@ directive:
   - from: resources.json
     where: $.definitions
     transform: >
-      $["ProviderInfo"] = {
+      $["TenantResourceProvider"] = {
         "properties": {
           "namespace": {
             "type": "string",
@@ -429,12 +430,12 @@ directive:
   - from: resources.json
     where: $.definitions
     transform: >
-      $["ProviderInfoListResult"] = {
+      $["TenantResourceProviderListResult"] = {
         "properties": {
           "value": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ProviderInfo"
+              "$ref": "#/definitions/TenantResourceProvider"
             },
             "description": "An array of resource providers."
           },
@@ -447,14 +448,14 @@ directive:
         "description": "List of resource providers."
       }
   - from: resources.json
-    where: $.definitions.ProviderInfoListResult.properties.value.items["$ref"]
-    transform: return "#/definitions/ProviderInfo"
+    where: $.definitions.TenantResourceProviderListResult.properties.value.items["$ref"]
+    transform: return "#/definitions/TenantResourceProvider"
   - from: resources.json
     where: $.paths["/providers"].get.responses["200"].schema["$ref"]
-    transform: return "#/definitions/ProviderInfoListResult"
+    transform: return "#/definitions/TenantResourceProviderListResult"
   - from: resources.json
     where: $.paths["/providers/{resourceProviderNamespace}"].get.responses["200"].schema["$ref"]
-    transform: return "#/definitions/ProviderInfo"
+    transform: return "#/definitions/TenantResourceProvider"
 
   - from: resources.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
@@ -524,6 +525,66 @@ directive:
     where: $.definitions.ManagedByTenant.properties.tenantId
     transform: >
       $['format'] = "uuid"
+  - from: resources.json
+    where: $.definitions.ResourcesMoveInfo.properties.resources.items
+    transform: >
+      $["x-ms-format"] = "arm-id"
+  - from: resources.json
+    where: $.definitions.RoleDefinition
+    transform: >
+      $["x-ms-client-name"] = "AzureRoleDefinition";
+  - from: resources.json
+    where: $.definitions.TagPatchResource.properties.operation["x-ms-enum"]
+    transform: >
+      $["name"] = "TagPatchMode"
+  - from: resources.json
+    where: $.definitions.TagPatchResource.properties.operation
+    transform: >
+      $["x-ms-client-name"] = "PatchMode"
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataManifestResourceFunctionsDefinition.properties.custom
+    transform: >
+      $["x-ms-client-name"] = "CustomDefinitions"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignmentProperties.properties.notScopes
+    transform: >
+      $["x-ms-client-name"] = "ExcludedScopes"
+  - from: resources.json
+    where: $.definitions.ExportTemplateRequest
+    transform: >
+      $["x-ms-client-name"] = "ExportTemplate"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignmentProperties.properties.enforcementMode["x-ms-enum"].values[0]
+    transform: >
+      $["value"] = "Enforced"
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataManifestCustomResourceFunctionDefinition.properties.fullyQualifiedResourceType
+    transform: >
+      $["x-ms-format"] = "resource-type"
+  - from: resources.json
+    where: $.definitions.Permission.properties.actions
+    transform: >
+      $["x-ms-client-name"] = "AllowedActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.notActions
+    transform: >
+      $["x-ms-client-name"] = "DeniedActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.dataActions
+    transform: >
+      $["x-ms-client-name"] = "AllowedDataActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.notDataActions
+    transform: >
+      $["x-ms-client-name"] = "DeniedDataActions"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignment.properties.location
+    transform: >
+      $["x-ms-format"] = "azure-location"
+  - from: resources.json
+    where: $.definitions.ProviderExtendedLocation.properties.location
+    transform: >
+      $["x-ms-format"] = "azure-location"
 ```
 
 ### Tag: package-management
