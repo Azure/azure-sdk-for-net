@@ -1,4 +1,4 @@
-Samples are where developers could start to learn a library. You should generate samples scaffold by running the quick start [tool](AzureSDKCodeGeneration_DataPlane_Quickstart.md#create-starter-package). The samples should match the structure containing the following key features:
+Samples are where developers could start to learn a library. You should generate samples scaffold by running the quick start [tool](AzureSDKCodeGeneration_DataPlane_Quickstart.md#create-starter-package). Different scenarios should be separated by different files. The samples should match the structure containing the following key features:
 ```
 ├── ...
 ├── samples
@@ -17,6 +17,33 @@ Samples are where developers could start to learn a library. You should generate
 |   |   └── ...
 │   └── ...
 └── ...
+```
+All the `Sample{number}_{Scenario}Async.*` files contain the corresponding async scenarios. You could merge it into its corresponding sync scenario files `Sample{number}_{Scenario}.*`. If you keep the structure same as above, you should declare the async class and its corresponding sync class as partial class. E.g.,
+```C#
+// Sample1_HelloWorld.cs
+public partial class Sample1_HelloWorld : SampleBase<SampleTestEnvironent>
+{
+  [Test]
+  [SyncOnly]
+  public void DoWork()
+  {
+    #region Azure_Sample_Sample1_DoWork
+    // ...
+    #endregion
+}
+
+// Sample1_HelloWorldAsync.cs
+public partial class Sample1_HelloWorld
+{
+  [Test]
+  [AsyncOnly]
+  public async Task DoWorkAsync()
+  {
+    #region Azure_Sample_Sample1_DoWorkAsync
+    // ...
+    #endregion
+  }
+}
 ```
 
 ## Folder `samples`
