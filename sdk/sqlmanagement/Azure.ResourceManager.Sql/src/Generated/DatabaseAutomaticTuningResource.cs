@@ -139,18 +139,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/automaticTuning/current
         /// Operation Id: DatabaseAutomaticTuning_Update
         /// </summary>
-        /// <param name="parameters"> The requested automatic tuning resource state. </param>
+        /// <param name="data"> The requested automatic tuning resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<DatabaseAutomaticTuningResource>> UpdateAsync(DatabaseAutomaticTuningData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<DatabaseAutomaticTuningResource>> UpdateAsync(DatabaseAutomaticTuningData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuningResource.Update");
             scope.Start();
             try
             {
-                var response = await _databaseAutomaticTuningRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseAutomaticTuningRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAutomaticTuningResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,18 +165,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/automaticTuning/current
         /// Operation Id: DatabaseAutomaticTuning_Update
         /// </summary>
-        /// <param name="parameters"> The requested automatic tuning resource state. </param>
+        /// <param name="data"> The requested automatic tuning resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<DatabaseAutomaticTuningResource> Update(DatabaseAutomaticTuningData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<DatabaseAutomaticTuningResource> Update(DatabaseAutomaticTuningData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseAutomaticTuningClientDiagnostics.CreateScope("DatabaseAutomaticTuningResource.Update");
             scope.Start();
             try
             {
-                var response = _databaseAutomaticTuningRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, parameters, cancellationToken);
+                var response = _databaseAutomaticTuningRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
                 return Response.FromValue(new DatabaseAutomaticTuningResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

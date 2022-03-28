@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingData arcSetting)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Hci
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(arcSetting);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -235,19 +235,19 @@ namespace Azure.ResourceManager.Hci
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
-        /// <param name="arcSetting"> Parameters supplied to the Create ArcSetting resource for this HCI cluster. </param>
+        /// <param name="data"> Parameters supplied to the Create ArcSetting resource for this HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="arcSetting"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ArcSettingData>> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
+        public async Task<Response<ArcSettingData>> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNull(arcSetting, nameof(arcSetting));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, arcSetting);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -268,19 +268,19 @@ namespace Azure.ResourceManager.Hci
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
-        /// <param name="arcSetting"> Parameters supplied to the Create ArcSetting resource for this HCI cluster. </param>
+        /// <param name="data"> Parameters supplied to the Create ArcSetting resource for this HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="arcSetting"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ArcSettingData> Create(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
+        public Response<ArcSettingData> Create(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNull(arcSetting, nameof(arcSetting));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, arcSetting);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="status"> Job status. </param>
         /// <param name="detailedStatus"> Detailed status. </param>
-        /// <param name="logUrl"> Log URL. </param>
+        /// <param name="logUri"> Log URL. </param>
         /// <param name="runCommand"> Run command. </param>
-        /// <param name="url"> Job URL. </param>
-        /// <param name="extraInfoUrl"> Extra Info URL. </param>
+        /// <param name="uri"> Job URL. </param>
+        /// <param name="extraInfoUri"> Extra Info URL. </param>
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ContinuousWebJobStatus? status, string detailedStatus, string logUrl, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
+        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ContinuousWebJobStatus? status, string detailedStatus, Uri logUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
         {
             Status = status;
             DetailedStatus = detailedStatus;
-            LogUrl = logUrl;
+            LogUri = logUri;
             RunCommand = runCommand;
-            Url = url;
-            ExtraInfoUrl = extraInfoUrl;
+            Uri = uri;
+            ExtraInfoUri = extraInfoUri;
             WebJobType = webJobType;
             Error = error;
             UsingSdk = usingSdk;
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Detailed status. </summary>
         public string DetailedStatus { get; set; }
         /// <summary> Log URL. </summary>
-        public string LogUrl { get; set; }
+        public Uri LogUri { get; set; }
         /// <summary> Run command. </summary>
         public string RunCommand { get; set; }
         /// <summary> Job URL. </summary>
-        public string Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Extra Info URL. </summary>
-        public string ExtraInfoUrl { get; set; }
+        public Uri ExtraInfoUri { get; set; }
         /// <summary> Job type. </summary>
         public WebJobType? WebJobType { get; set; }
         /// <summary> Error information. </summary>

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string endpointName, EndpointResourceData endpointResource)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string endpointName, EndpointResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(endpointResource);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -201,16 +201,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> Create or update the endpoint to the target resource. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="endpointResource"/> is null. </exception>
-        public async Task<Response<EndpointResourceData>> CreateOrUpdateAsync(string resourceUri, string endpointName, EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<EndpointResourceData>> CreateOrUpdateAsync(string resourceUri, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(resourceUri, endpointName, endpointResource);
+            using var message = CreateCreateOrUpdateRequest(resourceUri, endpointName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -229,16 +229,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> Create or update the endpoint to the target resource. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="endpointResource"/> is null. </exception>
-        public Response<EndpointResourceData> CreateOrUpdate(string resourceUri, string endpointName, EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public Response<EndpointResourceData> CreateOrUpdate(string resourceUri, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(resourceUri, endpointName, endpointResource);
+            using var message = CreateCreateOrUpdateRequest(resourceUri, endpointName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceUri, string endpointName, EndpointResourceData endpointResource)
+        internal HttpMessage CreateUpdateRequest(string resourceUri, string endpointName, EndpointResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(endpointResource);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -279,16 +279,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> Update the endpoint to the target resource. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="endpointResource"/> is null. </exception>
-        public async Task<Response<EndpointResourceData>> UpdateAsync(string resourceUri, string endpointName, EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<EndpointResourceData>> UpdateAsync(string resourceUri, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(resourceUri, endpointName, endpointResource);
+            using var message = CreateUpdateRequest(resourceUri, endpointName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -307,16 +307,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> Update the endpoint to the target resource. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="endpointResource"/> is null. </exception>
-        public Response<EndpointResourceData> Update(string resourceUri, string endpointName, EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public Response<EndpointResourceData> Update(string resourceUri, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(resourceUri, endpointName, endpointResource);
+            using var message = CreateUpdateRequest(resourceUri, endpointName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

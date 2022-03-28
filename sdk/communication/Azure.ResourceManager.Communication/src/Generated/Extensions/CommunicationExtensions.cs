@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: CommunicationService_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, NameAvailabilityOptions options = null, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailabilityAsync(nameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailabilityAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: CommunicationService_CheckNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
+        /// <param name="options"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<NameAvailability> CheckCommunicationNameAvailability(this SubscriptionResource subscriptionResource, NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        public static Response<NameAvailability> CheckCommunicationNameAvailability(this SubscriptionResource subscriptionResource, NameAvailabilityOptions options = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailability(nameAvailabilityParameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailability(options, cancellationToken);
         }
 
         /// <summary>

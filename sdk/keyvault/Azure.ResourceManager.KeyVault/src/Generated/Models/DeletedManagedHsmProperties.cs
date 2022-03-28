@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of DeletedManagedHsmProperties. </summary>
         /// <param name="mhsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
-        /// <param name="deletionDate"> The deleted date. </param>
-        /// <param name="scheduledPurgeDate"> The scheduled purged date. </param>
+        /// <param name="deletionOn"> The deleted date. </param>
+        /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
         /// <param name="tags"> Tags of the original managed HSM. </param>
-        internal DeletedManagedHsmProperties(string mhsmId, string location, DateTimeOffset? deletionDate, DateTimeOffset? scheduledPurgeDate, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags)
+        internal DeletedManagedHsmProperties(string mhsmId, string location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags)
         {
             MhsmId = mhsmId;
             Location = location;
-            DeletionDate = deletionDate;
-            ScheduledPurgeDate = scheduledPurgeDate;
+            DeletionOn = deletionOn;
+            ScheduledPurgeOn = scheduledPurgeOn;
             PurgeProtectionEnabled = purgeProtectionEnabled;
             Tags = tags;
         }
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The location of the original managed HSM. </summary>
         public string Location { get; }
         /// <summary> The deleted date. </summary>
-        public DateTimeOffset? DeletionDate { get; }
+        public DateTimeOffset? DeletionOn { get; }
         /// <summary> The scheduled purged date. </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; }
+        public DateTimeOffset? ScheduledPurgeOn { get; }
         /// <summary> Purge protection status of the original managed HSM. </summary>
         public bool? PurgeProtectionEnabled { get; }
         /// <summary> Tags of the original managed HSM. </summary>

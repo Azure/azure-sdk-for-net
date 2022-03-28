@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<NatGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string natGatewayName, NatGatewayData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<NatGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string natGatewayName, NatGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _natGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NatGatewayResource>(new NatGatewayOperationSource(Client), _natGatewayClientDiagnostics, Pipeline, _natGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _natGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<NatGatewayResource>(new NatGatewayOperationSource(Client), _natGatewayClientDiagnostics, Pipeline, _natGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update nat gateway operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update nat gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<NatGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string natGatewayName, NatGatewayData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<NatGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string natGatewayName, NatGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _natGatewayClientDiagnostics.CreateScope("NatGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _natGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<NatGatewayResource>(new NatGatewayOperationSource(Client), _natGatewayClientDiagnostics, Pipeline, _natGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _natGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, data, cancellationToken);
+                var operation = new NetworkArmOperation<NatGatewayResource>(new NatGatewayOperationSource(Client), _natGatewayClientDiagnostics, Pipeline, _natGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

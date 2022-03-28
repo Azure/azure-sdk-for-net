@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual async Task<ArmOperation<InventoryItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<InventoryItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inventoryItemName, InventoryItemData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             scope.Start();
             try
             {
-                var response = await _inventoryItemRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, body, cancellationToken).ConfigureAwait(false);
+                var response = await _inventoryItemRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ConnectedVMwarevSphereArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual ArmOperation<InventoryItemResource> CreateOrUpdate(WaitUntil waitUntil, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<InventoryItemResource> CreateOrUpdate(WaitUntil waitUntil, string inventoryItemName, InventoryItemData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             scope.Start();
             try
             {
-                var response = _inventoryItemRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, body, cancellationToken);
+                var response = _inventoryItemRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, data, cancellationToken);
                 var operation = new ConnectedVMwarevSphereArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

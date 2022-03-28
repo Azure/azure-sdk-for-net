@@ -66,21 +66,21 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="parameters"> Parameters for creating a namespace resource. </param>
+        /// <param name="data"> Parameters for creating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<EventHubNamespaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, EventHubNamespaceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<EventHubNamespaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, EventHubNamespaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubNamespaceClientDiagnostics.CreateScope("EventHubNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _eventHubNamespaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubNamespaceResource>(new EventHubNamespaceOperationSource(Client), _eventHubNamespaceClientDiagnostics, Pipeline, _eventHubNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _eventHubNamespaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubsArmOperation<EventHubNamespaceResource>(new EventHubNamespaceOperationSource(Client), _eventHubNamespaceClientDiagnostics, Pipeline, _eventHubNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -99,21 +99,21 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="parameters"> Parameters for creating a namespace resource. </param>
+        /// <param name="data"> Parameters for creating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<EventHubNamespaceResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, EventHubNamespaceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<EventHubNamespaceResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, EventHubNamespaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubNamespaceClientDiagnostics.CreateScope("EventHubNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _eventHubNamespaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubNamespaceResource>(new EventHubNamespaceOperationSource(Client), _eventHubNamespaceClientDiagnostics, Pipeline, _eventHubNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _eventHubNamespaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken);
+                var operation = new EventHubsArmOperation<EventHubNamespaceResource>(new EventHubNamespaceOperationSource(Client), _eventHubNamespaceClientDiagnostics, Pipeline, _eventHubNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

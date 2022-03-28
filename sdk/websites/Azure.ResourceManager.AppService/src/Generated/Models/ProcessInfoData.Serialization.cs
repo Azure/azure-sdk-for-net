@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("thread_count");
                 writer.WriteNumberValue(ThreadCount.Value);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(TotalCpuTime))
             {

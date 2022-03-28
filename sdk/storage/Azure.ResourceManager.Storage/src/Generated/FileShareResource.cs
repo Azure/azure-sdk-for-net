@@ -200,18 +200,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}
         /// Operation Id: FileShares_Update
         /// </summary>
-        /// <param name="fileShare"> Properties to update for the file share. </param>
+        /// <param name="data"> Properties to update for the file share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileShare"/> is null. </exception>
-        public virtual async Task<Response<FileShareResource>> UpdateAsync(FileShareData fileShare, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<FileShareResource>> UpdateAsync(FileShareData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(fileShare, nameof(fileShare));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareResource.Update");
             scope.Start();
             try
             {
-                var response = await _fileShareRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, fileShare, cancellationToken).ConfigureAwait(false);
+                var response = await _fileShareRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,18 +226,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}
         /// Operation Id: FileShares_Update
         /// </summary>
-        /// <param name="fileShare"> Properties to update for the file share. </param>
+        /// <param name="data"> Properties to update for the file share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileShare"/> is null. </exception>
-        public virtual Response<FileShareResource> Update(FileShareData fileShare, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<FileShareResource> Update(FileShareData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(fileShare, nameof(fileShare));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareResource.Update");
             scope.Start();
             try
             {
-                var response = _fileShareRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, fileShare, cancellationToken);
+                var response = _fileShareRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

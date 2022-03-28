@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="data"> The long term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedInstanceLongTermRetentionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ManagedInstanceLongTermRetentionPolicyName policyName, ManagedInstanceLongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedInstanceLongTermRetentionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ManagedInstanceLongTermRetentionPolicyName policyName, ManagedInstanceLongTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstanceLongTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource>(new ManagedInstanceLongTermRetentionPolicyOperationSource(Client), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, _managedInstanceLongTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedInstanceLongTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource>(new ManagedInstanceLongTermRetentionPolicyOperationSource(Client), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, _managedInstanceLongTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="data"> The long term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ManagedInstanceLongTermRetentionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, ManagedInstanceLongTermRetentionPolicyName policyName, ManagedInstanceLongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ManagedInstanceLongTermRetentionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, ManagedInstanceLongTermRetentionPolicyName policyName, ManagedInstanceLongTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstanceLongTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource>(new ManagedInstanceLongTermRetentionPolicyOperationSource(Client), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, _managedInstanceLongTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _managedInstanceLongTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data, cancellationToken);
+                var operation = new SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource>(new ManagedInstanceLongTermRetentionPolicyOperationSource(Client), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, _managedInstanceLongTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

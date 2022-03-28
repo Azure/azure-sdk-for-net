@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<IPGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipGroupsName, IPGroupData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<IPGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipGroupsName, IPGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ipGroupIpGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<IPGroupResource>(new IPGroupOperationSource(Client), _ipGroupIpGroupsClientDiagnostics, Pipeline, _ipGroupIpGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _ipGroupIpGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<IPGroupResource>(new IPGroupOperationSource(Client), _ipGroupIpGroupsClientDiagnostics, Pipeline, _ipGroupIpGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update IpGroups operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<IPGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ipGroupsName, IPGroupData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<IPGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ipGroupsName, IPGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ipGroupIpGroupsClientDiagnostics.CreateScope("IPGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ipGroupIpGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<IPGroupResource>(new IPGroupOperationSource(Client), _ipGroupIpGroupsClientDiagnostics, Pipeline, _ipGroupIpGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _ipGroupIpGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, data, cancellationToken);
+                var operation = new NetworkArmOperation<IPGroupResource>(new IPGroupOperationSource(Client), _ipGroupIpGroupsClientDiagnostics, Pipeline, _ipGroupIpGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
