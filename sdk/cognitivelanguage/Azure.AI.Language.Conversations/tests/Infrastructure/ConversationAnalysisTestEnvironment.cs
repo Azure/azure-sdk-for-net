@@ -19,18 +19,22 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <summary>
         /// Gets the primary test project name.
         /// </summary>
-        public string ProjectName => GetRecordedVariable("CONVERSATIONS_PROJECT");
+        public string ProjectName => "SampleProject";
 
         /// <summary>
         /// Gets the deployment name.
         /// </summary>
-        public string DeploymentName => "production";
+        public string DeploymentName => "MoTest";
 
         /// <summary>
         /// Gets the orchestration test project name.
         /// </summary>
-        public string OrchestrationProjectName => "antischTwo";
+        public string OrchestrationProjectName => "OrchestrationProject";
 
+        /// <summary>
+        /// Gets the orchestration test deploymentName name.
+        /// </summary>
+        public string OrchestrationDeploymentName => "ShabanTest";
         /// <summary>
         /// Gets the endpoint.
         /// </summary>
@@ -44,6 +48,6 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <summary>
         /// Gets an orchestration <see cref="ConversationsProject"/> using the <see cref="OrchestrationProjectName"/> and <see cref="DeploymentName"/>.
         /// </summary>
-        public ConversationsProject OrchestrationProject => new ConversationsProject(OrchestrationProjectName, DeploymentName);
+        public ConversationsProject OrchestrationProject => new ConversationsProject(OrchestrationProjectName, OrchestrationDeploymentName);
     }
 }
