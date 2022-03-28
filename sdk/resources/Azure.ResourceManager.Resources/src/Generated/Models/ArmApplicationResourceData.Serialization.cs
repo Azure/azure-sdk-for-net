@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationResource : IUtf8JsonSerializable
+    public partial class ArmApplicationResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ArmApplicationResource DeserializeArmApplicationResource(JsonElement element)
+        internal static ArmApplicationResourceData DeserializeArmApplicationResourceData(JsonElement element)
         {
             Optional<string> managedBy = default;
             Optional<ArmApplicationSku> sku = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmApplicationResource(id, name, type, systemData, tags, location, managedBy.Value, sku.Value);
+            return new ArmApplicationResourceData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value);
         }
     }
 }
