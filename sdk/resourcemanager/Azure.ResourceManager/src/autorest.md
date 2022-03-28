@@ -557,6 +557,10 @@ directive:
     where: $.definitions.PolicyAssignmentProperties.properties.enforcementMode["x-ms-enum"].values[0]
     transform: >
       $["value"] = "Enforced"
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataManifestCustomResourceFunctionDefinition.properties.fullyQualifiedResourceType
+    transform: >
+      $["x-ms-format"] = "resource-type"
 ```
 
 ### Tag: package-management
