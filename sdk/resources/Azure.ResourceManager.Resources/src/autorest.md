@@ -162,7 +162,7 @@ directive:
       $["Identity"]["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
       $["Identity"]["properties"]["principalId"]["format"] = "uuid";
       $["Identity"]["properties"]["tenantId"]["format"] = "uuid";
-      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResourceInfo";
+      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResourceData";
       $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
       $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
       $["Sku"]["x-ms-client-name"] = "ArmApplicationSku";
