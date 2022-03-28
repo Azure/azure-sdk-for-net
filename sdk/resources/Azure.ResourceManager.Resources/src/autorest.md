@@ -309,6 +309,10 @@ directive:
     where: $.definitions.DeploymentProperties.properties.expressionEvaluationOptions
     transform: >
       $["x-ms-client-name"] = "ExpressionEvaluation"
+  - from: resources.json
+    where: $.definitions.DeploymentProperties.properties.onErrorDeployment
+    transform: >
+      $["x-ms-client-name"] = "ErrorDeployment"
 ```
 
 ### Tag: package-track2-preview
