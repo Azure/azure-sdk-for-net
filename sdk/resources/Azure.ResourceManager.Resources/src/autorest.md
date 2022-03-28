@@ -73,6 +73,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Urls: Uris
 
 directive:
   - remove-operation: checkResourceName
@@ -150,10 +151,10 @@ directive:
       $["DeploymentScriptsError"]["x-ms-client-name"] = "ArmDeploymentScriptsError";
       $.DeploymentScript['x-ms-client-name'] = 'ArmDeploymentScript';
       $.DeploymentScriptListResult['x-ms-client-name'] = 'ArmDeploymentScriptListResult';
-  - from: managedapplications.json
-    where: $.definitions
-    transform: >
-      
+      $.DeploymentScriptPropertiesBase.properties.cleanupPreference["x-ms-enum"].name = "scriptCleanupOptions";
+      $.EnvironmentVariable['x-ms-client-name'] = 'ScriptEnvironmentVariable';
+      $.StorageAccountConfiguration['x-ms-client-name'] = 'ScriptStorageConfiguration';
+
   - from: managedapplications.json
     where: $.definitions
     transform: >
@@ -198,8 +199,8 @@ directive:
       $.ApplicationNotificationPolicy['x-ms-client-name'] = 'ArmApplicationNotificationPolicy';
       $.ApplicationPackageContact['x-ms-client-name'] = 'ArmApplicationPackageContact';
       $.ApplicationPackageSupportUrls['x-ms-client-name'] = 'ArmApplicationPackageSupportUrls';
-      $.ApplicationPackageSupportUrls.properties.governmentCloud['x-ms-client-name'] = 'AzureGovernment';
-      $.ApplicationPackageSupportUrls.properties.publicAzure['x-ms-client-name'] = 'AzurePublicCloud';
+      $.ApplicationPackageSupportUrls.properties.governmentCloud['x-ms-client-name'] = 'AzureGovernmentUri';
+      $.ApplicationPackageSupportUrls.properties.publicAzure['x-ms-client-name'] = 'AzurePublicCloudUri';
       $.ApplicationPolicy['x-ms-client-name'] = 'ArmApplicationPolicy';
       $.ApplicationPropertiesPatchable['x-ms-client-name'] = 'ArmApplicationPropertiesPatchable';
       $.ApplicationArtifactName['x-ms-enum'].name = 'ArmApplicationArtifactName';
@@ -208,6 +209,7 @@ directive:
       $.ApplicationLockLevel['x-ms-enum'].name = 'ArmApplicationLockLevel';
       $.ApplicationManagementMode['x-ms-enum'].name = 'ArmApplicationManagementMode';
       $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
+      $.JitSchedulingPolicy.properties.duration["x-ms-client-name"] = "Interval";
       $.JitSchedulingPolicy.properties.duration["format"] = "duration";
       $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
@@ -230,6 +232,7 @@ directive:
       $.DeploymentListResult['x-ms-client-name'] = 'ArmDeploymentListResult';
       $.DeploymentOperation['x-ms-client-name'] = 'ArmDeploymentOperation';
       $.DeploymentOperationProperties['x-ms-client-name'] = 'ArmDeploymentOperationProperties';
+      $.DeploymentOperationProperties.properties.provisioningOperation['x-ms-enum'].name = 'ProvisioningOperationKind';
       $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
       $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
       $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIf';
@@ -238,9 +241,20 @@ directive:
       $.DeploymentProperties['x-ms-client-name'] = 'ArmDeploymentProperties';
       $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
       $.Dependency["x-ms-client-name"] = "ArmDependency";
+      $.BasicDependency["x-ms-client-name"] = "BasicArmDependency";
       $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
+      $.DeploymentPropertiesExtended.properties.onErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
       $.DeploymentOperationProperties.properties.duration["format"] = "duration";
+      $.ExpressionEvaluationOptions.properties.scope['x-ms-enum']['name'] = 'ExpressionEvaluationScope';
+      $.OnErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
+      $.OnErrorDeployment.properties.type['x-ms-enum'].name = 'ErrorDeploymentType';
+      $.OnErrorDeploymentExtended['x-ms-client-name'] = 'ErrorDeploymentExtended';
+      $.OnErrorDeploymentExtended.properties.type['x-ms-enum'].name = 'ErrorDeploymentType';
+      $.ParametersLink['x-ms-client-name'] = 'ArmDeploymentParametersLink';
+      $.TemplateLink['x-ms-client-name'] = 'ArmDeploymentTemplateLink';
+      $.WhatIfChange.properties.changeType["x-ms-enum"].name = "WhatIfChangeType";
+      $.WhatIfPropertyChange.properties.propertyChangeType["x-ms-enum"].name = "WhatIfPropertyChangeType";
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'

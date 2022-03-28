@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDependency DeserializeArmDependency(JsonElement element)
         {
-            Optional<IReadOnlyList<BasicDependency>> dependsOn = default;
+            Optional<IReadOnlyList<BasicArmDependency>> dependsOn = default;
             Optional<string> id = default;
             Optional<string> resourceType = default;
             Optional<string> resourceName = default;
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BasicDependency> array = new List<BasicDependency>();
+                    List<BasicArmDependency> array = new List<BasicArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BasicDependency.DeserializeBasicDependency(item));
+                        array.Add(BasicArmDependency.DeserializeBasicArmDependency(item));
                     }
                     dependsOn = array;
                     continue;

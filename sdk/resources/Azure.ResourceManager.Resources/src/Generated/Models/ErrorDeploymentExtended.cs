@@ -8,28 +8,28 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment on error behavior with additional details. </summary>
-    public partial class OnErrorDeploymentExtended
+    public partial class ErrorDeploymentExtended
     {
-        /// <summary> Initializes a new instance of OnErrorDeploymentExtended. </summary>
-        internal OnErrorDeploymentExtended()
+        /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
+        internal ErrorDeploymentExtended()
         {
         }
 
-        /// <summary> Initializes a new instance of OnErrorDeploymentExtended. </summary>
+        /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
-        /// <param name="onErrorDeploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
+        /// <param name="errorDeploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
         /// <param name="deploymentName"> The deployment to be used on error case. </param>
-        internal OnErrorDeploymentExtended(string provisioningState, OnErrorDeploymentType? onErrorDeploymentType, string deploymentName)
+        internal ErrorDeploymentExtended(string provisioningState, ErrorDeploymentType? errorDeploymentType, string deploymentName)
         {
             ProvisioningState = provisioningState;
-            OnErrorDeploymentType = onErrorDeploymentType;
+            ErrorDeploymentType = errorDeploymentType;
             DeploymentName = deploymentName;
         }
 
         /// <summary> The state of the provisioning for the on error deployment. </summary>
         public string ProvisioningState { get; }
         /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
-        public OnErrorDeploymentType? OnErrorDeploymentType { get; }
+        public ErrorDeploymentType? ErrorDeploymentType { get; }
         /// <summary> The deployment to be used on error case. </summary>
         public string DeploymentName { get; }
     }

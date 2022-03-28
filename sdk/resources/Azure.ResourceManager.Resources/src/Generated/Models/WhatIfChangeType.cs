@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Type of change that will be made to the resource when the deployment is executed. </summary>
-    public enum ChangeType
+    public enum WhatIfChangeType
     {
         /// <summary> The resource does not exist in the current state but is present in the desired state. The resource will be created when the deployment is executed. </summary>
         Create,

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class BasicDependency
+    public partial class BasicArmDependency
     {
-        internal static BasicDependency DeserializeBasicDependency(JsonElement element)
+        internal static BasicArmDependency DeserializeBasicArmDependency(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> resourceType = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new BasicDependency(id.Value, resourceType.Value, resourceName.Value);
+            return new BasicArmDependency(id.Value, resourceType.Value, resourceName.Value);
         }
     }
 }

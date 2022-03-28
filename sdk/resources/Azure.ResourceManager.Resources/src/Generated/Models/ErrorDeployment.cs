@@ -8,15 +8,15 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment on error behavior. </summary>
-    public partial class OnErrorDeployment
+    public partial class ErrorDeployment
     {
-        /// <summary> Initializes a new instance of OnErrorDeployment. </summary>
-        public OnErrorDeployment()
+        /// <summary> Initializes a new instance of ErrorDeployment. </summary>
+        public ErrorDeployment()
         {
         }
 
         /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
-        public OnErrorDeploymentType? OnErrorDeploymentType { get; set; }
+        public ErrorDeploymentType? ErrorDeploymentType { get; set; }
         /// <summary> The deployment to be used on error case. </summary>
         public string DeploymentName { get; set; }
     }

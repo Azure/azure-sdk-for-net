@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class OnErrorDeployment : IUtf8JsonSerializable
+    public partial class ErrorDeployment : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OnErrorDeploymentType))
+            if (Optional.IsDefined(ErrorDeploymentType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(OnErrorDeploymentType.Value.ToSerialString());
+                writer.WriteStringValue(ErrorDeploymentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeploymentName))
             {

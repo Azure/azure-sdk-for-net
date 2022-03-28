@@ -145,13 +145,13 @@ namespace Azure.ResourceManager.Resources.Tests
                     Assert.NotNull(getResult.Data.Properties.DebugSetting);
                     Assert.AreEqual(model.Data.Properties.DebugSetting.DetailLevel, getResult.Data.Properties.DebugSetting.DetailLevel);
                 }
-                if (model.Data.Properties.OnErrorDeployment != null || getResult.Data.Properties.OnErrorDeployment != null)
+                if (model.Data.Properties.ErrorDeployment != null || getResult.Data.Properties.ErrorDeployment != null)
                 {
-                    Assert.NotNull(model.Data.Properties.OnErrorDeployment);
-                    Assert.NotNull(getResult.Data.Properties.OnErrorDeployment);
-                    Assert.AreEqual(model.Data.Properties.OnErrorDeployment.DeploymentName, getResult.Data.Properties.OnErrorDeployment.DeploymentName);
-                    Assert.AreEqual(model.Data.Properties.OnErrorDeployment.ProvisioningState, getResult.Data.Properties.OnErrorDeployment.ProvisioningState);
-                    Assert.AreEqual(model.Data.Properties.OnErrorDeployment.OnErrorDeploymentType, getResult.Data.Properties.OnErrorDeployment.OnErrorDeploymentType);
+                    Assert.NotNull(model.Data.Properties.ErrorDeployment);
+                    Assert.NotNull(getResult.Data.Properties.ErrorDeployment);
+                    Assert.AreEqual(model.Data.Properties.ErrorDeployment.DeploymentName, getResult.Data.Properties.ErrorDeployment.DeploymentName);
+                    Assert.AreEqual(model.Data.Properties.ErrorDeployment.ProvisioningState, getResult.Data.Properties.ErrorDeployment.ProvisioningState);
+                    Assert.AreEqual(model.Data.Properties.ErrorDeployment.ErrorDeploymentType, getResult.Data.Properties.ErrorDeployment.ErrorDeploymentType);
                 }
                 Assert.AreEqual(model.Data.Properties.TemplateHash, getResult.Data.Properties.TemplateHash);
                 if (model.Data.Properties.OutputResources != null || getResult.Data.Properties.OutputResources != null)

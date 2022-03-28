@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Tests
         protected static ArmDeploymentProperties CreateDeploymentProperties()
         {
             ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
-            tmpDeploymentProperties.TemplateLink = new TemplateLink();
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
             tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             tmpDeploymentProperties.Parameters = BinaryData.FromObjectAsJson(new JsonObject()
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Tests
         protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingJsonElement()
         {
             ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
-            tmpDeploymentProperties.TemplateLink = new TemplateLink();
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
             tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
             //convert this object to JsonElement

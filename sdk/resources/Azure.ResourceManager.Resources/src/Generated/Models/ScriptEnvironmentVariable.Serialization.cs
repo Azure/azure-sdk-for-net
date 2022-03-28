@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class EnvironmentVariable : IUtf8JsonSerializable
+    public partial class ScriptEnvironmentVariable : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static EnvironmentVariable DeserializeEnvironmentVariable(JsonElement element)
+        internal static ScriptEnvironmentVariable DeserializeScriptEnvironmentVariable(JsonElement element)
         {
             string name = default;
             Optional<string> value = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new EnvironmentVariable(name, value.Value, secureValue.Value);
+            return new ScriptEnvironmentVariable(name, value.Value, secureValue.Value);
         }
     }
 }

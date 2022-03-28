@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Tests
             WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf)).Value;
             Assert.AreEqual(whatIfOperationResult.Status, "Succeeded");
             Assert.AreEqual(whatIfOperationResult.Changes.Count, 1);
-            Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, ChangeType.Create);
+            Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, WhatIfChangeType.Create);
         }
     }
 }

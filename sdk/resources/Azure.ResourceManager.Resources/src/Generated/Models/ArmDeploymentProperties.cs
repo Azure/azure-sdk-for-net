@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </summary>
         public BinaryData Template { get; set; }
         /// <summary> The URI of the template. Use either the templateLink property or the template property, but not both. </summary>
-        public TemplateLink TemplateLink { get; set; }
+        public ArmDeploymentTemplateLink TemplateLink { get; set; }
         /// <summary> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </summary>
         public BinaryData Parameters { get; set; }
         /// <summary> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </summary>
-        public ParametersLink ParametersLink { get; set; }
+        public ArmDeploymentParametersLink ParametersLink { get; set; }
         /// <summary> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </summary>
         public ArmDeploymentMode Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The deployment on error behavior. </summary>
-        public OnErrorDeployment OnErrorDeployment { get; set; }
+        public ErrorDeployment OnErrorDeployment { get; set; }
         /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </summary>
         internal ExpressionEvaluationOptions ExpressionEvaluationOptions { get; set; }
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
-        public ExpressionEvaluationOptionsScopeType? ExpressionEvaluationOptionsScope
+        public ExpressionEvaluationScope? ExpressionEvaluationOptionsScope
         {
             get => ExpressionEvaluationOptions is null ? default : ExpressionEvaluationOptions.Scope;
             set

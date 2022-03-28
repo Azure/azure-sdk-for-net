@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<BinaryData> outputs = default;
             Optional<IReadOnlyList<ResourceProviderData>> providers = default;
             Optional<IReadOnlyList<ArmDependency>> dependencies = default;
-            Optional<TemplateLink> templateLink = default;
+            Optional<ArmDeploymentTemplateLink> templateLink = default;
             Optional<BinaryData> parameters = default;
-            Optional<ParametersLink> parametersLink = default;
+            Optional<ArmDeploymentParametersLink> parametersLink = default;
             Optional<ArmDeploymentMode> mode = default;
             Optional<DebugSetting> debugSetting = default;
-            Optional<OnErrorDeploymentExtended> onErrorDeployment = default;
+            Optional<ErrorDeploymentExtended> onErrorDeployment = default;
             Optional<string> templateHash = default;
             Optional<IReadOnlyList<SubResource>> outputResources = default;
             Optional<IReadOnlyList<SubResource>> validatedResources = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    templateLink = TemplateLink.DeserializeTemplateLink(property.Value);
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    parametersLink = ParametersLink.DeserializeParametersLink(property.Value);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mode"))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    onErrorDeployment = OnErrorDeploymentExtended.DeserializeOnErrorDeploymentExtended(property.Value);
+                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value);
                     continue;
                 }
                 if (property.NameEquals("templateHash"))
