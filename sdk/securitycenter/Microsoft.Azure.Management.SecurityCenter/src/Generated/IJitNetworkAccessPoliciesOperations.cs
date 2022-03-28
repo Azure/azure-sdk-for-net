@@ -47,6 +47,10 @@ namespace Microsoft.Azure.Management.Security
         /// Policies for protecting resources using Just-in-Time access control
         /// for the subscription, location
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -62,7 +66,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<JitNetworkAccessPolicy>>> ListByRegionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JitNetworkAccessPolicy>>> ListByRegionWithHttpMessagesAsync(string ascLocation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Policies for protecting resources using Just-in-Time access control
         /// for the subscription, location
@@ -95,6 +99,10 @@ namespace Microsoft.Azure.Management.Security
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
         /// </param>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -110,7 +118,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<JitNetworkAccessPolicy>>> ListByResourceGroupAndRegionWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JitNetworkAccessPolicy>>> ListByResourceGroupAndRegionWithHttpMessagesAsync(string resourceGroupName, string ascLocation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Policies for protecting resources using Just-in-Time access control
         /// for the subscription, location
@@ -118,6 +126,10 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
+        /// </param>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
         /// </param>
         /// <param name='jitNetworkAccessPolicyName'>
         /// Name of a Just-in-Time access configuration policy.
@@ -137,7 +149,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JitNetworkAccessPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JitNetworkAccessPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create a policy for protecting resources using Just-in-Time access
         /// control
@@ -145,6 +157,10 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
+        /// </param>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
         /// </param>
         /// <param name='jitNetworkAccessPolicyName'>
         /// Name of a Just-in-Time access configuration policy.
@@ -166,13 +182,17 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JitNetworkAccessPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, JitNetworkAccessPolicy body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JitNetworkAccessPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, JitNetworkAccessPolicy body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Just-in-Time access control policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
+        /// </param>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
         /// </param>
         /// <param name='jitNetworkAccessPolicyName'>
         /// Name of a Just-in-Time access configuration policy.
@@ -189,7 +209,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Initiate a JIT access from a specific Just-in-Time policy
         /// configuration.
@@ -197,6 +217,10 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
+        /// </param>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
         /// </param>
         /// <param name='jitNetworkAccessPolicyName'>
         /// Name of a Just-in-Time access configuration policy.
@@ -222,7 +246,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JitNetworkAccessRequest>> InitiateWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JitNetworkAccessRequest>> InitiateWithHttpMessagesAsync(string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Policies for protecting resources using Just-in-Time access
         /// control.

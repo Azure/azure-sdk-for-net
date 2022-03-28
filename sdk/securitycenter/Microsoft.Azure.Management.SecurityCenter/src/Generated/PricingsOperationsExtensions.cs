@@ -100,9 +100,14 @@ namespace Microsoft.Azure.Management.Security
             /// free tier offers basic security features. Possible values include: 'Free',
             /// 'Standard'
             /// </param>
-            public static Pricing Update(this IPricingsOperations operations, string pricingName, string pricingTier)
+            /// <param name='subPlan'>
+            /// The sub-plan selected for a Standard pricing configuration, when more than
+            /// one sub-plan is available. Each sub-plan enables a set of security
+            /// features. When not specified, full plan is applied.
+            /// </param>
+            public static Pricing Update(this IPricingsOperations operations, string pricingName, string pricingTier, string subPlan = default(string))
             {
-                return operations.UpdateAsync(pricingName, pricingTier).GetAwaiter().GetResult();
+                return operations.UpdateAsync(pricingName, pricingTier, subPlan).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -122,12 +127,17 @@ namespace Microsoft.Azure.Management.Security
             /// free tier offers basic security features. Possible values include: 'Free',
             /// 'Standard'
             /// </param>
+            /// <param name='subPlan'>
+            /// The sub-plan selected for a Standard pricing configuration, when more than
+            /// one sub-plan is available. Each sub-plan enables a set of security
+            /// features. When not specified, full plan is applied.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Pricing> UpdateAsync(this IPricingsOperations operations, string pricingName, string pricingTier, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Pricing> UpdateAsync(this IPricingsOperations operations, string pricingName, string pricingTier, string subPlan = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(pricingName, pricingTier, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(pricingName, pricingTier, subPlan, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

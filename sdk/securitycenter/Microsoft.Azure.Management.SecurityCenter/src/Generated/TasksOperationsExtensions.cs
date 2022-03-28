@@ -64,12 +64,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
-            public static IPage<SecurityTask> ListByHomeRegion(this ITasksOperations operations, string filter = default(string))
+            public static IPage<SecurityTask> ListByHomeRegion(this ITasksOperations operations, string ascLocation, string filter = default(string))
             {
-                return operations.ListByHomeRegionAsync(filter).GetAwaiter().GetResult();
+                return operations.ListByHomeRegionAsync(ascLocation, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -79,15 +83,19 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SecurityTask>> ListByHomeRegionAsync(this ITasksOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SecurityTask>> ListByHomeRegionAsync(this ITasksOperations operations, string ascLocation, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(ascLocation, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -100,12 +108,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='taskName'>
             /// Name of the task object, will be a GUID
             /// </param>
-            public static SecurityTask GetSubscriptionLevelTask(this ITasksOperations operations, string taskName)
+            public static SecurityTask GetSubscriptionLevelTask(this ITasksOperations operations, string ascLocation, string taskName)
             {
-                return operations.GetSubscriptionLevelTaskAsync(taskName).GetAwaiter().GetResult();
+                return operations.GetSubscriptionLevelTaskAsync(ascLocation, taskName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -115,15 +127,19 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='taskName'>
             /// Name of the task object, will be a GUID
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityTask> GetSubscriptionLevelTaskAsync(this ITasksOperations operations, string taskName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityTask> GetSubscriptionLevelTaskAsync(this ITasksOperations operations, string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSubscriptionLevelTaskWithHttpMessagesAsync(taskName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSubscriptionLevelTaskWithHttpMessagesAsync(ascLocation, taskName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -136,6 +152,10 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='taskName'>
             /// Name of the task object, will be a GUID
             /// </param>
@@ -143,9 +163,9 @@ namespace Microsoft.Azure.Management.Security
             /// Type of the action to do on the task. Possible values include: 'Activate',
             /// 'Dismiss', 'Start', 'Resolve', 'Close'
             /// </param>
-            public static void UpdateSubscriptionLevelTaskState(this ITasksOperations operations, string taskName, string taskUpdateActionType)
+            public static void UpdateSubscriptionLevelTaskState(this ITasksOperations operations, string ascLocation, string taskName, string taskUpdateActionType)
             {
-                operations.UpdateSubscriptionLevelTaskStateAsync(taskName, taskUpdateActionType).GetAwaiter().GetResult();
+                operations.UpdateSubscriptionLevelTaskStateAsync(ascLocation, taskName, taskUpdateActionType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -154,6 +174,10 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='taskName'>
             /// Name of the task object, will be a GUID
@@ -165,9 +189,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSubscriptionLevelTaskStateAsync(this ITasksOperations operations, string taskName, string taskUpdateActionType, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSubscriptionLevelTaskStateAsync(this ITasksOperations operations, string ascLocation, string taskName, string taskUpdateActionType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSubscriptionLevelTaskStateWithHttpMessagesAsync(taskName, taskUpdateActionType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateSubscriptionLevelTaskStateWithHttpMessagesAsync(ascLocation, taskName, taskUpdateActionType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -180,13 +204,17 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
-            public static IPage<SecurityTask> ListByResourceGroup(this ITasksOperations operations, string resourceGroupName, string filter = default(string))
+            public static IPage<SecurityTask> ListByResourceGroup(this ITasksOperations operations, string resourceGroupName, string ascLocation, string filter = default(string))
             {
-                return operations.ListByResourceGroupAsync(resourceGroupName, filter).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName, ascLocation, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -199,6 +227,10 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -206,9 +238,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SecurityTask>> ListByResourceGroupAsync(this ITasksOperations operations, string resourceGroupName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SecurityTask>> ListByResourceGroupAsync(this ITasksOperations operations, string resourceGroupName, string ascLocation, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, ascLocation, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -225,12 +257,16 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='taskName'>
             /// Name of the task object, will be a GUID
             /// </param>
-            public static SecurityTask GetResourceGroupLevelTask(this ITasksOperations operations, string resourceGroupName, string taskName)
+            public static SecurityTask GetResourceGroupLevelTask(this ITasksOperations operations, string resourceGroupName, string ascLocation, string taskName)
             {
-                return operations.GetResourceGroupLevelTaskAsync(resourceGroupName, taskName).GetAwaiter().GetResult();
+                return operations.GetResourceGroupLevelTaskAsync(resourceGroupName, ascLocation, taskName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -244,15 +280,19 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='taskName'>
             /// Name of the task object, will be a GUID
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityTask> GetResourceGroupLevelTaskAsync(this ITasksOperations operations, string resourceGroupName, string taskName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityTask> GetResourceGroupLevelTaskAsync(this ITasksOperations operations, string resourceGroupName, string ascLocation, string taskName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetResourceGroupLevelTaskWithHttpMessagesAsync(resourceGroupName, taskName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetResourceGroupLevelTaskWithHttpMessagesAsync(resourceGroupName, ascLocation, taskName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -269,6 +309,10 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='taskName'>
             /// Name of the task object, will be a GUID
             /// </param>
@@ -276,9 +320,9 @@ namespace Microsoft.Azure.Management.Security
             /// Type of the action to do on the task. Possible values include: 'Activate',
             /// 'Dismiss', 'Start', 'Resolve', 'Close'
             /// </param>
-            public static void UpdateResourceGroupLevelTaskState(this ITasksOperations operations, string resourceGroupName, string taskName, string taskUpdateActionType)
+            public static void UpdateResourceGroupLevelTaskState(this ITasksOperations operations, string resourceGroupName, string ascLocation, string taskName, string taskUpdateActionType)
             {
-                operations.UpdateResourceGroupLevelTaskStateAsync(resourceGroupName, taskName, taskUpdateActionType).GetAwaiter().GetResult();
+                operations.UpdateResourceGroupLevelTaskStateAsync(resourceGroupName, ascLocation, taskName, taskUpdateActionType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -292,6 +336,10 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='taskName'>
             /// Name of the task object, will be a GUID
             /// </param>
@@ -302,9 +350,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelTaskStateAsync(this ITasksOperations operations, string resourceGroupName, string taskName, string taskUpdateActionType, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateResourceGroupLevelTaskStateAsync(this ITasksOperations operations, string resourceGroupName, string ascLocation, string taskName, string taskUpdateActionType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelTaskStateWithHttpMessagesAsync(resourceGroupName, taskName, taskUpdateActionType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateResourceGroupLevelTaskStateWithHttpMessagesAsync(resourceGroupName, ascLocation, taskName, taskUpdateActionType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

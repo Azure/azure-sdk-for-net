@@ -47,12 +47,6 @@ namespace Microsoft.Azure.Management.Security
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The location where ASC stores the data of the subscription. can be
-        /// retrieved from Get locations
-        /// </summary>
-        string AscLocation { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -70,6 +64,21 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the IMdeOnboardingsOperations.
+        /// </summary>
+        IMdeOnboardingsOperations MdeOnboardings { get; }
+
+        /// <summary>
+        /// Gets the ICustomAssessmentAutomationsOperations.
+        /// </summary>
+        ICustomAssessmentAutomationsOperations CustomAssessmentAutomations { get; }
+
+        /// <summary>
+        /// Gets the ICustomEntityStoreAssignmentsOperations.
+        /// </summary>
+        ICustomEntityStoreAssignmentsOperations CustomEntityStoreAssignments { get; }
 
         /// <summary>
         /// Gets the IComplianceResultsOperations.
@@ -295,6 +304,11 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ISoftwareInventoriesOperations.
         /// </summary>
         ISoftwareInventoriesOperations SoftwareInventories { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorsOperations.
+        /// </summary>
+        ISecurityConnectorsOperations SecurityConnectors { get; }
 
     }
 }

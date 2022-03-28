@@ -49,6 +49,10 @@ namespace Microsoft.Azure.Management.Security
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
         /// </param>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='securitySolutionName'>
         /// Name of security solution.
         /// </param>
@@ -67,7 +71,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecuritySolution>> GetWithHttpMessagesAsync(string resourceGroupName, string securitySolutionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecuritySolution>> GetWithHttpMessagesAsync(string resourceGroupName, string ascLocation, string securitySolutionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of Security Solutions for the subscription.
         /// </summary>

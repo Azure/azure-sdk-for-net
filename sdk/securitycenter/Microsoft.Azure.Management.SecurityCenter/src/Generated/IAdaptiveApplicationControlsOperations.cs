@@ -52,6 +52,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Gets an application control VM/server group.
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='groupName'>
         /// Name of an application control machine group
         /// </param>
@@ -70,10 +74,14 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> GetWithHttpMessagesAsync(string ascLocation, string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update an application control machine group
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='groupName'>
         /// Name of an application control machine group
         /// </param>
@@ -94,10 +102,14 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> PutWithHttpMessagesAsync(string groupName, AdaptiveApplicationControlGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> PutWithHttpMessagesAsync(string ascLocation, string groupName, AdaptiveApplicationControlGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an application control machine group
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='groupName'>
         /// Name of an application control machine group
         /// </param>
@@ -113,6 +125,6 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string ascLocation, string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

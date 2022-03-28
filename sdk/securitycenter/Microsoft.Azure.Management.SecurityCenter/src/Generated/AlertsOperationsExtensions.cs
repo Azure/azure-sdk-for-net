@@ -92,9 +92,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Alert> ListSubscriptionLevelByRegion(this IAlertsOperations operations)
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            public static IPage<Alert> ListSubscriptionLevelByRegion(this IAlertsOperations operations, string ascLocation)
             {
-                return operations.ListSubscriptionLevelByRegionAsync().GetAwaiter().GetResult();
+                return operations.ListSubscriptionLevelByRegionAsync(ascLocation).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,12 +108,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListSubscriptionLevelByRegionAsync(this IAlertsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListSubscriptionLevelByRegionAsync(this IAlertsOperations operations, string ascLocation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSubscriptionLevelByRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSubscriptionLevelByRegionWithHttpMessagesAsync(ascLocation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -122,13 +130,17 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static IPage<Alert> ListResourceGroupLevelByRegion(this IAlertsOperations operations, string resourceGroupName)
+            public static IPage<Alert> ListResourceGroupLevelByRegion(this IAlertsOperations operations, string ascLocation, string resourceGroupName)
             {
-                return operations.ListResourceGroupLevelByRegionAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListResourceGroupLevelByRegionAsync(ascLocation, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -138,6 +150,10 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
@@ -145,9 +161,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListResourceGroupLevelByRegionAsync(this IAlertsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListResourceGroupLevelByRegionAsync(this IAlertsOperations operations, string ascLocation, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListResourceGroupLevelByRegionWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListResourceGroupLevelByRegionWithHttpMessagesAsync(ascLocation, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -159,12 +175,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            public static Alert GetSubscriptionLevel(this IAlertsOperations operations, string alertName)
+            public static Alert GetSubscriptionLevel(this IAlertsOperations operations, string ascLocation, string alertName)
             {
-                return operations.GetSubscriptionLevelAsync(alertName).GetAwaiter().GetResult();
+                return operations.GetSubscriptionLevelAsync(ascLocation, alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -173,15 +193,19 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Alert> GetSubscriptionLevelAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Alert> GetSubscriptionLevelAsync(this IAlertsOperations operations, string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSubscriptionLevelWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSubscriptionLevelWithHttpMessagesAsync(ascLocation, alertName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -194,6 +218,10 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
@@ -201,9 +229,9 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static Alert GetResourceGroupLevel(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            public static Alert GetResourceGroupLevel(this IAlertsOperations operations, string ascLocation, string alertName, string resourceGroupName)
             {
-                return operations.GetResourceGroupLevelAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                return operations.GetResourceGroupLevelAsync(ascLocation, alertName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -212,6 +240,10 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
@@ -223,9 +255,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Alert> GetResourceGroupLevelAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Alert> GetResourceGroupLevelAsync(this IAlertsOperations operations, string ascLocation, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetResourceGroupLevelWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetResourceGroupLevelWithHttpMessagesAsync(ascLocation, alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -237,12 +269,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            public static void UpdateSubscriptionLevelStateToDismiss(this IAlertsOperations operations, string alertName)
+            public static void UpdateSubscriptionLevelStateToDismiss(this IAlertsOperations operations, string ascLocation, string alertName)
             {
-                operations.UpdateSubscriptionLevelStateToDismissAsync(alertName).GetAwaiter().GetResult();
+                operations.UpdateSubscriptionLevelStateToDismissAsync(ascLocation, alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -251,36 +287,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task UpdateSubscriptionLevelStateToDismissAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.UpdateSubscriptionLevelStateToDismissWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Update the alert's state
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
-            public static void UpdateSubscriptionLevelStateToResolve(this IAlertsOperations operations, string alertName)
-            {
-                operations.UpdateSubscriptionLevelStateToResolveAsync(alertName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Update the alert's state
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
@@ -288,9 +297,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSubscriptionLevelStateToResolveAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSubscriptionLevelStateToDismissAsync(this IAlertsOperations operations, string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSubscriptionLevelStateToResolveWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateSubscriptionLevelStateToDismissWithHttpMessagesAsync(ascLocation, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -298,13 +307,17 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            public static void UpdateSubscriptionLevelStateToActivate(this IAlertsOperations operations, string alertName)
+            public static void UpdateSubscriptionLevelStateToResolve(this IAlertsOperations operations, string ascLocation, string alertName)
             {
-                operations.UpdateSubscriptionLevelStateToActivateAsync(alertName).GetAwaiter().GetResult();
+                operations.UpdateSubscriptionLevelStateToResolveAsync(ascLocation, alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -312,6 +325,10 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
@@ -319,9 +336,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSubscriptionLevelStateToActivateAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSubscriptionLevelStateToResolveAsync(this IAlertsOperations operations, string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSubscriptionLevelStateToActivateWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateSubscriptionLevelStateToResolveWithHttpMessagesAsync(ascLocation, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -329,6 +346,49 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            public static void UpdateSubscriptionLevelStateToActivate(this IAlertsOperations operations, string ascLocation, string alertName)
+            {
+                operations.UpdateSubscriptionLevelStateToActivateAsync(ascLocation, alertName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateSubscriptionLevelStateToActivateAsync(this IAlertsOperations operations, string ascLocation, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateSubscriptionLevelStateToActivateWithHttpMessagesAsync(ascLocation, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
@@ -337,9 +397,9 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static void UpdateResourceGroupLevelStateToResolve(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            public static void UpdateResourceGroupLevelStateToResolve(this IAlertsOperations operations, string ascLocation, string alertName, string resourceGroupName)
             {
-                operations.UpdateResourceGroupLevelStateToResolveAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                operations.UpdateResourceGroupLevelStateToResolveAsync(ascLocation, alertName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -348,44 +408,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task UpdateResourceGroupLevelStateToResolveAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Update the alert's state
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='alertName'>
-            /// Name of the alert object
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            public static void UpdateResourceGroupLevelStateToDismiss(this IAlertsOperations operations, string alertName, string resourceGroupName)
-            {
-                operations.UpdateResourceGroupLevelStateToDismissAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Update the alert's state
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
@@ -397,9 +422,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelStateToDismissAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateResourceGroupLevelStateToResolveAsync(this IAlertsOperations operations, string ascLocation, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(ascLocation, alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -407,6 +432,10 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
@@ -415,9 +444,9 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static void UpdateResourceGroupLevelStateToActivate(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            public static void UpdateResourceGroupLevelStateToDismiss(this IAlertsOperations operations, string ascLocation, string alertName, string resourceGroupName)
             {
-                operations.UpdateResourceGroupLevelStateToActivateAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                operations.UpdateResourceGroupLevelStateToDismissAsync(ascLocation, alertName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -425,6 +454,10 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='alertName'>
             /// Name of the alert object
@@ -436,9 +469,56 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelStateToActivateAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateResourceGroupLevelStateToDismissAsync(this IAlertsOperations operations, string ascLocation, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(ascLocation, alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            public static void UpdateResourceGroupLevelStateToActivate(this IAlertsOperations operations, string ascLocation, string alertName, string resourceGroupName)
+            {
+                operations.UpdateResourceGroupLevelStateToActivateAsync(ascLocation, alertName, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update the alert's state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert object
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateResourceGroupLevelStateToActivateAsync(this IAlertsOperations operations, string ascLocation, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(ascLocation, alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -447,12 +527,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='properties'>
             /// Alert Simulator request body data.
             /// </param>
-            public static void Simulate(this IAlertsOperations operations, AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties))
+            public static void Simulate(this IAlertsOperations operations, string ascLocation, AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties))
             {
-                operations.SimulateAsync(properties).GetAwaiter().GetResult();
+                operations.SimulateAsync(ascLocation, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -460,6 +544,10 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='properties'>
             /// Alert Simulator request body data.
@@ -467,40 +555,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SimulateAsync(this IAlertsOperations operations, AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SimulateAsync(this IAlertsOperations operations, string ascLocation, AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.SimulateWithHttpMessagesAsync(properties, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Simulate security alerts
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='properties'>
-            /// Alert Simulator request body data.
-            /// </param>
-            public static void BeginSimulate(this IAlertsOperations operations, AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties))
-            {
-                operations.BeginSimulateAsync(properties).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Simulate security alerts
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='properties'>
-            /// Alert Simulator request body data.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginSimulateAsync(this IAlertsOperations operations, AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginSimulateWithHttpMessagesAsync(properties, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.SimulateWithHttpMessagesAsync(ascLocation, properties, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

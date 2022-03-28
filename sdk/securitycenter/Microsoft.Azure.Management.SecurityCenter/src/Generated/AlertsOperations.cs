@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -445,6 +445,10 @@ namespace Microsoft.Azure.Management.Security
         /// List all the alerts that are associated with the subscription that are
         /// stored in a specific location
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -466,7 +470,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Alert>>> ListSubscriptionLevelByRegionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Alert>>> ListSubscriptionLevelByRegionWithHttpMessagesAsync(string ascLocation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -479,11 +483,11 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -492,6 +496,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSubscriptionLevelByRegion", tracingParameters);
             }
@@ -499,7 +504,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -634,6 +639,10 @@ namespace Microsoft.Azure.Management.Security
         /// List all the alerts that are associated with the resource group that are
         /// stored in a specific location
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The name is
         /// case insensitive.
@@ -659,7 +668,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Alert>>> ListResourceGroupLevelByRegionWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Alert>>> ListResourceGroupLevelByRegionWithHttpMessagesAsync(string ascLocation, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -672,9 +681,9 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (resourceGroupName == null)
             {
@@ -695,7 +704,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -704,6 +713,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListResourceGroupLevelByRegion", tracingParameters);
@@ -712,7 +722,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -847,6 +857,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Get an alert that is associated with a subscription
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -871,7 +885,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Alert>> GetSubscriptionLevelWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Alert>> GetSubscriptionLevelWithHttpMessagesAsync(string ascLocation, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -884,15 +898,15 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (alertName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "alertName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -901,6 +915,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertName", alertName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSubscriptionLevel", tracingParameters);
@@ -909,7 +924,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -1045,6 +1060,10 @@ namespace Microsoft.Azure.Management.Security
         /// Get an alert that is associated a resource group or a resource in a
         /// resource group
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -1073,7 +1092,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Alert>> GetResourceGroupLevelWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Alert>> GetResourceGroupLevelWithHttpMessagesAsync(string ascLocation, string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1086,9 +1105,9 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (alertName == null)
             {
@@ -1113,7 +1132,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1122,6 +1141,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertName", alertName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1131,7 +1151,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
@@ -1267,6 +1287,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -1288,7 +1312,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateSubscriptionLevelStateToDismissWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateSubscriptionLevelStateToDismissWithHttpMessagesAsync(string ascLocation, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1301,15 +1325,15 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (alertName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "alertName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1318,6 +1342,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertName", alertName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSubscriptionLevelStateToDismiss", tracingParameters);
@@ -1326,7 +1351,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/dismiss").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -1443,6 +1468,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -1464,7 +1493,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateSubscriptionLevelStateToResolveWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateSubscriptionLevelStateToResolveWithHttpMessagesAsync(string ascLocation, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1477,15 +1506,15 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (alertName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "alertName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1494,6 +1523,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertName", alertName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSubscriptionLevelStateToResolve", tracingParameters);
@@ -1502,7 +1532,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/resolve").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -1619,6 +1649,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -1640,7 +1674,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateSubscriptionLevelStateToActivateWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateSubscriptionLevelStateToActivateWithHttpMessagesAsync(string ascLocation, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1653,15 +1687,15 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (alertName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "alertName");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1670,6 +1704,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertName", alertName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSubscriptionLevelStateToActivate", tracingParameters);
@@ -1678,7 +1713,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/activate").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -1795,6 +1830,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -1820,7 +1859,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(string ascLocation, string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1833,9 +1872,9 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (alertName == null)
             {
@@ -1860,7 +1899,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1869,6 +1908,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertName", alertName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1878,7 +1918,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/resolve").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
@@ -1996,6 +2036,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -2021,7 +2065,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(string ascLocation, string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2034,9 +2078,9 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (alertName == null)
             {
@@ -2061,7 +2105,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2070,6 +2114,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertName", alertName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2079,7 +2124,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/dismiss").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
@@ -2197,6 +2242,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -2222,7 +2271,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(string ascLocation, string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2235,9 +2284,9 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (alertName == null)
             {
@@ -2262,7 +2311,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2271,6 +2320,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertName", alertName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2280,7 +2330,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/activate").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
@@ -2398,25 +2448,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Simulate security alerts
         /// </summary>
-        /// <param name='properties'>
-        /// Alert Simulator request body data.
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> SimulateWithHttpMessagesAsync(AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginSimulateWithHttpMessagesAsync(properties, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Simulate security alerts
-        /// </summary>
         /// <param name='properties'>
         /// Alert Simulator request body data.
         /// </param>
@@ -2438,7 +2473,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginSimulateWithHttpMessagesAsync(AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SimulateWithHttpMessagesAsync(string ascLocation, AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2451,11 +2486,11 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
-            string apiVersion = "2021-01-01";
+            string apiVersion = "2021-11-01";
             AlertSimulatorRequestBody alertSimulatorRequestBody = new AlertSimulatorRequestBody();
             if (properties != null)
             {
@@ -2469,15 +2504,16 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("alertSimulatorRequestBody", alertSimulatorRequestBody);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginSimulate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Simulate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/default/simulate").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -2547,7 +2583,7 @@ namespace Microsoft.Azure.Management.Security
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

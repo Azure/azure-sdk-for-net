@@ -58,9 +58,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<AllowedConnectionsResource> ListByHomeRegion(this IAllowedConnectionsOperations operations)
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            public static IPage<AllowedConnectionsResource> ListByHomeRegion(this IAllowedConnectionsOperations operations, string ascLocation)
             {
-                return operations.ListByHomeRegionAsync().GetAwaiter().GetResult();
+                return operations.ListByHomeRegionAsync(ascLocation).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -70,12 +74,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AllowedConnectionsResource>> ListByHomeRegionAsync(this IAllowedConnectionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AllowedConnectionsResource>> ListByHomeRegionAsync(this IAllowedConnectionsOperations operations, string ascLocation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(ascLocation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -92,13 +100,17 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='connectionType'>
             /// The type of allowed connections (Internal, External). Possible values
             /// include: 'Internal', 'External'
             /// </param>
-            public static AllowedConnectionsResource Get(this IAllowedConnectionsOperations operations, string resourceGroupName, string connectionType)
+            public static AllowedConnectionsResource Get(this IAllowedConnectionsOperations operations, string resourceGroupName, string ascLocation, string connectionType)
             {
-                return operations.GetAsync(resourceGroupName, connectionType).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, ascLocation, connectionType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -112,6 +124,10 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='connectionType'>
             /// The type of allowed connections (Internal, External). Possible values
             /// include: 'Internal', 'External'
@@ -119,9 +135,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AllowedConnectionsResource> GetAsync(this IAllowedConnectionsOperations operations, string resourceGroupName, string connectionType, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AllowedConnectionsResource> GetAsync(this IAllowedConnectionsOperations operations, string resourceGroupName, string ascLocation, string connectionType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, connectionType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, ascLocation, connectionType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

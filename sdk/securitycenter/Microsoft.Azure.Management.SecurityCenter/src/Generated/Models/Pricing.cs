@@ -44,13 +44,18 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="subPlan">The sub-plan selected for a Standard pricing
+        /// configuration, when more than one sub-plan is available. Each
+        /// sub-plan enables a set of security features. When not specified,
+        /// full plan is applied.</param>
         /// <param name="freeTrialRemainingTime">The duration left for the
         /// subscriptions free trial period - in ISO 8601 format (e.g.
         /// P3Y6M4DT12H30M5S).</param>
-        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?))
+        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), string subPlan = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?))
             : base(id, name, type)
         {
             PricingTier = pricingTier;
+            SubPlan = subPlan;
             FreeTrialRemainingTime = freeTrialRemainingTime;
             CustomInit();
         }
@@ -69,6 +74,15 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.pricingTier")]
         public string PricingTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sub-plan selected for a Standard pricing
+        /// configuration, when more than one sub-plan is available. Each
+        /// sub-plan enables a set of security features. When not specified,
+        /// full plan is applied.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subPlan")]
+        public string SubPlan { get; set; }
 
         /// <summary>
         /// Gets the duration left for the subscriptions free trial period - in

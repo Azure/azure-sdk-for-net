@@ -67,12 +67,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='groupName'>
             /// Name of an application control machine group
             /// </param>
-            public static AdaptiveApplicationControlGroup Get(this IAdaptiveApplicationControlsOperations operations, string groupName)
+            public static AdaptiveApplicationControlGroup Get(this IAdaptiveApplicationControlsOperations operations, string ascLocation, string groupName)
             {
-                return operations.GetAsync(groupName).GetAwaiter().GetResult();
+                return operations.GetAsync(ascLocation, groupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -81,15 +85,19 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='groupName'>
             /// Name of an application control machine group
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AdaptiveApplicationControlGroup> GetAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AdaptiveApplicationControlGroup> GetAsync(this IAdaptiveApplicationControlsOperations operations, string ascLocation, string groupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(groupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(ascLocation, groupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -101,14 +109,18 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='groupName'>
             /// Name of an application control machine group
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static AdaptiveApplicationControlGroup Put(this IAdaptiveApplicationControlsOperations operations, string groupName, AdaptiveApplicationControlGroup body)
+            public static AdaptiveApplicationControlGroup Put(this IAdaptiveApplicationControlsOperations operations, string ascLocation, string groupName, AdaptiveApplicationControlGroup body)
             {
-                return operations.PutAsync(groupName, body).GetAwaiter().GetResult();
+                return operations.PutAsync(ascLocation, groupName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -116,6 +128,10 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='groupName'>
             /// Name of an application control machine group
@@ -125,9 +141,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AdaptiveApplicationControlGroup> PutAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, AdaptiveApplicationControlGroup body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AdaptiveApplicationControlGroup> PutAsync(this IAdaptiveApplicationControlsOperations operations, string ascLocation, string groupName, AdaptiveApplicationControlGroup body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutWithHttpMessagesAsync(groupName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutWithHttpMessagesAsync(ascLocation, groupName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -139,12 +155,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='groupName'>
             /// Name of an application control machine group
             /// </param>
-            public static void Delete(this IAdaptiveApplicationControlsOperations operations, string groupName)
+            public static void Delete(this IAdaptiveApplicationControlsOperations operations, string ascLocation, string groupName)
             {
-                operations.DeleteAsync(groupName).GetAwaiter().GetResult();
+                operations.DeleteAsync(ascLocation, groupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -153,15 +173,19 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='groupName'>
             /// Name of an application control machine group
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IAdaptiveApplicationControlsOperations operations, string ascLocation, string groupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(groupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(ascLocation, groupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

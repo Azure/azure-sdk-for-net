@@ -56,9 +56,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<TopologyResource> ListByHomeRegion(this ITopologyOperations operations)
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            public static IPage<TopologyResource> ListByHomeRegion(this ITopologyOperations operations, string ascLocation)
             {
-                return operations.ListByHomeRegionAsync().GetAwaiter().GetResult();
+                return operations.ListByHomeRegionAsync(ascLocation).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -68,12 +72,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TopologyResource>> ListByHomeRegionAsync(this ITopologyOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TopologyResource>> ListByHomeRegionAsync(this ITopologyOperations operations, string ascLocation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(ascLocation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -89,12 +97,16 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='topologyResourceName'>
             /// Name of a topology resources collection.
             /// </param>
-            public static TopologyResource Get(this ITopologyOperations operations, string resourceGroupName, string topologyResourceName)
+            public static TopologyResource Get(this ITopologyOperations operations, string resourceGroupName, string ascLocation, string topologyResourceName)
             {
-                return operations.GetAsync(resourceGroupName, topologyResourceName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, ascLocation, topologyResourceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,15 +119,19 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='topologyResourceName'>
             /// Name of a topology resources collection.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TopologyResource> GetAsync(this ITopologyOperations operations, string resourceGroupName, string topologyResourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TopologyResource> GetAsync(this ITopologyOperations operations, string resourceGroupName, string ascLocation, string topologyResourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, topologyResourceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, ascLocation, topologyResourceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

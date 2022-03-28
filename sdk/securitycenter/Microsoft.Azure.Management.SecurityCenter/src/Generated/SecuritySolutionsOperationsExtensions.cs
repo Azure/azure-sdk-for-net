@@ -59,12 +59,16 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='securitySolutionName'>
             /// Name of security solution.
             /// </param>
-            public static SecuritySolution Get(this ISecuritySolutionsOperations operations, string resourceGroupName, string securitySolutionName)
+            public static SecuritySolution Get(this ISecuritySolutionsOperations operations, string resourceGroupName, string ascLocation, string securitySolutionName)
             {
-                return operations.GetAsync(resourceGroupName, securitySolutionName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, ascLocation, securitySolutionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -77,15 +81,19 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='securitySolutionName'>
             /// Name of security solution.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecuritySolution> GetAsync(this ISecuritySolutionsOperations operations, string resourceGroupName, string securitySolutionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecuritySolution> GetAsync(this ISecuritySolutionsOperations operations, string resourceGroupName, string ascLocation, string securitySolutionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, securitySolutionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, ascLocation, securitySolutionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

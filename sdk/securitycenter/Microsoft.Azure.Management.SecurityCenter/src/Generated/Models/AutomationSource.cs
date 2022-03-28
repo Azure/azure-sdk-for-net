@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the AutomationSource class.
         /// </summary>
         /// <param name="eventSource">A valid event source type. Possible
-        /// values include: 'Assessments', 'SubAssessments', 'Alerts',
+        /// values include: 'Assessments', 'AssessmentsSnapshot',
+        /// 'SubAssessments', 'SubAssessmentsSnapshot', 'Alerts',
         /// 'SecureScores', 'SecureScoresSnapshot', 'SecureScoreControls',
         /// 'SecureScoreControlsSnapshot', 'RegulatoryComplianceAssessment',
         /// 'RegulatoryComplianceAssessmentSnapshot'</param>
@@ -56,7 +57,8 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// Gets or sets a valid event source type. Possible values include:
-        /// 'Assessments', 'SubAssessments', 'Alerts', 'SecureScores',
+        /// 'Assessments', 'AssessmentsSnapshot', 'SubAssessments',
+        /// 'SubAssessmentsSnapshot', 'Alerts', 'SecureScores',
         /// 'SecureScoresSnapshot', 'SecureScoreControls',
         /// 'SecureScoreControlsSnapshot', 'RegulatoryComplianceAssessment',
         /// 'RegulatoryComplianceAssessmentSnapshot'

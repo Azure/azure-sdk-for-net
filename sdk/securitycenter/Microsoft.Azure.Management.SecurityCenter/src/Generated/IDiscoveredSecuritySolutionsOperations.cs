@@ -46,6 +46,10 @@ namespace Microsoft.Azure.Management.Security
         /// Gets a list of discovered Security Solutions for the subscription
         /// and location.
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -61,13 +65,17 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DiscoveredSecuritySolution>>> ListByHomeRegionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DiscoveredSecuritySolution>>> ListByHomeRegionWithHttpMessagesAsync(string ascLocation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a specific discovered Security Solution.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
+        /// </param>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
         /// </param>
         /// <param name='discoveredSecuritySolutionName'>
         /// Name of a discovered security solution.
@@ -87,7 +95,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DiscoveredSecuritySolution>> GetWithHttpMessagesAsync(string resourceGroupName, string discoveredSecuritySolutionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiscoveredSecuritySolution>> GetWithHttpMessagesAsync(string resourceGroupName, string ascLocation, string discoveredSecuritySolutionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of discovered Security Solutions for the subscription.
         /// </summary>
