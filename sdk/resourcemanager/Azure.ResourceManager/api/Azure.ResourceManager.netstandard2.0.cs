@@ -1376,8 +1376,8 @@ namespace Azure.ResourceManager.Resources.Models
         internal LocationMetadata() { }
         public string GeographyGroup { get { throw null; } }
         public string HomeLocation { get { throw null; } }
-        public string Latitude { get { throw null; } }
-        public string Longitude { get { throw null; } }
+        public double? Latitude { get { throw null; } }
+        public double? Longitude { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.PairedRegion> PairedRegion { get { throw null; } }
         public string PhysicalLocation { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.RegionCategory? RegionCategory { get { throw null; } }

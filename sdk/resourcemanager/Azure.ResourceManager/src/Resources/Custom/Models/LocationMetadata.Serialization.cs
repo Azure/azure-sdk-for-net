@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<RegionType> regionType = default;
             Optional<RegionCategory> regionCategory = default;
             Optional<string> geographyGroup = default;
-            Optional<string> longitude = default;
-            Optional<string> latitude = default;
+            Optional<double> longitude = default;
+            Optional<double> latitude = default;
             Optional<string> physicalLocation = default;
             Optional<IReadOnlyList<PairedRegion>> pairedRegion = default;
             Optional<string> homeLocation = default;
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("longitude"))
                 {
-                    longitude = property.Value.GetString();
+                    longitude = double.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("latitude"))
                 {
-                    latitude = property.Value.GetString();
+                    latitude = double.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("physicalLocation"))
