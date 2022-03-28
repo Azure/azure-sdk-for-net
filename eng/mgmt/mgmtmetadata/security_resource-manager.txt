@@ -4,7 +4,8 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/security/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\Users\surashed\Documents\GitHub\azure-sdk-for-net\sdk
-2022-03-28 14:57:49 UTC
+Autorest CSharp Version: 2.3.82
+2022-03-28 15:59:36 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
