@@ -11,7 +11,6 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Models
 {
     /// <summary> The resource management error additional info. </summary>
-    [PropertyReferenceType]
     public partial class ErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>

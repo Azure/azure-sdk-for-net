@@ -12,7 +12,6 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Models
 {
     /// <summary> The error detail. </summary>
-    [PropertyReferenceType]
     public partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
