@@ -79,13 +79,52 @@ The following examples show common scenarios using the `client` [created above](
 To analyze a conversation, you can then call the `client.AnalyzeConversation()` method which takes a `TextConversationItem` and `ConversationsProject` as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
+TextConversationItem textConversationItem = new TextConversationItem(
+    participantId: "1",
+    id: "1",
+    text: "Send an email to Carol about the tomorrow's demo.");
+
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "We'll have 2 plates of seared salmon nigiri.",
+Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+    textConversationItem,
     conversationsProject);
 
-Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
+
+Console.WriteLine("Intents");
+foreach (ConversationIntent intent in conversationPrediction.Intents)
+{
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
+    Console.WriteLine();
+}
+
+Console.WriteLine("Entities:");
+foreach (ConversationEntity entity in conversationPrediction.Entities)
+{
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
+    Console.WriteLine();
+
+    if (entity.Resolutions != null)
+    {
+        foreach (BaseResolution resolution in entity.Resolutions)
+        {
+            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
+        }
+    }
+}
 ```
 
 The specified parameters can also be used to initialize a `AnalyzeConversationOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
@@ -93,19 +132,56 @@ The specified parameters can also be used to initialize a `AnalyzeConversationOp
 You can also set the verbose parameter in the `AnalyzeConversation()` method.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
+TextConversationItem textConversationItem = new TextConversationItem(
+     participantId: "1",
+     id: "1",
+     text: "Send an email to Carol about the tomorrow's demo.");
+AnalyzeConversationOptions analysisInput = new AnalyzeConversationOptions(textConversationItem) { IsLoggingEnabled = true };
+
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions()
-{
-    IsLoggingEnabled = true,
-    Verbose = true,
-};
 
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "We'll have 2 plates of seared salmon nigiri.",
+Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+    textConversationItem,
     conversationsProject,
-    options);
+    analysisInput,
+    verbose: true);
 
-Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
+
+Console.WriteLine("Intents");
+foreach (ConversationIntent intent in conversationPrediction.Intents)
+{
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
+    Console.WriteLine();
+}
+
+Console.WriteLine("Entities:");
+foreach (ConversationEntity entity in conversationPrediction.Entities)
+{
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
+    Console.WriteLine();
+
+    if (entity.Resolutions != null)
+    {
+        foreach (BaseResolution resolution in entity.Resolutions)
+        {
+            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
+        }
+    }
+}
 ```
 
 ### Analyze a conversation in a different language
@@ -113,17 +189,56 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 The language property in the `TextConversationItem` can be used to specify the language of the conversation.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+TextConversationItem textConversationItem = new TextConversationItem(
+    participantId: "1",
+    id: "1",
+    text: "Tendremos 2 platos de nigiri de salmón braseado.")
 {
     Language = "es"
 };
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "Tendremos 2 platos de nigiri de salmón braseado.",
-    conversationsProject,
-    options);
 
-Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
+Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+    textConversationItem,
+    conversationsProject);
+
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
+
+Console.WriteLine("Intents");
+foreach (ConversationIntent intent in conversationPrediction.Intents)
+{
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
+    Console.WriteLine();
+}
+
+Console.WriteLine("Entities:");
+foreach (ConversationEntity entity in conversationPrediction.Entities)
+{
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
+    Console.WriteLine();
+
+    if (entity.Resolutions != null)
+    {
+        foreach (BaseResolution resolution in entity.Resolutions)
+        {
+            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
+        }
+    }
+}
 ```
 
 Other optional properties can be set such as verbosity and whether service logging is enabled.
@@ -133,14 +248,88 @@ To analyze a conversation using an orchestration project, you can then call the 
 
 ### Orchestration Project - Conversation Prediction
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
+string respondingProjectName = orchestratorPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult.TargetKind == TargetKind.Conversation)
+{
+    ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
+
+    ConversationResult conversationResult = cluTargetIntentResult.Result;
+    ConversationPrediction conversationPrediction = conversationResult.Prediction;
+
+    Console.WriteLine($"Top Intent: {conversationResult.Prediction.TopIntent}");
+    Console.WriteLine($"Intents:");
+    foreach (ConversationIntent intent in conversationPrediction.Intents)
+    {
+        Console.WriteLine($"Intent Category: {intent.Category}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
+        Console.WriteLine();
+    }
+
+    Console.WriteLine($"Entities:");
+    foreach (ConversationEntity entity in conversationPrediction.Entities)
+    {
+        Console.WriteLine($"Entity Text: {entity.Text}");
+        Console.WriteLine($"Entity Category: {entity.Category}");
+        Console.WriteLine($"Confidence: {entity.Confidence}");
+        Console.WriteLine($"Starting Position: {entity.Offset}");
+        Console.WriteLine($"Length: {entity.Length}");
+        Console.WriteLine();
+
+        if (entity.Resolutions != null)
+        {
+            Console.WriteLine($"Resolutions:");
+            foreach (BaseResolution resolution in entity.Resolutions)
+            {
+                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+    }
+}
 ```
 
 ### Orchestration Project - QuestionAnswering Prediction
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
+string respondingProjectName = orchestratorPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
+{
+    Console.WriteLine($"Top intent: {respondingProjectName}");
+
+    QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
+
+    KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
+
+    Console.WriteLine("Answers: \n");
+    foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
+    {
+        Console.WriteLine($"Answer: {answer.Answer}");
+        Console.WriteLine($"Confidence: {answer.Confidence}");
+        Console.WriteLine($"Source: {answer.Source}");
+        Console.WriteLine();
+    }
+}
 ```
 
 ### Orchestration Project - Luis Prediction
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
+string respondingProjectName = orchestratorPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult.TargetKind == TargetKind.Luis)
+{
+    LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
+    BinaryData luisResponse = luisTargetIntentResult.Result;
+
+    Console.WriteLine($"LUIS Response: {luisResponse.ToString()}");
+}
 ```
 
 
@@ -156,8 +345,9 @@ For example, if you submit a utterance to a non-existant project, a `400` error 
 try
 {
     ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
-    Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-        "We'll have 2 plates of seared salmon nigiri.",
+    TextConversationItem textConversationItem = new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo");
+    Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+        textConversationItem,
         conversationsProject);
 }
 catch (RequestFailedException ex)

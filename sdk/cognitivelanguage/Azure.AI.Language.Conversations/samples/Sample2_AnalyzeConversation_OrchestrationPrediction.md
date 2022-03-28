@@ -16,23 +16,31 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
+TextConversationItem textConversationItem = new TextConversationItem(
+    participantId: "1",
+    id: "1",
+    text: "Send an email to Carol about the tomorrow's demo.");
 ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "Where are the calories per recipe?",
+    textConversationItem,
     orchestrationProject);
-
-OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
 ```
 
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
+TextConversationItem textConversationItem = new TextConversationItem(
+                participantId: "1",
+                id: "1",
+                text: "Send an email to Carol about the tomorrow's demo.");
 ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
-Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-    "Where are the calories per recipe?",
+Response<AnalyzeConversationResult> response =  await client.AnalyzeConversationAsync(
+    textConversationItem,
     orchestrationProject);
-
-OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
 ```
 
 ## Accessing project specific results
@@ -47,6 +55,8 @@ TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondin
 
 if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
 {
+    Console.WriteLine($"Top intent: {respondingProjectName}");
+
     QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
     KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
@@ -75,9 +85,6 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
     ConversationResult conversationResult = cluTargetIntentResult.Result;
     ConversationPrediction conversationPrediction = conversationResult.Prediction;
 
-    if (!String.IsNullOrEmpty(conversationResult.DetectedLanguage))
-        Console.WriteLine($"Detected Language: {conversationResult.DetectedLanguage}");
-
     Console.WriteLine($"Top Intent: {conversationResult.Prediction.TopIntent}");
     Console.WriteLine($"Intents:");
     foreach (ConversationIntent intent in conversationPrediction.Intents)
@@ -88,14 +95,28 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
     }
 
     Console.WriteLine($"Entities:");
-    foreach (ConversationEntity entitiy in conversationPrediction.Entities)
+    foreach (ConversationEntity entity in conversationPrediction.Entities)
     {
-        Console.WriteLine($"Entity Text: {entitiy.Text}");
-        Console.WriteLine($"Entity Category: {entitiy.Category}");
-        Console.WriteLine($"Confidence: {entitiy.Confidence}");
-        Console.WriteLine($"Starting Position: {entitiy.Offset}");
-        Console.WriteLine($"Length: {entitiy.Length}");
+        Console.WriteLine($"Entity Text: {entity.Text}");
+        Console.WriteLine($"Entity Category: {entity.Category}");
+        Console.WriteLine($"Confidence: {entity.Confidence}");
+        Console.WriteLine($"Starting Position: {entity.Offset}");
+        Console.WriteLine($"Length: {entity.Length}");
         Console.WriteLine();
+
+        if (entity.Resolutions != null)
+        {
+            Console.WriteLine($"Resolutions:");
+            foreach (BaseResolution resolution in entity.Resolutions)
+            {
+                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
     }
 }
 ```

@@ -15,20 +15,20 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ## Synchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 TextConversationItem textConversationItem = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "Tendremos 2 platos de nigiri de salmón braseado.")
-{
-    Language = "es"
-};
+     participantId: "1",
+     id: "1",
+     text: "Send an email to Carol about the tomorrow's demo.");
+AnalyzeConversationOptions analysisInput = new AnalyzeConversationOptions(textConversationItem) { IsLoggingEnabled = true };
 
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     textConversationItem,
-    conversationsProject);
+    conversationsProject,
+    analysisInput,
+    verbose: true);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
@@ -70,20 +70,20 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
 ## Asynchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
 TextConversationItem textConversationItem = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "Tendremos 2 platos de nigiri de salmón braseado.")
-{
-    Language = "es"
-};
+     participantId: "1",
+     id: "1",
+     text: "Send an email to Carol about the tomorrow's demo.");
+AnalyzeConversationOptions analysisInput = new AnalyzeConversationOptions(textConversationItem) { IsLoggingEnabled = true };
 
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
     textConversationItem,
-    conversationsProject);
+    conversationsProject,
+    analysisInput,
+    verbose: true);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;

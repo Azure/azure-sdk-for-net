@@ -15,14 +15,11 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ## Synchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
+```C# Snippet:ConversationAnalysis_AnalyzeConversation
 TextConversationItem textConversationItem = new TextConversationItem(
     participantId: "1",
     id: "1",
-    text: "Tendremos 2 platos de nigiri de salmón braseado.")
-{
-    Language = "es"
-};
+    text: "Send an email to Carol about the tomorrow's demo.");
 
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
@@ -33,7 +30,6 @@ Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
 
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents");
@@ -70,14 +66,11 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
 ## Asynchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
+```C# Snippet:ConversationAnalysis_AnalyzeConversationAsync
 TextConversationItem textConversationItem = new TextConversationItem(
     participantId: "1",
     id: "1",
-    text: "Tendremos 2 platos de nigiri de salmón braseado.")
-{
-    Language = "es"
-};
+    text: "Send an email to Carol about the tomorrow's demo.");
 
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
