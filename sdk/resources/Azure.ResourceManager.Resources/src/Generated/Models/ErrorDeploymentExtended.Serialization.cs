@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class OnErrorDeploymentExtended
+    public partial class ErrorDeploymentExtended
     {
-        internal static OnErrorDeploymentExtended DeserializeOnErrorDeploymentExtended(JsonElement element)
+        internal static ErrorDeploymentExtended DeserializeErrorDeploymentExtended(JsonElement element)
         {
             Optional<string> provisioningState = default;
-            Optional<OnErrorDeploymentType> type = default;
+            Optional<ErrorDeploymentType> type = default;
             Optional<string> deploymentName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToOnErrorDeploymentType();
+                    type = property.Value.GetString().ToErrorDeploymentType();
                     continue;
                 }
                 if (property.NameEquals("deploymentName"))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new OnErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value);
+            return new ErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value);
         }
     }
 }

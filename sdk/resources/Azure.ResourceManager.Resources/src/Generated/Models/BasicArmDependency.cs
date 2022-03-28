@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment dependency information. </summary>
-    public partial class BasicDependency
+    public partial class BasicArmDependency
     {
-        /// <summary> Initializes a new instance of BasicDependency. </summary>
-        internal BasicDependency()
+        /// <summary> Initializes a new instance of BasicArmDependency. </summary>
+        internal BasicArmDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of BasicDependency. </summary>
+        /// <summary> Initializes a new instance of BasicArmDependency. </summary>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
-        internal BasicDependency(string id, string resourceType, string resourceName)
+        internal BasicArmDependency(string id, string resourceType, string resourceName)
         {
             Id = id;
             ResourceType = resourceType;

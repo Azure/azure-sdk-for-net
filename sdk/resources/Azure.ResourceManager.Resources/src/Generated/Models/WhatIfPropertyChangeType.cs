@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of property change. </summary>
-    public enum PropertyChangeType
+    public enum WhatIfPropertyChangeType
     {
         /// <summary> The property does not exist in the current state but is present in the desired state. The property will be created when the deployment is executed. </summary>
         Create,

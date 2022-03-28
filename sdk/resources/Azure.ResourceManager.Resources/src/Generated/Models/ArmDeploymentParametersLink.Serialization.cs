@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ParametersLink : IUtf8JsonSerializable
+    public partial class ArmDeploymentParametersLink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ParametersLink DeserializeParametersLink(JsonElement element)
+        internal static ArmDeploymentParametersLink DeserializeArmDeploymentParametersLink(JsonElement element)
         {
             Uri uri = default;
             Optional<string> contentVersion = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ParametersLink(uri, contentVersion.Value);
+            return new ArmDeploymentParametersLink(uri, contentVersion.Value);
         }
     }
 }

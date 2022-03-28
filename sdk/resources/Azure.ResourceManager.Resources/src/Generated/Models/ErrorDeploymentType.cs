@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
-    public enum OnErrorDeploymentType
+    public enum ErrorDeploymentType
     {
         /// <summary> LastSuccessful. </summary>
         LastSuccessful,

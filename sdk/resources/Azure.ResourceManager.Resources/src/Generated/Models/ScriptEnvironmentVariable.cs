@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The environment variable to pass to the script in the container instance. </summary>
-    public partial class EnvironmentVariable
+    public partial class ScriptEnvironmentVariable
     {
-        /// <summary> Initializes a new instance of EnvironmentVariable. </summary>
+        /// <summary> Initializes a new instance of ScriptEnvironmentVariable. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public EnvironmentVariable(string name)
+        public ScriptEnvironmentVariable(string name)
         {
             if (name == null)
             {
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Resources.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of EnvironmentVariable. </summary>
+        /// <summary> Initializes a new instance of ScriptEnvironmentVariable. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
         /// <param name="secureValue"> The value of the secure environment variable. </param>
-        internal EnvironmentVariable(string name, string value, string secureValue)
+        internal ScriptEnvironmentVariable(string name, string value, string secureValue)
         {
             Name = name;
             Value = value;

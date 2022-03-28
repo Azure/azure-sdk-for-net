@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TemplateLink : IUtf8JsonSerializable
+    public partial class ArmDeploymentTemplateLink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static TemplateLink DeserializeTemplateLink(JsonElement element)
+        internal static ArmDeploymentTemplateLink DeserializeArmDeploymentTemplateLink(JsonElement element)
         {
             Optional<Uri> uri = default;
             Optional<string> id = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TemplateLink(uri.Value, id.Value, relativePath.Value, contentVersion.Value, queryString.Value);
+            return new ArmDeploymentTemplateLink(uri.Value, id.Value, relativePath.Value, contentVersion.Value, queryString.Value);
         }
     }
 }

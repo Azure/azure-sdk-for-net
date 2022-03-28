@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class StorageAccountConfiguration : IUtf8JsonSerializable
+    public partial class ScriptStorageConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountConfiguration DeserializeStorageAccountConfiguration(JsonElement element)
+        internal static ScriptStorageConfiguration DeserializeScriptStorageConfiguration(JsonElement element)
         {
             Optional<string> storageAccountName = default;
             Optional<string> storageAccountKey = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new StorageAccountConfiguration(storageAccountName.Value, storageAccountKey.Value);
+            return new ScriptStorageConfiguration(storageAccountName.Value, storageAccountKey.Value);
         }
     }
 }

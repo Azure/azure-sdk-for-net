@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="parametersLink"> The URI referencing the parameters. </param>
         /// <param name="mode"> The deployment mode. Possible values are Incremental and Complete. </param>
         /// <param name="debugSetting"> The debug setting of the deployment. </param>
-        /// <param name="onErrorDeployment"> The deployment on error behavior. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
         /// <param name="templateHash"> The hash produced for the template. </param>
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, TemplateLink templateLink, BinaryData parameters, ParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
             ParametersLink = parametersLink;
             Mode = mode;
             DebugSetting = debugSetting;
-            OnErrorDeployment = onErrorDeployment;
+            ErrorDeployment = errorDeployment;
             TemplateHash = templateHash;
             OutputResources = outputResources;
             ValidatedResources = validatedResources;
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The list of deployment dependencies. </summary>
         public IReadOnlyList<ArmDependency> Dependencies { get; }
         /// <summary> The URI referencing the template. </summary>
-        public TemplateLink TemplateLink { get; }
+        public ArmDeploymentTemplateLink TemplateLink { get; }
         /// <summary> Deployment parameters. </summary>
         public BinaryData Parameters { get; }
         /// <summary> The URI referencing the parameters. </summary>
-        public ParametersLink ParametersLink { get; }
+        public ArmDeploymentParametersLink ParametersLink { get; }
         /// <summary> The deployment mode. Possible values are Incremental and Complete. </summary>
         public ArmDeploymentMode? Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The deployment on error behavior. </summary>
-        public OnErrorDeploymentExtended OnErrorDeployment { get; }
+        public ErrorDeploymentExtended ErrorDeployment { get; }
         /// <summary> The hash produced for the template. </summary>
         public string TemplateHash { get; }
         /// <summary> Array of provisioned resources. </summary>

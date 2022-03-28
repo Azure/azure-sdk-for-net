@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The name of the current provisioning operation. </summary>
-    public enum ProvisioningOperation
+    public enum ProvisioningOperationKind
     {
         /// <summary> The provisioning operation is not specified. </summary>
         NotSpecified,
