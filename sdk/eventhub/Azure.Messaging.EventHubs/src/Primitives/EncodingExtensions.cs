@@ -26,13 +26,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   The method was introduced as a compatibility shim for .NET Standard and can be replaced should the
         ///   SDK change targets to .NET Standard 2.1 or target frameworks that provides those methods out of the box.
         ///   During  reviews it was decided to not multi-target due to the added complexity.
-        ///  </remarks>
+        /// </remarks>
         ///
-        ///   <seealso="https://docs.microsoft.com/dotnet/api/system.text.encoding.getbytes?view=netstandard-2.1#system-text-encoding-getbytes(system-readonlyspan((system-char))-system-span((system-byte)))" />
+        /// <seealso href="https://docs.microsoft.com/dotnet/api/system.text.encoding.getbytes?view=netstandard-2.1#system-text-encoding-getbytes(system-readonlyspan((system-char))-system-span((system-byte)))" />
         ///
         public static unsafe int GetBytes(this Encoding encoding,
-                                          ReadOnlySpan<char> src,
-                                          Span<byte> dest)
+            ReadOnlySpan<char> src,
+            Span<byte> dest)
         {
             if (src.Length == 0)
             {
@@ -66,16 +66,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The count of bytes produced by encoding the specified character span.</returns>
         ///
-       /// <remarks>
+        /// <remarks>
         ///   The method was introduced as a compatibility shim for .NET Standard and can be replaced should the
         ///   SDK change targets to .NET Standard 2.1 or target frameworks that provides those methods out of the box.
         ///   During  reviews it was decided to not multi-target due to the added complexity.
         ///  </remarks>
         ///
-        ///   <seealso="https://docs.microsoft.com/dotnet/api/system.text.encoding.getbytes?view=netstandard-2.1#system-text-encoding-getbytes(system-readonlyspan((system-char))-system-span((system-byte)))" />
+        ///  <seealso href="https://docs.microsoft.com/dotnet/api/system.text.encoding.getbytes?view=netstandard-2.1#system-text-encoding-getbytes(system-readonlyspan((system-char))-system-span((system-byte)))" />
         ///
         public static unsafe int GetByteCount(this Encoding encoding,
-                                              ReadOnlySpan<char> src)
+            ReadOnlySpan<char> src)
         {
             if (src.IsEmpty)
             {
