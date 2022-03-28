@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="feedUri"> Feed URL. </param>
         /// <param name="authors"> List of authors. </param>
         /// <param name="installerCommandLineParams"> Installer command line parameters. </param>
-        /// <param name="publishedDateTime"> Published timestamp. </param>
+        /// <param name="publishedDateOn"> Published timestamp. </param>
         /// <param name="downloadCount"> Count of downloads. </param>
         /// <param name="localIsLatestVersion"> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="localPath"> Local path. </param>
-        /// <param name="installedDateTime"> Installed timestamp. </param>
+        /// <param name="installedDateOn"> Installed timestamp. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="comment"> Site Extension comment. </param>
-        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedDateTime, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedDateTime, string provisioningState, string comment) : base(id, name, resourceType, systemData, kind)
+        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedDateOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedDateOn, string provisioningState, string comment) : base(id, name, resourceType, systemData, kind)
         {
             ExtensionId = extensionId;
             Title = title;
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.AppService
             FeedUri = feedUri;
             Authors = authors;
             InstallerCommandLineParams = installerCommandLineParams;
-            PublishedDateTime = publishedDateTime;
+            PublishedDateOn = publishedDateOn;
             DownloadCount = downloadCount;
             LocalIsLatestVersion = localIsLatestVersion;
             LocalPath = localPath;
-            InstalledDateTime = installedDateTime;
+            InstalledDateOn = installedDateOn;
             ProvisioningState = provisioningState;
             Comment = comment;
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Installer command line parameters. </summary>
         public string InstallerCommandLineParams { get; set; }
         /// <summary> Published timestamp. </summary>
-        public DateTimeOffset? PublishedDateTime { get; set; }
+        public DateTimeOffset? PublishedDateOn { get; set; }
         /// <summary> Count of downloads. </summary>
         public int? DownloadCount { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Local path. </summary>
         public string LocalPath { get; set; }
         /// <summary> Installed timestamp. </summary>
-        public DateTimeOffset? InstalledDateTime { get; set; }
+        public DateTimeOffset? InstalledDateOn { get; set; }
         /// <summary> Provisioning state. </summary>
         public string ProvisioningState { get; set; }
         /// <summary> Site Extension comment. </summary>

@@ -21,21 +21,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="webJobId"> Job ID. </param>
         /// <param name="webJobName"> Job name. </param>
         /// <param name="status"> Job status. </param>
-        /// <param name="startTime"> Start time. </param>
-        /// <param name="endTime"> End time. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="endOn"> End time. </param>
         /// <param name="duration"> Job duration. </param>
         /// <param name="outputUri"> Output URL. </param>
         /// <param name="errorUri"> Error URL. </param>
         /// <param name="uri"> Job URL. </param>
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startTime, DateTimeOffset? endTime, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger)
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
             Status = status;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Duration = duration;
             OutputUri = outputUri;
             ErrorUri = errorUri;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Job status. </summary>
         public TriggeredWebJobStatus? Status { get; set; }
         /// <summary> Start time. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time. </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> Job duration. </summary>
         public TimeSpan? Duration { get; set; }
         /// <summary> Output URL. </summary>

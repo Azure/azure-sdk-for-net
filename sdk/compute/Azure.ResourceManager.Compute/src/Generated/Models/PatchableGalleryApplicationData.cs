@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The release note uri. </summary>
         public Uri ReleaseNoteUri { get; set; }
         /// <summary> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeDate { get; set; }
+        public DateTimeOffset? EndOfLifeOn { get; set; }
         /// <summary> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
         public OperatingSystemTypes? SupportedOSType { get; set; }
     }

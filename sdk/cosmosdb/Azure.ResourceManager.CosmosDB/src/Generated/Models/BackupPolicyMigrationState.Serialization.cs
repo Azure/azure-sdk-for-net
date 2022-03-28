@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("targetType");
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             writer.WriteEndObject();
         }

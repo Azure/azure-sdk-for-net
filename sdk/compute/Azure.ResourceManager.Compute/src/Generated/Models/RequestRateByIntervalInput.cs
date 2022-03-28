@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of RequestRateByIntervalInput. </summary>
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
-        /// <param name="fromTime"> From time of the query. </param>
-        /// <param name="toTime"> To time of the query. </param>
+        /// <param name="fromOn"> From time of the query. </param>
+        /// <param name="toOn"> To time of the query. </param>
         /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
-        public RequestRateByIntervalInput(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime)
+        public RequestRateByIntervalInput(Uri blobContainerSasUri, DateTimeOffset fromOn, DateTimeOffset toOn, IntervalInMins intervalLength) : base(blobContainerSasUri, fromOn, toOn)
         {
             if (blobContainerSasUri == null)
             {

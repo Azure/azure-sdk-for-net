@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticMetricSet. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="unit"> Metric&apos;s unit. </param>
-        /// <param name="startTime"> Start time of the period. </param>
-        /// <param name="endTime"> End time of the period. </param>
+        /// <param name="startOn"> Start time of the period. </param>
+        /// <param name="endOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </param>
         /// <param name="values"> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </param>
-        internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, IList<DiagnosticMetricSample> values)
+        internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<DiagnosticMetricSample> values)
         {
             Name = name;
             Unit = unit;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             TimeGrain = timeGrain;
             Values = values;
         }
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Metric&apos;s unit. </summary>
         public string Unit { get; set; }
         /// <summary> Start time of the period. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the period. </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </summary>
         public string TimeGrain { get; set; }
         /// <summary> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </summary>

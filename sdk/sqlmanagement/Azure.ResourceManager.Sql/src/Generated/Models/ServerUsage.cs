@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> The current value of the metric. </param>
         /// <param name="limit"> The current limit of the metric. </param>
         /// <param name="unit"> The units of the metric. </param>
-        /// <param name="nextResetTime"> The next reset time for the metric (ISO8601 format). </param>
-        internal ServerUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetTime)
+        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
+        internal ServerUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetOn)
         {
             Name = name;
             ResourceName = resourceName;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
-            NextResetTime = nextResetTime;
+            NextResetOn = nextResetOn;
         }
 
         /// <summary> Name of the server usage metric. </summary>
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The units of the metric. </summary>
         public string Unit { get; }
         /// <summary> The next reset time for the metric (ISO8601 format). </summary>
-        public DateTimeOffset? NextResetTime { get; }
+        public DateTimeOffset? NextResetOn { get; }
     }
 }
