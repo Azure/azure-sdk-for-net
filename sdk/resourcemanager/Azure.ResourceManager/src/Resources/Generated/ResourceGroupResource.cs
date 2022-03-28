@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ResourceGroupExportResult>> ExportTemplateAsync(WaitUntil waitUntil, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceGroupExportResult>> ExportTemplateAsync(WaitUntil waitUntil, ExportTemplate parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ResourceGroupExportResult> ExportTemplate(WaitUntil waitUntil, ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceGroupExportResult> ExportTemplate(WaitUntil waitUntil, ExportTemplate parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ProviderInfoListResult>> ListAtTenantScopeAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantResourceProviderListResult>> ListAtTenantScopeAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListAtTenantScopeRequest(top, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -379,9 +379,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderInfoListResult value = default;
+                        TenantResourceProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderInfoListResult.DeserializeProviderInfoListResult(document.RootElement);
+                        value = TenantResourceProviderListResult.DeserializeTenantResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all providers. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ProviderInfoListResult> ListAtTenantScope(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<TenantResourceProviderListResult> ListAtTenantScope(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListAtTenantScopeRequest(top, expand);
             _pipeline.Send(message, cancellationToken);
@@ -401,9 +401,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderInfoListResult value = default;
+                        TenantResourceProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderInfoListResult.DeserializeProviderInfoListResult(document.RootElement);
+                        value = TenantResourceProviderListResult.DeserializeTenantResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderInfo>> GetAtTenantScopeAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantResourceProvider>> GetAtTenantScopeAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderInfo value = default;
+                        TenantResourceProvider value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderInfo.DeserializeProviderInfo(document.RootElement);
+                        value = TenantResourceProvider.DeserializeTenantResourceProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderInfo> GetAtTenantScope(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public Response<TenantResourceProvider> GetAtTenantScope(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -555,9 +555,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderInfo value = default;
+                        TenantResourceProvider value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderInfo.DeserializeProviderInfo(document.RootElement);
+                        value = TenantResourceProvider.DeserializeTenantResourceProvider(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ProviderInfoListResult>> ListAtTenantScopeNextPageAsync(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantResourceProviderListResult>> ListAtTenantScopeNextPageAsync(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -667,9 +667,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderInfoListResult value = default;
+                        TenantResourceProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderInfoListResult.DeserializeProviderInfoListResult(document.RootElement);
+                        value = TenantResourceProviderListResult.DeserializeTenantResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ProviderInfoListResult> ListAtTenantScopeNextPage(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<TenantResourceProviderListResult> ListAtTenantScopeNextPage(string nextLink, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -693,9 +693,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderInfoListResult value = default;
+                        TenantResourceProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderInfoListResult.DeserializeProviderInfoListResult(document.RootElement);
+                        value = TenantResourceProviderListResult.DeserializeTenantResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("policyDefinitionId");
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (Optional.IsCollectionDefined(NotScopes))
+            if (Optional.IsCollectionDefined(ExcludedScopes))
             {
                 writer.WritePropertyName("notScopes");
                 writer.WriteStartArray();
-                foreach (var item in NotScopes)
+                foreach (var item in ExcludedScopes)
                 {
                     writer.WriteStringValue(item);
                 }
