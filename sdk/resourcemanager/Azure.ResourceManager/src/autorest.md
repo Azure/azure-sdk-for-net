@@ -553,6 +553,10 @@ directive:
     where: $.definitions.ExportTemplateRequest
     transform: >
       $["x-ms-client-name"] = "ExportTemplate"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignmentProperties.properties.enforcementMode["x-ms-enum"].values[0]
+    transform: >
+      $["value"] = "Enforced"
 ```
 
 ### Tag: package-management
