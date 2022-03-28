@@ -561,6 +561,22 @@ directive:
     where: $.definitions.DataManifestCustomResourceFunctionDefinition.properties.fullyQualifiedResourceType
     transform: >
       $["x-ms-format"] = "resource-type"
+  - from: resources.json
+    where: $.definitions.Permission.properties.actions
+    transform: >
+      $["x-ms-client-name"] = "AllowedActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.notActions
+    transform: >
+      $["x-ms-client-name"] = "DeniedActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.dataActions
+    transform: >
+      $["x-ms-client-name"] = "AllowedDataActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.notDataActions
+    transform: >
+      $["x-ms-client-name"] = "DeniedDataActions"
 ```
 
 ### Tag: package-management

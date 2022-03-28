@@ -1456,10 +1456,10 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class Permission
     {
         internal Permission() { }
-        public System.Collections.Generic.IReadOnlyList<string> Actions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> DataActions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> NotActions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> NotDataActions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> AllowedActions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> AllowedDataActions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> DeniedActions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> DeniedDataActions { get { throw null; } }
     }
     public partial class PolicyDefinitionGroup
     {
