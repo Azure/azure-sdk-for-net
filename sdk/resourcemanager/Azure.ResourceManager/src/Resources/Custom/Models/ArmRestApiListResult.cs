@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of RestApiListResult. </summary>
         internal ArmRestApiListResult()
         {
-            Value = new ChangeTrackingList<AmrRestApi>();
+            Value = new ChangeTrackingList<ArmRestApi>();
         }
 
         /// <summary> Initializes a new instance of RestApiListResult. </summary>
         /// <param name="value"> The list of operations. </param>
-        internal ArmRestApiListResult(IReadOnlyList<AmrRestApi> value)
+        internal ArmRestApiListResult(IReadOnlyList<ArmRestApi> value)
         {
             Value = value;
         }
 
         /// <summary> The list of operations. </summary>
-        public IReadOnlyList<AmrRestApi> Value { get; }
+        public IReadOnlyList<ArmRestApi> Value { get; }
     }
 }

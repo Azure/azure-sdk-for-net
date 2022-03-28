@@ -501,13 +501,13 @@ namespace Azure.ResourceManager.Models
 }
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ArmRestApiCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Models.AmrRestApi>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.AmrRestApi>, System.Collections.IEnumerable
+    public partial class ArmRestApiCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Models.ArmRestApi>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmRestApi>, System.Collections.IEnumerable
     {
         protected ArmRestApiCollection() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.AmrRestApi> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.AmrRestApi> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.Models.AmrRestApi> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Models.AmrRestApi>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Models.AmrRestApi> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.AmrRestApi>.GetEnumerator() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.ArmRestApi> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.ArmRestApi> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.Models.ArmRestApi> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Models.ArmRestApi>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.Models.ArmRestApi> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmRestApi>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class DataPolicyManifestCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.DataPolicyManifestResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DataPolicyManifestResource>, System.Collections.IEnumerable
@@ -1214,16 +1214,6 @@ namespace Azure.ResourceManager.Resources
 }
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AmrRestApi
-    {
-        internal AmrRestApi() { }
-        public string Description { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Origin { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-    }
     public partial class ApiProfile
     {
         internal ApiProfile() { }
@@ -1265,6 +1255,16 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public ArmPolicyParameterValue() { }
         public System.BinaryData Value { get { throw null; } set { } }
+    }
+    public partial class ArmRestApi
+    {
+        internal ArmRestApi() { }
+        public string Description { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public string Origin { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string Resource { get { throw null; } }
     }
     public partial class AzureRoleDefinition
     {

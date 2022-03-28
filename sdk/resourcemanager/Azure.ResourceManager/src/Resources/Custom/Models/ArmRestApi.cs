@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Describes the properties of an Operation value. </summary>
-    public partial class AmrRestApi
+    public partial class ArmRestApi
     {
         /// <summary> Initializes a new instance of RestApi for mocking. </summary>
-        internal AmrRestApi()
+        internal ArmRestApi()
         {
         }
 
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="resource"> The display name of the resource the operation applies to. </param>
         /// <param name="description"> The description of the operation. </param>
         /// <param name="provider"> The resource provider for the operation. </param>
-        internal AmrRestApi(string origin, string name, string operation, string resource, string description, string provider)
+        internal ArmRestApi(string origin, string name, string operation, string resource, string description, string provider)
         {
             Origin = origin;
             Name = name;
