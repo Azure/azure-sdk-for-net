@@ -94,6 +94,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   the gateway hashing algorithm as closely as possible and should not be adjusted without careful
         ///   consideration.
         /// </remarks>
+        ///
         private static short GenerateHashCode(string partitionKey)
         {
             if (partitionKey == null)
@@ -151,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Core
             int index = 0, size = data.Length;
             while (size > 12)
             {
-                a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index) );
+                a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index));
                 b += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index + 4));
                 c += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index + 8));
 
