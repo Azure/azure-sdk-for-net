@@ -40,9 +40,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
 directive:
-  - rename-model:
-      from: MHSMIPRule
-      to: MhsmIPRule
+#   - rename-model:
+#       from: MHSMIPRule
+#       to: MhsmIPRule
   - rename-model:
       from: Attributes
       to: BaseAttributes
@@ -59,12 +59,8 @@ directive:
     where: $['definitions']['ManagedHsmSku']['properties']['family']
     transform: delete $['x-ms-client-default']
   - from: swagger-document
-    where: "$.definitions.CheckNameAvailabilityResult.properties.reason"
-    transform: >
-      $["x-ms-enum"] = {
-        "modelAsString": false,
-        "name": "NameAvailabilityReason"
-      }
+    where: $.definitions.CheckNameAvailabilityResult.properties.reason["x-ms-enum"].name
+    transform: return "NameUnAvailabeReason"
   - from: swagger-document
     where: "$.definitions.Resource"
     transform: >
