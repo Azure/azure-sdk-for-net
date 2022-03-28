@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal DataManifestCustomResourceFunctionDefinition() { }
         public bool? AllowCustomProperties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DefaultProperties { get { throw null; } }
-        public string FullyQualifiedResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? FullyQualifiedResourceType { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class DataPolicyManifestEffect
