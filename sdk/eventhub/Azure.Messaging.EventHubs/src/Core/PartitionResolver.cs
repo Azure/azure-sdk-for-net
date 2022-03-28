@@ -101,13 +101,18 @@ namespace Azure.Messaging.EventHubs.Core
                 return 0;
             }
 
+            const int MaxStackLimit = 256;
+
             byte[] sharedBuffer = null;
             var partitionKeySpan = partitionKey.AsSpan();
-            var partitionKeyByteLength = Encoding.UTF8.GetByteCount(partitionKeySpan);
-            Span<byte> hashBuffer = partitionKeyByteLength <= 256 ? stackalloc byte[partitionKeyByteLength] :
+            var encoding = Encoding.UTF8;
+
+            var partitionKeyByteLength = encoding.GetMaxByteCount(partitionKey.Length);
+            var hashBuffer = partitionKeyByteLength <= MaxStackLimit ?
+                stackalloc byte[partitionKeyByteLength] :
                 sharedBuffer = ArrayPool<byte>.Shared.Rent(partitionKeyByteLength);
 
-            var written = Encoding.UTF8.GetBytes(partitionKeySpan, hashBuffer);
+            var written = encoding.GetBytes(partitionKeySpan, hashBuffer);
             ComputeHash(hashBuffer.Slice(0, written), seed1: 0, seed2: 0, out uint hash1, out uint hash2);
             if (sharedBuffer != null)
             {
