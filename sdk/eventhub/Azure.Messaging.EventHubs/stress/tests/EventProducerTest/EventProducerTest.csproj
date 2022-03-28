@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RestoreSources>
+      https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json;
+      https://api.nuget.org/v3/index.json;
+    </RestoreSources>
+  </PropertyGroup>
+
+  <!-- Package reference is used by default -->
+  <ItemGroup Condition="'$(SdkLocalRoot)' == ''">
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.2.0-dev.*"></PackageReference>
+  </ItemGroup>
+
+   <!-- Local source used if the override is set.  Note that a different project file name is assumed. -->
+  <ItemGroup Condition="'$(SdkLocalRoot)' != ''">
+    <ProjectReference Include="$(SdkLocalRoot)sdk\eventhub\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.local.csproj" />
+  </ItemGroup>
+
+  <!-- Shared Items -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\Shared\**\*.cs" Link="SharedSource\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dotenv.net" Version="3.1.1" />
+  </ItemGroup>
+
+</Project>

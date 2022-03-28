@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <SignAssembly>false</SignAssembly>
+        <AssemblyOriginatorKeyFile>AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Azure.Messaging.EventHubs" Version="5.2.0"></PackageReference>
+    </ItemGroup>
+</Project>
