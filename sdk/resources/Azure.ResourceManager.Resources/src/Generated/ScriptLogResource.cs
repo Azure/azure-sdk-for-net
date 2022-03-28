@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
     /// A Class representing a ScriptLog along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScriptLogResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetScriptLogResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeploymentScriptResource" /> using the GetScriptLog method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmDeploymentScriptResource" /> using the GetScriptLog method.
     /// </summary>
     public partial class ScriptLogResource : ArmResource
     {
