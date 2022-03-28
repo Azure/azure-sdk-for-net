@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagResourceData parameters)
+        internal HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -415,15 +415,15 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="parameters"> The TagResource to use. </param>
+        /// <param name="data"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<TagResourceData>> CreateOrUpdateAtScopeAsync(string scope, TagResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<TagResourceData>> CreateOrUpdateAtScopeAsync(string scope, TagResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateAtScopeRequest(scope, parameters);
+            using var message = CreateCreateOrUpdateAtScopeRequest(scope, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -441,15 +441,15 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="parameters"> The TagResource to use. </param>
+        /// <param name="data"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<TagResourceData> CreateOrUpdateAtScope(string scope, TagResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
+        public Response<TagResourceData> CreateOrUpdateAtScope(string scope, TagResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateAtScopeRequest(scope, parameters);
+            using var message = CreateCreateOrUpdateAtScopeRequest(scope, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="metricName"> Gets the name of the metric. e.g., CPU, Number of Queries. </param>
         /// <param name="unit"> Gets the unit in which metric is measured. e.g., DTU, Frequency. </param>
         /// <param name="timeGrain"> Gets the duration of time interval for the value given by this MetricInfo. e.g., PT1H (1 hour). </param>
-        /// <param name="startTime"> Gets the start time of time interval given by this MetricInfo. </param>
+        /// <param name="startOn"> Gets the start time of time interval given by this MetricInfo. </param>
         /// <param name="value"> Gets the value of the metric in the time interval given by this MetricInfo. </param>
-        internal RecommendedActionMetricInfo(string metricName, string unit, string timeGrain, DateTimeOffset? startTime, double? value)
+        internal RecommendedActionMetricInfo(string metricName, string unit, string timeGrain, DateTimeOffset? startOn, double? value)
         {
             MetricName = metricName;
             Unit = unit;
             TimeGrain = timeGrain;
-            StartTime = startTime;
+            StartOn = startOn;
             Value = value;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Gets the duration of time interval for the value given by this MetricInfo. e.g., PT1H (1 hour). </summary>
         public string TimeGrain { get; }
         /// <summary> Gets the start time of time interval given by this MetricInfo. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> Gets the value of the metric in the time interval given by this MetricInfo. </summary>
         public double? Value { get; }
     }

@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Defines an update domain for the cloud service. </summary>
-    public partial class UpdateDomain
+    public partial class UpdateDomainIdentifier
     {
-        /// <summary> Initializes a new instance of UpdateDomain. </summary>
-        public UpdateDomain()
+        /// <summary> Initializes a new instance of UpdateDomainIdentifier. </summary>
+        public UpdateDomainIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateDomain. </summary>
+        /// <summary> Initializes a new instance of UpdateDomainIdentifier. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource Name. </param>
-        internal UpdateDomain(string id, string name)
+        internal UpdateDomainIdentifier(string id, string name)
         {
             Id = id;
             Name = name;

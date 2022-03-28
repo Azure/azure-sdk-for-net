@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update virtual network operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<IPAllocationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipAllocationName, IPAllocationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<IPAllocationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipAllocationName, IPAllocationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ipAllocationIpAllocationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<IPAllocationResource>(new IPAllocationOperationSource(Client), _ipAllocationIpAllocationsClientDiagnostics, Pipeline, _ipAllocationIpAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _ipAllocationIpAllocationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<IPAllocationResource>(new IPAllocationOperationSource(Client), _ipAllocationIpAllocationsClientDiagnostics, Pipeline, _ipAllocationIpAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update virtual network operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<IPAllocationResource> CreateOrUpdate(WaitUntil waitUntil, string ipAllocationName, IPAllocationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<IPAllocationResource> CreateOrUpdate(WaitUntil waitUntil, string ipAllocationName, IPAllocationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ipAllocationIpAllocationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<IPAllocationResource>(new IPAllocationOperationSource(Client), _ipAllocationIpAllocationsClientDiagnostics, Pipeline, _ipAllocationIpAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _ipAllocationIpAllocationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data, cancellationToken);
+                var operation = new NetworkArmOperation<IPAllocationResource>(new IPAllocationOperationSource(Client), _ipAllocationIpAllocationsClientDiagnostics, Pipeline, _ipAllocationIpAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

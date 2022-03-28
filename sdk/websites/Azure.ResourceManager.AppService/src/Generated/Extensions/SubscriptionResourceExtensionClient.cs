@@ -211,15 +211,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
-        /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
+        /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidatePurchaseInformationAppServiceCertificateOrder");
             scope.Start();
             try
             {
-                var response = await AppServiceCertificateOrdersRestClient.ValidatePurchaseInformationAsync(Id.SubscriptionId, appServiceCertificateOrder, cancellationToken).ConfigureAwait(false);
+                var response = await AppServiceCertificateOrdersRestClient.ValidatePurchaseInformationAsync(Id.SubscriptionId, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -234,15 +234,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
-        /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
+        /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ValidatePurchaseInformationAppServiceCertificateOrder(AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        public virtual Response ValidatePurchaseInformationAppServiceCertificateOrder(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidatePurchaseInformationAppServiceCertificateOrder");
             scope.Start();
             try
             {
-                var response = AppServiceCertificateOrdersRestClient.ValidatePurchaseInformation(Id.SubscriptionId, appServiceCertificateOrder, cancellationToken);
+                var response = AppServiceCertificateOrdersRestClient.ValidatePurchaseInformation(Id.SubscriptionId, data, cancellationToken);
                 return response;
             }
             catch (Exception e)

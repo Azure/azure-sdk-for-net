@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="zones"> Availability Zone to use for this capacity reservation. The zone has to be single value and also should be part for the list of zones specified during the capacity reservation group creation. The zone can be assigned only during creation. If not provided, the reservation supports only non-zonal deployments. If provided, enforces VM/VMSS using this capacity reservation to be in same zone. </param>
         /// <param name="reservationId"> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </param>
         /// <param name="virtualMachinesAssociated"> A list of all virtual machine resource ids that are associated with the capacity reservation. </param>
-        /// <param name="provisioningTime"> The date time when the capacity reservation was last updated. </param>
+        /// <param name="provisioningOn"> The date time when the capacity reservation was last updated. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The Capacity reservation instance view. </param>
-        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, IList<string> zones, string reservationId, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningTime, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, IList<string> zones, string reservationId, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Zones = zones;
             ReservationId = reservationId;
             VirtualMachinesAssociated = virtualMachinesAssociated;
-            ProvisioningTime = provisioningTime;
+            ProvisioningOn = provisioningOn;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
         public IReadOnlyList<Resources.Models.SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The date time when the capacity reservation was last updated. </summary>
-        public DateTimeOffset? ProvisioningTime { get; }
+        public DateTimeOffset? ProvisioningOn { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The Capacity reservation instance view. </summary>

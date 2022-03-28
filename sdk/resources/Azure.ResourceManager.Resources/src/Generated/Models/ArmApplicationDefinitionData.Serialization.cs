@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                packageFileUri = null;
                                 continue;
                             }
                             packageFileUri = new Uri(property0.Value.GetString());

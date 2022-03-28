@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        resourceUri = null;
                         continue;
                     }
                     resourceUri = new Uri(property.Value.GetString());

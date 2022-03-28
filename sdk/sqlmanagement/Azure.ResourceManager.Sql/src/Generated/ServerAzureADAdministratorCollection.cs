@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
-        /// <param name="parameters"> The requested Azure Active Directory administrator Resource state. </param>
+        /// <param name="data"> The requested Azure Active Directory administrator Resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerAzureADAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AdministratorName administratorName, ServerAzureADAdministratorData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServerAzureADAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AdministratorName administratorName, ServerAzureADAdministratorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverAzureADAdministratorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ServerAzureADAdministratorResource>(new ServerAzureADAdministratorOperationSource(Client), _serverAzureADAdministratorClientDiagnostics, Pipeline, _serverAzureADAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _serverAzureADAdministratorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ServerAzureADAdministratorResource>(new ServerAzureADAdministratorOperationSource(Client), _serverAzureADAdministratorClientDiagnostics, Pipeline, _serverAzureADAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
-        /// <param name="parameters"> The requested Azure Active Directory administrator Resource state. </param>
+        /// <param name="data"> The requested Azure Active Directory administrator Resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ServerAzureADAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, AdministratorName administratorName, ServerAzureADAdministratorData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ServerAzureADAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, AdministratorName administratorName, ServerAzureADAdministratorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverAzureADAdministratorClientDiagnostics.CreateScope("ServerAzureADAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverAzureADAdministratorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ServerAzureADAdministratorResource>(new ServerAzureADAdministratorOperationSource(Client), _serverAzureADAdministratorClientDiagnostics, Pipeline, _serverAzureADAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _serverAzureADAdministratorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data, cancellationToken);
+                var operation = new SqlArmOperation<ServerAzureADAdministratorResource>(new ServerAzureADAdministratorOperationSource(Client), _serverAzureADAdministratorClientDiagnostics, Pipeline, _serverAzureADAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

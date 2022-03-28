@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
-        /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
+        /// <param name="data"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, SqlContainerCreateUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(createUpdateSqlContainerParameters, nameof(createUpdateSqlContainerParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<SqlContainerResource>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<SqlContainerResource>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
-        /// <param name="createUpdateSqlContainerParameters"> The parameters to provide for the current SQL container. </param>
+        /// <param name="data"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="createUpdateSqlContainerParameters"/> is null. </exception>
-        public virtual ArmOperation<SqlContainerResource> CreateOrUpdate(WaitUntil waitUntil, string containerName, SqlContainerCreateUpdateData createUpdateSqlContainerParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SqlContainerResource> CreateOrUpdate(WaitUntil waitUntil, string containerName, SqlContainerCreateUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(createUpdateSqlContainerParameters, nameof(createUpdateSqlContainerParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<SqlContainerResource>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, createUpdateSqlContainerParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlContainerSqlResourcesRestClient.CreateUpdateSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data, cancellationToken);
+                var operation = new CosmosDBArmOperation<SqlContainerResource>(new SqlContainerOperationSource(Client), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

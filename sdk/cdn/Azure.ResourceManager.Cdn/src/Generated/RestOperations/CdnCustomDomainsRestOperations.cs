@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(customDomainProperties);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -250,20 +250,20 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="customDomainProperties"> Properties required to create a new custom domain. </param>
+        /// <param name="options"> Properties required to create a new custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
-            Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, customDomainProperties);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -282,20 +282,20 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="customDomainProperties"> Properties required to create a new custom domain. </param>
+        /// <param name="options"> Properties required to create a new custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/> or <paramref name="customDomainProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/>, <paramref name="customDomainName"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions customDomainProperties, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
-            Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, customDomainProperties);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateEnableCustomHttpsRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters)
+        internal HttpMessage CreateEnableCustomHttpsRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -496,11 +496,11 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (customDomainHttpsParameters != null)
+            if (options != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(customDomainHttpsParameters);
+                content.JsonWriter.WriteObjectValue(options);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -513,11 +513,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
+        /// <param name="options"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="customDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> EnableCustomHttpsAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response> EnableCustomHttpsAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var message = CreateEnableCustomHttpsRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, customDomainHttpsParameters);
+            using var message = CreateEnableCustomHttpsRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -543,11 +543,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
-        /// <param name="customDomainHttpsParameters"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
+        /// <param name="options"> The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses CDN managed certificate by default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="customDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response EnableCustomHttps(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions customDomainHttpsParameters = null, CancellationToken cancellationToken = default)
+        public Response EnableCustomHttps(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using var message = CreateEnableCustomHttpsRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, customDomainHttpsParameters);
+            using var message = CreateEnableCustomHttpsRequest(subscriptionId, resourceGroupName, profileName, endpointName, customDomainName, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

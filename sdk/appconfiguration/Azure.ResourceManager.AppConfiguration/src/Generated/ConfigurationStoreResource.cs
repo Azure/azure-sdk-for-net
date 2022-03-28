@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/RegenerateKey
         /// Operation Id: ConfigurationStores_RegenerateKey
         /// </summary>
-        /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
+        /// <param name="options"> The options for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyOptions"/> is null. </exception>
-        public virtual async Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenerateKeyOptions, nameof(regenerateKeyOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = await _configurationStoreRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateKeyOptions, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationStoreRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -436,18 +436,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/RegenerateKey
         /// Operation Id: ConfigurationStores_RegenerateKey
         /// </summary>
-        /// <param name="regenerateKeyOptions"> The options for regenerating an access key. </param>
+        /// <param name="options"> The options for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateKeyOptions"/> is null. </exception>
-        public virtual Response<ApiKey> RegenerateKey(RegenerateKeyOptions regenerateKeyOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<ApiKey> RegenerateKey(RegenerateKeyOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenerateKeyOptions, nameof(regenerateKeyOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateKeyOptions, cancellationToken);
+                var response = _configurationStoreRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -462,18 +462,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeyValue
         /// Operation Id: ConfigurationStores_ListKeyValue
         /// </summary>
-        /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
+        /// <param name="options"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueOptions"/> is null. </exception>
-        public virtual async Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<KeyValue>> GetKeyValueAsync(ListKeyValueOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(listKeyValueOptions, nameof(listKeyValueOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreResource.GetKeyValue");
             scope.Start();
             try
             {
-                var response = await _configurationStoreRestClient.ListKeyValueAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, listKeyValueOptions, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationStoreRestClient.ListKeyValueAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -488,18 +488,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeyValue
         /// Operation Id: ConfigurationStores_ListKeyValue
         /// </summary>
-        /// <param name="listKeyValueOptions"> The options for retrieving a key-value. </param>
+        /// <param name="options"> The options for retrieving a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listKeyValueOptions"/> is null. </exception>
-        public virtual Response<KeyValue> GetKeyValue(ListKeyValueOptions listKeyValueOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<KeyValue> GetKeyValue(ListKeyValueOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(listKeyValueOptions, nameof(listKeyValueOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreResource.GetKeyValue");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.ListKeyValue(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, listKeyValueOptions, cancellationToken);
+                var response = _configurationStoreRestClient.ListKeyValue(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
                 return response;
             }
             catch (Exception e)

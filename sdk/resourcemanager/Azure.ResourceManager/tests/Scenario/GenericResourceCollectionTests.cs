@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Tests
             //`createdTime`, `changedTime` and `provisioningState`
             await foreach (var genericResource in subscription.GetGenericResourcesAsync(expand: "createdTime"))
             {
-                Assert.NotNull(genericResource.Data.CreatedTime);
-                Assert.Null(genericResource.Data.ChangedTime);
+                Assert.NotNull(genericResource.Data.CreatedOn);
+                Assert.Null(genericResource.Data.ChangedOn);
                 Assert.Null(genericResource.Data.ProvisioningState);
                 count++;
             }
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Tests
             //`createdTime`, `changedTime` and `provisioningState`
             await foreach (var genericResource in subscription.GetGenericResourcesAsync(expand: "changedTime,provisioningState"))
             {
-                Assert.Null(genericResource.Data.CreatedTime);
-                Assert.NotNull(genericResource.Data.ChangedTime);
+                Assert.Null(genericResource.Data.CreatedOn);
+                Assert.NotNull(genericResource.Data.ChangedOn);
                 Assert.NotNull(genericResource.Data.ProvisioningState);
             }
 
