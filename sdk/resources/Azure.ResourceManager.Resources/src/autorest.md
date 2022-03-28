@@ -305,6 +305,10 @@ directive:
     transform: >
       $.TemplateSpec.properties.location["x-ms-format"] = "azure-location";
       $.TemplateSpecVersion.properties.location["x-ms-format"] = "azure-location";
+  - from: resources.json
+    where: $.definitions.DeploymentProperties.properties.expressionEvaluationOptions
+    transform: >
+      $["x-ms-client-name"] = "ExpressionEvaluation"
 ```
 
 ### Tag: package-track2-preview

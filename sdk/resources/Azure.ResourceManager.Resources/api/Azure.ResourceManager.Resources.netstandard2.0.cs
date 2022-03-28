@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public ArmDeploymentProperties(Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode) { }
         public string DebugSettingDetailLevel { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? ExpressionEvaluationOptionsScope { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? ExpressionEvaluationScope { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentMode Mode { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ErrorDeployment OnErrorDeployment { get { throw null; } set { } }
         public System.BinaryData Parameters { get { throw null; } set { } }

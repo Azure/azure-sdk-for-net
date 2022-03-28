@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The deployment on error behavior. </summary>
         public ErrorDeployment OnErrorDeployment { get; set; }
         /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </summary>
-        internal ExpressionEvaluationOptions ExpressionEvaluationOptions { get; set; }
+        internal ExpressionEvaluationOptions ExpressionEvaluation { get; set; }
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
-        public ExpressionEvaluationScope? ExpressionEvaluationOptionsScope
+        public ExpressionEvaluationScope? ExpressionEvaluationScope
         {
-            get => ExpressionEvaluationOptions is null ? default : ExpressionEvaluationOptions.Scope;
+            get => ExpressionEvaluation is null ? default : ExpressionEvaluation.Scope;
             set
             {
-                if (ExpressionEvaluationOptions is null)
-                    ExpressionEvaluationOptions = new ExpressionEvaluationOptions();
-                ExpressionEvaluationOptions.Scope = value;
+                if (ExpressionEvaluation is null)
+                    ExpressionEvaluation = new ExpressionEvaluationOptions();
+                ExpressionEvaluation.Scope = value;
             }
         }
     }
