@@ -151,7 +151,7 @@ namespace Azure.Core.Tests
 
 #endif
 
-        [TestCaseSource(nameof(ClientOptions))]
+        [TestCaseSource(nameof(ClientOptionsTestValues))]
         public void GlobalConfigurationIsApplied(Func<ClientOptions, object> set, Func<ClientOptions, object> get)
         {
             var initial = get(Core.ClientOptions.Default);
@@ -162,7 +162,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expected, get(testOptions));
         }
 
-        public static IEnumerable<object[]> ClientOptions()
+        public static IEnumerable<object[]> ClientOptionsTestValues()
         {
             object[] M(Func<ClientOptions, object> set, Func<ClientOptions, object> get) => new[] { set, get };
 
@@ -223,6 +223,7 @@ namespace Azure.Core.Tests
             {
                 Assert.NotNull(target.Diagnostics);
                 Assert.That(target.Diagnostics, Is.TypeOf(typeof(TestDiagnosticsOptions)));
+                Assert.AreNotEqual(target.Diagnostics, ClientOptions.Default.Diagnostics);
             }
             else
             {
