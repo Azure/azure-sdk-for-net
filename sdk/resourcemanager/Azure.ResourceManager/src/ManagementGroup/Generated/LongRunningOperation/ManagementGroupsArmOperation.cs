@@ -13,27 +13,27 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Management
+namespace Azure.ResourceManager.ManagementGroups
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class ManagementArmOperation : ArmOperation
+    internal class ManagementGroupsArmOperation : ArmOperation
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ManagementArmOperation for mocking. </summary>
-        protected ManagementArmOperation()
+        /// <summary> Initializes a new instance of ManagementGroupsArmOperation for mocking. </summary>
+        protected ManagementGroupsArmOperation()
         {
         }
 
-        internal ManagementArmOperation(Response response)
+        internal ManagementGroupsArmOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }
 
-        internal ManagementArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal ManagementGroupsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "ManagementArmOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "ManagementGroupsArmOperation");
         }
 
         /// <inheritdoc />

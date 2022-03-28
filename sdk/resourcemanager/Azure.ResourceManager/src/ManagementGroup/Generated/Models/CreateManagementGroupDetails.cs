@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The details of a management group used during creation. </summary>
     public partial class CreateManagementGroupDetails
