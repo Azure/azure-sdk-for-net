@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmApplicationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmApplicationData : Azure.ResourceManager.Resources.Models.ArmApplicationResource
+    public partial class ArmApplicationData : Azure.ResourceManager.Resources.Models.ArmApplicationResourceInfo
     {
         public ArmApplicationData(Azure.Core.AzureLocation location, string kind) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.ResourceIdentifier ApplicationDefinitionId { get { throw null; } set { } }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmApplicationDefinitionData : Azure.ResourceManager.Resources.Models.ArmApplicationResource
+    public partial class ArmApplicationDefinitionData : Azure.ResourceManager.Resources.Models.ArmApplicationResourceInfo
     {
         public ArmApplicationDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ArmApplicationLockLevel lockLevel) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact> Artifacts { get { throw null; } }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Resources
     public partial class ArmDeploymentData : Azure.ResourceManager.Models.ResourceData
     {
         internal ArmDeploymentData() { }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended Properties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
@@ -189,9 +189,9 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ArmDeploymentScriptData : Azure.ResourceManager.Models.ResourceData
     {
-        public ArmDeploymentScriptData(string location) { }
+        public ArmDeploymentScriptData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity Identity { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ArmDeploymentScriptResource : Azure.ResourceManager.ArmResource
@@ -346,10 +346,10 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class TemplateSpecData : Azure.ResourceManager.Models.ResourceData
     {
-        public TemplateSpecData(string location) { }
+        public TemplateSpecData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo> Versions { get { throw null; } }
@@ -396,10 +396,10 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class TemplateSpecVersionData : Azure.ResourceManager.Models.ResourceData
     {
-        public TemplateSpecVersionData(string location) { }
+        public TemplateSpecVersionData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact> LinkedTemplates { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.BinaryData MainTemplate { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -593,9 +593,9 @@ namespace Azure.ResourceManager.Resources.Models
         public string Parameters { get { throw null; } set { } }
         public string PolicyDefinitionId { get { throw null; } set { } }
     }
-    public partial class ArmApplicationResource : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ArmApplicationResourceInfo : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ArmApplicationResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ArmApplicationResourceInfo(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationSku Sku { get { throw null; } set { } }
     }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ArmDeploymentInput
     {
         public ArmDeploymentInput(Azure.ResourceManager.Resources.Models.ArmDeploymentProperties properties) { }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentProperties Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ArmDeploymentWhatIf
     {
         public ArmDeploymentWhatIf(Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties properties) { }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties Properties { get { throw null; } }
     }
     public partial class ArmDeploymentWhatIfProperties : Azure.ResourceManager.Resources.Models.ArmDeploymentProperties
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class AzureCliScript : Azure.ResourceManager.Resources.ArmDeploymentScriptData
     {
-        public AzureCliScript(string location, System.TimeSpan retentionInterval, string azCliVersion) : base (default(string)) { }
+        public AzureCliScript(Azure.Core.AzureLocation location, System.TimeSpan retentionInterval, string azCliVersion) : base (default(Azure.Core.AzureLocation)) { }
         public string Arguments { get { throw null; } set { } }
         public string AzCliVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.CleanupOptions? CleanupPreference { get { throw null; } set { } }
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class AzurePowerShellScript : Azure.ResourceManager.Resources.ArmDeploymentScriptData
     {
-        public AzurePowerShellScript(string location, System.TimeSpan retentionInterval, string azPowerShellVersion) : base (default(string)) { }
+        public AzurePowerShellScript(Azure.Core.AzureLocation location, System.TimeSpan retentionInterval, string azPowerShellVersion) : base (default(Azure.Core.AzureLocation)) { }
         public string Arguments { get { throw null; } set { } }
         public string AzPowerShellVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.CleanupOptions? CleanupPreference { get { throw null; } set { } }
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContentVersion { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
-    public partial class PatchableArmApplicationData : Azure.ResourceManager.Resources.Models.ArmApplicationResource
+    public partial class PatchableArmApplicationData : Azure.ResourceManager.Resources.Models.ArmApplicationResourceInfo
     {
         public PatchableArmApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.ResourceIdentifier ApplicationDefinitionId { get { throw null; } set { } }
