@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ProviderExtendedLocation() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string ProviderExtendedLocationType { get { throw null; } }
     }
     public partial class ProviderPermission

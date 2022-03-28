@@ -581,6 +581,10 @@ directive:
     where: $.definitions.PolicyAssignment.properties.location
     transform: >
       $["x-ms-format"] = "azure-location"
+  - from: resources.json
+    where: $.definitions.ProviderExtendedLocation.properties.location
+    transform: >
+      $["x-ms-format"] = "azure-location"
 ```
 
 ### Tag: package-management
