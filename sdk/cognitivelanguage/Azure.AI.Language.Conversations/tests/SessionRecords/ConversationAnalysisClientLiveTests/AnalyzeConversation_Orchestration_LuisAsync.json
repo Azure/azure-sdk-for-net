@@ -5,17 +5,18 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "255",
+        "Content-Length": "254",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2c36995509639544a0a166dae92b7677-112c99925d521449-00",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220328.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "cd584ad696b00a62b8e0d2202ac16e31",
+        "x-ms-client-request-id": "08f153d9188956b4517e731bcf8719ab",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
-            "text": "Reserve a table for 2 at the Italian restaurant.",
+            "text": "Reserve a table for 2 at the Italian restaurant",
             "participantId": "1",
             "id": "1",
             "modality": "text"
@@ -29,59 +30,59 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f740d415-a3f6-4251-b0fe-396e4c5bddf3",
+        "apim-request-id": "785d59a3-14e1-4546-9427-3acb292412e2",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 28 Mar 2022 14:48:33 GMT",
+        "Date": "Mon, 28 Mar 2022 14:48:31 GMT",
         "Pragma": "no-cache",
-        "request-id": "f740d415-a3f6-4251-b0fe-396e4c5bddf3",
+        "request-id": "785d59a3-14e1-4546-9427-3acb292412e2",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "86"
+        "x-envoy-upstream-service-time": "95"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
         "results": {
-          "query": "Reserve a table for 2 at the Italian restaurant.",
+          "query": "Reserve a table for 2 at the Italian restaurant",
           "prediction": {
             "topIntent": "RestaurantIntent",
             "projectKind": "workflow",
             "intents": {
               "RestaurantIntent": {
-                "confidenceScore": 0.94078153,
+                "confidenceScore": 0.938881,
                 "targetKind": "luis",
                 "result": {
-                  "query": "Reserve a table for 2 at the Italian restaurant.",
+                  "query": "Reserve a table for 2 at the Italian restaurant",
                   "prediction": {
                     "topIntent": "RestaurantReservation.Reserve",
                     "intents": {
                       "RestaurantReservation.Reserve": {
-                        "score": 0.9976094
+                        "score": 0.99826175
                       },
                       "RestaurantReservation.Confirm": {
-                        "score": 0.07946264
+                        "score": 0.071711905
                       },
                       "RestaurantReservation.Reject": {
-                        "score": 0.04437588
+                        "score": 0.036779575
                       },
                       "RestaurantReservation.FindReservationEntry": {
-                        "score": 0.012039845
+                        "score": 0.009185963
                       },
                       "RestaurantReservation.DeleteReservation": {
-                        "score": 0.007185694
+                        "score": 0.0070448318
                       },
                       "RestaurantReservation.FindReservationWhen": {
-                        "score": 0.0032354314
+                        "score": 0.0047224266
                       },
                       "RestaurantReservation.FindReservationWhere": {
-                        "score": 0.0019547602
+                        "score": 0.0027942427
                       },
                       "None": {
-                        "score": 0.0006427079
+                        "score": 0.00071293896
                       },
                       "RestaurantReservation.ChangeReservation": {
-                        "score": 0.00024217603
+                        "score": 0.00027522864
                       }
                     },
                     "entities": {
@@ -112,7 +113,7 @@
                             "text": "Italian",
                             "startIndex": 29,
                             "length": 7,
-                            "score": 0.99850464,
+                            "score": 0.9961355,
                             "modelTypeId": 1,
                             "modelType": "Entity Extractor",
                             "recognitionSources": [
@@ -126,15 +127,15 @@
                 }
               },
               "ChitChat-QnA": {
-                "confidenceScore": 0.64078236,
+                "confidenceScore": 0.6247971,
                 "targetKind": "question_answering"
               },
               "EmailIntent": {
-                "confidenceScore": 0.47081497,
+                "confidenceScore": 0.45969298,
                 "targetKind": "conversation"
               },
               "None": {
-                "confidenceScore": 0.20775707,
+                "confidenceScore": 0.24402595,
                 "targetKind": "non_linked"
               }
             }
@@ -146,6 +147,6 @@
   "Variables": {
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_URI": "https://westeurope.api.cognitive.microsoft.com",
-    "RandomSeed": "1406136548"
+    "RandomSeed": "155591257"
   }
 }
