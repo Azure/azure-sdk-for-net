@@ -12,33 +12,39 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples
     {
-        /*[SyncOnly]
+        [SyncOnly]
         [RecordedTest]
         public void AnalyzeConversationOrchestrationPredictionQuestionAnswering()
         {
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
-
+            TextConversationItem textConversationItem = new TextConversationItem(
+                participantId: "1",
+                id: "1",
+                text: "Send an email to Carol about the tomorrow's demo.");
 #if SNIPPET
             ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "Where are the calories per recipe?",
+                textConversationItem,
                 orchestrationProject);
 #else
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "Where are the calories per recipe?",
+            Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+                textConversationItem,
                 TestEnvironment.OrchestrationProject);
 #endif
-
-            OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
             #endregion
+
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
             if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
             {
+                Console.WriteLine($"Top intent: {respondingProjectName}");
+
                 QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
                 KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
@@ -54,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.QuestionAnswering));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("SushiMaking"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("ChitChat-QnA"));
         }
 
         [SyncOnly]
@@ -63,11 +69,17 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "We'll have 2 plates of seared salmon nigiri.",
+            TextConversationItem textConversationItem = new TextConversationItem(
+                participantId: "1",
+                id: "1",
+                text: "Reserve a table for 2 at the Italian restaurant.");
+
+            Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+                textConversationItem,
                 TestEnvironment.OrchestrationProject);
 
-            OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
             string respondingProjectName = orchestratorPrediction.TopIntent;
@@ -80,9 +92,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 ConversationResult conversationResult = cluTargetIntentResult.Result;
                 ConversationPrediction conversationPrediction = conversationResult.Prediction;
 
-                if (!String.IsNullOrEmpty(conversationResult.DetectedLanguage))
-                    Console.WriteLine($"Detected Language: {conversationResult.DetectedLanguage}");
-
                 Console.WriteLine($"Top Intent: {conversationResult.Prediction.TopIntent}");
                 Console.WriteLine($"Intents:");
                 foreach (ConversationIntent intent in conversationPrediction.Intents)
@@ -93,33 +102,52 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
 
                 Console.WriteLine($"Entities:");
-                foreach (ConversationEntity entitiy in conversationPrediction.Entities)
+                foreach (ConversationEntity entity in conversationPrediction.Entities)
                 {
-                    Console.WriteLine($"Entity Text: {entitiy.Text}");
-                    Console.WriteLine($"Entity Category: {entitiy.Category}");
-                    Console.WriteLine($"Confidence: {entitiy.Confidence}");
-                    Console.WriteLine($"Starting Position: {entitiy.Offset}");
-                    Console.WriteLine($"Length: {entitiy.Length}");
+                    Console.WriteLine($"Entity Text: {entity.Text}");
+                    Console.WriteLine($"Entity Category: {entity.Category}");
+                    Console.WriteLine($"Confidence: {entity.Confidence}");
+                    Console.WriteLine($"Starting Position: {entity.Offset}");
+                    Console.WriteLine($"Length: {entity.Length}");
                     Console.WriteLine();
+
+                    if (entity.Resolutions != null)
+                    {
+                        Console.WriteLine($"Resolutions:");
+                        foreach (BaseResolution resolution in entity.Resolutions)
+                        {
+                            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                            Console.WriteLine();
+                        }
+                        Console.WriteLine();
+                    }
                 }
             }
             #endregion
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Conversation));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("SushiOrder"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("EmailIntent"));
         }
 
         [SyncOnly]
         [RecordedTest]
-        [Ignore(reason: "LUIS Orchestration not set up in CI pipeline")]
         public void AnalyzeConversationOrchestrationPredictionLuis()
         {
             ConversationAnalysisClient client = Client;
 
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                "Book me flight from London to Paris",
+            TextConversationItem textConversationItem = new TextConversationItem(
+                participantId: "1",
+                id: "1",
+                text: "Reserve a table for 2 at the Italian restaurant.");
+
+            Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+                textConversationItem,
                 TestEnvironment.OrchestrationProject);
 
-            OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
             string respondingProjectName = orchestratorPrediction.TopIntent;
@@ -135,7 +163,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("FlightBooking"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("RestaurantIntent"));
         }
 
         [AsyncOnly]
@@ -145,19 +173,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-
+            TextConversationItem textConversationItem = new TextConversationItem(
+                            participantId: "1",
+                            id: "1",
+                            text: "Send an email to Carol about the tomorrow's demo.");
 #if SNIPPET
             ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "Where are the calories per recipe?",
+            Response<AnalyzeConversationResult> response =  await client.AnalyzeConversationAsync(
+                textConversationItem,
                 orchestrationProject);
 #else
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "Where are the calories per recipe?",
+            Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
+                textConversationItem,
                 TestEnvironment.OrchestrationProject);
 #endif
-
-            OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
             #endregion
 
             string respondingProjectName = orchestratorPrediction.TopIntent;
@@ -165,6 +196,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
             {
+                Console.WriteLine($"Top intent: {respondingProjectName}");
+
                 QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
                 KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
@@ -179,7 +212,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.QuestionAnswering));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("SushiMaking"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("ChitChat-QnA"));
         }
 
         [AsyncOnly]
@@ -188,11 +221,17 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "We'll have 2 plates of seared salmon nigiri.",
+            TextConversationItem textConversationItem = new TextConversationItem(
+                participantId: "1",
+                id: "1",
+                text: "Reserve a table for 2 at the Italian restaurant.");
+
+            Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
+                textConversationItem,
                 TestEnvironment.OrchestrationProject);
 
-            OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
 
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
@@ -204,9 +243,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 ConversationResult conversationResult = cluTargetIntentResult.Result;
                 ConversationPrediction conversationPrediction = conversationResult.Prediction;
 
-                if (!String.IsNullOrEmpty(conversationResult.DetectedLanguage))
-                    Console.WriteLine($"Detected Language: {conversationResult.DetectedLanguage}");
-
                 Console.WriteLine($"Top Intent: {conversationResult.Prediction.TopIntent}");
                 Console.WriteLine($"Intents:");
                 foreach (ConversationIntent intent in conversationPrediction.Intents)
@@ -217,33 +253,52 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
 
                 Console.WriteLine($"Entities:");
-                foreach (ConversationEntity entitiy in conversationPrediction.Entities)
+                foreach (ConversationEntity entity in conversationPrediction.Entities)
                 {
-                    Console.WriteLine($"Entity Text: {entitiy.Text}");
-                    Console.WriteLine($"Entity Category: {entitiy.Category}");
-                    Console.WriteLine($"Confidence: {entitiy.Confidence}");
-                    Console.WriteLine($"Starting Position: {entitiy.Offset}");
-                    Console.WriteLine($"Length: {entitiy.Length}");
+                    Console.WriteLine($"Entity Text: {entity.Text}");
+                    Console.WriteLine($"Entity Category: {entity.Category}");
+                    Console.WriteLine($"Confidence: {entity.Confidence}");
+                    Console.WriteLine($"Starting Position: {entity.Offset}");
+                    Console.WriteLine($"Length: {entity.Length}");
                     Console.WriteLine();
+
+                    if (entity.Resolutions != null)
+                    {
+                        Console.WriteLine($"Resolutions:");
+                        foreach (BaseResolution resolution in entity.Resolutions)
+                        {
+                            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                            Console.WriteLine();
+                        }
+                        Console.WriteLine();
+                    }
                 }
             }
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Conversation));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("SushiOrder"));
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("EmailIntent"));
         }
 
         [AsyncOnly]
         [RecordedTest]
-        [Ignore(reason:"LUIS Orchestration not set up in CI pipeline")]
         public async Task AnalyzeConversationOrchestrationPredictionLuisAsync()
         {
             ConversationAnalysisClient client = Client;
 
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-                "Book me flight from London to Paris",
+            TextConversationItem textConversationItem = new TextConversationItem(
+                participantId: "1",
+                id: "1",
+                text: "Reserve a table for 2 at the Italian restaurant.");
+
+            Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
+                textConversationItem,
                 TestEnvironment.OrchestrationProject);
 
-            OrchestratorPrediction orchestratorPrediction = response.Value.Prediction as OrchestratorPrediction;
+            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
 
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
@@ -257,7 +312,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
 
             Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
-            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("FlightBooking"));
-        }*/
+            Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("RestaurantIntent"));
+        }
     }
 }
