@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of LocationMetadata. </summary>
         internal LocationMetadata()
         {
-            PairedRegion = new ChangeTrackingList<PairedRegion>();
+            PairedRegions = new ChangeTrackingList<PairedRegion>();
         }
 
         /// <summary> Initializes a new instance of LocationMetadata. </summary>
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="longitude"> The longitude of the location. </param>
         /// <param name="latitude"> The latitude of the location. </param>
         /// <param name="physicalLocation"> The physical location of the Azure location. </param>
-        /// <param name="pairedRegion"> The regions paired to this region. </param>
+        /// <param name="pairedRegions"> The regions paired to this region. </param>
         /// <param name="homeLocation"> The home location of an edge zone. </param>
-        internal LocationMetadata(RegionType? regionType, RegionCategory? regionCategory, string geographyGroup, double? longitude, double? latitude, string physicalLocation, IReadOnlyList<PairedRegion> pairedRegion, string homeLocation)
+        internal LocationMetadata(RegionType? regionType, RegionCategory? regionCategory, string geographyGroup, double? longitude, double? latitude, string physicalLocation, IReadOnlyList<PairedRegion> pairedRegions, string homeLocation)
         {
             RegionType = regionType;
             RegionCategory = regionCategory;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
             Longitude = longitude;
             Latitude = latitude;
             PhysicalLocation = physicalLocation;
-            PairedRegion = pairedRegion;
+            PairedRegions = pairedRegions;
             HomeLocation = homeLocation;
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The physical location of the Azure location. </summary>
         public string PhysicalLocation { get; }
         /// <summary> The regions paired to this region. </summary>
-        public IReadOnlyList<PairedRegion> PairedRegion { get; }
+        public IReadOnlyList<PairedRegion> PairedRegions { get; }
         /// <summary> The home location of an edge zone. </summary>
         public string HomeLocation { get; }
     }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<double> longitude = default;
             Optional<double> latitude = default;
             Optional<string> physicalLocation = default;
-            Optional<IReadOnlyList<PairedRegion>> pairedRegion = default;
+            Optional<IReadOnlyList<PairedRegion>> pairedRegions = default;
             Optional<string> homeLocation = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         array.Add(Models.PairedRegion.DeserializePairedRegion(item));
                     }
-                    pairedRegion = array;
+                    pairedRegions = array;
                     continue;
                 }
                 if (property.NameEquals("homeLocation"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geographyGroup.Value, longitude.Value, latitude.Value, physicalLocation.Value, Optional.ToList(pairedRegion), homeLocation.Value);
+            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geographyGroup.Value, longitude.Value, latitude.Value, physicalLocation.Value, Optional.ToList(pairedRegions), homeLocation.Value);
         }
     }
 }
