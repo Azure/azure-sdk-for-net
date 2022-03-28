@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
+            #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
             TextConversationItem textConversationItem = new TextConversationItem(
                  participantId: "1",
                  id: "1",
