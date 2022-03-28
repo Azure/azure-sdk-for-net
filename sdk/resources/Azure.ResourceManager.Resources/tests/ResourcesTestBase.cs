@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
         protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentInput(deploymentProperties);
 
-        protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties, string location) => new ArmDeploymentInput(deploymentProperties)
+        protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentInput(deploymentProperties)
         {
             Location = location
         };
