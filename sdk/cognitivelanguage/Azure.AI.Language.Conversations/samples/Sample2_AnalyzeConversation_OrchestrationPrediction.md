@@ -19,7 +19,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 TextConversationItem textConversationItem = new TextConversationItem(
     participantId: "1",
     id: "1",
-    text: "Send an email to Carol about the tomorrow's demo.");
+    text: "How are you?");
 ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
     textConversationItem,
@@ -34,7 +34,7 @@ var orchestratorPrediction = customConversationalTaskResult.Results.Prediction a
 TextConversationItem textConversationItem = new TextConversationItem(
                 participantId: "1",
                 id: "1",
-                text: "Send an email to Carol about the tomorrow's demo.");
+                text: "How are you?");
 ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response =  await client.AnalyzeConversationAsync(
     textConversationItem,
@@ -109,11 +109,14 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
             Console.WriteLine($"Resolutions:");
             foreach (BaseResolution resolution in entity.Resolutions)
             {
-                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                Console.WriteLine();
+                if (resolution is DateTimeResolution)
+                {
+                    DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                    Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                    Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                    Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                    Console.WriteLine();
+                }
             }
             Console.WriteLine();
         }

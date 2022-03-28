@@ -54,11 +54,14 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     {
         foreach (BaseResolution resolution in entity.Resolutions)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-            Console.WriteLine($"Value: {dateTimeResolution.Value}");
-            Console.WriteLine();
+            if (resolution is DateTimeResolution)
+            {
+                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                Console.WriteLine();
+            }
         }
     }
 }
@@ -106,11 +109,14 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     {
         foreach (BaseResolution resolution in entity.Resolutions)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-            Console.WriteLine($"Value: {dateTimeResolution.Value}");
-            Console.WriteLine();
+            if (resolution is DateTimeResolution)
+            {
+                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                Console.WriteLine();
+            }
         }
     }
 }
