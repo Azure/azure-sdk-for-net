@@ -182,6 +182,9 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 |No Managed Identity endpoint found|The application attempted to authenticate before an identity was assigned to its pod|Verify the pod is labeled correctly. This also occurs when a correctly labeled pod authenticates before the identity is ready. To prevent initialization races, configure NMI to set the Retry-After header in its responses (see [Pod Identity documentation](https://azure.github.io/aad-pod-identity/docs/configure/feature_flags/#set-retry-after-header-in-nmi-response)).
 
 ## Troubleshoot `VisualStudioCodeCredential` Authentication Issues
+
+It is a known issue that `VisualStudioCodeCredential` does not work well with Azure Account extension newer than **version 0.9.11**. If you are using latest version of Azure Account extension, please downgrade to **version 0.9.11** to make `VisualStudioCodeCredential` work correctly.
+
 `CredentialUnavailableException`
 | Error Message |Description| Mitigation |
 |---|---|---|
