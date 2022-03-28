@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("installer_command_line_params");
                 writer.WriteStringValue(InstallerCommandLineParams);
             }
-            if (Optional.IsDefined(PublishedDateOn))
+            if (Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("published_date_time");
-                writer.WriteStringValue(PublishedDateOn.Value, "O");
+                writer.WriteStringValue(PublishedOn.Value, "O");
             }
             if (Optional.IsDefined(DownloadCount))
             {
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("local_path");
                 writer.WriteStringValue(LocalPath);
             }
-            if (Optional.IsDefined(InstalledDateOn))
+            if (Optional.IsDefined(InstalledOn))
             {
                 writer.WritePropertyName("installed_date_time");
-                writer.WriteStringValue(InstalledDateOn.Value, "O");
+                writer.WriteStringValue(InstalledOn.Value, "O");
             }
             if (Optional.IsDefined(ProvisioningState))
             {
