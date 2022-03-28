@@ -191,11 +191,6 @@ namespace Azure.ResourceManager.Management.Models
         public string DisplayName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ParentId { get { throw null; } }
     }
-    public partial class DescendantParentGroupInfo
-    {
-        internal DescendantParentGroupInfo() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-    }
     public partial class ManagementGroupChildInfo
     {
         internal ManagementGroupChildInfo() { }
@@ -1354,11 +1349,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ExtendedLocationType left, Azure.ResourceManager.Resources.Models.ExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FeatureProperties
-    {
-        internal FeatureProperties() { }
-        public string State { get { throw null; } }
-    }
     public partial class LocationExpanded
     {
         internal LocationExpanded() { }
@@ -1539,11 +1529,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState left, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProviderConsentDefinition
-    {
-        public ProviderConsentDefinition() { }
-        public bool? ConsentToAuthorization { get { throw null; } set { } }
-    }
     public partial class ProviderExtendedLocation
     {
         internal ProviderExtendedLocation() { }
@@ -1559,12 +1544,6 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AzureRoleDefinition RoleDefinition { get { throw null; } }
     }
-    public partial class ProviderPermissionListResult
-    {
-        internal ProviderPermissionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderPermission> Value { get { throw null; } }
-    }
     public partial class ProviderResourceType
     {
         internal ProviderResourceType() { }
@@ -1577,12 +1556,6 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
         public string ResourceType { get { throw null; } }
-    }
-    public partial class ProviderResourceTypeListResult
-    {
-        internal ProviderResourceTypeListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderResourceType> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RegionCategory : System.IEquatable<Azure.ResourceManager.Resources.Models.RegionCategory>
@@ -1626,11 +1599,6 @@ namespace Azure.ResourceManager.Resources.Models
         internal ResourceGroupExportResult() { }
         public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
         public System.BinaryData Template { get { throw null; } }
-    }
-    public partial class ResourceGroupProperties
-    {
-        public ResourceGroupProperties() { }
-        public string ProvisioningState { get { throw null; } }
     }
     public partial class ResourceLinkProperties
     {
