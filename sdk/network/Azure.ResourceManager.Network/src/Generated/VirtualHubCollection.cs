@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="virtualHubParameters"> Parameters supplied to create or update VirtualHub. </param>
+        /// <param name="data"> Parameters supplied to create or update VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualHubName, VirtualHubData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNull(virtualHubParameters, nameof(virtualHubParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualHubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VirtualHubResource>(new VirtualHubOperationSource(Client), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualHubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VirtualHubResource>(new VirtualHubOperationSource(Client), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="virtualHubParameters"> Parameters supplied to create or update VirtualHub. </param>
+        /// <param name="data"> Parameters supplied to create or update VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual ArmOperation<VirtualHubResource> CreateOrUpdate(WaitUntil waitUntil, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VirtualHubResource> CreateOrUpdate(WaitUntil waitUntil, string virtualHubName, VirtualHubData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNull(virtualHubParameters, nameof(virtualHubParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken);
-                var operation = new NetworkArmOperation<VirtualHubResource>(new VirtualHubOperationSource(Client), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, data, cancellationToken);
+                var operation = new NetworkArmOperation<VirtualHubResource>(new VirtualHubOperationSource(Client), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHubName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

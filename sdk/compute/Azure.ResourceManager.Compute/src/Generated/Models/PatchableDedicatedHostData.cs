@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **Windows_Server_Hybrid** &lt;br&gt;&lt;br&gt; **Windows_Server_Perpetual** &lt;br&gt;&lt;br&gt; Default: **None**. </summary>
         public DedicatedHostLicenseTypes? LicenseType { get; set; }
         /// <summary> The date when the host was first provisioned. </summary>
-        public DateTimeOffset? ProvisioningTime { get; }
+        public DateTimeOffset? ProvisioningOn { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The dedicated host instance view. </summary>

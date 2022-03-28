@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="identity"> The managed identity information, if configured. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
         /// <param name="provisioningState"> The provisioning state of the configuration store. </param>
-        /// <param name="creationDate"> The creation date of configuration store. </param>
+        /// <param name="creationOn"> The creation date of configuration store. </param>
         /// <param name="endpoint"> The DNS endpoint where the configuration store API will be available. </param>
         /// <param name="encryption"> The encryption settings of the configuration store. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, ProvisioningState? provisioningState, DateTimeOffset? creationDate, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, ProvisioningState? provisioningState, DateTimeOffset? creationOn, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
             ProvisioningState = provisioningState;
-            CreationDate = creationDate;
+            CreationOn = creationOn;
             Endpoint = endpoint;
             Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The provisioning state of the configuration store. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The creation date of configuration store. </summary>
-        public DateTimeOffset? CreationDate { get; }
+        public DateTimeOffset? CreationOn { get; }
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
         public string Endpoint { get; }
         /// <summary> The encryption settings of the configuration store. </summary>

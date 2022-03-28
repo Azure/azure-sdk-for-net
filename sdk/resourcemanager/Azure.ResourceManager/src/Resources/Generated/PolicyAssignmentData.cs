@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
         /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, SystemAssignedServiceIdentity identity, string displayName, string policyDefinitionId, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, resourceType, systemData)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SystemAssignedServiceIdentity identity, string displayName, string policyDefinitionId, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Identity = identity;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> The managed identity associated with the policy assignment. </summary>
         public SystemAssignedServiceIdentity Identity { get; set; }
         /// <summary> The display name of the policy assignment. </summary>

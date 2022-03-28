@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             Assert.NotNull(eventHubNamespace.Id.Name);
             Assert.NotNull(eventHubNamespace.Data);
             Assert.NotNull(eventHubNamespace.Data.Location);
-            Assert.NotNull(eventHubNamespace.Data.CreatedAt);
+            Assert.NotNull(eventHubNamespace.Data.CreatedOn);
             Assert.NotNull(eventHubNamespace.Data.Sku);
             if (useDefaults)
             {

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
         public IReadOnlyList<Resources.Models.SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The date time when the capacity reservation was last updated. </summary>
-        public DateTimeOffset? ProvisioningTime { get; }
+        public DateTimeOffset? ProvisioningOn { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The Capacity reservation instance view. </summary>

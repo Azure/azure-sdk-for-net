@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData templateSpec)
+        internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(templateSpec);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -65,18 +65,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
-        /// <param name="templateSpec"> Template Spec supplied to the operation. </param>
+        /// <param name="data"> Template Spec supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TemplateSpecData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
+        public async Task<Response<TemplateSpecData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNull(templateSpec, nameof(templateSpec));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpec);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,18 +97,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
-        /// <param name="templateSpec"> Template Spec supplied to the operation. </param>
+        /// <param name="data"> Template Spec supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TemplateSpecData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
+        public Response<TemplateSpecData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNull(templateSpec, nameof(templateSpec));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpec);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, PatchableTemplateSpecData data)
+        internal Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, PatchableTemplateSpecData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
+        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

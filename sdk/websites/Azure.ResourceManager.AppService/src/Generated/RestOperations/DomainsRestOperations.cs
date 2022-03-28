@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData domain)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(domain);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -504,18 +504,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
-        /// <param name="domain"> Domain registration information. </param>
+        /// <param name="data"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-            Argument.AssertNotNull(domain, nameof(domain));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, domainName, domain);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, domainName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -531,18 +531,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
-        /// <param name="domain"> Domain registration information. </param>
+        /// <param name="data"> Domain registration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domain"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData domain, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string domainName, AppServiceDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-            Argument.AssertNotNull(domain, nameof(domain));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, domainName, domain);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, domainName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier)
+        internal HttpMessage CreateCreateOrUpdateOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -916,19 +916,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="name"> Name of identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainOwnershipIdentifierData>> CreateOrUpdateOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainOwnershipIdentifierData>> CreateOrUpdateOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateOwnershipIdentifierRequest(subscriptionId, resourceGroupName, domainName, name, domainOwnershipIdentifier);
+            using var message = CreateCreateOrUpdateOwnershipIdentifierRequest(subscriptionId, resourceGroupName, domainName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -949,19 +949,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="name"> Name of identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainOwnershipIdentifierData> CreateOrUpdateOwnershipIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public Response<DomainOwnershipIdentifierData> CreateOrUpdateOwnershipIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateOwnershipIdentifierRequest(subscriptionId, resourceGroupName, domainName, name, domainOwnershipIdentifier);
+            using var message = CreateCreateOrUpdateOwnershipIdentifierRequest(subscriptionId, resourceGroupName, domainName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier)
+        internal HttpMessage CreateUpdateOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(domainOwnershipIdentifier);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1084,19 +1084,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="name"> Name of identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainOwnershipIdentifierData>> UpdateOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainOwnershipIdentifierData>> UpdateOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateOwnershipIdentifierRequest(subscriptionId, resourceGroupName, domainName, name, domainOwnershipIdentifier);
+            using var message = CreateUpdateOwnershipIdentifierRequest(subscriptionId, resourceGroupName, domainName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1117,19 +1117,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
         /// <param name="name"> Name of identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainOwnershipIdentifierData> UpdateOwnershipIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        public Response<DomainOwnershipIdentifierData> UpdateOwnershipIdentifier(string subscriptionId, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateOwnershipIdentifierRequest(subscriptionId, resourceGroupName, domainName, name, domainOwnershipIdentifier);
+            using var message = CreateUpdateOwnershipIdentifierRequest(subscriptionId, resourceGroupName, domainName, name, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

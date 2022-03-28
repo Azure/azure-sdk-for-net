@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
+        /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServiceCertificateOrder"/> is null. </exception>
-        public static async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public static async Task<Response> ValidatePurchaseInformationAppServiceCertificateOrderAsync(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(appServiceCertificateOrder, nameof(appServiceCertificateOrder));
+            Argument.AssertNotNull(data, nameof(data));
 
-            return await GetExtensionClient(subscriptionResource).ValidatePurchaseInformationAppServiceCertificateOrderAsync(appServiceCertificateOrder, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ValidatePurchaseInformationAppServiceCertificateOrderAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -445,14 +445,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="appServiceCertificateOrder"> Information for a certificate order. </param>
+        /// <param name="data"> Information for a certificate order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServiceCertificateOrder"/> is null. </exception>
-        public static Response ValidatePurchaseInformationAppServiceCertificateOrder(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData appServiceCertificateOrder, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public static Response ValidatePurchaseInformationAppServiceCertificateOrder(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(appServiceCertificateOrder, nameof(appServiceCertificateOrder));
+            Argument.AssertNotNull(data, nameof(data));
 
-            return GetExtensionClient(subscriptionResource).ValidatePurchaseInformationAppServiceCertificateOrder(appServiceCertificateOrder, cancellationToken);
+            return GetExtensionClient(subscriptionResource).ValidatePurchaseInformationAppServiceCertificateOrder(data, cancellationToken);
         }
 
         /// <summary>

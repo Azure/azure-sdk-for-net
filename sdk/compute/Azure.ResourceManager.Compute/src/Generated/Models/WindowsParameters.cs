@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Filters out Kbs that don&apos;t have an InstallationRebootBehavior of &apos;NeverReboots&apos; when this is set to true. </summary>
         public bool? ExcludeKbsRequiringReboot { get; set; }
         /// <summary> This is used to install patches that were published on or before this given max published date. </summary>
-        public DateTimeOffset? MaxPatchPublishDate { get; set; }
+        public DateTimeOffset? MaxPatchPublishOn { get; set; }
     }
 }

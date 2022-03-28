@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                primaryScriptUri = null;
                                 continue;
                             }
                             primaryScriptUri = new Uri(property0.Value.GetString());

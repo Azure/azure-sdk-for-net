@@ -577,6 +577,10 @@ directive:
     where: $.definitions.Permission.properties.notDataActions
     transform: >
       $["x-ms-client-name"] = "DeniedDataActions"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignment.properties.location
+    transform: >
+      $["x-ms-format"] = "azure-location"
 ```
 
 ### Tag: package-management

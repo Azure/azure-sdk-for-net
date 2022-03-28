@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
         /// Operation Id: DatabaseAdvisors_Update
         /// </summary>
-        /// <param name="parameters"> The requested advisor resource state. </param>
+        /// <param name="data"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<ServerDatabaseAdvisorResource>> UpdateAsync(AdvisorData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<ServerDatabaseAdvisorResource>> UpdateAsync(AdvisorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("ServerDatabaseAdvisorResource.Update");
             scope.Start();
             try
             {
-                var response = await _serverDatabaseAdvisorDatabaseAdvisorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serverDatabaseAdvisorDatabaseAdvisorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServerDatabaseAdvisorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,18 +200,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
         /// Operation Id: DatabaseAdvisors_Update
         /// </summary>
-        /// <param name="parameters"> The requested advisor resource state. </param>
+        /// <param name="data"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ServerDatabaseAdvisorResource> Update(AdvisorData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<ServerDatabaseAdvisorResource> Update(AdvisorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("ServerDatabaseAdvisorResource.Update");
             scope.Start();
             try
             {
-                var response = _serverDatabaseAdvisorDatabaseAdvisorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _serverDatabaseAdvisorDatabaseAdvisorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new ServerDatabaseAdvisorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

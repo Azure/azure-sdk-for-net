@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account2.Data.Encryption);
             Assert.NotNull(account2.Data.Encryption.Services.Blob);
             Assert.True(account2.Data.Encryption.Services.Blob.Enabled);
-            Assert.NotNull(account2.Data.Encryption.Services.Blob.LastEnabledTime);
+            Assert.NotNull(account2.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account2.Data.Encryption.Services.File);
             Assert.True(account2.Data.Encryption.Services.File.Enabled);
-            Assert.NotNull(account2.Data.Encryption.Services.File.LastEnabledTime);
+            Assert.NotNull(account2.Data.Encryption.Services.File.LastEnabledOn);
 
             //update http traffic only and validate
             parameters = new PatchableStorageAccountData()
@@ -473,10 +473,10 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Encryption);
             Assert.NotNull(account1.Data.Encryption.Services.Blob);
             Assert.True(account1.Data.Encryption.Services.Blob.Enabled);
-            Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledTime);
+            Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account1.Data.Encryption.Services.File);
             Assert.True(account1.Data.Encryption.Services.File.Enabled);
-            Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledTime);
+            Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledOn);
 
             // 2. Restore storage encryption
             parameters = new PatchableStorageAccountData
@@ -494,10 +494,10 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Encryption);
             Assert.NotNull(account1.Data.Encryption.Services.Blob);
             Assert.True(account1.Data.Encryption.Services.Blob.Enabled);
-            Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledTime);
+            Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account1.Data.Encryption.Services.File);
             Assert.True(account1.Data.Encryption.Services.File.Enabled);
-            Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledTime);
+            Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledOn);
 
             // 3. Remove file encryption service field.
             parameters = new PatchableStorageAccountData
@@ -515,10 +515,10 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account1.Data.Encryption);
             Assert.NotNull(account1.Data.Encryption.Services.Blob);
             Assert.True(account1.Data.Encryption.Services.Blob.Enabled);
-            Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledTime);
+            Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account1.Data.Encryption.Services.File);
             Assert.True(account1.Data.Encryption.Services.File.Enabled);
-            Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledTime);
+            Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledOn);
         }
 
         [Test]
@@ -543,17 +543,17 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.Encryption);
             Assert.NotNull(account.Data.Encryption.Services.Blob);
             Assert.IsTrue(account.Data.Encryption.Services.Blob.Enabled);
-            Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.File);
             Assert.IsTrue(account.Data.Encryption.Services.File.Enabled);
-            Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
 
             if (null != account.Data.Encryption.Services.Table)
             {
                 if (account.Data.Encryption.Services.Table.Enabled.HasValue)
                 {
-                    Assert.IsFalse(account.Data.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    Assert.IsFalse(account.Data.Encryption.Services.Table.LastEnabledOn.HasValue);
                 }
             }
 
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 if (account.Data.Encryption.Services.Queue.Enabled.HasValue)
                 {
-                    Assert.IsFalse(account.Data.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    Assert.IsFalse(account.Data.Encryption.Services.Queue.LastEnabledOn.HasValue);
                 }
             }
         }
@@ -795,15 +795,15 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.Encryption);
             Assert.NotNull(account.Data.Encryption.Services.Blob);
             Assert.True(account.Data.Encryption.Services.Blob.Enabled);
-            Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account.Data.Encryption.Services.File);
             Assert.NotNull(account.Data.Encryption.Services.File.Enabled);
-            Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
             if (null != account.Data.Encryption.Services.Table)
             {
                 if (account.Data.Encryption.Services.Table.Enabled.HasValue)
                 {
-                    Assert.False(account.Data.Encryption.Services.Table.LastEnabledTime.HasValue);
+                    Assert.False(account.Data.Encryption.Services.Table.LastEnabledOn.HasValue);
                 }
             }
 
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 if (account.Data.Encryption.Services.Queue.Enabled.HasValue)
                 {
-                    Assert.False(account.Data.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                    Assert.False(account.Data.Encryption.Services.Queue.LastEnabledOn.HasValue);
                 }
             }
         }
@@ -841,22 +841,22 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.Encryption.Services.Blob);
             Assert.IsTrue(account.Data.Encryption.Services.Blob.Enabled);
             Assert.AreEqual(KeyType.Account, account.Data.Encryption.Services.Blob.KeyType);
-            Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.File);
             Assert.IsTrue(account.Data.Encryption.Services.File.Enabled);
             Assert.AreEqual(KeyType.Account, account.Data.Encryption.Services.Blob.KeyType);
-            Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.Queue);
             Assert.AreEqual(KeyType.Account, account.Data.Encryption.Services.Queue.KeyType);
             Assert.IsTrue(account.Data.Encryption.Services.Queue.Enabled);
-            Assert.NotNull(account.Data.Encryption.Services.Queue.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.Queue.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.Table);
             Assert.AreEqual(KeyType.Account, account.Data.Encryption.Services.Table.KeyType);
             Assert.IsTrue(account.Data.Encryption.Services.Table.Enabled);
-            Assert.NotNull(account.Data.Encryption.Services.Table.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.Table.LastEnabledOn);
         }
 
         [Test]
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.Storage.Tests
             account = await account.GetAsync(StorageAccountExpand.GeoReplicationStats);
             Assert.NotNull(account.Data.GeoReplicationStats);
             Assert.NotNull(account.Data.GeoReplicationStats.Status);
-            Assert.NotNull(account.Data.GeoReplicationStats.LastSyncTime);
+            Assert.NotNull(account.Data.GeoReplicationStats.LastSyncOn);
             Assert.NotNull(account.Data.GeoReplicationStats.CanFailover);
         }
 
@@ -1053,14 +1053,14 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             // Test for default values of sas credentials.
-            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryTime: Recording.UtcNow.AddHours(1));
+            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1));
             Response<ListAccountSasResponse> result = await account.GetAccountSASAsync(accountSasParameters);
             AccountSasParameters resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
 
             Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
             Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
             Assert.AreEqual(accountSasParameters.Permissions, resultCredentials.Permissions);
-            Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
+            Assert.NotNull(accountSasParameters.SharedAccessExpiryOn);
         }
 
         [Test]
@@ -1075,14 +1075,14 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             // Test for default values of sas credentials.
-            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryTime: Recording.UtcNow.AddHours(1));
+            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1));
             Response<ListAccountSasResponse> result = await account.GetAccountSASAsync(accountSasParameters);
             AccountSasParameters resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
 
             Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
             Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
             Assert.AreEqual(accountSasParameters.Permissions, resultCredentials.Permissions);
-            Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
+            Assert.NotNull(accountSasParameters.SharedAccessExpiryOn);
         }
 
         [Test]
@@ -1096,10 +1096,10 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
-            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryTime: Recording.UtcNow.AddHours(1))
+            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1))
             {
                 Protocols = HttpProtocol.HttpsHttp,
-                SharedAccessStartTime = Recording.UtcNow,
+                SharedAccessStartOn = Recording.UtcNow,
                 KeyToSign = "key1"
             };
             Response<ListAccountSasResponse> result = await account.GetAccountSASAsync(accountSasParameters);
@@ -1109,8 +1109,8 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
             Assert.AreEqual(accountSasParameters.Permissions, resultCredentials.Permissions);
             Assert.AreEqual(accountSasParameters.Protocols, resultCredentials.Protocols);
-            Assert.NotNull(accountSasParameters.SharedAccessStartTime);
-            Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
+            Assert.NotNull(accountSasParameters.SharedAccessStartOn);
+            Assert.NotNull(accountSasParameters.SharedAccessExpiryOn);
         }
 
         [Test]
@@ -1129,13 +1129,13 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Resource = "c",
                 Permissions = "rl",
-                SharedAccessExpiryTime = Recording.UtcNow.AddHours(1),
+                SharedAccessExpiryOn = Recording.UtcNow.AddHours(1),
             };
             Response<ListServiceSasResponse> result = await account.GetServiceSASAsync(serviceSasParameters);
             ServiceSasParameters resultCredentials = ParseServiceSASToken(result.Value.ServiceSasToken, canonicalizedResourceParameter);
             Assert.AreEqual(serviceSasParameters.Resource, resultCredentials.Resource);
             Assert.AreEqual(serviceSasParameters.Permissions, resultCredentials.Permissions);
-            Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
+            Assert.NotNull(serviceSasParameters.SharedAccessExpiryOn);
         }
 
         [Test]
@@ -1183,8 +1183,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 Resource = "c",
                 Permissions = "rdwlacup",
                 Protocols = HttpProtocol.HttpsHttp,
-                SharedAccessStartTime = Recording.UtcNow,
-                SharedAccessExpiryTime = Recording.UtcNow.AddHours(1),
+                SharedAccessStartOn = Recording.UtcNow,
+                SharedAccessExpiryOn = Recording.UtcNow.AddHours(1),
                 KeyToSign = "key1"
             };
 
@@ -1193,8 +1193,8 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(serviceSasParameters.Resource, resultCredentials.Resource);
             Assert.AreEqual(serviceSasParameters.Permissions, resultCredentials.Permissions);
             Assert.AreEqual(serviceSasParameters.Protocols, resultCredentials.Protocols);
-            Assert.NotNull(serviceSasParameters.SharedAccessStartTime);
-            Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
+            Assert.NotNull(serviceSasParameters.SharedAccessStartOn);
+            Assert.NotNull(serviceSasParameters.SharedAccessExpiryOn);
         }
 
         [Test]

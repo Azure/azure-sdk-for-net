@@ -60,21 +60,21 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
-        /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public virtual async Task<ArmOperation<GalleryApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<GalleryApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryApplicationName, GalleryApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNull(galleryApplication, nameof(galleryApplication));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _galleryApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryApplicationResource>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response, OperationFinalStateVia.Location);
+                var response = await _galleryApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<GalleryApplicationResource>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
-        /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public virtual ArmOperation<GalleryApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<GalleryApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string galleryApplicationName, GalleryApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNull(galleryApplication, nameof(galleryApplication));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _galleryApplicationClientDiagnostics.CreateScope("GalleryApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _galleryApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryApplicationResource>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response, OperationFinalStateVia.Location);
+                var response = _galleryApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, data, cancellationToken);
+                var operation = new ComputeArmOperation<GalleryApplicationResource>(new GalleryApplicationOperationSource(Client), _galleryApplicationClientDiagnostics, Pipeline, _galleryApplicationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

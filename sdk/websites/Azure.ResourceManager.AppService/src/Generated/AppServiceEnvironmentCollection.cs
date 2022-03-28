@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
-        /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppServiceEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<AppServiceEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(hostingEnvironmentEnvelope, nameof(hostingEnvironmentEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
+                var response = await _appServiceEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
-        /// <param name="hostingEnvironmentEnvelope"> Configuration details of the App Service Environment. </param>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public virtual ArmOperation<AppServiceEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AppServiceEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string name, AppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(hostingEnvironmentEnvelope, nameof(hostingEnvironmentEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
+                var response = _appServiceEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
+                var operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
