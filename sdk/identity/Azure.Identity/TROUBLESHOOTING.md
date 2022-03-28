@@ -183,7 +183,7 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 
 ## Troubleshoot `VisualStudioCodeCredential` Authentication Issues
 
-It is a known issue that `VisualStudioCodeCredential` does not work well with Azure Account extension newer than **version 0.9.11**. If you are using latest version of Azure Account extension, please downgrade to **version 0.9.11** to make `VisualStudioCodeCredential` work correctly.
+> It is a known issue that `VisualStudioCodeCredential` does not work well with Azure Account extension newer than **version 0.9.11**. If you are using latest version of Azure Account extension, downgrading to **version 0.9.11** will resolve this issue. A long term fix to this problem is in progress.
 
 `CredentialUnavailableException`
 | Error Message |Description| Mitigation |
