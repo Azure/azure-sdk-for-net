@@ -149,6 +149,7 @@ directive:
       $["DeploymentScriptPropertiesBase"]["x-ms-client-name"] = "ArmDeploymentScriptPropertiesBase";
       $["DeploymentScriptsError"]["x-ms-client-name"] = "ArmDeploymentScriptsError";
       $.DeploymentScript['x-ms-client-name'] = 'ArmDeploymentScript';
+      $.DeploymentScript.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentScriptListResult['x-ms-client-name'] = 'ArmDeploymentScriptListResult';
   - from: managedapplications.json
     where: $.definitions
@@ -161,7 +162,7 @@ directive:
       $["Identity"]["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
       $["Identity"]["properties"]["principalId"]["format"] = "uuid";
       $["Identity"]["properties"]["tenantId"]["format"] = "uuid";
-      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResource";
+      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResourceInfo";
       $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
       $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
       $["Sku"]["x-ms-client-name"] = "ArmApplicationSku";
@@ -224,7 +225,9 @@ directive:
       $.DeploymentProperties.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentPropertiesExtended.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentExtended['x-ms-client-name'] = 'ArmDeployment';
+      $.DeploymentExtended.properties.location["x-ms-format"] = "azure-location";
       $.Deployment['x-ms-client-name'] = 'ArmDeploymentInput';
+      $.Deployment.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentExportResult['x-ms-client-name'] = 'ArmDeploymentExportResult';
       $.DeploymentExtendedFilter['x-ms-client-name'] = 'ArmDeploymentExtendedFilter';
       $.DeploymentListResult['x-ms-client-name'] = 'ArmDeploymentListResult';
@@ -233,6 +236,7 @@ directive:
       $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
       $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
       $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIf';
+      $.DeploymentWhatIf.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentWhatIfSettings['x-ms-client-name'] = 'ArmDeploymentWhatIfSettings';
       $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';
       $.DeploymentProperties['x-ms-client-name'] = 'ArmDeploymentProperties';
@@ -282,6 +286,11 @@ directive:
     where: $.definitions.Alias.properties.type["x-ms-enum"]
     transform:
       $["name"] = "ResourceTypeAliasType";
+  - from: templateSpecs.json
+    where: $.definitions
+    transform: >
+      $.TemplateSpec.properties.location["x-ms-format"] = "azure-location";
+      $.TemplateSpecVersion.properties.location["x-ms-format"] = "azure-location";
 ```
 
 ### Tag: package-track2-preview

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The location to store the deployment data, only required at the tenant and management group scope. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> The deployment properties. </summary>
         public ArmDeploymentWhatIfProperties Properties { get; }
     }

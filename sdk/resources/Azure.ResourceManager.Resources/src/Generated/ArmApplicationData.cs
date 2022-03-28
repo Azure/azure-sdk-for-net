@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ArmApplication data model. </summary>
-    public partial class ArmApplicationData : Models.ArmApplicationResource
+    public partial class ArmApplicationData : ArmApplicationResourceInfo
     {
         /// <summary> Initializes a new instance of ArmApplicationData. </summary>
         /// <param name="location"> The location. </param>
