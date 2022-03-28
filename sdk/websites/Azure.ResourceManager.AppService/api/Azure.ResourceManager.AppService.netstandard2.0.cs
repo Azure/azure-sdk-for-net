@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.AppService
         public string Csr { get { throw null; } set { } }
         public string DistinguishedName { get { throw null; } set { } }
         public string DomainVerificationToken { get { throw null; } }
-        public System.DateTimeOffset? ExpirationTime { get { throw null; } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateDetails Intermediate { get { throw null; } }
         public bool? IsPrivateKeyExternal { get { throw null; } }
         public int? KeySize { get { throw null; } set { } }
-        public System.DateTimeOffset? LastCertificateIssuanceTime { get { throw null; } }
+        public System.DateTimeOffset? LastCertificateIssuanceOn { get { throw null; } }
         public System.DateTimeOffset? NextAutoRenewalTimeStamp { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateProductType? ProductType { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.ContactInformation ContactBilling { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ContactInformation ContactRegistrant { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ContactInformation ContactTech { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedTime { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DnsType? DnsType { get { throw null; } set { } }
         public string DnsZoneId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AppServiceDomainPropertiesDomainNotRenewableReasonsItem> DomainNotRenewableReasons { get { throw null; } }
-        public System.DateTimeOffset? ExpirationTime { get { throw null; } }
-        public System.DateTimeOffset? LastRenewedTime { get { throw null; } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
+        public System.DateTimeOffset? LastRenewedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.HostName> ManagedHostNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NameServers { get { throw null; } }
         public bool? Privacy { get { throw null; } set { } }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.AppService
         public AppServicePlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? ElasticScaleEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public System.DateTimeOffset? FreeOfferExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? FreeOfferExpirationOn { get { throw null; } set { } }
         public string GeoRegion { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } set { } }
         public bool? HyperV { get { throw null; } set { } }
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.AppService
         public bool? Reserved { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.SkuDescription Sku { get { throw null; } set { } }
-        public System.DateTimeOffset? SpotExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? SpotExpirationOn { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StatusOptions? Status { get { throw null; } }
         public string Subscription { get { throw null; } }
         public int? TargetWorkerCount { get { throw null; } set { } }
@@ -715,11 +715,11 @@ namespace Azure.ResourceManager.AppService
         public string CanonicalName { get { throw null; } set { } }
         public byte[] CerBlob { get { throw null; } }
         public string DomainValidationMethod { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpirationDate { get { throw null; } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
         public string FriendlyName { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } }
         public System.Collections.Generic.IList<string> HostNames { get { throw null; } }
-        public System.DateTimeOffset? IssueDate { get { throw null; } }
+        public System.DateTimeOffset? IssueOn { get { throw null; } }
         public string Issuer { get { throw null; } }
         public string KeyVaultId { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
@@ -845,9 +845,9 @@ namespace Azure.ResourceManager.AppService
         public string AuthorEmail { get { throw null; } set { } }
         public string Deployer { get { throw null; } set { } }
         public string Details { get { throw null; } set { } }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public int? Status { get { throw null; } set { } }
     }
     public partial class DetectorDefinitionAutoGeneratedData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
@@ -1205,9 +1205,9 @@ namespace Azure.ResourceManager.AppService
         public MSDeployStatusData() { }
         public bool? Complete { get { throw null; } }
         public string Deployer { get { throw null; } }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.MSDeployProvisioningState? ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     public partial class NetworkFeaturesCollection : Azure.ResourceManager.ArmCollection
     {
@@ -1282,7 +1282,7 @@ namespace Azure.ResourceManager.AppService
         public long? PeakWorkingSet { get { throw null; } set { } }
         public long? PrivateMemory { get { throw null; } set { } }
         public string PrivilegedCpuTime { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public int? ThreadCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ProcessThreadInfo> Threads { get { throw null; } }
         public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
@@ -1599,7 +1599,7 @@ namespace Azure.ResourceManager.AppService
         public bool? RemoteDebuggingEnabled { get { throw null; } set { } }
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public bool? RequestTracingEnabled { get { throw null; } set { } }
-        public System.DateTimeOffset? RequestTracingExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public bool? ScmIPSecurityRestrictionsUseMain { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SupportedTlsVersions? ScmMinTlsVersion { get { throw null; } set { } }
@@ -1852,14 +1852,14 @@ namespace Azure.ResourceManager.AppService
         public System.Uri ExtensionUri { get { throw null; } set { } }
         public System.Uri FeedUri { get { throw null; } set { } }
         public System.Uri IconUri { get { throw null; } set { } }
-        public System.DateTimeOffset? InstalledDateTime { get { throw null; } set { } }
+        public System.DateTimeOffset? InstalledOn { get { throw null; } set { } }
         public string InstallerCommandLineParams { get { throw null; } set { } }
         public System.Uri LicenseUri { get { throw null; } set { } }
         public bool? LocalIsLatestVersion { get { throw null; } set { } }
         public string LocalPath { get { throw null; } set { } }
         public System.Uri ProjectUri { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
-        public System.DateTimeOffset? PublishedDateTime { get { throw null; } set { } }
+        public System.DateTimeOffset? PublishedOn { get { throw null; } set { } }
         public string Summary { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
@@ -3705,7 +3705,7 @@ namespace Azure.ResourceManager.AppService
     public partial class SourceControlData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public SourceControlData() { }
-        public System.DateTimeOffset? ExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } set { } }
         public string RefreshToken { get { throw null; } set { } }
         public string Token { get { throw null; } set { } }
         public string TokenSecret { get { throw null; } set { } }
@@ -4486,10 +4486,10 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AbnormalTimePeriod
     {
         public AbnormalTimePeriod() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod> Events { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.Solution> Solutions { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
     public partial class Address
     {
@@ -4663,24 +4663,24 @@ namespace Azure.ResourceManager.AppService.Models
         public string BladeName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> CategoryTags { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.Channels? Channels { get { throw null; } set { } }
-        public System.DateTimeOffset? CreationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? CreationOn { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public int? Enabled { get { throw null; } set { } }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public string ExtensionName { get { throw null; } set { } }
         public string ForwardLink { get { throw null; } set { } }
         public bool? IsDynamic { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.NotificationLevel? Level { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
-        public System.DateTimeOffset? NextNotificationTime { get { throw null; } set { } }
-        public System.DateTimeOffset? NotificationExpirationTime { get { throw null; } set { } }
-        public System.DateTimeOffset? NotifiedTime { get { throw null; } set { } }
+        public System.DateTimeOffset? NextNotificationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? NotificationExpirationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? NotifiedOn { get { throw null; } set { } }
         public System.Guid? RecommendationId { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ResourceScopeType? ResourceScope { get { throw null; } set { } }
         public string RuleName { get { throw null; } set { } }
         public double? Score { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> States { get { throw null; } }
     }
     public partial class AppServiceResource : Azure.ResourceManager.Models.TrackedResourceData
@@ -4724,7 +4724,7 @@ namespace Azure.ResourceManager.AppService.Models
         public long? CurrentValue { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public long? Limit { get { throw null; } }
-        public System.DateTimeOffset? NextResetTime { get { throw null; } }
+        public System.DateTimeOffset? NextResetOn { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public string SiteMode { get { throw null; } }
         public string Unit { get { throw null; } }
@@ -4917,9 +4917,9 @@ namespace Azure.ResourceManager.AppService.Models
         public int FrequencyInterval { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.FrequencyUnit FrequencyUnit { get { throw null; } set { } }
         public bool KeepAtLeastOneBackup { get { throw null; } set { } }
-        public System.DateTimeOffset? LastExecutionTime { get { throw null; } }
+        public System.DateTimeOffset? LastExecutionOn { get { throw null; } }
         public int RetentionPeriodInDays { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
     public partial class BillingMeter : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -4993,7 +4993,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public CertificateOrderAction() { }
         public Azure.ResourceManager.AppService.Models.CertificateOrderActionType? ActionType { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
     }
     public enum CertificateOrderActionType
     {
@@ -5274,7 +5274,7 @@ namespace Azure.ResourceManager.AppService.Models
         public long? CurrentValue { get { throw null; } }
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.LocalizableString Name { get { throw null; } }
-        public System.DateTimeOffset? NextResetTime { get { throw null; } }
+        public System.DateTimeOffset? NextResetOn { get { throw null; } }
         public string Unit { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5404,14 +5404,14 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class DetectorAbnormalTimePeriod
     {
         public DetectorAbnormalTimePeriod() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.IssueType? IssueType { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair>> MetaData { get { throw null; } }
         public double? Priority { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.Solution> Solutions { get { throw null; } }
         public string Source { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
     public partial class DetectorDefinition
     {
@@ -5444,10 +5444,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public DiagnosticAnalysis() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AbnormalTimePeriod> AbnormalTimePeriods { get { throw null; } }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DetectorDefinition> NonCorrelatedDetectors { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AnalysisData> Payload { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
     public partial class DiagnosticData
     {
@@ -5462,10 +5462,10 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair>> Data { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DataSource DataSource { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition { get { throw null; } set { } }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public bool? IssueDetected { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticMetricSet> Metrics { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
     public partial class DiagnosticMetricSample
     {
@@ -5480,9 +5480,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class DiagnosticMetricSet
     {
         public DiagnosticMetricSet() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public string TimeGrain { get { throw null; } set { } }
         public string Unit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticMetricSample> Values { get { throw null; } }
@@ -5542,8 +5542,8 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class DomainPurchaseConsent
     {
         public DomainPurchaseConsent() { }
-        public System.DateTimeOffset? AgreedAt { get { throw null; } set { } }
         public string AgreedBy { get { throw null; } set { } }
+        public System.DateTimeOffset? AgreedOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AgreementKeys { get { throw null; } }
     }
     public partial class DomainRecommendationSearchParameters
@@ -5695,7 +5695,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal FunctionAppRuntimeSettings() { }
         public Azure.ResourceManager.AppService.Models.AppInsightsWebAppStackSettings AppInsightsSettings { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> AppSettingsDictionary { get { throw null; } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.GitHubActionWebAppStackSettings GitHubActionSettings { get { throw null; } }
         public bool? IsAutoUpdate { get { throw null; } }
         public bool? IsDefault { get { throw null; } }
@@ -6035,7 +6035,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class LinuxJavaContainerSettings
     {
         internal LinuxJavaContainerSettings() { }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public bool? IsAutoUpdate { get { throw null; } }
         public bool? IsDeprecated { get { throw null; } }
         public bool? IsEarlyAccess { get { throw null; } }
@@ -6244,12 +6244,12 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class OperationInformation
     {
         internal OperationInformation() { }
-        public System.DateTimeOffset? CreatedTime { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ErrorEntity> Errors { get { throw null; } }
-        public System.DateTimeOffset? ExpirationTime { get { throw null; } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
         public System.Guid? GeoMasterOperationId { get { throw null; } }
         public string Id { get { throw null; } }
-        public System.DateTimeOffset? ModifiedTime { get { throw null; } }
+        public System.DateTimeOffset? ModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.OperationStatus? Status { get { throw null; } }
     }
@@ -6283,11 +6283,11 @@ namespace Azure.ResourceManager.AppService.Models
         public string Csr { get { throw null; } set { } }
         public string DistinguishedName { get { throw null; } set { } }
         public string DomainVerificationToken { get { throw null; } }
-        public System.DateTimeOffset? ExpirationTime { get { throw null; } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateDetails Intermediate { get { throw null; } }
         public bool? IsPrivateKeyExternal { get { throw null; } }
         public int? KeySize { get { throw null; } set { } }
-        public System.DateTimeOffset? LastCertificateIssuanceTime { get { throw null; } }
+        public System.DateTimeOffset? LastCertificateIssuanceOn { get { throw null; } }
         public System.DateTimeOffset? NextAutoRenewalTimeStamp { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateProductType? ProductType { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -6314,12 +6314,12 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.ContactInformation ContactBilling { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ContactInformation ContactRegistrant { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ContactInformation ContactTech { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedTime { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DnsType? DnsType { get { throw null; } set { } }
         public string DnsZoneId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DomainNotRenewableReasons> DomainNotRenewableReasons { get { throw null; } }
-        public System.DateTimeOffset? ExpirationTime { get { throw null; } }
-        public System.DateTimeOffset? LastRenewedTime { get { throw null; } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
+        public System.DateTimeOffset? LastRenewedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.HostName> ManagedHostNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NameServers { get { throw null; } }
         public bool? Privacy { get { throw null; } set { } }
@@ -6352,7 +6352,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public PatchableAppServicePlanData() { }
         public bool? ElasticScaleEnabled { get { throw null; } set { } }
-        public System.DateTimeOffset? FreeOfferExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? FreeOfferExpirationOn { get { throw null; } set { } }
         public string GeoRegion { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } set { } }
         public bool? HyperV { get { throw null; } set { } }
@@ -6366,7 +6366,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public bool? Reserved { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } }
-        public System.DateTimeOffset? SpotExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? SpotExpirationOn { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StatusOptions? Status { get { throw null; } }
         public string Subscription { get { throw null; } }
         public int? TargetWorkerCount { get { throw null; } set { } }
@@ -6380,11 +6380,11 @@ namespace Azure.ResourceManager.AppService.Models
         public string CanonicalName { get { throw null; } set { } }
         public byte[] CerBlob { get { throw null; } }
         public string DomainValidationMethod { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpirationDate { get { throw null; } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
         public string FriendlyName { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } }
         public System.Collections.Generic.IList<string> HostNames { get { throw null; } }
-        public System.DateTimeOffset? IssueDate { get { throw null; } }
+        public System.DateTimeOffset? IssueOn { get { throw null; } }
         public string Issuer { get { throw null; } }
         public string KeyVaultId { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
@@ -6446,9 +6446,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class PerfMonSet
     {
         internal PerfMonSet() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public string TimeGrain { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.PerfMonSample> Values { get { throw null; } }
     }
@@ -6523,7 +6523,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string PriorityLevel { get { throw null; } set { } }
         public string Process { get { throw null; } set { } }
         public string StartAddress { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
         public string TotalProcessorTime { get { throw null; } set { } }
         public string UserProcessorTime { get { throw null; } set { } }
@@ -6982,7 +6982,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? RemoteDebuggingEnabled { get { throw null; } set { } }
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public bool? RequestTracingEnabled { get { throw null; } set { } }
-        public System.DateTimeOffset? RequestTracingExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public bool? ScmIPSecurityRestrictionsUseMain { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SupportedTlsVersions? ScmMinTlsVersion { get { throw null; } set { } }
@@ -7456,11 +7456,11 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public TriggeredJobRun() { }
         public System.TimeSpan? Duration { get { throw null; } set { } }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.Uri ErrorUri { get { throw null; } set { } }
         public string JobName { get { throw null; } set { } }
         public System.Uri OutputUri { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.TriggeredWebJobStatus? Status { get { throw null; } set { } }
         public string Trigger { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
@@ -7669,7 +7669,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal WebAppRuntimeSettings() { }
         public Azure.ResourceManager.AppService.Models.AppInsightsWebAppStackSettings AppInsightsSettings { get { throw null; } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.GitHubActionWebAppStackSettings GitHubActionSettings { get { throw null; } }
         public bool? IsAutoUpdate { get { throw null; } }
         public bool? IsDeprecated { get { throw null; } }
@@ -7696,7 +7696,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class WindowsJavaContainerSettings
     {
         internal WindowsJavaContainerSettings() { }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public bool? IsAutoUpdate { get { throw null; } }
         public bool? IsDeprecated { get { throw null; } }
         public bool? IsEarlyAccess { get { throw null; } }

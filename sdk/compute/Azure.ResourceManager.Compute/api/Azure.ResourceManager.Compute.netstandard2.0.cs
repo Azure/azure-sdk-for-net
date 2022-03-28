@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Compute
     {
         public CapacityReservationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView InstanceView { get { throw null; } }
+        public System.DateTimeOffset? ProvisioningOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
         public string ReservationId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
@@ -441,8 +441,8 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView InstanceView { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DedicatedHostLicenseTypes? LicenseType { get { throw null; } set { } }
         public int? PlatformFaultDomain { get { throw null; } set { } }
+        public System.DateTimeOffset? ProvisioningOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachines { get { throw null; } }
     }
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Compute
     {
         public GalleryApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
         public string Eula { get { throw null; } set { } }
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public System.Uri ReleaseNoteUri { get { throw null; } set { } }
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.Compute
         public GalleryImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
         public string Eula { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
@@ -1354,7 +1354,7 @@ namespace Azure.ResourceManager.Compute
     {
         internal SharedGalleryImageData() { }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -1395,9 +1395,9 @@ namespace Azure.ResourceManager.Compute
     public partial class SharedGalleryImageVersionData : Azure.ResourceManager.Compute.Models.PirSharedGalleryResource
     {
         internal SharedGalleryImageVersionData() { }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public System.DateTimeOffset? PublishedDate { get { throw null; } }
+        public System.DateTimeOffset? PublishedOn { get { throw null; } }
     }
     public partial class SharedGalleryImageVersionResource : Azure.ResourceManager.ArmResource
     {
@@ -2244,10 +2244,10 @@ namespace Azure.ResourceManager.Compute.Models
         public string AssessmentActivityId { get { throw null; } }
         public int? CriticalAndSecurityPatchCount { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public int? OtherPatchCount { get { throw null; } }
         public bool? RebootPending { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.PatchOperationStatus? Status { get { throw null; } }
     }
     public partial class BootDiagnostics
@@ -2415,7 +2415,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal CommunityGalleryImage() { }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageIdentifier Identifier { get { throw null; } }
@@ -2427,8 +2427,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class CommunityGalleryImageVersion : Azure.ResourceManager.Compute.Models.PirCommunityGalleryResource
     {
         internal CommunityGalleryImageVersion() { }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } }
-        public System.DateTimeOffset? PublishedDate { get { throw null; } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } }
+        public System.DateTimeOffset? PublishedOn { get { throw null; } }
     }
     public partial class ComputePlan
     {
@@ -2981,9 +2981,9 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryArtifactPublishingProfileBase
     {
         public GalleryArtifactPublishingProfileBase() { }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
         public bool? ExcludeFromLatest { get { throw null; } set { } }
-        public System.DateTimeOffset? PublishedDate { get { throw null; } }
+        public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public int? ReplicaCount { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationMode? ReplicationMode { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.StorageAccountType? StorageAccountType { get { throw null; } set { } }
@@ -3351,11 +3351,11 @@ namespace Azure.ResourceManager.Compute.Models
         public int? FailedPatchCount { get { throw null; } }
         public string InstallationActivityId { get { throw null; } }
         public int? InstalledPatchCount { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public bool? MaintenanceWindowExceeded { get { throw null; } }
         public int? NotSelectedPatchCount { get { throw null; } }
         public int? PendingPatchCount { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.PatchOperationStatus? Status { get { throw null; } }
     }
     public partial class LinuxConfiguration
@@ -3471,10 +3471,10 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? IsCustomerInitiatedMaintenanceAllowed { get { throw null; } }
         public string LastOperationMessage { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.MaintenanceOperationResultCodeTypes? LastOperationResultCode { get { throw null; } }
-        public System.DateTimeOffset? MaintenanceWindowEndTime { get { throw null; } }
-        public System.DateTimeOffset? MaintenanceWindowStartTime { get { throw null; } }
-        public System.DateTimeOffset? PreMaintenanceWindowEndTime { get { throw null; } }
-        public System.DateTimeOffset? PreMaintenanceWindowStartTime { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceWindowEndOn { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceWindowStartOn { get { throw null; } }
+        public System.DateTimeOffset? PreMaintenanceWindowEndOn { get { throw null; } }
+        public System.DateTimeOffset? PreMaintenanceWindowStartOn { get { throw null; } }
     }
     public partial class ManagedDiskParameters : Azure.ResourceManager.Compute.Models.SubResource
     {
@@ -3711,8 +3711,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public PatchableCapacityReservationData() { }
         public Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView InstanceView { get { throw null; } }
+        public System.DateTimeOffset? ProvisioningOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
         public string ReservationId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
@@ -3732,8 +3732,8 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView InstanceView { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DedicatedHostLicenseTypes? LicenseType { get { throw null; } set { } }
         public int? PlatformFaultDomain { get { throw null; } set { } }
+        public System.DateTimeOffset? ProvisioningOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public System.DateTimeOffset? ProvisioningTime { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachines { get { throw null; } }
     }
     public partial class PatchableDedicatedHostGroupData : Azure.ResourceManager.Compute.Models.UpdateResource
@@ -3782,7 +3782,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public PatchableGalleryApplicationData() { }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
         public string Eula { get { throw null; } set { } }
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public System.Uri ReleaseNoteUri { get { throw null; } set { } }
@@ -3809,7 +3809,7 @@ namespace Azure.ResourceManager.Compute.Models
         public PatchableGalleryImageData() { }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
-        public System.DateTimeOffset? EndOfLifeDate { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
         public string Eula { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
@@ -4523,8 +4523,8 @@ namespace Azure.ResourceManager.Compute.Models
         internal RollingUpgradeRunningStatus() { }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeStatusCode? Code { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeActionType? LastAction { get { throw null; } }
-        public System.DateTimeOffset? LastActionTime { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? LastActionOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     public enum RollingUpgradeStatusCode
     {
@@ -4889,8 +4889,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal UpgradeOperationHistoryStatus() { }
         public Azure.ResourceManager.Compute.Models.UpgradeState? Code { get { throw null; } }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     public enum UpgradeOperationInvoker
     {
@@ -4959,7 +4959,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
         public int? OtherPatchCount { get { throw null; } }
         public bool? RebootPending { get { throw null; } }
-        public System.DateTimeOffset? StartDateTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.PatchOperationStatus? Status { get { throw null; } }
     }
     public partial class VirtualMachineCaptureParameters
@@ -5057,7 +5057,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.PatchInstallationDetail> Patches { get { throw null; } }
         public int? PendingPatchCount { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VmGuestPatchRebootStatus? RebootStatus { get { throw null; } }
-        public System.DateTimeOffset? StartDateTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.PatchOperationStatus? Status { get { throw null; } }
     }
     public partial class VirtualMachineInstanceView
@@ -5159,13 +5159,13 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineRunCommandInstanceView
     {
         internal VirtualMachineRunCommandInstanceView() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public string Error { get { throw null; } }
         public string ExecutionMessage { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ExecutionState? ExecutionState { get { throw null; } }
         public int? ExitCode { get { throw null; } }
         public string Output { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
     }
     public partial class VirtualMachineRunCommandScriptSource
@@ -5689,10 +5689,10 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.PatchAssessmentState? AssessmentState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Classifications { get { throw null; } }
         public string KbId { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedDateTime { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Name { get { throw null; } }
         public string PatchId { get { throw null; } }
-        public System.DateTimeOffset? PublishedDate { get { throw null; } }
+        public System.DateTimeOffset? PublishedOn { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VmGuestPatchRebootBehavior? RebootBehavior { get { throw null; } }
         public string Version { get { throw null; } }
     }
@@ -5860,7 +5860,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? ExcludeKbsRequiringReboot { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
-        public System.DateTimeOffset? MaxPatchPublishDate { get { throw null; } set { } }
+        public System.DateTimeOffset? MaxPatchPublishOn { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WindowsPatchAssessmentMode : System.IEquatable<Azure.ResourceManager.Compute.Models.WindowsPatchAssessmentMode>

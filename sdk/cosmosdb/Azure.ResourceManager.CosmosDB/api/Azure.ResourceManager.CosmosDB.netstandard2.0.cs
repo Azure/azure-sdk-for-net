@@ -912,8 +912,8 @@ namespace Azure.ResourceManager.CosmosDB
         internal RestorableDatabaseAccountData() { }
         public string AccountName { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.ApiType? ApiType { get { throw null; } }
-        public System.DateTimeOffset? CreationTime { get { throw null; } }
-        public System.DateTimeOffset? DeletionTime { get { throw null; } }
+        public System.DateTimeOffset? CreationOn { get { throw null; } }
+        public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.RestorableLocationResource> RestorableLocations { get { throw null; } }
     }
@@ -1243,7 +1243,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class BackupPolicyMigrationState
     {
         public BackupPolicyMigrationState() { }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.BackupPolicyMigrationStatus? Status { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.BackupPolicyType? TargetType { get { throw null; } set { } }
     }
@@ -1307,10 +1307,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class BaseMetric
     {
         internal BaseMetric() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.MetricValue> MetricValues { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.MetricName Name { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public string TimeGrain { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.UnitType? Unit { get { throw null; } }
     }
@@ -2176,10 +2176,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class PercentileMetric
     {
         internal PercentileMetric() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.PercentileMetricValue> MetricValues { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.MetricName Name { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public string TimeGrain { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.UnitType? Unit { get { throw null; } }
     }
@@ -2261,8 +2261,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class RestorableLocationResource
     {
         internal RestorableLocationResource() { }
-        public System.DateTimeOffset? CreationTime { get { throw null; } }
-        public System.DateTimeOffset? DeletionTime { get { throw null; } }
+        public System.DateTimeOffset? CreationOn { get { throw null; } }
+        public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public string LocationName { get { throw null; } }
         public string RegionalDatabaseAccountInstanceId { get { throw null; } }
     }

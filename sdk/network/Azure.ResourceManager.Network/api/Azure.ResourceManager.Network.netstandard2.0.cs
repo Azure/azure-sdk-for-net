@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput> Outputs { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ConnectionMonitorSource Source { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionMonitorTestConfiguration> TestConfigurations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionMonitorTestGroup> TestGroups { get { throw null; } }
@@ -5784,12 +5784,12 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class AzureReachabilityReportParameters
     {
-        public AzureReachabilityReportParameters(Azure.ResourceManager.Network.Models.AzureReachabilityReportLocation providerLocation, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public AzureReachabilityReportParameters(Azure.ResourceManager.Network.Models.AzureReachabilityReportLocation providerLocation, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
         public System.Collections.Generic.IList<string> AzureLocations { get { throw null; } }
-        public System.DateTimeOffset EndTime { get { throw null; } }
+        public System.DateTimeOffset EndOn { get { throw null; } }
         public Azure.ResourceManager.Network.Models.AzureReachabilityReportLocation ProviderLocation { get { throw null; } }
         public System.Collections.Generic.IList<string> Providers { get { throw null; } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
+        public System.DateTimeOffset StartOn { get { throw null; } }
     }
     public partial class BastionHostIPConfiguration : Azure.ResourceManager.Network.Models.SubResource
     {
@@ -6177,14 +6177,14 @@ namespace Azure.ResourceManager.Network.Models
         internal ConnectionStateSnapshot() { }
         public long? AvgLatencyInMs { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ConnectionState? ConnectionState { get { throw null; } }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResourceManager.Network.Models.EvaluationState? EvaluationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectivityHop> Hops { get { throw null; } }
         public long? MaxLatencyInMs { get { throw null; } }
         public long? MinLatencyInMs { get { throw null; } }
         public long? ProbesFailed { get { throw null; } }
         public long? ProbesSent { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionStatus : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectionStatus>
@@ -8303,7 +8303,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class PacketCaptureQueryStatusResult
     {
         internal PacketCaptureQueryStatusResult() { }
-        public System.DateTimeOffset? CaptureStartTime { get { throw null; } }
+        public System.DateTimeOffset? CaptureStartOn { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.PcError> PacketCaptureError { get { throw null; } }
@@ -9097,7 +9097,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class Topology
     {
         internal Topology() { }
-        public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset? LastModified { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.TopologyResource> Resources { get { throw null; } }
@@ -9186,9 +9186,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal TroubleshootingResult() { }
         public string Code { get { throw null; } }
-        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.TroubleshootingDetails> Results { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     public partial class TunnelConnectionHealth
     {

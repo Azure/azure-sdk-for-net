@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     public partial class ResourceStatus
     {
         internal ResourceStatus() { }
-        public System.DateTimeOffset? LastUpdatedAt { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
         public string ResourceStatusType { get { throw null; } }

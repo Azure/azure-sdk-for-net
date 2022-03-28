@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Hci
         public ArcExtensionData() { }
         public Azure.ResourceManager.Hci.Models.ExtensionAggregateState? AggregateState { get { throw null; } }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? CreatedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.PerNodeExtensionState> PerNodeExtensionDetails { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Hci
         public ArcSettingData() { }
         public Azure.ResourceManager.Hci.Models.ArcSettingAggregateState? AggregateState { get { throw null; } }
         public string ArcInstanceResourceGroup { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? CreatedByType { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.PerNodeState> PerNodeDetails { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.Hci
         public string BillingModel { get { throw null; } }
         public System.Guid? CloudId { get { throw null; } }
         public string CloudManagementEndpoint { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? CreatedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.ClusterDesiredProperties DesiredProperties { get { throw null; } set { } }
         public System.DateTimeOffset? LastBillingTimestamp { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public System.DateTimeOffset? LastSyncTimestamp { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? RegistrationTimestamp { get { throw null; } }

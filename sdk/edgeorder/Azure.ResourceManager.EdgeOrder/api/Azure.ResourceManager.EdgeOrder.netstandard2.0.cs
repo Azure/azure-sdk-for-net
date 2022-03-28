@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.EdgeOrder
         public Azure.ResourceManager.EdgeOrder.Models.AddressDetails AddressDetails { get { throw null; } set { } }
         public string OrderId { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.OrderItemDetails OrderItemDetails { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     public partial class OrderResource : Azure.ResourceManager.ArmResource
     {
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string DisplayName { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.StageName? StageName { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.StageStatus? StageStatus { get { throw null; } }
-        public System.DateTimeOffset? StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StageName : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.StageName>

@@ -495,20 +495,20 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class DeletedManagedHsmProperties
     {
         internal DeletedManagedHsmProperties() { }
-        public System.DateTimeOffset? DeletionDate { get { throw null; } }
+        public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public string Location { get { throw null; } }
         public string MhsmId { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
-        public System.DateTimeOffset? ScheduledPurgeDate { get { throw null; } }
+        public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DeletedVaultProperties
     {
         internal DeletedVaultProperties() { }
-        public System.DateTimeOffset? DeletionDate { get { throw null; } }
+        public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public string Location { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
-        public System.DateTimeOffset? ScheduledPurgeDate { get { throw null; } }
+        public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string VaultId { get { throw null; } }
     }
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.MhsmPrivateEndpointConnectionItem> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public System.DateTimeOffset? ScheduledPurgeDate { get { throw null; } }
+        public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public string StatusMessage { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } set { } }

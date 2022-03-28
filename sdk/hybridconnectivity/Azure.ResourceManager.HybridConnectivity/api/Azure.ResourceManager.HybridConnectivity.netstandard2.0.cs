@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.HybridConnectivity
     public partial class EndpointResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public EndpointResourceData() { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public Azure.ResourceManager.HybridConnectivity.Models.CreatedByType? CreatedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public Azure.ResourceManager.HybridConnectivity.Models.EndpointType? EndpointType { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } set { } }
         public Azure.ResourceManager.HybridConnectivity.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string ResourceId { get { throw null; } set { } }
     }

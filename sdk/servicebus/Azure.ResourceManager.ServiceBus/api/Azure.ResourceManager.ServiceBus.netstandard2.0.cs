@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ServiceBusNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset? UpdatedAt { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
     public partial class ServiceBusNamespaceResource : Azure.ResourceManager.ArmResource
@@ -394,10 +394,10 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusQueueData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusQueueData() { }
-        public System.DateTimeOffset? AccessedAt { get { throw null; } }
+        public System.DateTimeOffset? AccessedOn { get { throw null; } }
         public System.TimeSpan? AutoDeleteOnIdle { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.MessageCountDetails CountDetails { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DeadLetteringOnMessageExpiration { get { throw null; } set { } }
         public System.TimeSpan? DefaultMessageTimeToLive { get { throw null; } set { } }
         public System.TimeSpan? DuplicateDetectionHistoryTimeWindow { get { throw null; } set { } }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? RequiresSession { get { throw null; } set { } }
         public long? SizeInBytes { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
-        public System.DateTimeOffset? UpdatedAt { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class ServiceBusQueueResource : Azure.ResourceManager.ArmResource
     {
@@ -489,11 +489,11 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusSubscriptionData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusSubscriptionData() { }
-        public System.DateTimeOffset? AccessedAt { get { throw null; } }
+        public System.DateTimeOffset? AccessedOn { get { throw null; } }
         public System.TimeSpan? AutoDeleteOnIdle { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties ClientAffineProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.MessageCountDetails CountDetails { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DeadLetteringOnFilterEvaluationExceptions { get { throw null; } set { } }
         public bool? DeadLetteringOnMessageExpiration { get { throw null; } set { } }
         public System.TimeSpan? DefaultMessageTimeToLive { get { throw null; } set { } }
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ServiceBus
         public long? MessageCount { get { throw null; } }
         public bool? RequiresSession { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
-        public System.DateTimeOffset? UpdatedAt { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class ServiceBusSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -544,10 +544,10 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusTopicData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusTopicData() { }
-        public System.DateTimeOffset? AccessedAt { get { throw null; } }
+        public System.DateTimeOffset? AccessedOn { get { throw null; } }
         public System.TimeSpan? AutoDeleteOnIdle { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.MessageCountDetails CountDetails { get { throw null; } }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.TimeSpan? DefaultMessageTimeToLive { get { throw null; } set { } }
         public System.TimeSpan? DuplicateDetectionHistoryTimeWindow { get { throw null; } set { } }
         public bool? EnableBatchedOperations { get { throw null; } set { } }
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
         public int? SubscriptionCount { get { throw null; } }
         public bool? SupportOrdering { get { throw null; } set { } }
-        public System.DateTimeOffset? UpdatedAt { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class ServiceBusTopicResource : Azure.ResourceManager.ArmResource
     {
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public partial class PatchableServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public PatchableServiceBusNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset? UpdatedAt { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

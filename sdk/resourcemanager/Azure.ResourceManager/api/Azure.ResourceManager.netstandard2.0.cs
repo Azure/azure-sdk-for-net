@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Management.Models
         public CreateManagementGroupDetails() { }
         public Azure.ResourceManager.Management.Models.ManagementGroupParentCreateOptions Parent { get { throw null; } set { } }
         public string UpdatedBy { get { throw null; } }
-        public System.DateTimeOffset? UpdatedTime { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public int? Version { get { throw null; } }
     }
     public partial class CreateManagementGroupOptions
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Management.Models
         public Azure.ResourceManager.Management.Models.ParentManagementGroupInfo Parent { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.ManagementGroupPathElement> Path { get { throw null; } }
         public string UpdatedBy { get { throw null; } }
-        public System.DateTimeOffset? UpdatedTime { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public int? Version { get { throw null; } }
     }
     public partial class ManagementGroupNameAvailabilityOptions
@@ -478,12 +478,12 @@ namespace Azure.ResourceManager.Models
     public partial class SystemData
     {
         public SystemData() { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public Azure.ResourceManager.Models.CreatedByType? CreatedByType { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Models.CreatedByType? LastModifiedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
@@ -605,8 +605,8 @@ namespace Azure.ResourceManager.Resources
     public partial class GenericResourceData : Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData
     {
         public GenericResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.DateTimeOffset? ChangedTime { get { throw null; } }
-        public System.DateTimeOffset? CreatedTime { get { throw null; } }
+        public System.DateTimeOffset? ChangedOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }

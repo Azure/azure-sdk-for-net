@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public bool? AllowNewSession { get { throw null; } set { } }
         public string AssignedUser { get { throw null; } set { } }
         public System.DateTimeOffset? LastHeartBeat { get { throw null; } set { } }
-        public System.DateTimeOffset? LastUpdateTime { get { throw null; } }
+        public System.DateTimeOffset? LastUpdateOn { get { throw null; } }
         public string ObjectId { get { throw null; } }
         public string OSVersion { get { throw null; } set { } }
         public string ResourceId { get { throw null; } }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public UserSessionData() { }
         public string ActiveDirectoryUserName { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.ApplicationType? ApplicationType { get { throw null; } set { } }
-        public System.DateTimeOffset? CreateTime { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateOn { get { throw null; } set { } }
         public string ObjectId { get { throw null; } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionState? SessionState { get { throw null; } set { } }
         public string UserPrincipalName { get { throw null; } set { } }
@@ -834,14 +834,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public partial class RegistrationInfo
     {
         public RegistrationInfo() { }
-        public System.DateTimeOffset? ExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.RegistrationTokenOperation? RegistrationTokenOperation { get { throw null; } set { } }
         public string Token { get { throw null; } set { } }
     }
     public partial class RegistrationInfoPatch
     {
         public RegistrationInfoPatch() { }
-        public System.DateTimeOffset? ExpirationTime { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpirationOn { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.RegistrationTokenOperation? RegistrationTokenOperation { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -907,21 +907,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem> DaysOfWeek { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostLoadBalancingAlgorithm? OffPeakLoadBalancingAlgorithm { get { throw null; } set { } }
-        public System.DateTimeOffset? OffPeakStartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? OffPeakStartOn { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostLoadBalancingAlgorithm? PeakLoadBalancingAlgorithm { get { throw null; } set { } }
-        public System.DateTimeOffset? PeakStartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? PeakStartOn { get { throw null; } set { } }
         public int? RampDownCapacityThresholdPct { get { throw null; } set { } }
         public bool? RampDownForceLogoffUsers { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostLoadBalancingAlgorithm? RampDownLoadBalancingAlgorithm { get { throw null; } set { } }
         public int? RampDownMinimumHostsPct { get { throw null; } set { } }
         public string RampDownNotificationMessage { get { throw null; } set { } }
-        public System.DateTimeOffset? RampDownStartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? RampDownStartOn { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.StopHostsWhen? RampDownStopHostsWhen { get { throw null; } set { } }
         public int? RampDownWaitTimeMinutes { get { throw null; } set { } }
         public int? RampUpCapacityThresholdPct { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostLoadBalancingAlgorithm? RampUpLoadBalancingAlgorithm { get { throw null; } set { } }
         public int? RampUpMinimumHostsPct { get { throw null; } set { } }
-        public System.DateTimeOffset? RampUpStartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? RampUpStartOn { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScalingScheduleDaysOfWeekItem : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.ScalingScheduleDaysOfWeekItem>
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal SessionHostHealthCheckFailureDetails() { }
         public int? ErrorCode { get { throw null; } }
-        public System.DateTimeOffset? LastHealthCheckDateTime { get { throw null; } }
+        public System.DateTimeOffset? LastHealthCheckOn { get { throw null; } }
         public string Message { get { throw null; } }
     }
     public partial class SessionHostHealthCheckReport
