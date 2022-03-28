@@ -76,7 +76,7 @@ The following examples show common scenarios using the `client` [created above](
 
 ### Analyze a conversation
 
-To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes a Conversations project and an utterance as parameters.
+To analyze a conversation, you can then call the `client.AnalyzeConversation()` method which takes a `TextConversationItem` and `ConversationsProject` as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -88,7 +88,9 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
 Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
-The specified parameters can also be used to initialize a `ConversationAnalysisOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
+The specified parameters can also be used to initialize a `AnalyzeConversationOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
+
+You can also set the verbose parameter in the `AnalyzeConversation()` method.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -108,7 +110,7 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 
 ### Analyze a conversation in a different language
 
-The language property in the `ConversationAnalysisOptions` can be used to specify the language of the conversation.
+The language property in the `TextConversationItem` can be used to specify the language of the conversation.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -125,6 +127,22 @@ Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
 ```
 
 Other optional properties can be set such as verbosity and whether service logging is enabled.
+
+### Analyze a conversation - Orchestration Project
+To analyze a conversation using an orchestration project, you can then call the `client.AnalyzeConversation()` just like the conversation project. But you have to cast the prediction to `OrchestratorPrediction`. Also, you have to cast the intent type into the one you need.
+
+### Orchestration Project - Conversation Prediction
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
+```
+
+### Orchestration Project - QuestionAnswering Prediction
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
+```
+
+### Orchestration Project - Luis Prediction
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
+```
+
 
 ## Troubleshooting
 
