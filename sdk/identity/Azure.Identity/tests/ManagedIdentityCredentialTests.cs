@@ -227,15 +227,20 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        [TestCase(null)]
-        [TestCase("mock-client-id")]
-        public async Task VerifyAppService2017RequestWithClientIdMockAsync(string clientId)
+        public async Task VerifyAppService2017RequestWithClientIdAndMockAsync([Values(null, "mock-client-id")] string clientId)
         {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+            using var environment = new TestEnvVar(new()
+            {
+                {"MSI_ENDPOINT", "https://mock.msi.endpoint/"},
+                {"MSI_SECRET", "mock-msi-secret"},
+                {"IDENTITY_ENDPOINT", null},
+                {"IDENTITY_HEADER", null},
+                {"AZURE_POD_IDENTITY_AUTHORITY_HOST", null}
+            });
 
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(response);
-            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions() {Transport = mockTransport};
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(clientId, options));
 
@@ -253,18 +258,50 @@ namespace Azure.Identity.Tests
             Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
             if (clientId != null)
             {
-                Assert.IsTrue(query.Contains($"clientid=mock-client-id"));
+                Assert.That(query, Does.Contain("clientid=mock-client-id"));
+            }
+            else
+            {
+                Assert.That(query, Does.Not.Contain("clientid=mock-client-id"));
             }
             Assert.IsTrue(request.Headers.TryGetValue("secret", out string actSecretValue));
             Assert.AreEqual("mock-msi-secret", actSecretValue);
         }
 
         [NonParallelizable]
-        [Ignore("This test is disabled as we have disabled AppService MI version 2019-08-01 due to issue https://github.com/Azure/azure-sdk-for-net/issues/16278. The test should be re-enabled if and when support for this api version is added back")]
+        [Test]
+        public async Task VerifyAppService2017RequestWithResourceIdMockAsync()
+        {
+            string resourceId = "resourceId";
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var response = CreateMockResponse(200, ExpectedToken);
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(resourceId), options));
+
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+
+            MockRequest request = mockTransport.SingleRequest;
+
+            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
+
+            string query = request.Uri.Query;
+
+            Assert.IsTrue(query.Contains("api-version=2017-09-01"));
+            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={resourceId}"));
+            Assert.IsTrue(request.Headers.TryGetValue("secret", out string actSecretValue));
+            Assert.AreEqual("mock-msi-secret", actSecretValue);
+        }
+
+        [NonParallelizable]
         [Test]
         public async Task VerifyAppService2019RequestMockAsync()
         {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", "mock-msi-secret" }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(response);
@@ -289,36 +326,32 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        // This test has been added to ensure as we have disabled AppService MI version 2019-08-01 due to issue https://github.com/Azure/azure-sdk-for-net/issues/16278.
-        // The test should be removed if and when support for this api version is added back
-        public async Task VerifyAppService2017RequestWith2019EnvVarsMockAsync()
+        public async Task AllAppServiceEnvVarsSetSelects2019Api()
         {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/"  }, { "MSI_SECRET", "mock-msi-secret" }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(response);
-            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions { Transport = mockTransport };
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(options: options));
 
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.AreEqual(ExpectedToken, token.Token);
 
             MockRequest request = mockTransport.Requests[0];
-
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
+            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
 
             string query = request.Uri.Query;
-
-            Assert.IsTrue(query.Contains("api-version=2017-09-01"));
+            Assert.IsTrue(query.Contains("api-version=2019-08-01"));
             Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            Assert.IsTrue(request.Headers.TryGetValue("secret", out string actSecretValue));
-            Assert.AreEqual("mock-msi-secret", actSecretValue);
+            Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
+
+            Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
         }
 
         [NonParallelizable]
-        [Ignore("This test is disabled as we have disabled AppService MI version 2019-08-01 due to issue https://github.com/Azure/azure-sdk-for-net/issues/16278. The test should be re-enabled if and when support for this api version is added back")]
         [Test]
         public async Task VerifyAppService2019RequestWithClientIdMockAsync()
         {
@@ -340,6 +373,35 @@ namespace Azure.Identity.Tests
             Assert.IsTrue(query.Contains("api-version=2019-08-01"));
             Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
             Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
+            Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task VerifyAppService2019RequestWithResourceIdMockAsync()
+        {
+            string resourceId = "resourceId";
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var response = CreateMockResponse(200, ExpectedToken);
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions() {Transport = mockTransport};
+            ManagedIdentityCredential credential =
+                InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(resourceId), options));
+
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+
+            MockRequest request = mockTransport.SingleRequest;
+            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
+
+            string query = request.Uri.Query;
+
+            Assert.IsTrue(query.Contains("api-version=2019-08-01"));
+            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={resourceId}"));
             Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
             Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
         }
