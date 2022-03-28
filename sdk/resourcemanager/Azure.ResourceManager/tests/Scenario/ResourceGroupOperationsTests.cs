@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg = rgOp.Value;
-            var parameters = new ExportTemplateRequest();
+            var parameters = new ExportTemplate();
             parameters.Resources.Add("*");
             var expOp = await rg.ExportTemplateAsync(WaitUntil.Started, parameters);
             await expOp.WaitForCompletionAsync();

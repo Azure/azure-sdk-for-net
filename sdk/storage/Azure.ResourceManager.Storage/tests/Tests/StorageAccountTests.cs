@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task StorageAccountGetOperations()
         {
-            RestApiCollection operationCollection = DefaultSubscription.GetRestApis("Microsoft.Storage");
-            List<RestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
+            ArmRestApiCollection operationCollection = DefaultSubscription.GetArmRestApis("Microsoft.Storage");
+            List<ArmRestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(apiList.Count() > 1);
         }
 
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task StorageAccountOperations()
         {
-            RestApiCollection operationCollection = DefaultSubscription.GetRestApis("Microsoft.Storage");
-            List<RestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
+            ArmRestApiCollection operationCollection = DefaultSubscription.GetArmRestApis("Microsoft.Storage");
+            List<ArmRestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
             bool exist1 = false;
             bool exist2 = false;
-            foreach (RestApi restApi in apiList)
+            foreach (ArmRestApi restApi in apiList)
             {
                 if (CheckRestApi(restApi, "Microsoft.Storage/storageAccounts/write", "Microsoft Storage", "Storage Accounts", "Create/Update Storage Account"))
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsTrue(exist2);
         }
 
-        public bool CheckRestApi(RestApi restApi, string name, string provider, string resource, string operation)
+        public bool CheckRestApi(ArmRestApi restApi, string name, string provider, string resource, string operation)
         {
             if (restApi.Name != name)
             {

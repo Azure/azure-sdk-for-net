@@ -79,6 +79,27 @@ namespace Azure.ResourceManager.Resources.Tests
             return tmpDeploymentProperties;
         }
 
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesAtSub()
+        {
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/azure-resource-manager/emptyrg.json");
+            tmpDeploymentProperties.Parameters = BinaryData.FromObjectAsJson(new JsonObject()
+            {
+                {"rgName", new JsonObject()
+                    {
+                        {"value", "testDeployAtSub" }
+                    }
+                },
+                {"rgLocation", new JsonObject()
+                    {
+                        {"value", $"{AzureLocation.CentralUS}" }
+                    }
+                },
+            });
+            return tmpDeploymentProperties;
+        }
+
         protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingString()
         {
             ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
@@ -109,6 +130,11 @@ namespace Azure.ResourceManager.Resources.Tests
         }
 
         protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentInput(deploymentProperties);
+
+        protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentInput(deploymentProperties)
+        {
+            Location = location
+        };
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {

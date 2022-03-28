@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The location to store the deployment data. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> The deployment properties. </summary>
         public ArmDeploymentProperties Properties { get; }
         /// <summary> Deployment tags. </summary>

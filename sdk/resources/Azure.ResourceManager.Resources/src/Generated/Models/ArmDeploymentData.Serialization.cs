@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources
     {
         internal static ArmDeploymentData DeserializeArmDeploymentData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<ArmDeploymentPropertiesExtended> properties = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -28,7 +28,12 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -77,7 +82,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ArmDeploymentData(id, name, type, systemData, location.Value, properties.Value, Optional.ToDictionary(tags));
+            return new ArmDeploymentData(id, name, type, systemData, Optional.ToNullable(location), properties.Value, Optional.ToDictionary(tags));
         }
     }
 }

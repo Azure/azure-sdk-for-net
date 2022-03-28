@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.Resources.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task CreateOrUpdateWithLocation()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string deployName = Recording.GenerateAssetName("deployEx-C-");
+            var deploymentData = CreateDeploymentData(CreateDeploymentPropertiesAtSub(), AzureLocation.JapanEast);
+            ArmDeploymentResource deployment = (await subscription.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            Assert.AreEqual(deployName, deployment.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, null));
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task CreateOrUpdateUsingString()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
