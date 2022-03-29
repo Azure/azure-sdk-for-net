@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 
-namespace Azure.Messaging.EventHubs.Primitives
+namespace Azure.Messaging.EventHubs.Core
 {
     /// <summary>
     ///   Encoding extensions used to provide a compatibility shim for encoding methods that are missing in .NET Standard 2.0.
