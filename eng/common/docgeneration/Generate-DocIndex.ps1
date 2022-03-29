@@ -84,7 +84,7 @@ function Get-TocMapping {
         }
         $displayName = $packageInfo[0].DisplayName.Trim()
         $isTrack2 = $packageInfo[0].New -eq 'true'
-        $isClient = $packageInfo[0].New -eq 'client'
+        $isClient = $packageInfo[0].Type -eq 'client'
         $orderServiceMapping[$artifact] = @($isClient, $isTrack2, $serviceName, $displayName)
     }
     return $orderServiceMapping
