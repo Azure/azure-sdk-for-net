@@ -67,7 +67,6 @@ function Get-TocMapping {
     foreach ($artifact in $artifacts) {
         $packageInfo = $metadata | ? { $_.Package -eq $artifact -and $_.Hide -ne "true" }
         $serviceName = ""
-        $displayName = ""
         if (!$packageInfo) {
             LogDebug "There is no service name for artifact $artifact or it is marked as hidden. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
             continue
@@ -76,16 +75,17 @@ function Get-TocMapping {
             LogWarning "There is no service name for artifact $artifact. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
             # If no service name retrieved, print out warning message, and put it into Other page.
             $serviceName = "Other"
-            $displayName = $packageInfo[0].DisplayName.Trim()
         }
         else {
             if ($packageInfo.Length -gt 1) {
                 LogWarning "There are more than 1 packages fetched out for artifact $artifact. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
             }
             $serviceName = $packageInfo[0].ServiceName.Trim()
-            $displayName = $packageInfo[0].DisplayName.Trim()
         }
-        $orderServiceMapping[$artifact] = @($serviceName, $displayName)
+        $displayName = $packageInfo[0].DisplayName.Trim()
+        $isTrack2 = $packageInfo[0].New -eq 'true'
+        $isClient = $packageInfo[0].New -eq 'client'
+        $orderServiceMapping[$artifact] = @($isClient, $isTrack2, $serviceName, $displayName)
     }
     return $orderServiceMapping
 }
@@ -114,10 +114,11 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang, [String]
     New-Item -Path $YmlPath -Name "toc.yml" -Force
     $visitedService = @{}
     # Sort and display toc service name by alphabetical order, and then sort artifact by order.
-    foreach ($serviceMapping in ($tocContent.GetEnumerator() | Sort-Object Value, Key)) {
+    # Track 2 packages go first, then others.
+    foreach ($serviceMapping in ($tocContent.GetEnumerator() | Sort-Object Value[0], Value[1], Value[2], Value[3])) {
         $artifact = $serviceMapping.Key
-        $serviceName = $serviceMapping.Value[0]
-        $displayName = $serviceMapping.Value[1]
+        $serviceName = $serviceMapping.Value[2]
+        $displayName = $serviceMapping.Value[3]
 
         # handle spaces in service name, EG "Confidential Ledger"
         # handle / in service name, EG "Database for MySQL/PostgreSQL". Leaving a "/" present will generate a bad link location.
