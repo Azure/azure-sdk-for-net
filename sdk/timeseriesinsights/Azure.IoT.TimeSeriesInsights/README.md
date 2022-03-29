@@ -1,7 +1,7 @@
 # Azure Time Series Insights client library for .NET
 
 ---
-[//]: <> (This content is similar to https://github.com/MicrosoftDocs/azure-docs/edit/main/includes/tsi-retirement.md)
+[//]: <> (This content is similar to https://github.com/MicrosoftDocs/azure-docs/blob/main/includes/tsi-retirement.md)
 
 **NOTE**
 >The Time Series Insights (TSI) service will no longer be supported after March 2025. Consider migrating existing TSI environments to alternative solutions as soon as possible. For more information on the deprecation and migration, visit our [documentation](https://aka.ms/tsi2adx).
