@@ -58,16 +58,15 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
 
             //validate if created successfully
-            consumerGroup = await _consumerGroupCollection.GetIfExistsAsync(consumerGroupName);
-            Assert.NotNull(consumerGroup);
             Assert.IsTrue(await _consumerGroupCollection.ExistsAsync(consumerGroupName));
+            consumerGroup = await _consumerGroupCollection.GetAsync(consumerGroupName);
 
             //delete consumer group
             await consumerGroup.DeleteAsync(WaitUntil.Completed);
 
             //validate
-            consumerGroup = await _consumerGroupCollection.GetIfExistsAsync(consumerGroupName);
-            Assert.Null(consumerGroup);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _consumerGroupCollection.GetAsync(consumerGroupName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _consumerGroupCollection.ExistsAsync(consumerGroupName));
         }
 

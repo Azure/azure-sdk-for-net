@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.EdgeOrder
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _addressResourceRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,66 +310,8 @@ namespace Azure.ResourceManager.EdgeOrder
             scope.Start();
             try
             {
-                var response = GetIfExists(addressName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
-        /// Operation Id: GetAddressByName
-        /// </summary>
-        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public virtual async Task<Response<AddressResource>> GetIfExistsAsync(string addressName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-
-            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _addressResourceRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AddressResource>(null, response.GetRawResponse());
-                return Response.FromValue(new AddressResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
-        /// Operation Id: GetAddressByName
-        /// </summary>
-        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public virtual Response<AddressResource> GetIfExists(string addressName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-
-            using var scope = _addressResourceClientDiagnostics.CreateScope("AddressResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _addressResourceRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<AddressResource>(null, response.GetRawResponse());
-                return Response.FromValue(new AddressResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

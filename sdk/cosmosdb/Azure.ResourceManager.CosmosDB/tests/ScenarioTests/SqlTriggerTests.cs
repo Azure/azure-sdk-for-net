@@ -54,9 +54,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            SqlTriggerResource trigger = await SqlTriggerCollection.GetIfExistsAsync(_triggerName);
-            if (trigger != null)
+            if (await SqlTriggerCollection.ExistsAsync(_triggerName))
             {
+                var id = SqlTriggerCollection.Id;
+                id = SqlTriggerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _triggerName);
+                SqlTriggerResource trigger = this.ArmClient.GetSqlTriggerResource(id);
                 await trigger.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -125,8 +127,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var trigger = await CreateSqlTrigger(null);
             await trigger.DeleteAsync(WaitUntil.Completed);
 
-            trigger = await SqlTriggerCollection.GetIfExistsAsync(_triggerName);
-            Assert.Null(trigger);
+            bool exists = await SqlTriggerCollection.ExistsAsync(_triggerName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<SqlTriggerResource> CreateSqlTrigger(AutoscaleSettings autoscale)

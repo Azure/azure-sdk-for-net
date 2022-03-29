@@ -90,26 +90,6 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_KeyVaults_GetAVaultIfExists
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
-
-            VaultResource vault = await vaultCollection.GetIfExistsAsync("foo");
-            if (vault != null)
-            {
-                Console.WriteLine(vault.Data.Name);
-            }
-
-            if (await vaultCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("KeyVault 'bar' exists.");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task Delete()
         {
             #region Snippet:Managing_KeyVaults_DeleteAVault

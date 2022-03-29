@@ -49,9 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            CosmosTableResource table = await TableCollection.GetIfExistsAsync(_databaseName);
-            if (table != null)
+            if (await TableCollection.ExistsAsync(_databaseName))
             {
+                var id = TableCollection.Id;
+                id = CosmosTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                CosmosTableResource table = this.ArmClient.GetCosmosTableResource(id);
                 await table.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -154,8 +156,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateTable(null);
             await database.DeleteAsync(WaitUntil.Completed);
 
-            database = await TableCollection.GetIfExistsAsync(_databaseName);
-            Assert.Null(database);
+            bool exists = await TableCollection.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<CosmosTableResource> CreateTable(AutoscaleSettings autoscale)

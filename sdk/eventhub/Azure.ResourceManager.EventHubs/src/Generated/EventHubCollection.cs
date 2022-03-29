@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _eventHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,66 +309,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = GetIfExists(eventHubName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
-        /// Operation Id: EventHubs_Get
-        /// </summary>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
-        public virtual async Task<Response<EventHubResource>> GetIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _eventHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<EventHubResource>(null, response.GetRawResponse());
-                return Response.FromValue(new EventHubResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}
-        /// Operation Id: EventHubs_Get
-        /// </summary>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
-        public virtual Response<EventHubResource> GetIfExists(string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _eventHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventHubName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<EventHubResource>(null, response.GetRawResponse());
-                return Response.FromValue(new EventHubResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

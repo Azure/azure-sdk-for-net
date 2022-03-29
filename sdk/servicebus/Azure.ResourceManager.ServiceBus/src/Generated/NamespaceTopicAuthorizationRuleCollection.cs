@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ServiceBus
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,66 +305,8 @@ namespace Azure.ResourceManager.ServiceBus
             scope.Start();
             try
             {
-                var response = GetIfExists(authorizationRuleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}
-        /// Operation Id: TopicAuthorizationRules_Get
-        /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual async Task<Response<NamespaceTopicAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            using var scope = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<NamespaceTopicAuthorizationRuleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new NamespaceTopicAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}
-        /// Operation Id: TopicAuthorizationRules_Get
-        /// </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<NamespaceTopicAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            using var scope = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesClientDiagnostics.CreateScope("NamespaceTopicAuthorizationRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _namespaceTopicAuthorizationRuleTopicAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<NamespaceTopicAuthorizationRuleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new NamespaceTopicAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

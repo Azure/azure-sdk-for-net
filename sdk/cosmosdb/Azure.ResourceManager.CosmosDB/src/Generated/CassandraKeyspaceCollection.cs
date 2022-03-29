@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(keyspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,66 +276,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = GetIfExists(keyspaceName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}
-        /// Operation Id: CassandraResources_GetCassandraKeyspace
-        /// </summary>
-        /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
-        public virtual async Task<Response<CassandraKeyspaceResource>> GetIfExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-
-            using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<CassandraKeyspaceResource>(null, response.GetRawResponse());
-                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}
-        /// Operation Id: CassandraResources_GetCassandraKeyspace
-        /// </summary>
-        /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
-        public virtual Response<CassandraKeyspaceResource> GetIfExists(string keyspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-
-            using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<CassandraKeyspaceResource>(null, response.GetRawResponse());
-                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

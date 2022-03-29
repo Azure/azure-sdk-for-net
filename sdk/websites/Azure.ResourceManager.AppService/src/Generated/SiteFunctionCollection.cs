@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteFunctionWebAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,66 +305,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(functionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
-        /// Operation Id: WebApps_GetFunction
-        /// </summary>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public virtual async Task<Response<SiteFunctionResource>> GetIfExistsAsync(string functionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteFunctionWebAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteFunctionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteFunctionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
-        /// Operation Id: WebApps_GetFunction
-        /// </summary>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public virtual Response<SiteFunctionResource> GetIfExists(string functionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _siteFunctionWebAppsRestClient.GetFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteFunctionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteFunctionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

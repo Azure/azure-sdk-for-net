@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(schemaGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _schemaGroupSchemaRegistryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,66 +305,8 @@ namespace Azure.ResourceManager.EventHubs
             scope.Start();
             try
             {
-                var response = GetIfExists(schemaGroupName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/schemagroups/{schemaGroupName}
-        /// Operation Id: SchemaRegistry_Get
-        /// </summary>
-        /// <param name="schemaGroupName"> The Schema Group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
-        public virtual async Task<Response<SchemaGroupResource>> GetIfExistsAsync(string schemaGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
-
-            using var scope = _schemaGroupSchemaRegistryClientDiagnostics.CreateScope("SchemaGroupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _schemaGroupSchemaRegistryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SchemaGroupResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SchemaGroupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/schemagroups/{schemaGroupName}
-        /// Operation Id: SchemaRegistry_Get
-        /// </summary>
-        /// <param name="schemaGroupName"> The Schema Group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaGroupName"/> is null. </exception>
-        public virtual Response<SchemaGroupResource> GetIfExists(string schemaGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(schemaGroupName, nameof(schemaGroupName));
-
-            using var scope = _schemaGroupSchemaRegistryClientDiagnostics.CreateScope("SchemaGroupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _schemaGroupSchemaRegistryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SchemaGroupResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SchemaGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

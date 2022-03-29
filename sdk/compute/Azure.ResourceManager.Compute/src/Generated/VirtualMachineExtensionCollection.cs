@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(vmExtensionName, expand: expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -281,68 +281,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = GetIfExists(vmExtensionName, expand: expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
-        /// Operation Id: VirtualMachineExtensions_Get
-        /// </summary>
-        /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmExtensionName"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachineExtensionResource>> GetIfExistsAsync(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vmExtensionName, nameof(vmExtensionName));
-
-            using var scope = _virtualMachineExtensionClientDiagnostics.CreateScope("VirtualMachineExtensionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _virtualMachineExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualMachineExtensionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualMachineExtensionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}
-        /// Operation Id: VirtualMachineExtensions_Get
-        /// </summary>
-        /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmExtensionName"/> is null. </exception>
-        public virtual Response<VirtualMachineExtensionResource> GetIfExists(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vmExtensionName, nameof(vmExtensionName));
-
-            using var scope = _virtualMachineExtensionClientDiagnostics.CreateScope("VirtualMachineExtensionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _virtualMachineExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualMachineExtensionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualMachineExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

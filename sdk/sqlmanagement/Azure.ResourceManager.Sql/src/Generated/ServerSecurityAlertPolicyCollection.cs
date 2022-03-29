@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverSecurityAlertPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,58 +286,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(securityAlertPolicyName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}
-        /// Operation Id: ServerSecurityAlertPolicies_Get
-        /// </summary>
-        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServerSecurityAlertPolicyResource>> GetIfExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverSecurityAlertPolicyClientDiagnostics.CreateScope("ServerSecurityAlertPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serverSecurityAlertPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerSecurityAlertPolicyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}
-        /// Operation Id: ServerSecurityAlertPolicies_Get
-        /// </summary>
-        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerSecurityAlertPolicyResource> GetIfExists(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _serverSecurityAlertPolicyClientDiagnostics.CreateScope("ServerSecurityAlertPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _serverSecurityAlertPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServerSecurityAlertPolicyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

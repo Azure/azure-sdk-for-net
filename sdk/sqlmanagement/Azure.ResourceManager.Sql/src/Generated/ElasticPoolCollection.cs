@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(elasticPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,66 +307,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(elasticPoolName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// Operation Id: ElasticPools_Get
-        /// </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public virtual async Task<Response<ElasticPoolResource>> GetIfExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
-
-            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ElasticPoolResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ElasticPoolResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// Operation Id: ElasticPools_Get
-        /// </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public virtual Response<ElasticPoolResource> GetIfExists(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
-
-            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _elasticPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ElasticPoolResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ElasticPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

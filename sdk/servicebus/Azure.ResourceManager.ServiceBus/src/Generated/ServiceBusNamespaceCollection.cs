@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ServiceBus
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,66 +306,8 @@ namespace Azure.ResourceManager.ServiceBus
             scope.Start();
             try
             {
-                var response = GetIfExists(namespaceName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
-        /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public virtual async Task<Response<ServiceBusNamespaceResource>> GetIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-
-            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServiceBusNamespaceResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespaceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
-        /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public virtual Response<ServiceBusNamespaceResource> GetIfExists(string namespaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-
-            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _serviceBusNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServiceBusNamespaceResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

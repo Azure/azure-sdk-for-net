@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(firewallPolicyName, expand: expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _firewallPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, firewallPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,68 +310,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(firewallPolicyName, expand: expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}
-        /// Operation Id: FirewallPolicies_Get
-        /// </summary>
-        /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
-        public virtual async Task<Response<FirewallPolicyResource>> GetIfExistsAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
-
-            using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _firewallPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, firewallPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<FirewallPolicyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new FirewallPolicyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}
-        /// Operation Id: FirewallPolicies_Get
-        /// </summary>
-        /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
-        public virtual Response<FirewallPolicyResource> GetIfExists(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
-
-            using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _firewallPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, firewallPolicyName, expand, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<FirewallPolicyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new FirewallPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

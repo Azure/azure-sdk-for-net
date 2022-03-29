@@ -81,23 +81,5 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsTrue(configurationStores.Count == 2);
             Assert.IsTrue(configurationStores.First(x => x.Data.Name == configurationStoreName1).Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
         }
-
-        [Test]
-        public async Task GetIfExistsTest()
-        {
-            string configurationStoreName = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
-            {
-                PublicNetworkAccess = PublicNetworkAccess.Disabled
-            };
-            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData);
-            ConfigurationStoreResource configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(configurationStoreName);
-
-            Assert.IsTrue(configurationStore.Data.Name == configurationStoreName);
-
-            configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync("foo");
-
-            Assert.IsNull(configurationStore);
-        }
     }
 }

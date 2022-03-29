@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            MongoDBCollectionResource collection = await MongoDBCollectionCollection.GetIfExistsAsync(_collectionName);
-            if (collection != null)
+            if (await MongoDBCollectionCollection.ExistsAsync(_collectionName))
             {
+                var id = MongoDBCollectionCollection.Id;
+                id = MongoDBCollectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _collectionName);
+                MongoDBCollectionResource collection = this.ArmClient.GetMongoDBCollectionResource(id);
                 await collection.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -152,8 +154,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var collection = await CreateMongoDBCollection(null);
             await collection.DeleteAsync(WaitUntil.Completed);
 
-            collection = await MongoDBCollectionCollection.GetIfExistsAsync(_collectionName);
-            Assert.Null(collection);
+            bool exists = await MongoDBCollectionCollection.ExistsAsync(_collectionName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<MongoDBCollectionResource> CreateMongoDBCollection(AutoscaleSettings autoscale)

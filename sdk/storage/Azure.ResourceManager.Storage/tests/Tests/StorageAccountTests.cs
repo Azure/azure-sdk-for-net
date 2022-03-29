@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
             VerifyAccountProperties(account2, true);
             AssertStorageAccountEqual(account1, account2);
-            StorageAccountResource account3 = await storageAccountCollection.GetIfExistsAsync(accountName + "1");
-            Assert.IsNull(account3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await storageAccountCollection.GetAsync(accountName + "1"); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsTrue(await storageAccountCollection.ExistsAsync(accountName));
             Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName + "1"));
 
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate if deleted successfully
             Assert.IsFalse(await storageAccountCollection.ExistsAsync(accountName));
-            StorageAccountResource account4 = await storageAccountCollection.GetIfExistsAsync(accountName);
-            Assert.IsNull(account4);
+            exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await storageAccountCollection.GetAsync(accountName); });
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
