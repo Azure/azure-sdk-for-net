@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Buffers.Binary;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using Azure.Messaging.EventHubs.Primitives;
@@ -95,6 +96,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   consideration.
         /// </remarks>
         ///
+        [SkipLocalsInit]
         private static short GenerateHashCode(string partitionKey)
         {
             if (partitionKey == null)
