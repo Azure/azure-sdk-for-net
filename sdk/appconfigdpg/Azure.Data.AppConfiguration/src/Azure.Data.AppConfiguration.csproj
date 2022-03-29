@@ -15,6 +15,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
