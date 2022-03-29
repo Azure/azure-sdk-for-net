@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Core
 
             var partitionKeyByteLength = encoding.GetMaxByteCount(partitionKey.Length);
             var hashBuffer = partitionKeyByteLength <= MaxStackLimit ?
-                stackalloc byte[partitionKeyByteLength] :
+                stackalloc byte[MaxStackLimit] :
                 sharedBuffer = ArrayPool<byte>.Shared.Rent(partitionKeyByteLength);
 
             var written = encoding.GetBytes(partitionKeySpan, hashBuffer);
