@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             }
         }
 
-        protected static async Task SimulateNetworkFailureAsync(ServiceBusClient client)
+        protected static void SimulateNetworkFailure(ServiceBusClient client)
         {
             var amqpClient = client.Connection.InnerClient;
             AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
@@ -84,9 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 "ActiveConnection",
                 BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
 
-            typeof(AmqpConnection).GetMethod("AbortInternal", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(activeConnection, null);
-            // allow for any additional frames from service to be consumed before continuing
-            await Task.Delay(500);
+            activeConnection.Abort();
         }
     }
 }
