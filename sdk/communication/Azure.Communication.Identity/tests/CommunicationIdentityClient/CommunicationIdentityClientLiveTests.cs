@@ -131,7 +131,7 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task GetTokenForTeamsUserWithValidToken()
+        public async Task GetTokenForTeamsUserWithValidParameters()
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
@@ -146,46 +146,37 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task GetTokenForTeamsUserWithEmptyTokenShouldThrow()
+        [TestCase(true, false, false, "token", TestName = "GetTokenForTeamsUserWithNullTokenShouldThrow")]
+        [TestCase(false, true, false, "appId", TestName = "GetTokenForTeamsUserWithNullAppIdShouldThrow")]
+        [TestCase(false, false, true, "userId", TestName = "GetTokenForTeamsUserWithNullUserIdShouldThrow")]
+        [TestCase(true, true, true, "token", TestName = "GetTokenForTeamsUserWithNullParamsShouldThrow")]
+        public async Task GetTokenForTeamsUserWithNullParamsShouldThrow(bool isTokenNull, bool isAppIdNull, bool isUserIdNull, string paramName)
         {
+            var token = isTokenNull ? null : await generateTeamsToken();
+            var appId = isAppIdNull ? null : TestEnvironment.CommunicationAppId;
+            var userId = isUserIdNull ? null : TestEnvironment.CommunicationUserId;
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync("", TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.NotNull(ex.Message);
-                Assert.True(ex.Message.Contains("401"));
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            Assert.Fail("An exception should have been thrown.");
-        }
-
-        [Test]
-        public async Task GetTokenForTeamsUserWithNullTokenShouldThrow()
-        {
-            try
-            {
-                CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(null, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, appId, userId);
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("token", ex.ParamName);
+                Assert.AreEqual(paramName, ex.ParamName);
                 return;
             }
             Assert.Fail("An exception should have been thrown.");
         }
 
         [Test]
-        public async Task GetTokenForTeamsUserWithInvalidTokenShouldThrow()
+        [TestCase("", TestName = "GetTokenForTeamsUserWithEmptyTokenShouldThrow")]
+        [TestCase("invalid", TestName = "GetTokenForTeamsUserWithInvalidTokenShouldThrow")]
+        public async Task GetTokenForTeamsUserWithInvalidTokenShouldThrow(string token)
         {
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync("invalid", TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, TestEnvironment.CommunicationAppId, TestEnvironment.CommunicationUserId);
             }
             catch (RequestFailedException ex)
             {
@@ -209,6 +200,70 @@ namespace Azure.Communication.Identity.Tests
             {
                 Assert.NotNull(ex.Message);
                 Assert.True(ex.Message.Contains("401"));
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
+
+        [Test]
+        [TestCase("", TestName = "GetTokenForTeamsUserWithEmptyAppIdShouldThrow")]
+        [TestCase("invalid", TestName = "GetTokenForTeamsUserWithInvalidAppIdShouldThrow")]
+        [TestCase("wrong", TestName = "GetTokenForTeamsUserWithWrongAppIdShouldThrow")]
+        public async Task GetTokenForTeamsUserWithInvalidAppIdShouldThrow(string appId)
+        {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
+            {
+                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+            }
+
+            string token = await generateTeamsToken();
+            if (appId == "wrong")
+            {
+                appId = TestEnvironment.CommunicationWrongAppId;
+            }
+
+            appId = appId.ToLower();
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, appId, TestEnvironment.CommunicationUserId);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.True(ex.Message.Contains("400"));
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
+
+        [Test]
+        [TestCase("", TestName = "GetTokenForTeamsUserWithEmptyUserIdShouldThrow")]
+        [TestCase("invalid", TestName = "GetTokenForTeamsUserWithInvalidUserIdShouldThrow")]
+        [TestCase("wrong", TestName = "GetTokenForTeamsUserWithWrongAppIdShouldThrow")]
+        public async Task GetTokenForTeamsUserWithInvalidUserIdShouldThrow(string userId)
+        {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
+            {
+                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+            }
+
+            string token = await generateTeamsToken();
+            if (userId == "wrong")
+            {
+                userId = TestEnvironment.CommunicationWrongUserId;
+            }
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(token, TestEnvironment.CommunicationAppId, userId);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.True(ex.Message.Contains("400"));
                 Console.WriteLine(ex.Message);
                 return;
             }
