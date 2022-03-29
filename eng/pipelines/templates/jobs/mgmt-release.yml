@@ -1,0 +1,102 @@
+parameters: 
+- name: ShouldPublish
+  type: boolean
+  default: false
+- name: BuildToolsPath
+  type: string
+  default: '$(Build.SourcesDirectory)/azure-sdk-build-tools'
+- name: NugetVersion
+  type: string
+  default: '5.4.x'
+- name: PartnerDropsSubscription
+  type: string
+  default: 'azuresdkpartnerdrops-kv Secrets'
+- name: PartnerDropsStorageName
+  type: string
+  default: 'azuresdkpartnerdrops'
+- name: PartnerDropsContainerName
+  type: string
+  default: 'mgmt-netsdk-signed'
+- name: PartnerDropsBlobDestPrefix
+  type: string
+  default: '$(System.DefinitionId)-$(Build.BuildId)-$(System.JobAttempt)'
+- name: DependsOn
+  type: string
+  default: Build
+
+stages:
+  - stage: Release
+    dependsOn: ${{parameters.DependsOn}}
+    jobs:
+      - deployment: Release
+        environment: nuget
+        pool:
+          name: azsdk-pool-mms-win-2019-general
+          vmImage: MMS2019
+
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - checkout: azure-sdk-build-tools
+
+                - download: current
+                  artifact: packages
+                  displayName: Download published Nuget Packages
+
+                - task: Powershell@2
+                  displayName: 'Verify Package Tags and Create Git Releases'
+                  inputs:
+                    filePath: ${{ parameters.BuildToolsPath }}/scripts/create-tags-and-git-release.ps1
+                    arguments: >
+                      -artifactLocation '$(PIPELINE.WORKSPACE)/packages'
+                      -workingDirectory $(System.DefaultWorkingDirectory)
+                      -packageRepository 'Nuget'
+                      -releaseSha '$(Build.SourceVersion)'
+                      -repoOwner 'azure-sdk-for-net'
+                      -repoName 'Azure'
+                    pwsh: true
+                  env:
+                    GH_TOKEN: $(azuresdk-github-pat)
+                  condition: and(succeeded(), ne(variables['SkipCreateTagAndGitRelease'], 'true'))
+
+                - ${{ if eq(parameters.ShouldPublish, true) }}:
+                  - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
+                    parameters:
+                      PackagesPath: '$(PIPELINE.WORKSPACE)/packages'
+                      BuildToolsPath: '${{ parameters.BuildToolsPath }}'
+
+                  - task: MSBuild@1
+                    displayName: 'Upload Symbols'
+                    inputs:
+                      solution: '${{ parameters.BuildToolsPath }}/tools/symboltool/SymbolUploader.proj'
+                      msbuildArguments: >
+                        /p:PackagesPath='$(PIPELINE.WORKSPACE)/packages'
+                        /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
+                        /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
+                        /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+
+                  - task: NuGetToolInstaller@1
+                    displayName: 'Use NuGet ${{ parameters.NugetVersion }}'
+                    inputs:
+                      versionSpec: ${{ parameters.NugetVersion }}
+
+                  - task: NuGetCommand@2
+                    displayName: 'Publish to Nuget'
+                    inputs:
+                      command: push
+                      packagesToPush: '$(PIPELINE.WORKSPACE)/packages/**/*.nupkg;!$(PIPELINE.WORKSPACE)/packages/**/*.symbols.nupkg'
+                      nuGetFeedType: external
+                      publishFeedCredentials: Nuget.org
+
+                  - task: AzureFileCopy@2
+                    displayName: 'Copy Signed Files to Blob'
+                    inputs:
+                      SourcePath: '$(PIPELINE.WORKSPACE)/packages'
+                      azureSubscription: '${{ parameters.PartnerDropsSubscription }}'
+                      Destination: AzureBlob
+                      storage: '${{ parameters.PartnerDropsStorageName }}'
+                      ContainerName: '${{ parameters.PartnerDropsContainerName }}'
+                      BlobPrefix: '${{ parameters.PartnerDropsBlobDestPrefix }}'
+                    condition: and(succeeded(), ne(variables['SkipCopySignedFilestoBlob'], 'true'))
