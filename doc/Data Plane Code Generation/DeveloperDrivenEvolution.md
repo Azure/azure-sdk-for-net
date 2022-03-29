@@ -1,22 +1,72 @@
 # Developer driven evolution
-To add a convenience API that returns raw JSON to a model, steps are:
+To add a convenience API that takes and returns strongly-typed input and output models instead of raw JSON, steps are:
+1. [Create the convenience method with new signature](#create-the-convenience-method-with-new-signature)
+- [Replace input parameters](#replace-input-parameters)
+- [Replace output value](#replace-output-value)
+- [Rename method if needed](#rename-method-if-needed)
+2. [Create the models](#create-the-models)
+3. [Implement the method](#implement-the-method)
+- [Implement GET method](#implement-get-method)
+- [Implement POST method](#implement-post-method)
+- [Implement GET paging method](#implement-get-paging-method)
 
-**Get convenience method signiture from protocol method signiture.** Replace the optional `RequestContext` parameter with an optional `CancellationToken`. If there is an input `RequestContent`, replace it with a model type `T`. Replace the return value `Response` with `Response<T>`.
+## Create the convenience method with new signature
+You should first decide how the convenience method grows up from protocol method. Below is an example of your generated protocol method.
 ```C#
-- public virtual async Task<Response> CreateMetricFeedbackAsync(RequestContent content, RequestContext context = null);
-+ public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default);
+public virtual async Task<Response> CreateMetricFeedbackAsync(RequestContent content, RequestContext context = null);
 ```
-**Pick the best convenience method name fitting your scenario.** You could use the same method name as the initial protocol method only when your convenience method has different **required** parameter list. E.g.,
-- ```(string feedId, RequestContext requestContext = null)``` and ```(string feedId, CancellationToken cancellationToken = default)``` have the same required parameter list. You cannot add the convenience method as an overload method by leveraging the initial method name, because it will cause an ambiguous compile error when you call it without `RequestContext`/`CancellationToken`.
-- ```(RequestContent content, RequestContext requestContext = null)``` and ```(string feedId, CancellationToken cancellationToken = default)``` have different required parameter list. You are safe to use same method name with the initial protocol name.
+You should do the following steps to create the convenience method signature:
+### Replace input parameters
+- Replace the parameter `RequestContext` with an optional `CancellationToken` with default value.
+- If there is an input parameter `RequestContent`, replace it with a wanted input type (e.g., `MetricFeedback`).
+
+After these steps, your convenience method signature will be like:
+```C#
+public virtual async Task<Response> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default);
+```
+### Replace output value
+- Replace the return value `Response` with `Response<T>` (`T` is your wanted output type, e.g., `MetricFeedback`).
+
+After these steps, your convenience method signature will be like:
+```C#
+public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default);
+```
+### Rename method if needed
+Renaming method should follow the rules:
+
+**It is needed if ambiguous call exists**
+
+This situation happens when your protocol method and convenience method have the same required paramater list. E.g.,
+```C#
+// protocol method
+public virtual async Task<Response> GetMetricFeedbackAsync(string feedId, RequestContext context = null);
+// Convenience method
+public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackAsync(string feedId, CancellationToken cancellationToken = default);
+```
+Ambiguous call exists when you call
+```C#
+GetMetricFeedbackAsync(feedId);
+```
+In this situation, you have to change the convenience name.
+
+**Suggested rename for most cases**
 
 If your convenience method has the same parameter list as that of the protocol method, we suggest 
-- Adding a suffix `Value` to the initial method name as the convenience method name, if the initial method is singular (e.g., `GetMetricFeedbackAsync`).
-- Adding a suffix `Values` to the initial method name as the convenience method name, if the initial method is plural (e.g., `GetMetricFeedbacksAsync`).
+- Adding a suffix `Value` to the initial method name as the convenience method name, if the initial method is singular (e.g., change `GetMetricFeedbackAsync` to `GetMetricFeedbackValueAsync`).
+```C#
+public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackValueAsync(string feedId, CancellationToken cancellationToken = default);
+```
+- Adding a suffix `Values` to the initial method name as the convenience method name, if the initial method is plural (e.g., change `GetMetricFeedbacksAsync` to `GetMetricFeedbackValuesAsync`).
+```C#
+public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackValuesAsync(string feedId, CancellationToken cancellationToken = default);
+```
+**If this name doesn't make sense, pick the best name**
 
-**Create the models for the convenience APIs you've added.** Currently it can be generated manually. We will support generate it automatically.
+If the suggested rename does not apply to your scenario, you could pick the best name fitting your API.
+## Create the models
+Currently the models should be created manually. We will support generate it automatically.
 
-**Add helper method mapping between raw response and model in generated or handcrafted model.** Examples for model `MetricFeedback` (Models/MetricFeedback/MetricFeedback.cs) are:
+After you create the models, you also need to add the helper methods mapping between raw response and model. Examples for model `MetricFeedback` (Models/MetricFeedback/MetricFeedback.cs) are:
 ```C#
 namespace Azure.AI.MetricsAdvisor
 {
@@ -30,7 +80,7 @@ namespace Azure.AI.MetricsAdvisor
             return DeserializeMetricFeedback(document.RootElement);
         }
 
-        // Mapping model to raw response
+        // Mapping model to raw request
         internal static RequestContent ToRequestContent(MetricFeedback metricFeedback)
         {
             var content = new Utf8JsonRequestContent();
@@ -40,10 +90,10 @@ namespace Azure.AI.MetricsAdvisor
     }
 }
 ```
-**Call the protocol method and map returned raw response to model.** You could call the protocol method inside your convenience method and map the returned raw response to model. See different scenarios and corresponding examples below. 
+## Implement the method
+You could call the protocol method inside your convenience method and map the returned raw response to model. See different scenarios and corresponding examples below. 
 
-
-## Improve a GET method that returns raw JSON to return a model
+### Implement GET method
 
 **Generated code before (Generated/MetricsAdvisorClient.cs):**
 ``` C#
@@ -76,40 +126,7 @@ namespace Azure.AI.MetricsAdvisor
 }
 ```
 
-## Improve a GET paging method that returns raw JSON to return a model
-
-**Generated code before (Generated/MetricsAdvisorClient.cs):**
-``` C#
-namespace Azure.AI.MetricsAdvisor
-{
-    public partial class MetricsAdvisorClient
-    {
-        public virtual AsyncPageable<BinaryData> GetMetricFeedbacksAsync(Guid feedbackId, RequestContext context = null)
-        {
-        }
-    }
-}
-```
-**Improve the GET paging method (MetricsAdvisorClient.cs):**
-``` C#
-namespace Azure.AI.MetricsAdvisor
-{
-    public partial class MetricsAdvisorClient
-    {
-        // Suggest appending values to a plural method name
-        public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksValuesAsync(Guid feedbackId, CancellationToken cancellationToken = default)
-        {
-            // Call protocol method
-            AsyncPageable<BinaryData> pageableBindaryData = GetMetricFeedbacksAsync(feedbackId, new RequestContext() { CancellationToken = cancellationToken });
-
-            // Calling deserialization helper
-            return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
-        }
-    }
-}
-```
-
-## Improve a POST method that reads a raw JSON to accept a model
+### Implement POST method
 **Generated code before (Generated/MetricsAdvisorClient.cs):**
 ``` C#
 namespace Azure.AI.MetricsAdvisor
@@ -139,6 +156,39 @@ namespace Azure.AI.MetricsAdvisor
 
             // Calling deserialization helper
             MetricFeedback value = MetricFeedback.FromResponse(response);
+        }
+    }
+}
+```
+
+## Implement GET paging method
+
+**Generated code before (Generated/MetricsAdvisorClient.cs):**
+``` C#
+namespace Azure.AI.MetricsAdvisor
+{
+    public partial class MetricsAdvisorClient
+    {
+        public virtual AsyncPageable<BinaryData> GetMetricFeedbacksAsync(Guid feedbackId, RequestContext context = null)
+        {
+        }
+    }
+}
+```
+**Improve the GET paging method (MetricsAdvisorClient.cs):**
+``` C#
+namespace Azure.AI.MetricsAdvisor
+{
+    public partial class MetricsAdvisorClient
+    {
+        // Suggest appending values to a plural method name
+        public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksValuesAsync(Guid feedbackId, CancellationToken cancellationToken = default)
+        {
+            // Call protocol method
+            AsyncPageable<BinaryData> pageableBinadryData = GetMetricFeedbacksAsync(feedbackId, new RequestContext() { CancellationToken = cancellationToken });
+
+            // Calling deserialization helper
+            return PageableHelpers.Select(pageableBinadryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
         }
     }
 }
