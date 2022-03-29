@@ -185,10 +185,10 @@ namespace Azure.AI.MetricsAdvisor
         public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksValuesAsync(Guid feedbackId, CancellationToken cancellationToken = default)
         {
             // Call protocol method
-            AsyncPageable<BinaryData> pageableBinadryData = GetMetricFeedbacksAsync(feedbackId, new RequestContext() { CancellationToken = cancellationToken });
+            AsyncPageable<BinaryData> pageableBinaryData = GetMetricFeedbacksAsync(feedbackId, new RequestContext() { CancellationToken = cancellationToken });
 
             // Calling deserialization helper
-            return PageableHelpers.Select(pageableBinadryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
+            return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
         }
     }
 }
