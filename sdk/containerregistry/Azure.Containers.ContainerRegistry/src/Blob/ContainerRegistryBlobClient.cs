@@ -22,7 +22,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
-        private readonly AuthenticationRestClient _acrAuthClient;
+        private readonly IContainerRegistryAuthenticationClient _acrAuthClient;
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
         /// <summary>
@@ -77,7 +77,16 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="repository">The name of the repository that logically groups the artifact parts.</param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/>, <paramref name="credential"/>, or <paramref name="repository"/> is null. </exception>
-        public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository, ContainerRegistryClientOptions options)
+        public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository, ContainerRegistryClientOptions options) : this(endpoint, credential, repository, null, options)
+        {
+        }
+
+        internal ContainerRegistryBlobClient(
+            Uri endpoint,
+            TokenCredential credential,
+            string repository,
+            IContainerRegistryAuthenticationClient authenticationClient,
+            ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -94,7 +103,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
-            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+            _acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
             string defaultScope = options.Audience + "/.default";
             _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
