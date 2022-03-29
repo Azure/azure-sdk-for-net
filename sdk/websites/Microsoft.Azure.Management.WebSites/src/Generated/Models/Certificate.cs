@@ -236,7 +236,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string CanonicalName { get; set; }
 
         /// <summary>
-        /// Gets or sets method of domain validation for free cert
+        /// Gets or sets method of domain validation for free cert. Possible values include:
+        /// 'CNameValidationValue', 'HttpTokenValidationValue'
         /// </summary>
         [JsonProperty(PropertyName = "properties.domainValidationMethod")]
         public string DomainValidationMethod { get; set; }
