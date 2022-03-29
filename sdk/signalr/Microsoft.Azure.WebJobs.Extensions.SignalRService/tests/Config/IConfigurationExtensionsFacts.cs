@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using Azure.Core.Serialization;
 using Azure.Identity;
@@ -42,6 +43,8 @@ namespace SignalRServiceExtension.Tests.Config
             Assert.Equal(uri, endpoint.Endpoint);
             Assert.IsType<DefaultAzureCredential>((endpoint.AccessKey as AadAccessKey).TokenCredential);
             Assert.Equal(EndpointType.Primary, endpoint.EndpointType);
+            Assert.Equal(new Uri(uri), endpoint.ServerEndpoint);
+            Assert.Equal(new Uri(uri), endpoint.ClientEndpoint);
         }
 
         [Fact]
@@ -56,12 +59,16 @@ namespace SignalRServiceExtension.Tests.Config
             config["eastus:serviceUri"] = uri;
             config["eastus:credential"] = "managedidentity";
             config["eastus:type"] = "secondary";
+            config["eastus:serverEndpoint"] = "https://serverEndpoint:440";
+            config["eastus:clientEndpoint"] = "https://clientEndpoint1:441";
 
             Assert.True(config.GetSection("eastus").TryGetNamedEndpointFromIdentity(factory, out var endpoint));
             Assert.Equal("eastus", endpoint.Name);
             Assert.Equal(uri, endpoint.Endpoint);
             Assert.IsType<ManagedIdentityCredential>((endpoint.AccessKey as AadAccessKey).TokenCredential);
             Assert.Equal(EndpointType.Secondary, endpoint.EndpointType);
+            Assert.Equal(new Uri("https://serverEndpoint:440"), endpoint.ServerEndpoint);
+            Assert.Equal(new Uri("https://clientEndpoint1:441"), endpoint.ClientEndpoint);
         }
 
         [Fact]
