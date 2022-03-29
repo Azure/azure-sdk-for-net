@@ -167,7 +167,7 @@ function Confirm-ChangeLogEntry {
 
   if ($ForRelease -eq $True)
   {
-    LogDebug "Verifying like it's a release build because ForRelease parameter is set to true"
+    LogDebug "Verifying as a release build because ForRelease parameter is set to true"
     return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries
   }
 
@@ -358,8 +358,7 @@ function Confirm-ChangeLogForRelease {
         $isValid = $false
       }
 
-      $dateHistory = $entries.ReleaseStatus | ForEach-Object { $_.Trim().Trim("()") }
-      if (@($dateHistory)[0] -ne $status)
+      if (@($entries.ReleaseStatus)[0] -ne $changeLogEntry.ReleaseStatus)
       {
         LogError "Invalid date [ $status ]. The date for the changelog being released must be the latest in the file."
         $isValid = $false
@@ -399,6 +398,5 @@ function Confirm-ChangeLogForRelease {
   {
     LogWarning "The changelog entry did not contain any of the recommended sections ($($RecommendedSectionHeaders -join ', ')), please add at least one. See https://aka.ms/azsdk/guideline/changelogs for more info."
   }
-  Write-Host "Changelog validation failed. Please fix errors above and try again."
   return $isValid
 }
