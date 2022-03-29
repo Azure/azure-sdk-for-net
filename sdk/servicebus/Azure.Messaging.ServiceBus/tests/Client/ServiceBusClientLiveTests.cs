@@ -247,14 +247,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var firstOpen = metrics.LastConnectionOpen;
                 Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
-                SimulateNetworkFailure(client);
+                await SimulateNetworkFailureAsync(client);
                 await sender.SendMessageAsync(new ServiceBusMessage());
 
                 metrics = client.GetTransportMetrics();
                 var secondOpen = metrics.LastConnectionOpen;
                 Assert.Greater(secondOpen, firstOpen);
 
-                SimulateNetworkFailure(client);
+                await SimulateNetworkFailureAsync(client);
                 var receiver = client.CreateReceiver(scope.QueueName);
                 await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));
 
@@ -287,7 +287,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var firstOpen = metrics.LastConnectionOpen;
                 Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
-                SimulateNetworkFailure(client);
+                await SimulateNetworkFailureAsync(client);
                 await sender.SendMessageAsync(new ServiceBusMessage());
                 Assert.AreEqual(firstOpen, metrics.LastConnectionOpen);
 

@@ -1047,7 +1047,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             {
                 await receiverA.CompleteMessageAsync(receivedMessage);
 
-                SimulateNetworkFailure(client);
+                await SimulateNetworkFailureAsync(client);
                 Assert.That(
                     async () => await senderB.SendMessageAsync(new ServiceBusMessage()),
                     Throws.InstanceOf<InvalidOperationException>());
