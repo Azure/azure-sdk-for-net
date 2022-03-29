@@ -14,28 +14,27 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Error definition.
+    /// Object reference to a Kubernetes object on a cluster
     /// </summary>
-    public partial class ErrorDefinition
+    public partial class ObjectReferenceDefinition
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorDefinition class.
+        /// Initializes a new instance of the ObjectReferenceDefinition class.
         /// </summary>
-        public ErrorDefinition()
+        public ObjectReferenceDefinition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorDefinition class.
+        /// Initializes a new instance of the ObjectReferenceDefinition class.
         /// </summary>
-        /// <param name="code">Service specific error code which serves as the
-        /// substatus for the HTTP error code.</param>
-        /// <param name="message">Description of the error.</param>
-        public ErrorDefinition(string code, string message)
+        /// <param name="name">Name of the object</param>
+        /// <param name="namespaceProperty">Namespace of the object</param>
+        public ObjectReferenceDefinition(string name = default(string), string namespaceProperty = default(string))
         {
-            Code = code;
-            Message = message;
+            Name = name;
+            NamespaceProperty = namespaceProperty;
             CustomInit();
         }
 
@@ -45,17 +44,16 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets service specific error code which serves as the
-        /// substatus for the HTTP error code.
+        /// Gets or sets name of the object
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets description of the error.
+        /// Gets or sets namespace of the object
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "namespace")]
+        public string NamespaceProperty { get; set; }
 
     }
 }
