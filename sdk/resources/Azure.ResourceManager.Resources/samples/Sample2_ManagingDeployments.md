@@ -45,7 +45,7 @@ ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployment
 string deploymentName = "myDeployment";
 var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
-    TemplateLink = new TemplateLink()
+    TemplateLink = new ArmDeploymentTemplateLink()
     {
         Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },
@@ -93,7 +93,7 @@ var parametersString = JsonSerializer.Serialize(parametersObject);
 var parameters = JsonDocument.Parse(parametersString).RootElement;
 var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
-    TemplateLink = new TemplateLink()
+    TemplateLink = new ArmDeploymentTemplateLink()
     {
         Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },

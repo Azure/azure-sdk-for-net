@@ -61,20 +61,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlan"> Object containing scaling plan definitions. </param>
+        /// <param name="data"> Object containing scaling plan definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="scalingPlan"/> is null. </exception>
-        public virtual async Task<ArmOperation<ScalingPlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ScalingPlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNull(scalingPlan, nameof(scalingPlan));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _scalingPlanRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, scalingPlan, cancellationToken).ConfigureAwait(false);
+                var response = await _scalingPlanRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new DesktopVirtualizationArmOperation<ScalingPlanResource>(Response.FromValue(new ScalingPlanResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -94,20 +94,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlan"> Object containing scaling plan definitions. </param>
+        /// <param name="data"> Object containing scaling plan definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="scalingPlan"/> is null. </exception>
-        public virtual ArmOperation<ScalingPlanResource> CreateOrUpdate(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ScalingPlanResource> CreateOrUpdate(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNull(scalingPlan, nameof(scalingPlan));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _scalingPlanRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, scalingPlan, cancellationToken);
+                var response = _scalingPlanRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, data, cancellationToken);
                 var operation = new DesktopVirtualizationArmOperation<ScalingPlanResource>(Response.FromValue(new ScalingPlanResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

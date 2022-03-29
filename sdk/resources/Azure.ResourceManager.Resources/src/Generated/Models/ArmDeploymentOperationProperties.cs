@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="targetResource"> The target resource. </param>
         /// <param name="request"> The HTTP request message. </param>
         /// <param name="response"> The HTTP response message. </param>
-        internal ArmDeploymentOperationProperties(ProvisioningOperation? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, TimeSpan? duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response)
+        internal ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, TimeSpan? duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response)
         {
             ProvisioningOperation = provisioningOperation;
             ProvisioningState = provisioningState;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the current provisioning operation. </summary>
-        public ProvisioningOperation? ProvisioningOperation { get; }
+        public ProvisioningOperationKind? ProvisioningOperation { get; }
         /// <summary> The state of the provisioning. </summary>
         public string ProvisioningState { get; }
         /// <summary> The date and time of the operation. </summary>

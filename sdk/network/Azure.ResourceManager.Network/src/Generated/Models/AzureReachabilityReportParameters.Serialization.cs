@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("startTime");
-            writer.WriteStringValue(StartTime, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime");
-            writer.WriteStringValue(EndTime, "O");
+            writer.WriteStringValue(EndOn, "O");
             writer.WriteEndObject();
         }
     }

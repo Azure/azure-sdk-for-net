@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Tests
         protected static ArmDeploymentProperties CreateDeploymentProperties()
         {
             ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
-            tmpDeploymentProperties.TemplateLink = new TemplateLink();
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
             tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             tmpDeploymentProperties.Parameters = BinaryData.FromObjectAsJson(new JsonObject()
             {
@@ -75,6 +75,27 @@ namespace Azure.ResourceManager.Resources.Tests
                         {"value", "Standard_GRS" }
                     }
                 }
+            });
+            return tmpDeploymentProperties;
+        }
+
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesAtSub()
+        {
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/azure-resource-manager/emptyrg.json");
+            tmpDeploymentProperties.Parameters = BinaryData.FromObjectAsJson(new JsonObject()
+            {
+                {"rgName", new JsonObject()
+                    {
+                        {"value", "testDeployAtSub" }
+                    }
+                },
+                {"rgLocation", new JsonObject()
+                    {
+                        {"value", $"{AzureLocation.CentralUS}" }
+                    }
+                },
             });
             return tmpDeploymentProperties;
         }
@@ -98,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Tests
         protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingJsonElement()
         {
             ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
-            tmpDeploymentProperties.TemplateLink = new TemplateLink();
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
             tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
             //convert this object to JsonElement
@@ -109,6 +130,11 @@ namespace Azure.ResourceManager.Resources.Tests
         }
 
         protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentInput(deploymentProperties);
+
+        protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentInput(deploymentProperties)
+        {
+            Location = location
+        };
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {

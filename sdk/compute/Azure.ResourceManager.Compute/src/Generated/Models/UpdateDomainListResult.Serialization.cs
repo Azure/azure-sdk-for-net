@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static UpdateDomainListResult DeserializeUpdateDomainListResult(JsonElement element)
         {
-            IReadOnlyList<UpdateDomain> value = default;
+            IReadOnlyList<UpdateDomainIdentifier> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<UpdateDomain> array = new List<UpdateDomain>();
+                    List<UpdateDomainIdentifier> array = new List<UpdateDomainIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateDomain.DeserializeUpdateDomain(item));
+                        array.Add(UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(item));
                     }
                     value = array;
                     continue;

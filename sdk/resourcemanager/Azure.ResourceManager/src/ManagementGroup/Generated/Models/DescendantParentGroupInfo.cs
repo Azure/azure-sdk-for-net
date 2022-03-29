@@ -7,10 +7,10 @@
 
 using Azure.Core;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The ID of the parent management group. </summary>
-    public partial class DescendantParentGroupInfo
+    internal partial class DescendantParentGroupInfo
     {
         /// <summary> Initializes a new instance of DescendantParentGroupInfo. </summary>
         internal DescendantParentGroupInfo()

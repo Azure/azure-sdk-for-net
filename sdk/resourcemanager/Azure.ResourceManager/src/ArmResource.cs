@@ -85,8 +85,8 @@ namespace Azure.ResourceManager
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            Response<ProviderInfo> resourcePageableProviderResponse = Client.GetTenantResourceProvider(nameSpace, null, cancellationToken);
-            ProviderInfo resourcePageableProvider = resourcePageableProviderResponse.Value;
+            Response<TenantResourceProvider> resourcePageableProviderResponse = Client.GetTenantResourceProvider(nameSpace, null, cancellationToken);
+            TenantResourceProvider resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            Response<ProviderInfo> resourcePageableProviderResponse = await Client.GetTenantResourceProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
-            ProviderInfo resourcePageableProvider = resourcePageableProviderResponse.Value;
+            Response<TenantResourceProvider> resourcePageableProviderResponse = await Client.GetTenantResourceProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
+            TenantResourceProvider resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));

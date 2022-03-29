@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static WhatIfChange DeserializeWhatIfChange(JsonElement element)
         {
             string resourceId = default;
-            ChangeType changeType = default;
+            WhatIfChangeType changeType = default;
             Optional<string> unsupportedReason = default;
             Optional<BinaryData> before = default;
             Optional<BinaryData> after = default;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("changeType"))
                 {
-                    changeType = property.Value.GetString().ToChangeType();
+                    changeType = property.Value.GetString().ToWhatIfChangeType();
                     continue;
                 }
                 if (property.NameEquals("unsupportedReason"))

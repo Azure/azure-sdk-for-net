@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdatePublishingUserRequest(UserData userDetails)
+        internal HttpMessage CreateUpdatePublishingUserRequest(UserData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -109,21 +109,21 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(userDetails);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Description for Updates publishing user. </summary>
-        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public async Task<Response<UserData>> UpdatePublishingUserAsync(UserData userDetails, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async Task<Response<UserData>> UpdatePublishingUserAsync(UserData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userDetails, nameof(userDetails));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdatePublishingUserRequest(userDetails);
+            using var message = CreateUpdatePublishingUserRequest(data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Updates publishing user. </summary>
-        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public Response<UserData> UpdatePublishingUser(UserData userDetails, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public Response<UserData> UpdatePublishingUser(UserData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userDetails, nameof(userDetails));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdatePublishingUserRequest(userDetails);
+            using var message = CreateUpdatePublishingUserRequest(data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSourceControlRequest(string sourceControlType, SourceControlData requestMessage)
+        internal HttpMessage CreateUpdateSourceControlRequest(string sourceControlType, SourceControlData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(requestMessage);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -310,16 +310,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Updates source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="requestMessage"> Source control token information. </param>
+        /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlData>> UpdateSourceControlAsync(string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
+        public async Task<Response<SourceControlData>> UpdateSourceControlAsync(string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-            Argument.AssertNotNull(requestMessage, nameof(requestMessage));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSourceControlRequest(sourceControlType, requestMessage);
+            using var message = CreateUpdateSourceControlRequest(sourceControlType, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -337,16 +337,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Updates source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="requestMessage"> Source control token information. </param>
+        /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlData> UpdateSourceControl(string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
+        public Response<SourceControlData> UpdateSourceControl(string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-            Argument.AssertNotNull(requestMessage, nameof(requestMessage));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSourceControlRequest(sourceControlType, requestMessage);
+            using var message = CreateUpdateSourceControlRequest(sourceControlType, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

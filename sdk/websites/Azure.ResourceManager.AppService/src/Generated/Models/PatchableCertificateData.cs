@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="siteName"> App name. </param>
         /// <param name="selfLink"> Self link. </param>
         /// <param name="issuer"> Certificate issuer. </param>
-        /// <param name="issueDate"> Certificate issue Date. </param>
-        /// <param name="expirationDate"> Certificate expiration date. </param>
+        /// <param name="issueOn"> Certificate issue Date. </param>
+        /// <param name="expirationOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="valid"> Is the certificate valid?. </param>
         /// <param name="cerBlob"> Raw bytes of .cer file. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
-        internal PatchableCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueDate, DateTimeOffset? expirationDate, string thumbprint, bool? valid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod) : base(id, name, resourceType, systemData, kind)
+        internal PatchableCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? valid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, string serverFarmId, string canonicalName, string domainValidationMethod) : base(id, name, resourceType, systemData, kind)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService.Models
             SiteName = siteName;
             SelfLink = selfLink;
             Issuer = issuer;
-            IssueDate = issueDate;
-            ExpirationDate = expirationDate;
+            IssueOn = issueOn;
+            ExpirationOn = expirationOn;
             Thumbprint = thumbprint;
             Valid = valid;
             CerBlob = cerBlob;
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Certificate issuer. </summary>
         public string Issuer { get; }
         /// <summary> Certificate issue Date. </summary>
-        public DateTimeOffset? IssueDate { get; }
+        public DateTimeOffset? IssueOn { get; }
         /// <summary> Certificate expiration date. </summary>
-        public DateTimeOffset? ExpirationDate { get; }
+        public DateTimeOffset? ExpirationOn { get; }
         /// <summary> Certificate thumbprint. </summary>
         public string Thumbprint { get; }
         /// <summary> Is the certificate valid?. </summary>

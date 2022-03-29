@@ -223,5 +223,45 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(key));
             Assert.AreEqual(subscription2.Value.Data.Tags[key], value);
         }
+
+        [RecordedTest]
+        public async Task ValidateResourceInRestApi()
+        {
+#if NET461
+            await Task.Delay(1); //no op due to header differences on 461
+#else
+            var namespacesToSkip = new HashSet<string>
+            {
+                "Microsoft.MarketplaceNotifications",
+                "Microsoft.Notebooks",
+                "Microsoft.App",
+                "Microsoft.ClassicSubscription",
+                "Microsoft.AVS",
+                "Microsoft.DataReplication",
+                "Microsoft.ImportExport",
+                "Microsoft.NetworkFunction",
+                "Microsoft.ProjectBabylon",
+                "Microsoft.Scheduler",
+                "Microsoft.ServicesHub",
+                "Microsoft.SoftwarePlan",
+                "Microsoft.TimeSeriesInsights",
+            };
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            await foreach (var provider in subscription.GetResourceProviders())
+            {
+                if (namespacesToSkip.Contains(provider.Data.Namespace))
+                    continue;
+                if (!provider.Data.ResourceTypes.Any(rt => rt.ResourceType == "operations"))
+                    continue;
+                Assert.DoesNotThrowAsync(async () =>
+                {
+                    await foreach (var restApi in subscription.GetArmRestApis(provider.Data.Namespace))
+                    {
+                        Assert.IsNotNull(restApi);
+                    }
+                }, $"Error getting rest apis for {provider.Data.Namespace}");
+            }
+#endif
+        }
     }
 }

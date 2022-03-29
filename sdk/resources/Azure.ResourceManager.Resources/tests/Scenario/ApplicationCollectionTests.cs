@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Data.CustomerSupport.Email, getResult.Data.CustomerSupport.Email);
                 Assert.AreEqual(model.Data.CustomerSupport.Phone, getResult.Data.CustomerSupport.Phone);
             }
-            if (model.Data.SupportUrls != null || getResult.Data.SupportUrls != null)
+            if (model.Data.SupportUris != null || getResult.Data.SupportUris != null)
             {
-                Assert.NotNull(model.Data.SupportUrls);
-                Assert.NotNull(getResult.Data.SupportUrls);
-                Assert.AreEqual(model.Data.SupportUrls.AzureGovernment, getResult.Data.SupportUrls.AzureGovernment);
-                Assert.AreEqual(model.Data.SupportUrls.AzurePublicCloud, getResult.Data.SupportUrls.AzurePublicCloud);
+                Assert.NotNull(model.Data.SupportUris);
+                Assert.NotNull(getResult.Data.SupportUris);
+                Assert.AreEqual(model.Data.SupportUris.AzureGovernmentUri, getResult.Data.SupportUris.AzureGovernmentUri);
+                Assert.AreEqual(model.Data.SupportUris.AzurePublicCloudUri, getResult.Data.SupportUris.AzurePublicCloudUri);
             }
             if (model.Data.Artifacts != null || getResult.Data.Artifacts != null)
             {

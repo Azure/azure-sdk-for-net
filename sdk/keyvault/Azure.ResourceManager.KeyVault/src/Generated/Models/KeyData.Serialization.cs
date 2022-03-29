@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.KeyVault
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                keyUri = null;
                                 continue;
                             }
                             keyUri = new Uri(property0.Value.GetString());
