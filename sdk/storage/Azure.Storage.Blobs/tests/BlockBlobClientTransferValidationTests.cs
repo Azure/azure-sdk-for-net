@@ -29,17 +29,17 @@ namespace Azure.Storage.Blobs.Tests
             return Task.FromResult(InstrumentClient(container.GetBlockBlobClient(resourceName ?? GetNewResourceName())));
         }
 
-        //protected override async Task<Stream> OpenWriteAsync(
-        //    BlockBlobClient client,
-        //    UploadTransferValidationOptions hashingOptions,
-        //    int internalBufferSize)
-        //{
-        //    return await client.OpenWriteAsync(true, new BlockBlobOpenWriteOptions
-        //    {
-        //        ValidationOptions = hashingOptions,
-        //        BufferSize = internalBufferSize
-        //    });
-        //}
+        protected override async Task<Stream> OpenWriteAsync(
+            BlockBlobClient client,
+            UploadTransferValidationOptions validationOptions,
+            int internalBufferSize)
+        {
+            return await client.OpenWriteAsync(true, new BlockBlobOpenWriteOptions
+            {
+                ValidationOptions = validationOptions,
+                BufferSize = internalBufferSize
+            });
+        }
 
         protected override async Task ParallelUploadAsync(
             BlockBlobClient client,

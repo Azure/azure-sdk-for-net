@@ -26,9 +26,10 @@ namespace Azure.Storage.Files.Shares
             ) : base(
                 position,
                 bufferSize,
-                progressHandler
+                progressHandler,
                 // TODO #27253
                 //hashingOptions
+                default
                 )
         {
             ValidateBufferSize(bufferSize);

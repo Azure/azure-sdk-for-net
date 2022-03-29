@@ -27,7 +27,8 @@ namespace Azure.Storage.Files.DataLake
             bool? closeEvent) : base(
                 position,
                 bufferSize,
-                progressHandler
+                progressHandler,
+                validationOptions: default
                 // TODO #27253
                 //hashingOptions
                 )

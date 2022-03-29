@@ -2789,9 +2789,8 @@ namespace Azure.Storage.Blobs.Specialized
                     progressHandler: options?.ProgressHandler,
                     blobHttpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
-                    tags: options?.Tags
-                    // TODO #27253
-                    //options?.TransactionalHashingOptions
+                    tags: options?.Tags,
+                    options?.ValidationOptions
                     );
             }
             catch (Exception ex)

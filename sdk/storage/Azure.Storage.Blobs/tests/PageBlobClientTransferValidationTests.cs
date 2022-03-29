@@ -34,17 +34,17 @@ namespace Azure.Storage.Blobs.Tests
             return pageBlob;
         }
 
-        //protected override async Task<Stream> OpenWriteAsync(
-        //    PageBlobClient client,
-        //    UploadTransferValidationOptions hashingOptions,
-        //    int internalBufferSize)
-        //{
-        //    return await client.OpenWriteAsync(false, 0, new PageBlobOpenWriteOptions
-        //    {
-        //        ValidationOptions = hashingOptions,
-        //        BufferSize = internalBufferSize
-        //    });
-        //}
+        protected override async Task<Stream> OpenWriteAsync(
+            PageBlobClient client,
+            UploadTransferValidationOptions hashingOptions,
+            int internalBufferSize)
+        {
+            return await client.OpenWriteAsync(false, 0, new PageBlobOpenWriteOptions
+            {
+                ValidationOptions = hashingOptions,
+                BufferSize = internalBufferSize
+            });
+        }
 
         protected override Task ParallelUploadAsync(
             PageBlobClient client,

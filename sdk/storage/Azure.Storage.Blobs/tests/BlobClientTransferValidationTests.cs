@@ -30,14 +30,17 @@ namespace Azure.Storage.Blobs.Tests
             return Task.FromResult(InstrumentClient(container.GetBlobClient(resourceName ?? GetNewResourceName())));
         }
 
-        //protected override Task<Stream> OpenWriteAsync(
-        //    BlobClient client,
-        //    UploadTransferValidationOptions hashingOptions,
-        //    int internalBufferSize)
-        //{
-        //    TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "BlobClient contains no definition for OpenWriteAsync.");
-        //    return Task.FromResult<Stream>(null);
-        //}
+        protected async override Task<Stream> OpenWriteAsync(
+            BlobClient client,
+            UploadTransferValidationOptions validationOptions,
+            int internalBufferSize)
+        {
+            return await client.OpenWriteAsync(true, new BlobOpenWriteOptions
+            {
+                ValidationOptions = validationOptions,
+                BufferSize = internalBufferSize
+            });
+        }
 
         protected override async Task ParallelUploadAsync(
             BlobClient client,

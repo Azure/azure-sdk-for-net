@@ -31,7 +31,7 @@ namespace Azure.Storage.Test.Shared
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, RecordedTestMode.Record)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -112,16 +112,16 @@ namespace Azure.Storage.Test.Shared
         //    DownloadTransferValidationOptions validationOptions,
         //    StorageTransferOptions transferOptions);
 
-        ///// <summary>
-        ///// Calls the open write method for the given resource client.
-        ///// </summary>
-        ///// <param name="client">Client to call open write on.</param>
-        ///// <param name="validationOptions">Validation options to use in the write stream.</param>
-        ///// <param name="internalBufferSize">Buffer size for the write stream.</param>
-        //protected abstract Task<Stream> OpenWriteAsync(
-        //    TResourceClient client,
-        //    UploadTransferValidationOptions validationOptions,
-        //    int internalBufferSize);
+        /// <summary>
+        /// Calls the open write method for the given resource client.
+        /// </summary>
+        /// <param name="client">Client to call open write on.</param>
+        /// <param name="validationOptions">Validation options to use in the write stream.</param>
+        /// <param name="internalBufferSize">Buffer size for the write stream.</param>
+        protected abstract Task<Stream> OpenWriteAsync(
+            TResourceClient client,
+            UploadTransferValidationOptions validationOptions,
+            int internalBufferSize);
 
         ///// <summary>
         ///// Calls the open read method for the given resource client.
@@ -435,87 +435,87 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region OpenWrite Tests
-        //[TestCaseSource("GetValidationAlgorithms")]
-        //public virtual async Task OpenWriteSuccessfulHashComputation(ValidationAlgorithm algorithm)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [TestCaseSource("GetValidationAlgorithms")]
+        public virtual async Task OpenWriteSuccessfulHashComputation(ValidationAlgorithm algorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const int streamBufferSize = Constants.KB; // this one needs to be 512 multiple for page blobs
-        //    const int dataSize = Constants.KB - 11; // odd number to get some variance
-        //    const int streamWrites = 10;
+            // Arrange
+            const int streamBufferSize = Constants.KB; // this one needs to be 512 multiple for page blobs
+            const int dataSize = Constants.KB - 11; // odd number to get some variance
+            const int streamWrites = 10;
 
-        //    var data = GetRandomBuffer(dataSize);
-        //    var validationOptions = new UploadTransferValidationOptions
-        //    {
-        //        Algorithm = algorithm
-        //    };
+            var data = GetRandomBuffer(dataSize);
+            var validationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = algorithm
+            };
 
-        //    // make pipeline assertion for checking checksum was present on upload
-        //    var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(algorithm));
-        //    var clientOptions = ClientBuilder.GetOptions();
-        //    clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(algorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
-        //    var client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        // should use dataSize instead of streamBufferSize but this gives 512 multiple and ends up irrelevant for this test
-        //        resourceLength: streamBufferSize * streamWrites,
-        //        createResource: true,
-        //        options: clientOptions);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                // should use dataSize instead of streamBufferSize but this gives 512 multiple and ends up irrelevant for this test
+                resourceLength: streamBufferSize * streamWrites,
+                createResource: true,
+                options: clientOptions);
 
-        //    // Act
-        //    var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
+            // Act
+            var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
-        //    // Assert
-        //    checksumPipelineAssertion.CheckRequest = true;
-        //    foreach (var _ in Enumerable.Range(0, streamWrites))
-        //    {
-        //        // triggers pipeline assertion
-        //        await writeStream.WriteAsync(data, 0, data.Length);
-        //    }
-        //}
+            // Assert
+            checksumPipelineAssertion.CheckRequest = true;
+            foreach (var _ in Enumerable.Range(0, streamWrites))
+            {
+                // triggers pipeline assertion
+                await writeStream.WriteAsync(data, 0, data.Length);
+            }
+        }
 
-        //[TestCaseSource("GetValidationAlgorithms")]
-        //public virtual async Task OpenWriteMismatchedHashThrows(ValidationAlgorithm algorithm)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [TestCaseSource("GetValidationAlgorithms")]
+        public virtual async Task OpenWriteMismatchedHashThrows(ValidationAlgorithm algorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const int streamBufferSize = Constants.KB; // this one needs to be 512 multiple for page blobs
-        //    const int dataSize = Constants.KB - 11; // odd number to get some variance
-        //    const int streamWrites = 10;
+            // Arrange
+            const int streamBufferSize = Constants.KB; // this one needs to be 512 multiple for page blobs
+            const int dataSize = Constants.KB - 11; // odd number to get some variance
+            const int streamWrites = 10;
 
-        //    var data = GetRandomBuffer(dataSize);
-        //    var validationOptions = new UploadTransferValidationOptions
-        //    {
-        //        Algorithm = algorithm
-        //    };
+            var data = GetRandomBuffer(dataSize);
+            var validationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = algorithm
+            };
 
-        //    // Tamper with stream contents in the pipeline to simulate silent failure in the transit layer
-        //    var clientOptions = ClientBuilder.GetOptions();
-        //    var tamperPolicy = new TamperStreamContentsPolicy();
-        //    clientOptions.AddPolicy(tamperPolicy, HttpPipelinePosition.PerCall);
+            // Tamper with stream contents in the pipeline to simulate silent failure in the transit layer
+            var clientOptions = ClientBuilder.GetOptions();
+            var tamperPolicy = new TamperStreamContentsPolicy();
+            clientOptions.AddPolicy(tamperPolicy, HttpPipelinePosition.PerCall);
 
-        //    var client = await GetResourceClientAsync(
-        //        disposingContainer.Container,
-        //        // should use dataSize instead of streamBufferSize but this gives 512 multiple and ends up irrelevant for this test
-        //        resourceLength: streamBufferSize * streamWrites,
-        //        createResource: true,
-        //        options: clientOptions);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                // should use dataSize instead of streamBufferSize but this gives 512 multiple and ends up irrelevant for this test
+                resourceLength: streamBufferSize * streamWrites,
+                createResource: true,
+                options: clientOptions);
 
-        //    // Act
-        //    var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
+            // Act
+            var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
-        //    // Assert
-        //    AssertWriteChecksumMismatch(async () =>
-        //    {
-        //        tamperPolicy.TransformRequestBody = true;
-        //        foreach (var _ in Enumerable.Range(0, streamWrites))
-        //        {
-        //            await writeStream.WriteAsync(data, 0, data.Length);
-        //        }
-        //    }, algorithm);
-        //}
+            // Assert
+            AssertWriteChecksumMismatch(async () =>
+            {
+                tamperPolicy.TransformRequestBody = true;
+                foreach (var _ in Enumerable.Range(0, streamWrites))
+                {
+                    await writeStream.WriteAsync(data, 0, data.Length);
+                }
+            }, algorithm);
+        }
         #endregion
 
         #region Parallel Upload Tests
