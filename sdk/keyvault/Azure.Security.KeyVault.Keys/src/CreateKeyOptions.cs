@@ -39,6 +39,16 @@ namespace Azure.Security.KeyVault.Keys
         public bool? Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the private key can be exported.
+        /// </summary>
+        public bool? Exportable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy rules under which the key can be exported.
+        /// </summary>
+        public KeyReleasePolicy ReleasePolicy { get; set; }
+
+        /// <summary>
         /// Gets a dictionary of tags with specific metadata about the key. Although this collection cannot be set, it can be modified
         ///  or initialized with a <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/how-to-initialize-a-dictionary-with-a-collection-initializer">collection initializer</see>.
         /// </summary>

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BastionHostListResult. </summary>
         internal BastionHostListResult()
         {
-            Value = new ChangeTrackingList<BastionHost>();
+            Value = new ChangeTrackingList<BastionHostData>();
         }
 
         /// <summary> Initializes a new instance of BastionHostListResult. </summary>
         /// <param name="value"> List of Bastion Hosts in a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal BastionHostListResult(IReadOnlyList<BastionHost> value, string nextLink)
+        internal BastionHostListResult(IReadOnlyList<BastionHostData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Bastion Hosts in a resource group. </summary>
-        public IReadOnlyList<BastionHost> Value { get; }
+        public IReadOnlyList<BastionHostData> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

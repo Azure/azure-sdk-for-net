@@ -92,7 +92,8 @@ namespace Azure.Storage.Sas
             string authorizedAadObjectId = default,
             string unauthorizedAadObjectId = default,
             string correlationId = default,
-            int? directoryDepth = default)
+            int? directoryDepth = default,
+            string encryptionScope = default)
             : base(
                 version: version,
                 services: services,
@@ -113,7 +114,8 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId: authorizedAadObjectId,
                 unauthorizedAadObjectId: unauthorizedAadObjectId,
                 correlationId: correlationId,
-                directoryDepth: directoryDepth)
+                directoryDepth: directoryDepth,
+                encryptionScope: encryptionScope)
         {
             KeyProperties = new UserDelegationKeyProperties
             {

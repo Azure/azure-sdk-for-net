@@ -33,8 +33,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         D2,
         [EnumMember(Value = "D3")]
         D3,
+        [EnumMember(Value = "SmallV3")]
+        SmallV3,
+        [EnumMember(Value = "MediumV3")]
+        MediumV3,
+        [EnumMember(Value = "LargeV3")]
+        LargeV3,
         [EnumMember(Value = "NestedSmall")]
         NestedSmall,
+        [EnumMember(Value = "NestedSmallLinux")]
+        NestedSmallLinux,
         [EnumMember(Value = "Default")]
         Default
     }
@@ -61,8 +69,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "D2";
                 case WorkerSizeOptions.D3:
                     return "D3";
+                case WorkerSizeOptions.SmallV3:
+                    return "SmallV3";
+                case WorkerSizeOptions.MediumV3:
+                    return "MediumV3";
+                case WorkerSizeOptions.LargeV3:
+                    return "LargeV3";
                 case WorkerSizeOptions.NestedSmall:
                     return "NestedSmall";
+                case WorkerSizeOptions.NestedSmallLinux:
+                    return "NestedSmallLinux";
                 case WorkerSizeOptions.Default:
                     return "Default";
             }
@@ -85,8 +101,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return WorkerSizeOptions.D2;
                 case "D3":
                     return WorkerSizeOptions.D3;
+                case "SmallV3":
+                    return WorkerSizeOptions.SmallV3;
+                case "MediumV3":
+                    return WorkerSizeOptions.MediumV3;
+                case "LargeV3":
+                    return WorkerSizeOptions.LargeV3;
                 case "NestedSmall":
                     return WorkerSizeOptions.NestedSmall;
+                case "NestedSmallLinux":
+                    return WorkerSizeOptions.NestedSmallLinux;
                 case "Default":
                     return WorkerSizeOptions.Default;
             }

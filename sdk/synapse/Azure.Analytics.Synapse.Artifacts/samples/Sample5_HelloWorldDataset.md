@@ -1,9 +1,7 @@
 ```C# Snippet:CreateDatasetClientPrep
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
-
 string storageName = "<my-storage-name>";
-
 string dataSetName = "Test-Dataset";
 ```
 
@@ -31,5 +29,5 @@ foreach (DatasetResource dataset in datasets)
 
 ```C# Snippet:DeleteDataset
 DatasetDeleteDatasetOperation deleteDatasetOperation = client.StartDeleteDataset(dataSetName);
-await deleteDatasetOperation.WaitForCompletionAsync();
+await deleteDatasetOperation.WaitForCompletionResponseAsync();
 ```

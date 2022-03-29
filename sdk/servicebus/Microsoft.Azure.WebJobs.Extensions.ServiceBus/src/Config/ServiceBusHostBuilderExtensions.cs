@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Net;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.ServiceBus;
@@ -73,6 +74,12 @@ namespace Microsoft.Extensions.Hosting
                     options.MaxConcurrentSessions = section.GetValue(
                         "SessionHandlerOptions:MaxConcurrentSessions",
                         options.MaxConcurrentSessions);
+
+                    var proxy = section.GetValue<string>("WebProxy");
+                    if (!string.IsNullOrEmpty(proxy))
+                    {
+                        options.WebProxy = new WebProxy(proxy);
+                    }
 
                     options.SessionIdleTimeout = section.GetValue("SessionHandlerOptions:MessageWaitTime", options.SessionIdleTimeout);
 

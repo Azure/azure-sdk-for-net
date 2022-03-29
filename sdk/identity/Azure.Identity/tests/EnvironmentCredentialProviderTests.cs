@@ -60,9 +60,7 @@ namespace Azure.Identity.Tests
         {
             using (new TestEnvVar(new()
             {
-                { "AZURE_CLIENT_ID", "mockclientid" },
-                { "AZURE_TENANT_ID", "mocktenantid" },
-                { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath" }
+                { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath" }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null }
             }))
             {
                 var provider = new EnvironmentCredential();
@@ -71,18 +69,84 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual("mockclientid", cred.ClientId);
                 Assert.AreEqual("mocktenantid", cred.TenantId);
 
-                var certProvider = cred.ClientCertificateProvider as ClientCertificateCredential.X509Certificate2FromFileProvider;
+                var certProvider = cred.ClientCertificateProvider as X509Certificate2FromFileProvider;
 
                 Assert.NotNull(certProvider);
                 Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
+                Assert.False(cred.Client._includeX5CClaimHeader);
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void CredentialConstructionClientCertificateWithCertificateChain()
+        {
+            using (new TestEnvVar(new()
+            {
+                { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath" }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", "true" }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null }
+            }))
+            {
+                var provider = new EnvironmentCredential();
+                var cred = provider.Credential as ClientCertificateCredential;
+                Assert.NotNull(cred);
+                Assert.AreEqual("mockclientid", cred.ClientId);
+                Assert.AreEqual("mocktenantid", cred.TenantId);
+
+                var certProvider = cred.ClientCertificateProvider as X509Certificate2FromFileProvider;
+
+                Assert.NotNull(certProvider);
+                Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
+                Assert.True(cred.Client._includeX5CClaimHeader);
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void CredentialConstructionClientCertificateWithoutCertificateChain()
+        {
+            using (new TestEnvVar(new()
+            {
+                { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath" }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", "false" }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null }
+            }))
+            {
+                var provider = new EnvironmentCredential();
+                var cred = provider.Credential as ClientCertificateCredential;
+                Assert.NotNull(cred);
+                Assert.AreEqual("mockclientid", cred.ClientId);
+                Assert.AreEqual("mocktenantid", cred.TenantId);
+
+                var certProvider = cred.ClientCertificateProvider as X509Certificate2FromFileProvider;
+
+                Assert.NotNull(certProvider);
+                Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
+                Assert.False(cred.Client._includeX5CClaimHeader);
             }
         }
 
         [Test]
         public void EnvironmentCredentialUnavailableException()
         {
-            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), null));
-            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            using (new TestEnvVar(new()
+            {
+                {"AZURE_CLIENT_ID", null},
+                {"AZURE_TENANT_ID", null},
+                {"AZURE_CLIENT_CERTIFICATE_PATH", null},
+                {"AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null},
+                {"AZURE_CLIENT_SEND_X5C", null },
+                {"AZURE_PASSWORD", null},
+                {"AZURE_CLIENT_SECRET", null},
+                {"IDENTITY_ENDPOINT", null},
+                {"IDENTITY_HEADER", null},
+                {"MSI_ENDPOINT", null},
+                {"MSI_SECRET", null},
+                {"IMDS_ENDPOINT", null},
+                {"IDENTITY_SERVER_THUMBPRINT", null}
+            }))
+            {
+                var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null)));
+                Assert.ThrowsAsync<CredentialUnavailableException>(async () =>
+                    await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            }
         }
 
         [Test]
@@ -107,16 +171,16 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<object[]> AssertCredentialUnavailableWhenEmptyStringEnvironmentSettings()
         {
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", string.Empty }, { "AZURE_CLIENT_SECRET", "mockclientsecret" }, { "AZURE_TENANT_ID", "mocktenantid" } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_SECRET", string.Empty }, { "AZURE_TENANT_ID", "mocktenantid" } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_SECRET", "mockclientsecret" }, { "AZURE_TENANT_ID", string.Empty } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", string.Empty }, { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertpath" }, { "AZURE_TENANT_ID", "mocktenantid" } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_CERTIFICATE_PATH", string.Empty }, { "AZURE_TENANT_ID", "mocktenantid" } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertpath" }, { "AZURE_TENANT_ID", string.Empty } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_USERNAME", string.Empty }, { "AZURE_PASSWORD", "mockpassword" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_ID", "mockclientid" } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_USERNAME", "mockusername" }, { "AZURE_PASSWORD", string.Empty }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_ID", "mockclientid" } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_USERNAME", "mockusername" }, { "AZURE_PASSWORD", "mockpassword" }, { "AZURE_TENANT_ID", string.Empty }, { "AZURE_CLIENT_ID", "mockclientid" } } };
-            yield return new object[] { new Dictionary<string, string> { { "AZURE_USERNAME", "mockusername" }, { "AZURE_PASSWORD", "mockpassword" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_ID", string.Empty } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", string.Empty }, { "AZURE_CLIENT_SECRET", "mockclientsecret" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_PASSWORD", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_SECRET", string.Empty }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_CERTIFICATE_PATH", null }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_SECRET", "mockclientsecret" }, { "AZURE_TENANT_ID", string.Empty }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_CERTIFICATE_PATH", null }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", string.Empty }, { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertpath" }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_CERTIFICATE_PATH", string.Empty }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_CERTIFICATE_PATH", "mockcertpath" }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "AZURE_TENANT_ID", string.Empty }, { "AZURE_PASSWORD", null }, { "AZURE_CLIENT_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_USERNAME", string.Empty }, { "AZURE_PASSWORD", "mockpassword" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_SECRET", null }, { "AZURE_CLIENT_CERTIFICATE_PATH", null }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_USERNAME", "mockusername" }, { "AZURE_PASSWORD", string.Empty }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_SECRET", null }, { "AZURE_CLIENT_CERTIFICATE_PATH", null }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_USERNAME", "mockusername" }, { "AZURE_PASSWORD", "mockpassword" }, { "AZURE_TENANT_ID", string.Empty }, { "AZURE_CLIENT_ID", "mockclientid" }, { "AZURE_CLIENT_SECRET", null }, { "AZURE_CLIENT_CERTIFICATE_PATH", null }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
+            yield return new object[] { new Dictionary<string, string> { { "AZURE_USERNAME", "mockusername" }, { "AZURE_PASSWORD", "mockpassword" }, { "AZURE_TENANT_ID", "mocktenantid" }, { "AZURE_CLIENT_ID", string.Empty }, { "AZURE_CLIENT_SECRET", null }, { "AZURE_CLIENT_CERTIFICATE_PATH", null }, { "AZURE_CLIENT_SEND_CERTIFICATE_CHAIN", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IMDS_ENDPOINT", null }, { "IDENTITY_SERVER_THUMBPRINT", null } } };
         }
 
         [NonParallelizable]
@@ -128,7 +192,7 @@ namespace Azure.Identity.Tests
             {
                 var credential = InstrumentClient(new EnvironmentCredential());
 
-                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)), string.Join(", ", environmentVars.Keys));
             }
         }
     }

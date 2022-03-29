@@ -1,5 +1,7 @@
 # Azure.Search.Documents Samples - Hello World (async)
 
+The following sample illustrates how to list repositories in a registry, and handle errors that might arise.
+
 ## Import the namespaces
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_Namespaces
@@ -15,10 +17,14 @@ Create a `ContainerRegistryClient` and send a request.
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+    });
 
-// Perform an operation
-AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+// Get the collection of repository names from the registry
+AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
 await foreach (string repository in repositories)
 {
     Console.WriteLine(repository);
@@ -32,13 +38,18 @@ All Container Registry operations will throw a RequestFailedException on failure
 ```C# Snippet:ContainerRegistry_Tests_Samples_HandleErrorsAsync
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-// Create an invalid ContainerRepositoryClient
+// Create a ContainerRepository class for an invalid repository
 string fakeRepositoryName = "doesnotexist";
-ContainerRepositoryClient client = new ContainerRepositoryClient(endpoint, fakeRepositoryName, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+    });
+ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
 try
 {
-    await client.GetPropertiesAsync();
+    await repository.GetPropertiesAsync();
 }
 catch (RequestFailedException ex) when (ex.Status == 404)
 {

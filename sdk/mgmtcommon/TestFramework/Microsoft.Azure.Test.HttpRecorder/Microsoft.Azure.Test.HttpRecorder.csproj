@@ -12,9 +12,13 @@
         1) Accomodate Newtonsoft.Json breaking change for .NET 4.5.2 and above
       ]]>
     </PackageReleaseNotes>
+
+    <PublicSign>false</PublicSign>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>$(RepoEngPath)\AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;net461;netstandard2.0;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net452;net461;netstandard2.0;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,7 +39,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   

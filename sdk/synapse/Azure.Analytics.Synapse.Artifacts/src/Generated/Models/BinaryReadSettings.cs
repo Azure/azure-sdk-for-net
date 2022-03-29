@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of BinaryReadSettings. </summary>
         /// <param name="type"> The read setting type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties"> Compression settings. </param>
         internal BinaryReadSettings(string type, IDictionary<string, object> additionalProperties, CompressionReadSettings compressionProperties) : base(type, additionalProperties)
         {

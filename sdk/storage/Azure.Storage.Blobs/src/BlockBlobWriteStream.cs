@@ -29,10 +29,15 @@ namespace Azure.Storage.Blobs
             IProgress<long> progressHandler,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            IDictionary<string, string> tags) : base(
+            IDictionary<string, string> tags
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions
+            ) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler
+                //hashingOptions
+                )
         {
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;
@@ -51,11 +56,28 @@ namespace Azure.Storage.Blobs
 
                 string blockId = Shared.StorageExtensions.GenerateBlockId(_position);
 
+                // Stage Block only supports LeaseId.
+                BlobRequestConditions conditions = null;
+                if (_conditions != null)
+                {
+                    conditions = new BlobRequestConditions
+                    {
+                        LeaseId = _conditions.LeaseId
+                    };
+                }
+
                 await _blockBlobClient.StageBlockInternal(
                     base64BlockId: blockId,
                     content: _buffer,
-                    transactionalContentHash: default,
-                    conditions: _conditions,
+                    // TODO #27253
+                    //new BlockBlobStageBlockOptions()
+                    //{
+                    //    TransactionalHashingOptions = _hashingOptions,
+                    //    Conditions = conditions,
+                    //    ProgressHandler = _progressHandler
+                    //},
+                    blockContentTransactionalMD5: default,
+                    conditions: conditions,
                     progressHandler: _progressHandler,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -77,6 +99,8 @@ namespace Azure.Storage.Blobs
                 tags: _tags,
                 conditions: _conditions,
                 accessTier: default,
+                immutabilityPolicy: default,
+                legalHold: default,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

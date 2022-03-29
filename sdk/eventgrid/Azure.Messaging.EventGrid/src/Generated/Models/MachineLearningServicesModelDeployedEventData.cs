@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.MachineLearningServices.ModelDeployed event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelDeployed event. </summary>
     public partial class MachineLearningServicesModelDeployedEventData
     {
         /// <summary> Initializes a new instance of MachineLearningServicesModelDeployedEventData. </summary>

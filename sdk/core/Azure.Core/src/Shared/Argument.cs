@@ -35,9 +35,9 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
 #if AZURE_NULLABLE
-        public static void AssertNotNull<T>([AllowNull, NotNull] T value, string name) where T : class?
+        public static void AssertNotNull<T>([AllowNull, NotNull] T value, string name)
 #else
-        public static void AssertNotNull<T>(T value, string name) where T : class
+        public static void AssertNotNull<T>(T value, string name)
 #endif
         {
             if (value is null)
@@ -177,6 +177,60 @@ namespace Azure.Core
             if (maximum.CompareTo(value) < 0)
             {
                 throw new ArgumentOutOfRangeException(name, "Value is greater than the maximum allowed.");
+            }
+        }
+
+        /// <summary>
+        /// Throws if <paramref name="value"/> has not been initialized; otherwise, returns <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> has not been initialized.</exception>
+#if AZURE_NULLABLE
+        public static T CheckNotNull<T>([AllowNull, NotNull] T value, string name) where T : class
+#else
+        public static T CheckNotNull<T>(T value, string name) where T : class
+#endif
+        {
+            AssertNotNull(value, name);
+            return value;
+        }
+
+        /// <summary>
+        /// Throws if <paramref name="value"/> is null or an empty string; otherwise, returns <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <exception cref="ArgumentException"><paramref name="value"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+#if AZURE_NULLABLE
+        public static string CheckNotNullOrEmpty([AllowNull, NotNull] string value, string name)
+#else
+        public static string CheckNotNullOrEmpty(string value, string name)
+#endif
+        {
+            AssertNotNullOrEmpty(value, name);
+            return value;
+        }
+
+        /// <summary>
+        /// Throws if <paramref name="value"/> is not null.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <param name="message">The error message.</param>
+        /// <exception cref="ArgumentException"><paramref name="value"/> is not null.</exception>
+#if AZURE_NULLABLE
+        public static void AssertNull<T>([AllowNull] T value, string name, [AllowNull] string message = null)
+#else
+#nullable enable
+        public static void AssertNull<T>(T value, string name, string? message = null)
+#nullable disable
+#endif
+        {
+            if (value is not null)
+            {
+                throw new ArgumentException(message ?? "Value must be null.", name);
             }
         }
     }

@@ -3,23 +3,17 @@
 
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests
 {
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
-        public ChatLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new ChatRecordedTestSanitizer();
+        public const string SanitizedUnsignedUserTokenValue = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
-        [OneTimeSetUp]
-        public void Setup()
+        public ChatLiveTestBase(bool isAsync) : base(isAsync)
         {
-            if (TestEnvironment.ShouldIgnoreTests)
-            {
-                Assert.Ignore("Chat tests are skipped " +
-                    "because chat package is not included in the TEST_PACKAGES_ENABLED variable");
-            }
+            JsonPathSanitizers.Add("$..token");
+            SanitizedHeaders.Add("x-ms-content-sha256");
         }
 
         /// <summary>
@@ -30,8 +24,8 @@ namespace Azure.Communication.Chat.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    TestEnvironment.LiveTestDynamicConnectionString,
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         /// <summary>
         /// Creates a <see cref="ChatClient" /> with a static token and instruments it to make use of
@@ -42,24 +36,17 @@ namespace Azure.Communication.Chat.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                token = ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue;
+                token = SanitizedUnsignedUserTokenValue;
             }
 
             CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
-            return InstrumentClient(new ChatClient(TestEnvironment.Endpoint, communicationTokenCredential,
-                CreateChatClientOptionsWithCorrelationVectorLogs()));
+            return InstrumentClient(new ChatClient(TestEnvironment.LiveTestDynamicEndpoint, communicationTokenCredential,
+                InstrumentClientOptions(new ChatClientOptions())));
         }
 
         protected ChatThreadClient GetInstrumentedChatThreadClient(ChatClient chatClient, string threadId)
         {
             return InstrumentClient(chatClient.GetChatThreadClient(threadId));
-        }
-
-        private ChatClientOptions CreateChatClientOptionsWithCorrelationVectorLogs()
-        {
-            ChatClientOptions chatClientOptions = new ChatClientOptions();
-            chatClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
-            return InstrumentClientOptions(chatClientOptions);
         }
     }
 }

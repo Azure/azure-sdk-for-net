@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <remarks>
         /// The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling 
-        /// slots available. For multi-instance Tasks, this must be 1.
+        /// slots available. For multi-instance Tasks, this property is not supported and must not be specified.
         /// </remarks>
         public int? RequiredSlots
         {

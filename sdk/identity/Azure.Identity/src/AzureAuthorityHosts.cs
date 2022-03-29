@@ -46,7 +46,7 @@ namespace Azure.Identity
 
         internal static string GetDefaultScope(Uri authorityHost)
         {
-            switch (authorityHost.ToString())
+            switch (authorityHost.AbsoluteUri)
             {
                 case AzurePublicCloudHostUrl:
                     return "https://management.core.windows.net//.default";

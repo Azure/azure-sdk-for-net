@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
     /// </summary>
     public static class ServerVersion
     {
+        public const string OneThree = "13";
         public const string OneTwo = "12";
         public const string OneOne = "11";
     }

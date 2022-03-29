@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The role scope. </summary>
     public readonly partial struct KeyVaultRoleScope : IEquatable<KeyVaultRoleScope>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="KeyVaultRoleScope"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleScope"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultRoleScope(string value)
         {

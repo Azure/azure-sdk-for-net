@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="objectId"> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </param>
         /// <param name="permissions"> Permissions the identity has for keys, secrets and certificates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="permissions"/> is null. </exception>
-        public AccessPolicyEntry(Guid tenantId, string objectId, Permissions permissions)
+        public AccessPolicyEntry(Guid tenantId, string objectId, AccessPermissions permissions)
         {
             if (objectId == null)
             {
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of AccessPolicyEntry. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="objectId"> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </param>
-        /// <param name="applicationId">  Application ID of the client making request on behalf of a principal. </param>
+        /// <param name="applicationId"> Application ID of the client making request on behalf of a principal. </param>
         /// <param name="permissions"> Permissions the identity has for keys, secrets and certificates. </param>
-        internal AccessPolicyEntry(Guid tenantId, string objectId, Guid? applicationId, Permissions permissions)
+        internal AccessPolicyEntry(Guid tenantId, string objectId, Guid? applicationId, AccessPermissions permissions)
         {
             TenantId = tenantId;
             ObjectId = objectId;
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Guid TenantId { get; set; }
         /// <summary> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </summary>
         public string ObjectId { get; set; }
-        /// <summary>  Application ID of the client making request on behalf of a principal. </summary>
+        /// <summary> Application ID of the client making request on behalf of a principal. </summary>
         public Guid? ApplicationId { get; set; }
         /// <summary> Permissions the identity has for keys, secrets and certificates. </summary>
-        public Permissions Permissions { get; set; }
+        public AccessPermissions Permissions { get; set; }
     }
 }

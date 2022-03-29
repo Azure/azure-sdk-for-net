@@ -2,7 +2,7 @@
     "Name": "ComputeNodeEndpointConfiguration",
     "ProtocolName": "Models.ComputeNodeEndpointConfiguration",
     "SummaryComment": "The endpoint configuration for the compute node.",
-    "IsConstructorPublic": false,
+    "ConstructorAccess": "internal",
     "Properties": [
         {
             "Key": {

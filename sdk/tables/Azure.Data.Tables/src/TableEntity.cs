@@ -58,8 +58,8 @@ namespace Azure.Data.Tables
         /// <value>An <see cref="ETag"/> containing the ETag value for the entity.</value>
         public ETag ETag
         {
-            get { return new ETag(GetString(TableConstants.PropertyNames.ETag)); }
-            set { _properties[TableConstants.PropertyNames.ETag] = value.ToString(); }
+            get { return new(GetString(TableConstants.PropertyNames.EtagOdata)); }
+            set { _properties[TableConstants.PropertyNames.EtagOdata] = value.ToString(); }
         }
 
         /// <summary>
@@ -237,14 +237,19 @@ namespace Azure.Data.Tables
             if (type != null)
             {
                 var valueType = value.GetType();
+                if (type == typeof(DateTime?) && valueType == typeof(DateTimeOffset))
+                {
+                    return ((DateTimeOffset)value).UtcDateTime;
+                }
+                if (type == typeof(DateTimeOffset?) && valueType == typeof(DateTime))
+                {
+                    return new DateTimeOffset((DateTime)value);
+                }
                 if (type == typeof(BinaryData) && valueType == typeof(byte[]))
                 {
-                    value = new BinaryData(value);
+                     return new BinaryData(value);
                 }
-                else
-                {
-                    EnforceType(type, valueType);
-                }
+                EnforceType(type, valueType);
             }
 
             return value;

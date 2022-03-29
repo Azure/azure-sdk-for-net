@@ -10,7 +10,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
     public class ServiceBusTriggerStrategyTests
     {
-        private const int BindingContractCount = 17;
+        private const int BindingContractCount = 22;
 
         [Test]
         public void GetStaticBindingContract_ReturnsExpectedValue()
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             userProps.Add(new KeyValuePair<string, object>("prop2", "value2"));
             var message = CreateMessageWithSystemProperties(applicationProperties: userProps);
 
-            var input = ServiceBusTriggerInput.CreateSingle(message);
+            var input = ServiceBusTriggerInput.CreateSingle(message, null, null);
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(message.SequenceNumber, bindingData["SequenceNumber"]);
             Assert.AreEqual(message.DeliveryCount, bindingData["DeliveryCount"]);
             Assert.AreSame(message.DeadLetterSource, bindingData["DeadLetterSource"]);
-            Assert.AreEqual(message.ExpiresAt, bindingData["ExpiresAtUtc"]);
-            Assert.AreEqual(message.EnqueuedTime, bindingData["EnqueuedTimeUtc"]);
+            Assert.AreEqual(message.ExpiresAt.DateTime, bindingData["ExpiresAtUtc"]);
+            Assert.AreEqual(message.EnqueuedTime.DateTime, bindingData["EnqueuedTimeUtc"]);
             Assert.AreSame(message.MessageId, bindingData["MessageId"]);
             Assert.AreSame(message.ContentType, bindingData["ContentType"]);
             Assert.AreSame(message.ReplyTo, bindingData["ReplyTo"]);
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 CreateMessageWithSystemProperties("Event 3"),
             };
 
-             var input = ServiceBusTriggerInput.CreateBatch(messages);
+             var input = ServiceBusTriggerInput.CreateBatch(messages, null, null);
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
@@ -167,6 +167,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["MessageSession"]);
             Assert.AreEqual(typeof(ServiceBusMessageActions), bindingDataContract["MessageActions"]);
             Assert.AreEqual(typeof(ServiceBusSessionMessageActions), bindingDataContract["SessionActions"]);
+            Assert.AreEqual(typeof(ServiceBusClient), bindingDataContract["Client"]);
         }
 
         private static ServiceBusReceivedMessage CreateMessageWithSystemProperties(string body = default, IDictionary<string, object> applicationProperties = default)

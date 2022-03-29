@@ -55,7 +55,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="name">The name of the policy definition.</param>
         /// <param name="type">The type of the resource
         /// (Microsoft.Authorization/policyDefinitions).</param>
-        public PolicyDefinition(string policyType = default(string), string mode = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), object metadata = default(object), IDictionary<string, ParameterDefinitionsValue> parameters = default(IDictionary<string, ParameterDefinitionsValue>), string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public PolicyDefinition(string policyType = default(string), string mode = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), object metadata = default(object), IDictionary<string, ParameterDefinitionsValue> parameters = default(IDictionary<string, ParameterDefinitionsValue>), string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             PolicyType = policyType;
             Mode = mode;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -140,6 +143,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

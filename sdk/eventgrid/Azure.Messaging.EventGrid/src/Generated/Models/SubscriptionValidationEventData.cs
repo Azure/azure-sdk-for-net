@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventGrid.SubscriptionValidationEvent. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventGrid.SubscriptionValidationEvent event. </summary>
     public partial class SubscriptionValidationEventData
     {
         /// <summary> Initializes a new instance of SubscriptionValidationEventData. </summary>

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the list of logical networks under a fabric.
         /// </summary>
         /// <remarks>
-        /// Lists all the logical networks of the Azure Site Recovery fabric
+        /// Lists all the logical networks of the Azure Site Recovery fabric.
         /// </remarks>
         /// <param name='fabricName'>
         /// Server Id.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the list of logical networks under a fabric.
         /// </summary>
         /// <remarks>
-        /// Lists all the logical networks of the Azure Site Recovery fabric
+        /// Lists all the logical networks of the Azure Site Recovery fabric.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

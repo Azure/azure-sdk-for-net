@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of unauthorized operations is not in allowed range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("UnauthorizedOperationsNotInAllowedRange")]
     public partial class UnauthorizedOperationsNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>

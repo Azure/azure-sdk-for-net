@@ -26,7 +26,7 @@ namespace NetApp.Tests.ResourceTests
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });                
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 //create account
                 ResourceUtils.CreateAccount(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
@@ -121,8 +121,8 @@ namespace NetApp.Tests.ResourceTests
             }
         }
 
-        [Fact(Skip ="BackupPolicy service side bug causes this to fail, re-enable when fixed")]
-        //[Fact]
+        //[Fact(Skip ="BackupPolicy service side bug causes this to fail, re-enable when fixed")]
+        [Fact]
         public void CreateVolumeWithBackupPolicy()
         {            
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -287,8 +287,7 @@ namespace NetApp.Tests.ResourceTests
                 Enabled = true,
                 DailyBackupsToKeep = 4,
                 WeeklyBackupsToKeep = 3,
-                MonthlyBackupsToKeep = 2,
-                YearlyBackupsToKeep = 1
+                MonthlyBackupsToKeep = 2
             };
 
             return testBackupPolicy;

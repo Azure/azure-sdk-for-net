@@ -44,6 +44,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// of URL path map path rule.</param>
         /// <param name="rewriteRuleSet">Rewrite rule set resource of URL path
         /// map path rule.</param>
+        /// <param name="loadDistributionPolicy">Load Distribution Policy
+        /// resource of URL path map path rule.</param>
         /// <param name="provisioningState">The provisioning state of the path
         /// rule resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -54,7 +56,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayPathRule(string id = default(string), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource redirectConfiguration = default(SubResource), SubResource rewriteRuleSet = default(SubResource), string provisioningState = default(string), SubResource firewallPolicy = default(SubResource), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayPathRule(string id = default(string), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource redirectConfiguration = default(SubResource), SubResource rewriteRuleSet = default(SubResource), SubResource loadDistributionPolicy = default(SubResource), string provisioningState = default(string), SubResource firewallPolicy = default(SubResource), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Paths = paths;
@@ -62,6 +64,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BackendHttpSettings = backendHttpSettings;
             RedirectConfiguration = redirectConfiguration;
             RewriteRuleSet = rewriteRuleSet;
+            LoadDistributionPolicy = loadDistributionPolicy;
             ProvisioningState = provisioningState;
             FirewallPolicy = firewallPolicy;
             Name = name;
@@ -107,6 +110,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.rewriteRuleSet")]
         public SubResource RewriteRuleSet { get; set; }
+
+        /// <summary>
+        /// Gets or sets load Distribution Policy resource of URL path map path
+        /// rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.loadDistributionPolicy")]
+        public SubResource LoadDistributionPolicy { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the path rule resource. Possible

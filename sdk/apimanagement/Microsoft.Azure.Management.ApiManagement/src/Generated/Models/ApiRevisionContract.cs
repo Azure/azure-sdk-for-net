@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -114,5 +115,32 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "isCurrent")]
         public bool? IsCurrent { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ApiRevision != null)
+            {
+                if (ApiRevision.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevision", 100);
+                }
+                if (ApiRevision.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiRevision", 1);
+                }
+            }
+            if (Description != null)
+            {
+                if (Description.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 256);
+                }
+            }
+        }
     }
 }

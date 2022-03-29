@@ -7,37 +7,27 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2e8b76dc-aade-482c-8dd3-9f8b8f9151ba"
+          "cd8a8fa3-15ff-49d8-8f69-5de8aac586c9"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.9.0.0"
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.12.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Mon, 22 Oct 2018 21:28:07 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "Set-Cookie": [
-          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
-        ],
-        "x-ms-request-charge": [
-          "1"
-        ],
         "x-ms-request-id": [
-          "75604f0f-74c2-4e6e-af9b-f81d15fe6b97"
+          "aa672ae2-4c5d-4353-a1dc-3394d45ef229"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -45,14 +35,20 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "Set-Cookie": [
+          "x-ms-gateway-slice=Production; path=/; secure; samesite=none; httponly"
+        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "b21fa2cd-315a-4c76-90bc-a41b46d09d4b"
+          "98b08478-6089-4728-be56-548104d0b1d6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181022T212807Z:b21fa2cd-315a-4c76-90bc-a41b46d09d4b"
+          "WESTUS2:20210612T015217Z:98b08478-6089-4728-be56-548104d0b1d6"
+        ],
+        "Date": [
+          "Sat, 12 Jun 2021 01:52:17 GMT"
         ],
         "Content-Length": [
           "82"

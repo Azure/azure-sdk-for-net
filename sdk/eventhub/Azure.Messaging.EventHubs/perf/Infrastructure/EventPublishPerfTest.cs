@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Perf
     ///
     /// <seealso cref="EventHubsPerfTest" />
     ///
-    public abstract class EventPublishPerfTest : EventHubsPerfTest
+    public abstract class EventPublishPerfTest<TOptions> : EventHubsPerfTest<TOptions> where TOptions : EventHubsOptions
     {
         /// <summary>The Event Hub to publish events to; shared across all concurrent instances of the scenario.</summary>
         private static EventHubScope s_scope;
@@ -28,8 +28,8 @@ namespace Azure.Messaging.EventHubs.Perf
         /// <summary>The body to use when creating events; shared across all concurrent instances of the scenario.</summary>
         private static ReadOnlyMemory<byte> s_eventBody;
 
-        /// <summary>The set of options to use when publishing events; shared across all concurrent instances of the scenario.</summary>
-        private static SendEventOptions s_sendOptions;
+        /// <summary>The set of options to use when publishing events.</summary>
+        private SendEventOptions _sendOptions;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventPublishPerfTest"/> class.
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public EventPublishPerfTest(SizeCountOptions options) : base(options)
+        public EventPublishPerfTest(TOptions options) : base(options)
         {
         }
 
@@ -53,12 +53,17 @@ namespace Azure.Messaging.EventHubs.Perf
 
             s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
-            s_sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
-            s_eventBody = EventGenerator.CreateRandomBody(Options.Size);
+            s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
+        }
+
+        public override async Task SetupAsync()
+        {
+            await base.SetupAsync();
+
+            _sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
 
             // Publish an empty event to force the connection and link to be established.
-
-            await s_producer.SendAsync(new[] { new EventData(Array.Empty<byte>()) }, s_sendOptions).ConfigureAwait(false);
+            await s_producer.SendAsync(new[] { new EventData(Array.Empty<byte>()) }, _sendOptions).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,16 +85,29 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
         ///
-        public async override Task RunAsync(CancellationToken cancellationToken)
+        public async override Task<int> RunBatchAsync(CancellationToken cancellationToken)
         {
-            // Generate a set of events using the same body.  This will result in publishing a set of events
-            // of equal size. The events will only differ by the id property that is assigned to them.
+            try
+            {
+                // Generate a set of events using the same body.  This will result in publishing a set of events
+                // of equal size. The events will only differ by the id property that is assigned to them.
 
-            await s_producer.SendAsync(
-                EventGenerator.CreateEventsFromBody(Options.Count, s_eventBody),
-                s_sendOptions,
-                cancellationToken
-            ).ConfigureAwait(false);
+                await s_producer.SendAsync(
+                    EventGenerator.CreateEventsFromBody(Options.BatchSize, s_eventBody),
+                    _sendOptions,
+                    cancellationToken
+                ).ConfigureAwait(false);
+
+                return Options.BatchSize;
+            }
+            catch (EventHubsException ex) when (cancellationToken.IsCancellationRequested && ex.IsTransient)
+            {
+                // If SendAsync() is canceled during a retry loop, the most recent exception is thrown.
+                // If the exception is transient, it should be wrapped in an OperationCancelledException
+                // which is ignored by the performance framework.
+
+                throw new OperationCanceledException("EventHubsException thrown during cancellation", ex);
+            }
         }
 
         /// <summary>

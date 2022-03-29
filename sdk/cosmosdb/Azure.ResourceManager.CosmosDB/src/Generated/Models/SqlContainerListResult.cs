@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of SqlContainerListResult. </summary>
         internal SqlContainerListResult()
         {
-            Value = new ChangeTrackingList<SqlContainerGetResults>();
+            Value = new ChangeTrackingList<SqlContainerData>();
         }
 
         /// <summary> Initializes a new instance of SqlContainerListResult. </summary>
         /// <param name="value"> List of containers and their properties. </param>
-        internal SqlContainerListResult(IReadOnlyList<SqlContainerGetResults> value)
+        internal SqlContainerListResult(IReadOnlyList<SqlContainerData> value)
         {
             Value = value;
         }
 
         /// <summary> List of containers and their properties. </summary>
-        public IReadOnlyList<SqlContainerGetResults> Value { get; }
+        public IReadOnlyList<SqlContainerData> Value { get; }
     }
 }

@@ -12,67 +12,64 @@ using System;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
-    public class CassandraResourcesOperationsTests
+    public class CassandraResourcesOperationsTests : IClassFixture<TestFixture>
     {
-        const string location = "EAST US 2";
+        public readonly TestFixture fixture;
 
-        // using an existing DB account, since Account provisioning takes 10-15 minutes
-        const string resourceGroupName = "CosmosDBResourceGroup3668";
-        const string databaseAccountName = "db8192";
-
-        const string keyspaceName = "keyspaceName2510";
-        const string keyspaceName2 = "keyspaceName22510";
-        const string tableName = "tableName2510";
-        const string cassandraThroughputType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings";
-        const int sampleThroughput = 700;
-
-        Dictionary<string, string> additionalProperties = new Dictionary<string, string>
+        public CassandraResourcesOperationsTests(TestFixture fixture)
         {
-            {"foo","bar" }
-        };
-        Dictionary<string, string> tags = new Dictionary<string, string>
-        {
-            {"key3","value3"},
-            {"key4","value4"}
-        };
+            this.fixture = fixture;
+        }
 
         [Fact]
         public void CassandraCRUDTests()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(this.GetType()))
             {
-                // Create client
-                CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler);        
+                fixture.Init(context);
 
-                bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
+                var cassandraClient = this.fixture.CosmosDBManagementClient.CassandraResources;
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Cassandra);
 
-                if (!isDatabaseNameExists)
-                {
-                    return;
-                }
+                const string keyspaceName = "keyspaceName2510";
+                const string keyspaceName2 = "keyspaceName22510";
+                const string tableName = "tableName2510";
+                const string cassandraThroughputType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings";
+                const int sampleThroughput = 700;
 
-                CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters
+                var cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters
                 {
                     Resource = new CassandraKeyspaceResource { Id = keyspaceName },
                     Options = new CreateUpdateOptions()
                 };
 
-                CassandraKeyspaceGetResults cassandraKeyspaceGetResults = cosmosDBManagementClient.CassandraResources.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraKeyspaceCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                var cassandraKeyspaceGetResults = cassandraClient.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName,
+                    cassandraKeyspaceCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(cassandraKeyspaceGetResults);
                 Assert.Equal(keyspaceName, cassandraKeyspaceGetResults.Name);
 
-                CassandraKeyspaceGetResults cassandraKeyspaceGetResults1 = cosmosDBManagementClient.CassandraResources.GetCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName).GetAwaiter().GetResult().Body;
+                var cassandraKeyspaceGetResults1 = cassandraClient.GetCassandraKeyspaceWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(cassandraKeyspaceGetResults1);
                 Assert.Equal(keyspaceName, cassandraKeyspaceGetResults1.Name);
 
                 VerifyEqualCassandraDatabases(cassandraKeyspaceGetResults, cassandraKeyspaceGetResults1);
 
-                CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters2 = new CassandraKeyspaceCreateUpdateParameters
+                var cassandraKeyspaceCreateUpdateParameters2 = new CassandraKeyspaceCreateUpdateParameters
                 {
-                    Location = location,
-                    Tags = tags,
+                    Location = this.fixture.Location,
+                    Tags = new Dictionary<string, string>
+                {
+                    {"key3","value3"},
+                    {"key4","value4"}
+                },
                     Resource = new CassandraKeyspaceResource { Id = keyspaceName2 },
                     Options = new CreateUpdateOptions
                     {
@@ -80,20 +77,32 @@ namespace CosmosDB.Tests.ScenarioTests
                     }
                 };
 
-                CassandraKeyspaceGetResults cassandraKeyspaceGetResults2 = cosmosDBManagementClient.CassandraResources.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName2, cassandraKeyspaceCreateUpdateParameters2).GetAwaiter().GetResult().Body;
+                var cassandraKeyspaceGetResults2 = cassandraClient.CreateUpdateCassandraKeyspaceWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName2,
+                    cassandraKeyspaceCreateUpdateParameters2
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(cassandraKeyspaceGetResults2);
                 Assert.Equal(keyspaceName2, cassandraKeyspaceGetResults2.Name);
 
-                IEnumerable<CassandraKeyspaceGetResults> cassandraKeyspaces = cosmosDBManagementClient.CassandraResources.ListCassandraKeyspacesWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                var cassandraKeyspaces = cassandraClient.ListCassandraKeyspacesWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(cassandraKeyspaces);
 
-                ThroughputSettingsGetResults throughputSettingsGetResults = cosmosDBManagementClient.CassandraResources.GetCassandraKeyspaceThroughputWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName2).GetAwaiter().GetResult().Body;
+                var throughputSettingsGetResults = cassandraClient.GetCassandraKeyspaceThroughputWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName2
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(throughputSettingsGetResults);
                 Assert.NotNull(throughputSettingsGetResults.Name);
                 Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
                 Assert.Equal(cassandraThroughputType, throughputSettingsGetResults.Type);
 
-                CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters
+                var cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters
                 {
                     Resource = new CassandraTableResource
                     {
@@ -108,23 +117,50 @@ namespace CosmosDB.Tests.ScenarioTests
                     Options = new CreateUpdateOptions()
                 };
 
-                CassandraTableGetResults cassandraTableGetResults = cosmosDBManagementClient.CassandraResources.CreateUpdateCassandraTableWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName, cassandraTableCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                CassandraTableGetResults cassandraTableGetResults = cassandraClient.CreateUpdateCassandraTableWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName,
+                    tableName,
+                    cassandraTableCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(cassandraTableGetResults);
                 VerifyCassandraTableCreation(cassandraTableGetResults, cassandraTableCreateUpdateParameters);
 
-                IEnumerable<CassandraTableGetResults> cassandraTables = cosmosDBManagementClient.CassandraResources.ListCassandraTablesWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName).GetAwaiter().GetResult().Body;
+                var cassandraTables = cassandraClient.ListCassandraTablesWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    keyspaceName
+                ).GetAwaiter().GetResult().Body;
                 Assert.NotNull(cassandraTables);
 
                 foreach (CassandraTableGetResults cassandraTable in cassandraTables)
                 {
-                    cosmosDBManagementClient.CassandraResources.DeleteCassandraTableWithHttpMessagesAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraTable.Name);
+                    cassandraClient.DeleteCassandraTableWithHttpMessagesAsync(
+                        this.fixture.ResourceGroupName,
+                        databaseAccountName,
+                        keyspaceName,
+                        cassandraTable.Name
+                    );
                 }
 
                 foreach (CassandraKeyspaceGetResults cassandraKeyspace in cassandraKeyspaces)
                 {
-                    cosmosDBManagementClient.CassandraResources.DeleteCassandraKeyspaceWithHttpMessagesAsync(resourceGroupName, databaseAccountName, cassandraKeyspace.Name);
+                    cassandraClient.DeleteCassandraKeyspaceWithHttpMessagesAsync(
+                        this.fixture.ResourceGroupName,
+                        databaseAccountName,
+                        cassandraKeyspace.Name
+                    );
                 }
             }
+        }
+
+        private void VerifyEqualCassandraDatabases(CassandraKeyspaceGetResults expectedValue, CassandraKeyspaceGetResults actualValue)
+        {
+            Assert.Equal(expectedValue.Resource.Id, actualValue.Resource.Id);
+            Assert.Equal(expectedValue.Resource._rid, actualValue.Resource._rid);
+            Assert.Equal(expectedValue.Resource._ts, actualValue.Resource._ts);
+            Assert.Equal(expectedValue.Resource._etag, actualValue.Resource._etag);
         }
 
         private void VerifyCassandraTableCreation(CassandraTableGetResults cassandraTableGetResults, CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters)
@@ -148,14 +184,6 @@ namespace CosmosDB.Tests.ScenarioTests
             {
                 Assert.Equal(cassandraTableGetResults.Resource.Schema.PartitionKeys[i].Name, cassandraTableCreateUpdateParameters.Resource.Schema.PartitionKeys[i].Name);
             }
-        }
-
-        private void VerifyEqualCassandraDatabases(CassandraKeyspaceGetResults expectedValue, CassandraKeyspaceGetResults actualValue)
-        {
-            Assert.Equal(expectedValue.Resource.Id, actualValue.Resource.Id);
-            Assert.Equal(expectedValue.Resource._rid, actualValue.Resource._rid);
-            Assert.Equal(expectedValue.Resource._ts, actualValue.Resource._ts);
-            Assert.Equal(expectedValue.Resource._etag, actualValue.Resource._etag);
         }
     }
 }

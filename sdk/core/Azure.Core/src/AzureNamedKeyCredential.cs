@@ -62,7 +62,7 @@ namespace Azure
         /// <param name="name">The name of the <paramref name="key"/>.</param>
         /// <param name="key">The key to use for authenticating with the Azure service.</param>
         /// <example>
-        /// <code snippet="Snippet:AzureNamedKeyCredential_Deconstruct">
+        /// <code snippet="Snippet:AzureNamedKeyCredential_Deconstruct" language="csharp">
         /// var credential = new AzureNamedKeyCredential(&quot;SomeName&quot;, &quot;SomeKey&quot;);
         ///
         /// (string name, string key) = credential;

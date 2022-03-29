@@ -33,9 +33,20 @@ namespace Azure.Core.Pipeline
                 return _stream.Read(buffer, offset, count);
             }
             // We dispose stream on timeout so catch and check if cancellation token was cancelled
-            catch (ObjectDisposedException)
+            catch (IOException ex)
             {
-                source.Token.ThrowIfCancellationRequested();
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+                throw;
+            }
+            // We dispose stream on timeout so catch and check if cancellation token was cancelled
+            catch (ObjectDisposedException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+                throw;
+            }
+            catch (OperationCanceledException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
                 throw;
             }
             finally
@@ -54,9 +65,20 @@ namespace Azure.Core.Pipeline
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
             }
             // We dispose stream on timeout so catch and check if cancellation token was cancelled
-            catch (ObjectDisposedException)
+            catch (IOException ex)
             {
-                source.Token.ThrowIfCancellationRequested();
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+                throw;
+            }
+            // We dispose stream on timeout so catch and check if cancellation token was cancelled
+            catch (ObjectDisposedException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+                throw;
+            }
+            catch (OperationCanceledException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
                 throw;
             }
             finally

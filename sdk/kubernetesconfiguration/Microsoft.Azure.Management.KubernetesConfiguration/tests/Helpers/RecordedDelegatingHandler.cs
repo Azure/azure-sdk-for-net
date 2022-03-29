@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace KubernetesConfiguration.Tests.Helpers
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.Helpers
 {
     using System.Net.Http;
     using System.Threading;

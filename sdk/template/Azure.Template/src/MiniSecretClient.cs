@@ -32,7 +32,7 @@ namespace Azure.Template
         public MiniSecretClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options): this(
             new ClientDiagnostics(options),
             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
-            endpoint.ToString(),
+            endpoint.AbsoluteUri,
             options.Version)
         {
         }

@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Quantum</PackageId>
 		<Description>Microsoft Azure Management Quantum Library</Description>
-		<Version>1.0.0-beta.1</Version>
+		<Version>1.0.0-beta.2</Version>
 		<AssemblyName>Microsoft.Azure.Management.Quantum</AssemblyName>
 		<PackageTags>Quantum management;Quantum;</PackageTags>
 		<PackageReleaseNotes>

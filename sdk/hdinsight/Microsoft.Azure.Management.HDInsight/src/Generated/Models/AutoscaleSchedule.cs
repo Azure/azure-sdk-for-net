@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// rule</param>
         /// <param name="timeAndCapacity">Time and capacity for a
         /// schedule-based autoscale rule</param>
-        public AutoscaleSchedule(IList<DaysOfWeek?> days = default(IList<DaysOfWeek?>), AutoscaleTimeAndCapacity timeAndCapacity = default(AutoscaleTimeAndCapacity))
+        public AutoscaleSchedule(IList<string> days = default(IList<string>), AutoscaleTimeAndCapacity timeAndCapacity = default(AutoscaleTimeAndCapacity))
         {
             Days = days;
             TimeAndCapacity = timeAndCapacity;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Gets or sets days of the week for a schedule-based autoscale rule
         /// </summary>
         [JsonProperty(PropertyName = "days")]
-        public IList<DaysOfWeek?> Days { get; set; }
+        public IList<string> Days { get; set; }
 
         /// <summary>
         /// Gets or sets time and capacity for a schedule-based autoscale rule

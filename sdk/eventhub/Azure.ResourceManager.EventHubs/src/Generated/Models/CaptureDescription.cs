@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="sizeLimitInBytes"> The size window defines the amount of data built up in your Event Hub before an capture operation, value should be between 10485760 to 524288000 bytes. </param>
         /// <param name="destination"> Properties of Destination where capture will be stored. (Storage Account, Blob Names). </param>
         /// <param name="skipEmptyArchives"> A value that indicates whether to Skip Empty Archives. </param>
-        internal CaptureDescription(bool? enabled, EncodingCaptureDescription? encoding, int? intervalInSeconds, int? sizeLimitInBytes, Destination destination, bool? skipEmptyArchives)
+        internal CaptureDescription(bool? enabled, EncodingCaptureDescription? encoding, int? intervalInSeconds, int? sizeLimitInBytes, EventHubDestination destination, bool? skipEmptyArchives)
         {
             Enabled = enabled;
             Encoding = encoding;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> The size window defines the amount of data built up in your Event Hub before an capture operation, value should be between 10485760 to 524288000 bytes. </summary>
         public int? SizeLimitInBytes { get; set; }
         /// <summary> Properties of Destination where capture will be stored. (Storage Account, Blob Names). </summary>
-        public Destination Destination { get; set; }
+        public EventHubDestination Destination { get; set; }
         /// <summary> A value that indicates whether to Skip Empty Archives. </summary>
         public bool? SkipEmptyArchives { get; set; }
     }

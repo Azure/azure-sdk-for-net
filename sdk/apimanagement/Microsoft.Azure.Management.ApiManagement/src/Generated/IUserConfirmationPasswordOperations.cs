@@ -36,6 +36,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// User identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
+        /// <param name='appType'>
+        /// Determines the type of application which send the create user
+        /// request. Default is legacy publisher portal. Possible values
+        /// include: 'portal', 'developerPortal'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -48,6 +53,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SendWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SendWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, string appType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

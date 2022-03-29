@@ -19,21 +19,21 @@ namespace Microsoft.Azure.Management.TrafficManager
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Network", "Endpoints", "2018-04-01"),
-                new Tuple<string, string, string>("Network", "GeographicHierarchies", "2018-04-01"),
-                new Tuple<string, string, string>("Network", "HeatMap", "2018-04-01"),
-                new Tuple<string, string, string>("Network", "Profiles", "2018-04-01"),
-                new Tuple<string, string, string>("Network", "TrafficManagerUserMetricsKeys", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "Endpoints", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "GeographicHierarchies", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "HeatMap", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "Profiles", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "TrafficManagerUserMetricsKeys", "2018-08-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/trafficmanager/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --opt-in-extensible-enums --csharp-sdks-folder=D:\\Source\\tatlicioglu\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/trafficmanager/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --csharp-sdks-folder=D:\\GitHub\\Repos\\AllenCalMinChild\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "07af8ada3a9463d813e3b9271160451e49b2349d";
+      public static readonly String GithubCommidId = "3f1e770aa89c7d306d7cdb4f7aa852819d2f9fa8";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

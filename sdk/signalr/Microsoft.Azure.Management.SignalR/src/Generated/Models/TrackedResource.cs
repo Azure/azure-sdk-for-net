@@ -36,9 +36,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource - e.g.
         /// "Microsoft.SignalRService/SignalR"</param>
-        /// <param name="location">The GEO location of the SignalR service.
-        /// e.g. West US | East US | North Central US | South Central
-        /// US.</param>
+        /// <param name="location">The GEO location of the resource. e.g. West
+        /// US | East US | North Central US | South Central US.</param>
         /// <param name="tags">Tags of the service which is a list of key value
         /// pairs that describe the resource.</param>
         public TrackedResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
@@ -55,8 +54,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the GEO location of the SignalR service. e.g. West US
-        /// | East US | North Central US | South Central US.
+        /// Gets or sets the GEO location of the resource. e.g. West US | East
+        /// US | North Central US | South Central US.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <Description>This is a dummy project used to restore nuget packages used for doc generation</Description>
     <AssemblyTitle>Doc generation Packages</AssemblyTitle>
   </PropertyGroup>
@@ -8,6 +8,7 @@
     <ECMA2YmlVersion>1.0.644-alpha</ECMA2YmlVersion>
     <PopImportVersion>1.0.0</PopImportVersion>
     <NuGetPackageRoot>$(UserProfile)\.nuget\packages</NuGetPackageRoot>
+    <NuGetPackageRoot Condition="'$(NUGET_PACKAGES)' != ''">$(NUGET_PACKAGES)</NuGetPackageRoot>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DocAsCode.ECMA2Yaml" Version="$(ECMA2YmlVersion)" />

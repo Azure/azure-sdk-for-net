@@ -25,5 +25,23 @@
             SasKey = key.SasKey;
             AccountKey = key.AccountKey;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureBlobFileSystemConfiguration"/> class.
+        /// </summary>
+        /// <param name='accountName'>The Azure Storage account name.</param>
+        /// <param name='containerName'>The Azure Blob Storage Container name.</param>
+        /// <param name='relativeMountPath'>The relative path on the compute node where the file system will be mounted.</param>
+        /// <param name='identityReference'>The managed identity to use to authenticate with Azure Storage.</param>
+        /// <param name='blobfuseOptions'>Additional command line options to pass to the mount command.</param>
+        public AzureBlobFileSystemConfiguration(
+            string accountName,
+            string containerName,
+            string relativeMountPath,
+            ComputeNodeIdentityReference identityReference,
+            string blobfuseOptions = default(string)) : this(accountName, containerName, relativeMountPath, blobfuseOptions: blobfuseOptions)
+        {
+            IdentityReference = identityReference;
+        }
     }
 }

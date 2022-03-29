@@ -7,26 +7,27 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment script execution logs. </summary>
-    public partial class ScriptLogsList
+    internal partial class ScriptLogsList
     {
         /// <summary> Initializes a new instance of ScriptLogsList. </summary>
         internal ScriptLogsList()
         {
-            Value = new ChangeTrackingList<ScriptLog>();
+            Value = new ChangeTrackingList<ScriptLogData>();
         }
 
         /// <summary> Initializes a new instance of ScriptLogsList. </summary>
         /// <param name="value"> Deployment scripts logs. </param>
-        internal ScriptLogsList(IReadOnlyList<ScriptLog> value)
+        internal ScriptLogsList(IReadOnlyList<ScriptLogData> value)
         {
             Value = value;
         }
 
         /// <summary> Deployment scripts logs. </summary>
-        public IReadOnlyList<ScriptLog> Value { get; }
+        public IReadOnlyList<ScriptLogData> Value { get; }
     }
 }

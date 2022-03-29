@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Lists the networks available for a fabric.
         /// </remarks>
         /// <param name='fabricName'>
-        /// Fabric name
+        /// Fabric name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the list of networks. View-only API.
         /// </summary>
         /// <remarks>
-        /// Lists the networks available in a vault
+        /// Lists the networks available in a vault.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the list of networks. View-only API.
         /// </summary>
         /// <remarks>
-        /// Lists the networks available in a vault
+        /// Lists the networks available in a vault.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

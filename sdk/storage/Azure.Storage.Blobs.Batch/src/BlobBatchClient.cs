@@ -150,7 +150,7 @@ namespace Azure.Storage.Blobs.Specialized
                 BlobServiceClientInternals.GetAuthenticationPolicy(client),
                 _version);
 
-            (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients();
+            (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients(_uri);
             _serviceRestClient = serviceRestClient;
             _containerRestClient = containerRestClient;
 
@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs.Specialized
                 BlobServiceClientInternals.GetAuthenticationPolicy(blobServiceClient),
                 _version);
 
-            (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients();
+            (ServiceRestClient serviceRestClient, ContainerRestClient containerRestClient) = BuildRestClients(blobServiceClient.Uri);
             _serviceRestClient = serviceRestClient;
             _containerRestClient = containerRestClient;
             _containerName = client.Name;
@@ -224,22 +224,18 @@ namespace Azure.Storage.Blobs.Specialized
                 authenticationPolicy);
         }
 
-        private (ServiceRestClient ServiceClient, ContainerRestClient ContainerClient) BuildRestClients()
+        private (ServiceRestClient ServiceClient, ContainerRestClient ContainerClient) BuildRestClients(Uri serviceUri)
         {
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(_uri);
-            uriBuilder.BlobContainerName = null;
-            uriBuilder.BlobName = null;
-
             ServiceRestClient serviceRestClient = new ServiceRestClient(
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
-                url: uriBuilder.ToUri().ToString(),
+                url: serviceUri.AbsoluteUri,
                 version: _version.ToVersionString());
 
             ContainerRestClient containerRestClient = new ContainerRestClient(
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
-                url: uriBuilder.ToUri().ToString(),
+                url: serviceUri.AbsoluteUri,
                 version: _version.ToVersionString());
 
             return (serviceRestClient, containerRestClient);
@@ -658,8 +654,8 @@ namespace Azure.Storage.Blobs.Specialized
         #region DeleteBlobs
         /// <summary>
         /// The DeleteBlobs operation marks the specified blobs for deletion.
-        /// The blobs are later deleted during garbage collection.  All of the
-        /// deletions are sent as a single batched request.
+        /// The blobs are later deleted during garbage collection which could take
+        /// several minutes.  All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
@@ -691,7 +687,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The DeleteBlobsAsync operation marks the specified blobs for
-        /// deletion.  The blobs are later deleted during garbage collection.
+        /// deletion.  The blobs are later deleted during garbage collection
+        /// which could take several minutes.
         /// All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="cancellationToken">
@@ -724,7 +721,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The DeleteBlobsAsync operation marks the specified blobs for
-        /// deletion.  The blobs are later deleted during garbage collection.
+        /// deletion.  The blobs are later deleted during garbage collection
+        /// which could take several minutes.
         /// All of the deletions are sent as a single batched request.
         /// </summary>
         /// <param name="blobUris">URIs of the blobs to delete.</param>

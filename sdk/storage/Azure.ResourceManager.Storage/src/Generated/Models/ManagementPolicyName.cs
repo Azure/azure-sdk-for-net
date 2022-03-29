@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The ManagementPolicyName. </summary>
-    public readonly partial struct ManagementPolicyName : IEquatable<ManagementPolicyName>
+    internal readonly partial struct ManagementPolicyName : IEquatable<ManagementPolicyName>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagementPolicyName"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagementPolicyName(string value)
         {

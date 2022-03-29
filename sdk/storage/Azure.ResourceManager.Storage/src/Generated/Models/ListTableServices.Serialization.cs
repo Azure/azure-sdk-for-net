@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ListTableServices
+    internal partial class ListTableServices
     {
         internal static ListTableServices DeserializeListTableServices(JsonElement element)
         {
-            Optional<IReadOnlyList<TableServiceProperties>> value = default;
+            Optional<IReadOnlyList<TableServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TableServiceProperties> array = new List<TableServiceProperties>();
+                    List<TableServiceData> array = new List<TableServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TableServiceProperties.DeserializeTableServiceProperties(item));
+                        array.Add(TableServiceData.DeserializeTableServiceData(item));
                     }
                     value = array;
                     continue;

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
     public static partial class StorageAccountsOperationsExtensions
     {
             /// <summary>
-            /// Lists all the storage accounts in a Data Box Edge/Data Box Gateway device.
+            /// Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             }
 
             /// <summary>
-            /// Lists all the storage accounts in a Data Box Edge/Data Box Gateway device.
+            /// Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             }
 
             /// <summary>
-            /// Lists all the storage accounts in a Data Box Edge/Data Box Gateway device.
+            /// Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             }
 
             /// <summary>
-            /// Lists all the storage accounts in a Data Box Edge/Data Box Gateway device.
+            /// Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

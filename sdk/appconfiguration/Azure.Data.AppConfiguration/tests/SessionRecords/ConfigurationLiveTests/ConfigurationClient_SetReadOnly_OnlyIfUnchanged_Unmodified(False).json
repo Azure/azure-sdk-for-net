@@ -65,6 +65,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "Content-Length": "0",
         "Date": "Mon, 08 Feb 2021 19:13:45 GMT",
         "If-Match": "\u0022F9rLCu2Igv7zJw9ZIk8ywADv2yO\u0022",
         "Sync-Token": "zAJw6V16=MDozIzY4NzEyMzQ=",

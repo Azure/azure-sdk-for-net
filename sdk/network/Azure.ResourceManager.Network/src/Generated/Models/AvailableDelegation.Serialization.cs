@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,28 +16,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableDelegation DeserializeAvailableDelegation(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> type = default;
             Optional<string> serviceName = default;
             Optional<IReadOnlyList<string>> actions = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("serviceName"))
                 {
                     serviceName = property.Value.GetString();
@@ -57,8 +44,28 @@ namespace Azure.ResourceManager.Network.Models
                     actions = array;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new AvailableDelegation(name.Value, id.Value, type.Value, serviceName.Value, Optional.ToList(actions));
+            return new AvailableDelegation(id, name, type, systemData, serviceName.Value, Optional.ToList(actions));
         }
     }
 }

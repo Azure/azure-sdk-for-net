@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        internal WhatIfChange(string resourceId, ChangeType changeType)
+        internal WhatIfChange(string resourceId, WhatIfChangeType changeType)
         {
             if (resourceId == null)
             {
@@ -33,13 +33,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of WhatIfChange. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
+        /// <param name="unsupportedReason"> The explanation about why the resource is unsupported by What-If. </param>
         /// <param name="before"> The snapshot of the resource before the deployment is executed. </param>
         /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to resource properties. </param>
-        internal WhatIfChange(string resourceId, ChangeType changeType, object before, object after, IReadOnlyList<WhatIfPropertyChange> delta)
+        internal WhatIfChange(string resourceId, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta)
         {
             ResourceId = resourceId;
             ChangeType = changeType;
+            UnsupportedReason = unsupportedReason;
             Before = before;
             After = after;
             Delta = delta;
@@ -48,11 +50,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Resource ID. </summary>
         public string ResourceId { get; }
         /// <summary> Type of change that will be made to the resource when the deployment is executed. </summary>
-        public ChangeType ChangeType { get; }
+        public WhatIfChangeType ChangeType { get; }
+        /// <summary> The explanation about why the resource is unsupported by What-If. </summary>
+        public string UnsupportedReason { get; }
         /// <summary> The snapshot of the resource before the deployment is executed. </summary>
-        public object Before { get; }
+        public BinaryData Before { get; }
         /// <summary> The predicted snapshot of the resource after the deployment is executed. </summary>
-        public object After { get; }
+        public BinaryData After { get; }
         /// <summary> The predicted changes to resource properties. </summary>
         public IReadOnlyList<WhatIfPropertyChange> Delta { get; }
     }

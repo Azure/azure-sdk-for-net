@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         public const string Default = "Default";
         public const string PointInTimeRestore = "PointInTimeRestore";
         public const string Replica = "Replica";
+        public const string GeoRestore = "GeoRestore";
     }
 }

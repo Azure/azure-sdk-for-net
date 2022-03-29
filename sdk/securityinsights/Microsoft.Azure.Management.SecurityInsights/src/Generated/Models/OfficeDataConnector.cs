@@ -33,16 +33,21 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the OfficeDataConnector class.
         /// </summary>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
-        /// <param name="etag">Etag of the azure resource</param>
         /// <param name="tenantId">The tenant id to connect to, and get the
         /// data from.</param>
         /// <param name="dataTypes">The available data types for the
         /// connector.</param>
-        public OfficeDataConnector(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string tenantId = default(string), OfficeDataConnectorDataTypes dataTypes = default(OfficeDataConnectorDataTypes))
-            : base(id, name, type, etag)
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        /// <param name="etag">Etag of the azure resource</param>
+        public OfficeDataConnector(string tenantId, OfficeDataConnectorDataTypes dataTypes, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string))
+            : base(id, name, type, systemData, etag)
         {
             TenantId = tenantId;
             DataTypes = dataTypes;
@@ -66,5 +71,26 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonProperty(PropertyName = "properties.dataTypes")]
         public OfficeDataConnectorDataTypes DataTypes { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TenantId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TenantId");
+            }
+            if (DataTypes == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DataTypes");
+            }
+            if (DataTypes != null)
+            {
+                DataTypes.Validate();
+            }
+        }
     }
 }

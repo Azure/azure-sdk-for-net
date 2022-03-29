@@ -82,11 +82,6 @@ namespace Microsoft.Azure.Management.Security
         IPricingsOperations Pricings { get; }
 
         /// <summary>
-        /// Gets the ISettingsOperations.
-        /// </summary>
-        ISettingsOperations Settings { get; }
-
-        /// <summary>
         /// Gets the IAdvancedThreatProtectionOperations.
         /// </summary>
         IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
@@ -115,26 +110,6 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IIotSecuritySolutionsAnalyticsRecommendationOperations.
         /// </summary>
         IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; }
-
-        /// <summary>
-        /// Gets the IIotAlertTypesOperations.
-        /// </summary>
-        IIotAlertTypesOperations IotAlertTypes { get; }
-
-        /// <summary>
-        /// Gets the IIotAlertsOperations.
-        /// </summary>
-        IIotAlertsOperations IotAlerts { get; }
-
-        /// <summary>
-        /// Gets the IIotRecommendationTypesOperations.
-        /// </summary>
-        IIotRecommendationTypesOperations IotRecommendationTypes { get; }
-
-        /// <summary>
-        /// Gets the IIotRecommendationsOperations.
-        /// </summary>
-        IIotRecommendationsOperations IotRecommendations { get; }
 
         /// <summary>
         /// Gets the ILocationsOperations.
@@ -242,11 +217,6 @@ namespace Microsoft.Azure.Management.Security
         ITopologyOperations Topology { get; }
 
         /// <summary>
-        /// Gets the IAlertsOperations.
-        /// </summary>
-        IAlertsOperations Alerts { get; }
-
-        /// <summary>
         /// Gets the IJitNetworkAccessPoliciesOperations.
         /// </summary>
         IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
@@ -307,34 +277,24 @@ namespace Microsoft.Azure.Management.Security
         ISqlVulnerabilityAssessmentBaselineRulesOperations SqlVulnerabilityAssessmentBaselineRules { get; }
 
         /// <summary>
-        /// Gets the IIotDefenderSettingsOperations.
+        /// Gets the IAlertsOperations.
         /// </summary>
-        IIotDefenderSettingsOperations IotDefenderSettings { get; }
+        IAlertsOperations Alerts { get; }
 
         /// <summary>
-        /// Gets the IIotSensorsOperations.
+        /// Gets the ISettingsOperations.
         /// </summary>
-        IIotSensorsOperations IotSensors { get; }
+        ISettingsOperations Settings { get; }
 
         /// <summary>
-        /// Gets the IDevicesForSubscriptionOperations.
+        /// Gets the IIngestionSettingsOperations.
         /// </summary>
-        IDevicesForSubscriptionOperations DevicesForSubscription { get; }
+        IIngestionSettingsOperations IngestionSettings { get; }
 
         /// <summary>
-        /// Gets the IDevicesForHubOperations.
+        /// Gets the ISoftwareInventoriesOperations.
         /// </summary>
-        IDevicesForHubOperations DevicesForHub { get; }
-
-        /// <summary>
-        /// Gets the IDeviceOperations.
-        /// </summary>
-        IDeviceOperations Device { get; }
-
-        /// <summary>
-        /// Gets the IOnPremiseIotSensorsOperations.
-        /// </summary>
-        IOnPremiseIotSensorsOperations OnPremiseIotSensors { get; }
+        ISoftwareInventoriesOperations SoftwareInventories { get; }
 
     }
 }

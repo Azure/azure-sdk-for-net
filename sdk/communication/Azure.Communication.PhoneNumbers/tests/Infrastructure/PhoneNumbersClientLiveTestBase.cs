@@ -6,28 +6,30 @@ using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
-using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.Tests
 {
     public class PhoneNumbersClientLiveTestBase : RecordedTestBase<PhoneNumbersClientTestEnvironment>
     {
+        private const string PhoneNumberRegEx = @"[\\+]?[0-9]{11,15}";
+        private const string UrlEncodedPhoneNumberRegEx = @"[\\%2B]{0,3}[0-9]{11,15}";
+        protected const string UnauthorizedNumber = "+14255550123";
+
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new PhoneNumbersClientRecordedTestSanitizer();
+        {
+            SanitizedHeaders.Add("location");
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(UrlEncodedPhoneNumberRegEx, SanitizeValue));
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         public bool SkipPhoneNumberLiveTests
             => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_PHONENUMBER_LIVE_TESTS") == "TRUE";
 
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            if (TestEnvironment.ShouldIgnoreTests)
-            {
-                Assert.Ignore("Phone number tests are skipped " +
-                    "because phonenumbers package is not included in the TEST_PACKAGES_ENABLED variable");
-            }
-        }
+        public bool SkipUpdateCapabilitiesLiveTest
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_UPDATE_CAPABILITIES_LIVE_TESTS") == "TRUE";
 
         /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
@@ -37,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithConnectionString(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestConnectionString,
+                    TestEnvironment.LiveTestStaticConnectionString,
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -53,8 +55,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestAccessKey),
+                    TestEnvironment.LiveTestStaticEndpoint,
+                     new AzureKeyCredential(TestEnvironment.LiveTestStaticAccessKey),
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
@@ -68,7 +70,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestEndpoint,
+                    TestEnvironment.LiveTestStaticEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
@@ -93,9 +95,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         protected string GetTestPhoneNumber()
         {
-            return TestEnvironment.Mode == RecordedTestMode.Playback
-                ? RecordedTestSanitizer.SanitizeValue
-                : TestEnvironment.CommunicationTestPhoneNumber;
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                return SanitizeValue;
+
+            if (!SkipUpdateCapabilitiesLiveTest)
+                return TestEnvironment.TestAgentPhoneNumber;
+
+            return TestEnvironment.DefaultTestPhoneNumber;
         }
 
         protected void SleepIfNotInPlaybackMode()

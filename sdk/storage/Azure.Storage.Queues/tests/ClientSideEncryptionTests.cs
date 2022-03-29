@@ -43,16 +43,16 @@ namespace Azure.Storage.Queues.Test
         /// </summary>
         private string EncryptData(string message, byte[] key, byte[] iv)
         {
-            using (var aesProvider = new AesCryptoServiceProvider() { Key = key, IV = iv })
-            using (var encryptor = aesProvider.CreateEncryptor())
-            using (var memStream = new MemoryStream())
-            using (var cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write))
-            {
-                var messageBytes = Encoding.UTF8.GetBytes(message);
-                cryptoStream.Write(messageBytes, 0, messageBytes.Length);
-                cryptoStream.FlushFinalBlock();
-                return Convert.ToBase64String(memStream.ToArray());
-            }
+            using var aesProvider = Aes.Create();
+            aesProvider.Key = key;
+            aesProvider.IV = iv;
+            using var encryptor = aesProvider.CreateEncryptor();
+            using var memStream = new MemoryStream();
+            using var cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write);
+            var messageBytes = Encoding.UTF8.GetBytes(message);
+            cryptoStream.Write(messageBytes, 0, messageBytes.Length);
+            cryptoStream.FlushFinalBlock();
+            return Convert.ToBase64String(memStream.ToArray());
         }
 
         private async Task<IKeyEncryptionKey> GetKeyvaultIKeyEncryptionKey()
@@ -107,7 +107,11 @@ namespace Azure.Storage.Queues.Test
             {
                 const int keySizeBits = 256;
                 var bytes = new byte[keySizeBits >> 3];
+#if NET6_0_OR_GREATER
+                RandomNumberGenerator.Create().GetBytes(bytes);
+#else
                 new RNGCryptoServiceProvider().GetBytes(bytes);
+#endif
                 userKeyBytes = bytes;
             }
             keyId ??= Guid.NewGuid().ToString();
@@ -188,7 +192,11 @@ namespace Azure.Storage.Queues.Test
             {
                 const int keySizeBits = 256;
                 var bytes = new byte[keySizeBits >> 3];
+#if NET6_0_OR_GREATER
+                RandomNumberGenerator.Create().GetBytes(bytes);
+#else
                 new RNGCryptoServiceProvider().GetBytes(bytes);
+#endif
                 userKeyBytes = bytes;
             }
             keyId ??= Guid.NewGuid().ToString();
@@ -380,7 +388,11 @@ namespace Azure.Storage.Queues.Test
 
             const int keySizeBits = 256;
             var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
-            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#if NET6_0_OR_GREATER
+            RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
+#else
+                new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#endif
             var keyId = Guid.NewGuid().ToString();
 
             var mockKey = GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object;
@@ -433,7 +445,11 @@ namespace Azure.Storage.Queues.Test
 
             const int keySizeBits = 256;
             var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
-            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#if NET6_0_OR_GREATER
+            RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
+#else
+                new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+#endif
             var keyId = Guid.NewGuid().ToString();
 
             var mockKey = GetIKeyEncryptionKey(keyEncryptionKeyBytes, keyId).Object;
@@ -738,7 +754,7 @@ namespace Azure.Storage.Queues.Test
         public void CanGenerateSas_WithClientSideEncryptionOptions_True()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -768,7 +784,7 @@ namespace Azure.Storage.Queues.Test
         public void CanGenerateSas_WithClientSideEncryptionOptions_False()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)

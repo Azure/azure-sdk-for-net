@@ -24,14 +24,10 @@ namespace Azure.Identity.Tests.Mock
             : base(pipeline, clientId)
         {
         }
-        public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
 
         public Func<AccessToken> TokenFactory { get; set; }
 
         public override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
               => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : base.AuthenticateAsync(async, context, cancellationToken);
-
-        private protected override ValueTask<ManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
-            => ManagedIdentitySourceFactory != null ? new ValueTask<ManagedIdentitySource>(ManagedIdentitySourceFactory()) : base.GetManagedIdentitySourceAsync(async, cancellationToken);
     }
 }

@@ -63,6 +63,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId.Value);
             }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId");
+                writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret");
+                writer.WriteObjectValue(ClientSecret);
+            }
             writer.WriteEndObject();
         }
 
@@ -77,6 +87,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> rootFolder = default;
             Optional<string> lastCommitId = default;
             Optional<Guid> tenantId = default;
+            Optional<string> clientId = default;
+            Optional<GitHubClientSecret> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -129,8 +141,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (property.NameEquals("clientId"))
+                {
+                    clientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clientSecret"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientSecret = GitHubClientSecret.DeserializeGitHubClientSecret(property.Value);
+                    continue;
+                }
             }
-            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId));
+            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), clientId.Value, clientSecret.Value);
         }
 
         internal partial class WorkspaceRepositoryConfigurationConverter : JsonConverter<WorkspaceRepositoryConfiguration>

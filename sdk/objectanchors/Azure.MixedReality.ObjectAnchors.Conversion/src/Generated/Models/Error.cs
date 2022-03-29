@@ -16,15 +16,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         }
 
         /// <summary> Initializes a new instance of Error. </summary>
-        /// <param name="code"> . </param>
-        /// <param name="message"> . </param>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
         internal Error(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
+        /// <summary> Gets the code. </summary>
         public string Code { get; }
+        /// <summary> Gets the message. </summary>
         public string Message { get; }
     }
 }

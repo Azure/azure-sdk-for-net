@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -15,23 +14,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
         }
 
-        private ContainerRegistryClient CreateClient()
-        {
-            return InstrumentClient(new ContainerRegistryClient(
-                new Uri(TestEnvironment.Endpoint),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new ContainerRegistryClientOptions())
-            ));
-        }
-
         [RecordedTest]
-        public async Task CanGetRepositories()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetRepositories(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
 
             bool gotHelloWorld = false;
             await foreach (string repository in repositories)
@@ -48,15 +40,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetRepositoriesWithCustomPageSize()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetRepositoriesWithCustomPageSize(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             int pageSize = 2;
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
             var pages = repositories.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -71,15 +65,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanStartPagingMidCollection()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanStartPagingMidCollection(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             int pageSize = 1;
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
             var pages = repositories.AsPages($"</acr/v1/_catalog?last=library/alpine&n={pageSize}>");
 
             int pageCount = 0;
@@ -102,9 +98,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanDeleteRepostitory()
+        public async Task CanDeleteRepository()
         {
             // Arrange
+            string registry = TestEnvironment.Registry;
             string repository = $"library/hello-world";
             List<string> tags = new List<string>()
             {
@@ -120,21 +117,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(repository, tags);
+                    await ImportImageAsync(registry, repository, tags);
                 }
 
                 // Act
                 await client.DeleteRepositoryAsync(repository);
 
-                // Assert
-                // This will be removed, pending investigation into potential race condition.
-                // https://github.com/azure/azure-sdk-for-net/issues/19699
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(5000);
-                }
-
-                var repositories = client.GetRepositoriesAsync();
+                var repositories = client.GetRepositoryNamesAsync();
 
                 await foreach (var item in repositories)
                 {
@@ -149,9 +138,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(repository, tags);
+                    await ImportImageAsync(registry, repository, tags);
                 }
             }
+        }
+
+        [RecordedTest, NonParallelizable]
+        public void CanDeleteRepository_Anonymous()
+        {
+            // Arrange
+            string repository = $"library/hello-world";
+            var client = CreateClient(anonymousAccess: true);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.DeleteRepositoryAsync(repository));
         }
     }
 }

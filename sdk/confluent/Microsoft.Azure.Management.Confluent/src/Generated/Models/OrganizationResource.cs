@@ -35,9 +35,13 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// <summary>
         /// Initializes a new instance of the OrganizationResource class.
         /// </summary>
+        /// <param name="offerDetail">Confluent offer detail</param>
+        /// <param name="userDetail">Subscriber detail</param>
         /// <param name="id">The ARM id of the resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource</param>
         /// <param name="createdTime">The creation time of the
         /// resource.</param>
         /// <param name="provisioningState">Provision states for confluent RP.
@@ -48,15 +52,14 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// organization.</param>
         /// <param name="ssoUrl">SSO url for the Confluent
         /// organization.</param>
-        /// <param name="offerDetail">Confluent offer detail</param>
-        /// <param name="userDetail">Subscriber detail</param>
         /// <param name="tags">Organization resource tags</param>
         /// <param name="location">Location of Organization resource</param>
-        public OrganizationResource(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdTime = default(System.DateTime?), string provisioningState = default(string), string organizationId = default(string), string ssoUrl = default(string), OrganizationResourcePropertiesOfferDetail offerDetail = default(OrganizationResourcePropertiesOfferDetail), OrganizationResourcePropertiesUserDetail userDetail = default(OrganizationResourcePropertiesUserDetail), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string))
+        public OrganizationResource(OfferDetail offerDetail, UserDetail userDetail, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.DateTime? createdTime = default(System.DateTime?), string provisioningState = default(string), string organizationId = default(string), string ssoUrl = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             CreatedTime = createdTime;
             ProvisioningState = provisioningState;
             OrganizationId = organizationId;
@@ -92,18 +95,25 @@ namespace Microsoft.Azure.Management.Confluent.Models
         public string Type { get; private set; }
 
         /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Gets the creation time of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdTime")]
         public System.DateTime? CreatedTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets provision states for confluent RP. Possible values
-        /// include: 'Accepted', 'Creating', 'Updating', 'Deleting',
-        /// 'Succeeded', 'Failed', 'Canceled', 'Deleted', 'NotSpecified'
+        /// Gets provision states for confluent RP. Possible values include:
+        /// 'Accepted', 'Creating', 'Updating', 'Deleting', 'Succeeded',
+        /// 'Failed', 'Canceled', 'Deleted', 'NotSpecified'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets id of the Confluent organization.
@@ -121,13 +131,13 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// Gets or sets confluent offer detail
         /// </summary>
         [JsonProperty(PropertyName = "properties.offerDetail")]
-        public OrganizationResourcePropertiesOfferDetail OfferDetail { get; set; }
+        public OfferDetail OfferDetail { get; set; }
 
         /// <summary>
         /// Gets or sets subscriber detail
         /// </summary>
         [JsonProperty(PropertyName = "properties.userDetail")]
-        public OrganizationResourcePropertiesUserDetail UserDetail { get; set; }
+        public UserDetail UserDetail { get; set; }
 
         /// <summary>
         /// Gets or sets organization resource tags
@@ -141,5 +151,30 @@ namespace Microsoft.Azure.Management.Confluent.Models
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (OfferDetail == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OfferDetail");
+            }
+            if (UserDetail == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "UserDetail");
+            }
+            if (OfferDetail != null)
+            {
+                OfferDetail.Validate();
+            }
+            if (UserDetail != null)
+            {
+                UserDetail.Validate();
+            }
+        }
     }
 }

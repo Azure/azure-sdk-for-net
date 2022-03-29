@@ -5,6 +5,8 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using Xunit;
 using System.Threading;
+using Microsoft.Azure.Management.Quantum.Models;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.Quantum.Tests
 {
@@ -15,9 +17,25 @@ namespace Microsoft.Azure.Management.Quantum.Tests
         {
             TestInitialize();
 
-            // create workspace
             string workspaceName = TestUtilities.GenerateName("aqws");
             var createParams = CommonData.PrepareWorkspaceCreateParams();
+
+            // get Microsoft provider
+            var offeringsFirstPage = QuantumClient.Offerings.List(CommonData.Location);
+            var offerings = QuantumManagementTestUtilities.ListResources(offeringsFirstPage, QuantumClient.Offerings.ListNext);
+            Assert.True(offerings.Count >= 1);
+            var microsoftQIO = offerings.FirstOrDefault((offering) => "Microsoft".Equals(offering.Id));
+            Assert.NotNull(microsoftQIO);
+            var microsoftQIOBasicSKU = microsoftQIO.Properties.Skus.FirstOrDefault((sku) => sku.Name.Contains("Learn"));
+            Assert.NotNull(microsoftQIOBasicSKU);
+            createParams.Providers.Add(
+                new Provider()
+                {
+                    ProviderId = microsoftQIO.Id,
+                    ProviderSku = microsoftQIOBasicSKU.Id,
+                });
+
+            // create workspace
             var workspaceCreate = QuantumClient.Workspaces.CreateOrUpdate(CommonData.ResourceGroupName, workspaceName, createParams);
             Assert.Equal(CommonTestFixture.WorkspaceType, workspaceCreate.Type);
             Assert.Equal(workspaceName, workspaceCreate.Name);

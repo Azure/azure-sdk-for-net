@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class GetSeries : IUtf8JsonSerializable
+    internal partial class GetSeries : IUtf8JsonSerializable
     {
     }
 }

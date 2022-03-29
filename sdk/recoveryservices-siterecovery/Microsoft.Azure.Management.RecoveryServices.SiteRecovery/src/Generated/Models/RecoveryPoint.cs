@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Base class representing a recovery point.
+    /// Recovery point.
     /// </summary>
     public partial class RecoveryPoint : Resource
     {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="name">Resource Name</param>
         /// <param name="type">Resource Type</param>
         /// <param name="location">Resource Location</param>
-        /// <param name="properties">Recovery point related data.</param>
+        /// <param name="properties">The recovery point properties.</param>
         public RecoveryPoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), RecoveryPointProperties properties = default(RecoveryPointProperties))
             : base(id, name, type, location)
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets recovery point related data.
+        /// Gets or sets the recovery point properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public RecoveryPointProperties Properties { get; set; }

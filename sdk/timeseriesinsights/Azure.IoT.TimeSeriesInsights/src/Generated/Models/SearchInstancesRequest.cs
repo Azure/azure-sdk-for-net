@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to execute a search query against time series instances and return matching time series instances. </summary>
-    public partial class SearchInstancesRequest
+    internal partial class SearchInstancesRequest
     {
         /// <summary> Initializes a new instance of SearchInstancesRequest. </summary>
         /// <param name="searchString"> Query search string that will be matched to the attributes of time series instances. Example: &quot;floor 100&quot;. Case-insensitive, must be present, but can be empty string. </param>

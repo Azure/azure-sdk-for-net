@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraTableListResult. </summary>
         internal CassandraTableListResult()
         {
-            Value = new ChangeTrackingList<CassandraTableGetResults>();
+            Value = new ChangeTrackingList<CassandraTableData>();
         }
 
         /// <summary> Initializes a new instance of CassandraTableListResult. </summary>
         /// <param name="value"> List of Cassandra tables and their properties. </param>
-        internal CassandraTableListResult(IReadOnlyList<CassandraTableGetResults> value)
+        internal CassandraTableListResult(IReadOnlyList<CassandraTableData> value)
         {
             Value = value;
         }
 
         /// <summary> List of Cassandra tables and their properties. </summary>
-        public IReadOnlyList<CassandraTableGetResults> Value { get; }
+        public IReadOnlyList<CassandraTableData> Value { get; }
     }
 }

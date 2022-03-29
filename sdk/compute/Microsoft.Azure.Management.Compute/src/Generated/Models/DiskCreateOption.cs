@@ -48,5 +48,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// directly upload the contents of the disk.
         /// </summary>
         public const string Upload = "Upload";
+        /// <summary>
+        /// Create a new disk by using a deep copy process, where the resource
+        /// creation is considered complete only after all data has been copied
+        /// from the source.
+        /// </summary>
+        public const string CopyStart = "CopyStart";
+        /// <summary>
+        /// Similar to Import create option. Create a new Trusted Launch VM or
+        /// Confidential VM supported disk by importing additional blob for VM
+        /// guest state specified by securityDataUri in storage account
+        /// specified by storageAccountId
+        /// </summary>
+        public const string ImportSecure = "ImportSecure";
+        /// <summary>
+        /// Similar to Upload create option. Create a new Trusted Launch VM or
+        /// Confidential VM supported disk and upload using write token in both
+        /// disk and VM guest state
+        /// </summary>
+        public const string UploadPreparedSecure = "UploadPreparedSecure";
     }
 }

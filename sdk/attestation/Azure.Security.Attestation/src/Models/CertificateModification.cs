@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [CodeGenModel("CertificateModification")]
-    public partial struct CertificateModification
+    public partial struct PolicyCertificateResolution
     {
     }
 }

@@ -38,15 +38,23 @@ namespace Azure.Core.Pipeline
 
         public static void SetLimits(ServicePoint requestServicePoint)
         {
-            // Only change when the default runtime limit is used
-            if (requestServicePoint.ConnectionLimit == RuntimeDefaultConnectionLimit)
+            try
             {
-                requestServicePoint.ConnectionLimit = IncreasedConnectionLimit;
-            }
+                // Only change these configuration values when the default value is used
+                if (requestServicePoint.ConnectionLimit == RuntimeDefaultConnectionLimit)
+                {
+                    requestServicePoint.ConnectionLimit = IncreasedConnectionLimit;
+                }
 
-            if (requestServicePoint.ConnectionLeaseTimeout == DefaultConnectionLeaseTimeout)
+                if (requestServicePoint.ConnectionLeaseTimeout == DefaultConnectionLeaseTimeout)
+                {
+                    requestServicePoint.ConnectionLeaseTimeout = IncreasedConnectionLeaseTimeout;
+                }
+            }
+            catch (NotImplementedException)
             {
-                requestServicePoint.ConnectionLeaseTimeout = IncreasedConnectionLeaseTimeout;
+                // Some platforms (like Unity) might throw NotImplementedException
+                // when accessing handler options
             }
         }
 #endif
@@ -57,15 +65,17 @@ namespace Azure.Core.Pipeline
                 return;
             }
 
-            switch (messageHandler)
+            try
             {
-                case HttpClientHandler httpClientHandler:
-                    // Only change when the default runtime limit is used
-                    if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
-                    {
-                        httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
-                    }
-                    break;
+                switch (messageHandler)
+                {
+                    case HttpClientHandler httpClientHandler:
+                        // Only change when the default runtime limit is used
+                        if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
+                        {
+                            httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
+                        }
+                        break;
 #if NETCOREAPP
                 case SocketsHttpHandler socketsHttpHandler:
                     if (socketsHttpHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
@@ -78,9 +88,20 @@ namespace Azure.Core.Pipeline
                     }
                     break;
 #endif
-                default:
-                    Debug.Assert(false, "Unknown handler type");
-                    break;
+                    default:
+                        Debug.Assert(false, "Unknown handler type");
+                        break;
+                }
+            }
+            catch (NotSupportedException)
+            {
+                // Some platforms might throw NotSupportedException
+                // when accessing handler options
+            }
+            catch (NotImplementedException)
+            {
+                // Some platforms (like Unity) might throw NotImplementedException
+                // when accessing handler options
             }
         }
     }

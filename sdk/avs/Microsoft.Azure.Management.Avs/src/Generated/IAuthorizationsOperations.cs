@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExpressRouteAuthorization>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, object authorization, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ExpressRouteAuthorization>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, ExpressRouteAuthorization authorization, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an ExpressRoute Circuit Authorization in a private cloud
         /// </summary>
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExpressRouteAuthorization>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, object authorization, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ExpressRouteAuthorization>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, ExpressRouteAuthorization authorization, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an ExpressRoute Circuit Authorization in a private cloud
         /// </summary>

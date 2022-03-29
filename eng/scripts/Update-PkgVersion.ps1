@@ -3,7 +3,7 @@
 Bumps up package versions after release
 
 .DESCRIPTION
-This script bumps up package versions following conventions defined at https://github.com/Azure/azure-sdk/blob/master/docs/policies/releases.md#incrementing-after-release-net
+This script bumps up package versions following conventions defined at https://github.com/Azure/azure-sdk/blob/main/docs/policies/releases.md#incrementing-after-release-net
 
 .PARAMETER RepoRoot
 The Root of the repo
@@ -39,7 +39,8 @@ Param (
   [Parameter(Mandatory=$True)]
   [string] $PackageName,
   [string] $NewVersionString,
-  [string] $ReleaseDate
+  [string] $ReleaseDate,
+  [boolean] $ReplaceLatestEntryTitle=$true
 )
 
 . (Join-Path $PSScriptRoot ".." common scripts common.ps1)
@@ -67,7 +68,7 @@ else {
 
   & "${PSScriptRoot}/../common/scripts/Update-ChangeLog.ps1" -Version $packageSemVer.ToString() `
   -ChangelogPath $pkgProperties.ChangeLogPath -Unreleased $False `
-  -ReplaceLatestEntryTitle $True -ReleaseDate $ReleaseDate
+  -ReplaceLatestEntryTitle $ReplaceLatestEntryTitle -ReleaseDate $ReleaseDate
 }
 
 Write-Host "New Version: ${packageSemVer}"

@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of the targeted resource, only VM is currently supported. </summary>
         public string Target { get; }
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. </summary>
-        public int? BytesToCapturePerPacket { get; }
+        public long? BytesToCapturePerPacket { get; }
         /// <summary> Maximum size of the capture output. </summary>
-        public int? TotalBytesPerSession { get; }
+        public long? TotalBytesPerSession { get; }
         /// <summary> Maximum duration of the capture session in seconds. </summary>
         public int? TimeLimitInSeconds { get; }
         /// <summary> The storage location for a packet capture session. </summary>

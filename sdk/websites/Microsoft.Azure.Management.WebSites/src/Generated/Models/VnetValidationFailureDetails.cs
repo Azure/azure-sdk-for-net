@@ -40,15 +40,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="message">Text describing the validation
+        /// outcome.</param>
         /// <param name="failed">A flag describing whether or not validation
         /// failed.</param>
         /// <param name="failedTests">A list of tests that failed in the
         /// validation.</param>
-        public VnetValidationFailureDetails(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? failed = default(bool?), IList<VnetValidationTestFailure> failedTests = default(IList<VnetValidationTestFailure>))
+        /// <param name="warnings">A list of warnings generated during
+        /// validation.</param>
+        public VnetValidationFailureDetails(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string message = default(string), bool? failed = default(bool?), IList<VnetValidationTestFailure> failedTests = default(IList<VnetValidationTestFailure>), IList<VnetValidationTestFailure> warnings = default(IList<VnetValidationTestFailure>))
             : base(id, name, kind, type)
         {
+            Message = message;
             Failed = failed;
             FailedTests = failedTests;
+            Warnings = warnings;
             CustomInit();
         }
 
@@ -56,6 +62,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets text describing the validation outcome.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.message")]
+        public string Message { get; set; }
 
         /// <summary>
         /// Gets or sets a flag describing whether or not validation failed.
@@ -68,6 +80,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.failedTests")]
         public IList<VnetValidationTestFailure> FailedTests { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of warnings generated during validation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.warnings")]
+        public IList<VnetValidationTestFailure> Warnings { get; set; }
 
     }
 }

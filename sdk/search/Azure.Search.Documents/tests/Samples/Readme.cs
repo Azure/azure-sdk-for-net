@@ -13,6 +13,7 @@ using NUnit.Framework;
 using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
+using Azure.Core.GeoJson;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 
 namespace Azure.Search.Documents.Tests.Samples
@@ -91,7 +92,6 @@ namespace Azure.Search.Documents.Tests.Samples
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
-            #region Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
 #if SNIPPET
             SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
 #else
@@ -104,7 +104,6 @@ namespace Azure.Search.Documents.Tests.Samples
                 string name = doc.hotelName;
                 Console.WriteLine("{id}: {name}");
             }
-            #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dynamic
         }
 
         #region Snippet:Azure_Search_Tests_Samples_Readme_StaticType
@@ -125,10 +124,54 @@ namespace Azure.Search.Documents.Tests.Samples
 #endif
             [SearchableField(IsFilterable = true, IsSortable = true)]
             public string Name { get; set; }
+
+#if !SNIPPET
+            [JsonPropertyName("geoLocation")]
+#endif
+            [SimpleField(IsFilterable = true, IsSortable = true)]
+            public GeoPoint GeoLocation { get; set; }
+
+#if !SNIPPET
+            [JsonPropertyName("address")]
+#endif
+            // Complex fields are included automatically in an index if not ignored.
+            public HotelAddress Address { get; set; }
+        }
+
+        public class HotelAddress
+        {
+#if !SNIPPET
+            [JsonPropertyName("streetAddress")]
+#endif
+            public string StreetAddress { get; set; }
+
+#if !SNIPPET
+            [JsonPropertyName("city")]
+#endif
+            [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+            public string City { get; set; }
+
+#if !SNIPPET
+            [JsonPropertyName("stateProvince")]
+#endif
+            [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+            public string StateProvince { get; set; }
+
+#if !SNIPPET
+            [JsonPropertyName("country")]
+#endif
+            [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+            public string Country { get; set; }
+
+#if !SNIPPET
+            [JsonPropertyName("postalCode")]
+#endif
+            [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
+            public string PostalCode { get; set; }
         }
         #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticType
 
-        [Test]
+            [Test]
         [SyncOnly]
         public async Task QueryStatic()
         {

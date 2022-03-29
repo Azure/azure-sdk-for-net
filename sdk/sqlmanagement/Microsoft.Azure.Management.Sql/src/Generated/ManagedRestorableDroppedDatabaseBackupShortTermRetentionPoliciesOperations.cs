@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string policyName = "default";
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Sets a database's short term retention policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='parameters'>
-        /// The long term retention policy info.
+        /// The short term retention policy info.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Sets a database's short term retention policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='parameters'>
-        /// The long term retention policy info.
+        /// The short term retention policy info.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -516,7 +516,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Sets a database's short term retention policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -528,7 +528,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='parameters'>
-        /// The long term retention policy info.
+        /// The short term retention policy info.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -574,7 +574,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string policyName = "default";
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -736,7 +736,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Sets a database's short term retention policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -748,7 +748,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='parameters'>
-        /// The long term retention policy info.
+        /// The short term retention policy info.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -794,7 +794,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string policyName = "default";
-            string apiVersion = "2017-03-01-preview";
+            string apiVersion = "2020-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

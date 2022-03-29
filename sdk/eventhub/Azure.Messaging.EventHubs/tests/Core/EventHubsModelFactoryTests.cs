@@ -114,12 +114,18 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PartitionContextInitializesProperties()
         {
             var fakeDate = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
+            var fullyQualifiedNamespace = "fakeNamespace";
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumerGroup";
             var partition = "0";
             var properties = EventHubsModelFactory.LastEnqueuedEventProperties(465, 988, fakeDate, fakeDate);
-            var context = EventHubsModelFactory.PartitionContext(partition, properties);
+            var context = EventHubsModelFactory.PartitionContext(fullyQualifiedNamespace, eventHubName, consumerGroup, partition, properties);
 
             Assert.That(context, Is.Not.Null, "The context should have been created.");
-            Assert.That(context.PartitionId, Is.EqualTo(partition), "The context should have been set.");
+            Assert.That(context.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace), "The namespace should have been set.");
+            Assert.That(context.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
+            Assert.That(context.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should have been set.");
+            Assert.That(context.PartitionId, Is.EqualTo(partition), "The partition should have been set.");
             Assert.That(context.ReadLastEnqueuedEventProperties(), Is.EqualTo(properties), "The last enqueued event properties should have been set.");
         }
 
@@ -131,11 +137,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void PartitionContextDefaultsLastEnqueuedEventProperties()
         {
+            var fullyQualifiedNamespace = "fakeNamespace";
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumerGroup";
             var partition = "0";
-            var context = EventHubsModelFactory.PartitionContext(partition);
+            var context = EventHubsModelFactory.PartitionContext(fullyQualifiedNamespace, eventHubName, consumerGroup, partition);
 
             Assert.That(context, Is.Not.Null, "The context should have been created.");
-            Assert.That(context.PartitionId, Is.EqualTo(partition), "The context should have been set.");
+            Assert.That(context.FullyQualifiedNamespace, Is.EqualTo(fullyQualifiedNamespace), "The namespace should have been set.");
+            Assert.That(context.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
+            Assert.That(context.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should have been set.");
+            Assert.That(context.PartitionId, Is.EqualTo(partition), "The partition should have been set.");
             Assert.That(context.ReadLastEnqueuedEventProperties(), Is.EqualTo(new LastEnqueuedEventProperties()), "Reading last enqueued event properties should return a default instance.");
         }
 
@@ -175,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EventDataBatchInitializesProperties()
         {
             var size = 1024;
-            var store = new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) };
+            var store = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) };
             var options = new CreateBatchOptions { MaximumSizeInBytes = 2048 };
             var batch = EventHubsModelFactory.EventDataBatch(size, store, options);
 
@@ -183,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(batch.SizeInBytes, Is.EqualTo(size), "The batch size should have been set.");
             Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(options.MaximumSizeInBytes), "The maximum batch size should have been set.");
             Assert.That(batch.Count, Is.EqualTo(store.Count), "The batch count should reflect the count of the backing store.");
-            Assert.That(batch.AsEnumerable<EventData>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
+            Assert.That(batch.AsReadOnlyCollection<EventData>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
         }
 
         /// <summary>
@@ -208,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(() => batch.TryAdd(new EventData(new BinaryData("Too many"))), Is.False, "The batch is full; a second attempt to add a new event should not succeed.");
 
             Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit after the failed TryAdd attempts.");
-            Assert.That(batch.AsEnumerable<EventData>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
+            Assert.That(batch.AsReadOnlyCollection<EventData>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
         }
 
         /// <summary>
@@ -220,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EventDataBatchIsSafeToDispose()
         {
             var size = 1024;
-            var store = new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) };
+            var store = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) };
             var options = new CreateBatchOptions { MaximumSizeInBytes = 2048 };
             var batch = EventHubsModelFactory.EventDataBatch(size, store, options, _ => false);
 

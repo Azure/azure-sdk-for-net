@@ -98,9 +98,9 @@ namespace System.Tests
             byte[] buffer = Encoding.UTF8.GetBytes("some data");
             BinaryData data = BinaryData.FromBytes(buffer);
             Stream stream = data.ToStream();
-            buffer[0] = (byte)'z';
+            buffer[0] = (byte)'t';
             StreamReader sr = new StreamReader(stream);
-            Assert.Equal("zome data", await sr.ReadToEndAsync());
+            Assert.Equal("tome data", await sr.ReadToEndAsync());
         }
 
         [Fact]
@@ -296,12 +296,15 @@ namespace System.Tests
             TestModel payload = new TestModel { A = "value", B = 5, C = true, D = null };
 
             AssertData(BinaryData.FromObjectAsJson(payload));
-            AssertData(BinaryData.FromObjectAsJson(payload, new Text.Json.JsonSerializerOptions { IgnoreNullValues = true }));
             AssertData(new BinaryData(payload, type: typeof(TestModel)));
             AssertData(new BinaryData(payload));
             AssertData(new BinaryData(payload, type: null));
             AssertData(new BinaryData(payload, options: null, typeof(TestModel)));
+
+#pragma warning disable CS0618, SYSLIB0020 // IgnoreNullValues is obsolete
+            AssertData(BinaryData.FromObjectAsJson(payload, new Text.Json.JsonSerializerOptions { IgnoreNullValues = true }));
             AssertData(new BinaryData(payload, new Text.Json.JsonSerializerOptions() { IgnoreNullValues = true }, typeof(TestModel)));
+#pragma warning restore CS0618, SYSLIB0020
 
             void AssertData(BinaryData data)
             {
@@ -563,6 +566,18 @@ namespace System.Tests
             Assert.Throws<ObjectDisposedException>(() => stream.Length);
             Assert.False(stream.CanRead);
             Assert.False(stream.CanSeek);
+        }
+
+        [Fact]
+        public void EmptyIsEmpty()
+        {
+            Assert.Equal(Array.Empty<byte>(), BinaryData.Empty.ToArray());
+        }
+
+        [Fact]
+        public void EmptyIsSingleton()
+        {
+            Assert.Same(BinaryData.Empty, BinaryData.Empty);
         }
 
         private class DerivedModel : TestModel

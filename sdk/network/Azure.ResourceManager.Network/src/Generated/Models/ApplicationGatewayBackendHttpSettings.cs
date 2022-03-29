@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,15 +17,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHttpSettings. </summary>
         public ApplicationGatewayBackendHttpSettings()
         {
-            AuthenticationCertificates = new ChangeTrackingList<SubResource>();
-            TrustedRootCertificates = new ChangeTrackingList<SubResource>();
+            AuthenticationCertificates = new ChangeTrackingList<WritableSubResource>();
+            TrustedRootCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHttpSettings. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the backend http settings that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="port"> The destination port on the backend. </param>
         /// <param name="protocol"> The protocol used to communicate with the backend. </param>
         /// <param name="cookieBasedAffinity"> Cookie based affinity. </param>
@@ -39,11 +40,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendHttpSettings(string id, string name, string etag, string type, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeout, SubResource probe, IList<SubResource> authenticationCertificates, IList<SubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayBackendHttpSettings(string id, string name, string etag, string resourceType, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeout, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Port = port;
             Protocol = protocol;
             CookieBasedAffinity = cookieBasedAffinity;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The destination port on the backend. </summary>
         public int? Port { get; set; }
         /// <summary> The protocol used to communicate with the backend. </summary>
@@ -75,11 +76,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
         public int? RequestTimeout { get; set; }
         /// <summary> Probe resource of an application gateway. </summary>
-        public SubResource Probe { get; set; }
+        internal WritableSubResource Probe { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ProbeId
+        {
+            get => Probe is null ? default : Probe.Id;
+            set
+            {
+                if (Probe is null)
+                    Probe = new WritableSubResource();
+                Probe.Id = value;
+            }
+        }
+
         /// <summary> Array of references to application gateway authentication certificates. </summary>
-        public IList<SubResource> AuthenticationCertificates { get; }
+        public IList<WritableSubResource> AuthenticationCertificates { get; }
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
-        public IList<SubResource> TrustedRootCertificates { get; }
+        public IList<WritableSubResource> TrustedRootCertificates { get; }
         /// <summary> Connection draining of the backend http settings resource. </summary>
         public ApplicationGatewayConnectionDraining ConnectionDraining { get; set; }
         /// <summary> Host header to be sent to the backend servers. </summary>

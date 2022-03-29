@@ -123,5 +123,121 @@ namespace Microsoft.Azure.Management.HDInsight
                 }
             }
 
+            /// <summary>
+            /// Get the async operation status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The Azure location (region) for which to make the request.
+            /// </param>
+            /// <param name='operationId'>
+            /// The long running operation id.
+            /// </param>
+            public static AsyncOperationResult GetAzureAsyncOperationStatus(this ILocationsOperations operations, string location, string operationId)
+            {
+                return operations.GetAzureAsyncOperationStatusAsync(location, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the async operation status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The Azure location (region) for which to make the request.
+            /// </param>
+            /// <param name='operationId'>
+            /// The long running operation id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AsyncOperationResult> GetAzureAsyncOperationStatusAsync(this ILocationsOperations operations, string location, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAzureAsyncOperationStatusWithHttpMessagesAsync(location, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Check the cluster name is available or not.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The Azure location (region) for which to make the request.
+            /// </param>
+            /// <param name='parameters'>
+            /// </param>
+            public static NameAvailabilityCheckResult CheckNameAvailability(this ILocationsOperations operations, string location, NameAvailabilityCheckRequestParameters parameters)
+            {
+                return operations.CheckNameAvailabilityAsync(location, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the cluster name is available or not.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The Azure location (region) for which to make the request.
+            /// </param>
+            /// <param name='parameters'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NameAvailabilityCheckResult> CheckNameAvailabilityAsync(this ILocationsOperations operations, string location, NameAvailabilityCheckRequestParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Validate the cluster create request spec is valid or not.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The Azure location (region) for which to make the request.
+            /// </param>
+            /// <param name='parameters'>
+            /// </param>
+            public static ClusterCreateValidationResult ValidateClusterCreateRequest(this ILocationsOperations operations, string location, ClusterCreateRequestValidationParameters parameters)
+            {
+                return operations.ValidateClusterCreateRequestAsync(location, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validate the cluster create request spec is valid or not.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The Azure location (region) for which to make the request.
+            /// </param>
+            /// <param name='parameters'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClusterCreateValidationResult> ValidateClusterCreateRequestAsync(this ILocationsOperations operations, string location, ClusterCreateRequestValidationParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ValidateClusterCreateRequestWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

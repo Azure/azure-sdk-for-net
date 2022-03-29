@@ -92,6 +92,21 @@ namespace Microsoft.Azure.Management.Maintenance
         IMaintenanceConfigurationsOperations MaintenanceConfigurations { get; }
 
         /// <summary>
+        /// Gets the IMaintenanceConfigurationsForResourceGroupOperations.
+        /// </summary>
+        IMaintenanceConfigurationsForResourceGroupOperations MaintenanceConfigurationsForResourceGroup { get; }
+
+        /// <summary>
+        /// Gets the IApplyUpdateForResourceGroupOperations.
+        /// </summary>
+        IApplyUpdateForResourceGroupOperations ApplyUpdateForResourceGroup { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationAssignmentsWithinSubscriptionOperations.
+        /// </summary>
+        IConfigurationAssignmentsWithinSubscriptionOperations ConfigurationAssignmentsWithinSubscription { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

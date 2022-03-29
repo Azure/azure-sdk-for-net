@@ -28,5 +28,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Ultra service level
         /// </summary>
         public const string Ultra = "Ultra";
+        /// <summary>
+        /// Zone redundant storage service level
+        /// </summary>
+        public const string StandardZRS = "StandardZRS";
     }
 }

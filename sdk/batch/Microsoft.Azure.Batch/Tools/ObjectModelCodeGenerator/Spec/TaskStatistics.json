@@ -2,7 +2,7 @@
       "Name": "TaskStatistics",
       "ProtocolName": "Models.TaskStatistics",
       "SummaryComment": "Resource usage statistics for the task.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

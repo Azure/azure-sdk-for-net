@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkWatcherListResult DeserializeNetworkWatcherListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkWatcher>> value = default;
+            Optional<IReadOnlyList<NetworkWatcherData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkWatcher> array = new List<NetworkWatcher>();
+                    List<NetworkWatcherData> array = new List<NetworkWatcherData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkWatcher.DeserializeNetworkWatcher(item));
+                        array.Add(NetworkWatcherData.DeserializeNetworkWatcherData(item));
                     }
                     value = array;
                     continue;

@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="requestMethod">The HTTP method used to call the
         /// RESTful API. The default is GET. Type: string (or Expression with
         /// resultType string).</param>
@@ -52,8 +55,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="partitionRootPath">Specify the root path where
         /// partition discovery starts from. Type: string (or Expression with
         /// resultType string).</param>
-        public HttpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object requestTimeout = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object))
-            : base(additionalProperties, maxConcurrentConnections)
+        public HttpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object requestTimeout = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object))
+            : base(additionalProperties, maxConcurrentConnections, disableMetricsCollection)
         {
             RequestMethod = requestMethod;
             RequestBody = requestBody;

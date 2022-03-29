@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of PrivateLinkResourceListResult. </summary>
         internal PrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<PrivateLinkResource>();
+            Value = new ChangeTrackingList<PrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourceListResult. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal PrivateLinkResourceListResult(IReadOnlyList<PrivateLinkResource> value)
+        internal PrivateLinkResourceListResult(IReadOnlyList<PrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<PrivateLinkResource> Value { get; }
+        public IReadOnlyList<PrivateLinkResourceData> Value { get; }
     }
 }

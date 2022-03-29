@@ -39,6 +39,10 @@ Global
 		{A128CD7B-EABC-48C7-BAD2-216007EF130D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A128CD7B-EABC-48C7-BAD2-216007EF130D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A128CD7B-EABC-48C7-BAD2-216007EF130D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFD20568-B88B-4CA1-852B-E21F3ADFB12E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD20568-B88B-4CA1-852B-E21F3ADFB12E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD20568-B88B-4CA1-852B-E21F3ADFB12E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD20568-B88B-4CA1-852B-E21F3ADFB12E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

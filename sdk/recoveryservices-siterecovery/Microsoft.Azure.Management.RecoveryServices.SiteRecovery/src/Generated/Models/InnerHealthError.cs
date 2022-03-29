@@ -44,11 +44,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="possibleCauses">Possible causes of error.</param>
         /// <param name="recommendedAction">Recommended action to resolve
         /// error.</param>
-        /// <param name="creationTimeUtc">Error creation time (UTC)</param>
+        /// <param name="creationTimeUtc">Error creation time (UTC).</param>
         /// <param name="recoveryProviderErrorMessage">DRA error
         /// message.</param>
         /// <param name="entityId">ID of the entity.</param>
-        public InnerHealthError(string errorSource = default(string), string errorType = default(string), string errorLevel = default(string), string errorCategory = default(string), string errorCode = default(string), string summaryMessage = default(string), string errorMessage = default(string), string possibleCauses = default(string), string recommendedAction = default(string), System.DateTime? creationTimeUtc = default(System.DateTime?), string recoveryProviderErrorMessage = default(string), string entityId = default(string))
+        /// <param name="errorId">The health error unique id.</param>
+        /// <param name="customerResolvability">Value indicating whether the
+        /// health error is customer resolvable. Possible values include:
+        /// 'Allowed', 'NotAllowed'</param>
+        public InnerHealthError(string errorSource = default(string), string errorType = default(string), string errorLevel = default(string), string errorCategory = default(string), string errorCode = default(string), string summaryMessage = default(string), string errorMessage = default(string), string possibleCauses = default(string), string recommendedAction = default(string), System.DateTime? creationTimeUtc = default(System.DateTime?), string recoveryProviderErrorMessage = default(string), string entityId = default(string), string errorId = default(string), string customerResolvability = default(string))
         {
             ErrorSource = errorSource;
             ErrorType = errorType;
@@ -62,6 +66,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CreationTimeUtc = creationTimeUtc;
             RecoveryProviderErrorMessage = recoveryProviderErrorMessage;
             EntityId = entityId;
+            ErrorId = errorId;
+            CustomerResolvability = customerResolvability;
             CustomInit();
         }
 
@@ -125,7 +131,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RecommendedAction { get; set; }
 
         /// <summary>
-        /// Gets or sets error creation time (UTC)
+        /// Gets or sets error creation time (UTC).
         /// </summary>
         [JsonProperty(PropertyName = "creationTimeUtc")]
         public System.DateTime? CreationTimeUtc { get; set; }
@@ -141,6 +147,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "entityId")]
         public string EntityId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the health error unique id.
+        /// </summary>
+        [JsonProperty(PropertyName = "errorId")]
+        public string ErrorId { get; set; }
+
+        /// <summary>
+        /// Gets or sets value indicating whether the health error is customer
+        /// resolvable. Possible values include: 'Allowed', 'NotAllowed'
+        /// </summary>
+        [JsonProperty(PropertyName = "customerResolvability")]
+        public string CustomerResolvability { get; set; }
 
     }
 }

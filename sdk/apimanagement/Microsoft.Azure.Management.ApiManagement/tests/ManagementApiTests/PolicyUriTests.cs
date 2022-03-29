@@ -22,7 +22,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         protected const string ProductValid = "https://raw.githubusercontent.com/Azure/api-management-samples/master/sdkClientResources/ProductPolicy.xml";
 
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -50,7 +50,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = TestUtilities.GenerateName("description"),
                             Path = TestUtilities.GenerateName("path"),
                             ServiceUrl = "https://echoapi.cloudapp.net/echo",
-                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http }
+                            Protocols = new List<string> { Protocol.Https, Protocol.Http }
                         });
 
                     Assert.NotNull(createdApiContract);

@@ -5,12 +5,11 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Processor;
-using Azure.Storage.Blobs;
+using Azure.Messaging.EventHubs.Primitives;
+using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 {
     internal class EventHubTriggerAttributeBindingProvider : ITriggerBindingProvider
     {
-        private readonly ILogger _logger;
+        private readonly ILoggerFactory _loggerFactory;
         private readonly IOptions<EventHubOptions> _options;
         private readonly EventHubClientFactory _clientFactory;
         private readonly IConverterManager _converterManager;
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             _converterManager = converterManager;
             _options = options;
             _clientFactory = clientFactory;
-            _logger = loggerFactory?.CreateLogger(LogCategories.CreateTriggerCategory("EventHub"));
+            _loggerFactory = loggerFactory;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
@@ -55,16 +54,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
              (factoryContext, singleDispatch) =>
              {
                  var options = _options.Value;
-                 if (singleDispatch && !options.IsSingleDispatchEnabled)
-                 {
-                     throw new NotSupportedException("Binding to individual events is not supported. Please use batch processing by binding to an array instead.");
-                 }
-
-                 var checkpointStore = new BlobsCheckpointStore(
+                 var checkpointStore = new BlobCheckpointStoreInternal(
                      _clientFactory.GetCheckpointStoreClient(),
-                     options.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
                      factoryContext.Descriptor.Id,
-                     _logger);
+                     _loggerFactory.CreateLogger<BlobCheckpointStoreInternal>());
 
                  IListener listener = new EventHubListener(
                                                 factoryContext.Descriptor.Id,
@@ -74,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                                                 _clientFactory.GetEventHubConsumerClient(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
                                                 checkpointStore,
                                                 options,
-                                                _logger);
+                                                _loggerFactory);
                  return Task.FromResult(listener);
              };
 

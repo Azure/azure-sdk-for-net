@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationAlertSettingsOperations ReplicationAlertSettings { get; private set; }
 
         /// <summary>
+        /// Gets the IReplicationAppliancesOperations.
+        /// </summary>
+        public virtual IReplicationAppliancesOperations ReplicationAppliances { get; private set; }
+
+        /// <summary>
         /// Gets the IReplicationEligibilityResultsOperations.
         /// </summary>
         public virtual IReplicationEligibilityResultsOperations ReplicationEligibilityResults { get; private set; }
@@ -191,6 +196,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the IReplicationPoliciesOperations.
         /// </summary>
         public virtual IReplicationPoliciesOperations ReplicationPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationProtectionIntentsOperations.
+        /// </summary>
+        public virtual IReplicationProtectionIntentsOperations ReplicationProtectionIntents { get; private set; }
 
         /// <summary>
         /// Gets the IReplicationRecoveryPlansOperations.
@@ -455,6 +465,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         {
             Operations = new Operations(this);
             ReplicationAlertSettings = new ReplicationAlertSettingsOperations(this);
+            ReplicationAppliances = new ReplicationAppliancesOperations(this);
             ReplicationEligibilityResults = new ReplicationEligibilityResultsOperations(this);
             ReplicationEvents = new ReplicationEventsOperations(this);
             ReplicationFabrics = new ReplicationFabricsOperations(this);
@@ -475,12 +486,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             ReplicationvCenters = new ReplicationvCentersOperations(this);
             ReplicationJobs = new ReplicationJobsOperations(this);
             ReplicationPolicies = new ReplicationPoliciesOperations(this);
+            ReplicationProtectionIntents = new ReplicationProtectionIntentsOperations(this);
             ReplicationRecoveryPlans = new ReplicationRecoveryPlansOperations(this);
             SupportedOperatingSystems = new SupportedOperatingSystemsOperations(this);
             ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
             ReplicationVaultSetting = new ReplicationVaultSettingOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-07-10";
+            ApiVersion = "2021-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -509,8 +521,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProtectionProfileCustomDetails>("resourceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProtectionProfileCustomDetails>("resourceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StorageAccountCustomDetails>("resourceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StorageAccountCustomDetails>("resourceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryAvailabilitySetCustomDetails>("resourceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryAvailabilitySetCustomDetails>("resourceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryVirtualNetworkCustomDetails>("resourceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryVirtualNetworkCustomDetails>("resourceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryProximityPlacementGroupCustomDetails>("resourceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryProximityPlacementGroupCustomDetails>("resourceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryResourceGroupCustomDetails>("resourceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryResourceGroupCustomDetails>("resourceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AddDisksProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AddDisksProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ApplianceSpecificDetails>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ApplianceSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TaskTypeDetails>("instanceType"));
@@ -527,6 +553,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificContainerCreationInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificContainerMappingInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificContainerMappingInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CreateProtectionIntentProviderSpecificDetails>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CreateProtectionIntentProviderSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanActionDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanActionDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanProviderSpecificInput>("instanceType"));
@@ -555,8 +583,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrationProviderSpecificSettings>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<NetworkMappingFabricSpecificSettings>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<NetworkMappingFabricSpecificSettings>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProviderSpecificFailoverInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificFailoverInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PlannedFailoverProviderSpecificFailoverInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PlannedFailoverProviderSpecificFailoverInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProtectionContainerMappingProviderSpecificDetails>("instanceType"));
@@ -571,6 +599,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RemoveDisksProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProtectionIntentProviderSpecificSettings>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProtectionIntentProviderSpecificSettings>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResyncProviderSpecificInput>("instanceType"));
@@ -579,8 +609,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProviderProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SwitchProviderProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TestFailoverProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TestFailoverProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TestMigrateProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TestMigrateProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UnplannedFailoverProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UnplannedFailoverProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateApplianceForReplicationProtectedItemProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UpdateApplianceForReplicationProtectedItemProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateMigrationItemProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UpdateMigrationItemProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateReplicationProtectedItemProviderInput>("instanceType"));

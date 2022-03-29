@@ -25,14 +25,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions() { }
         public int BatchCheckpointFrequency { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions ClientRetryOptions { get { throw null; } set { } }
-        public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
+        public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
         public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
-        public int MaxBatchSize { get { throw null; } set { } }
+        public int MaxEventBatchSize { get { throw null; } set { } }
         public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public long? PrefetchSizeInBytes { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { get { throw null; } set { } }
+        public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
     public partial class InitialOffsetOptions

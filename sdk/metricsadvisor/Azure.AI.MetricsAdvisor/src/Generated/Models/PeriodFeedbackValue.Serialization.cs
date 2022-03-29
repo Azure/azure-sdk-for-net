@@ -24,13 +24,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static PeriodFeedbackValue DeserializePeriodFeedbackValue(JsonElement element)
         {
-            PeriodType periodType = default;
+            MetricPeriodType periodType = default;
             int periodValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("periodType"))
                 {
-                    periodType = new PeriodType(property.Value.GetString());
+                    periodType = new MetricPeriodType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("periodValue"))

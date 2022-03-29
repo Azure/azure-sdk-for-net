@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
@@ -63,12 +64,25 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-            if (!receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+
+            AmqpMessageBody body = null;
+            if (receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegments(dataBody));
+            }
+            else if (receivedMessage.AmqpMessage.Body.TryGetValue(out object valueBody))
+            {
+                body = AmqpMessageBody.FromValue(valueBody);
+            }
+            else if (receivedMessage.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequenceBody))
+            {
+                body = AmqpMessageBody.FromSequence(sequenceBody);
+            }
+            else
             {
                 throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
             }
 
-            AmqpMessageBody body = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(dataBody));
             AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
@@ -102,7 +116,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
                     kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName)
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName)
                 {
                     continue;
                 }
@@ -288,13 +302,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string CorrelationId
         {
-            get
-            {
-                return AmqpMessage.Properties.CorrelationId.ToString();
-            }
+            get => AmqpMessage.Properties.CorrelationId?.ToString();
             set
             {
-                AmqpMessage.Properties.CorrelationId = new AmqpMessageId(value);
+                AmqpMessage.Properties.CorrelationId = value == null ? null : new AmqpMessageId(value);
             }
         }
 
@@ -326,13 +337,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string To
         {
-            get
-            {
-                return AmqpMessage.Properties.To.ToString();
-            }
+            get => AmqpMessage.Properties.To?.ToString();
             set
             {
-                AmqpMessage.Properties.To = new AmqpAddress(value);
+                AmqpMessage.Properties.To = value == null ? null : new AmqpAddress(value);
             }
         }
 
@@ -364,13 +372,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string ReplyTo
         {
-            get
-            {
-                return AmqpMessage.Properties.ReplyTo.ToString();
-            }
+            get => AmqpMessage.Properties.ReplyTo?.ToString();
             set
             {
-                AmqpMessage.Properties.ReplyTo = new AmqpAddress(value);
+                AmqpMessage.Properties.ReplyTo = value == null ? null : new AmqpAddress(value);
             }
         }
 

@@ -37,10 +37,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// source MySQL server</param>
         /// <param name="targetConnectionInfo">Connection information for
         /// target Azure Database for MySQL server</param>
-        public ConnectToTargetAzureDbForMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlConnectionInfo targetConnectionInfo)
+        /// <param name="isOfflineMigration">Flag for whether or not the
+        /// migration is offline</param>
+        public ConnectToTargetAzureDbForMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlConnectionInfo targetConnectionInfo, bool? isOfflineMigration = default(bool?))
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
+            IsOfflineMigration = isOfflineMigration;
             CustomInit();
         }
 
@@ -61,6 +64,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetConnectionInfo")]
         public MySqlConnectionInfo TargetConnectionInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether or not the migration is offline
+        /// </summary>
+        [JsonProperty(PropertyName = "isOfflineMigration")]
+        public bool? IsOfflineMigration { get; set; }
 
         /// <summary>
         /// Validate the object.

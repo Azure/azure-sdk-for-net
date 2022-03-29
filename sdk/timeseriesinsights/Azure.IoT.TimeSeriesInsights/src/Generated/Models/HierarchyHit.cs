@@ -8,7 +8,7 @@
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The hierarchy node which contains the instances matching the query based on the input. May be empty or null. </summary>
-    public partial class HierarchyHit
+    internal partial class HierarchyHit
     {
         /// <summary> Initializes a new instance of HierarchyHit. </summary>
         internal HierarchyHit()

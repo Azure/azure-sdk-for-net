@@ -16,8 +16,6 @@ namespace Microsoft.Azure.Management.IotCentral.Models
     /// </summary>
     public static class AppSku
     {
-        public const string F1 = "F1";
-        public const string S1 = "S1";
         public const string ST0 = "ST0";
         public const string ST1 = "ST1";
         public const string ST2 = "ST2";

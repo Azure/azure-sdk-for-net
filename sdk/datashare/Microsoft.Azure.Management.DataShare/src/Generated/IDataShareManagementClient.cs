@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.DataShare
         IDataSetMappingsOperations DataSetMappings { get; }
 
         /// <summary>
+        /// Gets the IEmailRegistrationsOperations.
+        /// </summary>
+        IEmailRegistrationsOperations EmailRegistrations { get; }
+
+        /// <summary>
         /// Gets the IInvitationsOperations.
         /// </summary>
         IInvitationsOperations Invitations { get; }

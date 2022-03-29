@@ -21,5 +21,5 @@ This client library allows to do following operations:
  - Manage phone numbers [synchronously][sample_phonenumbers] or [asynchronously][sample_phonenumbers_async]
 
 <!-- LINKS -->
-[sample_phonenumbers]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/samples/Sample_PhoneNumbersClient.md
-[sample_phonenumbers_async]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/samples/Sample_PhoneNumbersClientAsync.md
+[sample_phonenumbers]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/samples/Sample_PhoneNumbersClient.md
+[sample_phonenumbers_async]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/samples/Sample_PhoneNumbersClientAsync.md

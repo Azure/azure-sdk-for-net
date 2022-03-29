@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ProximityPlacementGroupListResult. </summary>
         /// <param name="value"> The list of proximity placement groups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ProximityPlacementGroupListResult(IEnumerable<ProximityPlacementGroup> value)
+        internal ProximityPlacementGroupListResult(IEnumerable<ProximityPlacementGroupData> value)
         {
             if (value == null)
             {
@@ -30,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ProximityPlacementGroupListResult. </summary>
         /// <param name="value"> The list of proximity placement groups. </param>
         /// <param name="nextLink"> The URI to fetch the next page of proximity placement groups. </param>
-        internal ProximityPlacementGroupListResult(IReadOnlyList<ProximityPlacementGroup> value, string nextLink)
+        internal ProximityPlacementGroupListResult(IReadOnlyList<ProximityPlacementGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of proximity placement groups. </summary>
-        public IReadOnlyList<ProximityPlacementGroup> Value { get; }
+        public IReadOnlyList<ProximityPlacementGroupData> Value { get; }
         /// <summary> The URI to fetch the next page of proximity placement groups. </summary>
         public string NextLink { get; }
     }

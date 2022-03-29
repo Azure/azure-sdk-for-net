@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static SqlContainerListResult DeserializeSqlContainerListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SqlContainerGetResults>> value = default;
+            Optional<IReadOnlyList<SqlContainerData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SqlContainerGetResults> array = new List<SqlContainerGetResults>();
+                    List<SqlContainerData> array = new List<SqlContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlContainerGetResults.DeserializeSqlContainerGetResults(item));
+                        array.Add(SqlContainerData.DeserializeSqlContainerData(item));
                     }
                     value = array;
                     continue;

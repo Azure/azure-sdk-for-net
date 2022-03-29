@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Confluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Confluent Agreements Resource.
+    /// Agreement Terms definition
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ConfluentAgreementResource : IResource
@@ -33,9 +33,11 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// <summary>
         /// Initializes a new instance of the ConfluentAgreementResource class.
         /// </summary>
-        /// <param name="id">ARM id of the resource.</param>
-        /// <param name="name">Name of the agreement.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">The ARM id of the resource.</param>
+        /// <param name="name">The name of the agreement.</param>
+        /// <param name="type">The type of the agreement.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource</param>
         /// <param name="publisher">Publisher identifier string.</param>
         /// <param name="product">Product identifier string.</param>
         /// <param name="plan">Plan identifier string.</param>
@@ -48,11 +50,12 @@ namespace Microsoft.Azure.Management.Confluent.Models
         /// <param name="signature">Terms signature.</param>
         /// <param name="accepted">If any version of the terms have been
         /// accepted, otherwise false.</param>
-        public ConfluentAgreementResource(string id = default(string), string name = default(string), string type = default(string), string publisher = default(string), string product = default(string), string plan = default(string), string licenseTextLink = default(string), string privacyPolicyLink = default(string), System.DateTime? retrieveDatetime = default(System.DateTime?), string signature = default(string), bool? accepted = default(bool?))
+        public ConfluentAgreementResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string publisher = default(string), string product = default(string), string plan = default(string), string licenseTextLink = default(string), string privacyPolicyLink = default(string), System.DateTime? retrieveDatetime = default(System.DateTime?), string signature = default(string), bool? accepted = default(bool?))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             Publisher = publisher;
             Product = product;
             Plan = plan;
@@ -70,22 +73,29 @@ namespace Microsoft.Azure.Management.Confluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets ARM id of the resource.
+        /// Gets the ARM id of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the agreement.
+        /// Gets the name of the agreement.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the type of the resource.
+        /// Gets the type of the agreement.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets publisher identifier string.

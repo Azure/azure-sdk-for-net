@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,11 +32,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// CreateNetworkMappingInputProperties class.
         /// </summary>
-        /// <param name="recoveryFabricName">Recovery fabric Name.</param>
         /// <param name="recoveryNetworkId">Recovery network Id.</param>
+        /// <param name="recoveryFabricName">Recovery fabric Name.</param>
         /// <param name="fabricSpecificDetails">Fabric specific input
         /// properties.</param>
-        public CreateNetworkMappingInputProperties(string recoveryFabricName = default(string), string recoveryNetworkId = default(string), FabricSpecificCreateNetworkMappingInput fabricSpecificDetails = default(FabricSpecificCreateNetworkMappingInput))
+        public CreateNetworkMappingInputProperties(string recoveryNetworkId, string recoveryFabricName = default(string), FabricSpecificCreateNetworkMappingInput fabricSpecificDetails = default(FabricSpecificCreateNetworkMappingInput))
         {
             RecoveryFabricName = recoveryFabricName;
             RecoveryNetworkId = recoveryNetworkId;
@@ -66,5 +67,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "fabricSpecificDetails")]
         public FabricSpecificCreateNetworkMappingInput FabricSpecificDetails { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RecoveryNetworkId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryNetworkId");
+            }
+        }
     }
 }

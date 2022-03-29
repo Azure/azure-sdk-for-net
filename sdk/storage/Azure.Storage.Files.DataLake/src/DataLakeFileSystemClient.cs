@@ -17,6 +17,8 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using System.ComponentModel;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
@@ -225,15 +227,18 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _containerClient = BlobContainerClientInternals.Create(
                 _blobUri,
                 _clientConfiguration);
 
-            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_uri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -330,7 +335,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential)
-            : this(fileSystemUri, credential.AsPolicy(), null, null)
+            : this(fileSystemUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
         {
             Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
@@ -352,7 +357,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileSystemUri, credential.AsPolicy(), options, null)
+            : this(fileSystemUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
@@ -393,15 +398,18 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _containerClient = BlobContainerClientInternals.Create(
                 _blobUri,
                 _clientConfiguration);
 
-            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(fileSystemUri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -430,29 +438,25 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _clientConfiguration);
 
-            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(fileSystemUri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
             _fileSystemRestClient = dfsFileSystemRestClient;
             _blobFileSystemRestClient = blobFileSystemRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
-        private (FileSystemRestClient DfsFileSystemRestClient, FileSystemRestClient BlobFileSystemRestClient) BuildFileSystemRestClients(Uri uri)
+        private (FileSystemRestClient DfsFileSystemRestClient, FileSystemRestClient BlobFileSystemRestClient) BuildFileSystemRestClients(Uri dfsUri, Uri blobUri)
         {
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
-            string fileSystemName = uriBuilder.FileSystemName;
-            uriBuilder.FileSystemName = null;
-
             FileSystemRestClient dfsFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToDfsUri().ToString(),
-                fileSystem: fileSystemName,
+                url: dfsUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
 
             FileSystemRestClient blobFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToBlobUri().ToString(),
-                fileSystem: fileSystemName,
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
 
             return (dfsFileSystemRestClient, blobFileSystemRestClient);
@@ -844,7 +848,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified
         /// file system for deletion. The file system and any paths contained
-        /// within it are later deleted during garbage collection.
+        /// within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -859,7 +864,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -870,6 +875,14 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
+
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(conditions));
 
             try
             {
@@ -893,7 +906,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
         /// file system for deletion. The file system and any paths contained
-        /// within it are later deleted during garbage collection.
+        /// within it are later deleted during garbage collection which could
+        /// take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -908,7 +922,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -919,6 +933,14 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
+
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(conditions));
 
             try
             {
@@ -945,7 +967,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified
         /// file system for deletion if it exists. The file system and any files
-        /// and directories contained within it are later deleted during garbage collection.
+        /// and directories contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -960,7 +983,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -971,6 +994,14 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteIfExists)}");
+
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(conditions));
 
             try
             {
@@ -994,7 +1025,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified
         /// file system for deletion if it exists. The file system and any files
-        /// and directories contained within it are later deleted during garbage collection.
+        /// and directories contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1009,7 +1041,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1772,7 +1804,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteDirectory"/> operation marks the specified path
         /// deletion. The path is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1790,7 +1822,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1825,7 +1857,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteDirectoryAsync"/> deletes a directory in this file system.
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -1843,7 +1875,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -2904,7 +2936,15 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal virtual DataLakePathClient GetPathClient(string path)
+        /// <summary>
+        /// Create a new <see cref="DataLakePathClient"/> object by appending
+        /// <paramref name="path"/> to the end of <see cref="Uri"/>.  The
+        /// new <see cref="DataLakePathClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="path">The name of the directory.</param>
+        /// <returns>A new <see cref="DataLakePathClient"/> instance.</returns>
+        public virtual DataLakePathClient GetPathClient(string path)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri)
             {
@@ -2916,5 +2956,59 @@ namespace Azure.Storage.Files.DataLake
                 ClientConfiguration);
         }
         #endregion Restore Path
+
+        #region GetParentDataLakeServiceClientCore
+
+        private DataLakeServiceClient _parentServiceClient;
+
+        /// <summary>
+        /// Create a new <see cref="DataLakeServiceClient"/> that pointing to this <see cref="DataLakeFileSystemClient"/>'s parent container.
+        /// The new <see cref="DataLakeServiceClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="DataLakeFileSystemClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual DataLakeServiceClient GetParentServiceClientCore()
+        {
+            if (_parentServiceClient == null)
+            {
+                DataLakeUriBuilder datalakeUriBuilder = new DataLakeUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    DirectoryOrFilePath = null,
+                    Snapshot = null,
+                };
+
+                _parentServiceClient = new DataLakeServiceClient(
+                    datalakeUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentServiceClient;
+        }
+        #endregion
+    }
+
+    namespace Specialized
+    {
+        /// <summary>
+        /// Add easy to discover methods to <see cref="DataLakePathClient"/> for
+        /// creating <see cref="DataLakeFileSystemClient"/> instances.
+        /// </summary>
+        public static partial class SpecializedDataLakeExtensions
+        {
+            /// <summary>
+            /// Create a new <see cref="DataLakeFileSystemClient"/> that pointing to this <see cref="DataLakePathClient"/>'s parent container.
+            /// The new <see cref="DataLakeFileSystemClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="DataLakePathClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="DataLakePathClient"/>.</param>
+            /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
+            public static DataLakeServiceClient GetParentServiceClient(this DataLakeFileSystemClient client)
+            {
+                return client.GetParentServiceClientCore();
+            }
+        }
     }
 }

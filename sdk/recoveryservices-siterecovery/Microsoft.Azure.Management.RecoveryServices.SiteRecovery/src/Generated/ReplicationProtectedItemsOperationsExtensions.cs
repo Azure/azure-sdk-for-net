@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Updates protection.
+            /// Updates the replication protected item settings.
             /// </summary>
             /// <remarks>
             /// The operation to update the recovery settings of an ASR replication
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Updates protection.
+            /// Updates the replication protected item settings.
             /// </summary>
             /// <remarks>
             /// The operation to update the recovery settings of an ASR replication
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The protection container name.
             /// </param>
             /// <param name='replicatedProtectedItemName'>
-            /// The replicated protected item's name.
+            /// The replicated protected item name.
             /// </param>
             /// <param name='applyRecoveryPointInput'>
             /// The ApplyRecoveryPointInput.
@@ -399,7 +399,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The protection container name.
             /// </param>
             /// <param name='replicatedProtectedItemName'>
-            /// The replicated protected item's name.
+            /// The replicated protected item name.
             /// </param>
             /// <param name='applyRecoveryPointInput'>
             /// The ApplyRecoveryPointInput.
@@ -416,7 +416,59 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute commit failover
+            /// Execute cancel failover.
+            /// </summary>
+            /// <remarks>
+            /// Operation to cancel the failover of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            public static ReplicationProtectedItem FailoverCancel(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName)
+            {
+                return operations.FailoverCancelAsync(fabricName, protectionContainerName, replicatedProtectedItemName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute cancel failover.
+            /// </summary>
+            /// <remarks>
+            /// Operation to cancel the failover of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> FailoverCancelAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.FailoverCancelWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Execute commit failover.
             /// </summary>
             /// <remarks>
             /// Operation to commit the failover of the replication protected item.
@@ -439,7 +491,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute commit failover
+            /// Execute commit failover.
             /// </summary>
             /// <remarks>
             /// Operation to commit the failover of the replication protected item.
@@ -468,7 +520,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute planned failover
+            /// Execute planned failover.
             /// </summary>
             /// <remarks>
             /// Operation to initiate a planned failover of the replication protected item.
@@ -486,7 +538,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Replication protected item name.
             /// </param>
             /// <param name='failoverInput'>
-            /// Disable protection input.
+            /// Planned failover input.
             /// </param>
             public static ReplicationProtectedItem PlannedFailover(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, PlannedFailoverInput failoverInput)
             {
@@ -494,7 +546,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute planned failover
+            /// Execute planned failover.
             /// </summary>
             /// <remarks>
             /// Operation to initiate a planned failover of the replication protected item.
@@ -512,7 +564,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Replication protected item name.
             /// </param>
             /// <param name='failoverInput'>
-            /// Disable protection input.
+            /// Planned failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -695,7 +747,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute Reverse Replication\Reprotect
+            /// Execute Reverse Replication\Reprotect.
             /// </summary>
             /// <remarks>
             /// Operation to reprotect or reverse replicate a failed over replication
@@ -713,16 +765,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='replicatedProtectedItemName'>
             /// Replication protected item name.
             /// </param>
-            /// <param name='rrInput'>
-            /// Disable protection input.
+            /// <param name='reprotectInput'>
+            /// Reverse replication input.
             /// </param>
-            public static ReplicationProtectedItem Reprotect(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput rrInput)
+            public static ReplicationProtectedItem Reprotect(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput reprotectInput)
             {
-                return operations.ReprotectAsync(fabricName, protectionContainerName, replicatedProtectedItemName, rrInput).GetAwaiter().GetResult();
+                return operations.ReprotectAsync(fabricName, protectionContainerName, replicatedProtectedItemName, reprotectInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Execute Reverse Replication\Reprotect
+            /// Execute Reverse Replication\Reprotect.
             /// </summary>
             /// <remarks>
             /// Operation to reprotect or reverse replicate a failed over replication
@@ -740,15 +792,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='replicatedProtectedItemName'>
             /// Replication protected item name.
             /// </param>
-            /// <param name='rrInput'>
-            /// Disable protection input.
+            /// <param name='reprotectInput'>
+            /// Reverse replication input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationProtectedItem> ReprotectAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput rrInput, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReplicationProtectedItem> ReprotectAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput reprotectInput, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ReprotectWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, rrInput, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReprotectWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, reprotectInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -813,10 +865,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute test failover
+            /// Execute switch provider.
             /// </summary>
             /// <remarks>
-            /// Operation to perform a test failover of the replication protected item.
+            /// Operation to initiate a switch provider of the replication protected item.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -830,16 +882,48 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='replicatedProtectedItemName'>
             /// Replication protected item name.
             /// </param>
-            /// <param name='failoverInput'>
-            /// Test failover input.
+            /// <param name='switchProviderInput'>
+            /// Switch provider input.
             /// </param>
-            public static ReplicationProtectedItem TestFailover(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput failoverInput)
+            public static ReplicationProtectedItem SwitchProvider(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderInput switchProviderInput)
             {
-                return operations.TestFailoverAsync(fabricName, protectionContainerName, replicatedProtectedItemName, failoverInput).GetAwaiter().GetResult();
+                return operations.SwitchProviderAsync(fabricName, protectionContainerName, replicatedProtectedItemName, switchProviderInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Execute test failover
+            /// Execute switch provider.
+            /// </summary>
+            /// <remarks>
+            /// Operation to initiate a switch provider of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='switchProviderInput'>
+            /// Switch provider input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> SwitchProviderAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderInput switchProviderInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SwitchProviderWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, switchProviderInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Execute test failover.
             /// </summary>
             /// <remarks>
             /// Operation to perform a test failover of the replication protected item.
@@ -856,15 +940,41 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='replicatedProtectedItemName'>
             /// Replication protected item name.
             /// </param>
-            /// <param name='failoverInput'>
+            /// <param name='testfailoverInput'>
+            /// Test failover input.
+            /// </param>
+            public static ReplicationProtectedItem TestFailover(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput testfailoverInput)
+            {
+                return operations.TestFailoverAsync(fabricName, protectionContainerName, replicatedProtectedItemName, testfailoverInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute test failover.
+            /// </summary>
+            /// <remarks>
+            /// Operation to perform a test failover of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='testfailoverInput'>
             /// Test failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationProtectedItem> TestFailoverAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput failoverInput, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReplicationProtectedItem> TestFailoverAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput testfailoverInput, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TestFailoverWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, failoverInput, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TestFailoverWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, testfailoverInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -929,7 +1039,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute unplanned failover
+            /// Execute unplanned failover.
             /// </summary>
             /// <remarks>
             /// Operation to initiate a failover of the replication protected item.
@@ -947,7 +1057,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Replication protected item name.
             /// </param>
             /// <param name='failoverInput'>
-            /// Disable protection input.
+            /// Failover input.
             /// </param>
             public static ReplicationProtectedItem UnplannedFailover(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UnplannedFailoverInput failoverInput)
             {
@@ -955,7 +1065,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute unplanned failover
+            /// Execute unplanned failover.
             /// </summary>
             /// <remarks>
             /// Operation to initiate a failover of the replication protected item.
@@ -973,7 +1083,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Replication protected item name.
             /// </param>
             /// <param name='failoverInput'>
-            /// Disable protection input.
+            /// Failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -981,6 +1091,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<ReplicationProtectedItem> UnplannedFailoverAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UnplannedFailoverInput failoverInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UnplannedFailoverWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, failoverInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates appliance for replication protected Item.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update appliance of an ASR replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='applianceUpdateInput'>
+            /// Appliance update protection input.
+            /// </param>
+            public static ReplicationProtectedItem UpdateAppliance(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemInput applianceUpdateInput)
+            {
+                return operations.UpdateApplianceAsync(fabricName, protectionContainerName, replicatedProtectedItemName, applianceUpdateInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates appliance for replication protected Item.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update appliance of an ASR replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='applianceUpdateInput'>
+            /// Appliance update protection input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> UpdateApplianceAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemInput applianceUpdateInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateApplianceWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, applianceUpdateInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1060,7 +1228,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </param>
             /// <param name='skipToken'>
             /// The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or
-            /// null
+            /// null.
             /// </param>
             public static IPage<ReplicationProtectedItem> List(this IReplicationProtectedItemsOperations operations, ODataQuery<ProtectedItemsQueryParameter> odataQuery = default(ODataQuery<ProtectedItemsQueryParameter>), string skipToken = default(string))
             {
@@ -1081,7 +1249,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </param>
             /// <param name='skipToken'>
             /// The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or
-            /// null
+            /// null.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1210,7 +1378,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Updates protection.
+            /// Updates the replication protected item settings.
             /// </summary>
             /// <remarks>
             /// The operation to update the recovery settings of an ASR replication
@@ -1237,7 +1405,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Updates protection.
+            /// Updates the replication protected item settings.
             /// </summary>
             /// <remarks>
             /// The operation to update the recovery settings of an ASR replication
@@ -1344,7 +1512,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The protection container name.
             /// </param>
             /// <param name='replicatedProtectedItemName'>
-            /// The replicated protected item's name.
+            /// The replicated protected item name.
             /// </param>
             /// <param name='applyRecoveryPointInput'>
             /// The ApplyRecoveryPointInput.
@@ -1371,7 +1539,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The protection container name.
             /// </param>
             /// <param name='replicatedProtectedItemName'>
-            /// The replicated protected item's name.
+            /// The replicated protected item name.
             /// </param>
             /// <param name='applyRecoveryPointInput'>
             /// The ApplyRecoveryPointInput.
@@ -1388,7 +1556,59 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute commit failover
+            /// Execute cancel failover.
+            /// </summary>
+            /// <remarks>
+            /// Operation to cancel the failover of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            public static ReplicationProtectedItem BeginFailoverCancel(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName)
+            {
+                return operations.BeginFailoverCancelAsync(fabricName, protectionContainerName, replicatedProtectedItemName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute cancel failover.
+            /// </summary>
+            /// <remarks>
+            /// Operation to cancel the failover of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> BeginFailoverCancelAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginFailoverCancelWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Execute commit failover.
             /// </summary>
             /// <remarks>
             /// Operation to commit the failover of the replication protected item.
@@ -1411,7 +1631,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute commit failover
+            /// Execute commit failover.
             /// </summary>
             /// <remarks>
             /// Operation to commit the failover of the replication protected item.
@@ -1440,7 +1660,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute planned failover
+            /// Execute planned failover.
             /// </summary>
             /// <remarks>
             /// Operation to initiate a planned failover of the replication protected item.
@@ -1458,7 +1678,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Replication protected item name.
             /// </param>
             /// <param name='failoverInput'>
-            /// Disable protection input.
+            /// Planned failover input.
             /// </param>
             public static ReplicationProtectedItem BeginPlannedFailover(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, PlannedFailoverInput failoverInput)
             {
@@ -1466,7 +1686,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute planned failover
+            /// Execute planned failover.
             /// </summary>
             /// <remarks>
             /// Operation to initiate a planned failover of the replication protected item.
@@ -1484,7 +1704,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Replication protected item name.
             /// </param>
             /// <param name='failoverInput'>
-            /// Disable protection input.
+            /// Planned failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1667,7 +1887,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute Reverse Replication\Reprotect
+            /// Execute Reverse Replication\Reprotect.
             /// </summary>
             /// <remarks>
             /// Operation to reprotect or reverse replicate a failed over replication
@@ -1685,16 +1905,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='replicatedProtectedItemName'>
             /// Replication protected item name.
             /// </param>
-            /// <param name='rrInput'>
-            /// Disable protection input.
+            /// <param name='reprotectInput'>
+            /// Reverse replication input.
             /// </param>
-            public static ReplicationProtectedItem BeginReprotect(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput rrInput)
+            public static ReplicationProtectedItem BeginReprotect(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput reprotectInput)
             {
-                return operations.BeginReprotectAsync(fabricName, protectionContainerName, replicatedProtectedItemName, rrInput).GetAwaiter().GetResult();
+                return operations.BeginReprotectAsync(fabricName, protectionContainerName, replicatedProtectedItemName, reprotectInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Execute Reverse Replication\Reprotect
+            /// Execute Reverse Replication\Reprotect.
             /// </summary>
             /// <remarks>
             /// Operation to reprotect or reverse replicate a failed over replication
@@ -1712,15 +1932,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='replicatedProtectedItemName'>
             /// Replication protected item name.
             /// </param>
-            /// <param name='rrInput'>
-            /// Disable protection input.
+            /// <param name='reprotectInput'>
+            /// Reverse replication input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationProtectedItem> BeginReprotectAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput rrInput, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReplicationProtectedItem> BeginReprotectAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput reprotectInput, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginReprotectWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, rrInput, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginReprotectWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, reprotectInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1785,10 +2005,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute test failover
+            /// Execute switch provider.
             /// </summary>
             /// <remarks>
-            /// Operation to perform a test failover of the replication protected item.
+            /// Operation to initiate a switch provider of the replication protected item.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1802,16 +2022,48 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='replicatedProtectedItemName'>
             /// Replication protected item name.
             /// </param>
-            /// <param name='failoverInput'>
-            /// Test failover input.
+            /// <param name='switchProviderInput'>
+            /// Switch provider input.
             /// </param>
-            public static ReplicationProtectedItem BeginTestFailover(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput failoverInput)
+            public static ReplicationProtectedItem BeginSwitchProvider(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderInput switchProviderInput)
             {
-                return operations.BeginTestFailoverAsync(fabricName, protectionContainerName, replicatedProtectedItemName, failoverInput).GetAwaiter().GetResult();
+                return operations.BeginSwitchProviderAsync(fabricName, protectionContainerName, replicatedProtectedItemName, switchProviderInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Execute test failover
+            /// Execute switch provider.
+            /// </summary>
+            /// <remarks>
+            /// Operation to initiate a switch provider of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='switchProviderInput'>
+            /// Switch provider input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> BeginSwitchProviderAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderInput switchProviderInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginSwitchProviderWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, switchProviderInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Execute test failover.
             /// </summary>
             /// <remarks>
             /// Operation to perform a test failover of the replication protected item.
@@ -1828,15 +2080,41 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='replicatedProtectedItemName'>
             /// Replication protected item name.
             /// </param>
-            /// <param name='failoverInput'>
+            /// <param name='testfailoverInput'>
+            /// Test failover input.
+            /// </param>
+            public static ReplicationProtectedItem BeginTestFailover(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput testfailoverInput)
+            {
+                return operations.BeginTestFailoverAsync(fabricName, protectionContainerName, replicatedProtectedItemName, testfailoverInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute test failover.
+            /// </summary>
+            /// <remarks>
+            /// Operation to perform a test failover of the replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Unique fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='testfailoverInput'>
             /// Test failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationProtectedItem> BeginTestFailoverAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput failoverInput, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReplicationProtectedItem> BeginTestFailoverAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverInput testfailoverInput, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginTestFailoverWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, failoverInput, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginTestFailoverWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, testfailoverInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1901,7 +2179,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute unplanned failover
+            /// Execute unplanned failover.
             /// </summary>
             /// <remarks>
             /// Operation to initiate a failover of the replication protected item.
@@ -1919,7 +2197,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Replication protected item name.
             /// </param>
             /// <param name='failoverInput'>
-            /// Disable protection input.
+            /// Failover input.
             /// </param>
             public static ReplicationProtectedItem BeginUnplannedFailover(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UnplannedFailoverInput failoverInput)
             {
@@ -1927,7 +2205,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Execute unplanned failover
+            /// Execute unplanned failover.
             /// </summary>
             /// <remarks>
             /// Operation to initiate a failover of the replication protected item.
@@ -1945,7 +2223,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Replication protected item name.
             /// </param>
             /// <param name='failoverInput'>
-            /// Disable protection input.
+            /// Failover input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1953,6 +2231,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<ReplicationProtectedItem> BeginUnplannedFailoverAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UnplannedFailoverInput failoverInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUnplannedFailoverWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, failoverInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates appliance for replication protected Item.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update appliance of an ASR replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='applianceUpdateInput'>
+            /// Appliance update protection input.
+            /// </param>
+            public static ReplicationProtectedItem BeginUpdateAppliance(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemInput applianceUpdateInput)
+            {
+                return operations.BeginUpdateApplianceAsync(fabricName, protectionContainerName, replicatedProtectedItemName, applianceUpdateInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates appliance for replication protected Item.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update appliance of an ASR replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// Replication protected item name.
+            /// </param>
+            /// <param name='applianceUpdateInput'>
+            /// Appliance update protection input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReplicationProtectedItem> BeginUpdateApplianceAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemInput applianceUpdateInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateApplianceWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, applianceUpdateInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

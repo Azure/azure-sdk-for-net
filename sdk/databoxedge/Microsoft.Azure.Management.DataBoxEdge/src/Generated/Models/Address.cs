@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <summary>
         /// Initializes a new instance of the Address class.
         /// </summary>
+        /// <param name="country">The country name.</param>
         /// <param name="addressLine1">The address line1.</param>
+        /// <param name="addressLine2">The address line2.</param>
+        /// <param name="addressLine3">The address line3.</param>
         /// <param name="postalCode">The postal code.</param>
         /// <param name="city">The city name.</param>
         /// <param name="state">The state name.</param>
-        /// <param name="country">The country name.</param>
-        /// <param name="addressLine2">The address line2.</param>
-        /// <param name="addressLine3">The address line3.</param>
-        public Address(string addressLine1, string postalCode, string city, string state, string country, string addressLine2 = default(string), string addressLine3 = default(string))
+        public Address(string country, string addressLine1 = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string postalCode = default(string), string city = default(string), string state = default(string))
         {
             AddressLine1 = addressLine1;
             AddressLine2 = addressLine2;
@@ -104,22 +104,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (AddressLine1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AddressLine1");
-            }
-            if (PostalCode == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PostalCode");
-            }
-            if (City == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "City");
-            }
-            if (State == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "State");
-            }
             if (Country == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Country");

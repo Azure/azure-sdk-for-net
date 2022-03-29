@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.Samples
                 Console.WriteLine("https://www.bing.com/maps?cp={0}~{1}&sp=point.{0}_{1}_{2}",
                     mountain.Summit.Latitude,
                     mountain.Summit.Longitude,
-                    Uri.EscapeUriString(mountain.Name));
+                    Uri.EscapeDataString(mountain.Name));
             }
             #endregion Snippet:Microsoft_Azure_Core_Spatial_NewtonsoftJson_Samples_Readme_SearchSample
 

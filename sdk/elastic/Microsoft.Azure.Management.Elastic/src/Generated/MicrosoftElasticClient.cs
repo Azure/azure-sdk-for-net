@@ -98,6 +98,21 @@ namespace Microsoft.Azure.Management.Elastic
         public virtual ITagRulesOperations TagRules { get; private set; }
 
         /// <summary>
+        /// Gets the IVMHostOperations.
+        /// </summary>
+        public virtual IVMHostOperations VMHost { get; private set; }
+
+        /// <summary>
+        /// Gets the IVMIngestionOperations.
+        /// </summary>
+        public virtual IVMIngestionOperations VMIngestion { get; private set; }
+
+        /// <summary>
+        /// Gets the IVMCollectionOperations.
+        /// </summary>
+        public virtual IVMCollectionOperations VMCollection { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the MicrosoftElasticClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -343,6 +358,9 @@ namespace Microsoft.Azure.Management.Elastic
             MonitoredResources = new MonitoredResourcesOperations(this);
             DeploymentInfo = new DeploymentInfoOperations(this);
             TagRules = new TagRulesOperations(this);
+            VMHost = new VMHostOperations(this);
+            VMIngestion = new VMIngestionOperations(this);
+            VMCollection = new VMCollectionOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2020-07-01-preview";
             AcceptLanguage = "en-US";

@@ -43,8 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
                 Notebook notebook = new Notebook (
                     new NotebookMetadata { LanguageInfo = new NotebookLanguageInfo(name: "Python") },
-                    nbformat: 4,
-                    nbformatMinor: 2,
+                    notebookFormat: 4,
+                    notebookFormatMinor: 2,
                     new List<NotebookCell>()
                 );
                 NotebookCreateOrUpdateNotebookOperation createOperation = await client.StartCreateOrUpdateNotebookAsync(name, new NotebookResource(name, notebook));
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             public async ValueTask DisposeAsync()
             {
                 NotebookDeleteNotebookOperation operation = await _client.StartDeleteNotebookAsync (Name);
-                await operation.WaitForCompletionAsync();
+                await operation.WaitForCompletionResponseAsync();
             }
         }
 
@@ -110,13 +110,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             string newNotebookName = Recording.GenerateId("Notebook2", 16);
 
             NotebookRenameNotebookOperation renameOperation = await client.StartRenameNotebookAsync (resource.Name, new ArtifactRenameRequest () { NewName = newNotebookName } );
-            await renameOperation.WaitForCompletionAsync();
+            await renameOperation.WaitForCompletionResponseAsync();
 
             NotebookResource notebook = await client.GetNotebookAsync (newNotebookName);
             Assert.AreEqual (newNotebookName, notebook.Name);
 
             NotebookDeleteNotebookOperation operation = await client.StartDeleteNotebookAsync (newNotebookName);
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionResponseAsync();
         }
 
         [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18080 - Notebook summary appears to require Synapse.Spark execution first")]

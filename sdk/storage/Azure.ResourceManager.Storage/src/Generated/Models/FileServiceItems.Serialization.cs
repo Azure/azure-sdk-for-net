@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class FileServiceItems
+    internal partial class FileServiceItems
     {
         internal static FileServiceItems DeserializeFileServiceItems(JsonElement element)
         {
-            Optional<IReadOnlyList<FileServiceProperties>> value = default;
+            Optional<IReadOnlyList<FileServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FileServiceProperties> array = new List<FileServiceProperties>();
+                    List<FileServiceData> array = new List<FileServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileServiceProperties.DeserializeFileServiceProperties(item));
+                        array.Add(FileServiceData.DeserializeFileServiceData(item));
                     }
                     value = array;
                     continue;

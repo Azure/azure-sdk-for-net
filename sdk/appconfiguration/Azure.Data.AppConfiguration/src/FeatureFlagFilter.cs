@@ -23,7 +23,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="name">The name of the feature filter. For example: PercentageFilter, TimeWindowFilter, TargetingFilter.</param>
         /// <param name="parameters">Parameters of the feature filter.</param>
-        public FeatureFlagFilter(string name, IReadOnlyDictionary<string, object> parameters)
+        public FeatureFlagFilter(string name, IDictionary<string, object> parameters)
         {
             Name = name;
             Parameters = parameters;
@@ -37,6 +37,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Gets the parameters of the feature filter.
         /// </summary>
-        public IReadOnlyDictionary<string, object> Parameters { get; }
+        public IDictionary<string, object> Parameters { get; }
     }
 }

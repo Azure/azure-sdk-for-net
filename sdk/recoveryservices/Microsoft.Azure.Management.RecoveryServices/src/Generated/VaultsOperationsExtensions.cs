@@ -263,6 +263,102 @@ namespace Microsoft.Azure.Management.RecoveryServices
             }
 
             /// <summary>
+            /// Creates or updates a Recovery Services vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='vault'>
+            /// Recovery Services Vault to be created.
+            /// </param>
+            public static Vault BeginCreateOrUpdate(this IVaultsOperations operations, string resourceGroupName, string vaultName, Vault vault)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, vaultName, vault).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a Recovery Services vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='vault'>
+            /// Recovery Services Vault to be created.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Vault> BeginCreateOrUpdateAsync(this IVaultsOperations operations, string resourceGroupName, string vaultName, Vault vault, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vaultName, vault, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='vault'>
+            /// Recovery Services Vault to be created.
+            /// </param>
+            public static Vault BeginUpdate(this IVaultsOperations operations, string resourceGroupName, string vaultName, PatchVault vault)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, vaultName, vault).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='vault'>
+            /// Recovery Services Vault to be created.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Vault> BeginUpdateAsync(this IVaultsOperations operations, string resourceGroupName, string vaultName, PatchVault vault, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, vaultName, vault, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Fetches all the resources of the specified type in the subscription.
             /// </summary>
             /// <param name='operations'>

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Response of a single operation on a batch of instances. Only one of &quot;get&quot;, &quot;put&quot;, &quot;update&quot; or &quot;delete&quot; will be set based on the request. </summary>
-    public partial class InstancesBatchResponse
+    internal partial class InstancesBatchResponse
     {
         /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>
         internal InstancesBatchResponse()

@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<int?> TotalTasksRunProperty;
             public readonly PropertyAccessor<int?> TotalTasksSucceededProperty;
             public readonly PropertyAccessor<string> UrlProperty;
+            public readonly PropertyAccessor<VirtualMachineInfo> VirtualMachineInfoProperty;
             public readonly PropertyAccessor<string> VirtualMachineSizeProperty;
             public PropertyContainer(Models.ComputeNode protocolObject) : base(BindingState.Bound)
             {
@@ -131,6 +132,10 @@ namespace Microsoft.Azure.Batch
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
                     nameof(Url),
+                    BindingAccess.Read);
+                this.VirtualMachineInfoProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.VirtualMachineInfo, o => new VirtualMachineInfo(o).Freeze()),
+                    nameof(VirtualMachineInfo),
                     BindingAccess.Read);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor(
                     protocolObject.VmSize,
@@ -357,6 +362,14 @@ namespace Microsoft.Azure.Batch
         public string Url
         {
             get { return this.propertyContainer.UrlProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets info about the current state of the virtual machine.
+        /// </summary>
+        public VirtualMachineInfo VirtualMachineInfo
+        {
+            get { return this.propertyContainer.VirtualMachineInfoProperty.Value; }
         }
 
         /// <summary>

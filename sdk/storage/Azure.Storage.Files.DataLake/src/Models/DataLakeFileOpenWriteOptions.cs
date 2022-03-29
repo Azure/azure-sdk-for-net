@@ -39,5 +39,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// the file stream has been closed.
         /// </summary>
         public bool? Close { get; set; }
+
+        ///// <summary>
+        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        ///// hashing on uploads.
+        ///// </summary>
+        // TODO #27253
+        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

@@ -95,10 +95,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (MaxRequestBodySizeInKb > 128)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxRequestBodySizeInKb", 128);
-            }
             if (MaxRequestBodySizeInKb < 8)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxRequestBodySizeInKb", 8);

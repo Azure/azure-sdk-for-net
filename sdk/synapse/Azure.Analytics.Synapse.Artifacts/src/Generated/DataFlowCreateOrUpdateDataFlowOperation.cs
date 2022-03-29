@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a data flow. </summary>
     public partial class DataFlowCreateOrUpdateDataFlowOperation : Operation<DataFlowResource>, IOperationSource<DataFlowResource>
     {
-        private readonly ArmOperationHelpers<DataFlowResource> _operation;
+        private readonly OperationInternals<DataFlowResource> _operation;
 
         /// <summary> Initializes a new instance of DataFlowCreateOrUpdateDataFlowOperation for mocking. </summary>
         protected DataFlowCreateOrUpdateDataFlowOperation()
@@ -28,8 +28,9 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal DataFlowCreateOrUpdateDataFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DataFlowResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowCreateOrUpdateDataFlowOperation");
+            _operation = new OperationInternals<DataFlowResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowCreateOrUpdateDataFlowOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -50,6 +51,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<DataFlowResource> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<DataFlowResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<DataFlowResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);

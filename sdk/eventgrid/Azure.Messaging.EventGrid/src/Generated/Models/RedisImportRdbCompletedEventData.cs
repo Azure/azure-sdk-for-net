@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Cache.ImportRDBCompleted event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.ImportRDBCompleted event. </summary>
     public partial class RedisImportRdbCompletedEventData
     {
         /// <summary> Initializes a new instance of RedisImportRdbCompletedEventData. </summary>

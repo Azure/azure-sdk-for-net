@@ -21,14 +21,16 @@ namespace Azure.AI.MetricsAdvisor.Samples
         [Test]
         public void CreateMetricsAdvisorClient()
         {
+            #region Snippet:CreateMetricsAdvisorClient
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string subscriptionKey = "<subscriptionKey>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
             string apiKey = MetricsAdvisorApiKey;
-
-            #region Snippet:CreateMetricsAdvisorClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string subscriptionKey = "<subscriptionKey>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
             #endregion
@@ -37,10 +39,12 @@ namespace Azure.AI.MetricsAdvisor.Samples
         [Test]
         public void CreateMetricsAdvisorClientWithAad()
         {
-            string endpoint = MetricsAdvisorUri;
-
             #region Snippet:CreateMetricsAdvisorClientWithAad
-            //@@ string endpoint = "<endpoint>";
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#else
+            string endpoint = MetricsAdvisorUri;
+#endif
             var client = new MetricsAdvisorClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
@@ -48,14 +52,16 @@ namespace Azure.AI.MetricsAdvisor.Samples
         [Test]
         public void CreateMetricsAdvisorAdministrationClient()
         {
+            #region Snippet:CreateMetricsAdvisorAdministrationClient
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string subscriptionKey = "<subscriptionKey>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
             string apiKey = MetricsAdvisorApiKey;
-
-            #region Snippet:CreateMetricsAdvisorAdministrationClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string subscriptionKey = "<subscriptionKey>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var credential = new MetricsAdvisorKeyCredential(subscriptionKey, apiKey);
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
             #endregion
@@ -64,10 +70,12 @@ namespace Azure.AI.MetricsAdvisor.Samples
         [Test]
         public void CreateMetricsAdvisorAdministrationClientWithAad()
         {
-            string endpoint = MetricsAdvisorUri;
-
             #region Snippet:CreateMetricsAdvisorAdministrationClientWithAad
-            //@@ string endpoint = "<endpoint>";
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#else
+            string endpoint = MetricsAdvisorUri;
+#endif
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
@@ -93,6 +101,31 @@ namespace Azure.AI.MetricsAdvisor.Samples
             {
                 Console.WriteLine(ex.ToString());
             }
+            #endregion
+        }
+
+        [Test]
+
+        public void SettingAuthentication()
+        {
+            #region Snippet:SettingAuthentication
+            var dataSoure = new SqlServerDataFeedSource("<connection-string>", "<query>")
+            {
+                Authentication = SqlServerDataFeedSource.AuthenticationType.ManagedIdentity
+            };
+            #endregion
+        }
+
+        [Test]
+
+        public void SettingCredentialAuthentication()
+        {
+            #region Snippet:SettingCredentialAuthentication
+            var dataSoure = new SqlServerDataFeedSource("<connection-string>", "<query>")
+            {
+                Authentication = SqlServerDataFeedSource.AuthenticationType.ServicePrincipal,
+                DataSourceCredentialId = "<credentialId>"
+            };
             #endregion
         }
     }

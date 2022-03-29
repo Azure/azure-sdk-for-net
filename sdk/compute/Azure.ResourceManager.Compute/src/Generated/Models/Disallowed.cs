@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the disallowed disk types. </summary>
-    public partial class Disallowed
+    internal partial class Disallowed
     {
         /// <summary> Initializes a new instance of Disallowed. </summary>
         public Disallowed()

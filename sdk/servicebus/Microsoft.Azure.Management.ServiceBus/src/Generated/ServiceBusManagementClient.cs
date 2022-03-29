@@ -21,9 +21,6 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Azure Service Bus client
-    /// </summary>
     public partial class ServiceBusManagementClient : ServiceClient<ServiceBusManagementClient>, IServiceBusManagementClient, IAzureClient
     {
         /// <summary>
@@ -77,14 +74,24 @@ namespace Microsoft.Azure.Management.ServiceBus
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         public virtual INamespacesOperations Namespaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Gets the IDisasterRecoveryConfigsOperations.
@@ -107,29 +114,14 @@ namespace Microsoft.Azure.Management.ServiceBus
         public virtual ITopicsOperations Topics { get; private set; }
 
         /// <summary>
-        /// Gets the ISubscriptionsOperations.
-        /// </summary>
-        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
-
-        /// <summary>
         /// Gets the IRulesOperations.
         /// </summary>
         public virtual IRulesOperations Rules { get; private set; }
 
         /// <summary>
-        /// Gets the IRegionsOperations.
+        /// Gets the ISubscriptionsOperations.
         /// </summary>
-        public virtual IRegionsOperations Regions { get; private set; }
-
-        /// <summary>
-        /// Gets the IPremiumMessagingRegionsOperations.
-        /// </summary>
-        public virtual IPremiumMessagingRegionsOperations PremiumMessagingRegions { get; private set; }
-
-        /// <summary>
-        /// Gets the IEventHubsOperations.
-        /// </summary>
-        public virtual IEventHubsOperations EventHubs { get; private set; }
+        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ServiceBusManagementClient class.
@@ -372,19 +364,18 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </summary>
         private void Initialize()
         {
-            Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            Operations = new Operations(this);
             DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
             MigrationConfigs = new MigrationConfigsOperations(this);
             Queues = new QueuesOperations(this);
             Topics = new TopicsOperations(this);
-            Subscriptions = new SubscriptionsOperations(this);
             Rules = new RulesOperations(this);
-            Regions = new RegionsOperations(this);
-            PremiumMessagingRegions = new PremiumMessagingRegionsOperations(this);
-            EventHubs = new EventHubsOperations(this);
+            Subscriptions = new SubscriptionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-04-01";
+            ApiVersion = "2021-06-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

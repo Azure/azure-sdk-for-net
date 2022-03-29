@@ -18,15 +18,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorTcpConfiguration. </summary>
         /// <param name="port"> The port to connect to. </param>
         /// <param name="disableTraceRoute"> Value indicating whether path evaluation with trace route should be disabled. </param>
-        internal ConnectionMonitorTcpConfiguration(int? port, bool? disableTraceRoute)
+        /// <param name="destinationPortBehavior"> Destination port behavior. </param>
+        internal ConnectionMonitorTcpConfiguration(int? port, bool? disableTraceRoute, DestinationPortBehavior? destinationPortBehavior)
         {
             Port = port;
             DisableTraceRoute = disableTraceRoute;
+            DestinationPortBehavior = destinationPortBehavior;
         }
 
         /// <summary> The port to connect to. </summary>
         public int? Port { get; set; }
         /// <summary> Value indicating whether path evaluation with trace route should be disabled. </summary>
         public bool? DisableTraceRoute { get; set; }
+        /// <summary> Destination port behavior. </summary>
+        public DestinationPortBehavior? DestinationPortBehavior { get; set; }
     }
 }

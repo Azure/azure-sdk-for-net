@@ -15,5 +15,7 @@
     <Compile Include="$(MSBuildThisfileDirectory)Testing\EventHubScope.cs" Link="SharedSource\Perf\%(Filename)%(Extension)" />
     <Compile Include="$(MSBuildThisfileDirectory)Testing\EventHubsTestEnvironment.cs" Link="SharedSource\Perf\%(Filename)%(Extension)" />
     <Compile Include="$(MSBuildThisfileDirectory)Testing\LiveResourceManager.cs" Link="SharedSource\Perf\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisfileDirectory)BlobStorageTesting\StorageScope.cs" Link="SharedSource\Perf\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisfileDirectory)BlobStorageTesting\StorageTestEnvironment.cs" Link="SharedSource\Perf\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

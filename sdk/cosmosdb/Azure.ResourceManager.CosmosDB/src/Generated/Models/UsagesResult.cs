@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of UsagesResult. </summary>
         internal UsagesResult()
         {
-            Value = new ChangeTrackingList<Usage>();
+            Value = new ChangeTrackingList<BaseUsage>();
         }
 
         /// <summary> Initializes a new instance of UsagesResult. </summary>
         /// <param name="value"> The list of usages for the database. A usage is a point in time metric. </param>
-        internal UsagesResult(IReadOnlyList<Usage> value)
+        internal UsagesResult(IReadOnlyList<BaseUsage> value)
         {
             Value = value;
         }
 
         /// <summary> The list of usages for the database. A usage is a point in time metric. </summary>
-        public IReadOnlyList<Usage> Value { get; }
+        public IReadOnlyList<BaseUsage> Value { get; }
     }
 }

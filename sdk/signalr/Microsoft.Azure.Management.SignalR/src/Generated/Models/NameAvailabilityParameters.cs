@@ -30,10 +30,11 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the NameAvailabilityParameters class.
         /// </summary>
-        /// <param name="type">The resource type. Should be always
-        /// "Microsoft.SignalRService/SignalR".</param>
-        /// <param name="name">The SignalR service name to validate.
-        /// e.g."my-signalR-name-here"</param>
+        /// <param name="type">The resource type. Can be
+        /// "Microsoft.SignalRService/SignalR" or
+        /// "Microsoft.SignalRService/webPubSub"</param>
+        /// <param name="name">The resource name to validate.
+        /// e.g."my-resource-name"</param>
         public NameAvailabilityParameters(string type, string name)
         {
             Type = type;
@@ -47,15 +48,15 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource type. Should be always
-        /// "Microsoft.SignalRService/SignalR".
+        /// Gets or sets the resource type. Can be
+        /// "Microsoft.SignalRService/SignalR" or
+        /// "Microsoft.SignalRService/webPubSub"
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the SignalR service name to validate.
-        /// e.g."my-signalR-name-here"
+        /// Gets or sets the resource name to validate. e.g."my-resource-name"
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

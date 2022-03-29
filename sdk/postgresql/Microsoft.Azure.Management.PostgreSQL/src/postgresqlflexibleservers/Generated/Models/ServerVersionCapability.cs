@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// Initializes a new instance of the ServerVersionCapability class.
         /// </summary>
         /// <param name="name">server version</param>
-        public ServerVersionCapability(string name = default(string), IList<VcoreCapability> supportedVcores = default(IList<VcoreCapability>))
+        /// <param name="status">The status</param>
+        public ServerVersionCapability(string name = default(string), IList<VcoreCapability> supportedVcores = default(IList<VcoreCapability>), string status = default(string))
         {
             Name = name;
             SupportedVcores = supportedVcores;
+            Status = status;
             CustomInit();
         }
 
@@ -54,6 +56,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedVcores")]
         public IList<VcoreCapability> SupportedVcores { get; private set; }
+
+        /// <summary>
+        /// Gets the status
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

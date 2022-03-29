@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of SnowflakeImportCopyCommand. </summary>
         /// <param name="type"> The import setting type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }. </param>
         /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;FORCE&quot;: &quot;TRUE&quot;, &quot;LOAD_UNCERTAIN_FILES&quot;: &quot;&apos;FALSE&apos;&quot; }. </param>
         internal SnowflakeImportCopyCommand(string type, IDictionary<string, object> additionalProperties, IDictionary<string, object> additionalCopyOptions, IDictionary<string, object> additionalFormatOptions) : base(type, additionalProperties)

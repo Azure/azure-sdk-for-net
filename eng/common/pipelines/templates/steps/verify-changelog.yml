@@ -4,7 +4,7 @@ parameters:
   default: 'not-specified'
 - name: ServiceName
   type: string
-  default: 'not-specified'
+  default: ''
 - name: ServiceDirectory
   type: string
   default: ''
@@ -17,8 +17,8 @@ steps:
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-ChangeLog.ps1
       arguments: >
-        -PackageName ${{ parameters.PackageName }}
-        -ServiceDirectory ${{ coalesce(parameters.ServiceDirectory, parameters.ServiceName) }}
+        -PackageName '${{ parameters.PackageName }}'
+        -ServiceDirectory '${{ coalesce(parameters.ServiceDirectory, parameters.ServiceName) }}'
         -ForRelease $${{ parameters.ForRelease }}
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)

@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
     /// These extension methods are generated from swagger schema.
-    /// Please use https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/template/Azure.Template
+    /// Please use https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template
     /// to generate this code until new generator fully supports storage sdk.
     /// </summary>
     internal static partial class DataLakeSerializationExtensions

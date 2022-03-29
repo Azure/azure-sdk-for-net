@@ -40,11 +40,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// is configured for the VM size otherwise **ResourceDisk** is
         /// used.&lt;br&gt;&lt;br&gt; Refer to VM size documentation for
         /// Windows VM at
-        /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes
-        /// and Linux VM at
-        /// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
-        /// to check which VM sizes exposes a cache disk. Possible values
-        /// include: 'CacheDisk', 'ResourceDisk'</param>
+        /// https://docs.microsoft.com/azure/virtual-machines/windows/sizes and
+        /// Linux VM at
+        /// https://docs.microsoft.com/azure/virtual-machines/linux/sizes to
+        /// check which VM sizes exposes a cache disk. Possible values include:
+        /// 'CacheDisk', 'ResourceDisk'</param>
         public DiffDiskSettings(string option = default(string), string placement = default(string))
         {
             Option = option;
@@ -73,11 +73,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// is configured for the VM size otherwise **ResourceDisk** is
         /// used.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Refer to VM size
         /// documentation for Windows VM at
-        /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes
-        /// and Linux VM at
-        /// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
-        /// to check which VM sizes exposes a cache disk. Possible values
-        /// include: 'CacheDisk', 'ResourceDisk'
+        /// https://docs.microsoft.com/azure/virtual-machines/windows/sizes and
+        /// Linux VM at
+        /// https://docs.microsoft.com/azure/virtual-machines/linux/sizes to
+        /// check which VM sizes exposes a cache disk. Possible values include:
+        /// 'CacheDisk', 'ResourceDisk'
         /// </summary>
         [JsonProperty(PropertyName = "placement")]
         public string Placement { get; set; }

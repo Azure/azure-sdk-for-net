@@ -24,15 +24,17 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// <summary>
             /// List all entities (Management Groups, Subscriptions, etc.) for the
             /// authenticated user.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='skiptoken'>
             /// Page continuation token is only used if a previous operation returned a
-            /// partial result. If a previous response contains a nextLink element, the
-            /// value of the nextLink element will include a token parameter that specifies
-            /// a starting point to use for subsequent calls.
+            /// partial result.
+            /// If a previous response contains a nextLink element, the value of the
+            /// nextLink element will include a token parameter that specifies a starting
+            /// point to use for subsequent calls.
             /// </param>
             /// <param name='skip'>
             /// Number of entities to skip over when retrieving results. Passing this in
@@ -51,15 +53,23 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// </param>
             /// <param name='search'>
             /// The $search parameter is used in conjunction with the $filter parameter to
-            /// return three different outputs depending on the parameter passed in. With
-            /// $search=AllowedParents the API will return the entity info of all groups
-            /// that the requested entity will be able to reparent to as determined by the
-            /// user's permissions. With $search=AllowedChildren the API will return the
-            /// entity info of all entities that can be added as children of the requested
-            /// entity. With $search=ParentAndFirstLevelChildren the API will return the
-            /// parent and  first level of children that the user has either direct access
-            /// to or indirect access via one of their descendants. Possible values
-            /// include: 'AllowedParents', 'AllowedChildren', 'ParentAndFirstLevelChildren'
+            /// return three different outputs depending on the parameter passed in.
+            /// With $search=AllowedParents the API will return the entity info of all
+            /// groups that the requested entity will be able to reparent to as determined
+            /// by the user's permissions.
+            /// With $search=AllowedChildren the API will return the entity info of all
+            /// entities that can be added as children of the requested entity.
+            /// With $search=ParentAndFirstLevelChildren the API will return the parent and
+            /// first level of children that the user has either direct access to or
+            /// indirect access via one of their descendants.
+            /// With $search=ParentOnly the API will return only the group if the user has
+            /// access to at least one of the descendants of the group.
+            /// With $search=ChildrenOnly the API will return only the first level of
+            /// children of the group entity info specified in $filter.  The user must have
+            /// direct access to the children entities or one of it's descendants for it to
+            /// show up in the results. Possible values include: 'AllowedParents',
+            /// 'AllowedChildren', 'ParentAndFirstLevelChildren', 'ParentOnly',
+            /// 'ChildrenOnly'
             /// </param>
             /// <param name='filter'>
             /// The filter parameter allows you to filter on the the name or display name
@@ -79,7 +89,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// (i.e. "$filter=name eq 'groupName'")
             /// </param>
             /// <param name='cacheControl'>
-            /// Indicates that the request shouldn't utilize any caches.
+            /// Indicates whether the request should utilize any caches. Populate the
+            /// header with 'no-cache' value to bypass existing caches.
             /// </param>
             public static IPage<EntityInfo> List(this IEntitiesOperations operations, string skiptoken = default(string), int? skip = default(int?), int? top = default(int?), string select = default(string), string search = default(string), string filter = default(string), string view = default(string), string groupName = default(string), string cacheControl = "no-cache")
             {
@@ -89,15 +100,17 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// <summary>
             /// List all entities (Management Groups, Subscriptions, etc.) for the
             /// authenticated user.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='skiptoken'>
             /// Page continuation token is only used if a previous operation returned a
-            /// partial result. If a previous response contains a nextLink element, the
-            /// value of the nextLink element will include a token parameter that specifies
-            /// a starting point to use for subsequent calls.
+            /// partial result.
+            /// If a previous response contains a nextLink element, the value of the
+            /// nextLink element will include a token parameter that specifies a starting
+            /// point to use for subsequent calls.
             /// </param>
             /// <param name='skip'>
             /// Number of entities to skip over when retrieving results. Passing this in
@@ -116,15 +129,23 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// </param>
             /// <param name='search'>
             /// The $search parameter is used in conjunction with the $filter parameter to
-            /// return three different outputs depending on the parameter passed in. With
-            /// $search=AllowedParents the API will return the entity info of all groups
-            /// that the requested entity will be able to reparent to as determined by the
-            /// user's permissions. With $search=AllowedChildren the API will return the
-            /// entity info of all entities that can be added as children of the requested
-            /// entity. With $search=ParentAndFirstLevelChildren the API will return the
-            /// parent and  first level of children that the user has either direct access
-            /// to or indirect access via one of their descendants. Possible values
-            /// include: 'AllowedParents', 'AllowedChildren', 'ParentAndFirstLevelChildren'
+            /// return three different outputs depending on the parameter passed in.
+            /// With $search=AllowedParents the API will return the entity info of all
+            /// groups that the requested entity will be able to reparent to as determined
+            /// by the user's permissions.
+            /// With $search=AllowedChildren the API will return the entity info of all
+            /// entities that can be added as children of the requested entity.
+            /// With $search=ParentAndFirstLevelChildren the API will return the parent and
+            /// first level of children that the user has either direct access to or
+            /// indirect access via one of their descendants.
+            /// With $search=ParentOnly the API will return only the group if the user has
+            /// access to at least one of the descendants of the group.
+            /// With $search=ChildrenOnly the API will return only the first level of
+            /// children of the group entity info specified in $filter.  The user must have
+            /// direct access to the children entities or one of it's descendants for it to
+            /// show up in the results. Possible values include: 'AllowedParents',
+            /// 'AllowedChildren', 'ParentAndFirstLevelChildren', 'ParentOnly',
+            /// 'ChildrenOnly'
             /// </param>
             /// <param name='filter'>
             /// The filter parameter allows you to filter on the the name or display name
@@ -144,7 +165,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// (i.e. "$filter=name eq 'groupName'")
             /// </param>
             /// <param name='cacheControl'>
-            /// Indicates that the request shouldn't utilize any caches.
+            /// Indicates whether the request should utilize any caches. Populate the
+            /// header with 'no-cache' value to bypass existing caches.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,6 +182,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// <summary>
             /// List all entities (Management Groups, Subscriptions, etc.) for the
             /// authenticated user.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,7 +191,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// The NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cacheControl'>
-            /// Indicates that the request shouldn't utilize any caches.
+            /// Indicates whether the request should utilize any caches. Populate the
+            /// header with 'no-cache' value to bypass existing caches.
             /// </param>
             public static IPage<EntityInfo> ListNext(this IEntitiesOperations operations, string nextPageLink, string cacheControl = "no-cache")
             {
@@ -178,6 +202,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// <summary>
             /// List all entities (Management Groups, Subscriptions, etc.) for the
             /// authenticated user.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -186,7 +211,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// The NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cacheControl'>
-            /// Indicates that the request shouldn't utilize any caches.
+            /// Indicates whether the request should utilize any caches. Populate the
+            /// header with 'no-cache' value to bypass existing caches.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

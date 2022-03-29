@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="recursive">If true, files under the folder path will
         /// be read recursively. Default is true. Type: boolean (or Expression
         /// with resultType boolean).</param>
@@ -62,8 +65,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public SftpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object fileListPath = default(object), object deleteFilesAfterCompletion = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
-            : base(additionalProperties, maxConcurrentConnections)
+        /// <param name="disableChunking">If true, disable parallel reading
+        /// within each file. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
+        public SftpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object fileListPath = default(object), object deleteFilesAfterCompletion = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object), object disableChunking = default(object))
+            : base(additionalProperties, maxConcurrentConnections, disableMetricsCollection)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -74,6 +80,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             DeleteFilesAfterCompletion = deleteFilesAfterCompletion;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
+            DisableChunking = disableChunking;
             CustomInit();
         }
 
@@ -146,6 +153,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "modifiedDatetimeEnd")]
         public object ModifiedDatetimeEnd { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, disable parallel reading within each file.
+        /// Default is false. Type: boolean (or Expression with resultType
+        /// boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "disableChunking")]
+        public object DisableChunking { get; set; }
 
     }
 }

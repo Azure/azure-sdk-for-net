@@ -175,6 +175,7 @@ namespace Azure.Core.Tests
         [Test]
         public void GetECDsaPrivateKeyImportedOid()
         {
+            // cspell:ignore Secp
             byte[] data = Convert.FromBase64String(EcSecp256k1PrivateKey);
             Assert.AreEqual("1.2.840.10045.2.1", LightweightPkcs8Decoder.DecodePrivateKeyOid(data));
         }
@@ -185,7 +186,7 @@ namespace Azure.Core.Tests
             byte[] data = Convert.FromBase64String(PrivateKey);
 
             using RSA fromPem = LightweightPkcs8Decoder.DecodeRSAPkcs8(data);
-            using RSA fromPfx = (RSA)new X509Certificate2(Convert.FromBase64String(Pfx)).PrivateKey;
+            using RSA fromPfx = new X509Certificate2(Convert.FromBase64String(Pfx)).GetRSAPrivateKey();
 
             RSAParameters pemParams = fromPem.ExportParameters(false);
             RSAParameters pfxParams = fromPfx.ExportParameters(false);

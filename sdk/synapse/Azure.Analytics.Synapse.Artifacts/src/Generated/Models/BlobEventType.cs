@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="BlobEventType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobEventType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobEventType(string value)
         {

@@ -60,7 +60,11 @@ namespace Azure.Core.Tests
 
                     var decoded = Base64Url.Decode(encoded);
 
-                    CollectionAssert.AreEqual(data, decoded, "Data round trip failed. Seed {0}", seed);
+                    Assert.AreEqual(data.Length, decoded.Length, $"Data round trip failed. Seed {seed}");
+                    for (int k = 0; k < data.Length; k++)
+                    {
+                        Assert.True(data[k] == decoded[k], $"Data round trip failed. Seed {seed}");
+                    }
                 }
             }
         }
@@ -101,11 +105,13 @@ namespace Azure.Core.Tests
 
         private static readonly (string, string)[] s_staticValues = new (string, string)[]
         {
+            //cSpell:disable
             ("foo", "Zm9v"),
             ("<foo!>", "PGZvbyE-"),
             ("<foo!?", "PGZvbyE_"),
             ("<foo!?><<foo?>>", "PGZvbyE_Pjw8Zm9vPz4-"),
             ("<foo!?><<foo?>>foo", "PGZvbyE_Pjw8Zm9vPz4-Zm9v")
+            //cSpell:enable
         };
 
         [Test]

@@ -194,8 +194,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             {
                                 PrincipalUsed.CertificateThumbprint = cert.Thumbprint;
                                 PrincipalUsed.IsAuthenticated = true;
-                                PrincipalUsed.TenantId = AccessToken.Parse(accessToken).TenantId;
-
+                                PrincipalUsed.TenantId = AccessToken.TenantIdInfo(accessToken);
                                 return authResult;
                             }
                         }

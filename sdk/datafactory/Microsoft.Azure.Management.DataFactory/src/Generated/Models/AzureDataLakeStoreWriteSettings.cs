@@ -38,14 +38,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="copyBehavior">The type of copy behavior for copy
         /// sink.</param>
         /// <param name="expiryDateTime">Specifies the expiry time of the
         /// written files. The time is applied to the UTC time zone in the
         /// format of "2018-12-01T05:00:00Z". Default value is NULL. Type:
         /// integer (or Expression with resultType integer).</param>
-        public AzureDataLakeStoreWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object), object expiryDateTime = default(object))
-            : base(additionalProperties, maxConcurrentConnections, copyBehavior)
+        public AzureDataLakeStoreWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object copyBehavior = default(object), object expiryDateTime = default(object))
+            : base(additionalProperties, maxConcurrentConnections, disableMetricsCollection, copyBehavior)
         {
             ExpiryDateTime = expiryDateTime;
             CustomInit();

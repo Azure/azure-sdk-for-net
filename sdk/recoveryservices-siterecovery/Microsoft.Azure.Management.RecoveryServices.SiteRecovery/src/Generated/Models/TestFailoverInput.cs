@@ -10,11 +10,12 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Input definition for planned failover.
+    /// Input definition for test failover.
     /// </summary>
     public partial class TestFailoverInput
     {
@@ -29,8 +30,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the TestFailoverInput class.
         /// </summary>
-        /// <param name="properties">Planned failover input properties</param>
-        public TestFailoverInput(TestFailoverInputProperties properties = default(TestFailoverInputProperties))
+        /// <param name="properties">Test failover input properties.</param>
+        public TestFailoverInput(TestFailoverInputProperties properties)
         {
             Properties = properties;
             CustomInit();
@@ -42,10 +43,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets planned failover input properties
+        /// Gets or sets test failover input properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public TestFailoverInputProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+        }
     }
 }

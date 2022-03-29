@@ -22,5 +22,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public const string InstallUpdates = "InstallUpdates";
         public const string RefreshShare = "RefreshShare";
         public const string RefreshContainer = "RefreshContainer";
+        public const string Backup = "Backup";
+        public const string Restore = "Restore";
+        public const string TriggerSupportPackage = "TriggerSupportPackage";
     }
 }

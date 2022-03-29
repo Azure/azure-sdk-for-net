@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ServerConnectionType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ServerConnectionType
+    public static class ServerConnectionType
     {
-        [EnumMember(Value = "Default")]
-        Default,
-        [EnumMember(Value = "Proxy")]
-        Proxy,
-        [EnumMember(Value = "Redirect")]
-        Redirect
-    }
-    internal static class ServerConnectionTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ServerConnectionType? value)
-        {
-            return value == null ? null : ((ServerConnectionType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ServerConnectionType value)
-        {
-            switch( value )
-            {
-                case ServerConnectionType.Default:
-                    return "Default";
-                case ServerConnectionType.Proxy:
-                    return "Proxy";
-                case ServerConnectionType.Redirect:
-                    return "Redirect";
-            }
-            return null;
-        }
-
-        internal static ServerConnectionType? ParseServerConnectionType(this string value)
-        {
-            switch( value )
-            {
-                case "Default":
-                    return ServerConnectionType.Default;
-                case "Proxy":
-                    return ServerConnectionType.Proxy;
-                case "Redirect":
-                    return ServerConnectionType.Redirect;
-            }
-            return null;
-        }
+        public const string Default = "Default";
+        public const string Redirect = "Redirect";
+        public const string Proxy = "Proxy";
     }
 }

@@ -56,7 +56,8 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+            /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
             /// </param>
             public static Setting Get(this ISettingsOperations operations, string settingName)
             {
@@ -70,7 +71,8 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+            /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -90,7 +92,8 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+            /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
             /// </param>
             /// <param name='setting'>
             /// Setting object
@@ -107,7 +110,8 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+            /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
             /// </param>
             /// <param name='setting'>
             /// Setting object

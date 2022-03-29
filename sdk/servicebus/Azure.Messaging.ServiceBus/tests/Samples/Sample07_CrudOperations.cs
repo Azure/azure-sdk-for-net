@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -10,17 +11,46 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
     public class Sample07_CrudOperations : ServiceBusLiveTestBase
     {
+        /// <summary>
+        /// Authenticate with a connection string/>.
+        /// </summary>
+        public void AuthenticateWithConnectionString()
+        {
+            #region Snippet:ServiceBusAdministrationClientConnectionString
+            // Create a ServiceBusAdministrationClient that will authenticate using a connection string
+            string connectionString = "<connection_string>";
+            ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
+            #endregion
+        }
+
+        /// <summary>
+        /// Authenticate with <see cref="DefaultAzureCredential"/>.
+        /// </summary>
+        public void AuthenticateWithAAD()
+        {
+            #region Snippet:ServiceBusAdministrationClientAAD
+            // Create a ServiceBusAdministrationClient that will authenticate using default credentials
+            string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+            ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+            #endregion
+        }
+
         [Test]
         public async Task CreateQueue()
         {
-            string queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
+            string adminQueueName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            string adminConnectionString = TestEnvironment.ServiceBusConnectionString;
 
             try
             {
                 #region Snippet:CreateQueue
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string queueName = "<queue_name>";
+#else
+                string queueName = adminQueueName;
+                string connectionString = adminConnectionString;
+#endif
                 var client = new ServiceBusAdministrationClient(connectionString);
                 var options = new CreateQueueOptions(queueName)
                 {
@@ -46,11 +76,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 QueueProperties createdQueue = await client.CreateQueueAsync(options);
                 #endregion
-                Assert.AreEqual(options, new CreateQueueOptions(createdQueue));
+                Assert.AreEqual(options, new CreateQueueOptions(createdQueue) { MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes});
             }
             finally
             {
-                await new ServiceBusAdministrationClient(connectionString).DeleteQueueAsync(queueName);
+                await new ServiceBusAdministrationClient(adminConnectionString).DeleteQueueAsync(adminQueueName);
             }
         }
 
@@ -83,17 +113,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Test]
         public async Task CreateTopicAndSubscription()
         {
-            string topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            string subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
-            var client = new ServiceBusAdministrationClient(connectionString);
+            string adminTopicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            string adminSubscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            string adminConnectionString = TestEnvironment.ServiceBusConnectionString;
 
             try
             {
                 #region Snippet:CreateTopicAndSubscription
-                //@@ string connectionString = "<connection_string>";
-                //@@ string topicName = "<topic_name>";
-                //@@ var client = new ServiceBusManagementClient(connectionString);
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string topicName = "<topic_name>";
+#else
+                string connectionString = adminConnectionString;
+                string topicName = adminTopicName;
+#endif
+                var client = new ServiceBusAdministrationClient(connectionString);
                 var topicOptions = new CreateTopicOptions(topicName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -112,7 +146,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
 
-                //@@ string subscriptionName = "<subscription_name>";
+#if SNIPPET
+                string subscriptionName = "<subscription_name>";
+#else
+                string subscriptionName = adminSubscriptionName;
+#endif
                 var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -122,12 +160,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 };
                 SubscriptionProperties createdSubscription = await client.CreateSubscriptionAsync(subscriptionOptions);
                 #endregion
-                Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+                Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic) { MaxMessageSizeInKilobytes = topicOptions.MaxMessageSizeInKilobytes});
                 Assert.AreEqual(subscriptionOptions, new CreateSubscriptionOptions(createdSubscription));
             }
             finally
             {
-                await client.DeleteTopicAsync(topicName);
+                await new ServiceBusAdministrationClient(adminConnectionString).DeleteTopicAsync(adminTopicName);
             }
         }
 

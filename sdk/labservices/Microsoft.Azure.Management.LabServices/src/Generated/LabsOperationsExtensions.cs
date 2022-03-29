@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.LabServices
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -23,402 +22,646 @@ namespace Microsoft.Azure.Management.LabServices
     public static partial class LabsOperationsExtensions
     {
             /// <summary>
-            /// List labs in a given lab account.
+            /// Get all labs for a subscription.
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all labs for a subscription.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='filter'>
+            /// The filter to apply to the operation.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<Lab> List(this ILabsOperations operations, string resourceGroupName, string labAccountName, ODataQuery<Lab> odataQuery = default(ODataQuery<Lab>))
+            public static IPage<Lab> ListBySubscription(this ILabsOperations operations, string filter = default(string))
             {
-                return operations.ListAsync(resourceGroupName, labAccountName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync(filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List labs in a given lab account.
+            /// Get all labs for a subscription.
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all labs for a subscription.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='filter'>
+            /// The filter to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Lab>> ListAsync(this ILabsOperations operations, string resourceGroupName, string labAccountName, ODataQuery<Lab> odataQuery = default(ODataQuery<Lab>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Lab>> ListBySubscriptionAsync(this ILabsOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, labAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get lab
+            /// Get all labs for a subscription and resource group.
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all labs in a resource group.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=maxUsersInLab)'
-            /// </param>
-            public static Lab Get(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, string expand = default(string))
+            public static IPage<Lab> ListByResourceGroup(this ILabsOperations operations, string resourceGroupName)
             {
-                return operations.GetAsync(resourceGroupName, labAccountName, labName, expand).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get lab
+            /// Get all labs for a subscription and resource group.
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all labs in a resource group.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=maxUsersInLab)'
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Lab> GetAsync(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Lab>> ListByResourceGroupAsync(this ILabsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create or replace an existing Lab.
+            /// Get a lab resource.
             /// </summary>
+            /// <remarks>
+            /// Returns the properties of a lab resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
-            /// <param name='lab'>
-            /// Represents a lab.
-            /// </param>
-            public static Lab CreateOrUpdate(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, Lab lab)
+            public static Lab Get(this ILabsOperations operations, string resourceGroupName, string labName)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labAccountName, labName, lab).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, labName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or replace an existing Lab.
+            /// Get a lab resource.
             /// </summary>
+            /// <remarks>
+            /// Returns the properties of a lab resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='lab'>
-            /// Represents a lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Lab> CreateOrUpdateAsync(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, Lab lab, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Lab> GetAsync(this ILabsOperations operations, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, lab, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete lab. This operation can take a while to complete
+            /// Create or update a lab resource.
             /// </summary>
+            /// <remarks>
+            /// Operation to create or update a lab resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='body'>
+            /// The request body.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
-            public static void Delete(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName)
+            public static Lab CreateOrUpdate(this ILabsOperations operations, Lab body, string resourceGroupName, string labName)
             {
-                operations.DeleteAsync(resourceGroupName, labAccountName, labName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(body, resourceGroupName, labName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete lab. This operation can take a while to complete
+            /// Create or update a lab resource.
             /// </summary>
+            /// <remarks>
+            /// Operation to create or update a lab resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='body'>
+            /// The request body.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Lab> CreateOrUpdateAsync(this ILabsOperations operations, Lab body, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Modify properties of labs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='lab'>
-            /// Represents a lab.
-            /// </param>
-            public static Lab Update(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, LabFragment lab)
-            {
-                return operations.UpdateAsync(resourceGroupName, labAccountName, labName, lab).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Modify properties of labs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='lab'>
-            /// Represents a lab.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Lab> UpdateAsync(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, LabFragment lab, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, lab, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(body, resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Add users to a lab
+            /// Update a lab resource.
             /// </summary>
+            /// <remarks>
+            /// Operation to update a lab resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='body'>
+            /// The request body.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
-            /// <param name='addUsersPayload'>
-            /// Payload for Add Users operation on a Lab.
-            /// </param>
-            public static void AddUsers(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, AddUsersPayload addUsersPayload)
+            public static Lab Update(this ILabsOperations operations, LabUpdate body, string resourceGroupName, string labName)
             {
-                operations.AddUsersAsync(resourceGroupName, labAccountName, labName, addUsersPayload).GetAwaiter().GetResult();
+                return operations.UpdateAsync(body, resourceGroupName, labName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Add users to a lab
+            /// Update a lab resource.
             /// </summary>
+            /// <remarks>
+            /// Operation to update a lab resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// <param name='body'>
+            /// The request body.
             /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='addUsersPayload'>
-            /// Payload for Add Users operation on a Lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddUsersAsync(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, AddUsersPayload addUsersPayload, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Lab> UpdateAsync(this ILabsOperations operations, LabUpdate body, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AddUsersWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, addUsersPayload, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(body, resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Register to managed lab.
+            /// Deletes a lab resource.
             /// </summary>
+            /// <remarks>
+            /// Operation to delete a lab resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
-            public static void Register(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName)
+            public static void Delete(this ILabsOperations operations, string resourceGroupName, string labName)
             {
-                operations.RegisterAsync(resourceGroupName, labAccountName, labName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, labName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Register to managed lab.
+            /// Deletes a lab resource.
             /// </summary>
+            /// <remarks>
+            /// Operation to delete a lab resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RegisterAsync(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ILabsOperations operations, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RegisterWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Delete lab. This operation can take a while to complete
+            /// Publish or re-publish a lab.
             /// </summary>
+            /// <remarks>
+            /// Publish or re-publish a lab. This will create or update all lab resources,
+            /// such as virtual machines.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
-            public static void BeginDelete(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName)
+            public static void Publish(this ILabsOperations operations, string resourceGroupName, string labName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, labAccountName, labName).GetAwaiter().GetResult();
+                operations.PublishAsync(resourceGroupName, labName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete lab. This operation can take a while to complete
+            /// Publish or re-publish a lab.
             /// </summary>
+            /// <remarks>
+            /// Publish or re-publish a lab. This will create or update all lab resources,
+            /// such as virtual machines.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labAccountName'>
-            /// The name of the lab Account.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='labName'>
-            /// The name of the lab.
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this ILabsOperations operations, string resourceGroupName, string labAccountName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PublishAsync(this ILabsOperations operations, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, labAccountName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.PublishWithHttpMessagesAsync(resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// List labs in a given lab account.
+            /// Manually sync the lab group.
             /// </summary>
+            /// <remarks>
+            /// Action used to manually kick off an AAD group sync job.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            public static void SyncGroup(this ILabsOperations operations, string resourceGroupName, string labName)
+            {
+                operations.SyncGroupAsync(resourceGroupName, labName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Manually sync the lab group.
+            /// </summary>
+            /// <remarks>
+            /// Action used to manually kick off an AAD group sync job.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SyncGroupAsync(this ILabsOperations operations, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SyncGroupWithHttpMessagesAsync(resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create or update a lab resource.
+            /// </summary>
+            /// <remarks>
+            /// Operation to create or update a lab resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            public static Lab BeginCreateOrUpdate(this ILabsOperations operations, Lab body, string resourceGroupName, string labName)
+            {
+                return operations.BeginCreateOrUpdateAsync(body, resourceGroupName, labName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update a lab resource.
+            /// </summary>
+            /// <remarks>
+            /// Operation to create or update a lab resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Lab> BeginCreateOrUpdateAsync(this ILabsOperations operations, Lab body, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(body, resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a lab resource.
+            /// </summary>
+            /// <remarks>
+            /// Operation to update a lab resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            public static Lab BeginUpdate(this ILabsOperations operations, LabUpdate body, string resourceGroupName, string labName)
+            {
+                return operations.BeginUpdateAsync(body, resourceGroupName, labName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a lab resource.
+            /// </summary>
+            /// <remarks>
+            /// Operation to update a lab resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The request body.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Lab> BeginUpdateAsync(this ILabsOperations operations, LabUpdate body, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(body, resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a lab resource.
+            /// </summary>
+            /// <remarks>
+            /// Operation to delete a lab resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            public static void BeginDelete(this ILabsOperations operations, string resourceGroupName, string labName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, labName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a lab resource.
+            /// </summary>
+            /// <remarks>
+            /// Operation to delete a lab resource.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this ILabsOperations operations, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Publish or re-publish a lab.
+            /// </summary>
+            /// <remarks>
+            /// Publish or re-publish a lab. This will create or update all lab resources,
+            /// such as virtual machines.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            public static void BeginPublish(this ILabsOperations operations, string resourceGroupName, string labName)
+            {
+                operations.BeginPublishAsync(resourceGroupName, labName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Publish or re-publish a lab.
+            /// </summary>
+            /// <remarks>
+            /// Publish or re-publish a lab. This will create or update all lab resources,
+            /// such as virtual machines.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginPublishAsync(this ILabsOperations operations, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginPublishWithHttpMessagesAsync(resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Manually sync the lab group.
+            /// </summary>
+            /// <remarks>
+            /// Action used to manually kick off an AAD group sync job.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            public static void BeginSyncGroup(this ILabsOperations operations, string resourceGroupName, string labName)
+            {
+                operations.BeginSyncGroupAsync(resourceGroupName, labName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Manually sync the lab group.
+            /// </summary>
+            /// <remarks>
+            /// Action used to manually kick off an AAD group sync job.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='labName'>
+            /// The name of the lab that uniquely identifies it within containing lab
+            /// account. Used in resource URIs.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginSyncGroupAsync(this ILabsOperations operations, string resourceGroupName, string labName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginSyncGroupWithHttpMessagesAsync(resourceGroupName, labName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get all labs for a subscription.
+            /// </summary>
+            /// <remarks>
+            /// Returns a list of all labs for a subscription.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Lab> ListNext(this ILabsOperations operations, string nextPageLink)
+            public static IPage<Lab> ListBySubscriptionNext(this ILabsOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List labs in a given lab account.
+            /// Get all labs for a subscription.
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all labs for a subscription.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -428,9 +671,49 @@ namespace Microsoft.Azure.Management.LabServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Lab>> ListNextAsync(this ILabsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Lab>> ListBySubscriptionNextAsync(this ILabsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all labs for a subscription and resource group.
+            /// </summary>
+            /// <remarks>
+            /// Returns a list of all labs in a resource group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Lab> ListByResourceGroupNext(this ILabsOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all labs for a subscription and resource group.
+            /// </summary>
+            /// <remarks>
+            /// Returns a list of all labs in a resource group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Lab>> ListByResourceGroupNextAsync(this ILabsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

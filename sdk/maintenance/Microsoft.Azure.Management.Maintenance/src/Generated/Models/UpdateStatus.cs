@@ -16,10 +16,25 @@ namespace Microsoft.Azure.Management.Maintenance.Models
     /// </summary>
     public static class UpdateStatus
     {
+        /// <summary>
+        /// There are pending updates to be installed.
+        /// </summary>
         public const string Pending = "Pending";
+        /// <summary>
+        /// Updates installation are in progress.
+        /// </summary>
         public const string InProgress = "InProgress";
+        /// <summary>
+        /// All updates are successfully applied.
+        /// </summary>
         public const string Completed = "Completed";
+        /// <summary>
+        /// Updates installation failed but are ready to retry again.
+        /// </summary>
         public const string RetryNow = "RetryNow";
+        /// <summary>
+        /// Updates installation failed and should be retried later.
+        /// </summary>
         public const string RetryLater = "RetryLater";
     }
 }

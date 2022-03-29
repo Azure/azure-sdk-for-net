@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The resource model definition for a Azure Resource Manager resource with an etag. </summary>
-    public partial class AzureEntityResource : Resource
+    /// <summary> The resource model definition for an Azure Resource Manager resource with an etag. </summary>
+    public partial class AzureEntityResource : ResourceData
     {
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         public AzureEntityResource()
@@ -16,11 +19,12 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal AzureEntityResource(string id, string name, string type, string etag) : base(id, name, type)
+        internal AzureEntityResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
         }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="RouteFilterRuleType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteFilterRuleType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouteFilterRuleType(string value)
         {

@@ -1,7 +1,6 @@
 ```C# Snippet:CreateTriggerClientPrep
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
-
 string triggerName = "Test-Trigger";
 ```
 
@@ -29,5 +28,5 @@ foreach (TriggerResource trigger in triggers)
 
 ```C# Snippet:DeleteTrigger
 TriggerDeleteTriggerOperation deleteOperation = client.StartDeleteTrigger(triggerName);
-await deleteOperation.WaitForCompletionAsync();
+await deleteOperation.WaitForCompletionResponseAsync();
 ```

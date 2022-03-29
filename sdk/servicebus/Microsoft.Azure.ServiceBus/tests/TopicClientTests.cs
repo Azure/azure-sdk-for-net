@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
@@ -65,7 +66,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         this.ReceiveDeleteTestCase(
                             topicClient.InnerSender,
                             subscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                            messageCount);
+                            messageCount,
+                            TimeSpan.FromSeconds(10));
                 }
                 finally
                 {

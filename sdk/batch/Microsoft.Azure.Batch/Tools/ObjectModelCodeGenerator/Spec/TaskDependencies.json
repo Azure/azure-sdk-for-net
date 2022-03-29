@@ -2,7 +2,7 @@
   "Name": "TaskDependencies",
   "ProtocolName": "Models.TaskDependencies",
   "SummaryComment": "Specifies any dependencies of a task. Any task that is explicitly specified or within a dependency range must complete before the dependant task will be scheduled.",
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {

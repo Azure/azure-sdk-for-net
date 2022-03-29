@@ -17,10 +17,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("group");
             writer.WriteObjectValue(SeriesGroupKey);
-            if (Optional.IsDefined(CrossConditionsOperator))
+            if (Optional.IsDefined(ConditionOperator))
             {
                 writer.WritePropertyName("conditionOperator");
-                writer.WriteStringValue(CrossConditionsOperator.Value.ToString());
+                writer.WriteStringValue(ConditionOperator.Value.ToString());
             }
             if (Optional.IsDefined(SmartDetectionCondition))
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static MetricSeriesGroupDetectionCondition DeserializeMetricSeriesGroupDetectionCondition(JsonElement element)
         {
             DimensionKey group = default;
-            Optional<DetectionConditionsOperator> conditionOperator = default;
+            Optional<DetectionConditionOperator> conditionOperator = default;
             Optional<SmartDetectionCondition> smartDetectionCondition = default;
             Optional<HardThresholdCondition> hardThresholdCondition = default;
             Optional<ChangeThresholdCondition> changeThresholdCondition = default;
@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    conditionOperator = new DetectionConditionsOperator(property.Value.GetString());
+                    conditionOperator = new DetectionConditionOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("smartDetectionCondition"))

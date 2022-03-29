@@ -267,7 +267,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"7DE133E19E9785ADCDF5C16A6DE868D0\",\r\n  \"secondaryKey\": \"EFFB49BC9FA810310F0BD11D7CAE2C9E\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"Sanitized\",\r\n  \"secondaryKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {

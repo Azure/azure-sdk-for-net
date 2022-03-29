@@ -438,6 +438,26 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
             }
         }
+        [Test]
+        public void ReturnsCaseInsensitiveDictionary()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Section--Secret1", "Value1")
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("Value1", provider.Get("section:secret1"));
+            }
+        }
 
         [Test]
         public void HandleCollisions()
@@ -606,6 +626,21 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         public void ConstructorThrowsForNegativeRefreshPeriodValue()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(),  new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.FromMilliseconds(-1) }));
+        }
+
+        [Test]
+        public void DisposeCanBeCalledMultipleTimes()
+        {
+            // Arrange
+            var client = new Mock<SecretClient>();
+
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
+            {
+                provider.Dispose();
+
+                // Act & Assert
+                Assert.DoesNotThrow(() => provider.Dispose());
+            }
         }
 
         private class EndsWithOneKeyVaultSecretManager : KeyVaultSecretManager

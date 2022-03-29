@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static AccessUri DeserializeAccessUri(JsonElement element)
         {
             Optional<string> accessSAS = default;
+            Optional<string> securityDataAccessSAS = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessSAS"))
@@ -22,8 +23,13 @@ namespace Azure.ResourceManager.Compute.Models
                     accessSAS = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("securityDataAccessSAS"))
+                {
+                    securityDataAccessSAS = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AccessUri(accessSAS.Value);
+            return new AccessUri(accessSAS.Value, securityDataAccessSAS.Value);
         }
     }
 }

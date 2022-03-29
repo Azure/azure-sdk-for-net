@@ -36,17 +36,20 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// firewall rule. Must be IPv4 format.</param>
         /// <param name="endIpAddress">The end IP address of the server
         /// firewall rule. Must be IPv4 format.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
-        public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -68,6 +71,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endIpAddress")]
         public string EndIpAddress { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

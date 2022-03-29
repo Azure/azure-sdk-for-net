@@ -15,11 +15,17 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static AcrManifests DeserializeAcrManifests(JsonElement element)
         {
+            Optional<string> registry = default;
             Optional<string> imageName = default;
             Optional<IReadOnlyList<ManifestAttributesBase>> manifests = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("registry"))
+                {
+                    registry = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("imageName"))
                 {
                     imageName = property.Value.GetString();
@@ -46,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new AcrManifests(imageName.Value, Optional.ToList(manifests), link.Value);
+            return new AcrManifests(registry.Value, imageName.Value, Optional.ToList(manifests), link.Value);
         }
     }
 }

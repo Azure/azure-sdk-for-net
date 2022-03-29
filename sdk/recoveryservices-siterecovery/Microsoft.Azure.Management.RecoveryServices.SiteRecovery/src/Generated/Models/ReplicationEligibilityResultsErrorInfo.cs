@@ -52,28 +52,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the error code.
+        /// Gets or sets the error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets the error message.
+        /// Gets or sets the error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
+        public string Message { get; set; }
 
         /// <summary>
-        /// Gets the possible causes.
+        /// Gets or sets the possible causes.
         /// </summary>
         [JsonProperty(PropertyName = "possibleCauses")]
-        public string PossibleCauses { get; private set; }
+        public string PossibleCauses { get; set; }
 
         /// <summary>
-        /// Gets the recommended action.
+        /// Gets or sets the recommended action.
         /// </summary>
         [JsonProperty(PropertyName = "recommendedAction")]
-        public string RecommendedAction { get; private set; }
+        public string RecommendedAction { get; set; }
 
         /// <summary>
         /// Gets the error status.

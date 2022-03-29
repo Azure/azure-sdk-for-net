@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="hourlySchedule">hourlySchedule</param>
@@ -47,11 +49,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="enabled">The property to decide policy is enabled or
         /// not</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public SnapshotPolicy(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), HourlySchedule hourlySchedule = default(HourlySchedule), DailySchedule dailySchedule = default(DailySchedule), WeeklySchedule weeklySchedule = default(WeeklySchedule), MonthlySchedule monthlySchedule = default(MonthlySchedule), bool? enabled = default(bool?), string provisioningState = default(string))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public SnapshotPolicy(string location, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), HourlySchedule hourlySchedule = default(HourlySchedule), DailySchedule dailySchedule = default(DailySchedule), WeeklySchedule weeklySchedule = default(WeeklySchedule), MonthlySchedule monthlySchedule = default(MonthlySchedule), bool? enabled = default(bool?), string provisioningState = default(string), SystemData systemData = default(SystemData))
         {
             Location = location;
             Id = id;
             Name = name;
+            Etag = etag;
             Type = type;
             Tags = tags;
             HourlySchedule = hourlySchedule;
@@ -60,6 +65,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             MonthlySchedule = monthlySchedule;
             Enabled = enabled;
             ProvisioningState = provisioningState;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -85,6 +91,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets resource type
@@ -145,6 +158,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

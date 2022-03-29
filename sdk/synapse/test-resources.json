@@ -383,6 +383,10 @@
             "type": "string",
             "value": "[concat('https://', variables('uniqueWorkspaceName'), '.dev.azuresynapse.net')]"
         },
+        "AZURE_SYNAPSE_WORKSPACE_NAME": {
+            "type": "string",
+            "value": "[variables('uniqueWorkspaceName')]"
+        },
         "AZURE_SYNAPSE_SPARK_POOL_NAME": {
             "type": "string",
             "value": "[variables('uniqueSparkPoolName')]"

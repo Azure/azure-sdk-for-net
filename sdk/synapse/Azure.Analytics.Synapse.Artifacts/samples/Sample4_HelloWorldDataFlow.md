@@ -1,7 +1,6 @@
 ```C# Snippet:CreateDataFlowClientPrep
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
-
 string dataFlowName = "Test-DataFlow";
 ```
 
@@ -28,5 +27,5 @@ foreach (DataFlowResource dataflow in dataFlows)
 
 ```C# Snippet:DeleteDataFlow
 DataFlowDeleteDataFlowOperation deleteOperation = client.StartDeleteDataFlow(dataFlowName);
-await deleteOperation.WaitForCompletionAsync();
+await deleteOperation.WaitForCompletionResponseAsync();
 ```

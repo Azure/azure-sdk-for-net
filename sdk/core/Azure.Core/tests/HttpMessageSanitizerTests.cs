@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -45,6 +46,45 @@ namespace Azure.Core.Tests
             uriBuilder.AppendQuery("a", "b");
 
             Assert.AreEqual("http://localhost/?a=*", sanitizer.SanitizeUrl(uriBuilder.ToString()));
+        }
+
+        [Test]
+        public void ApiVersionIsNotSanitizedByDefault()
+        {
+            HttpMessageSanitizer sanitizer = ClientDiagnostics.CreateMessageSanitizer(ClientOptions.Default.Diagnostics);
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/"));
+            uriBuilder.AppendQuery("api-version", "2021-11-01");
+
+            Assert.AreEqual("http://localhost/?api-version=2021-11-01", sanitizer.SanitizeUrl(uriBuilder.ToString()));
+        }
+
+        [Test]
+        public void AddingApiVersionManuallyStillWorks()
+        {
+            var options = new DefaultClientOptions();
+            options.Diagnostics.LoggedQueryParameters.Add("api-version");
+
+            HttpMessageSanitizer sanitizer = ClientDiagnostics.CreateMessageSanitizer(options.Diagnostics);
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/"));
+            uriBuilder.AppendQuery("api-version", "2021-11-01");
+
+            Assert.AreEqual("http://localhost/?api-version=2021-11-01", sanitizer.SanitizeUrl(uriBuilder.ToString()));
+        }
+
+        [Test]
+        public void CanRemoveApiVersionFromLoggedQueryParams()
+        {
+            var options = new DefaultClientOptions();
+            options.Diagnostics.LoggedQueryParameters.Remove("api-version");
+
+            HttpMessageSanitizer sanitizer = ClientDiagnostics.CreateMessageSanitizer(options.Diagnostics);
+            var uriBuilder = new RequestUriBuilder();
+            uriBuilder.Reset(new Uri("http://localhost/"));
+            uriBuilder.AppendQuery("api-version", "2021-11-01");
+
+            Assert.AreEqual("http://localhost/?api-version=REDACTED", sanitizer.SanitizeUrl(uriBuilder.ToString()));
         }
     }
 }

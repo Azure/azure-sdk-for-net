@@ -1,0 +1,15 @@
+parameters: 
+  - name: ContainerRegistryClientId
+    type: string
+  - name: ContainerRegistryClientSecret
+    type: string
+  - name: ImageId
+    type: string
+steps:
+- pwsh: |
+    $containerRegistry = ("${{parameters.ImageId}}" -split "\/")[0]
+    docker login $containerRegistry -u "${{ parameters.ContainerRegistryClientId }}" -p "${{ parameters.ContainerRegistryClientSecret }}"
+  displayName: Login container registry
+- pwsh: |
+    docker pull '${{ parameters.ImageId}}'
+  displayName: Pull docker image ${{ parameters.ImageId }}

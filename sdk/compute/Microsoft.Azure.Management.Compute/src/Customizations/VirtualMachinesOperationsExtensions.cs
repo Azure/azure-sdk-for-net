@@ -13,6 +13,21 @@
     /// </summary>
     public static partial class VirtualMachinesOperationsExtensions
     {
+        public static async Task<IPage<VirtualMachine>> ListAsync(this IVirtualMachinesOperations operations, string resourceGroupName, CancellationToken cancellationToken)
+        {
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly, CancellationToken cancellationToken)
+        {
+            using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
         /// <summary>
         /// The operation to delete a virtual machine.
         /// </summary>
@@ -24,6 +39,7 @@
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
+        /// </param>
         public static async Task DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
         {
             await DeleteAsync(operations, resourceGroupName, vmName, false, default(CancellationToken));

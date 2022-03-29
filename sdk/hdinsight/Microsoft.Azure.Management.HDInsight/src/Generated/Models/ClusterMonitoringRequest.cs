@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The Operations Management Suite (OMS) parameters.
+    /// The cluster monitor parameters.
     /// </summary>
     public partial class ClusterMonitoringRequest
     {
@@ -29,10 +29,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Initializes a new instance of the ClusterMonitoringRequest class.
         /// </summary>
-        /// <param name="workspaceId">The Operations Management Suite (OMS)
-        /// workspace ID.</param>
-        /// <param name="primaryKey">The Operations Management Suite (OMS)
-        /// workspace key.</param>
+        /// <param name="workspaceId">The cluster monitor workspace ID.</param>
+        /// <param name="primaryKey">The cluster monitor workspace key.</param>
         public ClusterMonitoringRequest(string workspaceId = default(string), string primaryKey = default(string))
         {
             WorkspaceId = workspaceId;
@@ -46,13 +44,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Operations Management Suite (OMS) workspace ID.
+        /// Gets or sets the cluster monitor workspace ID.
         /// </summary>
         [JsonProperty(PropertyName = "workspaceId")]
         public string WorkspaceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Operations Management Suite (OMS) workspace key.
+        /// Gets or sets the cluster monitor workspace key.
         /// </summary>
         [JsonProperty(PropertyName = "primaryKey")]
         public string PrimaryKey { get; set; }

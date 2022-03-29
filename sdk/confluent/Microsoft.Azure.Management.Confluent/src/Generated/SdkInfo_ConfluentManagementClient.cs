@@ -19,19 +19,20 @@ namespace Microsoft.Azure.Management.Confluent
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Confluent", "MarketplaceAgreements", "2020-03-01"),
-                new Tuple<string, string, string>("Confluent", "Organization", "2020-03-01"),
-                new Tuple<string, string, string>("Confluent", "OrganizationOperations", "2020-03-01"),
+                new Tuple<string, string, string>("Confluent", "MarketplaceAgreements", "2021-03-01-preview"),
+                new Tuple<string, string, string>("Confluent", "Organization", "2021-03-01-preview"),
+                new Tuple<string, string, string>("Confluent", "OrganizationOperations", "2021-03-01-preview"),
+                new Tuple<string, string, string>("Confluent", "Validations", "2021-03-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/confluent/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\sralluri\\source\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/confluent/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\azureDotnetSDK\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "14313ea8bb4807f71b970334262b4e199797a4a1";
+      public static readonly String GithubCommidId = "b2034729e79d99e48f6a2e6b66c3592311b4c688";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

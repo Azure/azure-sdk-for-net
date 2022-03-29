@@ -13,32 +13,53 @@ namespace Azure.Identity
 {
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
+        private Action<PublicClientApplicationBuilder> _beforeBuildClient;
+
         internal string RedirectUrl { get; }
 
         protected MsalPublicClient()
-        {
-        }
+        { }
 
-        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions)
-            : base(pipeline, tenantId, clientId, cacheOptions)
+        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options, Action<PublicClientApplicationBuilder> beforeBuildClient = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             RedirectUrl = redirectUrl;
+            _beforeBuildClient = beforeBuildClient;
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
         {
-            var authorityHost = Pipeline.AuthorityHost;
+            string[] clientCapabilities =
+                IdentityCompatSwitches.DisableCP1 ? Array.Empty<string>() : new[] { "CP1" };
 
+            return CreateClientCoreAsync(clientCapabilities, async, cancellationToken);
+        }
+
+        protected virtual ValueTask<IPublicClientApplication> CreateClientCoreAsync(string[] clientCapabilities, bool async, CancellationToken cancellationToken)
+        {
+            var authorityHost = Pipeline.AuthorityHost;
             var authorityUri = new UriBuilder(authorityHost.Scheme, authorityHost.Host, authorityHost.Port, TenantId ?? Constants.OrganizationsTenantId).Uri;
 
-            PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder.Create(ClientId).WithAuthority(authorityUri).WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline)).WithLogging(AzureIdentityEventSource.Singleton.LogMsal);
+            PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder
+                .Create(ClientId)
+                .WithAuthority(authorityUri)
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
+                .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
             if (!string.IsNullOrEmpty(RedirectUrl))
             {
                 pubAppBuilder = pubAppBuilder.WithRedirectUri(RedirectUrl);
             }
 
-            pubAppBuilder.WithClientCapabilities(new string[] { "CP1" });
+            if (clientCapabilities.Length > 0)
+            {
+                pubAppBuilder.WithClientCapabilities(clientCapabilities);
+            }
+
+            if (_beforeBuildClient != null)
+            {
+                _beforeBuildClient(pubAppBuilder);
+            }
 
             return new ValueTask<IPublicClientApplication>(pubAppBuilder.Build());
         }
@@ -54,26 +75,33 @@ namespace Azure.Identity
             return await GetAccountsAsync(client, async).ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, IAccount account, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, IAccount account, string tenantId, bool async, CancellationToken cancellationToken)
         {
-            return await AcquireTokenSilentCoreAsync(scopes, claims, account, async, cancellationToken).ConfigureAwait(false);
+            return await AcquireTokenSilentCoreAsync(scopes, claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, IAccount account, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, IAccount account, string tenantId, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
-            return await client.AcquireTokenSilent(scopes, account)
-                .WithClaims(claims)
+            var builder = client.AcquireTokenSilent(scopes, account)
+                .WithClaims(claims);
+
+            if (tenantId != null)
+            {
+                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+            }
+
+            return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, AuthenticationRecord record, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, AuthenticationRecord record, string tenantId, bool async, CancellationToken cancellationToken)
         {
-            return await AcquireTokenSilentCoreAsync(scopes, claims, record, async, cancellationToken).ConfigureAwait(false);
+            return await AcquireTokenSilentCoreAsync(scopes, claims, record, tenantId, async, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, AuthenticationRecord record, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, AuthenticationRecord record, string tenantId, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
@@ -87,7 +115,7 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool async, CancellationToken cancellationToken)
         {
 #pragma warning disable AZC0109 // Misuse of 'async' parameter.
             if (!async && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
@@ -101,38 +129,53 @@ namespace Azure.Identity
                 AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingOnThreadPool();
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-                return Task.Run(async () => await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, true, cancellationToken).ConfigureAwait(false)).GetAwaiter().GetResult();
+                return Task.Run(async () => await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, true, cancellationToken).ConfigureAwait(false)).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-
             }
 
             AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingInline();
 
-            return await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, async, cancellationToken).ConfigureAwait(false);
+            return await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, async, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
-            return await client.AcquireTokenInteractive(scopes)
+            var builder = client.AcquireTokenInteractive(scopes)
                 .WithPrompt(prompt)
                 .WithClaims(claims)
+                .WithPrompt(prompt)
+                .WithClaims(claims);
+            if (loginHint != null)
+            {
+                builder.WithLoginHint(loginHint);
+            }
+            if (tenantId != null)
+            {
+                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+            }
+            return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, string tenantId, bool async, CancellationToken cancellationToken)
         {
-            return await AcquireTokenByUsernamePasswordCoreAsync(scopes, claims, username, password, async, cancellationToken).ConfigureAwait(false);
+            return await AcquireTokenByUsernamePasswordCoreAsync(scopes, claims, username, password, tenantId, async, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, SecureString password, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, SecureString password, string tenantId, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
-            return await client.AcquireTokenByUsernamePassword(scopes, username, password)
-                .WithClaims(claims)
-                .ExecuteAsync(async, cancellationToken)
+            var builder = client
+                .AcquireTokenByUsernamePassword(scopes, username, password)
+                .WithClaims(claims);
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+            }
+            return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
 

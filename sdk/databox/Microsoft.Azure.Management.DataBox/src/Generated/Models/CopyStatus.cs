@@ -10,138 +10,83 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CopyStatus.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum CopyStatus
+    public static class CopyStatus
     {
         /// <summary>
         /// Data copy hasn't started yet.
         /// </summary>
-        [EnumMember(Value = "NotStarted")]
-        NotStarted,
+        public const string NotStarted = "NotStarted";
         /// <summary>
         /// Data copy is in progress.
         /// </summary>
-        [EnumMember(Value = "InProgress")]
-        InProgress,
+        public const string InProgress = "InProgress";
         /// <summary>
         /// Data copy completed.
         /// </summary>
-        [EnumMember(Value = "Completed")]
-        Completed,
+        public const string Completed = "Completed";
         /// <summary>
         /// Data copy completed with errors.
         /// </summary>
-        [EnumMember(Value = "CompletedWithErrors")]
-        CompletedWithErrors,
+        public const string CompletedWithErrors = "CompletedWithErrors";
         /// <summary>
         /// Data copy failed. No data was copied.
         /// </summary>
-        [EnumMember(Value = "Failed")]
-        Failed,
+        public const string Failed = "Failed";
         /// <summary>
         /// No copy triggered as device was not returned.
         /// </summary>
-        [EnumMember(Value = "NotReturned")]
-        NotReturned,
+        public const string NotReturned = "NotReturned";
         /// <summary>
         /// The Device has hit hardware issues.
         /// </summary>
-        [EnumMember(Value = "HardwareError")]
-        HardwareError,
+        public const string HardwareError = "HardwareError";
         /// <summary>
         /// Data copy failed. The Device was formatted by user.
         /// </summary>
-        [EnumMember(Value = "DeviceFormatted")]
-        DeviceFormatted,
+        public const string DeviceFormatted = "DeviceFormatted";
         /// <summary>
         /// Data copy failed. Device metadata was modified by user.
         /// </summary>
-        [EnumMember(Value = "DeviceMetadataModified")]
-        DeviceMetadataModified,
+        public const string DeviceMetadataModified = "DeviceMetadataModified";
         /// <summary>
         /// Data copy failed. Storage Account was not accessible during copy.
         /// </summary>
-        [EnumMember(Value = "StorageAccountNotAccessible")]
-        StorageAccountNotAccessible,
+        public const string StorageAccountNotAccessible = "StorageAccountNotAccessible";
         /// <summary>
         /// Data copy failed. The Device data content is not supported.
         /// </summary>
-        [EnumMember(Value = "UnsupportedData")]
-        UnsupportedData
-    }
-    internal static class CopyStatusEnumExtension
-    {
-        internal static string ToSerializedValue(this CopyStatus? value)
-        {
-            return value == null ? null : ((CopyStatus)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this CopyStatus value)
-        {
-            switch( value )
-            {
-                case CopyStatus.NotStarted:
-                    return "NotStarted";
-                case CopyStatus.InProgress:
-                    return "InProgress";
-                case CopyStatus.Completed:
-                    return "Completed";
-                case CopyStatus.CompletedWithErrors:
-                    return "CompletedWithErrors";
-                case CopyStatus.Failed:
-                    return "Failed";
-                case CopyStatus.NotReturned:
-                    return "NotReturned";
-                case CopyStatus.HardwareError:
-                    return "HardwareError";
-                case CopyStatus.DeviceFormatted:
-                    return "DeviceFormatted";
-                case CopyStatus.DeviceMetadataModified:
-                    return "DeviceMetadataModified";
-                case CopyStatus.StorageAccountNotAccessible:
-                    return "StorageAccountNotAccessible";
-                case CopyStatus.UnsupportedData:
-                    return "UnsupportedData";
-            }
-            return null;
-        }
-
-        internal static CopyStatus? ParseCopyStatus(this string value)
-        {
-            switch( value )
-            {
-                case "NotStarted":
-                    return CopyStatus.NotStarted;
-                case "InProgress":
-                    return CopyStatus.InProgress;
-                case "Completed":
-                    return CopyStatus.Completed;
-                case "CompletedWithErrors":
-                    return CopyStatus.CompletedWithErrors;
-                case "Failed":
-                    return CopyStatus.Failed;
-                case "NotReturned":
-                    return CopyStatus.NotReturned;
-                case "HardwareError":
-                    return CopyStatus.HardwareError;
-                case "DeviceFormatted":
-                    return CopyStatus.DeviceFormatted;
-                case "DeviceMetadataModified":
-                    return CopyStatus.DeviceMetadataModified;
-                case "StorageAccountNotAccessible":
-                    return CopyStatus.StorageAccountNotAccessible;
-                case "UnsupportedData":
-                    return CopyStatus.UnsupportedData;
-            }
-            return null;
-        }
+        public const string UnsupportedData = "UnsupportedData";
+        /// <summary>
+        /// No copy triggered as device was not received.
+        /// </summary>
+        public const string DriveNotReceived = "DriveNotReceived";
+        /// <summary>
+        /// No copy triggered as device type is not supported.
+        /// </summary>
+        public const string UnsupportedDrive = "UnsupportedDrive";
+        /// <summary>
+        /// Copy failed due to service error.
+        /// </summary>
+        public const string OtherServiceError = "OtherServiceError";
+        /// <summary>
+        /// Copy failed due to user error.
+        /// </summary>
+        public const string OtherUserError = "OtherUserError";
+        /// <summary>
+        /// Copy failed due to disk detection error.
+        /// </summary>
+        public const string DriveNotDetected = "DriveNotDetected";
+        /// <summary>
+        /// Copy failed due to corrupted drive.
+        /// </summary>
+        public const string DriveCorrupted = "DriveCorrupted";
+        /// <summary>
+        /// Copy failed due to modified  or removed metadata files.
+        /// </summary>
+        public const string MetadataFilesModifiedOrRemoved = "MetadataFilesModifiedOrRemoved";
     }
 }

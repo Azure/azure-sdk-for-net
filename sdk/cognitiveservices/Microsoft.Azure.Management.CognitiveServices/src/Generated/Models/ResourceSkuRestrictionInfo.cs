@@ -45,16 +45,17 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets locations where the SKU is restricted
+        /// Gets or sets locations where the SKU is restricted
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
-        public IList<string> Locations { get; private set; }
+        public IList<string> Locations { get; set; }
 
         /// <summary>
-        /// Gets list of availability zones where the SKU is restricted.
+        /// Gets or sets list of availability zones where the SKU is
+        /// restricted.
         /// </summary>
         [JsonProperty(PropertyName = "zones")]
-        public IList<string> Zones { get; private set; }
+        public IList<string> Zones { get; set; }
 
     }
 }

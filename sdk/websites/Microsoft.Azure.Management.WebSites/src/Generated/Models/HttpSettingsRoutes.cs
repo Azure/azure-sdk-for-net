@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the paths HTTP requests.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class HttpSettingsRoutes : ProxyOnlyResource
     {
@@ -33,6 +36,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="apiPrefix">The prefix that should precede all the
+        /// authentication/authorization paths.</param>
         public HttpSettingsRoutes(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string apiPrefix = default(string))
             : base(id, name, kind, type)
         {
@@ -46,6 +51,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the prefix that should precede all the
+        /// authentication/authorization paths.
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiPrefix")]
         public string ApiPrefix { get; set; }

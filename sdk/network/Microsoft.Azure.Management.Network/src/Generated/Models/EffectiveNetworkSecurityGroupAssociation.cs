@@ -31,11 +31,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// EffectiveNetworkSecurityGroupAssociation class.
         /// </summary>
+        /// <param name="networkManager">The ID of the Azure network manager if
+        /// assigned.</param>
         /// <param name="subnet">The ID of the subnet if assigned.</param>
         /// <param name="networkInterface">The ID of the network interface if
         /// assigned.</param>
-        public EffectiveNetworkSecurityGroupAssociation(SubResource subnet = default(SubResource), SubResource networkInterface = default(SubResource))
+        public EffectiveNetworkSecurityGroupAssociation(SubResource networkManager = default(SubResource), SubResource subnet = default(SubResource), SubResource networkInterface = default(SubResource))
         {
+            NetworkManager = networkManager;
             Subnet = subnet;
             NetworkInterface = networkInterface;
             CustomInit();
@@ -45,6 +48,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the ID of the Azure network manager if assigned.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkManager")]
+        public SubResource NetworkManager { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the subnet if assigned.

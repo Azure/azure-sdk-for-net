@@ -17,19 +17,19 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchPoolEndToEndAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();
                 string paasPoolName = "test_paas_pool";
                 string iaasPoolName = "test_iaas_pool";
                 string displayName = "test_pool";
-                ResourceGroup group = new ResourceGroup(this.Location);
-                await this.ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
+                ResourceGroup group = new ResourceGroup(Location);
+                await ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
 
                 // Create an account
-                BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(this.Location);
-                await this.BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
+                BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(Location);
+                await BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
 
                 try
                 {
@@ -44,8 +44,12 @@ namespace Batch.Tests.ScenarioTests
                             OsFamily = "5"
                         }
                     };
+
+                    string userId = "refUserId123"; 
+                    ComputeNodeIdentityReference identity = new ComputeNodeIdentityReference(userId);
+                    
                     var resources = new List<ResourceFile>();
-                    resources.Add(new ResourceFile(httpUrl: "https://blobsource.com", filePath: "filename.txt"));
+                    resources.Add(new ResourceFile(httpUrl: "https://blobsource.com", filePath: "filename.txt", identityReference: identity));
                     var environments = new List<EnvironmentSetting>();
                     environments.Add(new EnvironmentSetting("ENV_VAR", "env_value"));
                     paasPool.StartTask = new StartTask()
@@ -73,10 +77,12 @@ namespace Batch.Tests.ScenarioTests
                         }
                     };
 
-                    var paasPoolResponse = await this.BatchManagementClient.Pool.CreateAsync(resourceGroupName, batchAccountName, paasPoolName, paasPool);
+                    var paasPoolResponse = await BatchManagementClient.Pool.CreateAsync(resourceGroupName, batchAccountName, paasPoolName, paasPool);
                     Assert.NotNull(paasPoolResponse.StartTask);
+                    Assert.Equal(userId, paasPoolResponse.StartTask.ResourceFiles.Single().IdentityReference.ResourceId);
+
                     var referenceId =
-                        $"/subscriptions/{this.BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{batchAccountName}/pools/{paasPoolName.ToLowerInvariant()}";
+                        $"/subscriptions/{BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{batchAccountName}/pools/{paasPoolName.ToLowerInvariant()}";
                     Assert.Equal(referenceId, paasPoolResponse.Id);
 
                     // Create IaaS pool
@@ -94,7 +100,8 @@ namespace Batch.Tests.ScenarioTests
                                 Sku = "2016-Datacenter-smalldisk"
                             },
                             NodeAgentSkuId = "batch.node.windows amd64",
-                            WindowsConfiguration = new WindowsConfiguration(true)
+                            WindowsConfiguration = new WindowsConfiguration(true),
+                            OsDisk = new OSDisk(new DiffDiskSettings(DiffDiskPlacement.CacheDisk))
                         }
                     };
                     iaasPool.ScaleSettings = new ScaleSettings()
@@ -106,33 +113,35 @@ namespace Batch.Tests.ScenarioTests
                         }
                     };
 
-                    var iaasPoolResponse = await this.BatchManagementClient.Pool.CreateAsync(resourceGroupName, batchAccountName, iaasPoolName, iaasPool);
+                    var iaasPoolResponse = await BatchManagementClient.Pool.CreateAsync(resourceGroupName, batchAccountName, iaasPoolName, iaasPool);
                     Assert.Null(iaasPoolResponse.StartTask);
                     referenceId =
-                        $"/subscriptions/{this.BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{batchAccountName}/pools/{iaasPoolName.ToLowerInvariant()}";
+                        $"/subscriptions/{BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{batchAccountName}/pools/{iaasPoolName.ToLowerInvariant()}";
                     Assert.Equal(referenceId, iaasPoolResponse.Id);
 
                     // Verify list operation
-                    var pools = await this.BatchManagementClient.Pool.ListByBatchAccountAsync(resourceGroupName, batchAccountName);
+                    var pools = await BatchManagementClient.Pool.ListByBatchAccountAsync(resourceGroupName, batchAccountName);
                     Assert.Equal(2, pools.Count());
 
                     // Verify get operation
-                    var pool = await this.BatchManagementClient.Pool.GetAsync(resourceGroupName, batchAccountName, iaasPoolName);
+                    var pool = await BatchManagementClient.Pool.GetAsync(resourceGroupName, batchAccountName, iaasPoolName);
                     Assert.Equal("STANDARD_A1", pool.VmSize);
                     Assert.Equal(displayName, pool.DisplayName);
                     Assert.Equal(AllocationState.Resizing, pool.AllocationState);
                     Assert.Equal("batch.node.windows amd64", pool.DeploymentConfiguration.VirtualMachineConfiguration.NodeAgentSkuId);
+                    Assert.NotNull(pool.DeploymentConfiguration.VirtualMachineConfiguration.OsDisk);
+                    Assert.Equal(DiffDiskPlacement.CacheDisk, pool.DeploymentConfiguration.VirtualMachineConfiguration.OsDisk.EphemeralOSDiskSettings.Placement);
 
                     // Verify stop resize operation
-                    await this.BatchManagementClient.Pool.StopResizeAsync(resourceGroupName, batchAccountName, iaasPoolName);
+                    await BatchManagementClient.Pool.StopResizeAsync(resourceGroupName, batchAccountName, iaasPoolName);
 
                     // Verify disable auto scale operation
-                    await this.BatchManagementClient.Pool.DisableAutoScaleAsync(resourceGroupName, batchAccountName, iaasPoolName);
+                    await BatchManagementClient.Pool.DisableAutoScaleAsync(resourceGroupName, batchAccountName, iaasPoolName);
 
                     // Delete the paas pool
                     try
                     {
-                        await this.BatchManagementClient.Pool.DeleteAsync(resourceGroupName, batchAccountName, paasPoolName);
+                        await BatchManagementClient.Pool.DeleteAsync(resourceGroupName, batchAccountName, paasPoolName);
                     }
                     catch (CloudException ex)
                     {
@@ -145,7 +154,7 @@ namespace Batch.Tests.ScenarioTests
                     // Delete iaaS pool
                     try
                     {
-                        await this.BatchManagementClient.Pool.DeleteAsync(resourceGroupName, batchAccountName, iaasPoolName);
+                        await BatchManagementClient.Pool.DeleteAsync(resourceGroupName, batchAccountName, iaasPoolName);
                     }
                     catch (CloudException ex)
                     {
@@ -158,7 +167,7 @@ namespace Batch.Tests.ScenarioTests
                     // Verify pool was deleted. A GET operation will return a 404 error and result in an exception
                     try
                     {
-                        await this.BatchManagementClient.Pool.GetAsync(resourceGroupName, batchAccountName, paasPoolName);
+                        await BatchManagementClient.Pool.GetAsync(resourceGroupName, batchAccountName, paasPoolName);
                     }
                     catch (CloudException ex)
                     {
@@ -168,8 +177,8 @@ namespace Batch.Tests.ScenarioTests
                 }
                 finally
                 {
-                    await this.BatchManagementClient.BatchAccount.DeleteAsync(resourceGroupName, batchAccountName);
-                    await this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName);
+                    await BatchManagementClient.BatchAccount.DeleteAsync(resourceGroupName, batchAccountName);
+                    await ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName);
                 }
             }
         }

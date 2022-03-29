@@ -4,11 +4,11 @@
   "parameters": {
     "managementGroupId": {
       "type": "string",
-      "defaultValue": "gopremra-testmg"
+      "defaultValue": "net-sdk-testmg"
     },
     "subscriptionId": {
       "type": "string",
-      "defaultValue": "ce7f58b7-53c8-4806-ad09-18b516f85d4a"
+      "defaultValue": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
     },
     "roleDefinitionId": {
       "type": "string",

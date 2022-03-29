@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// this particular object.</param>
         /// <param name="display">The localized display information for this
         /// particular operation or action.</param>
-        /// <param name="origin">The intended executor of the operation.
-        /// Possible values include: 'NotSpecified', 'user', 'system'</param>
+        /// <param name="origin">The intended executor of the
+        /// operation.</param>
         /// <param name="properties">Additional descriptions for the
         /// operation.</param>
         public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), IDictionary<string, object> properties = default(IDictionary<string, object>))
@@ -54,31 +54,30 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the name of the operation being performed on this particular
-        /// object.
+        /// Gets or sets the name of the operation being performed on this
+        /// particular object.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets the localized display information for this particular
+        /// Gets or sets the localized display information for this particular
         /// operation or action.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; private set; }
+        public OperationDisplay Display { get; set; }
 
         /// <summary>
-        /// Gets the intended executor of the operation. Possible values
-        /// include: 'NotSpecified', 'user', 'system'
+        /// Gets or sets the intended executor of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
-        public string Origin { get; private set; }
+        public string Origin { get; set; }
 
         /// <summary>
-        /// Gets additional descriptions for the operation.
+        /// Gets or sets additional descriptions for the operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public IDictionary<string, object> Properties { get; private set; }
+        public IDictionary<string, object> Properties { get; set; }
 
     }
 }

@@ -63,7 +63,7 @@ await client.DeleteQueueAsync(queueName);
 ```C# Snippet:CreateTopicAndSubscription
 string connectionString = "<connection_string>";
 string topicName = "<topic_name>";
-var client = new ServiceBusManagementClient(connectionString);
+var client = new ServiceBusAdministrationClient(connectionString);
 var topicOptions = new CreateTopicOptions(topicName)
 {
     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -147,4 +147,4 @@ await client.DeleteTopicAsync(topicName);
 
 To see the full example source, see:
 
-* [Sample07_CrudOperations.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample07_CrudOperations.cs)
+* [Sample07_CrudOperations.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample07_CrudOperations.cs)

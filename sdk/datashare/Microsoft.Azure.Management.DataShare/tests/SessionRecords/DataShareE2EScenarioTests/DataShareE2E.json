@@ -1114,6 +1114,150 @@
       "StatusCode": 201
     },
     {
+      "RequestUri": "/providers/Microsoft.DataShare/locations/eastus2euap/registerEmail?api-version=2020-09-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVNoYXJlL2xvY2F0aW9ucy9lYXN0dXMyZXVhcC9yZWdpc3RlckVtYWlsP2FwaS12ZXJzaW9uPTIwMjAtMDktMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1eae65f9-2331-429d-bda7-eeebe726a047"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataShare.DataShareManagementClient/1.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "162"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-quota": [
+          "[{\"currentUsed\":1,\"limit\":200,\"name\":{\"localizedValue\":\"Invitation resource quota\",\"value\":\"Invitation resource quota\"},\"target\":\"/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktstshareaccount/shares/sdktestingshare/invitations/sdktestinginvitation\"}]"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "0618ef3e-cd11-4100-92ed-7810abc53451"
+        ],
+        "x-ms-correlation-request-id": [
+          "0618ef3e-cd11-4100-92ed-7810abc53451"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210311T185820Z:0618ef3e-cd11-4100-92ed-7810abc53451"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 11 Mar 2021 18:58:20 GMT"
+        ],
+        "Content-Length": [
+          "886"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n   \"activationCode\": \"15ee7153fe0df5a3a449a897d6cec836\",\r\n    \"activationExpirationDate\": \"2022-08-16T22:35:17.2093506Z\",\r\n    \"email\": \"john.smith@contoso.com\",\r\n    \"registrationStatus\": \"ActivationPending\",\r\n    \"tenantId\": \"f686d426-8d16-42db-81b7-ab578e110ccd\"\r\n }",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.DataShare/locations/eastus2euap/activateEmail?api-version=2020-09-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVNoYXJlL2xvY2F0aW9ucy9lYXN0dXMyZXVhcC9hY3RpdmF0ZUVtYWlsP2FwaS12ZXJzaW9uPTIwMjAtMDktMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n   \"activationCode\": \"15ee7153fe0df5a3a449a897d6cec836\",\r\n    \"activationExpirationDate\": \"2022-08-16T22:35:17.2093506Z\",\r\n    \"email\": \"john.smith@contoso.com\",\r\n    \"registrationStatus\": \"Activated\",\r\n    \"tenantId\": \"f686d426-8d16-42db-81b7-ab578e110ccd\"\r\n }",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1eae65f9-2331-429d-bda7-eeebe726a047"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataShare.DataShareManagementClient/1.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "162"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-quota": [
+          "[{\"currentUsed\":1,\"limit\":200,\"name\":{\"localizedValue\":\"Invitation resource quota\",\"value\":\"Invitation resource quota\"},\"target\":\"/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktstshareaccount/shares/sdktestingshare/invitations/sdktestinginvitation\"}]"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "0618ef3e-cd11-4100-92ed-7810abc53451"
+        ],
+        "x-ms-correlation-request-id": [
+          "0618ef3e-cd11-4100-92ed-7810abc53451"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210311T185820Z:0618ef3e-cd11-4100-92ed-7810abc53451"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 11 Mar 2021 18:58:20 GMT"
+        ],
+        "Content-Length": [
+          "886"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n   \"activationCode\": \"15ee7153fe0df5a3a449a897d6cec836\",\r\n    \"activationExpirationDate\": \"2022-08-16T22:35:17.2093506Z\",\r\n    \"email\": \"john.smith@contoso.com\",\r\n    \"registrationStatus\": \"Activated\",\r\n    \"tenantId\": \"f686d426-8d16-42db-81b7-ab578e110ccd\"\r\n }",
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktstshareaccount/shareSubscriptions/sdktestingsharesub?api-version=2020-09-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGYzZGNmYzMtMThmOC00MDk5LWIzODEtODM1M2UxOWQ0M2E3L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZHNyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFTaGFyZS9hY2NvdW50cy9zZGt0c3RzaGFyZWFjY291bnQvc2hhcmVTdWJzY3JpcHRpb25zL3Nka3Rlc3RpbmdzaGFyZXN1Yj9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
       "RequestMethod": "PUT",

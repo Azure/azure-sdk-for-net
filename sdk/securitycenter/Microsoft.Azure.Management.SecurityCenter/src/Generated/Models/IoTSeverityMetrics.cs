@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// alerts/recommendations.</param>
         /// <param name="low">Count of low severity
         /// alerts/recommendations.</param>
-        public IoTSeverityMetrics(int? high = default(int?), int? medium = default(int?), int? low = default(int?))
+        public IoTSeverityMetrics(long? high = default(long?), long? medium = default(long?), long? low = default(long?))
         {
             High = high;
             Medium = medium;
@@ -52,19 +52,19 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets or sets count of high severity alerts/recommendations.
         /// </summary>
         [JsonProperty(PropertyName = "high")]
-        public int? High { get; set; }
+        public long? High { get; set; }
 
         /// <summary>
         /// Gets or sets count of medium severity alerts/recommendations.
         /// </summary>
         [JsonProperty(PropertyName = "medium")]
-        public int? Medium { get; set; }
+        public long? Medium { get; set; }
 
         /// <summary>
         /// Gets or sets count of low severity alerts/recommendations.
         /// </summary>
         [JsonProperty(PropertyName = "low")]
-        public int? Low { get; set; }
+        public long? Low { get; set; }
 
     }
 }

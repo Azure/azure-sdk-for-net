@@ -17,6 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> documentId = default;
             Optional<long> index = default;
             Optional<string> endReason = default;
+            Optional<string> metadataLocation = default;
+            Optional<string> contentLocation = default;
+            Optional<string> deleteLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentId"))
@@ -39,8 +42,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     endReason = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("metadataLocation"))
+                {
+                    metadataLocation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contentLocation"))
+                {
+                    contentLocation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deleteLocation"))
+                {
+                    deleteLocation = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AcsRecordingChunkInfoProperties(documentId.Value, Optional.ToNullable(index), endReason.Value);
+            return new AcsRecordingChunkInfoProperties(documentId.Value, Optional.ToNullable(index), endReason.Value, metadataLocation.Value, contentLocation.Value, deleteLocation.Value);
         }
     }
 }

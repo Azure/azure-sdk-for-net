@@ -8,7 +8,7 @@
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Parameters of how to return time series instances by search instances call. </summary>
-    public partial class SearchInstancesParameters
+    internal partial class SearchInstancesParameters
     {
         /// <summary> Initializes a new instance of SearchInstancesParameters. </summary>
         public SearchInstancesParameters()

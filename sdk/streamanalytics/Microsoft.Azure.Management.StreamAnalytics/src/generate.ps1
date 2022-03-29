@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "streamanalytics/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "streamanalytics/resource-manager" -AutoRestVersion "v2" -SpecsRepoBranch "main"

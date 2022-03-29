@@ -148,6 +148,54 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Updates vault setting. A vault setting object is a singleton per vault and
+            /// it is always present by default.
+            /// </summary>
+            /// <remarks>
+            /// The operation to configure vault setting.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultSettingName'>
+            /// Vault setting name.
+            /// </param>
+            /// <param name='input'>
+            /// Vault setting creation input.
+            /// </param>
+            public static VaultSetting BeginCreate(this IReplicationVaultSettingOperations operations, string vaultSettingName, VaultSettingCreationInput input)
+            {
+                return operations.BeginCreateAsync(vaultSettingName, input).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates vault setting. A vault setting object is a singleton per vault and
+            /// it is always present by default.
+            /// </summary>
+            /// <remarks>
+            /// The operation to configure vault setting.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultSettingName'>
+            /// Vault setting name.
+            /// </param>
+            /// <param name='input'>
+            /// Vault setting creation input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VaultSetting> BeginCreateAsync(this IReplicationVaultSettingOperations operations, string vaultSettingName, VaultSettingCreationInput input, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(vaultSettingName, input, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the list of vault setting.
             /// </summary>
             /// <remarks>

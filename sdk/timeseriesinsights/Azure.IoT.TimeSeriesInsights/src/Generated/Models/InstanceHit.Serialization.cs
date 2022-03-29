@@ -8,11 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.IoT.TimeSeriesInsights.Models;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class InstanceHit
+    internal partial class InstanceHit
     {
         internal static InstanceHit DeserializeInstanceHit(JsonElement element)
         {

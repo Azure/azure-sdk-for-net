@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisionVMAgent))
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent");
-                writer.WriteBooleanValue(ProvisionVMAgent.Value);
+                writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
             if (Optional.IsDefined(EnableAutomaticUpdates))
             {
@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PatchSettings))
+            {
+                writer.WritePropertyName("patchSettings");
+                writer.WriteObjectValue(PatchSettings);
+            }
             if (Optional.IsDefined(WinRM))
             {
                 writer.WritePropertyName("winRM");
@@ -55,6 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableAutomaticUpdates = default;
             Optional<string> timeZone = default;
             Optional<IList<AdditionalUnattendContent>> additionalUnattendContent = default;
+            Optional<PatchSettings> patchSettings = default;
             Optional<WinRMConfiguration> winRM = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -98,6 +104,16 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalUnattendContent = array;
                     continue;
                 }
+                if (property.NameEquals("patchSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    patchSettings = PatchSettings.DeserializePatchSettings(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("winRM"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -109,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new WindowsConfiguration(Optional.ToNullable(provisionVMAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), winRM.Value);
+            return new WindowsConfiguration(Optional.ToNullable(provisionVMAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value);
         }
     }
 }

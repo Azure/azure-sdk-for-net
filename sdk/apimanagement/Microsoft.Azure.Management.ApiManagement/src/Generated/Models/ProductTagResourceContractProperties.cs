@@ -98,11 +98,23 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Name != null)
+            {
+                if (Name.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 300);
+                }
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
             }
         }
     }

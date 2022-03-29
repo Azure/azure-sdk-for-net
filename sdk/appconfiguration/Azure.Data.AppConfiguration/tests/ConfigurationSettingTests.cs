@@ -190,5 +190,15 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.IsTrue(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]));
             Assert.IsNull(deserialized["null_key"]);
         }
+
+        [Test]
+        public void ConfigurationSettingEtagConstructor()
+        {
+            var configurationSetting = new ConfigurationSetting("key", "value", "label", new ETag("etag"));
+            Assert.AreEqual("key", configurationSetting.Key);
+            Assert.AreEqual("value", configurationSetting.Value);
+            Assert.AreEqual("label", configurationSetting.Label);
+            Assert.AreEqual("etag", configurationSetting.ETag.ToString());
+        }
     }
 }

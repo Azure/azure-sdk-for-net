@@ -203,6 +203,58 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
+            /// Gets the async operation status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
+            /// <param name='operationId'>
+            /// The long running operation id.
+            /// </param>
+            public static AsyncOperationResult GetAzureAsyncOperationStatus(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, string operationId)
+            {
+                return operations.GetAzureAsyncOperationStatusAsync(resourceGroupName, clusterName, applicationName, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the async operation status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
+            /// <param name='operationId'>
+            /// The long running operation id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AsyncOperationResult> GetAzureAsyncOperationStatusAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAzureAsyncOperationStatusWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates applications for the HDInsight cluster.
             /// </summary>
             /// <param name='operations'>

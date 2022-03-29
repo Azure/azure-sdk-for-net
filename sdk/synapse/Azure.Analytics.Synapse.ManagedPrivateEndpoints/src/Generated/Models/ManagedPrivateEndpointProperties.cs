@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     /// <summary> Properties of a managed private endpoint. </summary>
@@ -13,23 +16,32 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
         public ManagedPrivateEndpointProperties()
         {
+            Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
+        /// <param name="name"> The name of managed private endpoint. </param>
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
         /// <param name="provisioningState"> The managed private endpoint provisioning state. </param>
         /// <param name="connectionState"> The managed private endpoint connection state. </param>
         /// <param name="isReserved"> Denotes whether the managed private endpoint is reserved. </param>
-        internal ManagedPrivateEndpointProperties(string privateLinkResourceId, string groupId, string provisioningState, ManagedPrivateEndpointConnectionState connectionState, bool? isReserved)
+        /// <param name="fqdns"> List of fully qualified domain names. </param>
+        /// <param name="isCompliant"> Denotes whether the managed private endpoint is compliant. </param>
+        internal ManagedPrivateEndpointProperties(string name, string privateLinkResourceId, string groupId, string provisioningState, ManagedPrivateEndpointConnectionState connectionState, bool? isReserved, IList<string> fqdns, bool? isCompliant)
         {
+            Name = name;
             PrivateLinkResourceId = privateLinkResourceId;
             GroupId = groupId;
             ProvisioningState = provisioningState;
             ConnectionState = connectionState;
             IsReserved = isReserved;
+            Fqdns = fqdns;
+            IsCompliant = isCompliant;
         }
 
+        /// <summary> The name of managed private endpoint. </summary>
+        public string Name { get; set; }
         /// <summary> The ARM resource ID of the resource to which the managed private endpoint is created. </summary>
         public string PrivateLinkResourceId { get; set; }
         /// <summary> The groupId to which the managed private endpoint is created. </summary>
@@ -40,5 +52,9 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         public ManagedPrivateEndpointConnectionState ConnectionState { get; set; }
         /// <summary> Denotes whether the managed private endpoint is reserved. </summary>
         public bool? IsReserved { get; }
+        /// <summary> List of fully qualified domain names. </summary>
+        public IList<string> Fqdns { get; }
+        /// <summary> Denotes whether the managed private endpoint is compliant. </summary>
+        public bool? IsCompliant { get; set; }
     }
 }

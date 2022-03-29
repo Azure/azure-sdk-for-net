@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("blobContainerSasUri");
-            writer.WriteStringValue(BlobContainerSasUri);
+            writer.WriteStringValue(BlobContainerSasUri.AbsoluteUri);
             writer.WritePropertyName("fromTime");
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime");
@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("groupByResourceName");
                 writer.WriteBooleanValue(GroupByResourceName.Value);
+            }
+            if (Optional.IsDefined(GroupByClientApplicationId))
+            {
+                writer.WritePropertyName("groupByClientApplicationId");
+                writer.WriteBooleanValue(GroupByClientApplicationId.Value);
+            }
+            if (Optional.IsDefined(GroupByUserAgent))
+            {
+                writer.WritePropertyName("groupByUserAgent");
+                writer.WriteBooleanValue(GroupByUserAgent.Value);
             }
             writer.WriteEndObject();
         }

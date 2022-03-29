@@ -15,21 +15,36 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "DelimitedTextConfiguration");
-            writer.WriteStartElement("ColumnSeparator");
-            writer.WriteValue(ColumnSeparator);
-            writer.WriteEndElement();
-            writer.WriteStartElement("FieldQuote");
-            writer.WriteValue(FieldQuote);
-            writer.WriteEndElement();
-            writer.WriteStartElement("RecordSeparator");
-            writer.WriteValue(RecordSeparator);
-            writer.WriteEndElement();
-            writer.WriteStartElement("EscapeChar");
-            writer.WriteValue(EscapeChar);
-            writer.WriteEndElement();
-            writer.WriteStartElement("HasHeaders");
-            writer.WriteValue(HeadersPresent);
-            writer.WriteEndElement();
+            if (Optional.IsDefined(ColumnSeparator))
+            {
+                writer.WriteStartElement("ColumnSeparator");
+                writer.WriteValue(ColumnSeparator);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(FieldQuote))
+            {
+                writer.WriteStartElement("FieldQuote");
+                writer.WriteValue(FieldQuote);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(RecordSeparator))
+            {
+                writer.WriteStartElement("RecordSeparator");
+                writer.WriteValue(RecordSeparator);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(EscapeChar))
+            {
+                writer.WriteStartElement("EscapeChar");
+                writer.WriteValue(EscapeChar);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(HeadersPresent))
+            {
+                writer.WriteStartElement("HasHeaders");
+                writer.WriteValue(HeadersPresent.Value);
+                writer.WriteEndElement();
+            }
             writer.WriteEndElement();
         }
     }

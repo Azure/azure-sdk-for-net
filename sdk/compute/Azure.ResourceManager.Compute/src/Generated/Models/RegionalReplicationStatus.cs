@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of RegionalReplicationStatus. </summary>
-        /// <param name="region"> The region to which the gallery Image Version is being replicated to. </param>
+        /// <param name="region"> The region to which the gallery image version is being replicated to. </param>
         /// <param name="state"> This is the regional replication state. </param>
         /// <param name="details"> The details of the replication status. </param>
         /// <param name="progress"> It indicates progress of the replication job. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Progress = progress;
         }
 
-        /// <summary> The region to which the gallery Image Version is being replicated to. </summary>
+        /// <summary> The region to which the gallery image version is being replicated to. </summary>
         public string Region { get; }
         /// <summary> This is the regional replication state. </summary>
         public ReplicationState? State { get; }

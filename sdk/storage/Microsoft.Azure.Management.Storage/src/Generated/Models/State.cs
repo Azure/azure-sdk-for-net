@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// </summary>
     public static class State
     {
-        public const string Provisioning = "provisioning";
-        public const string Deprovisioning = "deprovisioning";
-        public const string Succeeded = "succeeded";
-        public const string Failed = "failed";
-        public const string NetworkSourceDeleted = "networkSourceDeleted";
+        public const string Provisioning = "Provisioning";
+        public const string Deprovisioning = "Deprovisioning";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
+        public const string NetworkSourceDeleted = "NetworkSourceDeleted";
     }
 }

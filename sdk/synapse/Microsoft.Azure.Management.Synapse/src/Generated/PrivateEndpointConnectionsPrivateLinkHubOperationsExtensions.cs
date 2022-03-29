@@ -62,6 +62,52 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Get all PrivateEndpointConnection in the PrivateLinkHub by name
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateLinkHubName'>
+            /// Name of the privateLinkHub
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the privateEndpointConnection
+            /// </param>
+            public static PrivateEndpointConnectionForPrivateLinkHub Get(this IPrivateEndpointConnectionsPrivateLinkHubOperations operations, string resourceGroupName, string privateLinkHubName, string privateEndpointConnectionName)
+            {
+                return operations.GetAsync(resourceGroupName, privateLinkHubName, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all PrivateEndpointConnection in the PrivateLinkHub by name
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateLinkHubName'>
+            /// Name of the privateLinkHub
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the privateEndpointConnection
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnectionForPrivateLinkHub> GetAsync(this IPrivateEndpointConnectionsPrivateLinkHubOperations operations, string resourceGroupName, string privateLinkHubName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, privateLinkHubName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get all PrivateEndpointConnections in the PrivateLinkHub
             /// </summary>
             /// <param name='operations'>

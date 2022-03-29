@@ -18,11 +18,13 @@ namespace Azure.Analytics.Synapse.Spark
 {
     internal partial class SparkSessionRestClient
     {
-        private Uri endpoint;
-        private string sparkPoolName;
-        private string livyApiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _sparkPoolName;
+        private readonly string _livyApiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of SparkSessionRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -30,27 +32,14 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
         /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="sparkPoolName"/>, or <paramref name="livyApiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="sparkPoolName"/> or <paramref name="livyApiVersion"/> is null. </exception>
         public SparkSessionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (sparkPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkPoolName));
-            }
-            if (livyApiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(livyApiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.sparkPoolName = sparkPoolName;
-            this.livyApiVersion = livyApiVersion;
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _sparkPoolName = sparkPoolName ?? throw new ArgumentNullException(nameof(sparkPoolName));
+            _livyApiVersion = livyApiVersion ?? throw new ArgumentNullException(nameof(livyApiVersion));
         }
 
         internal HttpMessage CreateGetSparkSessionsRequest(int? @from, int? size, bool? detailed)
@@ -59,11 +48,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions", false);
             if (@from != null)
             {
@@ -86,7 +75,6 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="from"> Optional param specifying which index the list should begin from. </param>
         /// <param name="size">
         /// Optional param specifying the size of the returned list.
-        /// 
         ///             By default it is 20 and that is the maximum.
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
@@ -105,7 +93,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -113,7 +101,6 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="from"> Optional param specifying which index the list should begin from. </param>
         /// <param name="size">
         /// Optional param specifying the size of the returned list.
-        /// 
         ///             By default it is 20 and that is the maximum.
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
@@ -132,7 +119,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -142,11 +129,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions", false);
             if (detailed != null)
             {
@@ -185,7 +172,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -213,7 +200,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -223,11 +210,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             if (detailed != null)
@@ -257,7 +244,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -279,7 +266,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -289,11 +276,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
@@ -312,7 +299,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -328,7 +315,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -338,11 +325,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/reset-timeout", false);
@@ -362,7 +349,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -378,7 +365,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -388,11 +375,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements", false);
@@ -418,7 +405,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -439,7 +426,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -449,11 +436,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements", false);
@@ -490,7 +477,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -518,7 +505,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -528,11 +515,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements/", false);
@@ -560,7 +547,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -582,7 +569,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -592,11 +579,11 @@ namespace Azure.Analytics.Synapse.Spark
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements/", false);
@@ -625,7 +612,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -647,7 +634,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

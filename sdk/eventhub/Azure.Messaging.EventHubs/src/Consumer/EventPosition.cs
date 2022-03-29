@@ -27,27 +27,21 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition Earliest => FromOffset(StartOfStreamOffset, false);
+        public static EventPosition Earliest { get; } = FromOffset(StartOfStreamOffset, false);
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
-        ///   position to begin receiving from the next event to be enqueued in the partition after an <see cref="EventHubConsumerClient"/>
-        ///   is created with this position.
+        ///   position to begin receiving from the next event to be enqueued in the partition after an event
+        ///   consumer begins reading with this position.
         /// </summary>
         ///
-        public static EventPosition Latest => FromOffset(EndOfStreamOffset, false);
+        public static EventPosition Latest { get; } = FromOffset(EndOfStreamOffset, false);
 
         /// <summary>
         ///   The offset of the event identified by this position.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
-        ///
-        /// <remarks>
-        ///   The offset is the relative position for event in the context of the stream.  The offset
-        ///   should not be considered a stable value, as the same offset may refer to a different event
-        ///   as events reach the age limit for retention and are no longer visible within the stream.
-        /// </remarks>
         ///
         internal string Offset { get; set; }
 
@@ -77,25 +71,29 @@ namespace Azure.Messaging.EventHubs.Consumer
         internal long? SequenceNumber { get; set; }
 
         /// <summary>
-        ///   Corresponds to the event in the partition at the provided offset, inclusive of that event.
+        ///   Corresponds to a specific offset in the partition event stream.  By default, if an event is located
+        ///   at that offset, it will be read.  Setting <paramref name="isInclusive"/> to <c>false</c> will skip the
+        ///   event at that offset and begin reading at the next available event.
         /// </summary>
         ///
         /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
-        /// <param name="isInclusive">If true, the event with the <paramref name="offset"/> is included; otherwise the next event in sequence will be received.</param>
+        /// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="offset"/> is included; otherwise the next event in sequence will be read.</param>
         ///
-        /// <returns>The position of the specified event.</returns>
+        /// <returns>The specified position of an event in the partition.</returns>
         ///
         public static EventPosition FromOffset(long offset,
                                                bool isInclusive = true) => FromOffset(offset.ToString(CultureInfo.InvariantCulture), isInclusive);
 
         /// <summary>
-        ///   Corresponds to the event in the partition having a specified sequence number associated with it.
+        ///   Corresponds to an event with the specified sequence number in the partition.  By default, the event
+        ///   with this <paramref name="sequenceNumber"/> will be read.  Setting <paramref name="isInclusive"/> to
+        ///   <c>false</c> will skip the event with that sequence number and begin reading at the next available event.
         /// </summary>
         ///
         /// <param name="sequenceNumber">The sequence number assigned to an event when it was enqueued in the partition.</param>
-        /// <param name="isInclusive">If true, the event with the <paramref name="sequenceNumber"/> is included; otherwise the next event in sequence will be received.</param>
+        /// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="sequenceNumber"/> is included; otherwise the next event in sequence will be read.</param>
         ///
-        /// <returns>The position of the specified event.</returns>
+        /// <returns>The specified position of an event in the partition.</returns>
         ///
         public static EventPosition FromSequenceNumber(long sequenceNumber,
                                                        bool isInclusive = true)
@@ -108,13 +106,13 @@ namespace Azure.Messaging.EventHubs.Consumer
         }
 
         /// <summary>
-        ///   Corresponds to a specific date and time within the partition to begin seeking an event; the event enqueued after the
-        ///   requested <paramref name="enqueuedTime" /> will become the current position.
+        ///   Corresponds to a specific date and time within the partition to begin seeking an event; the event enqueued on or after
+        ///   the specified <paramref name="enqueuedTime" /> will be read.
         /// </summary>
         ///
         /// <param name="enqueuedTime">The date and time, in UTC, from which the next available event should be chosen.</param>
         ///
-        /// <returns>The position of the specified event.</returns>
+        /// <returns>The specified position of an event in the partition.</returns>
         ///
         public static EventPosition FromEnqueuedTime(DateTimeOffset enqueuedTime)
         {
@@ -178,17 +176,16 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Converts the instance to string representation.
         /// </summary>
         ///
-        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        /// <returns>A <see cref="System.String" /> that represents the position in the event stream.</returns>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() =>
             this switch
             {
-                EventPosition _ when (Offset == StartOfStreamOffset) => nameof(Earliest),
-                EventPosition _ when (Offset == EndOfStreamOffset) => nameof(Latest),
-                EventPosition _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
-                EventPosition _ when (SequenceNumber.HasValue) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
-                EventPosition _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
+                _ when (Offset == StartOfStreamOffset) => nameof(Earliest),
+                _ when (Offset == EndOfStreamOffset) => nameof(Latest),
+                _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
+                _ when (SequenceNumber.HasValue) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
+                _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
                 _ => base.ToString()
             };
 

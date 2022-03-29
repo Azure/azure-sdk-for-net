@@ -333,5 +333,29 @@ namespace Azure.Messaging.ServiceBus.Tests
                 previousDelay = delay.Value;
             }
         }
+
+        /// <summary>
+        ///  Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
+        ///  method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRetryDelayDoesNotOverlowTimespanMaximum()
+        {
+            // The fixed policy can't exceed the maximum due to limitations on
+            // the configured Delay and MaximumRetries; the exponential policy
+            // will overflow a TimeSpan on the 38th retry with maximum values if
+            // the calculation is uncapped.
+
+            var policy = new BasicRetryPolicy(new ServiceBusRetryOptions
+            {
+                MaxRetries = 100,
+                Delay = TimeSpan.FromMinutes(5),
+                MaxDelay = TimeSpan.MaxValue,
+                Mode = ServiceBusRetryMode.Exponential
+            });
+
+            Assert.That(policy.CalculateRetryDelay(new ServiceBusException(true, "transient", "fake", ServiceBusFailureReason.ServiceTimeout), 88), Is.EqualTo(TimeSpan.MaxValue));
+        }
     }
 }

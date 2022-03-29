@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -40,23 +41,27 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="subscriptionKeyParameterNames">Protocols over which
         /// API is made available.</param>
         /// <param name="apiType">Type of API. Possible values include: 'http',
-        /// 'soap'</param>
-        /// <param name="apiRevision">Describes the Revision of the Api. If no
+        /// 'soap', 'websocket', 'graphql'</param>
+        /// <param name="apiRevision">Describes the revision of the API. If no
         /// value is provided, default revision 1 is created</param>
-        /// <param name="apiVersion">Indicates the Version identifier of the
+        /// <param name="apiVersion">Indicates the version identifier of the
         /// API if the API is versioned</param>
         /// <param name="isCurrent">Indicates if API revision is current api
         /// revision.</param>
         /// <param name="isOnline">Indicates if API revision is accessible via
         /// the gateway.</param>
-        /// <param name="apiRevisionDescription">Description of the Api
+        /// <param name="apiRevisionDescription">Description of the API
         /// Revision.</param>
-        /// <param name="apiVersionDescription">Description of the Api
+        /// <param name="apiVersionDescription">Description of the API
         /// Version.</param>
         /// <param name="apiVersionSetId">A resource identifier for the related
         /// ApiVersionSet.</param>
         /// <param name="subscriptionRequired">Specifies whether an API or
         /// Product subscription is required for accessing the API.</param>
+        /// <param name="termsOfServiceUrl"> A URL to the Terms of Service for
+        /// the API. MUST be in the format of a URL.</param>
+        /// <param name="contact">Contact information for the API.</param>
+        /// <param name="license">License information for the API.</param>
         /// <param name="id">API identifier in the form /apis/{apiId}.</param>
         /// <param name="name">API name.</param>
         /// <param name="serviceUrl">Absolute URL of the backend service
@@ -68,8 +73,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// API.</param>
         /// <param name="protocols">Describes on which protocols the operations
         /// in this API can be invoked.</param>
-        public ApiTagResourceContractProperties(string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string id = default(string), string name = default(string), string serviceUrl = default(string), string path = default(string), IList<Protocol?> protocols = default(IList<Protocol?>))
-            : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired)
+        public ApiTagResourceContractProperties(string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string termsOfServiceUrl = default(string), ApiContactInformation contact = default(ApiContactInformation), ApiLicenseInformation license = default(ApiLicenseInformation), string id = default(string), string name = default(string), string serviceUrl = default(string), string path = default(string), IList<string> protocols = default(IList<string>))
+            : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceUrl, contact, license)
         {
             Id = id;
             Name = name;
@@ -117,7 +122,50 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// API can be invoked.
         /// </summary>
         [JsonProperty(PropertyName = "protocols")]
-        public IList<Protocol?> Protocols { get; set; }
+        public IList<string> Protocols { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (Name != null)
+            {
+                if (Name.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 300);
+                }
+                if (Name.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
+                }
+            }
+            if (ServiceUrl != null)
+            {
+                if (ServiceUrl.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ServiceUrl", 2000);
+                }
+                if (ServiceUrl.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ServiceUrl", 1);
+                }
+            }
+            if (Path != null)
+            {
+                if (Path.Length > 400)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Path", 400);
+                }
+                if (Path.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Path", 0);
+                }
+            }
+        }
     }
 }

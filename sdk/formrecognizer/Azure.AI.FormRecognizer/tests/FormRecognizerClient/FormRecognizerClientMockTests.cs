@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;

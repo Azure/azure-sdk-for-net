@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Resources.Models
     internal partial class ScriptConfigurationBase
     {
         /// <summary> Initializes a new instance of ScriptConfigurationBase. </summary>
-        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </param>
+        /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         internal ScriptConfigurationBase(TimeSpan retentionInterval)
         {
             SupportingScriptUris = new ChangeTrackingList<string>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
         }
 
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
-        public string PrimaryScriptUri { get; }
+        public Uri PrimaryScriptUri { get; }
         /// <summary> Supporting files for the external script. </summary>
         public IReadOnlyList<string> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
         public string Arguments { get; }
         /// <summary> The environment variables to pass over to the script. </summary>
-        public IReadOnlyList<EnvironmentVariable> EnvironmentVariables { get; }
+        public IReadOnlyList<ScriptEnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
         public string ForceUpdateTag { get; }
-        /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P7D means one week). </summary>
+        /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </summary>
         public TimeSpan RetentionInterval { get; }
-        /// <summary> Maximum allowed script execution time specified in ISO 8601 format. Default value is PT1H. </summary>
+        /// <summary> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </summary>
         public TimeSpan? Timeout { get; }
     }
 }

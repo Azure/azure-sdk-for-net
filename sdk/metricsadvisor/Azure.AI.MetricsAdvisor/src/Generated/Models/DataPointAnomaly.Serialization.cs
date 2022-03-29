@@ -16,6 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
         {
+            Optional<string> dataFeedId = default;
             Optional<string> metricId = default;
             Optional<string> anomalyDetectionConfigurationId = default;
             DateTimeOffset timestamp = default;
@@ -25,6 +26,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalyProperty property = default;
             foreach (var property0 in element.EnumerateObject())
             {
+                if (property0.NameEquals("dataFeedId"))
+                {
+                    dataFeedId = property0.Value.GetString();
+                    continue;
+                }
                 if (property0.NameEquals("metricId"))
                 {
                     metricId = property0.Value.GetString();
@@ -76,7 +82,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataPointAnomaly(metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
+            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
         }
     }
 }

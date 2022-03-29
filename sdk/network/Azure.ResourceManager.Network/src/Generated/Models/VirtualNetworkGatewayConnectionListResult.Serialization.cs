@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkGatewayConnectionListResult DeserializeVirtualNetworkGatewayConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualNetworkGatewayConnection>> value = default;
+            Optional<IReadOnlyList<VirtualNetworkGatewayConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkGatewayConnection> array = new List<VirtualNetworkGatewayConnection>();
+                    List<VirtualNetworkGatewayConnectionData> array = new List<VirtualNetworkGatewayConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkGatewayConnection.DeserializeVirtualNetworkGatewayConnection(item));
+                        array.Add(VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(item));
                     }
                     value = array;
                     continue;

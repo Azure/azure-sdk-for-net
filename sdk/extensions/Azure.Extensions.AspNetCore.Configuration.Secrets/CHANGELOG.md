@@ -1,6 +1,29 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.2 (2022-04-05)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Martin Costello  _([GitHub](https://github.com/martincostello))_
+
+### Bugs Fixed
+
+- Prevent ObjectDisposedException when Key Vault config provider is disposed twice. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
+
+## 1.2.1 (2021-05-18)
+
+### Changes
+
+#### Key Bug Fixes
+
+- Fixes an issues where keys returned from `AzureKeyVaultConfigurationProvider` were case sensitive. 
+
+## 1.1.0 (2021-05-14)
+
+### Changes
+
+- Dependency versions updated.
 
 ### Added
 
@@ -25,6 +48,6 @@ An overload of `AddAzureKeyVault` that takes an `AzureKeyVaultConfigurationOptio
 
 - Package renamed to Azure.Extensions.AspNetCore.Configuration.Secrets
 
-## 1.0.0-preview.1 (2020)
+## 1.0.0-preview.1 (2020-03-02)
 
 - Initial preview of the Azure.Extensions.Configuration.Secrets library

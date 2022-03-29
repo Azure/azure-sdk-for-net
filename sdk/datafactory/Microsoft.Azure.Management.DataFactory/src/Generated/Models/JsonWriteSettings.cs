@@ -35,9 +35,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="filePattern">File pattern of JSON. This setting
         /// controls the way a collection of JSON objects will be treated. The
-        /// default value is 'setOfObjects'. It is case-sensitive. Possible
-        /// values include: 'setOfObjects', 'arrayOfObjects'</param>
-        public JsonWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string filePattern = default(string))
+        /// default value is 'setOfObjects'. It is case-sensitive.</param>
+        public JsonWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object filePattern = default(object))
             : base(additionalProperties)
         {
             FilePattern = filePattern;
@@ -52,11 +51,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Gets or sets file pattern of JSON. This setting controls the way a
         /// collection of JSON objects will be treated. The default value is
-        /// 'setOfObjects'. It is case-sensitive. Possible values include:
-        /// 'setOfObjects', 'arrayOfObjects'
+        /// 'setOfObjects'. It is case-sensitive.
         /// </summary>
         [JsonProperty(PropertyName = "filePattern")]
-        public string FilePattern { get; set; }
+        public object FilePattern { get; set; }
 
     }
 }

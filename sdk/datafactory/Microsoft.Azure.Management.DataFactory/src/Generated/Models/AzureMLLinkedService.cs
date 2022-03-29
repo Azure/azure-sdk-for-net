@@ -64,7 +64,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureMLLinkedService(object mlEndpoint, SecretBase apiKey, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
+        /// <param name="authentication">Type of authentication (Required to
+        /// specify MSI) used to connect to AzureML. Type: string (or
+        /// Expression with resultType string).</param>
+        public AzureMLLinkedService(object mlEndpoint, SecretBase apiKey, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object), object authentication = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             MlEndpoint = mlEndpoint;
@@ -74,6 +77,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             EncryptedCredential = encryptedCredential;
+            Authentication = authentication;
             CustomInit();
         }
 
@@ -135,6 +139,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.encryptedCredential")]
         public object EncryptedCredential { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of authentication (Required to specify MSI) used
+        /// to connect to AzureML. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.authentication")]
+        public object Authentication { get; set; }
 
         /// <summary>
         /// Validate the object.

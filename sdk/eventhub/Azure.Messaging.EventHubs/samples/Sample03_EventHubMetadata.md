@@ -1,6 +1,6 @@
 # Event Hub Metadata
 
-This sample discusses the metadata available for an Event Hub instance and demonstrates how to query and inspect the information.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
+This sample discusses the metadata available for an Event Hub instance and demonstrates how to query and inspect the information.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
 # Client types
 
@@ -58,7 +58,7 @@ finally
 
 Some application scenarios call for understanding the "backlog" of events in an Event Hub, where an event being consumed is compared with the latest event available in the partition to understand how many events have accumulated and have yet to be processed.  This allows applications to make reasoned decisions about scaling consumers or throttling publishers to ensure that event processing does not fall too far behind. To support this, the `EventHubProducerClient` and `EventHubConsumerClient` provide the ability to query partitions of the Event Hub for information about its current state.
 
-This query is useful for occasionally inspecting partitions, but should not be used frequently as it may negatively impact performance by saturating the connection.  When this information is needed often, an option can be set when reading events to query the last published event information for a partition in real-time.  More detail can be found in [Sample05_ReadingEvents](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md#query-partition-information-while-reading).
+This query is useful for occasionally inspecting partitions, but should not be used frequently as it may negatively impact performance by saturating the connection.  When this information is needed often, an option can be set when reading events to query the last published event information for a partition in real-time.  More detail can be found in [Sample05_ReadingEvents](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md#query-partition-information-while-reading).
 
 For illustration, the `EventHubConsumerClient` is demonstrated, but the concept and form are common across both clients.
 

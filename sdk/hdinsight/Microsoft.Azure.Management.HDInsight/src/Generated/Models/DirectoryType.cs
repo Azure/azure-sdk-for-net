@@ -10,45 +10,12 @@
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DirectoryType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DirectoryType
+    public static class DirectoryType
     {
-        [EnumMember(Value = "ActiveDirectory")]
-        ActiveDirectory
-    }
-    internal static class DirectoryTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this DirectoryType? value)
-        {
-            return value == null ? null : ((DirectoryType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this DirectoryType value)
-        {
-            switch( value )
-            {
-                case DirectoryType.ActiveDirectory:
-                    return "ActiveDirectory";
-            }
-            return null;
-        }
-
-        internal static DirectoryType? ParseDirectoryType(this string value)
-        {
-            switch( value )
-            {
-                case "ActiveDirectory":
-                    return DirectoryType.ActiveDirectory;
-            }
-            return null;
-        }
+        public const string ActiveDirectory = "ActiveDirectory";
     }
 }

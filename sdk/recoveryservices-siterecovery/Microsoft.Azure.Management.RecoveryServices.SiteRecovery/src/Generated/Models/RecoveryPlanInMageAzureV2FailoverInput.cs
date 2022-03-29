@@ -33,16 +33,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// RecoveryPlanInMageAzureV2FailoverInput class.
         /// </summary>
-        /// <param name="vaultLocation">The vault location.</param>
         /// <param name="recoveryPointType">The recovery point type. Possible
         /// values include: 'Latest', 'LatestApplicationConsistent',
         /// 'LatestCrashConsistent', 'LatestProcessed'</param>
         /// <param name="useMultiVmSyncPoint">A value indicating whether multi
         /// VM sync enabled VMs should use multi VM sync points for
         /// failover.</param>
-        public RecoveryPlanInMageAzureV2FailoverInput(string vaultLocation, string recoveryPointType, string useMultiVmSyncPoint = default(string))
+        public RecoveryPlanInMageAzureV2FailoverInput(string recoveryPointType, string useMultiVmSyncPoint = default(string))
         {
-            VaultLocation = vaultLocation;
             RecoveryPointType = recoveryPointType;
             UseMultiVmSyncPoint = useMultiVmSyncPoint;
             CustomInit();
@@ -52,12 +50,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the vault location.
-        /// </summary>
-        [JsonProperty(PropertyName = "vaultLocation")]
-        public string VaultLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the recovery point type. Possible values include:
@@ -82,10 +74,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (VaultLocation == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "VaultLocation");
-            }
             if (RecoveryPointType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryPointType");

@@ -22,40 +22,74 @@ namespace Microsoft.Azure.Management.LabServices
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Get operation
+            /// Get all operations
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all operations.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='locationName'>
-            /// The name of the location.
-            /// </param>
-            /// <param name='operationName'>
-            /// The name of the operation.
-            /// </param>
-            public static OperationResult Get(this IOperations operations, string locationName, string operationName)
+            public static IPage<Operation> List(this IOperations operations)
             {
-                return operations.GetAsync(locationName, operationName).GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get operation
+            /// Get all operations
             /// </summary>
+            /// <remarks>
+            /// Returns a list of all operations.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='locationName'>
-            /// The name of the location.
-            /// </param>
-            /// <param name='operationName'>
-            /// The name of the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationResult> GetAsync(this IOperations operations, string locationName, string operationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Operation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(locationName, operationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all operations
+            /// </summary>
+            /// <remarks>
+            /// Returns a list of all operations.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Operation> ListNext(this IOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all operations
+            /// </summary>
+            /// <remarks>
+            /// Returns a list of all operations.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Operation>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

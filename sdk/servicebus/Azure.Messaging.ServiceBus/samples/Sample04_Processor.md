@@ -66,7 +66,7 @@ Task ErrorHandler(ProcessErrorEventArgs args)
 // start processing
 await processor.StartProcessingAsync();
 
-// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+// since the processing happens in the background, we add a Console.ReadKey to allow the processing to continue until a key is pressed.
 Console.ReadKey();
 ```
 
@@ -74,4 +74,4 @@ Console.ReadKey();
 
 To see the full example source, see:
 
-* [Sample04_Processor.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample04_Processor.cs)
+* [Sample04_Processor.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample04_Processor.cs)

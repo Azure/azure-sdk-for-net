@@ -41,6 +41,12 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='restorableSqlDatabaseRid'>
         /// The resource ID of the SQL database.
         /// </param>
+        /// <param name='startTime'>
+        /// Restorable Sql containers event feed start time.
+        /// </param>
+        /// <param name='endTime'>
+        /// Restorable Sql containers event feed end time.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -56,6 +62,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<RestorableSqlContainerGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restorableSqlDatabaseRid = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<RestorableSqlContainerGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restorableSqlDatabaseRid = default(string), string startTime = default(string), string endTime = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

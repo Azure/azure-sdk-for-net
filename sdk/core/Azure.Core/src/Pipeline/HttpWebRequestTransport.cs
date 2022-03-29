@@ -8,7 +8,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,6 +33,10 @@ namespace Azure.Core.Pipeline
         public HttpWebRequestTransport() : this(_ => { })
         {
         }
+
+        internal HttpWebRequestTransport(HttpPipelineTransportOptions options)
+            : this(req => ApplyOptionsToRequest(req, options))
+        { }
 
         internal HttpWebRequestTransport(Action<HttpWebRequest> configureRequest)
         {
@@ -76,7 +83,15 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    request.ContentLength = 0;
+                    // match the behavior of HttpClient
+                    if (message.Request.Method != RequestMethod.Head &&
+                         message.Request.Method != RequestMethod.Get &&
+                         message.Request.Method != RequestMethod.Delete)
+                    {
+                        request.ContentLength = 0;
+                    }
+
+                    request.ContentType = null;
                 }
 
                 WebResponse webResponse;
@@ -95,16 +110,13 @@ namespace Azure.Core.Pipeline
             // ObjectDisposedException might be thrown if the request is aborted during the content upload via SSL
             catch (ObjectDisposedException) when (message.CancellationToken.IsCancellationRequested)
             {
-                throw new TaskCanceledException();
-            }
-            // WebException is thrown in the case of .Abort() call
-            catch (WebException) when (message.CancellationToken.IsCancellationRequested)
-            {
-                throw new TaskCanceledException();
+                CancellationHelper.ThrowIfCancellationRequested(message.CancellationToken);
             }
             catch (WebException webException)
             {
-                throw new RequestFailedException(0, webException.Message);
+                // WebException is thrown in the case of .Abort() call
+                CancellationHelper.ThrowIfCancellationRequested(message.CancellationToken);
+                throw new RequestFailedException(0, webException.Message, webException);
             }
         }
 
@@ -116,11 +128,16 @@ namespace Azure.Core.Pipeline
             request.Timeout = Timeout.Infinite;
             request.ReadWriteTimeout = Timeout.Infinite;
 
+            // Redirect is handled by the pipeline
+            request.AllowAutoRedirect = false;
+
             // Don't disable the default proxy when there is no environment proxy configured
             if (_environmentProxy != null)
             {
                 request.Proxy = _environmentProxy;
             }
+
+            request.ServicePoint.Expect100Continue = false;
 
             _configureRequest(request);
 
@@ -177,7 +194,14 @@ namespace Azure.Core.Pipeline
 
                 if (string.Equals(messageRequestHeader.Name, "Expect", StringComparison.OrdinalIgnoreCase))
                 {
-                    request.Expect = messageRequestHeader.Value;
+                    if (messageRequestHeader.Value == "100-continue")
+                    {
+                        request.ServicePoint.Expect100Continue = true;
+                    }
+                    else
+                    {
+                        request.Expect = messageRequestHeader.Value;
+                    }
                     continue;
                 }
 
@@ -273,7 +297,11 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                _originalContentStream?.Dispose();
+                // In the case of failed response the content stream would be
+                // pre-buffered subclass of MemoryStream
+                // keep it alive because the ResponseBodyPolicy won't re-buffer it
+                DisposeStreamIfNotBuffered(ref _originalContentStream);
+                DisposeStreamIfNotBuffered(ref _contentStream);
             }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
@@ -341,6 +369,25 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 Content?.Dispose();
+            }
+        }
+
+        private static void ApplyOptionsToRequest(HttpWebRequest request, HttpPipelineTransportOptions options)
+        {
+            if (options == null)
+            {
+                return;
+            }
+
+            // ServerCertificateCustomValidationCallback
+            if (options.ServerCertificateCustomValidationCallback != null)
+            {
+                request.ServerCertificateValidationCallback =
+                    (request, certificate, x509Chain, sslPolicyErrors) => options.ServerCertificateCustomValidationCallback(
+                        new ServerCertificateCustomValidationArgs(
+                            new X509Certificate2(certificate),
+                            x509Chain,
+                            sslPolicyErrors));
             }
         }
     }

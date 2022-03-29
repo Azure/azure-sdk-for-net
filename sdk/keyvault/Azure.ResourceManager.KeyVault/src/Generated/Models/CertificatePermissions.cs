@@ -15,13 +15,14 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CertificatePermissions"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificatePermissions"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CertificatePermissions(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string AllValue = "all";
         private const string GetValue = "get";
         private const string ListValue = "list";
         private const string DeleteValue = "delete";
@@ -39,6 +40,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string BackupValue = "backup";
         private const string RestoreValue = "restore";
 
+        /// <summary> all. </summary>
+        public static CertificatePermissions All { get; } = new CertificatePermissions(AllValue);
         /// <summary> get. </summary>
         public static CertificatePermissions Get { get; } = new CertificatePermissions(GetValue);
         /// <summary> list. </summary>

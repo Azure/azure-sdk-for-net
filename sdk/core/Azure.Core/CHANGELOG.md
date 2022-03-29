@@ -1,7 +1,126 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.24.0-beta.1 (Unreleased)
 
+### Features Added
+
+- Added the `MessageContent` type which represents a message containing a content type and data.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.23.0 (2022-03-21)
+
+### Features Added
+
+- Added the `TelemetryDetails` type which enables customization of UserAgent header values on a per-request basis based on a specified `Assembly` and an optional application Id string.
+- Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
+- Added a new `StatusCodeClassifier` type that will be used as the default `ResponseClassifier` for some libraries.
+- Added an extension method to `BinaryData` called `ToObjectFromJson` which converts the json value represented by `BinaryData` to an object of a specific type.
+- Additional data center locations were added to `AzureLocation`.
+- Added `WaitUntil` enum to allow callers to set whether a method invoking a long running operation should return when the operation starts or once it has completed.
+
+### Breaking Changes
+
+- Cookies are no longer set on requests by default. Cookies can be re-enabled for `HttpClientTransport` by either setting an AppContext switch named "Azure.Core.Pipeline.HttpClientTransport.EnableCookies" to true or by setting the environment variable, "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES" to "true". Note: AppContext switches can also be configured via configuration like below:
+```xml
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.HttpClientTransport.EnableCookies" Value="true" />
+  </ItemGroup>
+```
+
+## 1.22.0 (2022-01-11)
+
+### Features Added
+
+- Added `AddPolicies` method to `RequestContext`.  This allows policies to be added to the pipeline when calling protocol methods.
+- Added `IsError` property to `Response`.  This will indicate whether the message's `ResponseClassifier` considers the response to be an error.
+- Added `RequestFailedException` constructor that takes a `Response`.
+- Added `AzureLocation`. This class gives static references to known Azure regions.
+- Added `ResourceIdentifier`. This class allows users to load an Azure resource identifier string and parse out the pieces of that string such as which `SubscriptionId` does the resource belong to.
+- Added `ResourceType`. This class represents the ARM provider information for a given resource and is used by the `ResourceIdentifier` class.
+- Added `HttpPipelineTransportOptions` type.  This type contains a `ServerCertificateCustomValidationCallback` property that allows callers to set a `Func<ServerCertificateCustomValidationArgs, bool>` delegate.  If set, the delegate will be called to validate the server side TLS certificate.
+- Added a new static overload for `HttpPipelineBuilder.Build` that takes an `HttpPipelineTransportOptions` instance.  This overload creates an `HttpPipeline` with the default transport configuration and the `HttpPipelineTransportOptions` applied. It returns a `DisposableHttpPipeline` that implements `IDisposable`. Note: The `HttpPipelineTransportOptions` will not be applied if a custom `Transport` has been set in the `ClientOptions`. In the case that transport options were provided but not applied, an event is logged `(PipelineTransportOptionsNotApplied`). 
+
+### Breaking Changes
+
+- Added logging of `api-version` query parameter by default. In order to redact this, you can do the following:
+```c#
+options.Diagnostics.LoggedQueryParameters.Remove("api-version");
+```
+
+### Bugs Fixed
+
+- Fixed a bug where requests were failing with `NotImplementedException` on Unity with .NET Framework scripting.
+
+
+## 1.21.0 (2021-11-03)
+
+### Features Added
+
+- Added `RequestContext` and `ErrorOptions` types to aid in configuring requests.
+- Added `ContentType` strongly-typed string to allow operation callers to specify the content type of a request.
+
+## 1.20.0 (2021-10-01)
+
+### Features Added
+
+- Added the static `DelegatedTokenCredential` type with a `Create` method, which returns an instance of `TokenCredential` that uses the supplied delgates to produce an `AccessToken`. This would most typically be used when an token has previously been obtained from some other source and that token needs to be returned by a `TokenCredential` instance.
+- Added `ResponseError` type to represent an Azure error type.
+- Added an experimental `ActivitySource` support.
+
+### Bugs Fixed
+
+- Fixed an exception during EventSource creation on Xamarin.
+
+## 1.19.0 (2021-09-07)
+
+### Features Added
+
+- Added `HttpAuthorization` to represent authentication information in Authorization, ProxyAuthorization, WWW-Authenticate, and Proxy-Authenticate header values.
+
+## 1.18.0 (2021-08-18)
+
+### Bugs Fixed
+
+- Fixed a bug where a buffered error responses on .NET Framework were prematurely disposed
+- Fixed relative redirect support.
+
+## 1.17.0 (2021-08-10)
+
+### Features Added
+
+- Added `ClientOptions.Default` to configure defaults process-wide.
+- Added `HttpPipelinePosition.BeforeTransport` to be able to add policies at the end of the pipeline before the transport.
+
+### Fixed
+
+- Fixed `NotSupportedException` when running in Unity.
+
+## 1.16.0 (2021-06-30)
+
+### Changed
+
+- Added `TenantId` to the properties on `TokenRequestContext` to enable multi-tenant support in Azure.Identity.
+
+## 1.15.0 (2021-06-08)
+
+### Features Added
+
+- Types to represent `GeoJson` primitives.
+
+### Changed
+
+- `Response.Content` no longer throws `InvalidOperationException` when the response is backed by a `MemoryStream` with a non publicly visible buffer.
+
+## 1.14.0 (2021-05-11)
+
+### Features Added
+
+- Added additional methods to `BearerTokenAuthenticationPolicy`, which enables creation of authentication policies that can handle challenges.
 
 ## 1.13.0 (2021-04-07)
 
@@ -12,13 +131,13 @@
 
 ## 1.12.0 (2021-04-06)
 
-### Added
+### Features Added
 
 - Added `HttpPipeline.CreateHttpMessagePropertiesScope` that can be used to inject scoped properties into `HttpMessage`.
 
 ## 1.11.0 (2021-03-22)
 
-### Added
+### Features Added
 
 - `Operation` base class for operations that do not return a value.
 - Added `Content` property to `Response` which returns the body of the response as a `BinaryData` if the body is buffered.
@@ -32,13 +151,13 @@
 
 ## 1.10.0 (2021-03-09)
 
-## Added
+## Features Added
 
-- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
+- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/).
 
 ## 1.9.0 (2021-02-09)
 
-## Added
+## Features Added
 - Added Serialize overloads on `ObjectSerializer` that serialize to `BinaryData`.
 - Added AzureCoreExtensions containing extensions methods for `BinaryData` that allow deserializing with an `ObjectSerializer`.
 
@@ -55,7 +174,7 @@
 
 ## 1.8.0 (2021-01-06)
 
-### Added
+### Features Added
 - `AzureSasCredential` and its respective policy.
 
 ### Key Bug Fixes
@@ -72,11 +191,11 @@
 
 ## 1.6.0 (2020-10-28)
 
-### Added
+### Features Added
 - The `HttpClientTransport(HttpMessageHandler)` constructor overload.
 - The `JsonPatchDocument` type.
 
-### Fixed
+### Key Bugs Fixed
 - The race condition in `AzureEventSourceListener` class that sometimes resulted in a `NullReferenceException` in the `EventSource`.
 - The overflow exception when content length is larger than `int.MaxValue`.
 
@@ -91,7 +210,7 @@
 ### Changed
 - `ETag` now supports weak ETags and implements an overload for `ToString` that accepts a format string.
 
-### Added
+### Features Added
 - HttpWebRequest-based transport implementation. Enabled by-default on .NET Framework. Can be disabled using `AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT` environment variable or `Azure.Core.Pipeline.DisableHttpWebRequestTransport` AppContext switch. To use the app context switch add the following snippet to your `.csproj`:
 
 ```xml
@@ -104,27 +223,27 @@ When the environment variable or the switch are set the `HttpClientTransport` wo
 
 ## 1.4.1 (2020-08-18)
 
-### Fixed
+### Key Bugs Fixed
 - Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
 
 ## 1.4.0 (2020-08-06)
 
-### Added
+### Features Added
 - Added `ObjectSerializer` base class for serialization.
 - Added `IMemberNameConverter` for converting member names to serialized property names.
 - Added `JsonObjectSerializer` that implements `ObjectSerializer` for `System.Text.Json`.
 
-### Fixed
+### Key Bugs Fixed
 - Connection leak for retried non-buffered requests on .NET Framework.
 
 ## 1.3.0 (2020-07-02)
 
-### Added
+### Features Added
 - `HttpPipeline.CreateClientRequestIdScope` method to allow setting client request id on outgoing requests.
 
 ## 1.2.2 (2020-06-04)
 
-### Bugfix
+### Key Bugs Fixed
 - Retry server timeouts on .NET Framework.
 
 ## 1.2.1 (2020-04-30)
@@ -132,12 +251,12 @@ When the environment variable or the switch are set the `HttpClientTransport` wo
 ### Changed
 - Read client request ID value used for logging and tracing off the initial request object if available.
 
-### Bugfix
+### Key Bugs Fixed
 - Fixed a bug when using Azure.Core based libraries in Blazor WebAssembly apps.
 
 ## 1.2.0 (2020-04-03)
 
-### Added
+### Features Added
 - `AzureKeyCredential` and its respective policy.
 
 ### Changed

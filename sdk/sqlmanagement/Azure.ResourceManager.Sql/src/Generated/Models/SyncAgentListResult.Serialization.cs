@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SyncAgentListResult DeserializeSyncAgentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SyncAgent>> value = default;
+            Optional<IReadOnlyList<SyncAgentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SyncAgent> array = new List<SyncAgent>();
+                    List<SyncAgentData> array = new List<SyncAgentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncAgent.DeserializeSyncAgent(item));
+                        array.Add(SyncAgentData.DeserializeSyncAgentData(item));
                     }
                     value = array;
                     continue;

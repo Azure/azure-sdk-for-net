@@ -60,7 +60,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// image.</param>
         /// <param name="mask">Properties describing the presence of a mask on
         /// a given face.</param>
-        public FaceAttributes(double? age = default(double?), Gender? gender = default(Gender?), double? smile = default(double?), FacialHair facialHair = default(FacialHair), GlassesType? glasses = default(GlassesType?), HeadPose headPose = default(HeadPose), Emotion emotion = default(Emotion), Hair hair = default(Hair), Makeup makeup = default(Makeup), Occlusion occlusion = default(Occlusion), IList<Accessory> accessories = default(IList<Accessory>), Blur blur = default(Blur), Exposure exposure = default(Exposure), Noise noise = default(Noise), Mask mask = default(Mask))
+        /// <param name="qualityForRecognition">Properties describing the
+        /// overall image quality regarding whether the image being used in the
+        /// detection is of sufficient quality to attempt face recognition on.
+        /// Possible values include: 'Low', 'Medium', 'High'</param>
+        public FaceAttributes(double? age = default(double?), Gender? gender = default(Gender?), double? smile = default(double?), FacialHair facialHair = default(FacialHair), GlassesType? glasses = default(GlassesType?), HeadPose headPose = default(HeadPose), Emotion emotion = default(Emotion), Hair hair = default(Hair), Makeup makeup = default(Makeup), Occlusion occlusion = default(Occlusion), IList<Accessory> accessories = default(IList<Accessory>), Blur blur = default(Blur), Exposure exposure = default(Exposure), Noise noise = default(Noise), Mask mask = default(Mask), QualityForRecognition? qualityForRecognition = default(QualityForRecognition?))
         {
             Age = age;
             Gender = gender;
@@ -77,6 +81,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
             Exposure = exposure;
             Noise = noise;
             Mask = mask;
+            QualityForRecognition = qualityForRecognition;
             CustomInit();
         }
 
@@ -181,6 +186,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         [JsonProperty(PropertyName = "mask")]
         public Mask Mask { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties describing the overall image quality
+        /// regarding whether the image being used in the detection is of
+        /// sufficient quality to attempt face recognition on. Possible values
+        /// include: 'Low', 'Medium', 'High'
+        /// </summary>
+        [JsonProperty(PropertyName = "qualityForRecognition")]
+        public QualityForRecognition? QualityForRecognition { get; set; }
 
     }
 }

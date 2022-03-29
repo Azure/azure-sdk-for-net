@@ -22,15 +22,6 @@ namespace Azure.Security.Attestation.Tests
         {
         }
 
-        #region Snippet:CreateTestTokenForMocking
-        private class TestAttestationToken : AttestationToken
-        {
-            public TestAttestationToken(string token) : base(token)
-            {
-            }
-        }
-        #endregion
-
         private class TestBody
         {
             public string StringField { get; set; }
@@ -60,8 +51,8 @@ namespace Azure.Security.Attestation.Tests
             // The body of attestation token MUST be a JSON object.
             TestBody body = new TestBody { StringField = "Foo", };
 
-            var token = new AttestationToken(body, new TokenSigningKey(fullCertificate));
-            string serializedToken = token.ToString();
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(body), new AttestationTokenSigningKey(fullCertificate));
+            string serializedToken = token.Serialize();
 
             await ValidateSerializedToken(serializedToken, body);
         }
@@ -75,8 +66,8 @@ namespace Azure.Security.Attestation.Tests
 
             object tokenBody = new StoredAttestationPolicy { AttestationPolicy = "Foo", };
 
-            var token = new AttestationToken(tokenBody, new TokenSigningKey(privateKey, fullCertificate));
-            string serializedToken = token.ToString();
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
+            string serializedToken = token.Serialize();
 
             await ValidateSerializedToken(serializedToken, tokenBody);
         }
@@ -86,8 +77,8 @@ namespace Azure.Security.Attestation.Tests
         {
             object tokenBody = new StoredAttestationPolicy { AttestationPolicy = "Foo", };
 
-            var token = new AttestationToken(tokenBody);
-            string serializedToken = token.ToString();
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
+            string serializedToken = token.Serialize();
 
             await ValidateSerializedToken(serializedToken, tokenBody);
         }
@@ -101,14 +92,14 @@ namespace Azure.Security.Attestation.Tests
                 ExpiresAt = DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(5)).ToUnixTimeSeconds(),
             };
 
-            var token = new AttestationToken(tokenBody);
-            string serializedToken = token.ToString();
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
+            string serializedToken = token.Serialize();
 
             // This check should fail since the token expired 5 seconds ago.
             Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
 
             // This check should succeed since the token slack is greater than the 5 second expiration time.
-            await ValidateSerializedToken(serializedToken, tokenBody, new TokenValidationOptions(timeValidationSlack: 10));
+            await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10 });
         }
 
         [RecordedTest]
@@ -125,18 +116,18 @@ namespace Azure.Security.Attestation.Tests
             X509Certificate2 fullCertificate = TestEnvironment.PolicyManagementCertificate;
             AsymmetricAlgorithm privateKey = TestEnvironment.PolicyManagementKey;
 
-            var token = new AttestationToken(tokenBody, new TokenSigningKey(privateKey, fullCertificate));
-            string serializedToken = token.ToString();
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
+            string serializedToken = token.Serialize();
 
             // This check should fail since the token won't be valid for another 5 seconds.
             Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
 
             // This check should succeed since the token slack is greater than the 10 seconds before it becomes valid.
-            await ValidateSerializedToken(serializedToken, tokenBody, new TokenValidationOptions(timeValidationSlack: 10));
+            await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10 });
         }
 
         [RecordedTest]
-        public async Task ValidateTokenCallback()
+        public void ValidateTokenCallback()
         {
             // Create a JWT whose body will become valid 5 seconds from now.
             object tokenBody = new JwtTestBody
@@ -149,38 +140,40 @@ namespace Azure.Security.Attestation.Tests
             X509Certificate2 fullCertificate = TestEnvironment.PolicyManagementCertificate;
             AsymmetricAlgorithm privateKey = TestEnvironment.PolicyManagementKey;
 
-            var token = new AttestationToken(tokenBody, new TokenSigningKey(privateKey, fullCertificate));
-            string serializedToken = token.ToString();
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
+            string serializedToken = token.Serialize();
 
-            // This check should fail since the token won't be valid for another 5 seconds.
-            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
+            var validationOptions = new AttestationTokenValidationOptions();
 
-            // This check should succeed since the token slack is greater than the 10 seconds before it becomes valid.
-            await ValidateSerializedToken(
+            validationOptions.TokenValidated += (args) =>
+            {
+                Assert.AreEqual(1, args.Signer.SigningCertificates.Count);
+                Assert.IsNotNull(args.Signer.SigningCertificates[0]);
+                CollectionAssert.AreEqual(fullCertificate.Export(X509ContentType.Cert), args.Signer.SigningCertificates[0].Export(X509ContentType.Cert));
+                Assert.AreEqual(fullCertificate, args.Signer.SigningCertificates[0]);
+                return Task.CompletedTask;
+            };
+
+            // ValidateTokenAsync will throw an exception if a callback is specified outside of an attestation client.
+            // Note that validation callbacks are tested elsewhere in the AttestationClient codebase.
+            Assert.ThrowsAsync(typeof(Exception), async() => await ValidateSerializedToken(
                 serializedToken,
                 tokenBody,
-                new TokenValidationOptions(timeValidationSlack: 10, validationCallback: (AttestationToken tokenToValidate, AttestationSigner tokenSigner) =>
-                {
-                    Assert.AreEqual(1, tokenSigner.SigningCertificates.Count);
-                    Assert.IsNotNull(tokenSigner.SigningCertificates[0]);
-                    CollectionAssert.AreEqual(fullCertificate.Export(X509ContentType.Cert), tokenSigner.SigningCertificates[0].Export(X509ContentType.Cert));
-                    Assert.AreEqual(fullCertificate, tokenSigner.SigningCertificates[0]);
-                    return true;
-                }));
+                validationOptions));
         }
 
         /// <summary>
         /// Ensure that the serialized token validates correctly.
         /// </summary>
         /// <param name="serializedToken"></param>
-        public async Task ValidateSerializedToken(string serializedToken, object expectedBody, TokenValidationOptions tokenOptions = default)
+        public async Task ValidateSerializedToken(string serializedToken, object expectedBody, AttestationTokenValidationOptions tokenOptions = default)
         {
-            var parsedToken = new TestAttestationToken(serializedToken);
-
-            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new TokenValidationOptions(validateExpirationTime:true), null));
+            var parsedToken = AttestationToken.Deserialize(serializedToken);
+            await Task.Yield();
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true }, null));
 
             // The body of the token should match the expected body.
-            Assert.AreEqual(JsonSerializer.Serialize(expectedBody), parsedToken.TokenBody);
+            Assert.AreEqual(JsonSerializer.Serialize(expectedBody), Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()));
         }
     }
 }

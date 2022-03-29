@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ManagedInstanceLicenseType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLicenseType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstanceLicenseType(string value)
         {

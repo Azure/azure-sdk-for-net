@@ -15,41 +15,53 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
+                if (ConnectionString != null)
+                {
+                    writer.WritePropertyName("connectionString");
+                    writer.WriteStringValue(ConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("connectionString");
+                }
             }
-            else
+            if (Optional.IsDefined(Database))
             {
-                writer.WriteNull("connectionString");
+                if (Database != null)
+                {
+                    writer.WritePropertyName("database");
+                    writer.WriteStringValue(Database);
+                }
+                else
+                {
+                    writer.WriteNull("database");
+                }
             }
-            if (Database != null)
+            if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("database");
-                writer.WriteStringValue(Database);
+                if (UserName != null)
+                {
+                    writer.WritePropertyName("userName");
+                    writer.WriteStringValue(UserName);
+                }
+                else
+                {
+                    writer.WriteNull("userName");
+                }
             }
-            else
+            if (Optional.IsDefined(Password))
             {
-                writer.WriteNull("database");
-            }
-            if (UserName != null)
-            {
-                writer.WritePropertyName("userName");
-                writer.WriteStringValue(UserName);
-            }
-            else
-            {
-                writer.WriteNull("userName");
-            }
-            if (Password != null)
-            {
-                writer.WritePropertyName("password");
-                writer.WriteStringValue(Password);
-            }
-            else
-            {
-                writer.WriteNull("password");
+                if (Password != null)
+                {
+                    writer.WritePropertyName("password");
+                    writer.WriteStringValue(Password);
+                }
+                else
+                {
+                    writer.WriteNull("password");
+                }
             }
             if (Query != null)
             {
@@ -65,10 +77,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static InfluxDBParameter DeserializeInfluxDBParameter(JsonElement element)
         {
-            string connectionString = default;
-            string database = default;
-            string userName = default;
-            string password = default;
+            Optional<string> connectionString = default;
+            Optional<string> database = default;
+            Optional<string> userName = default;
+            Optional<string> password = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -123,7 +135,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new InfluxDBParameter(connectionString, database, userName, password, query);
+            return new InfluxDBParameter(connectionString.Value, database.Value, userName.Value, password.Value, query);
         }
     }
 }

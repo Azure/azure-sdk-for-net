@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Base class for provider specific input
+    /// Base class for provider specific input.
     /// </summary>
     public partial class PolicyProviderSpecificInput
     {

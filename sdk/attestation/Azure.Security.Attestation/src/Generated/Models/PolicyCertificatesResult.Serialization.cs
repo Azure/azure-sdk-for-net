@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificatesResultConverter))]
-    public partial class PolicyCertificatesResult
+    internal partial class PolicyCertificatesResult
     {
         internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
         {

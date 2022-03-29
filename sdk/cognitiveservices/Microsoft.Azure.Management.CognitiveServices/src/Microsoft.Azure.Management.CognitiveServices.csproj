@@ -6,13 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
-		<Version>7.4.0-preview</Version>
+		<Version>8.2.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
 		<PackageReleaseNotes>
 <![CDATA[    
-1) Support more fields for ApiProperties.
-2) Support listing Private Network Connections.
+1) Update to API version 2022-03-01.
 ]]>
 	    </PackageReleaseNotes>
 	</PropertyGroup>

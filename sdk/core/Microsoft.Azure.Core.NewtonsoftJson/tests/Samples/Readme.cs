@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Core.NewtonsoftJson.Tests.Samples
         [Test]
         public void SearchSample()
         {
+            // cspell:word Aragorn Sauron's
             MockResponse response = new MockResponse(200);
             response.SetContent(@"{
                 ""value"": [

@@ -77,11 +77,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public IList<string> GroupIds { get; set; }
 
         /// <summary>
-        /// Gets or sets a message passed to the owner of the remote resource
-        /// with this connection request. Restricted to 140 chars.
+        /// Gets a message passed to the owner of the remote resource with this
+        /// connection request. Restricted to 140 chars.
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestMessage")]
-        public string RequestMessage { get; set; }
+        public string RequestMessage { get; private set; }
 
         /// <summary>
         /// Gets or sets a collection of read-only information about the state

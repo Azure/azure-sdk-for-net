@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="DiskCreateOption"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskCreateOption"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskCreateOption(string value)
         {
@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         private const string CopyValue = "Copy";
         private const string RestoreValue = "Restore";
         private const string UploadValue = "Upload";
+        private const string CopyStartValue = "CopyStart";
+        private const string ImportSecureValue = "ImportSecure";
+        private const string UploadPreparedSecureValue = "UploadPreparedSecure";
 
         /// <summary> Create an empty data disk of a size given by diskSizeGB. </summary>
         public static DiskCreateOption Empty { get; } = new DiskCreateOption(EmptyValue);
@@ -44,6 +47,12 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskCreateOption Restore { get; } = new DiskCreateOption(RestoreValue);
         /// <summary> Create a new disk by obtaining a write token and using it to directly upload the contents of the disk. </summary>
         public static DiskCreateOption Upload { get; } = new DiskCreateOption(UploadValue);
+        /// <summary> Create a new disk by using a deep copy process, where the resource creation is considered complete only after all data has been copied from the source. </summary>
+        public static DiskCreateOption CopyStart { get; } = new DiskCreateOption(CopyStartValue);
+        /// <summary> Similar to Import create option. Create a new Trusted Launch VM or Confidential VM supported disk by importing additional blob for VM guest state specified by securityDataUri in storage account specified by storageAccountId. </summary>
+        public static DiskCreateOption ImportSecure { get; } = new DiskCreateOption(ImportSecureValue);
+        /// <summary> Similar to Upload create option. Create a new Trusted Launch VM or Confidential VM supported disk and upload using write token in both disk and VM guest state. </summary>
+        public static DiskCreateOption UploadPreparedSecure { get; } = new DiskCreateOption(UploadPreparedSecureValue);
         /// <summary> Determines if two <see cref="DiskCreateOption"/> values are the same. </summary>
         public static bool operator ==(DiskCreateOption left, DiskCreateOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskCreateOption"/> values are not the same. </summary>

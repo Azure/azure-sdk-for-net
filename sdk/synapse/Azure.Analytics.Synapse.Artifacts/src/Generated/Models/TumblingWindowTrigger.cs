@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipeline"> Pipeline for which runs are created when an event is fired for trigger window that is ready. </param>
         /// <param name="frequency"> The frequency of the time windows. </param>
         /// <param name="interval"> The interval of the time windows. The minimum interval allowed is 15 Minutes. </param>

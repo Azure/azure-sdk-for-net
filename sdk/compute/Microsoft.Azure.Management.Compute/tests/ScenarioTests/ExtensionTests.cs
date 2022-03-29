@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,7 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Compute.Tests
@@ -42,10 +44,11 @@ namespace Compute.Tests
                 Tags =
                     new Dictionary<string, string>
                     {
-                        {"extensionTag1", "1"},
-                        {"extensionTag2", "2"},
-                        {"extensionTag3", "3"}
-                    }
+                        { "extensionTag1", "1" },
+                        { "extensionTag2", "2" },
+                        { "extensionTag3", "3" }
+                    },
+                SuppressFailures = true
             };
 
             return vmExtensionUpdate;
@@ -98,6 +101,7 @@ namespace Compute.Tests
                     var vmExtensionUpdate = GetTestVMUpdateExtension();
                     m_CrpClient.VirtualMachineExtensions.Update(rgName, vm.Name, vmExtension.Name, vmExtensionUpdate);
                     vmExtension.Tags["extensionTag3"] = "3";
+                    vmExtension.SuppressFailures = true;
                     getVMExtResponse = m_CrpClient.VirtualMachineExtensions.Get(rgName, vm.Name, vmExtension.Name);
                     ValidateVMExtension(vmExtension, getVMExtResponse);
 
@@ -112,6 +116,20 @@ namespace Compute.Tests
 
                     // Validate the extension delete API
                     m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, vmExtension.Name);
+
+                    // Add another extension to the VM with protectedSettingsFromKeyVault
+                    var vmExtension2 = GetTestVMExtension();
+                    AddProtectedSettingsFromKeyVaultToExtension(vmExtension2, rgName);
+
+                    //For now we just validate that the protectedSettingsFromKeyVault has been accepted and persisted. Since we didn't create a KV, this failure is expected
+                    try
+                    {
+                        response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension2.Name, vmExtension2);
+                    }
+                    catch (Exception e)
+                    {
+                        Assert.Contains("either has not been enabled for deployment or the vault id provided", e.Message);
+                    }
                 }
                 finally
                 {
@@ -133,6 +151,7 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.ForceUpdateTag == vmExtReturned.ForceUpdateTag);
             Assert.True(vmExtExpected.Tags.SequenceEqual(vmExtReturned.Tags));
             Assert.True(vmExtExpected.EnableAutomaticUpgrade == vmExtReturned.EnableAutomaticUpgrade);
+            Assert.True(vmExtExpected.SuppressFailures == vmExtReturned.SuppressFailures);
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)
@@ -142,6 +161,16 @@ namespace Compute.Tests
             Assert.NotNull(vmExtInstanceView.Statuses[0].Code);
             Assert.NotNull(vmExtInstanceView.Statuses[0].Level);
             Assert.NotNull(vmExtInstanceView.Statuses[0].Message);
+        }
+
+        private void AddProtectedSettingsFromKeyVaultToExtension(VirtualMachineExtension vmExtension, string resourceGroupName)
+        {
+            vmExtension.ProtectedSettings = null;
+            string idValue = string.Format("subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/kvName", m_subId, resourceGroupName);
+            string sourceVaultId = string.Format("\"id\": \"{0}\"", idValue);
+            string sourceVault = "{ " + sourceVaultId + " }";
+            string secret = string.Format("\"secretUrl\": \"{0}\"", "https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e");
+            vmExtension.ProtectedSettingsFromKeyVault = new JRaw("{ " + string.Format("\"sourceVault\": {0},{1}", sourceVault, secret) + " }");
         }
     }
 }

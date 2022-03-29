@@ -845,6 +845,9 @@ namespace Microsoft.Azure.Management.ExtendedLocation
         /// <param name='resourceName'>
         /// Custom Locations name.
         /// </param>
+        /// <param name='identity'>
+        /// Identity for the resource.
+        /// </param>
         /// <param name='authentication'>
         /// This is optional input that contains the authentication that should be used
         /// to generate the namespace.
@@ -894,7 +897,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CustomLocation>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceParameter = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CustomLocation>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, Identity identity = default(Identity), CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceParameter = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -913,8 +916,9 @@ namespace Microsoft.Azure.Management.ExtendedLocation
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
             PatchableCustomLocations parameters = new PatchableCustomLocations();
-            if (authentication != null || clusterExtensionIds != null || displayName != null || hostResourceId != null || hostType != null || namespaceParameter != null || provisioningState != null || tags != null)
+            if (identity != null || authentication != null || clusterExtensionIds != null || displayName != null || hostResourceId != null || hostType != null || namespaceParameter != null || provisioningState != null || tags != null)
             {
+                parameters.Identity = identity;
                 parameters.Authentication = authentication;
                 parameters.ClusterExtensionIds = clusterExtensionIds;
                 parameters.DisplayName = displayName;
@@ -1012,7 +1016,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1206,7 +1210,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1415,7 +1419,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 400)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2291,7 +2295,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

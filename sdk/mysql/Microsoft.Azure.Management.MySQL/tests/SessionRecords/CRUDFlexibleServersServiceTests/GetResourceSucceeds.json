@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourcegroups/mysqlsdkrg?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Jlc291cmNlZ3JvdXBzL215c3Fsc2Rrcmc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/resourcegroups/mysqlnetsdkrg?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWMwMjcxZDYtNDI2Yi00YjBkLWI4OGQtMGQwZTRiZDY5M2FlL3Jlc291cmNlZ3JvdXBzL215c3FsbmV0c2Rrcmc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"northeurope\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "29d2c29c-ca14-4565-816d-d36263f61a9a"
+          "fe918da5-c7af-4fdc-b9c2-7a3730958ee5"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
@@ -29,6 +29,9 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Mon, 25 Oct 2021 23:09:48 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
@@ -36,13 +39,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "f812e04f-28e1-4011-833c-60c5cc1f850d"
+          "263937c0-2d10-42bc-8e9d-ac419da48ebb"
         ],
         "x-ms-correlation-request-id": [
-          "f812e04f-28e1-4011-833c-60c5cc1f850d"
+          "263937c0-2d10-42bc-8e9d-ac419da48ebb"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T204426Z:f812e04f-28e1-4011-833c-60c5cc1f850d"
+          "WESTUS:20211025T230948Z:263937c0-2d10-42bc-8e9d-ac419da48ebb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,11 +53,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:44:26 GMT"
-        ],
         "Content-Length": [
-          "178"
+          "184"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,76 +63,76 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg\",\r\n  \"name\": \"mysqlsdkrg\",\r\n  \"location\": \"northeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/resourceGroups/mysqlnetsdkrg\",\r\n  \"name\": \"mysqlnetsdkrg\",\r\n  \"location\": \"northeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBForMySql/flexibleServers/mysqlsdkflexserver?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Jlc291cmNlR3JvdXBzL215c3Fsc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvck15U3FsL2ZsZXhpYmxlU2VydmVycy9teXNxbHNka2ZsZXhzZXJ2ZXI/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/resourceGroups/mysqlnetsdkrg/providers/Microsoft.DBforMySQL/flexibleServers/mysqlsdkflexserver?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWMwMjcxZDYtNDI2Yi00YjBkLWI4OGQtMGQwZTRiZDY5M2FlL3Jlc291cmNlR3JvdXBzL215c3FsbmV0c2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQmZvck15U1FML2ZsZXhpYmxlU2VydmVycy9teXNxbHNka2ZsZXhzZXJ2ZXI/YXBpLXZlcnNpb249MjAyMS0wNS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D4s_v3\",\r\n    \"tier\": \"GeneralPurpose\"\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"testUser\",\r\n    \"administratorLoginPassword\": \"testPassword1!\",\r\n    \"version\": \"5.7\",\r\n    \"storageProfile\": {\r\n      \"storageMB\": 524288\r\n    }\r\n  },\r\n  \"location\": \"northeurope\"\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_B1ms\",\r\n    \"tier\": \"Burstable\"\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"testUser\",\r\n    \"administratorLoginPassword\": \"testPassword1!\",\r\n    \"version\": \"5.7\",\r\n    \"storage\": {\r\n      \"storageSizeGB\": 512\r\n    }\r\n  },\r\n  \"location\": \"northeurope\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f01eea60-540c-4a59-a92c-eafb34d79a04"
+          "7bceb40a-6b59-410e-ada5-660b7b50e535"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.1.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "312"
+          "299"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Mon, 25 Oct 2021 23:10:02 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/providers/Microsoft.DBforMySQL/locations/northeurope/operationResults/ace55ce1-9b01-4941-86be-0f5f05797bc0?api-version=2020-07-01-privatepreview"
+          "https://management.azure.com/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/providers/Microsoft.DBforMySQL/locations/northeurope/operationResults/07240288-7550-4878-9054-270ea6b5fe6a?api-version=2021-05-01"
         ],
         "Retry-After": [
           "60"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/ace55ce1-9b01-4941-86be-0f5f05797bc0?api-version=2020-07-01-privatepreview"
+          "https://management.azure.com/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/07240288-7550-4878-9054-270ea6b5fe6a?api-version=2021-05-01"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "ace55ce1-9b01-4941-86be-0f5f05797bc0"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "07240288-7550-4878-9054-270ea6b5fe6a"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "febb35cb-a8bb-4ebe-86c6-9764d682b07b"
+          "fc24a77f-c783-438d-afde-e1d3fd2a8de2"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T204432Z:febb35cb-a8bb-4ebe-86c6-9764d682b07b"
+          "WESTUS:20211025T231003Z:fc24a77f-c783-438d-afde-e1d3fd2a8de2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:44:32 GMT"
-        ],
         "Content-Length": [
-          "87"
+          "88"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -141,25 +141,28 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"UpsertServerManagementOperationV2\",\r\n  \"startTime\": \"2020-09-11T20:44:32.12Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertServerManagementOperationV2\",\r\n  \"startTime\": \"2021-10-25T23:10:03.407Z\"\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/ace55ce1-9b01-4941-86be-0f5f05797bc0?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi9hY2U1NWNlMS05YjAxLTQ5NDEtODZiZS0wZjVmMDU3OTdiYzA/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/07240288-7550-4878-9054-270ea6b5fe6a?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWMwMjcxZDYtNDI2Yi00YjBkLWI4OGQtMGQwZTRiZDY5M2FlL3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi8wNzI0MDI4OC03NTUwLTQ4NzgtOTA1NC0yNzBlYTZiNWZlNmE/YXBpLXZlcnNpb249MjAyMS0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.1.1"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Mon, 25 Oct 2021 23:11:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -167,29 +170,206 @@
         "Retry-After": [
           "60"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "7c86c4c6-f6a8-4804-9ee0-ded95812b9a9"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "9dc31b38-ef2e-4d5a-80ca-ee43eb3f7bc0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "d2d3d174-815b-4c29-8d3c-8fe35bae19ee"
+          "6d1cccec-22b4-4ce4-a21c-bb3efe1675c1"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T204533Z:d2d3d174-815b-4c29-8d3c-8fe35bae19ee"
+          "WESTUS:20211025T231104Z:6d1cccec-22b4-4ce4-a21c-bb3efe1675c1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"07240288-7550-4878-9054-270ea6b5fe6a\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-10-25T23:10:03.407Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/07240288-7550-4878-9054-270ea6b5fe6a?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWMwMjcxZDYtNDI2Yi00YjBkLWI4OGQtMGQwZTRiZDY5M2FlL3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi8wNzI0MDI4OC03NTUwLTQ4NzgtOTA1NC0yNzBlYTZiNWZlNmE/YXBpLXZlcnNpb249MjAyMS0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.1.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
         "Date": [
-          "Fri, 11 Sep 2020 20:45:32 GMT"
+          "Mon, 25 Oct 2021 23:12:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "733b0b17-7bcd-497e-84ff-2713faa6f058"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "dca4a83f-748a-48a0-8e4a-b5194a11379e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20211025T231205Z:dca4a83f-748a-48a0-8e4a-b5194a11379e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"07240288-7550-4878-9054-270ea6b5fe6a\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-10-25T23:10:03.407Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/07240288-7550-4878-9054-270ea6b5fe6a?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWMwMjcxZDYtNDI2Yi00YjBkLWI4OGQtMGQwZTRiZDY5M2FlL3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi8wNzI0MDI4OC03NTUwLTQ4NzgtOTA1NC0yNzBlYTZiNWZlNmE/YXBpLXZlcnNpb249MjAyMS0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.1.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 25 Oct 2021 23:13:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "08ea533e-f8d8-4cb4-9f60-3ac9c096f511"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "037ff5fd-efc8-45e9-9973-4fc063ee6a72"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20211025T231306Z:037ff5fd-efc8-45e9-9973-4fc063ee6a72"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"07240288-7550-4878-9054-270ea6b5fe6a\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2021-10-25T23:10:03.407Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/07240288-7550-4878-9054-270ea6b5fe6a?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWMwMjcxZDYtNDI2Yi00YjBkLWI4OGQtMGQwZTRiZDY5M2FlL3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi8wNzI0MDI4OC03NTUwLTQ4NzgtOTA1NC0yNzBlYTZiNWZlNmE/YXBpLXZlcnNpb249MjAyMS0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.1.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 25 Oct 2021 23:14:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "f62a10ab-bf4c-4676-b26c-b98f22d8e97c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "7709c003-a23a-483a-b5c7-6fa8b18c038e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20211025T231407Z:7709c003-a23a-483a-b5c7-6fa8b18c038e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
           "107"
@@ -201,58 +381,55 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"ace55ce1-9b01-4941-86be-0f5f05797bc0\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-11T20:44:32.12Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"07240288-7550-4878-9054-270ea6b5fe6a\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-10-25T23:10:03.407Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/ace55ce1-9b01-4941-86be-0f5f05797bc0?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi9hY2U1NWNlMS05YjAxLTQ5NDEtODZiZS0wZjVmMDU3OTdiYzA/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/resourceGroups/mysqlnetsdkrg/providers/Microsoft.DBforMySQL/flexibleServers/mysqlsdkflexserver?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWMwMjcxZDYtNDI2Yi00YjBkLWI4OGQtMGQwZTRiZDY5M2FlL3Jlc291cmNlR3JvdXBzL215c3FsbmV0c2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQmZvck15U1FML2ZsZXhpYmxlU2VydmVycy9teXNxbHNka2ZsZXhzZXJ2ZXI/YXBpLXZlcnNpb249MjAyMS0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.1.1"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Mon, 25 Oct 2021 23:14:06 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
-        "Retry-After": [
-          "60"
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "95bec356-85e1-4f6b-904a-a8979243e2c0"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "7ba00946-32f5-4e3b-a203-92d9d93f5cd3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "b15ad6bc-0ff2-4c51-a818-366660e488c4"
+          "e2fbf40f-ffc9-4a37-be2b-b4e8081e0aaf"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T204633Z:b15ad6bc-0ff2-4c51-a818-366660e488c4"
+          "WESTUS:20211025T231407Z:e2fbf40f-ffc9-4a37-be2b-b4e8081e0aaf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:46:32 GMT"
-        ],
         "Content-Length": [
-          "107"
+          "937"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -261,358 +438,61 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"ace55ce1-9b01-4941-86be-0f5f05797bc0\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-11T20:44:32.12Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_B1ms\",\r\n    \"tier\": \"Burstable\"\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"testUser\",\r\n    \"storage\": {\r\n      \"storageSizeGB\": 512,\r\n      \"iops\": 640,\r\n      \"autoGrow\": \"Enabled\",\r\n      \"storageSku\": \"Premium_LRS\"\r\n    },\r\n    \"version\": \"5.7\",\r\n    \"state\": \"Ready\",\r\n    \"fullyQualifiedDomainName\": \"mysqlsdkflexserver.mysql.database.azure.com\",\r\n    \"availabilityZone\": \"3\",\r\n    \"maintenanceWindow\": {\r\n      \"customWindow\": \"Disabled\",\r\n      \"dayOfWeek\": 0,\r\n      \"startHour\": 0,\r\n      \"startMinute\": 0\r\n    },\r\n    \"replicationRole\": \"None\",\r\n    \"replicaCapacity\": 10,\r\n    \"network\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    },\r\n    \"backup\": {\r\n      \"backupRetentionDays\": 7,\r\n      \"geoRedundantBackup\": \"Disabled\",\r\n      \"earliestRestoreDate\": \"2021-10-25T16:20:06.860033-07:00\"\r\n    },\r\n    \"highAvailability\": {\r\n      \"mode\": \"Disabled\",\r\n      \"state\": \"NotEnabled\"\r\n    }\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"id\": \"/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/resourceGroups/mysqlnetsdkrg/providers/Microsoft.DBforMySQL/flexibleServers/mysqlsdkflexserver\",\r\n  \"name\": \"mysqlsdkflexserver\",\r\n  \"type\": \"Microsoft.DBforMySQL/flexibleServers\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/ace55ce1-9b01-4941-86be-0f5f05797bc0?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi9hY2U1NWNlMS05YjAxLTQ5NDEtODZiZS0wZjVmMDU3OTdiYzA/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29130.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "60"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "f18daebb-aa01-4103-9364-bbe47f9377e0"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
-        ],
-        "x-ms-correlation-request-id": [
-          "bcca0a23-47cb-494b-ae70-9a319aefef64"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T204733Z:bcca0a23-47cb-494b-ae70-9a319aefef64"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:47:33 GMT"
-        ],
-        "Content-Length": [
-          "107"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"ace55ce1-9b01-4941-86be-0f5f05797bc0\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-11T20:44:32.12Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/ace55ce1-9b01-4941-86be-0f5f05797bc0?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi9hY2U1NWNlMS05YjAxLTQ5NDEtODZiZS0wZjVmMDU3OTdiYzA/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29130.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "60"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "5e29d9be-53a4-45e5-9217-33a6e2a1dccc"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
-        ],
-        "x-ms-correlation-request-id": [
-          "748fb97f-951b-4998-bfd5-0734c29289a3"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T204833Z:748fb97f-951b-4998-bfd5-0734c29289a3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:48:32 GMT"
-        ],
-        "Content-Length": [
-          "107"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"ace55ce1-9b01-4941-86be-0f5f05797bc0\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-11T20:44:32.12Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/ace55ce1-9b01-4941-86be-0f5f05797bc0?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi9hY2U1NWNlMS05YjAxLTQ5NDEtODZiZS0wZjVmMDU3OTdiYzA/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29130.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "60"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "2b0d465c-d5fb-47e6-a34f-dd2c06ba86ea"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
-        ],
-        "x-ms-correlation-request-id": [
-          "3f6fdbac-5c1e-4353-a407-6c2560e1b0e3"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T204934Z:3f6fdbac-5c1e-4353-a407-6c2560e1b0e3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:49:33 GMT"
-        ],
-        "Content-Length": [
-          "107"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"ace55ce1-9b01-4941-86be-0f5f05797bc0\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-09-11T20:44:32.12Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/providers/Microsoft.DBforMySQL/locations/northeurope/azureAsyncOperation/ace55ce1-9b01-4941-86be-0f5f05797bc0?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Byb3ZpZGVycy9NaWNyb3NvZnQuREJmb3JNeVNRTC9sb2NhdGlvbnMvbm9ydGhldXJvcGUvYXp1cmVBc3luY09wZXJhdGlvbi9hY2U1NWNlMS05YjAxLTQ5NDEtODZiZS0wZjVmMDU3OTdiYzA/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29130.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "60"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "cf2fce3b-d02f-4f3b-999e-d484c864eb66"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
-        ],
-        "x-ms-correlation-request-id": [
-          "465b2cb9-a2b0-4c24-9aa9-c8b2b9cf3887"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T205034Z:465b2cb9-a2b0-4c24-9aa9-c8b2b9cf3887"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:50:33 GMT"
-        ],
-        "Content-Length": [
-          "106"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"ace55ce1-9b01-4941-86be-0f5f05797bc0\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-09-11T20:44:32.12Z\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBForMySql/flexibleServers/mysqlsdkflexserver?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Jlc291cmNlR3JvdXBzL215c3Fsc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvck15U3FsL2ZsZXhpYmxlU2VydmVycy9teXNxbHNka2ZsZXhzZXJ2ZXI/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.29130.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "e247dc4c-f673-4e90-b09c-ce77fe1e759c"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
-        ],
-        "x-ms-correlation-request-id": [
-          "7a6e1129-8b75-4f61-be25-6ff3c77e5242"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T205034Z:7a6e1129-8b75-4f61-be25-6ff3c77e5242"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:50:33 GMT"
-        ],
-        "Content-Length": [
-          "678"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D4s_v3\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"capacity\": 0\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"testUser\",\r\n    \"storageProfile\": {\r\n      \"storageMB\": 524288,\r\n      \"storageIops\": 0,\r\n      \"backupRetentionDays\": 7,\r\n      \"storageAutogrow\": \"Disabled\"\r\n    },\r\n    \"version\": \"5.7\",\r\n    \"state\": \"Ready\",\r\n    \"haState\": \"NotEnabled\",\r\n    \"fullyQualifiedDomainName\": \"mysqlsdkflexserver.sqltest-eg1.mscds.com\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"sslEnforcement\": \"Disabled\",\r\n    \"standbyCount\": 0\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"id\": \"/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBforMySQL/flexibleServers/mysqlsdkflexserver\",\r\n  \"name\": \"mysqlsdkflexserver\",\r\n  \"type\": \"Microsoft.DBforMySQL/flexibleServers\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBForMySql/flexibleServers/mysqlsdkflexserver?api-version=2020-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Jlc291cmNlR3JvdXBzL215c3Fsc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvck15U3FsL2ZsZXhpYmxlU2VydmVycy9teXNxbHNka2ZsZXhzZXJ2ZXI/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/resourceGroups/mysqlnetsdkrg/providers/Microsoft.DBforMySQL/flexibleServers/mysqlsdkflexserver?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYWMwMjcxZDYtNDI2Yi00YjBkLWI4OGQtMGQwZTRiZDY5M2FlL3Jlc291cmNlR3JvdXBzL215c3FsbmV0c2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQmZvck15U1FML2ZsZXhpYmxlU2VydmVycy9teXNxbHNka2ZsZXhzZXJ2ZXI/YXBpLXZlcnNpb249MjAyMS0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ffc3b468-288f-493e-a3eb-9c1eb95026fb"
+          "fc488e19-2d40-4ff3-abe0-8429364eca6c"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20211.",
-          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.9.5"
+          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "Microsoft.Azure.Management.MySQL.FlexibleServers.MySQLManagementClient/0.1.1"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Mon, 25 Oct 2021 23:14:07 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "c432a1d5-076c-4732-b1e5-c776130ce576"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "deaf01bf-4306-4657-b5e4-18e5cd03febe"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14986"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "8b078739-0f19-492c-9618-a26eb39fe6f3"
+          "d6221653-0e1b-4764-a023-e212f5a6497c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200911T205034Z:8b078739-0f19-492c-9618-a26eb39fe6f3"
+          "WESTUS:20211025T231408Z:d6221653-0e1b-4764-a023-e212f5a6497c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Date": [
-          "Fri, 11 Sep 2020 20:50:33 GMT"
-        ],
         "Content-Length": [
-          "678"
+          "937"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -621,12 +501,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D4s_v3\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"capacity\": 0\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"testUser\",\r\n    \"storageProfile\": {\r\n      \"storageMB\": 524288,\r\n      \"storageIops\": 0,\r\n      \"backupRetentionDays\": 7,\r\n      \"storageAutogrow\": \"Disabled\"\r\n    },\r\n    \"version\": \"5.7\",\r\n    \"state\": \"Ready\",\r\n    \"haState\": \"NotEnabled\",\r\n    \"fullyQualifiedDomainName\": \"mysqlsdkflexserver.sqltest-eg1.mscds.com\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"sslEnforcement\": \"Disabled\",\r\n    \"standbyCount\": 0\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"id\": \"/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBforMySQL/flexibleServers/mysqlsdkflexserver\",\r\n  \"name\": \"mysqlsdkflexserver\",\r\n  \"type\": \"Microsoft.DBforMySQL/flexibleServers\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_B1ms\",\r\n    \"tier\": \"Burstable\"\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"testUser\",\r\n    \"storage\": {\r\n      \"storageSizeGB\": 512,\r\n      \"iops\": 640,\r\n      \"autoGrow\": \"Enabled\",\r\n      \"storageSku\": \"Premium_LRS\"\r\n    },\r\n    \"version\": \"5.7\",\r\n    \"state\": \"Ready\",\r\n    \"fullyQualifiedDomainName\": \"mysqlsdkflexserver.mysql.database.azure.com\",\r\n    \"availabilityZone\": \"3\",\r\n    \"maintenanceWindow\": {\r\n      \"customWindow\": \"Disabled\",\r\n      \"dayOfWeek\": 0,\r\n      \"startHour\": 0,\r\n      \"startMinute\": 0\r\n    },\r\n    \"replicationRole\": \"None\",\r\n    \"replicaCapacity\": 10,\r\n    \"network\": {\r\n      \"publicNetworkAccess\": \"Enabled\"\r\n    },\r\n    \"backup\": {\r\n      \"backupRetentionDays\": 7,\r\n      \"geoRedundantBackup\": \"Disabled\",\r\n      \"earliestRestoreDate\": \"2021-10-25T16:20:06.860033-07:00\"\r\n    },\r\n    \"highAvailability\": {\r\n      \"mode\": \"Disabled\",\r\n      \"state\": \"NotEnabled\"\r\n    }\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"id\": \"/subscriptions/ac0271d6-426b-4b0d-b88d-0d0e4bd693ae/resourceGroups/mysqlnetsdkrg/providers/Microsoft.DBforMySQL/flexibleServers/mysqlsdkflexserver\",\r\n  \"name\": \"mysqlsdkflexserver\",\r\n  \"type\": \"Microsoft.DBforMySQL/flexibleServers\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "55656d10-5b22-470b-99f7-9dbe3d3df5a7"
+    "SubscriptionId": "ac0271d6-426b-4b0d-b88d-0d0e4bd693ae"
   }
 }

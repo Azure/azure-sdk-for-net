@@ -52,7 +52,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// secrets.</param>
         /// <param name="buildProperties">Build properties to configure on the
         /// repository.</param>
-        public StaticSiteARMResource(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultHostname = default(string), string repositoryUrl = default(string), string branch = default(string), IList<string> customDomains = default(IList<string>), string repositoryToken = default(string), StaticSiteBuildProperties buildProperties = default(StaticSiteBuildProperties), SkuDescription sku = default(SkuDescription))
+        /// <param name="privateEndpointConnections">Private endpoint
+        /// connections</param>
+        /// <param name="stagingEnvironmentPolicy">State indicating whether
+        /// staging environments are allowed or not allowed for a static web
+        /// app. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="allowConfigFileUpdates">&lt;code&gt;false&lt;/code&gt;
+        /// if config file is locked for this static web app; otherwise,
+        /// &lt;code&gt;true&lt;/code&gt;.</param>
+        /// <param name="templateProperties">Template options for generating a
+        /// new repository.</param>
+        /// <param name="contentDistributionEndpoint">The content distribution
+        /// endpoint for the static site.</param>
+        /// <param name="keyVaultReferenceIdentity">Identity to use for Key
+        /// Vault Reference authentication.</param>
+        /// <param name="userProvidedFunctionApps">User provided function apps
+        /// registered with the static site</param>
+        /// <param name="provider">The provider that submitted the last
+        /// deployment to the primary environment of the static site.</param>
+        public StaticSiteARMResource(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultHostname = default(string), string repositoryUrl = default(string), string branch = default(string), IList<string> customDomains = default(IList<string>), string repositoryToken = default(string), StaticSiteBuildProperties buildProperties = default(StaticSiteBuildProperties), IList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default(IList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>), StagingEnvironmentPolicy? stagingEnvironmentPolicy = default(StagingEnvironmentPolicy?), bool? allowConfigFileUpdates = default(bool?), StaticSiteTemplateOptions templateProperties = default(StaticSiteTemplateOptions), string contentDistributionEndpoint = default(string), string keyVaultReferenceIdentity = default(string), IList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps = default(IList<StaticSiteUserProvidedFunctionApp>), string provider = default(string), SkuDescription sku = default(SkuDescription), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(location, id, name, kind, type, tags)
         {
             DefaultHostname = defaultHostname;
@@ -61,7 +79,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
             CustomDomains = customDomains;
             RepositoryToken = repositoryToken;
             BuildProperties = buildProperties;
+            PrivateEndpointConnections = privateEndpointConnections;
+            StagingEnvironmentPolicy = stagingEnvironmentPolicy;
+            AllowConfigFileUpdates = allowConfigFileUpdates;
+            TemplateProperties = templateProperties;
+            ContentDistributionEndpoint = contentDistributionEndpoint;
+            KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
+            UserProvidedFunctionApps = userProvidedFunctionApps;
+            Provider = provider;
             Sku = sku;
+            Identity = identity;
             CustomInit();
         }
 
@@ -108,9 +135,67 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public StaticSiteBuildProperties BuildProperties { get; set; }
 
         /// <summary>
+        /// Gets private endpoint connections
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets or sets state indicating whether staging environments are
+        /// allowed or not allowed for a static web app. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.stagingEnvironmentPolicy")]
+        public StagingEnvironmentPolicy? StagingEnvironmentPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; if
+        /// config file is locked for this static web app; otherwise,
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowConfigFileUpdates")]
+        public bool? AllowConfigFileUpdates { get; set; }
+
+        /// <summary>
+        /// Gets or sets template options for generating a new repository.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.templateProperties")]
+        public StaticSiteTemplateOptions TemplateProperties { get; set; }
+
+        /// <summary>
+        /// Gets the content distribution endpoint for the static site.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.contentDistributionEndpoint")]
+        public string ContentDistributionEndpoint { get; private set; }
+
+        /// <summary>
+        /// Gets identity to use for Key Vault Reference authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultReferenceIdentity")]
+        public string KeyVaultReferenceIdentity { get; private set; }
+
+        /// <summary>
+        /// Gets user provided function apps registered with the static site
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userProvidedFunctionApps")]
+        public IList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get; private set; }
+
+        /// <summary>
+        /// Gets the provider that submitted the last deployment to the primary
+        /// environment of the static site.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provider")]
+        public string Provider { get; private set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public SkuDescription Sku { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

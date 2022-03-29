@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Concurrent;
 using Azure.Messaging.ServiceBus;
 using System.Collections.Generic;
 using System.Threading;
@@ -17,6 +19,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private readonly ProcessMessageEventArgs _eventArgs;
         private readonly ProcessSessionMessageEventArgs _sessionEventArgs;
 
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> SettledMessages { get; } = new();
+
         internal ServiceBusMessageActions(ProcessSessionMessageEventArgs sessionEventArgs)
         {
             _sessionEventArgs = sessionEventArgs;
@@ -30,6 +34,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         internal ServiceBusMessageActions(ServiceBusReceiver receiver)
         {
             _receiver = receiver;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusMessageActions"/> class for mocking use in testing.
+        /// </summary>
+        /// <remarks>
+        /// This constructor exists only to support mocking. When used, class state is not fully initialized, and
+        /// will not function correctly; virtual members are meant to be mocked.
+        ///</remarks>
+        protected ServiceBusMessageActions()
+        {
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
@@ -50,6 +65,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 await _sessionEventArgs.AbandonMessageAsync(message, propertiesToModify, cancellationToken).ConfigureAwait(false);
             }
+
+            TrackMessageAsSettled(message);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.CompleteMessageAsync(ServiceBusReceivedMessage, CancellationToken)"/>
@@ -69,6 +86,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 await _sessionEventArgs.CompleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
+
+            TrackMessageAsSettled(message);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, string, string, CancellationToken)"/>
@@ -105,6 +124,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
+
+            TrackMessageAsSettled(message);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
@@ -137,6 +158,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
+
+            TrackMessageAsSettled(message);
         }
 
         ///<inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
@@ -169,6 +192,36 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                     cancellationToken)
                 .ConfigureAwait(false);
             }
+
+            TrackMessageAsSettled(message);
         }
+
+        ///<inheritdoc cref="ServiceBusReceiver.RenewMessageLockAsync(ServiceBusReceivedMessage, CancellationToken)"/>
+        public virtual async Task RenewMessageLockAsync(
+            ServiceBusReceivedMessage message,
+            CancellationToken cancellationToken = default)
+        {
+            if (_receiver is ServiceBusSessionReceiver || _sessionEventArgs != null)
+            {
+                throw new InvalidOperationException(Resources.CannotLockMessageOnSessionEntity);
+            }
+            if (_receiver != null)
+            {
+                await _receiver.RenewMessageLockAsync(
+                        message,
+                        cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                await _eventArgs.RenewMessageLockAsync(
+                        message,
+                        cancellationToken)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        private void TrackMessageAsSettled(ServiceBusReceivedMessage message)
+            => SettledMessages[message] = 0;
     }
 }

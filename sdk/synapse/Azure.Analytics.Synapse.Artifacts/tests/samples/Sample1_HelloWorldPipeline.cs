@@ -21,9 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public async Task RunPipeline()
         {
             #region Snippet:CreatePipelineClientPrep
+#if SNIPPET
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
+#endif
 
             string pipelineName = "Test-Pipeline";
             #endregion
@@ -58,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeletePipeline
             PipelineDeletePipelineOperation deleteOperation = client.StartDeletePipeline(pipelineName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

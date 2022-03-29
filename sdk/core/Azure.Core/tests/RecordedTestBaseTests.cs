@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -31,18 +30,23 @@ namespace Azure.Core.Tests
 
             var operation = await client.StartOperationAsync();
 
+            var startTime = DateTimeOffset.Now;
             await operation.WaitForCompletionAsync();
+            var timingPoint1 = DateTimeOffset.Now;
+
             await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(10), default);
+            var timingPoint2 = DateTimeOffset.Now;
 
             await operation.WaitForCompletionResponseAsync();
+            var timingPoint3 = DateTimeOffset.Now;
+
             await operation.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(10), default);
+            var timingPoint4 = DateTimeOffset.Now;
 
-            var original = GetOriginal(operation);
-
-            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[0]);
-            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[1]);
-            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[2]);
-            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[3]);
+            Assert.That((timingPoint1 - startTime).TotalSeconds, Is.EqualTo(0).Within(0.3));
+            Assert.That((timingPoint2 - timingPoint1).TotalSeconds, Is.EqualTo(0).Within(0.3));
+            Assert.That((timingPoint3 - timingPoint2).TotalSeconds, Is.EqualTo(0).Within(0.3));
+            Assert.That((timingPoint4 - timingPoint3).TotalSeconds, Is.EqualTo(0).Within(0.3));
         }
 
         [Test]
@@ -80,32 +84,57 @@ namespace Azure.Core.Tests
             Assert.AreEqual(TimeSpan.FromSeconds(10), original.WaitForCompletionCalls[3]);
         }
 
+        [Test]
+        public async Task WaitForCompletionErrorsArePropagated()
+        {
+            var client = InstrumentClient(new RecordedClient());
+
+            var operation = await client.StartOperationAsync(true);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+        }
+
         public class RecordedClient
         {
-            public virtual Task<CustomOperation> StartOperationAsync()
+            public virtual Task<CustomOperation> StartOperationAsync(bool throwOnWait = false)
             {
-                return Task.FromResult(new CustomOperation());
+                return Task.FromResult(new CustomOperation(throwOnWait));
             }
 
-            public virtual CustomOperation StartOperation()
+            public virtual CustomOperation StartOperation(bool throwOnWait = false)
             {
-                return new CustomOperation();
+                return new CustomOperation(throwOnWait);
             }
         }
 
         public class CustomOperation : Operation<int>
         {
+            private readonly bool _throwOnWait;
+
+            public CustomOperation(bool throwOnWait)
+            {
+                _throwOnWait = throwOnWait;
+            }
+
+            protected CustomOperation()
+            {
+            }
+
             public virtual List<TimeSpan?> WaitForCompletionCalls { get; } = new();
             public override string Id { get; }
             public override Response GetRawResponse()
             {
-                throw new NotImplementedException();
+                return new MockResponse(200);
             }
 
-            public override bool HasCompleted { get; }
+            public override bool HasCompleted { get; } = true;
             public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
             {
-                throw new NotImplementedException();
+                if (_throwOnWait)
+                {
+                    throw new RequestFailedException(400, "Operation failed");
+                }
+                return new ValueTask<Response>(new MockResponse(20));
             }
 
             public override Response UpdateStatus(CancellationToken cancellationToken = default)
@@ -123,6 +152,10 @@ namespace Azure.Core.Tests
             public override ValueTask<Response<int>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
             {
                 WaitForCompletionCalls.Add(pollingInterval);
+                if (_throwOnWait)
+                {
+                    throw new RequestFailedException(400, "Operation failed");
+                }
                 return new(Response.FromValue(0, new MockResponse(200)));
             }
         }

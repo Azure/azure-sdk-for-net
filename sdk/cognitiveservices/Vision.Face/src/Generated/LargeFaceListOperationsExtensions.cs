@@ -78,7 +78,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync(this ILargeFaceListOperations operations, string largeFaceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateAsync(this ILargeFaceListOperations operations, string largeFaceListId, string name, string userData = default(string), string recognitionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.CreateWithHttpMessagesAsync(largeFaceListId, name, userData, recognitionModel, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -196,12 +196,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// A value indicating whether the operation should return 'recognitionModel'
             /// in response.
             /// </param>
+            /// <param name='start'>
+            /// Starting large face list id to return (used to list a range of large face
+            /// lists).
+            /// </param>
+            /// <param name='top'>
+            /// Number of large face lists to return starting with the large face list id
+            /// indicated by the 'start' parameter.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<LargeFaceList>> ListAsync(this ILargeFaceListOperations operations, bool? returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<LargeFaceList>> ListAsync(this ILargeFaceListOperations operations, bool? returnRecognitionModel = false, string start = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(returnRecognitionModel, start, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -93,11 +93,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         public virtual IConfigurationsOperations Configurations { get; private set; }
 
         /// <summary>
-        /// Gets the IServerKeysOperations.
-        /// </summary>
-        public virtual IServerKeysOperations ServerKeys { get; private set; }
-
-        /// <summary>
         /// Gets the ICheckNameAvailabilityOperations.
         /// </summary>
         public virtual ICheckNameAvailabilityOperations CheckNameAvailability { get; private set; }
@@ -116,6 +111,16 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabasesOperations.
+        /// </summary>
+        public virtual IDatabasesOperations Databases { get; private set; }
+
+        /// <summary>
+        /// Gets the IGetPrivateDnsZoneSuffixOperations.
+        /// </summary>
+        public virtual IGetPrivateDnsZoneSuffixOperations GetPrivateDnsZoneSuffix { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PostgreSQLManagementClient class.
@@ -361,13 +366,14 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
             Servers = new ServersOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             Configurations = new ConfigurationsOperations(this);
-            ServerKeys = new ServerKeysOperations(this);
             CheckNameAvailability = new CheckNameAvailabilityOperations(this);
             LocationBasedCapabilities = new LocationBasedCapabilitiesOperations(this);
             VirtualNetworkSubnetUsage = new VirtualNetworkSubnetUsageOperations(this);
             Operations = new Operations(this);
+            Databases = new DatabasesOperations(this);
+            GetPrivateDnsZoneSuffix = new GetPrivateDnsZoneSuffixOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-02-14-privatepreview";
+            ApiVersion = "2021-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

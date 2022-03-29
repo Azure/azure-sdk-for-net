@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Resource Group Name
         /// </param>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Resource Group Name
         /// </param>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='configuration'>
         /// The configuration
@@ -453,7 +453,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Resource Group Name
         /// </param>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -575,7 +575,7 @@ namespace Microsoft.Azure.Management.Maintenance
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new MaintenanceErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -644,7 +644,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Resource Group Name
         /// </param>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='configuration'>
         /// The configuration

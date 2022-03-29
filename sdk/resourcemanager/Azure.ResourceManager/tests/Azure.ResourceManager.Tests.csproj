@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
+    <NoWarn>SA1649;SA1633;SA1000;SA1028;SA1400;SA1508</NoWarn>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.csproj" />
+    <ProjectReference Include="..\..\..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj" />
+    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Unit\TestAssets\Identity\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Unit\TestAssets\UserAssignedIdentity\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Unit\TestAssets\SystemAssignedIdentity\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Unit\TestAssets\GenericResourceData\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\CollectionTryGetTest\" />
+    <Folder Include="SessionRecords\FeatureCollectionTests\" />
+    <Folder Include="SessionRecords\LocationExpandedTests\" />
+    <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />
+    <Folder Include="SessionRecords\RestApiCollectionTests\" />
+    <Folder Include="SessionRecords\SubscriptionOperationsTests\" />
+  </ItemGroup>
+
+</Project>

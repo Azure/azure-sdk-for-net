@@ -33,10 +33,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the DiagnosticContract class.
         /// </summary>
         /// <param name="loggerId">Resource Id of a target logger.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="alwaysLog">Specifies for what type of messages
         /// sampling settings should not apply. Possible values include:
         /// 'allErrors'</param>
@@ -53,7 +55,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="verbosity">The verbosity level applied to traces
         /// emitted by trace policies. Possible values include: 'verbose',
         /// 'information', 'error'</param>
-        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? logClientIp = default(bool?), string httpCorrelationProtocol = default(string), string verbosity = default(string))
+        /// <param name="operationNameFormat">The format of the Operation Name
+        /// for Application Insights telemetries. Default is Name. Possible
+        /// values include: 'Name', 'Url'</param>
+        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? logClientIp = default(bool?), string httpCorrelationProtocol = default(string), string verbosity = default(string), string operationNameFormat = default(string))
             : base(id, name, type)
         {
             AlwaysLog = alwaysLog;
@@ -64,6 +69,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             LogClientIp = logClientIp;
             HttpCorrelationProtocol = httpCorrelationProtocol;
             Verbosity = verbosity;
+            OperationNameFormat = operationNameFormat;
             CustomInit();
         }
 
@@ -126,6 +132,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.verbosity")]
         public string Verbosity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the format of the Operation Name for Application
+        /// Insights telemetries. Default is Name. Possible values include:
+        /// 'Name', 'Url'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operationNameFormat")]
+        public string OperationNameFormat { get; set; }
 
         /// <summary>
         /// Validate the object.

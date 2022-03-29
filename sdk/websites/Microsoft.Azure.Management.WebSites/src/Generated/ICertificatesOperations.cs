@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <remarks>
         /// Description for Get all certificates for a subscription.
         /// </remarks>
+        /// <param name='filter'>
+        /// Return only information specified in the filter (using OData
+        /// syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -44,7 +48,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Certificate>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Certificate>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all certificates in a resource group.
         /// </summary>

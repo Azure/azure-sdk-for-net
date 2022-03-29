@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static FileShareItems DeserializeFileShareItems(JsonElement element)
         {
-            Optional<IReadOnlyList<FileShareItem>> value = default;
+            Optional<IReadOnlyList<FileShareData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FileShareItem> array = new List<FileShareItem>();
+                    List<FileShareData> array = new List<FileShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileShareItem.DeserializeFileShareItem(item));
+                        array.Add(FileShareData.DeserializeFileShareData(item));
                     }
                     value = array;
                     continue;

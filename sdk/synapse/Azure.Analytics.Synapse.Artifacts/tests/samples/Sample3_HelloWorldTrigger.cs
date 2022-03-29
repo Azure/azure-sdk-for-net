@@ -17,10 +17,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public async Task TriggerSample()
         {
             #region Snippet:CreateTriggerClientPrep
+#if SNIPPET
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
-
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
+#endif
             string triggerName = "Test-Trigger";
             #endregion
 
@@ -48,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteTrigger
             TriggerDeleteTriggerOperation deleteOperation = client.StartDeleteTrigger(triggerName);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

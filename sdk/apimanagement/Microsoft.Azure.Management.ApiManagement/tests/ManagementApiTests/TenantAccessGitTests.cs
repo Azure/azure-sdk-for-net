@@ -8,13 +8,14 @@ using Microsoft.Azure.Management.ApiManagement;
 using Xunit;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
     public class TenantAccessGitTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "sasolank")]
         public async Task GetUpdateKeys()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -23,42 +24,56 @@ namespace ApiManagement.Tests.ManagementApiTests
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
 
-                // get settings
-                var getResponse = testBase.client.TenantAccessGit.Get(
+                // git settings
+                var head = await testBase.client.TenantAccess.GetEntityTagAsync(
                     testBase.rgName,
-                    testBase.serviceName);
+                    testBase.serviceName,
+                    "gitAccess");
+                Assert.NotNull(head);
+
+                // get settings
+                var getResponse = await testBase.client.TenantAccess.GetAsync(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    "gitAccess");
 
                 Assert.NotNull(getResponse);
                 Assert.NotNull(getResponse);
                 Assert.True(getResponse.Enabled); // git access is always enabled
-                Assert.Null(getResponse.PrimaryKey);
-                Assert.Null(getResponse.SecondaryKey);
+                Assert.Equal("git", getResponse.PrincipalId);
 
-                var secretsResponse = testBase.client.TenantAccessGit.ListSecrets(
+                var secretsResponse = await testBase.client.TenantAccess.ListSecretsAsync(
                     testBase.rgName,
-                    testBase.serviceName);
+                    testBase.serviceName,
+                    "gitAccess");
                 Assert.NotNull(secretsResponse.PrimaryKey);
                 Assert.NotNull(secretsResponse.SecondaryKey);
 
                 testBase.client.TenantAccessGit.RegeneratePrimaryKey(
                     testBase.rgName,
-                    testBase.serviceName);
+                    testBase.serviceName,
+                    "access");
 
-                var secretsResponse2 = testBase.client.TenantAccessGit.ListSecrets(
+                var secretsResponse2 = await testBase.client.TenantAccess.ListSecretsAsync(
                     testBase.rgName,
-                    testBase.serviceName);
+                    testBase.serviceName,
+                    "gitAccess");
 
                 Assert.NotNull(secretsResponse2);
                 Assert.Equal(secretsResponse.SecondaryKey, secretsResponse2.SecondaryKey);
-                Assert.NotEqual(secretsResponse.PrimaryKey, secretsResponse2.PrimaryKey);
+
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    Assert.NotEqual(secretsResponse.PrimaryKey, secretsResponse2.PrimaryKey);
 
                 testBase.client.TenantAccessGit.RegenerateSecondaryKey(
                     testBase.rgName,
-                    testBase.serviceName);
+                    testBase.serviceName,
+                    "access");
 
-                var getSecretsHttpResponse = await testBase.client.TenantAccessGit.ListSecretsWithHttpMessagesAsync(
+                var getSecretsHttpResponse = await testBase.client.TenantAccess.ListSecretsWithHttpMessagesAsync(
                     testBase.rgName,
-                    testBase.serviceName);
+                    testBase.serviceName,
+                    "gitAccess");
 
                 Assert.NotNull(getSecretsHttpResponse);
                 Assert.NotNull(getSecretsHttpResponse.Body);

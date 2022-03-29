@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FlowLogListResult. </summary>
         internal FlowLogListResult()
         {
-            Value = new ChangeTrackingList<FlowLog>();
+            Value = new ChangeTrackingList<FlowLogData>();
         }
 
         /// <summary> Initializes a new instance of FlowLogListResult. </summary>
         /// <param name="value"> Information about flow log resource. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal FlowLogListResult(IReadOnlyList<FlowLog> value, string nextLink)
+        internal FlowLogListResult(IReadOnlyList<FlowLogData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about flow log resource. </summary>
-        public IReadOnlyList<FlowLog> Value { get; }
+        public IReadOnlyList<FlowLogData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -17,17 +17,22 @@ namespace Azure.ResourceManager.Sql.Models
         internal ManagedInstanceEditionCapability()
         {
             SupportedFamilies = new ChangeTrackingList<ManagedInstanceFamilyCapability>();
+            SupportedStorageCapabilities = new ChangeTrackingList<StorageCapability>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceEditionCapability. </summary>
         /// <param name="name"> The managed server version name. </param>
         /// <param name="supportedFamilies"> The supported families. </param>
+        /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
+        /// <param name="zoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ManagedInstanceEditionCapability(string name, IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies, CapabilityStatus? status, string reason)
+        internal ManagedInstanceEditionCapability(string name, IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies, IReadOnlyList<StorageCapability> supportedStorageCapabilities, bool? zoneRedundant, CapabilityStatus? status, string reason)
         {
             Name = name;
             SupportedFamilies = supportedFamilies;
+            SupportedStorageCapabilities = supportedStorageCapabilities;
+            ZoneRedundant = zoneRedundant;
             Status = status;
             Reason = reason;
         }
@@ -36,6 +41,10 @@ namespace Azure.ResourceManager.Sql.Models
         public string Name { get; }
         /// <summary> The supported families. </summary>
         public IReadOnlyList<ManagedInstanceFamilyCapability> SupportedFamilies { get; }
+        /// <summary> The list of supported storage capabilities for this edition. </summary>
+        public IReadOnlyList<StorageCapability> SupportedStorageCapabilities { get; }
+        /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
+        public bool? ZoneRedundant { get; }
         /// <summary> The status of the capability. </summary>
         public CapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>

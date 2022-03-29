@@ -36,10 +36,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// container.</param>
         /// <param name="issues">The list of summary of health errors across
         /// the resources under the container.</param>
-        public ResourceHealthSummary(int? resourceCount = default(int?), IList<HealthErrorSummary> issues = default(IList<HealthErrorSummary>))
+        /// <param name="categorizedResourceCounts">The categorized resource
+        /// counts.</param>
+        public ResourceHealthSummary(int? resourceCount = default(int?), IList<HealthErrorSummary> issues = default(IList<HealthErrorSummary>), IDictionary<string, int?> categorizedResourceCounts = default(IDictionary<string, int?>))
         {
             ResourceCount = resourceCount;
             Issues = issues;
+            CategorizedResourceCounts = categorizedResourceCounts;
             CustomInit();
         }
 
@@ -60,6 +63,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "issues")]
         public IList<HealthErrorSummary> Issues { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categorized resource counts.
+        /// </summary>
+        [JsonProperty(PropertyName = "categorizedResourceCounts")]
+        public IDictionary<string, int?> CategorizedResourceCounts { get; set; }
 
     }
 }

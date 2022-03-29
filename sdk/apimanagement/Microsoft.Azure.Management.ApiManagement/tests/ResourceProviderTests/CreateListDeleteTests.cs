@@ -17,7 +17,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
     public partial class ApiManagementServiceTests
     {
         [Fact]
-        [Trait("owner", "kjoshi")]
+        [Trait("owner", "sasolank")]
         public void CreateListDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -33,7 +33,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 };
                 var checkNameResponse = testBase.client.ApiManagementService.CheckNameAvailability(parameters);
                 Assert.NotNull(checkNameResponse);
-                Assert.True(checkNameResponse.NameAvailable);                
+                Assert.True(checkNameResponse.NameAvailable);
 
                 // create service
                 var createdService = testBase.client.ApiManagementService.CreateOrUpdate(
@@ -49,8 +49,19 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
-                                
+                    testBase.tags, 
+                    PlatformVersion.Stv2);
+
+                // skuoperations api at service level
+                var apimSkus = testBase.client.ApiManagementServiceSkus.ListAvailableServiceSkus(testBase.rgName, testBase.serviceName);
+                Assert.NotNull(apimSkus);
+                Assert.True(apimSkus.Count() > 3);
+
+                // skus at subscription level
+                var skus = testBase.client.ApiManagementSkus.List();
+                Assert.NotNull(skus);
+                Assert.True(skus.Count() > 4);
+
                 // list service
                 var listServiceResponse = testBase.client.ApiManagementService.ListByResourceGroup(
                     resourceGroupName: testBase.rgName);
@@ -68,7 +79,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
 
                 // get sso token
                 var ssoTokenResponse = testBase.client.ApiManagementService.GetSsoToken(

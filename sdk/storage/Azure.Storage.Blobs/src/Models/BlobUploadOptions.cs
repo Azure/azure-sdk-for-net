@@ -8,7 +8,7 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional paratmers for uploading to a Blob.
+    /// Optional parameters for uploading to a Blob.
     /// </summary>
     public class BlobUploadOptions
     {
@@ -20,6 +20,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Optional custom metadata to set for this append blob.
+        /// For a sample code to set the metadata, see <see href="https://github.com/Azure/azure-sdk-for-net/blob/47ea075bca473fe6e9928ff9893fbaa8a552f3a5/sdk/storage/Azure.Storage.Blobs/samples/Sample03_Migrations.cs#L630">this </see>article.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
@@ -55,5 +56,26 @@ namespace Azure.Storage.Blobs.Models
         /// parallel transfer behavior.
         /// </summary>
         public StorageTransferOptions TransferOptions { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </summary>
+        public BlobImmutabilityPolicy ImmutabilityPolicy { get; set; }
+
+        /// <summary>
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has immutable storage with versioning enabled.
+        /// </summary>
+        public bool? LegalHold { get; set; }
+
+        ///// <summary>
+        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        ///// hashing on uploads.
+        ///// </summary>
+        // TODO #27253
+        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

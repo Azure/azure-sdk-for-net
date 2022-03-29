@@ -218,6 +218,40 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string AmazonRdsForOracleTable = @"
+{
+    name: ""AmazonRdsForOracleTable"",
+    properties:
+    {
+        type: ""AmazonRdsForOracleTable"",
+        description: ""Example of AmazonRdsForOracle with parameter, description, and expression"",
+        parameters: {
+            StartTime: {
+                type: ""String"",
+                defaultValue:  ""2017-01-31T00:00:00Z""
+            }
+        },
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: {
+                value: ""@parameters('StartTime')"",
+                type: ""Expression""
+            },
+            table: {
+                value: ""@parameters('StartTime')"",
+                type: ""Expression""
+            }
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string ODataResource = @"
 {
     name: ""ODataResourceDataset"",
@@ -1111,6 +1145,45 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string ExcelDatasetWithSheetIndex = @"
+{
+  ""name"": ""ExcelDataset"",
+  ""properties"": {
+    ""type"": ""Excel"",
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""exceltest"",
+        ""fileName"": ""releases-1.xlsx""
+      },
+      ""compression"": {
+        ""type"": ""GZip"",
+        ""level"": ""Fastest""
+      },
+      ""sheetName"": ""test01"",
+      ""firstRowAsHeader"": true,
+      ""range"": ""A4:H9"",
+      ""nullValue"": ""N/A"",
+      ""sheetIndex"": 1,
+    },
+    ""linkedServiceName"": {
+      ""referenceName"": ""MyLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""schema"": [
+      {
+        ""name"": ""title"",
+        ""type"": ""string""
+      },
+      {
+        ""name"": ""movieId"",
+        ""type"": ""string""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string ParquetDataset = @"
 {
   ""name"": ""ParquetDataset"",
@@ -1662,6 +1735,26 @@ namespace DataFactory.Tests.JsonSamples
     properties:
     {
         type: ""AzureSqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            schema: ""dbo"",
+            table: ""testtable""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string AmazonRdsForSqlServerTableV2 = @"
+{
+    name: ""AmazonRdsForSqlServerTable"",
+    properties:
+    {
+        type: ""AmazonRdsForSqlServerTable"",
         linkedServiceName: 
         {  
             referenceName : ""ls"",

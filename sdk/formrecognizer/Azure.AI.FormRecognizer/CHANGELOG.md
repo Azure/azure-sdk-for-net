@@ -1,7 +1,77 @@
 # Release History
 
-## 3.1.0-beta.5 (Unreleased)
+## 4.0.0-beta.4 (Unreleased)
 
+### Features Added
+- Added `DocumentAnalysisClient` integration for ASP.NET Core ([#27123](https://github.com/azure/azure-sdk-for-net/issues/27123)).
+
+### Breaking Changes
+- Renamed `StartCopyModel` methods to `StartCopyModelTo`.
+- Made `DocumentSpan` a `struct` instead of a `class`.
+- In `AccountProperties`, renamed `Count` and `Limit` to `DocumentModelCount` and `DocumentModelLimit`.
+- In `DocumentTableCell`, properties `Kind`, `RowSpan`, and `ColumnSpan` are not nullable anymore.
+- In the method `StartCreateComposedModel`, renamed parameter `modelIds` to `componentModelIds`.
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.0.0-beta.3 (2022-02-10)
+
+### Features Added
+- Added the `DocumentField.AsCurrency` method and the `DocumentFieldType.Currency` enum value to support analyzed currency fields.
+- Added the `Languages` property to the `AnalyzeResult` class. This property is populated when using the `prebuilt-read` model and holds information about the languages in which the document is written.
+- Added the `Tags` property to the `BuildModelOptions` class. This property can be used to specify custom key-value attributes associated with the model to be built.
+- Added the `Tags` property to the `DocumentModelInfo` and to the `ModelOperationInfo` classes.
+- Added the `BuildMode` property to `DocTypeInfo` to indicate the technique used when building the correspoding model.
+- Added the `DocumentAnalysisModelFactory` static class to the `Azure.AI.FormRecognizer.DocumentAnalysis` namespace. It contains methods for instantiating `DocumentAnalysis` models for mocking.
+
+### Breaking Changes
+- Added the required parameter `buildMode` to `StartBuildModel` methods. Users must now choose the technique (`Template` or `Neural`) used to build models. For more information about the available build modes and their differences, see [here](https://aka.ms/azsdk/formrecognizer/buildmode).
+- Added the `tags` parameter to the `GetCopyAuthorization` methods.
+- Added the `tags` parameter to the `StartCreateComposedModel` methods.
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-01-30-preview`, so they don't support `2021-09-30-preview` anymore.
+
+### Bugs Fixed
+- FormRecognizerAudience and DocumentAnalysisAudience have been added to allow the user to select the Azure cloud where the resource is located. Issue [17192](https://github.com/azure/azure-sdk-for-net/issues/17192).
+
+## 4.0.0-beta.2 (2021-11-09)
+
+### Bugs Fixed
+- `BuildModelOperation` and `CopyModelOperation` correctly populate the `PercentCompleted` property, instead of always having a value of `0`.
+
+## 4.0.0-beta.1 (2021-10-07)
+> Note: Starting with version `2021-09-30-preview`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/MigrationGuide.md) for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version.
+
+### Features Added
+- This version of the SDK defaults to the latest supported Service API version, which currently is `2021_09_30_preview`.
+- Added class `DocumentAnalysisClient` to the new `Azure.AI.FormRecognizer.DocumentAnalysis` namespace. This will be the main client to use when analyzing documents for service versions `2021_09_30_preview` and higher. For lower versions, please use the `FormRecognizerClient`.
+- Added methods `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` to `DocumentAnalysisClient`. These methods substitute all existing `StartRecognize<...>` methods, such as `StartRecognizeContent` and `StartRecognizeReceiptsFromUri`.
+- Added class `DocumentModelAdministrationClient` to the new `Azure.AI.FormRecognizer.DocumentAnalysis` namespace. This will be the main client to use for model management for service versions `2021_09_30_preview` and higher. For lower versions, please use the `FormTrainingClient`.
+- Added methods `StartBuildModel`, `StartCopyModel`, `StartCreateComposedModel`, `GetCopyAuthorization`, `GetModel`, `GetModels`, `GetAccountProperties`, `DeleteModel`, `GetOperation`, `GetOperations`, and the equivalent async methods to `DocumentModelAdministrationClient`.
+
+## 3.1.1 (2021-06-08)
+
+### Key Bug Fixes
+- Handles invoices and other recognition operations that return a `FormField` with `Text` and no `BoundingBox` or `Page` information.
+
+## 3.1.0 (2021-05-26)
+
+### New Features
+- This General Availability (GA) release marks the stability of the changes introduced in package versions `3.1.0-beta.1` through `3.1.0-beta.4`.
+- Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
+- Added support for service version `2.0`. This can be specified in the `FormRecognizerClientOptions` object under the `ServiceVersion` enum.
+By default the SDK targets latest supported service version.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `2.1`.
+- Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.
+- Renamed the model `ReadingOrder` to `FormReadingOrder`.
+- The model `TextAppearance` now includes the properties `StyleName` and `StyleConfidence` that were part of the `TextStyle` object.
+- Removed the model `TextStyle`.
+- Renamed the method `AsCountryCode` to `AsCountryRegion`.
+- Removed type `FieldValueGender`.
+- Removed value `Gender` from the model `FieldValuetype`.
 
 ## 3.0.1 (2021-04-09)
 
@@ -203,5 +273,5 @@ This package's [documentation][readme] and [samples][samples] demonstrate the ne
 
 [guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html
 [cognitiveServices_fr_nuget]: https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.FormRecognizer/0.8.0-preview
-[readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
+[readme]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md

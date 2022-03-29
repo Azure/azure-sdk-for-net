@@ -2,7 +2,7 @@
 
 **NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. 
 
-Some operations take long time to complete and require polling for their status. Methods starting long-running operations return `*Operation<T>` types.
+Some operations take long time to complete and require polling for their status. Methods starting long-running operations return either `*Operation<T>` or `*PageableOperation<T>` types.
 
 ## Awaiting completion of the operation
 
@@ -37,4 +37,50 @@ Console.WriteLine(operation.HasCompleted);
 // HasValue indicated is operation Value is available, for some operations it can return true even when operation
 // hasn't completed yet.
 Console.WriteLine(operation.HasValue);
+```
+
+## Accessing results for Pageable Operations
+
+A Pageable Operation is use when the service call returns multiple values in pages after the Long Running Operation completes. The results can be access with the `GetValues()`, `GetValuesAsync()` methods which return `Pageable<T>/AsyncPageable<T>` respectively.
+
+To access the result you can iterate over the `Pageable<T>/AsyncPageable<T>`. For more information see [Consuming Service Methods Returning Pageable/AsyncPageable](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core#consuming-service-methods-returning-asyncpageablet).
+
+### Using `GetValuesAsync()`
+The `GetValuesAsync` method will contain the `AsyncPageable<T>` results.
+
+```C# Snippet:PageableOperationGetValuesAsync
+// create a client
+var client = new MyStoreClient();
+
+// Start the operation
+GetProductsOperation operation = client.StartGetProducts();
+
+await operation.WaitForCompletionAsync();
+
+await foreach (Product product in operation.GetValuesAsync())
+{
+    Console.WriteLine($"Name: {product.Name}");
+    Console.WriteLine($"Quantity: {product.Quantity}");
+    Console.WriteLine($"Price: {product.Price}");
+}
+```
+
+### Using `GetValues()`
+The `GetValues` method will contain the `Pageable<T>` results.
+
+```C# Snippet:PageableOperationGetValues
+// create a client
+var client = new MyStoreClient();
+
+// Start the operation
+GetProductsOperation operation = client.StartGetProducts();
+
+await operation.WaitForCompletionAsync();
+
+foreach (Product product in operation.GetValues())
+{
+    Console.WriteLine($"Name: {product.Name}");
+    Console.WriteLine($"Quantity: {product.Quantity}");
+    Console.WriteLine($"Price: {product.Price}");
+}
 ```

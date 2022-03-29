@@ -9,7 +9,7 @@
 
     public class SoftwareUpdateConfigurationMachineRunTests : BaseTest
     {
-        [Fact]
+
         public void CanGetMachineRunById()
         {
             var runId = Guid.Parse("3c789f68-05aa-4614-9d1a-b557b39cc53c");
@@ -23,7 +23,6 @@
             }
         }
 
-        [Fact]
         public void CanGetAllMachineRuns()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -36,7 +35,6 @@
             }
         }
 
-        [Fact]
         public void CanGetAllRunsByCorrelationId()
         {
             Guid correlationId = Guid.Parse("e5934d51-6e50-41f8-b860-3a3657040f8d");
@@ -50,7 +48,6 @@
             }
         }
 
-        [Fact]
         public void CanGetAllRunsByStatus()
         {
             const string status = "Succeeded";

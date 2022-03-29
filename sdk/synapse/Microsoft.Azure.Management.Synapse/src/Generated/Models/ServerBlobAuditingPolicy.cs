@@ -167,7 +167,27 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// processed.
         /// The default minimum value is 1000 (1 second). The maximum is
         /// 2,147,483,647.</param>
-        public ServerBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?))
+        /// <param name="isDevopsAuditEnabled">Specifies the state of devops
+        /// audit. If state is Enabled, devops logs will be sent to Azure
+        /// Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as
+        /// 'Enabled', 'IsAzureMonitorTargetEnabled' as true and
+        /// 'IsDevopsAuditEnabled' as true
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with
+        /// 'DevOpsOperationsAudit' diagnostic logs category on the master
+        /// database should also be created.
+        ///
+        /// Diagnostic Settings URI format:
+        /// PUT
+        /// https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        ///
+        /// For more information, see [Diagnostic Settings REST
+        /// API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings
+        /// PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// </param>
+        public ServerBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?), bool? isDevopsAuditEnabled = default(bool?))
             : base(id, name, type)
         {
             State = state;
@@ -179,6 +199,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             QueueDelayMs = queueDelayMs;
+            IsDevopsAuditEnabled = isDevopsAuditEnabled;
             CustomInit();
         }
 
@@ -354,6 +375,30 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.queueDelayMs")]
         public int? QueueDelayMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the state of devops audit. If state is
+        /// Enabled, devops logs will be sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as
+        /// 'Enabled', 'IsAzureMonitorTargetEnabled' as true and
+        /// 'IsDevopsAuditEnabled' as true
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with
+        /// 'DevOpsOperationsAudit' diagnostic logs category on the master
+        /// database should also be created.
+        ///
+        /// Diagnostic Settings URI format:
+        /// PUT
+        /// https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
+        ///
+        /// For more information, see [Diagnostic Settings REST
+        /// API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings
+        /// PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        ///
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDevopsAuditEnabled")]
+        public bool? IsDevopsAuditEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.

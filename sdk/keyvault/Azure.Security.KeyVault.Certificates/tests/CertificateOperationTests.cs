@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -69,7 +71,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Begin
             IEnumerable<EventWrittenEventArgs> messages = _listener.EventsById(CertificatesEventSource.BeginUpdateStatusEvent);
-            Assert.AreEqual(1, messages.Count());
+            AssertMessageCount(1, messages);
 
             EventWrittenEventArgs message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -80,7 +82,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
-            Assert.AreEqual(1, messages.Count());
+            AssertMessageCount(1, messages);
 
             message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -129,7 +131,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
-            Assert.AreEqual(10, messages.Count());
+            AssertMessageCount(10, messages);
 
             message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -162,7 +164,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Begin
             IEnumerable<EventWrittenEventArgs> messages = _listener.EventsById(CertificatesEventSource.BeginUpdateStatusEvent);
-            Assert.AreEqual(5, messages.Count());
+            AssertMessageCount(5, messages);
 
             EventWrittenEventArgs message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -173,7 +175,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
-            Assert.AreEqual(5, messages.Count());
+            AssertMessageCount(5, messages);
 
             message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -206,7 +208,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Begin
             IEnumerable<EventWrittenEventArgs> messages = _listener.EventsById(CertificatesEventSource.BeginUpdateStatusEvent);
-            Assert.AreEqual(5, messages.Count());
+            AssertMessageCount(5, messages);
 
             EventWrittenEventArgs message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -217,7 +219,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
-            Assert.AreEqual(5, messages.Count());
+            AssertMessageCount(5, messages);
 
             message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -250,7 +252,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Begin
             IEnumerable<EventWrittenEventArgs> messages = _listener.EventsById(CertificatesEventSource.BeginUpdateStatusEvent);
-            Assert.AreEqual(5, messages.Count());
+            AssertMessageCount(5, messages);
 
             EventWrittenEventArgs message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -261,7 +263,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // End
             messages = _listener.EventsById(CertificatesEventSource.EndUpdateStatusEvent);
-            Assert.AreEqual(5, messages.Count());
+            AssertMessageCount(5, messages);
 
             message = messages.Last();
             Assert.AreEqual(EventLevel.Verbose, message.Level);
@@ -271,10 +273,30 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual("mock failure message", message.GetProperty<string>("error"));
         }
 
+        private static void AssertMessageCount(int expected, IEnumerable<EventWrittenEventArgs> messages)
+        {
+            int actual = messages.Count();
+            if (actual != expected)
+            {
+                StringBuilder sb = new StringBuilder($"Expected {expected} messages; got {actual}\nMessages:\n");
+                foreach (EventWrittenEventArgs message in messages)
+                {
+                    sb.AppendFormat("- {0} ({1}): {2}\n", message.EventName, message.EventId, message.Message);
+                }
+
+                Assert.Fail(sb.ToString());
+            }
+        }
+
         private CertificateClient CreateClient(HttpPipelineTransport transport)
         {
             CertificateClientOptions options = new CertificateClientOptions
             {
+                Retry =
+                {
+                    Delay = TimeSpan.FromMilliseconds(10),
+                    Mode = RetryMode.Fixed,
+                },
                 Transport = transport,
             };
 
@@ -286,10 +308,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     ));
         }
 
-        private async ValueTask<KeyVaultCertificateWithPolicy> WaitForOperationAsync(CertificateOperation operation)
-        {
-            return await operation.WaitForCompletionAsync();
-        }
+        private async ValueTask<KeyVaultCertificateWithPolicy> WaitForOperationAsync(CertificateOperation operation) =>
+            await operation.WaitForCompletionAsync();
 
         public class MockCredential : TokenCredential
         {

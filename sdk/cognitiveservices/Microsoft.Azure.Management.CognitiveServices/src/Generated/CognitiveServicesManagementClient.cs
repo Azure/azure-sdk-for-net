@@ -82,6 +82,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         public virtual IAccountsOperations Accounts { get; private set; }
 
         /// <summary>
+        /// Gets the IDeletedAccountsOperations.
+        /// </summary>
+        public virtual IDeletedAccountsOperations DeletedAccounts { get; private set; }
+
+        /// <summary>
         /// Gets the IResourceSkusOperations.
         /// </summary>
         public virtual IResourceSkusOperations ResourceSkus { get; private set; }
@@ -92,6 +97,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the ICommitmentTiersOperations.
+        /// </summary>
+        public virtual ICommitmentTiersOperations CommitmentTiers { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -100,6 +110,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeploymentsOperations.
+        /// </summary>
+        public virtual IDeploymentsOperations Deployments { get; private set; }
+
+        /// <summary>
+        /// Gets the ICommitmentPlansOperations.
+        /// </summary>
+        public virtual ICommitmentPlansOperations CommitmentPlans { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CognitiveServicesManagementClient class.
@@ -343,12 +363,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         private void Initialize()
         {
             Accounts = new AccountsOperations(this);
+            DeletedAccounts = new DeletedAccountsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Operations = new Operations(this);
+            CommitmentTiers = new CommitmentTiersOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            Deployments = new DeploymentsOperations(this);
+            CommitmentPlans = new CommitmentPlansOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-04-18";
+            ApiVersion = "2022-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -401,7 +425,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -416,7 +440,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckSkuAvailabilityResultList>> CheckSkuAvailabilityWithHttpMessagesAsync(string location, IList<string> skus, string kind, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SkuAvailabilityListResult>> CheckSkuAvailabilityWithHttpMessagesAsync(string location, IList<string> skus, string kind, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionId == null)
             {
@@ -551,14 +575,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, DeserializationSettings);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -568,10 +591,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -584,7 +603,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<CheckSkuAvailabilityResultList>();
+            var _result = new AzureOperationResponse<SkuAvailabilityListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -597,7 +616,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<CheckSkuAvailabilityResultList>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<SkuAvailabilityListResult>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -625,13 +644,16 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='type'>
         /// The Type of the resource.
         /// </param>
+        /// <param name='kind'>
+        /// The Kind of the resource.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -646,7 +668,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckDomainAvailabilityResult>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DomainAvailability>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, string kind = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionId == null)
             {
@@ -679,10 +701,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
             CheckDomainAvailabilityParameter parameters = new CheckDomainAvailabilityParameter();
-            if (subdomainName != null || type != null)
+            if (subdomainName != null || type != null || kind != null)
             {
                 parameters.SubdomainName = subdomainName;
                 parameters.Type = type;
+                parameters.Kind = kind;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -770,14 +793,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, DeserializationSettings);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -787,10 +809,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -803,7 +821,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<CheckDomainAvailabilityResult>();
+            var _result = new AzureOperationResponse<DomainAvailability>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -816,7 +834,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<CheckDomainAvailabilityResult>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<DomainAvailability>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

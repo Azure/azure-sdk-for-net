@@ -6,6 +6,7 @@ using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage
 {
@@ -60,5 +61,23 @@ namespace Azure.Storage
                     IfModifiedSince = conditions.IfModifiedSince,
                     IfUnmodifiedSince = conditions.IfUnmodifiedSince
                 };
+
+        public static BlobHttpHeaders ToBlobHttpHeaders(this HttpHeaderParameters headers)
+        {
+            if (headers == default)
+            {
+                return default;
+            }
+
+            return new BlobHttpHeaders
+            {
+                ContentEncoding = headers.ContentEncoding,
+                ContentDisposition = headers.ContentDisposition,
+                CacheControl = headers.CacheControl,
+                ContentHash = headers.ContentHash,
+                ContentLanguage = headers.ContentLanguage,
+                ContentType = headers.ContentType
+            };
+        }
     }
 }

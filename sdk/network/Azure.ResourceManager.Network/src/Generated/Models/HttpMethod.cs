@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="HttpMethod"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpMethod"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HttpMethod(string value)
         {

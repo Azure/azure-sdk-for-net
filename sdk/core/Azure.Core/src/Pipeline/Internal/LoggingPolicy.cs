@@ -15,9 +15,9 @@ namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {
-        public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters, string? assemblyName)
+        public LoggingPolicy(bool logContent, int maxLength, HttpMessageSanitizer sanitizer, string? assemblyName)
         {
-            _sanitizer = new HttpMessageSanitizer(allowedQueryParameters, allowedHeaderNames);
+            _sanitizer = sanitizer;
             _logContent = logContent;
             _maxLength = maxLength;
             _assemblyName = assemblyName;
@@ -29,7 +29,7 @@ namespace Azure.Core.Pipeline
 
         private readonly bool _logContent;
         private readonly int _maxLength;
-        private HttpMessageSanitizer _sanitizer;
+        private readonly HttpMessageSanitizer _sanitizer;
         private readonly string? _assemblyName;
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -91,9 +91,9 @@ namespace Azure.Core.Pipeline
 
             var after = Stopwatch.GetTimestamp();
 
-            bool isError = message.ResponseClassifier.IsErrorResponse(message);
-
             Response response = message.Response;
+            bool isError = response.IsError;
+
             ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding? responseTextEncoding);
 
             bool wrapResponseContent = response.ContentStream != null &&

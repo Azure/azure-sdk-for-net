@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ConflictResolutionMode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConflictResolutionMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConflictResolutionMode(string value)
         {

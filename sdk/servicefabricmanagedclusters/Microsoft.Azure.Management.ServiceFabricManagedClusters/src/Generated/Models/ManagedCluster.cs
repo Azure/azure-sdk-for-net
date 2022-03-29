@@ -78,14 +78,17 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// 'Creating', 'Created', 'Updating', 'Succeeded', 'Failed',
         /// 'Canceled', 'Deleting', 'Deleted', 'Other'</param>
         /// <param name="clusterCodeVersion">The Service Fabric runtime version
-        /// of the cluster. This property can only by set the user when
-        /// **upgradeMode** is set to 'Manual'. To get list of available
+        /// of the cluster. This property is required when
+        /// **clusterUpgradeMode** is set to 'Manual'. To get list of available
         /// Service Fabric versions for new clusters use [ClusterVersion
         /// API](./ClusterVersion.md). To get the list of available version for
         /// existing clusters use **availableClusterVersions**.</param>
+        /// <param name="clusterUpgradeMode">Possible values include:
+        /// 'Automatic', 'Manual'</param>
         /// <param name="clusterUpgradeCadence">Indicates when new cluster
         /// runtime version upgrades will be applied after they are released.
-        /// By default is Wave0. Possible values include: 'Wave0', 'Wave1',
+        /// By default is Wave0. Only applies when **clusterUpgradeMode** is
+        /// set to 'Automatic'. Possible values include: 'Wave0', 'Wave1',
         /// 'Wave2'</param>
         /// <param name="addonFeatures">List of add-on features to enable on
         /// the cluster.</param>
@@ -93,10 +96,12 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// automatic OS upgrade for the node types that are created using any
         /// platform OS image with version 'latest'. The default value for this
         /// setting is false.</param>
+        /// <param name="zonalResiliency">Indicates if the cluster has zone
+        /// resiliency.</param>
         /// <param name="applicationTypeVersionsCleanupPolicy">The policy used
         /// to clean up unused versions.</param>
         /// <param name="sku">The sku of the managed cluster</param>
-        public ManagedCluster(string location, string dnsName, string adminUserName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), string fqdn = default(string), string ipv4Address = default(string), string clusterId = default(string), string clusterState = default(string), IList<string> clusterCertificateThumbprints = default(IList<string>), int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), string adminPassword = default(string), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), bool? allowRdpAccess = default(bool?), IList<NetworkSecurityRule> networkSecurityRules = default(IList<NetworkSecurityRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string clusterCodeVersion = default(string), string clusterUpgradeCadence = default(string), IList<string> addonFeatures = default(IList<string>), bool? enableAutoOSUpgrade = default(bool?), ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default(ApplicationTypeVersionsCleanupPolicy), Sku sku = default(Sku))
+        public ManagedCluster(string location, string dnsName, string adminUserName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), string fqdn = default(string), string ipv4Address = default(string), string clusterId = default(string), string clusterState = default(string), IList<string> clusterCertificateThumbprints = default(IList<string>), int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), string adminPassword = default(string), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), bool? allowRdpAccess = default(bool?), IList<NetworkSecurityRule> networkSecurityRules = default(IList<NetworkSecurityRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), string clusterUpgradeCadence = default(string), IList<string> addonFeatures = default(IList<string>), bool? enableAutoOSUpgrade = default(bool?), bool? zonalResiliency = default(bool?), ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default(ApplicationTypeVersionsCleanupPolicy), Sku sku = default(Sku))
             : base(location, id, name, type, tags, etag, systemData)
         {
             DnsName = dnsName;
@@ -117,9 +122,11 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
             FabricSettings = fabricSettings;
             ProvisioningState = provisioningState;
             ClusterCodeVersion = clusterCodeVersion;
+            ClusterUpgradeMode = clusterUpgradeMode;
             ClusterUpgradeCadence = clusterUpgradeCadence;
             AddonFeatures = addonFeatures;
             EnableAutoOSUpgrade = enableAutoOSUpgrade;
+            ZonalResiliency = zonalResiliency;
             ApplicationTypeVersionsCleanupPolicy = applicationTypeVersionsCleanupPolicy;
             Sku = sku;
             CustomInit();
@@ -248,19 +255,26 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
 
         /// <summary>
         /// Gets or sets the Service Fabric runtime version of the cluster.
-        /// This property can only by set the user when **upgradeMode** is set
-        /// to 'Manual'. To get list of available Service Fabric versions for
-        /// new clusters use [ClusterVersion API](./ClusterVersion.md). To get
-        /// the list of available version for existing clusters use
+        /// This property is required when **clusterUpgradeMode** is set to
+        /// 'Manual'. To get list of available Service Fabric versions for new
+        /// clusters use [ClusterVersion API](./ClusterVersion.md). To get the
+        /// list of available version for existing clusters use
         /// **availableClusterVersions**.
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterCodeVersion")]
         public string ClusterCodeVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets possible values include: 'Automatic', 'Manual'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clusterUpgradeMode")]
+        public string ClusterUpgradeMode { get; set; }
+
+        /// <summary>
         /// Gets or sets indicates when new cluster runtime version upgrades
-        /// will be applied after they are released. By default is Wave0.
-        /// Possible values include: 'Wave0', 'Wave1', 'Wave2'
+        /// will be applied after they are released. By default is Wave0. Only
+        /// applies when **clusterUpgradeMode** is set to 'Automatic'. Possible
+        /// values include: 'Wave0', 'Wave1', 'Wave2'
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterUpgradeCadence")]
         public string ClusterUpgradeCadence { get; set; }
@@ -278,6 +292,12 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableAutoOSUpgrade")]
         public bool? EnableAutoOSUpgrade { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if the cluster has zone resiliency.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zonalResiliency")]
+        public bool? ZonalResiliency { get; set; }
 
         /// <summary>
         /// Gets or sets the policy used to clean up unused versions.

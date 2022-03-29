@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    /// <summary> Client options for AccessControlClient. </summary>
+    /// <summary> Client options for AccessControlClient library clients. </summary>
     public partial class AccessControlClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2020_08_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2020_12_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2020-08-01-preview". </summary>
-            V2020_08_01_preview = 1,
+            /// <summary> Service version "2020-12-01". </summary>
+            V2020_12_01 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         {
             Version = version switch
             {
-                ServiceVersion.V2020_08_01_preview => "2020-08-01-preview",
+                ServiceVersion.V2020_12_01 => "2020-12-01",
                 _ => throw new NotSupportedException()
             };
         }

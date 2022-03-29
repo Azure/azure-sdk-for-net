@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class HierarchyHit
+    internal partial class HierarchyHit
     {
         internal static HierarchyHit DeserializeHierarchyHit(JsonElement element)
         {

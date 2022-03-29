@@ -63,5 +63,48 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             await keyClient.PurgeDeletedKeyAsync(rsaKeyName);
         }
+
+        [Test]
+        public async Task OctEncryptDecryptAsync()
+        {
+            TestEnvironment.AssertManagedHsm();
+
+            string managedHsmUrl = TestEnvironment.ManagedHsmUrl;
+
+            var managedHsmClient = new KeyClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
+
+            var octKeyOptions = new CreateOctKeyOptions($"CloudOctKey-{Guid.NewGuid()}")
+            {
+                KeySize = 256,
+            };
+
+            KeyVaultKey cloudOctKey = await managedHsmClient.CreateOctKeyAsync(octKeyOptions);
+
+            var cryptoClient = new CryptographyClient(cloudOctKey.Id, new DefaultAzureCredential());
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] aad = Encoding.UTF8.GetBytes("additional authenticated data");
+
+            EncryptParameters encryptParams = EncryptParameters.A256GcmParameters(plaintext, aad);
+            EncryptResult encryptResult = await cryptoClient.EncryptAsync(encryptParams);
+
+            DecryptParameters decryptParams = DecryptParameters.A256GcmParameters(
+                encryptResult.Ciphertext,
+                encryptResult.Iv,
+                encryptResult.AuthenticationTag,
+                encryptResult.AdditionalAuthenticatedData);
+
+            DecryptResult decryptResult = await cryptoClient.DecryptAsync(decryptParams);
+
+            Assert.AreEqual(plaintext, decryptResult.Plaintext);
+
+            // Delete and purge the key.
+            DeleteKeyOperation operation = await managedHsmClient.StartDeleteKeyAsync(octKeyOptions.Name);
+
+            // You only need to wait for completion if you want to purge or recover the key.
+            await operation.WaitForCompletionAsync();
+
+            managedHsmClient.PurgeDeletedKey(operation.Value.Name);
+        }
     }
 }

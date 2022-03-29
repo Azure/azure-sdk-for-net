@@ -2095,11 +2095,11 @@ namespace Microsoft.Azure.Management.WebSites
 
         /// <summary>
         /// Creates an ownership identifier for a domain or updates identifier details
-        /// for an existing identifer
+        /// for an existing identifier
         /// </summary>
         /// <remarks>
         /// Description for Creates an ownership identifier for a domain or updates
-        /// identifier details for an existing identifer
+        /// identifier details for an existing identifier
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2526,11 +2526,11 @@ namespace Microsoft.Azure.Management.WebSites
 
         /// <summary>
         /// Creates an ownership identifier for a domain or updates identifier details
-        /// for an existing identifer
+        /// for an existing identifier
         /// </summary>
         /// <remarks>
         /// Description for Creates an ownership identifier for a domain or updates
-        /// identifier details for an existing identifer
+        /// identifier details for an existing identifier
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.

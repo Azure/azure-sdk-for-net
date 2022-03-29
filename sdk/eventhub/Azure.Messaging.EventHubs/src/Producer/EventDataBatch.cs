@@ -212,7 +212,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
-        internal IEnumerable<T> AsEnumerable<T>() => InnerBatch.AsEnumerable<T>();
+        internal IReadOnlyCollection<T> AsReadOnlyCollection<T>() => InnerBatch.AsReadOnlyCollection<T>();
 
         /// <summary>
         ///   Gets the list of diagnostic identifiers of events added to this batch.

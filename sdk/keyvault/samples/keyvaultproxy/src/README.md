@@ -11,7 +11,7 @@ description: Shows how to implement a pipeline policy to cache certain responses
 
 # Azure Key Vault Proxy
 
-This is a sample showing how to use an `HttpPipelinePolicy` to cache and proxy secrets, keys, and certificates from Azure Key Vault. The [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md) packages provides a number of useful HTTP pipeline policies like configurable retries, logging, and more; and, you can add your own policies.
+This is a sample showing how to use an `HttpPipelinePolicy` to cache and proxy secrets, keys, and certificates from Azure Key Vault. The [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md) packages provides a number of useful HTTP pipeline policies like configurable retries, logging, and more; and, you can add your own policies.
 
 ## Getting started
 
@@ -57,4 +57,4 @@ When the resource has expired, the next request will go to the server and a succ
 
 ## License
 
-This project is licensed under the [MIT license](https://github.com/Azure/azure-sdk-for-net/blob/master/LICENSE.txt).
+This project is licensed under the [MIT license](https://github.com/Azure/azure-sdk-for-net/blob/main/LICENSE.txt).

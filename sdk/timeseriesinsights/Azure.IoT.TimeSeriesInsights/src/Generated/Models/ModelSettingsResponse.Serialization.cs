@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class ModelSettingsResponse
+    internal partial class ModelSettingsResponse
     {
         internal static ModelSettingsResponse DeserializeModelSettingsResponse(JsonElement element)
         {

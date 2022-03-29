@@ -65,7 +65,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="instanceView">The virtual machine extension instance
         /// view.</param>
-        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
+        /// <param name="suppressFailures">Indicates whether failures stemming
+        /// from the extension will be suppressed (Operational failures such as
+        /// not connecting to the VM will not be suppressed regardless of this
+        /// value). The default is false.</param>
+        /// <param name="protectedSettingsFromKeyVault">The extensions
+        /// protected settings that are passed by reference, and consumed from
+        /// key vault</param>
+        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView), bool? suppressFailures = default(bool?), object protectedSettingsFromKeyVault = default(object))
             : base(location, id, name, type, tags)
         {
             ForceUpdateTag = forceUpdateTag;
@@ -78,6 +85,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
+            SuppressFailures = suppressFailures;
+            ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
             CustomInit();
         }
 
@@ -153,6 +162,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
         public VirtualMachineExtensionInstanceView InstanceView { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether failures stemming from the extension
+        /// will be suppressed (Operational failures such as not connecting to
+        /// the VM will not be suppressed regardless of this value). The
+        /// default is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suppressFailures")]
+        public bool? SuppressFailures { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extensions protected settings that are passed by
+        /// reference, and consumed from key vault
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.protectedSettingsFromKeyVault")]
+        public object ProtectedSettingsFromKeyVault { get; set; }
 
         /// <summary>
         /// Validate the object.

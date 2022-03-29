@@ -57,11 +57,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string SqlExpression { get; set; }
 
         /// <summary>
-        /// Gets this property is reserved for future use. An integer value
-        /// showing the compatibility level, currently hard-coded to 20.
+        /// Gets or sets this property is reserved for future use. An integer
+        /// value showing the compatibility level, currently hard-coded to 20.
         /// </summary>
         [JsonProperty(PropertyName = "compatibilityLevel")]
-        public int? CompatibilityLevel { get; private set; }
+        public int? CompatibilityLevel { get; set; }
 
         /// <summary>
         /// Gets or sets value that indicates whether the rule action requires

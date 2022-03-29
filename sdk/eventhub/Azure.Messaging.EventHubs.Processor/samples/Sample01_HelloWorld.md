@@ -2,7 +2,7 @@
 
 This sample demonstrates the basic flow of events through an Event Hub, with the goal of quickly allowing you to publish events and process events from the Event Hubs service.  To accomplish this, the `EventHubProducerClient` and `EventProcessorClient` types will be introduced, along with some of the core concepts of Event Hubs.
 
-To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README and have the prerequisites, such as the connection string information, available.
+To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README and have the prerequisites, such as the connection string information, available.
 
 ## Client lifetime
 

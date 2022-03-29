@@ -24,8 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575
-        public const string DefaultSasVersion = "2020-06-12";
+        public const string DefaultSasVersion = "2021-04-10";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -105,6 +104,11 @@ namespace Azure.Storage
 
         public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
 
+        public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
+        public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
+
+        public const string DefaultScope = "/.default";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
@@ -170,6 +174,8 @@ namespace Azure.Storage
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
+            public const string LastModified = "Last-Modified";
+            public const string ETag = "ETag";
         }
 
         internal static class ErrorCodes
@@ -252,6 +258,7 @@ namespace Azure.Storage
             public const string FileAttributesNone = "None";
             public const string FileTimeNow = "Now";
             public const string Preserve = "Preserve";
+            public const string Source = "Source";
             public const string FilePermissionInherit = "Inherit";
             public const int MaxFilePermissionHeaderSize = 8 * KB;
             public const int MaxFileUpdateRange = 4 * MB;
@@ -295,9 +302,19 @@ namespace Azure.Storage
             public const string BlobUriSuffix = Blob.UriSubDomain;
 
             /// <summary>
+            /// The blob URI suffix.
+            /// </summary>
+            public const string BlobUriPeriodSuffix = "." + Blob.UriSubDomain + ".";
+
+            /// <summary>
             /// The DFS URI suffix.
             /// </summary>
             public const string DfsUriSuffix = "dfs";
+
+            /// <summary>
+            /// The DFS URI suffix.
+            /// </summary>
+            public const string DfsUriPeriodSuffix = "." + DfsUriSuffix + ".";
 
             /// <summary>
             /// The key of the object json object returned for errors.
@@ -320,6 +337,7 @@ namespace Azure.Storage
             public const string AlreadyExists = "ContainerAlreadyExists";
             public const string FilesystemNotFound = "FilesystemNotFound";
             public const string PathNotFound = "PathNotFound";
+            public const string PathAlreadyExists = "PathAlreadyExists";
 
             /// <summary>
             /// Default concurrent transfers count.
@@ -408,6 +426,9 @@ namespace Azure.Storage
                 public const string ContentType = "contentType";
                 public const string ContentLength = "contentLength";
                 public const string BlobType = "blobType";
+                public const string BlobVersionLower = "blobVersion";
+                public const string ContainerVersion = "containerVersion";
+                public const string BlobTier = "blobTier";
                 public const string BlockBlob = "BlockBlob";
                 public const string PageBlob = "pageBlob";
                 public const string AppendBlob = "AppendBlob";
@@ -417,6 +438,25 @@ namespace Azure.Storage
                 public const string Url = "url";
                 public const string Recursive = "recursive";
                 public const string Sequencer = "sequencer";
+                public const string PreviousInfo = "previousInfo";
+                public const string Snapshot = "snapshot";
+                public const string BlobPropertiesUpdated = "blobPropertiesUpdated";
+                public const string AsyncOperationInfo = "asyncOperationInfo";
+
+                public const string Current = "current";
+                public const string Previous = "previous";
+
+                public const string DestinationTier = "DestinationTier";
+                public const string WasAsyncOperation = "WasAsyncOperation";
+                public const string CopyId = "CopyId";
+
+                public const string SoftDeletedSnapshot = "SoftDeleteSnapshot";
+                public const string WasBlobSoftDeleted = "WasBlobSoftDeleted";
+                public const string BlobVersion = "BlobVersion";
+                public const string LastVersion = "LastVersion";
+                public const string PreviousTier = "PreviousTier";
+
+                public const string BlobTagsUpdated = "blobTagsUpdated";
             }
         }
 
@@ -468,8 +508,10 @@ namespace Azure.Storage
                 public const char FilterByTags = 'f';
                 public const char Move = 'm';
                 public const char Execute = 'e';
+                public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
+                public const char PermanentDelete = 'y';
             }
 
             internal static class Parameters
@@ -526,6 +568,8 @@ namespace Azure.Storage
                 public const string CorrelationIdUpper = "SCID";
                 public const string DirectoryDepth = "sdd";
                 public const string DirectoryDepthUpper = "SDD";
+                public const string EncryptionScope = "ses";
+                public const string EncryptionScopeUpper = "SES";
             }
 
             internal static class Resource
@@ -562,13 +606,15 @@ namespace Azure.Storage
                 Sas.Permissions.Write,
                 Sas.Permissions.Delete,
                 Sas.Permissions.DeleteBlobVersion,
+                Sas.Permissions.PermanentDelete,
                 Sas.Permissions.List,
                 Sas.Permissions.Tag,
                 Sas.Permissions.Update,
                 Sas.Permissions.Process,
                 Sas.Permissions.FilterByTags,
                 Sas.Permissions.Move,
-                Sas.Permissions.Execute
+                Sas.Permissions.Execute,
+                Sas.Permissions.SetImmutabilityPolicy,
             };
 
             /// <summary>

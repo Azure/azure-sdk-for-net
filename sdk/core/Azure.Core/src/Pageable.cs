@@ -50,8 +50,8 @@ namespace Azure
         /// begin paging from the beginning.
         /// </param>
         /// <param name="pageSizeHint">
-        /// The size of <see cref="Page{T}"/>s that should be requested (from
-        /// service operations that support it).
+        /// The number of items per <see cref="Page{T}"/> that should be requested (from
+        /// service operations that support it). It's not guaranteed that the value will be respected.
         /// </param>
         /// <returns>
         /// An async sequence of <see cref="Page{T}"/>s.
@@ -115,7 +115,7 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
-        private class StaticPageable: Pageable<T>
+        private class StaticPageable : Pageable<T>
         {
             private readonly IEnumerable<Page<T>> _pages;
 
@@ -126,7 +126,22 @@ namespace Azure
 
             public override IEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
             {
-                return _pages;
+                var shouldReturnPages = continuationToken == null;
+
+                foreach (var page in _pages)
+                {
+                    if (shouldReturnPages)
+                    {
+                        yield return page;
+                    }
+                    else
+                    {
+                        if (continuationToken == page.ContinuationToken)
+                        {
+                            shouldReturnPages = true;
+                        }
+                    }
+                }
             }
         }
     }

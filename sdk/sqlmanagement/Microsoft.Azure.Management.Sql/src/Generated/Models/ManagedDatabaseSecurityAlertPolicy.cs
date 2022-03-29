@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="disabledAlerts">Specifies an array of alerts that are
         /// disabled. Allowed values are: Sql_Injection,
         /// Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration,
-        /// Unsafe_Action</param>
+        /// Unsafe_Action, Brute_Force</param>
         /// <param name="emailAddresses">Specifies an array of e-mail addresses
         /// to which the alert is sent.</param>
         /// <param name="emailAccountAdmins">Specifies that the alert is sent
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets specifies an array of alerts that are disabled.
         /// Allowed values are: Sql_Injection, Sql_Injection_Vulnerability,
-        /// Access_Anomaly, Data_Exfiltration, Unsafe_Action
+        /// Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force
         /// </summary>
         [JsonProperty(PropertyName = "properties.disabledAlerts")]
         public IList<string> DisabledAlerts { get; set; }

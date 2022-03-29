@@ -10,14 +10,12 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of cloud to device messages (MQTT protocol) is not in allowed
     /// range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("MqttC2DMessagesNotInAllowedRange")]
     public partial class MqttC2DMessagesNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>

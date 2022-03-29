@@ -11,12 +11,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample2_SelectiveRestore : BackupRestoreTestBase
     {
-        public Sample2_SelectiveRestore(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public Sample2_SelectiveRestore(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [RecordedTest]
-        [Ignore("Recording is out of date; requires service attention: https://github.com/Azure/azure-sdk-for-net/issues/18501")]
         public async Task BackupAndRestoreSampleAsync()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;
@@ -31,15 +30,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Make sure we have a key to back up and restore.
             KeyVaultKey key = await KeyClient.CreateKeyAsync(Recording.GenerateId(), KeyType.Oct);
-            string keyName = key.Name;
-
-            RegisterKeyForCleanup(keyName);
 
             // Start the backup.
-            BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
+            KeyVaultBackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
             // Wait for completion of the BackupOperation.
-            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             await WaitForOperationAsync();
 
@@ -52,13 +48,17 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #region Snippet:SelectiveRestoreAsync
 #if SNIPPET
             string keyName = "<key name to restore>";
+#else
+            string keyName = key.Name;
+
+            RegisterKeyForCleanup(keyName);
 #endif
 
             // Start the restore for a specific key that was previously backed up using the backupBlobUri returned from a previous BackupOperation.
-            SelectiveKeyRestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, folderUri, sasToken);
+            KeyVaultSelectiveKeyRestoreOperation restoreOperation = await Client.StartSelectiveKeyRestoreAsync(keyName, folderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
-            SelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+            KeyVaultSelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
             Assert.That(restoreOperation.HasValue, Is.True);

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
@@ -9,19 +8,25 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary>
     /// Specifies which time property of a <see cref="MetricFeedback"/> will be used to filter results
     /// in the <see cref="MetricsAdvisorClient.GetAllFeedback"/> and the <see cref="MetricsAdvisorClient.GetAllFeedbackAsync"/>
-    /// operations.
+    /// operations. Defaults to <see cref="None"/>.
     /// </summary>
     [CodeGenModel("FeedbackQueryTimeMode")]
-    public readonly partial struct FeedbackQueryTimeMode
+    public enum FeedbackQueryTimeMode
     {
         /// <summary>
-        /// Filters feedbacks by its metric's timestamps.
+        /// No time filter is applied.
         /// </summary>
-        public static FeedbackQueryTimeMode MetricTimestamp { get; } = new FeedbackQueryTimeMode(MetricTimestampValue);
+        None,
 
         /// <summary>
-        /// Filters feedbacks by <see cref="MetricFeedback.CreatedTime"/>.
+        /// Filters feedback by its metric's timestamps.
         /// </summary>
-        public static FeedbackQueryTimeMode FeedbackCreatedTime { get; } = new FeedbackQueryTimeMode(FeedbackCreatedTimeValue);
+        MetricTimestamp,
+
+        /// <summary>
+        /// Filters feedback by <see cref="MetricFeedback.CreatedOn"/>.
+        /// </summary>
+        [CodeGenMember("FeedbackCreatedTime")]
+        FeedbackCreatedOn
     }
 }

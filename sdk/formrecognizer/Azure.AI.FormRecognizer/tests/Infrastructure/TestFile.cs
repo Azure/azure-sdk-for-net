@@ -28,6 +28,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>An itemized en-US receipt.</summary>
         public const string ReceiptPng = "contoso-allinone.png";
 
+        /// <summary>A file with multiple receipts, one per page.</summary>
+        public const string ReceipMultipage = "multipleReceipt.pdf";
+
+        /// <summary>A three-page receipt file in which the second page is blank.</summary>
+        public const string ReceipMultipageWithBlankPage = "multipageReceiptBlankPage.pdf";
+
         /// <summary>A business card file.</summary>
         public const string BusinessCardJpg = "businessCard.jpg";
 
@@ -54,5 +60,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>A three-page invoice file in which the second page is blank.</summary>
         public const string InvoiceMultipageBlank = "multipage_invoice1.pdf";
+
+        /// <summary>A form with a table that has dynamic rows and empty cells.</summary>
+        public const string FormTableDynamicRows = "label_table_dynamic_rows1.pdf";
+
+        /// <summary>A form with a table that has fixed rows and empty cells.</summary>
+        public const string FormTableFixedRows = "label_table_fixed_rows1.pdf";
     }
 }

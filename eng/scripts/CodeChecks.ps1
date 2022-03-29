@@ -9,17 +9,21 @@ param (
     [string] $ProjectDirectory,
 
     [Parameter()]
-    [string] $SDKType = "all"
+    [string] $SDKType = "all",
+
+    [Parameter()]
+    [switch] $SpellCheckPublicApiSurface
 )
 
 $ErrorActionPreference = 'Stop'
+$Env:NODE_OPTIONS = "--max-old-space-size=8192"
 Set-StrictMode -Version 1
 
 [string[]] $errors = @()
 
 function LogError([string]$message) {
     if ($env:TF_BUILD) {
-        Write-Host "##vso[task.logissue type=error]$message"
+        Write-Host ("##vso[task.logissue type=error]$message" -replace "`n","%0D%0A")
     }
     Write-Host -f Red "error: $message"
     $script:errors += $message
@@ -87,7 +91,7 @@ try {
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType
+        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
     }
 
     if (-not $ProjectDirectory)
@@ -98,11 +102,14 @@ try {
         if ($LastExitCode -ne 0) {
             $status = git status -s | Out-String
             $status = $status -replace "`n","`n    "
-            LogError "Generated code is not up to date.`n" + `
-                "You may need to rebase on the latest master, `n" + `
-                "run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#updating-sample-snippets), `n" + `
-                "run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#public-api-additions) `n" +
-                "run 'dotnet build /t:GenerateCode' to update the generated code."
+            LogError `
+"Generated code is not up to date.`
+    You may need to rebase on the latest main, `
+    run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets), `
+    run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
+    run 'dotnet build /t:GenerateCode' to update the generated code.`
+    `
+To reproduce this error localy run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."
         }
     }
 }

@@ -1,5 +1,87 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 5.4.0
+###  Feature Additions
+- Added Web Activity disable cert validation
+
+## Version 5.3.0
+###  Feature Additions
+- Added ScriptActivity in ADF
+- Added TeamDesk, Quickbase, Smartsheet, Zendesk connectors in ADF
+
+## Version 5.2.0
+###  Feature Additions
+- Added FailActivity in ADF
+- Fixed update PublicNetworkAccess not work in Factory Update API
+
+## Version 5.1.0
+###  Feature Additions
+- Added support UAMI M2
+- Added connectionProperties in GoogleAdWordsLinkedService
+- Added servicePrincipalCredentialType and servicePrincipalCredential into AzureBlobFSLinkedService
+
+## Version 5.0.0
+###  Feature Additions
+### Breaking Changes
+- Removed unnecessary additional properties for data flow flowlet for bug fix
+- Added optional property disableChunking in FTP and SFTP read settings
+- Added parameters for dataflow activity
+- Added possible values to pipeline run status description
+
+## Version 4.28.0
+###  Feature Additions
+- Supported Dataset and LinkedService for Rest call transform
+- Change compressionType to type of object
+
+## Version 4.27.0
+###  Feature Additions
+- Supported Dataflow flowlets in ADF
+
+## Version 4.26.0
+###  Feature Additions
+- Supported Power Query model changes for multiple queries
+- Added locale support in Power Query activity
+- Added publicNetworkAccess into FactoryUpdateParameters
+
+## Version 4.25.0
+###  Feature Additions
+- Supported UAMI in sql always
+- Supported AmazonRdsForSqlServer Source
+- Supported subnet id for swift injection of azure-ssis IR
+
+## Version 4.24.0
+###  Feature Additions
+- Supported AmazonRdsForOracle Source
+
+## Version 4.23.0
+###  Feature Additions
+- Supported power query GA payload
+
+## Version 4.22.0
+###  Feature Additions
+- Added Sql table lock and upsert properties
+- Added isServerVersionAbove32 in CosmosDbMongoDbApi linked service
+- Changed additionalColumns/compressionType to type of object
+- Support cleanup property for integration runtime resource from DataFactory
+- Unify IR vNet injection experience
+
+## Version 4.21.0
+###  Feature Additions
+- Added properties pipelineName and pipelineRunId to PipelineRunInvokedBy definition
+- Updated avroCompressionCodec and orcCompressionCodec from string to object
+- Supported UAMI in ADF IR/LS/Activity
+- GitHub bring your own app swagger update for ADF/Synapse Dataplane only
+
+## Version 4.20.0
+###  Feature Additions
+- Added disableMetricsCollection in read/wirte properties
+
+## Version 4.19.0
+###  Feature Additions
+- Support sheetIndex in excel and set sheetName from required to optional
+- Set filePattern to object type to allow expressions
+- Support user-assigned managed identity in SSIS-IR
+
 ## Version 4.18.0
 ###  Feature Additions
 - Added MongoDB/MongoDBAtlas sink

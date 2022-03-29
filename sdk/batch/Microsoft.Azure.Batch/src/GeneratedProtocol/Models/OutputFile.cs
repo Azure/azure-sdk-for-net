@@ -18,6 +18,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// another location after the Batch service has finished executing the
     /// Task process.
     /// </summary>
+    /// <remarks>
+    /// On every file uploads, Batch service writes two log files to the
+    /// compute node, 'fileuploadout.txt' and 'fileuploaderr.txt'. These log
+    /// files are used to learn more about a specific failure.
+    /// </remarks>
     public partial class OutputFile
     {
         /// <summary>

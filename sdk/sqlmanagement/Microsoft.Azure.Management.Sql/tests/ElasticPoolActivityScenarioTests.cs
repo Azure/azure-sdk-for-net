@@ -34,7 +34,6 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
@@ -88,7 +87,6 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
@@ -124,7 +122,6 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
@@ -136,7 +133,6 @@ namespace Sql.Tests
                 epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0

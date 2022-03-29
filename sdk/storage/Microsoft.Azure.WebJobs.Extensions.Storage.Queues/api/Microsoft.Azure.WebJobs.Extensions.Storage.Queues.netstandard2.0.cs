@@ -60,12 +60,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
     public partial class QueueProcessor
     {
         protected internal QueueProcessor(Microsoft.Azure.WebJobs.Host.Queues.QueueProcessorOptions queueProcessorOptions) { }
-        public event System.EventHandler<Microsoft.Azure.WebJobs.Host.Queues.PoisonMessageEventArgs> MessageAddedToPoisonQueue { add { } remove { } }
+        public event System.Func<Microsoft.Azure.WebJobs.Host.Queues.QueueProcessor, Microsoft.Azure.WebJobs.Host.Queues.PoisonMessageEventArgs, System.Threading.Tasks.Task> MessageAddedToPoisonQueueAsync { add { } remove { } }
         protected internal virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Azure.Storage.Queues.Models.QueueMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected internal virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Azure.Storage.Queues.Models.QueueMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task CopyMessageToPoisonQueueAsync(Azure.Storage.Queues.Models.QueueMessage message, Azure.Storage.Queues.QueueClient poisonQueue, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected virtual System.Threading.Tasks.Task DeleteMessageAsync(Azure.Storage.Queues.Models.QueueMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected internal virtual void OnMessageAddedToPoisonQueue(Microsoft.Azure.WebJobs.Host.Queues.PoisonMessageEventArgs e) { }
+        protected internal virtual System.Threading.Tasks.Task OnMessageAddedToPoisonQueueAsync(Microsoft.Azure.WebJobs.Host.Queues.PoisonMessageEventArgs e) { throw null; }
         protected virtual System.Threading.Tasks.Task ReleaseMessageAsync(Azure.Storage.Queues.Models.QueueMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.TimeSpan visibilityTimeout, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class QueueProcessorOptions

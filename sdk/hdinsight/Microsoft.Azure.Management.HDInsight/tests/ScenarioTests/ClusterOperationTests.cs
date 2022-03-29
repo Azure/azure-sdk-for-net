@@ -31,7 +31,7 @@ namespace Management.HDInsight.Tests
             ValidateCluster(clusterName, createParams, cluster);
         }
 
-        [Fact]
+        [Fact(Skip = "Premium Cluster only available for ESP cluster.")]
         public void TestCreateHumboldtClusterWithPremiumTier()
         {
             TestInitialize();
@@ -158,9 +158,9 @@ namespace Management.HDInsight.Tests
                 createParams.Identity = new ClusterIdentity
                 {
                     Type = ResourceIdentityType.UserAssigned,
-                    UserAssignedIdentities = new Dictionary<string, ClusterIdentityUserAssignedIdentitiesValue>
+                    UserAssignedIdentities = new Dictionary<string, UserAssignedIdentity>
                     {
-                        { msi.Id, new ClusterIdentityUserAssignedIdentitiesValue() }
+                        { msi.Id, new UserAssignedIdentity() }
                     }
                 };
 
@@ -225,7 +225,7 @@ namespace Management.HDInsight.Tests
             createParams.Properties.ClusterVersion = "4.0";
             createParams.Properties.ClusterDefinition.Kind = "kafka";
             createParams.Properties.ClusterDefinition.ComponentVersion = new Dictionary<string, string>{ { "Kafka", "2.1"} };
-            createParams.Location = "South Central US";
+            createParams.Location = "West US 2";
 
             var workerNode = createParams.Properties.ComputeProfile.Roles.First(role => role.Name == "workernode");
             workerNode.DataDisksGroups = new List<DataDisksGroups>
@@ -432,7 +432,7 @@ namespace Management.HDInsight.Tests
                     {
                         new AutoscaleSchedule
                         {
-                            Days = new List<DaysOfWeek?>
+                            Days = new List<string>
                             {
                                 DaysOfWeek.Thursday
                             },
@@ -452,7 +452,7 @@ namespace Management.HDInsight.Tests
                 cluster.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration);
         }
 
-        [Fact]
+        [Fact(Skip = "HDI 4.0 doesn't support create MLServices cluster and 3.6 will be deprecated soon.")]
         public void TestCreateRServerCluster()
         {
             TestInitialize();
@@ -460,6 +460,10 @@ namespace Management.HDInsight.Tests
             string clusterName = TestUtilities.GenerateName("hdisdk-rserver");
             var createParams = CommonData.PrepareClusterCreateParamsForWasb();
             createParams.Properties.ClusterDefinition.Kind = "RServer";
+            createParams.Properties.ClusterDefinition.ComponentVersion = new Dictionary<string, string>
+            {
+                { "RServer", "9.3"},
+            };
             createParams.Properties.ComputeProfile.Roles.Add(
                 new Role
                 {
@@ -484,7 +488,7 @@ namespace Management.HDInsight.Tests
             ValidateCluster(clusterName, createParams, cluster);
         }
 
-        [Fact]
+        [Fact(Skip ="HDI 4.0 doesn't support create MLServices cluster and 3.6 will be deprecated soon.")]
         public void TestCreateMLServicesCluster()
         {
             TestInitialize();
@@ -492,7 +496,7 @@ namespace Management.HDInsight.Tests
             string clusterName = TestUtilities.GenerateName("hdisdk-mlservices");
             var createParams = CommonData.PrepareClusterCreateParamsForWasb();
             createParams.Properties.ClusterDefinition.Kind = "MLServices";
-            createParams.Properties.ClusterVersion = "3.6";
+            createParams.Properties.ClusterVersion = "4.0";
             createParams.Properties.ComputeProfile.Roles.Add(
                 new Role
                 {
@@ -670,8 +674,8 @@ namespace Management.HDInsight.Tests
             string storageAccountResourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Storage/storageAccounts/{2}", CommonData.SubscriptionId, CommonData.ResourceGroupName, CommonData.StorageAccountName);
             createParams.Properties.StorageProfile.Storageaccounts[0].ResourceId = storageAccountResourceId;
 
-            string vnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet";
-            string subnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default";
+            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet";
+            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default";
 
             foreach (var role in createParams.Properties.ComputeProfile.Roles)
             {
@@ -769,6 +773,157 @@ namespace Management.HDInsight.Tests
             // check encryption at host properties
             var diskEncryptionProperties = cluster.Properties.DiskEncryptionProperties;
             Assert.True(diskEncryptionProperties.EncryptionAtHost);
+        }
+
+        [Fact]
+        public void TestCreateClusterWithAvailabilityZones()
+        {
+            TestInitialize();
+
+            // create HDInsight cluster with encrytpion at host
+            string clusterName = TestUtilities.GenerateName("hdisdk-az");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Location = "South Central US";
+            createParams.Properties.ClusterDefinition.Kind = "Spark";
+            createParams.Properties.ClusterVersion = "4.0";
+            // set zones
+            createParams.Zones = new string[] { "1"};
+
+            // availability zones requires custom vnet
+            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnetforcreatcluster";
+            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnetforcreatcluster/subnets/default";
+            foreach (var role in createParams.Properties.ComputeProfile.Roles)
+            {
+                role.VirtualNetworkProfile = new VirtualNetworkProfile(vnetId, subnetId);
+            }
+
+            // availability zones requires custom metastore: ambari, hive,oozie
+            string sqlServerName = "scustestsqlserver.database.windows.net";
+            string sqlServerUserName = "sqlserveruser";
+            string sqlServerPassword = "***";
+            string ambariDatabase = "ambaridb1";
+            string hiveDatabase = "hivemetastore1";
+            string oozieDatabase = "ooziemetastore1";
+            string hiveConnectionUrl =  string.Format(Constants.MetastoreConfigurations.ConnectionUrlFormat, sqlServerName, hiveDatabase);
+
+
+            string oozieConnectionUrl = string.Format(Constants.MetastoreConfigurations.ConnectionUrlFormat, sqlServerName, oozieDatabase);
+
+            createParams.Properties.ClusterDefinition.Configurations = new Dictionary<string, Dictionary<string, string>>
+            {
+                // custom ambari db
+                { Constants.ConfigurationKey.AmbariConf, new Dictionary<string, string>
+                   {
+                       { Constants.MetastoreConfigurations.AmbariConfiguration.SqlServerKey, sqlServerName },
+                       { Constants.MetastoreConfigurations.AmbariConfiguration.DatabaseNameKey, ambariDatabase },
+                       { Constants.MetastoreConfigurations.AmbariConfiguration.DatabaseUserKey, sqlServerUserName },
+                       { Constants.MetastoreConfigurations.AmbariConfiguration.DatabasePasswordKey, sqlServerPassword },
+                   }
+                },
+                { "gateway", new Dictionary<string, string>
+                {
+                    { "restAuthCredential.isEnabled", "true" },
+                    { "restAuthCredential.username", CommonData.ClusterUserName },
+                    { "restAuthCredential.password", CommonData.ClusterPassword }
+                }
+                },
+                // custom hive metastore
+                { Constants.ConfigurationKey.HiveSite, new Dictionary<string, string>
+                    {
+                        {Constants.MetastoreConfigurations.HiveSite.ConnectionUrlKey, hiveConnectionUrl},
+                        {Constants.MetastoreConfigurations.HiveSite.ConnectionUserNameKey, sqlServerUserName},
+                        {Constants.MetastoreConfigurations.HiveSite.ConnectionPasswordKey, sqlServerPassword},
+                        {Constants.MetastoreConfigurations.HiveSite.ConnectionDriverNameKey, Constants.MetastoreConfigurations.HiveSite.ConnectionDriverNameValue}
+                    }
+                },
+
+                { Constants.ConfigurationKey.HiveEnv, new Dictionary<string, string>
+                    {
+                        {Constants.MetastoreConfigurations.HiveEnv.DatabaseKey, Constants.MetastoreConfigurations.DatabaseValue},
+                        {Constants.MetastoreConfigurations.HiveEnv.DatabaseNameKey, hiveDatabase},
+                        {Constants.MetastoreConfigurations.HiveEnv.DatabaseTypeKey, Constants.MetastoreConfigurations.DatabaseTypeValue},
+                        {Constants.MetastoreConfigurations.HiveEnv.ExistingDatabaseKey, hiveDatabase},
+                        {Constants.MetastoreConfigurations.HiveEnv.ExistingHostKey, sqlServerName},
+                        {Constants.MetastoreConfigurations.HiveEnv.HostNameKey, sqlServerName}
+                    }
+                },
+               
+                // custom oozie metastore
+                { Constants.ConfigurationKey.OozieSite, new Dictionary<string, string>
+                    {
+                        {Constants.MetastoreConfigurations.OozieSite.UrlKey, oozieConnectionUrl},
+                        {Constants.MetastoreConfigurations.OozieSite.UserNameKey, sqlServerUserName},
+                        {Constants.MetastoreConfigurations.OozieSite.PasswordKey, sqlServerPassword},
+                        {Constants.MetastoreConfigurations.OozieSite.DriverKey, Constants.MetastoreConfigurations.OozieSite.DriverValue},
+                        {Constants.MetastoreConfigurations.OozieSite.SchemaKey, Constants.MetastoreConfigurations.OozieSite.SchemaValue}
+                    }
+                },
+                { Constants.ConfigurationKey.OozieEnv, new Dictionary<string, string>
+                    {
+                        {Constants.MetastoreConfigurations.OozieEnv.DatabaseKey, Constants.MetastoreConfigurations.DatabaseValue},
+                        {Constants.MetastoreConfigurations.OozieEnv.DatabaseNameKey, oozieDatabase},
+                        {Constants.MetastoreConfigurations.OozieEnv.DatabaseTypeKey, Constants.MetastoreConfigurations.DatabaseTypeValue},
+                        {Constants.MetastoreConfigurations.OozieEnv.ExistingDatabaseKey, oozieDatabase},
+                        {Constants.MetastoreConfigurations.OozieEnv.ExistingHostKey, sqlServerName},
+                        {Constants.MetastoreConfigurations.OozieEnv.HostNameKey, sqlServerName}
+                    }
+                }
+            };
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateCluster(clusterName, createParams, cluster);
+
+            // check zones property
+            var zones = cluster.Zones;
+            Assert.NotNull(zones);
+            Assert.Equal("1", zones[0]);
+        }
+
+        [Fact]
+        public void TestCreateClusterWithPrivateLinkConfiguration()
+        {
+            TestInitialize();
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-plconfig");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Location = "South Central US";
+
+            var networkProperties = new NetworkProperties(ResourceProviderConnection.Outbound, PrivateLink.Enabled);
+            createParams.Properties.NetworkProperties = networkProperties;
+
+            string storageAccountResourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Storage/storageAccounts/{2}", CommonData.SubscriptionId, CommonData.ResourceGroupName, CommonData.StorageAccountName);
+            createParams.Properties.StorageProfile.Storageaccounts[0].ResourceId = storageAccountResourceId;
+
+            string vnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet";
+            string subnetId = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default";
+
+            foreach (var role in createParams.Properties.ComputeProfile.Roles)
+            {
+                role.VirtualNetworkProfile = new VirtualNetworkProfile(vnetId, subnetId);
+            }
+
+            createParams.Properties.PrivateLinkConfigurations = new List<PrivateLinkConfiguration>{
+                new PrivateLinkConfiguration()
+                {
+                    Name="plconfig",
+                    GroupId="headnode",
+                    IpConfigurations = new List<IPConfiguration>
+                    {
+                        new IPConfiguration()
+                        {
+                            Name="ipconfig",
+                            Primary=true,
+                        }
+                    }
+                } 
+            };
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+
+            var result = HDInsightClient.Clusters.Get(CommonData.ResourceGroupName, clusterName);
+            ValidateCluster(clusterName, createParams, result);
+            Assert.NotNull(result.Properties.PrivateLinkConfigurations.First());
+            Assert.Equal(createParams.Properties.PrivateLinkConfigurations.First().GroupId, result.Properties.PrivateLinkConfigurations.First().GroupId);
         }
     }
 }

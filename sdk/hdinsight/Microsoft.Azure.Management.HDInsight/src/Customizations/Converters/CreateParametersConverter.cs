@@ -27,21 +27,21 @@ namespace Microsoft.Azure.Management.HDInsight
                 Tags = clusterCreateParameters.Tags,
                 Properties = new ClusterCreateProperties
                 {
+                    ClusterVersion = clusterCreateParameters.Version,
+                    OsType = OSType.Linux,
+                    Tier = clusterCreateParameters.ClusterTier,
                     ClusterDefinition = new ClusterDefinition
                     {
                         Kind = clusterCreateParameters.ClusterType,
                         ComponentVersion = clusterCreateParameters.ComponentVersion,
                         Configurations = GetConfigurations(clusterName, clusterCreateParameters)
                     },
-                    Tier = clusterCreateParameters.ClusterTier,
-                    ClusterVersion = clusterCreateParameters.Version,
                     ComputeProfile = new ComputeProfile
                     {
                         Roles = GetRoleCollection(clusterCreateParameters)
                     },
-                    OsType = OSType.Linux,
-                    SecurityProfile = clusterCreateParameters.SecurityProfile,
                     StorageProfile = GetStorageProfile(clusterCreateParameters),
+                    SecurityProfile = clusterCreateParameters.SecurityProfile,
                     DiskEncryptionProperties = clusterCreateParameters.DiskEncryptionProperties
                 },
                 Identity = clusterCreateParameters.ClusterIdentity

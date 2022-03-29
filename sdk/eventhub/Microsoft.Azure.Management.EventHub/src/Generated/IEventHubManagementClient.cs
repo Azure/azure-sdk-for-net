@@ -40,6 +40,11 @@ namespace Microsoft.Azure.Management.EventHub
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// Client API Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// Subscription credentials that uniquely identify a Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every
         /// service call.
@@ -71,29 +76,24 @@ namespace Microsoft.Azure.Management.EventHub
         IClustersOperations Clusters { get; }
 
         /// <summary>
-        /// Gets the INamespacesOperations.
-        /// </summary>
-        INamespacesOperations Namespaces { get; }
-
-        /// <summary>
         /// Gets the IConfigurationOperations.
         /// </summary>
         IConfigurationOperations Configuration { get; }
 
         /// <summary>
-        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// Gets the INamespacesOperations.
         /// </summary>
-        IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
+        INamespacesOperations Namespaces { get; }
 
         /// <summary>
-        /// Gets the IEventHubsOperations.
+        /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        IEventHubsOperations EventHubs { get; }
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
         /// <summary>
-        /// Gets the IConsumerGroupsOperations.
+        /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
-        IConsumerGroupsOperations ConsumerGroups { get; }
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -101,9 +101,24 @@ namespace Microsoft.Azure.Management.EventHub
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IRegionsOperations.
+        /// Gets the IEventHubsOperations.
         /// </summary>
-        IRegionsOperations Regions { get; }
+        IEventHubsOperations EventHubs { get; }
+
+        /// <summary>
+        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// </summary>
+        IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
+
+        /// <summary>
+        /// Gets the IConsumerGroupsOperations.
+        /// </summary>
+        IConsumerGroupsOperations ConsumerGroups { get; }
+
+        /// <summary>
+        /// Gets the ISchemaRegistryOperations.
+        /// </summary>
+        ISchemaRegistryOperations SchemaRegistry { get; }
 
     }
 }

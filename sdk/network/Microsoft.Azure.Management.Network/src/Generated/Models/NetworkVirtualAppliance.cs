@@ -52,6 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="cloudInitConfiguration">CloudInitConfiguration string
         /// in plain text.</param>
         /// <param name="virtualApplianceAsn">VirtualAppliance ASN.</param>
+        /// <param name="sshPublicKey">Public key for SSH login.</param>
         /// <param name="virtualApplianceNics">List of Virtual Appliance
         /// Network Interfaces.</param>
         /// <param name="virtualApplianceSites">List of references to
@@ -65,7 +66,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// to cloud-init and config blob.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkVirtualAppliance(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualApplianceSkuProperties nvaSku = default(VirtualApplianceSkuProperties), string addressPrefix = default(string), IList<string> bootStrapConfigurationBlobs = default(IList<string>), SubResource virtualHub = default(SubResource), IList<string> cloudInitConfigurationBlobs = default(IList<string>), string cloudInitConfiguration = default(string), long? virtualApplianceAsn = default(long?), IList<VirtualApplianceNicProperties> virtualApplianceNics = default(IList<VirtualApplianceNicProperties>), IList<SubResource> virtualApplianceSites = default(IList<SubResource>), IList<SubResource> inboundSecurityRules = default(IList<SubResource>), string provisioningState = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string etag = default(string))
+        public NetworkVirtualAppliance(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualApplianceSkuProperties nvaSku = default(VirtualApplianceSkuProperties), string addressPrefix = default(string), IList<string> bootStrapConfigurationBlobs = default(IList<string>), SubResource virtualHub = default(SubResource), IList<string> cloudInitConfigurationBlobs = default(IList<string>), string cloudInitConfiguration = default(string), long? virtualApplianceAsn = default(long?), string sshPublicKey = default(string), IList<VirtualApplianceNicProperties> virtualApplianceNics = default(IList<VirtualApplianceNicProperties>), IList<SubResource> virtualApplianceSites = default(IList<SubResource>), IList<SubResource> inboundSecurityRules = default(IList<SubResource>), string provisioningState = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             NvaSku = nvaSku;
@@ -75,6 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
             CloudInitConfigurationBlobs = cloudInitConfigurationBlobs;
             CloudInitConfiguration = cloudInitConfiguration;
             VirtualApplianceAsn = virtualApplianceAsn;
+            SshPublicKey = sshPublicKey;
             VirtualApplianceNics = virtualApplianceNics;
             VirtualApplianceSites = virtualApplianceSites;
             InboundSecurityRules = inboundSecurityRules;
@@ -131,6 +133,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualApplianceAsn")]
         public long? VirtualApplianceAsn { get; set; }
+
+        /// <summary>
+        /// Gets or sets public key for SSH login.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sshPublicKey")]
+        public string SshPublicKey { get; set; }
 
         /// <summary>
         /// Gets list of Virtual Appliance Network Interfaces.

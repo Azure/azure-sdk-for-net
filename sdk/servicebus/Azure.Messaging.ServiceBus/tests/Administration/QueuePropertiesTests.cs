@@ -120,7 +120,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 "forward",
                 "dlq",
                 "metadata",
-                true);
+                true,
+                2000);
             Assert.AreEqual("queueName", properties.Name);
             Assert.AreEqual(TimeSpan.FromSeconds(30), properties.LockDuration);
             Assert.AreEqual(100, properties.MaxSizeInMegabytes);
@@ -137,6 +138,38 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
             Assert.AreEqual("metadata", properties.UserMetadata);
             Assert.IsTrue(properties.EnablePartitioning);
+            Assert.AreEqual(2000, properties.MaxMessageSizeInKilobytes);
+        }
+
+        [Test]
+        public void CanCreateQueueRuntimePropertiesFromFactory()
+        {
+            var today = DateTimeOffset.Now;
+            var yesterday = today.Subtract(TimeSpan.FromDays(1));
+            var twoDaysAgo = today.Subtract(TimeSpan.FromDays(2));
+            var properties = ServiceBusModelFactory.QueueRuntimeProperties(
+                "queueName",
+                10,
+                1,
+                5,
+                2,
+                3,
+                21,
+                100,
+                twoDaysAgo,
+                yesterday,
+                today);
+            Assert.AreEqual("queueName", properties.Name);
+            Assert.AreEqual(10, properties.ActiveMessageCount);
+            Assert.AreEqual(1, properties.ScheduledMessageCount);
+            Assert.AreEqual(5, properties.DeadLetterMessageCount);
+            Assert.AreEqual(2, properties.TransferDeadLetterMessageCount);
+            Assert.AreEqual(3, properties.TransferMessageCount);
+            Assert.AreEqual(21, properties.TotalMessageCount);
+            Assert.AreEqual(100, properties.SizeInBytes);
+            Assert.AreEqual(twoDaysAgo, properties.CreatedAt);
+            Assert.AreEqual(yesterday, properties.UpdatedAt);
+            Assert.AreEqual(today, properties.AccessedAt);
         }
 
         [Test]
@@ -159,7 +192,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 ForwardDeadLetteredMessagesTo = "dlqForward",
                 ForwardTo = "forward",
                 EnablePartitioning = true,
-                UserMetadata = "metadata"
+                UserMetadata = "metadata",
+                MaxMessageSizeInKilobytes = 2000
             };
             var properties = new QueueProperties(options);
 

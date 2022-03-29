@@ -55,6 +55,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list containing the IDs of the Compute Nodes to be
         /// removed from the specified Pool.
         /// </summary>
+        /// <remarks>
+        /// A maximum of 100 nodes may be removed per request.
+        /// </remarks>
         [JsonProperty(PropertyName = "nodeList")]
         public IList<string> NodeList { get; set; }
 

@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-    public partial class HelloWorld : SamplesBase<ContainerRegistryTestEnvironment>
+    public partial class HelloWorld : ContainerRegistrySamplesBase
     {
         [Test]
         [SyncOnly]
@@ -25,10 +25,14 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+                });
 
-            // Perform an operation
-            Pageable<string> repositories = client.GetRepositories();
+            // Get the collection of repository names from the registry
+            Pageable<string> repositories = client.GetRepositoryNames();
             foreach (string repository in repositories)
             {
                 Console.WriteLine(repository);
@@ -47,10 +51,14 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+                });
 
-            // Perform an operation
-            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            // Get the collection of repository names from the registry
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
             await foreach (string repository in repositories)
             {
                 Console.WriteLine(repository);
@@ -67,13 +75,18 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #region Snippet:ContainerRegistry_Tests_Samples_HandleErrors
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-            // Create an invalid ContainerRepositoryClient
+            // Create a ContainerRepository class for an invalid repository
             string fakeRepositoryName = "doesnotexist";
-            ContainerRepositoryClient client = new ContainerRepositoryClient(endpoint, fakeRepositoryName, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+                });
+            ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
             try
             {
-                client.GetProperties();
+                repository.GetProperties();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -91,13 +104,18 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #region Snippet:ContainerRegistry_Tests_Samples_HandleErrorsAsync
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-            // Create an invalid ContainerRepositoryClient
+            // Create a ContainerRepository class for an invalid repository
             string fakeRepositoryName = "doesnotexist";
-            ContainerRepositoryClient client = new ContainerRepositoryClient(endpoint, fakeRepositoryName, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+                });
+            ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
             try
             {
-                await client.GetPropertiesAsync();
+                await repository.GetPropertiesAsync();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {

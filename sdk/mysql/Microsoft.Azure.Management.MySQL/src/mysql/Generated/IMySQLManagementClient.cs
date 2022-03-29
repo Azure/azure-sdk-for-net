@@ -102,6 +102,11 @@ namespace Microsoft.Azure.Management.MySQL
         IConfigurationsOperations Configurations { get; }
 
         /// <summary>
+        /// Gets the IServerParametersOperations.
+        /// </summary>
+        IServerParametersOperations ServerParameters { get; }
+
+        /// <summary>
         /// Gets the ILogFilesOperations.
         /// </summary>
         ILogFilesOperations LogFiles { get; }
@@ -110,6 +115,16 @@ namespace Microsoft.Azure.Management.MySQL
         /// Gets the IServerAdministratorsOperations.
         /// </summary>
         IServerAdministratorsOperations ServerAdministrators { get; }
+
+        /// <summary>
+        /// Gets the IRecoverableServersOperations.
+        /// </summary>
+        IRecoverableServersOperations RecoverableServers { get; }
+
+        /// <summary>
+        /// Gets the IServerBasedPerformanceTierOperations.
+        /// </summary>
+        IServerBasedPerformanceTierOperations ServerBasedPerformanceTier { get; }
 
         /// <summary>
         /// Gets the ILocationBasedPerformanceTierOperations.
@@ -180,6 +195,23 @@ namespace Microsoft.Azure.Management.MySQL
         /// Gets the IServerKeysOperations.
         /// </summary>
         IServerKeysOperations ServerKeys { get; }
+
+        /// <summary>
+        /// Reset data for Query Performance Insight.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<QueryPerformanceInsightResetDataResult>> ResetQueryPerformanceInsightDataWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Create recommendation action session for the advisor.

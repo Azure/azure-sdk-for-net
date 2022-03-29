@@ -10,14 +10,12 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Number of cloud to device messages (HTTP protocol) is not in allowed
     /// range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("HttpC2DMessagesNotInAllowedRange")]
     public partial class HttpC2DMessagesNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>

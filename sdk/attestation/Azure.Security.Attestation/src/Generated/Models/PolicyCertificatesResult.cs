@@ -8,7 +8,7 @@
 namespace Azure.Security.Attestation
 {
     /// <summary> The result of a call to retrieve policy certificates. </summary>
-    public partial class PolicyCertificatesResult
+    internal partial class PolicyCertificatesResult
     {
 
         /// <summary> Initializes a new instance of PolicyCertificatesResult. </summary>

@@ -38,13 +38,26 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
         /// <param name="tags">Resource tags</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="kind">Metadata used by portal/tooling/etc to render
+        /// different UX experiences for resources of the same type; e.g.
+        /// ApiApps are a kind of Microsoft.Web/sites type.  If supported, the
+        /// resource provider must validate and persist this value.</param>
+        /// <param name="etag">The etag field is *not* required. If it is
+        /// provided in the response body, it must also be provided as a header
+        /// per the normal etag convention.  Entity tags are used for comparing
+        /// two or more entities from the same requested resource. HTTP/1.1
+        /// uses entity tags in the etag (section 14.19), If-Match (section
+        /// 14.24), If-None-Match (section 14.26), and If-Range (section 14.27)
+        /// header fields. </param>
+        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string etag = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            Kind = kind;
+            Etag = etag;
             CustomInit();
         }
 
@@ -82,6 +95,27 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets metadata used by portal/tooling/etc to render different UX
+        /// experiences for resources of the same type; e.g. ApiApps are a kind
+        /// of Microsoft.Web/sites type.  If supported, the resource provider
+        /// must validate and persist this value.
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; private set; }
+
+        /// <summary>
+        /// Gets the etag field is *not* required. If it is provided in the
+        /// response body, it must also be provided as a header per the normal
+        /// etag convention.  Entity tags are used for comparing two or more
+        /// entities from the same requested resource. HTTP/1.1 uses entity
+        /// tags in the etag (section 14.19), If-Match (section 14.24),
+        /// If-None-Match (section 14.26), and If-Range (section 14.27) header
+        /// fields.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Validate the object.

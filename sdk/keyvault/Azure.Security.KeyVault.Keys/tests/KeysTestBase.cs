@@ -15,13 +15,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_0,
         KeyClientOptions.ServiceVersion.V7_1,
-        KeyClientOptions.ServiceVersion.V7_2)]
+        KeyClientOptions.ServiceVersion.V7_2,
+        KeyClientOptions.ServiceVersion.V7_3)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
             ? TimeSpan.Zero
-            : TimeSpan.FromSeconds(2);
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
 
         public KeyClient Client { get; private set; }
 
@@ -40,47 +41,65 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
         }
 
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                ChallengeBasedAuthenticationPolicy.ClearCache();
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the current text fixture is running against Managed HSM.
+        /// </summary>
+        protected internal virtual bool IsManagedHSM => false;
+
+        internal static void IgnoreIfNotSupported(RequestFailedException ex)
+        {
+            if (ex.Status == 400 && ex.ErrorCode == "NotSupported")
+            {
+                throw new IgnoreException(ex.Message ?? "The feature under test is not supported");
+            }
+        }
+
         internal KeyClient GetClient()
         {
+            KeyClientOptions options = InstrumentClientOptions(new KeyClientOptions(_serviceVersion)
+            {
+                Diagnostics =
+                {
+                    LoggedHeaderNames =
+                    {
+                        "x-ms-request-id",
+                    },
+                },
+            });
+
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
             // we need to delay creation of keys due to aggressive service limits on key creation:
             // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
             IInterceptor[] interceptors = new[] { new DelayCreateKeyInterceptor(Mode) };
 
-            return InstrumentClient(
-                new KeyClient(
-                    Uri,
-                    TestEnvironment.Credential,
-                    InstrumentClientOptions(
-                        new KeyClientOptions(_serviceVersion)
-                        {
-                            Diagnostics =
-                            {
-                                LoggedHeaderNames =
-                                {
-                                    "x-ms-request-id",
-                                },
-                                // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
-                                IsLoggingContentEnabled = Mode != RecordedTestMode.Playback,
-                            },
-                        })),
-                interceptors);
+            return InstrumentClient(new KeyClient(Uri, TestEnvironment.Credential, options), interceptors);
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
         }
 
-        public override void StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]
@@ -251,7 +270,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        protected Task WaitForDeletedKey(string name, TimeSpan? delay = null)
+        protected Task WaitForDeletedKey(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -260,8 +279,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= TimeSpan.FromSeconds(5);
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: delay.Value);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
@@ -274,7 +301,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= TimeSpan.FromSeconds(5);
+                delay ??= PollingInterval;
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {

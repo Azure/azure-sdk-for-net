@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Perf
 {
@@ -19,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Perf
     ///
     /// <seealso cref="EventHubsPerfTest" />
     ///
-    public abstract class ReadPerfTest : EventHubsPerfTest
+    public abstract class ReadPerfTest<TOptions> : EventHubsPerfTest<TOptions> where TOptions : EventHubsOptions
     {
         /// <summary>
         ///   The Event Hub to publish events to; shared across all concurrent instances of the scenario.
@@ -47,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public ReadPerfTest(SizeCountOptions options) : base(options)
+        public ReadPerfTest(TOptions options) : base(options)
         {
         }
 
@@ -121,8 +120,8 @@ namespace Azure.Messaging.EventHubs.Perf
             // Calculate the number of events needed to satisfy the number of events per iteration
             // and then buffer it to allow for the warm-up.
 
-            var eventCount = Options.Count * Options.Iterations * 3;
-            var eventBody = EventGenerator.CreateRandomBody(Options.Size);
+            var eventCount = Options.BatchSize * Options.Iterations * 3;
+            var eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
             var batchOptions = new CreateBatchOptions { PartitionId = PartitionId };
 
             foreach (var eventData in EventGenerator.CreateEventsFromBody(eventCount, eventBody))

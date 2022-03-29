@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="type">Resource type of the Virtual Network
         /// (read-only).</param>
         /// <param name="subnet">Subnet within the Virtual Network.</param>
-        public VirtualNetworkProfile(string id = default(string), string name = default(string), string type = default(string), string subnet = default(string))
+        public VirtualNetworkProfile(string id, string name = default(string), string type = default(string), string subnet = default(string))
         {
             Id = id;
             Name = name;
@@ -72,5 +73,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "subnet")]
         public string Subnet { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+        }
     }
 }

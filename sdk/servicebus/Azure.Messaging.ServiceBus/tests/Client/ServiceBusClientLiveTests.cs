@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
-                var message = GetMessage(useSessions ? "sessionId" : null);
+                var message = ServiceBusTestUtilities.GetMessage(useSessions ? "sessionId" : null);
                 await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
-                var message = GetMessage(useSessions ? "sessionId" : null);
+                var message = ServiceBusTestUtilities.GetMessage(useSessions ? "sessionId" : null);
                 await sender.SendMessageAsync(message);
                 await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
@@ -212,12 +212,90 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
                 Assert.Less(stop - start, duration.Add(duration));
                 var sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(GetMessage("sessionId"));
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("sessionId"));
 
                 start = DateTime.UtcNow;
                 var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 stop = DateTime.UtcNow;
                 Assert.Less(stop - start, duration.Add(duration));
+            }
+        }
+
+        [Test]
+        public async Task CanAcceptBlankSession()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                var client = CreateClient();
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "");
+                Assert.AreEqual("", receiver.SessionId);
+            }
+        }
+
+        [Test]
+        public async Task MetricsAreUpdatedCorrectly()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions { EnableTransportMetrics = true });
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                var metrics = client.GetTransportMetrics();
+                var firstHeartBeat = metrics.LastHeartBeat;
+                var firstOpen = metrics.LastConnectionOpen;
+                Assert.Greater(firstOpen, firstHeartBeat);
+
+                SimulateNetworkFailure(client);
+                await sender.SendMessageAsync(new ServiceBusMessage());
+
+                metrics = client.GetTransportMetrics();
+                var secondOpen = metrics.LastConnectionOpen;
+                Assert.Greater(secondOpen, firstOpen);
+
+                SimulateNetworkFailure(client);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));
+
+                metrics = client.GetTransportMetrics();
+                var thirdOpen = metrics.LastConnectionOpen;
+                Assert.Greater(thirdOpen, secondOpen);
+
+                await client.DisposeAsync();
+                // The close frame does not come back from the service before the DisposeAsync
+                // call is returned.
+                await Task.Delay(500);
+                metrics = client.GetTransportMetrics();
+                Assert.Greater(metrics.LastConnectionClose, thirdOpen);
+                Assert.Greater(metrics.LastHeartBeat, firstHeartBeat);
+            }
+        }
+
+        [Test]
+        public async Task MetricsInstanceIsNotMutated()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions { EnableTransportMetrics = true });
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                var metrics = client.GetTransportMetrics();
+                var firstHeartBeat = metrics.LastHeartBeat;
+                var firstOpen = metrics.LastConnectionOpen;
+                Assert.Greater(firstOpen, firstHeartBeat);
+
+                SimulateNetworkFailure(client);
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                Assert.AreEqual(firstOpen, metrics.LastConnectionOpen);
+
+                await client.DisposeAsync();
+                // The close frame does not come back from the service before the DisposeAsync
+                // call is returned.
+                await Task.Delay(500);
+                Assert.IsNull(metrics.LastConnectionClose);
             }
         }
     }

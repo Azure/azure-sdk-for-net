@@ -38,14 +38,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// resource.</param>
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
-        /// <param name="eTag">Optional ETag.</param>
+        /// <param name="etag">Optional ETag.</param>
         /// <param name="integrityKey">Integrity key.</param>
         /// <param name="encryptionKey">Encryption key.</param>
         /// <param name="encryptionKeyThumbprint">Encryption key
         /// thumbprint.</param>
         /// <param name="algorithm">Algorithm for Vault ExtendedInfo</param>
-        public VaultExtendedInfoResource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string integrityKey = default(string), string encryptionKey = default(string), string encryptionKeyThumbprint = default(string), string algorithm = default(string))
-            : base(id, name, type, eTag)
+        public VaultExtendedInfoResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string integrityKey = default(string), string encryptionKey = default(string), string encryptionKeyThumbprint = default(string), string algorithm = default(string))
+            : base(id, name, type, etag)
         {
             IntegrityKey = integrityKey;
             EncryptionKey = encryptionKey;

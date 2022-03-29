@@ -1,6 +1,6 @@
 # Processing Events
 
-This sample demonstrates scenarios for processing events read from the Event Hubs service.  To begin, please ensure that you're familiar with the items discussed in the [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md) sample.  You'll also need to have the prerequisites and connection string information available, as discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.
+This sample demonstrates scenarios for processing events read from the Event Hubs service.  To begin, please ensure that you're familiar with the items discussed in the [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md) sample.  You'll also need to have the prerequisites and connection string information available, as discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.
 
 ## Client types
 
@@ -42,13 +42,13 @@ Once it has been configured, the `EventProcessorClient` must be explicitly start
 
  When stopping, the processor will relinquish ownership of partitions that it was responsible for processing and clean up network resources used for communication with the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.  Due to service calls and network latency, an invocation of this method may take slightly longer than the configured [MaximumWaitTime](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions.maximumwaittime?view=azure-dotnet#Azure_Messaging_EventHubs_EventProcessorClientOptions_MaximumWaitTime).  In the case where the wait time was not configured, stopping may take slightly longer than the [TryTimeout](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsretryoptions.trytimeout?view=azure-dotnet#Azure_Messaging_EventHubs_EventHubsRetryOptions_TryTimeout) of the active retry policy.  By default, this is 60 seconds.  
  
- For more information on configuring the `TryTimeout`, see:  [Configuring the timeout used for Event Hubs service operations](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample02_EventProcessorConfiguration.md#configuring-the-timeout-used-for-event-hubs-service-operations).
+ For more information on configuring the `TryTimeout`, see:  [Configuring the timeout used for Event Hubs service operations](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample02_EventProcessorConfiguration.md#configuring-the-timeout-used-for-event-hubs-service-operations).
  
 ## Interacting with the processor while running
 
 The act of processing events read from the partition and handling any errors that occur is delegated by the `EventProcessorClient` to code that you provide using the [.NET event pattern](https://docs.microsoft.com/dotnet/csharp/event-pattern).  This allows your logic to concentrate on delivering business value while the processor handles the tasks associated with reading events, managing the partitions, and allowing state to be persisted in the form of checkpoints.
 
-An in-depth discussion of the handlers used with the `EventProcessorClient` along with guidance for implementing them can be found in the sample:  [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md).  The following examples will assume familiarity with best practices for handler implementation and will often avoid going into detail in the interest of brevity.
+An in-depth discussion of the handlers used with the `EventProcessorClient` along with guidance for implementing them can be found in the sample:  [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md).  The following examples will assume familiarity with best practices for handler implementation and will often avoid going into detail in the interest of brevity.
 
 ## Basic event processing
 
@@ -163,13 +163,13 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.  This
-   // is especially important when using lambda expressions or handlers
-   // in any form that may contain closure scopes or hold other references.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.  This
+    // is especially important when using lambda expressions or handlers
+    // in any form that may contain closure scopes or hold other references.
 
-   processor.ProcessEventAsync -= processEventHandler;
-   processor.ProcessErrorAsync -= processErrorHandler;
+    processor.ProcessEventAsync -= processEventHandler;
+    processor.ProcessErrorAsync -= processErrorHandler;
 }
 ```
 
@@ -275,11 +275,11 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup
 
-   processor.ProcessEventAsync -= processEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+    processor.ProcessEventAsync -= processEventHandler;
+    processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
 }
 ```
 
@@ -371,124 +371,12 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup
 
-   processor.PartitionInitializingAsync -= initializeEventHandler;
-   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
-}
-```
-
-## Batch processing
-
-In order to ensure efficient communication with the Event Hubs service and the best throughput possible for dispatching events to be processed, the Event Processor client is eagerly reading from each partition of the Event Hub and staging events.  The processor will dispatch an event to the "ProcessEvent" handler immediately when one is available.  Each call to the handler passes a single event and the context of the partition from which the event was read.  This pattern is intended to allow developers to act on an event as soon as possible, and present a straightforward and understandable interface.
-
-This approach is optimized for scenarios where the processing of events can be performed quickly and without heavy resource costs.  For scenarios where that is not the case, it may be advantageous to collect the events into batches and send them to be processed outside of the context of the "ProcessEvent" handler.  In this example, the `processEventHandler` will group events into batches of 50 by partition, sending them to the application to process when the batch size was reached.
-
-One important thing to note is that batching with the `EventProcessorClient` may boost throughput, but more demanding applications may need more control and less ceremony to meet their higher throughput or specialized needs - that's where the [EventProcessor&lt;TPartition&gt;](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_EventHubsClients.md) from the [Azure.Messaging.EventHubs](https://www.nuget.org/packages/Azure.Messaging.EventHubs) package is intended to help.  More on the design and philosophy behind the `EventProcessor<TPartition>` can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-processor%7BT%7D.md).
-
-```C# Snippet:EventHubs_Processor_Sample04_ProcessByBatch
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-
-var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-var eventHubName = "<< NAME OF THE EVENT HUB >>";
-var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-
-var storageClient = new BlobContainerClient(
-    storageConnectionString,
-    blobContainerName);
-
-var processor = new EventProcessorClient(
-    storageClient,
-    consumerGroup,
-    eventHubsConnectionString,
-    eventHubName);
-
-const int EventsInBatch = 50;
-var partitionEventBatches = new ConcurrentDictionary<string, List<EventData>>();
-var checkpointNeeded = false;
-
-async Task processEventHandler(ProcessEventArgs args)
-{
-    try
-    {
-        string partition = args.Partition.PartitionId;
-
-        List<EventData> partitionBatch =
-            partitionEventBatches.GetOrAdd(
-                partition,
-                new List<EventData>());
-
-        partitionBatch.Add(args.Data);
-
-        if (partitionBatch.Count >= EventsInBatch)
-        {
-            await Application.ProcessEventBatchAsync(
-                partitionBatch,
-                args.Partition,
-                args.CancellationToken);
-
-            checkpointNeeded = true;
-            partitionBatch.Clear();
-        }
-
-        if (checkpointNeeded)
-        {
-            await args.UpdateCheckpointAsync();
-            checkpointNeeded = false;
-        }
-    }
-    catch (Exception ex)
-    {
-        Application.HandleProcessingException(args, ex);
-    }
-}
-
-try
-{
-    using var cancellationSource = new CancellationTokenSource();
-    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-    // The error handler is not relevant for this sample; for
-    // illustration, it is delegating the implementation to the
-    // host application.
-
-    processor.ProcessEventAsync += processEventHandler;
-    processor.ProcessErrorAsync += Application.ProcessorErrorHandler;
-
-    try
-    {
-        await processor.StartProcessingAsync(cancellationSource.Token);
-        await Task.Delay(Timeout.Infinite, cancellationSource.Token);
-    }
-    catch (TaskCanceledException)
-    {
-        // This is expected if the cancellation token is
-        // signaled.
-    }
-    finally
-    {
-        // This may take up to the length of time defined
-        // as part of the configured TryTimeout of the processor;
-        // by default, this is 60 seconds.
-
-        await processor.StopProcessingAsync();
-    }
-}
-catch
-{
-    // If this block is invoked, then something external to the
-    // processor was the source of the exception.
-}
-finally
-{
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.
-
-   processor.ProcessEventAsync -= processEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+    processor.PartitionInitializingAsync -= initializeEventHandler;
+    processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
 }
 ```
 
@@ -582,10 +470,10 @@ catch
 }
 finally
 {
-   // It is encouraged that you unregister your handlers when you have
-   // finished using the Event Processor to ensure proper cleanup.
+    // It is encouraged that you unregister your handlers when you have
+    // finished using the Event Processor to ensure proper cleanup.
 
-   processor.ProcessEventAsync -= processEventHandler;
-   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+    processor.ProcessEventAsync -= processEventHandler;
+    processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
 }
 ```

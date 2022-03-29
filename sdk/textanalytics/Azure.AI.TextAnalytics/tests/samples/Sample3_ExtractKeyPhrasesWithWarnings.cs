@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
@@ -16,15 +16,16 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string document = @"Anthony runs his own personal training business so
                               thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
 
             try
             {
-                Response<KeyPhraseCollection> response = client.ExtractKeyPhrases(document);
-                KeyPhraseCollection keyPhrases = response.Value;
+                Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(new List<string>() { document }, options: new TextAnalyticsRequestOptions() { ModelVersion = "2020-07-01" });
+                ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
+                KeyPhraseCollection keyPhrases = keyPhrasesInDocuments.FirstOrDefault().KeyPhrases;
 
                 if (keyPhrases.Warnings.Count > 0)
                 {

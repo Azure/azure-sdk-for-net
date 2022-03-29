@@ -51,9 +51,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("metadata");
             writer.WriteObjectValue(Metadata);
             writer.WritePropertyName("nbformat");
-            writer.WriteNumberValue(Nbformat);
+            writer.WriteNumberValue(NotebookFormat);
             writer.WritePropertyName("nbformat_minor");
-            writer.WriteNumberValue(NbformatMinor);
+            writer.WriteNumberValue(NotebookFormatMinor);
             writer.WritePropertyName("cells");
             writer.WriteStartArray();
             foreach (var item in Cells)
@@ -61,6 +61,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Folder))
+            {
+                if (Folder != null)
+                {
+                    writer.WritePropertyName("folder");
+                    writer.WriteObjectValue(Folder);
+                }
+                else
+                {
+                    writer.WriteNull("folder");
+                }
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -78,6 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             int nbformat = default;
             int nbformatMinor = default;
             IList<NotebookCell> cells = default;
+            Optional<NotebookFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -132,10 +145,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cells = array;
                     continue;
                 }
+                if (property.NameEquals("folder"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        folder = null;
+                        continue;
+                    }
+                    folder = NotebookFolder.DeserializeNotebookFolder(property.Value);
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, additionalProperties);
+            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
         }
 
         internal partial class NotebookConverter : JsonConverter<Notebook>

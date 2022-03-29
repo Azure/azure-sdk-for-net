@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Search for available phone numbers to purchase. </summary>
     public partial class SearchAvailablePhoneNumbersOperation : Operation<PhoneNumberSearchResult>, IOperationSource<PhoneNumberSearchResult>
     {
-        private readonly ArmOperationHelpers<PhoneNumberSearchResult> _operation;
+        private readonly OperationInternals<PhoneNumberSearchResult> _operation;
 
         /// <summary> Initializes a new instance of SearchAvailablePhoneNumbersOperation for mocking. </summary>
         protected SearchAvailablePhoneNumbersOperation()
@@ -42,6 +42,12 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<PhoneNumberSearchResult> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<PhoneNumberSearchResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<PhoneNumberSearchResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);

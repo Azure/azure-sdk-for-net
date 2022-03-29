@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The connection strings for the given database account. </summary>
-    public partial class DatabaseAccountListConnectionStringsResult
+    internal partial class DatabaseAccountListConnectionStringsResult
     {
         /// <summary> Initializes a new instance of DatabaseAccountListConnectionStringsResult. </summary>
         internal DatabaseAccountListConnectionStringsResult()

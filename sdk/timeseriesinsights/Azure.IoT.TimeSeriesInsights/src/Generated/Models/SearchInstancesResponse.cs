@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The instances matching the query based on the input. May be empty or null. </summary>
-    public partial class SearchInstancesResponse
+    internal partial class SearchInstancesResponse
     {
         /// <summary> Initializes a new instance of SearchInstancesResponse. </summary>
         internal SearchInstancesResponse()

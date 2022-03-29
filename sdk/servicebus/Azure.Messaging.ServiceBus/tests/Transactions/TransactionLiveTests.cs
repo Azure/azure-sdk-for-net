@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using NUnit.Framework;
@@ -24,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                ServiceBusMessage message = GetMessage(
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage(
                     sessionEnabled ? "sessionId" : null,
                     partitioned ? "sessionId" : null);
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -51,8 +50,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                ServiceBusMessage message1 = GetMessage("session1");
-                ServiceBusMessage message2 = GetMessage("session2");
+                ServiceBusMessage message1 = ServiceBusTestUtilities.GetMessage("session1");
+                ServiceBusMessage message2 = ServiceBusTestUtilities.GetMessage("session2");
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sender.SendMessageAsync(message1);
@@ -85,8 +84,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                ServiceBusMessage message1 = GetMessage("session1");
-                ServiceBusMessage message2 = GetMessage("session2");
+                ServiceBusMessage message1 = ServiceBusTestUtilities.GetMessage("session1");
+                ServiceBusMessage message2 = ServiceBusTestUtilities.GetMessage("session2");
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sender.SendMessageAsync(message1);
@@ -108,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                ServiceBusMessage message = GetMessage();
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
                 long seq = await sender.ScheduleMessageAsync(message, DateTimeOffset.UtcNow.AddMinutes(1));
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -128,13 +127,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.TopicName);
 
-                ServiceBusMessage message = GetMessage();
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
                 await sender.SendMessageAsync(message);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.TopicName, scope.SubscriptionNames.First());
                 ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await sender.SendMessageAsync(GetMessage());
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                     await receiver.CompleteMessageAsync(received);
                     ts.Complete();
                 }
@@ -158,7 +157,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
-                ServiceBusMessage message = GetMessage(
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage(
                     sessionEnabled ? "sessionId" : null,
                     partitioned ? "sessionId" : null);
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -192,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 string body = Guid.NewGuid().ToString("N");
-                ServiceBusMessage message = GetMessage(
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage(
                     sessionEnabled ? "sessionId" : null,
                     partitioned ? "sessionId" : null);
                 await sender.SendMessageAsync(message);
@@ -252,8 +251,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
                 string body = Guid.NewGuid().ToString("N");
-                ServiceBusMessage message1 = GetMessage(partitionKey: "1");
-                ServiceBusMessage message2 = GetMessage(partitionKey: "2");
+                ServiceBusMessage message1 = ServiceBusTestUtilities.GetMessage(partitionKey: "1");
+                ServiceBusMessage message2 = ServiceBusTestUtilities.GetMessage(partitionKey: "2");
 
                 // Two send operations to different partitions.
                 var transaction = new CommittableTransaction();
@@ -318,8 +317,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
-                ServiceBusMessage message1 = GetMessage();
-                ServiceBusMessage message2 = GetMessage();
+                ServiceBusMessage message1 = ServiceBusTestUtilities.GetMessage();
+                ServiceBusMessage message2 = ServiceBusTestUtilities.GetMessage();
                 await sender.SendMessageAsync(message1);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -349,6 +348,79 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 Assert.NotNull(receivedMessage);
                 Assert.AreEqual(message2.Body.ToString(), receivedMessage.Body.ToString());
                 await receiver.CompleteMessageAsync(receivedMessage);
+
+                // validate that the Local transaction cannot span multiple entities error is not thrown when outside of a transaction
+                await using var scope2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+                ServiceBusReceiver receiver2 = client.CreateReceiver(scope2.QueueName);
+                await receiver2.ReceiveMessageAsync(TimeSpan.FromSeconds(2));
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanUseSameSenderBothWithinAndOutsideTransactionSimultaneously(bool transactionFirst)
+        {
+            await using (var scope1 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+                ServiceBusSender sender1 = client.CreateSender(scope1.QueueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(scope1.QueueName);
+
+                await using var scope2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+                ServiceBusSender sender2 = client.CreateSender(scope2.QueueName);
+
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
+                await sender1.SendMessageAsync(message);
+
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.NotNull(receivedMessage);
+
+                var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                Task transactionTask = SendWithTransactionAsync();
+                Task noTransactionTask = SendWithoutTransactionAsync();
+
+                async Task SendWithTransactionAsync()
+                {
+                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    {
+                        if (!transactionFirst)
+                        {
+                            await tcs.Task;
+                        }
+                        await receiver.CompleteMessageAsync(receivedMessage).ConfigureAwait(false);
+                        if (transactionFirst)
+                        {
+                            tcs.SetResult(true);
+                        }
+
+                        await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                        await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                        ts.Complete();
+                    }
+                }
+
+                async Task SendWithoutTransactionAsync()
+                {
+                    // await the TCS so that we can attempt to call Send from both inside the txn and outside at the same time
+                    if (transactionFirst)
+                    {
+                        await tcs.Task;
+                    }
+                    Assert.IsNull(Transaction.Current);
+                    await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                    if (!transactionFirst)
+                    {
+                        tcs.SetResult(true);
+                    }
+                    Assert.IsNull(Transaction.Current);
+                    await sender2.SendMessageAsync(message).ConfigureAwait(false);
+                }
+
+                // make sure tasks are completed to surface any exceptions
+                await noTransactionTask;
+                await transactionTask;
             }
         }
 
@@ -362,8 +434,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await using var client2 = CreateClient();
                 ServiceBusReceiver receiver = client2.CreateReceiver(scope.QueueName);
 
-                ServiceBusMessage message1 = GetMessage();
-                ServiceBusMessage message2 = GetMessage();
+                ServiceBusMessage message1 = ServiceBusTestUtilities.GetMessage();
+                ServiceBusMessage message2 = ServiceBusTestUtilities.GetMessage();
                 await sender.SendMessageAsync(message1);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -391,8 +463,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
-                ServiceBusMessage message1 = GetMessage();
-                ServiceBusMessage message2 = GetMessage();
+                ServiceBusMessage message1 = ServiceBusTestUtilities.GetMessage();
+                ServiceBusMessage message2 = ServiceBusTestUtilities.GetMessage();
                 await sender.SendMessageAsync(message1);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -401,7 +473,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+                    await receiver.CompleteMessageAsync(receivedMessage);
                     await sender.SendMessageAsync(message2);
                 }
 
@@ -410,7 +482,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 // Following should succeed without exceptions
-                await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+                await receiver.CompleteMessageAsync(receivedMessage);
 
                 // Assert that send failed
                 receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
@@ -423,7 +495,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         [TestCase(true, false)]
         [TestCase(false, false)]
         [TestCase(false, true)]
-        public async Task TransactionGroupReceivesFirst(bool partitioned, bool enableSessions)
+        public async Task CrossEntityTransactionReceivesFirst(bool partitioned, bool enableSessions)
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
@@ -470,8 +542,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
        [Test]
-       [Ignore("Send claims are not available for the topic. Leaving for now in case this is supported in the future.")]
-        public async Task TransactionGroupReceivesFirstRollbackSubscription()
+        public async Task CrossEntityTransactionReceivesFirstRollbackSubscription()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var topicA = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
@@ -491,7 +562,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 await receiverA.CompleteMessageAsync(receivedMessage);
-                // claims exception thrown here
                 await senderB.SendMessageAsync(message);
                 await senderC.SendMessageAsync(message);
             }
@@ -502,12 +572,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             Assert.IsNotNull(receivedMessage);
             await receiverA.AbandonMessageAsync(receivedMessage);
 
-            var receiverB = client.CreateReceiver(queueB.QueueName);
+            var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
 
             receivedMessage = await receiverB.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
             Assert.IsNull(receivedMessage);
 
-            var receiverC = client.CreateReceiver(queueC.QueueName);
+            var receiverC = noTxClient.CreateReceiver(queueC.QueueName);
             receivedMessage = await receiverC.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
             Assert.IsNull(receivedMessage);
 
@@ -530,7 +600,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupReceivesFirstRollback()
+        public async Task CrossEntityTransactionReceivesFirstRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -588,7 +658,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupFirstOperationTransacted()
+        public async Task CrossEntityTransactionFirstOperationTransacted()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -609,7 +679,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         [Test]
         [TestCase(true, false)]
         [TestCase(false, true)]
-        public async Task TransactionGroupSendsFirst(bool partitioned, bool enableSessions)
+        public async Task CrossEntityTransactionSendsFirst(bool partitioned, bool enableSessions)
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
@@ -700,7 +770,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSendsFirstRollback()
+        public async Task CrossEntityTransactionSendsFirstRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -771,14 +841,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupProcessorRollback()
+        public async Task CrossEntityTransactionProcessorRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             var senderA = client.CreateSender(queueA.QueueName);
-            var processorA = client.CreateProcessor(queueA.QueueName);
+            await using var processorA = client.CreateProcessor(queueA.QueueName);
 
             var receiverA = client.CreateReceiver(queueA.QueueName);
             var receiverB = client.CreateReceiver(queueB.QueueName);
@@ -791,7 +861,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await senderA.SendMessageAsync(message);
 
-            processorA.ProcessErrorAsync += ExceptionHandler;
+            processorA.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
             var tcs = new TaskCompletionSource<bool>();
             processorA.ProcessMessageAsync += async args =>
@@ -816,7 +886,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupProcessor()
+        public async Task CrossEntityTransactionProcessor()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var noTxClient = CreateClient();
@@ -824,7 +894,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             var senderA = noTxClient.CreateSender(queueA.QueueName);
-            var processorA = client.CreateProcessor(queueA.QueueName);
+            await using var processorA = client.CreateProcessor(queueA.QueueName);
 
             var receiverA = noTxClient.CreateReceiver(queueA.QueueName);
             var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
@@ -837,7 +907,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await senderA.SendMessageAsync(message);
 
-            processorA.ProcessErrorAsync += ExceptionHandler;
+            processorA.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
             var tcs = new TaskCompletionSource<bool>();
             processorA.ProcessMessageAsync += async args =>
@@ -867,14 +937,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSessionProcessorRollback()
+        public async Task CrossEntityTransactionSessionProcessorRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             var senderA = client.CreateSender(queueA.QueueName);
-            var processorA = client.CreateSessionProcessor(queueA.QueueName);
+            await using var processorA = client.CreateSessionProcessor(queueA.QueueName);
             var senderB = client.CreateSender(queueB.QueueName);
             var senderC = client.CreateSender(queueC.QueueName);
 
@@ -885,7 +955,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await senderA.SendMessageAsync(message);
 
-            processorA.ProcessErrorAsync += ExceptionHandler;
+            processorA.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
             var tcs = new TaskCompletionSource<bool>();
             processorA.ProcessMessageAsync += async args =>
@@ -910,7 +980,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSessionProcessor()
+        public async Task CrossEntityTransactionSessionProcessor()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -919,7 +989,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var noTxClient = CreateNoRetryClient();
             var senderA = noTxClient.CreateSender(queueA.QueueName);
 
-            var processorA = client.CreateSessionProcessor(queueA.QueueName);
+            await using var processorA = client.CreateSessionProcessor(queueA.QueueName);
             var senderB = client.CreateSender(queueB.QueueName);
             var senderC = client.CreateSender(queueC.QueueName);
 
@@ -930,7 +1000,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await senderA.SendMessageAsync(message);
 
-            processorA.ProcessErrorAsync += ExceptionHandler;
+            processorA.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
 
             var tcs = new TaskCompletionSource<bool>();
             processorA.ProcessMessageAsync += async args =>
@@ -956,6 +1026,44 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             // should not throw
             _ = await noTxClient.AcceptNextSessionAsync(queueB.QueueName);
             _ = await noTxClient.AcceptNextSessionAsync(queueC.QueueName);
+        }
+
+        [Test]
+        public async Task CrossEntityTransactionConnectionDropped()
+        {
+            await using var client = CreateCrossEntityTxnClient();
+            await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+
+            await using var noTxClient = CreateNoRetryClient();
+            var senderA = noTxClient.CreateSender(queueA.QueueName);
+            await senderA.SendMessageAsync(new ServiceBusMessage());
+
+            var receiverA = client.CreateReceiver(queueA.QueueName);
+            var senderB = client.CreateSender(queueB.QueueName);
+
+            var receivedMessage = await receiverA.ReceiveMessageAsync();
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+
+                SimulateNetworkFailure(client);
+                Assert.That(
+                    async () => await senderB.SendMessageAsync(new ServiceBusMessage()),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+
+            // allow enough time for the service to discard the transaction
+            receivedMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(200));
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                await senderB.SendMessageAsync(new ServiceBusMessage());
+                ts.Complete();
+            }
+
+            var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
+            Assert.IsNotNull(await receiverB.ReceiveMessageAsync());
         }
 
         private ServiceBusClient CreateCrossEntityTxnClient() =>

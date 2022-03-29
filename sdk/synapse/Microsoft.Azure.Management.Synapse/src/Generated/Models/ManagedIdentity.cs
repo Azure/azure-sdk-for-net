@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Synapse.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,12 +36,16 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="tenantId">The tenant ID of the workspace managed
         /// identity</param>
         /// <param name="type">The type of managed identity for the workspace.
-        /// Possible values include: 'None', 'SystemAssigned'</param>
-        public ManagedIdentity(string principalId = default(string), System.Guid? tenantId = default(System.Guid?), ResourceIdentityType? type = default(ResourceIdentityType?))
+        /// Possible values include: 'None', 'SystemAssigned',
+        /// 'SystemAssigned,UserAssigned'</param>
+        /// <param name="userAssignedIdentities">The user assigned managed
+        /// identities.</param>
+        public ManagedIdentity(string principalId = default(string), System.Guid? tenantId = default(System.Guid?), ResourceIdentityType? type = default(ResourceIdentityType?), IDictionary<string, UserAssignedManagedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedManagedIdentity>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -62,10 +68,17 @@ namespace Microsoft.Azure.Management.Synapse.Models
 
         /// <summary>
         /// Gets or sets the type of managed identity for the workspace.
-        /// Possible values include: 'None', 'SystemAssigned'
+        /// Possible values include: 'None', 'SystemAssigned',
+        /// 'SystemAssigned,UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ResourceIdentityType? Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user assigned managed identities.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedManagedIdentity> UserAssignedIdentities { get; set; }
 
     }
 }

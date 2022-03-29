@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="assetName">The name of the input Asset.</param>
         /// <param name="files">List of files. Required for JobInputHttp.
-        /// Maximum of 4000 characters each.</param>
+        /// Maximum of 4000 characters each. Query strings will not be returned
+        /// in service responses to prevent sensitive data exposure.</param>
         /// <param name="start">Defines a point on the timeline of the input
         /// media at which processing will start. Defaults to the beginning of
         /// the input media.</param>

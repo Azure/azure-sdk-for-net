@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +22,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample04_ProcessingEventsLiveTests
     {
         /// <summary>
@@ -39,19 +36,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample04_BasicEventProcessing
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -154,13 +152,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup.  This
-               // is especially important when using lambda expressions or handlers
-               // in any form that may contain closure scopes or hold other references.
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup.  This
+                // is especially important when using lambda expressions or handlers
+                // in any form that may contain closure scopes or hold other references.
 
-               processor.ProcessEventAsync -= processEventHandler;
-               processor.ProcessErrorAsync -= processErrorHandler;
+                processor.ProcessEventAsync -= processEventHandler;
+                processor.ProcessErrorAsync -= processErrorHandler;
             }
 
             #endregion
@@ -178,19 +176,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample04_CheckpointByEventCount
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -276,11 +275,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup
 
-               processor.ProcessEventAsync -= processEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+                processor.ProcessEventAsync -= processEventHandler;
+                processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion
@@ -298,19 +297,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample04_InitializePartition
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -386,136 +386,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup
 
-               processor.PartitionInitializingAsync -= initializeEventHandler;
-               processor.ProcessEventAsync -= Application.ProcessorEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessByBatch()
-        {
-            await using var eventHubScope = await EventHubScope.CreateAsync(1);
-            await using var storageScope = await StorageScope.CreateAsync();
-
-            #region Snippet:EventHubs_Processor_Sample04_ProcessByBatch
-
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
-
-            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-            var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
-
-            var storageClient = new BlobContainerClient(
-                storageConnectionString,
-                blobContainerName);
-
-            var processor = new EventProcessorClient(
-                storageClient,
-                consumerGroup,
-                eventHubsConnectionString,
-                eventHubName);
-
-            const int EventsInBatch = 50;
-            var partitionEventBatches = new ConcurrentDictionary<string, List<EventData>>();
-            var checkpointNeeded = false;
-
-            async Task processEventHandler(ProcessEventArgs args)
-            {
-                try
-                {
-                    string partition = args.Partition.PartitionId;
-
-                    List<EventData> partitionBatch =
-                        partitionEventBatches.GetOrAdd(
-                            partition,
-                            new List<EventData>());
-
-                    partitionBatch.Add(args.Data);
-
-                    if (partitionBatch.Count >= EventsInBatch)
-                    {
-                        await Application.ProcessEventBatchAsync(
-                            partitionBatch,
-                            args.Partition,
-                            args.CancellationToken);
-
-                        checkpointNeeded = true;
-                        partitionBatch.Clear();
-                    }
-
-                    if (checkpointNeeded)
-                    {
-                        await args.UpdateCheckpointAsync();
-                        checkpointNeeded = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Application.HandleProcessingException(args, ex);
-                }
-            }
-
-            try
-            {
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-                // The error handler is not relevant for this sample; for
-                // illustration, it is delegating the implementation to the
-                // host application.
-
-                processor.ProcessEventAsync += processEventHandler;
-                processor.ProcessErrorAsync += Application.ProcessorErrorHandler;
-
-                try
-                {
-                    await processor.StartProcessingAsync(cancellationSource.Token);
-                    await Task.Delay(Timeout.Infinite, cancellationSource.Token);
-                }
-                catch (TaskCanceledException)
-                {
-                    // This is expected if the cancellation token is
-                    // signaled.
-                }
-                finally
-                {
-                    // This may take up to the length of time defined
-                    // as part of the configured TryTimeout of the processor;
-                    // by default, this is 60 seconds.
-
-                    await processor.StopProcessingAsync();
-                }
-            }
-            catch
-            {
-                // If this block is invoked, then something external to the
-                // processor was the source of the exception.
-            }
-            finally
-            {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup.
-
-               processor.ProcessEventAsync -= processEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+                processor.PartitionInitializingAsync -= initializeEventHandler;
+                processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+                processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion
@@ -533,19 +409,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Processor_Sample04_ProcessWithHeartbeat
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,
@@ -621,11 +498,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
             finally
             {
-               // It is encouraged that you unregister your handlers when you have
-               // finished using the Event Processor to ensure proper cleanup.
+                // It is encouraged that you unregister your handlers when you have
+                // finished using the Event Processor to ensure proper cleanup.
 
-               processor.ProcessEventAsync -= processEventHandler;
-               processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+                processor.ProcessEventAsync -= processEventHandler;
+                processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
             }
 
             #endregion
@@ -636,7 +513,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         ///   examples.
         /// </summary>
         ///
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Simulated class for illustration in samples.")]
         private static class Application
         {
             /// <summary>
@@ -664,18 +540,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                                                               CancellationToken cancellationToken) => Task.CompletedTask;
 
             /// <summary>
-            ///   A simulated method that an application would use to process a batch of events.
-            /// </summary>
-            ///
-            /// <param name="eventData">The event to process.</param>
-            /// <param name="partition">The partition from which the event originated.</param>
-            /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
-            ///
-            public static Task ProcessEventBatchAsync(IReadOnlyList<EventData> eventData,
-                                                      PartitionContext partition,
-                                                      CancellationToken cancellationToken) => Task.CompletedTask;
-
-            /// <summary>
             ///   A simulated method for handling an exception that occurs during
             ///   partition initialization.
             /// </summary>
@@ -684,7 +548,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             /// <param name="exception">The exception to handle.</param>
             ///
             public static void HandleInitializeException(PartitionInitializingEventArgs eventArgs,
-                                                         Exception exception) {}
+                                                         Exception exception)
+            { }
 
             /// <summary>
             ///   A simulated method for handling an exception that occurs during
@@ -695,7 +560,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             /// <param name="exception">The exception to handle.</param>
             ///
             public static void HandleProcessingException(ProcessEventArgs eventArgs,
-                                                         Exception exception) {}
+                                                         Exception exception)
+            { }
 
             /// <summary>
             ///   A simulated method for handling an exception that occurs during
@@ -706,7 +572,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             /// <param name="exception">The exception to handle.</param>
             ///
             public static void HandleErrorException(ProcessErrorEventArgs eventArgs,
-                                                    Exception exception) {}
+                                                    Exception exception)
+            { }
 
             /// <summary>
             ///   A simulated method that an application would register as an event handler.

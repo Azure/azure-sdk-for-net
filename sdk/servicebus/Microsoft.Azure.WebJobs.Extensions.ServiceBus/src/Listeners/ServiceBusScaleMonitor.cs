@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private const string DeadLetterQueuePath = @"/$DeadLetterQueue";
 
         private readonly string _functionId;
-        private readonly EntityType _entityType;
+        private readonly ServiceBusEntityType _serviceBusEntityType;
         private readonly string _entityPath;
         private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
         private readonly bool _isListeningOnDeadLetterQueue;
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private DateTime _nextWarningTime;
 
-        public ServiceBusScaleMonitor(string functionId, EntityType entityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
+        public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
         {
             _functionId = functionId;
-            _entityType = entityType;
+            _serviceBusEntityType = serviceBusEntityType;
             _entityPath = entityPath;
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(CultureInfo.InvariantCulture));
             _isListeningOnDeadLetterQueue = entityPath.EndsWith(DeadLetterQueuePath, StringComparison.OrdinalIgnoreCase);
@@ -57,23 +57,48 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         public async Task<ServiceBusTriggerMetrics> GetMetricsAsync()
         {
-            ServiceBusReceivedMessage message = null;
-            string entityName = _entityType == EntityType.Queue ? "queue" : "topic";
+            ServiceBusReceivedMessage activeMessage = null;
+            string entityName = _serviceBusEntityType == ServiceBusEntityType.Queue ? "queue" : "topic";
 
             try
             {
-                // Peek the first message in the queue without removing it from the queue
-                // PeekAsync remembers the sequence number of the last message, so the second call returns the second message instead of the first one
-                // Use PeekBySequenceNumberAsync with fromSequenceNumber = 0 to always get the first available message
-                message = await _receiver.Value.PeekMessageAsync(fromSequenceNumber: 0).ConfigureAwait(false);
-
-                if (_entityType == EntityType.Queue)
+                // Do a first attempt to peek one message from the head of the queue
+                var peekedMessage = await _receiver.Value.PeekMessageAsync(fromSequenceNumber: 0).ConfigureAwait(false);
+                if (peekedMessage == null)
                 {
-                    return await GetQueueMetricsAsync(message).ConfigureAwait(false);
+                    // ignore it. The Get[Queue|Topic]MetricsAsync methods deal with activeMessage being null
+                }
+                else if (MessageIsActive(peekedMessage))
+                {
+                    activeMessage = peekedMessage;
                 }
                 else
                 {
-                    return await GetTopicMetricsAsync(message).ConfigureAwait(false);
+                    // Do another attempt to peek ten message from last peek sequence number
+                    var peekedMessages  = await _receiver.Value.PeekMessagesAsync(10, fromSequenceNumber: peekedMessage.SequenceNumber).ConfigureAwait(false);
+                    foreach (var receivedMessage in peekedMessages )
+                    {
+                        if (MessageIsActive(receivedMessage))
+                        {
+                            activeMessage = receivedMessage;
+                            break;
+                        }
+                    }
+
+                    // Batch contains messages but none are active in the peeked batch
+                    if (peekedMessages.Count > 0 && activeMessage == null)
+                    {
+                        _logger.LogDebug("{_serviceBusEntityType} {_entityPath} contains multiple messages but none are active in the peeked batch.");
+                    }
+                }
+
+                if (_serviceBusEntityType == ServiceBusEntityType.Queue)
+                {
+                    return await GetQueueMetricsAsync(activeMessage).ConfigureAwait(false);
+                }
+                else
+                {
+                    return await GetTopicMetricsAsync(activeMessage).ConfigureAwait(false);
                 }
             }
             catch (ServiceBusException ex)
@@ -95,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
 
             // Path for connection strings with no manage claim
-            return CreateTriggerMetrics(message, 0, 0, 0, _isListeningOnDeadLetterQueue);
+            return CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
         }
 
         private async Task<ServiceBusTriggerMetrics> GetQueueMetricsAsync(ServiceBusReceivedMessage message)
@@ -161,6 +186,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 PartitionCount = partitionCount,
                 QueueTime = queueTime
             };
+        }
+
+        private static bool MessageIsActive(ServiceBusReceivedMessage message)
+        {
+            return message.State == ServiceBusMessageState.Active;
         }
 
         ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)

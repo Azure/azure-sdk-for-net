@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceKeyListResult. </summary>
         internal ManagedInstanceKeyListResult()
         {
-            Value = new ChangeTrackingList<ManagedInstanceKey>();
+            Value = new ChangeTrackingList<ManagedInstanceKeyData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceKeyListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ManagedInstanceKeyListResult(IReadOnlyList<ManagedInstanceKey> value, string nextLink)
+        internal ManagedInstanceKeyListResult(IReadOnlyList<ManagedInstanceKeyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<ManagedInstanceKey> Value { get; }
+        public IReadOnlyList<ManagedInstanceKeyData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

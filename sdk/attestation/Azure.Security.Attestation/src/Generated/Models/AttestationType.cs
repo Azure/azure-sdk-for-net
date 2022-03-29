@@ -15,7 +15,7 @@ namespace Azure.Security.Attestation
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="AttestationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttestationType(string value)
         {

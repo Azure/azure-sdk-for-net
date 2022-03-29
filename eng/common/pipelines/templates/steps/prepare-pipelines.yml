@@ -13,10 +13,13 @@ parameters:
   - name: TestsConventionOptions
     type: string
     default: ''
+  - name: GenerateUnifiedWeekly
+    type: boolean
+    default: false
 
 steps:
   - template: install-pipeline-generation.yml
-
+  - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
   # This covers our public repos.
   - ${{ if not(endsWith(parameters.Repository, '-pr'))}}:
     - script: >
@@ -30,11 +33,11 @@ steps:
         --repository ${{parameters.Repository}}
         --convention ci
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.CIConventionOptions}}
-      displayName: Create CI pipelines for public repository
+      displayName: Create CI Pipelines for Public Repository
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -48,11 +51,11 @@ steps:
         --repository ${{parameters.Repository}}
         --convention up
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.UPConventionOptions}}
-      displayName: Create UP pipelines for public repository
+      displayName: Create UP Pipelines for Public Repository
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -66,14 +69,53 @@ steps:
         --repository ${{parameters.Repository}}
         --convention tests
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.TestsConventionOptions}}
-      displayName: Create Live Test pipelines for public repository
-      condition: ne('${{parameters.TestsConventionOptions}}','')
+      displayName: Create Live Test Pipelines for Public Repository
+      condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
+    - script: >
+        $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
+        --organization https://dev.azure.com/azure-sdk
+        --project internal
+        --prefix ${{parameters.Prefix}}
+        --devopspath "\${{parameters.Prefix}}"
+        --path $(System.DefaultWorkingDirectory)/sdk
+        --endpoint Azure
+        --repository ${{parameters.Repository}}
+        --convention testsweekly
+        --agentpool Hosted
+        --branch refs/heads/$(DefaultBranch)
+        --patvar PATVAR
+        --debug
+        ${{parameters.TestsConventionOptions}}
+      displayName: Create Weekly (Multi-Cloud) Live Test Pipelines for Public Repository
+      condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
+      env:
+        PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
+    - script: >
+        $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
+        --organization https://dev.azure.com/azure-sdk
+        --project internal
+        --prefix ${{parameters.Prefix}}
+        --devopspath "\${{parameters.Prefix}}"
+        --path $(System.DefaultWorkingDirectory)/sdk
+        --endpoint Azure
+        --repository ${{parameters.Repository}}
+        --convention upweekly
+        --agentpool Hosted
+        --branch refs/heads/$(DefaultBranch)
+        --patvar PATVAR
+        --debug
+        ${{parameters.UPConventionOptions}}
+      displayName: Create Weekly (Multi-Cloud) Unified Test Pipelines for Public Repository
+      condition: and(succeeded(), eq(${{parameters.GenerateUnifiedWeekly}},true))
+      env:
+        PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
+
 
   # This covers our -pr repositories.
   - ${{ if endsWith(parameters.Repository, '-pr')}}:
@@ -88,12 +130,12 @@ steps:
         --repository ${{parameters.Repository}}
         --convention ci
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
         ${{parameters.CIConventionOptions}}
-      displayName: Create CI pipelines for private repository
+      displayName: Create CI Pipelines for Private Repository
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -107,12 +149,12 @@ steps:
         --repository ${{parameters.Repository}}
         --convention up
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
         ${{parameters.UPConventionOptions}}
-      displayName: Create UP pipelines for private repository
+      displayName: Create UP Pipelines for Private Repository
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
     - script: >
@@ -126,12 +168,12 @@ steps:
         --repository ${{parameters.Repository}}
         --convention tests
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
         ${{parameters.TestsConventionOptions}}
-      displayName: Create Live Test pipelines for private repository
-      condition: ne('${{parameters.TestsConventionOptions}}','')
+      displayName: Create Live Test Pipelines for Private Repository
+      condition: and(succeeded(), ne('${{parameters.TestsConventionOptions}}',''))
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)

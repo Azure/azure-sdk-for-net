@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.Compute
             /// The filter to apply on the operation. Only **location** filter is supported
             /// currently.
             /// </param>
-            public static IPage<ResourceSku> List(this IResourceSkusOperations operations, string filter = default(string))
+            /// <param name='includeExtendedLocations'>
+            /// To Include Extended Locations information or not in the response.
+            /// </param>
+            public static IPage<ResourceSku> List(this IResourceSkusOperations operations, string filter = default(string), string includeExtendedLocations = default(string))
             {
-                return operations.ListAsync(filter).GetAwaiter().GetResult();
+                return operations.ListAsync(filter, includeExtendedLocations).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,12 +49,15 @@ namespace Microsoft.Azure.Management.Compute
             /// The filter to apply on the operation. Only **location** filter is supported
             /// currently.
             /// </param>
+            /// <param name='includeExtendedLocations'>
+            /// To Include Extended Locations information or not in the response.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceSku>> ListAsync(this IResourceSkusOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceSku>> ListAsync(this IResourceSkusOperations operations, string filter = default(string), string includeExtendedLocations = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(filter, includeExtendedLocations, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

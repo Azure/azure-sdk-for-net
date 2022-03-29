@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 
@@ -24,9 +23,6 @@ namespace Azure.Identity
         private DateTimeOffset _lastUpdated;
         private ConditionalWeakTable<object, CacheTimestamp> _cacheAccessMap;
         internal Func<IPublicClientApplication> _publicClientApplicationFactory;
-        // we are creating the MsalCacheHelper with a random guid based clientId to work around issue https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/issues/98
-        // This does not impact the functionality of the cacheHelper as the ClientId is only used to iterate accounts in the cache not for authentication purposes.
-        internal static readonly string s_msalCacheClientId = Guid.NewGuid().ToString();
         private readonly bool _allowUnencryptedStorage;
         private readonly string _name;
         private readonly bool _persistToDisk;
@@ -91,7 +87,7 @@ namespace Azure.Identity
         /// <summary>
         /// A delegate that will be called before the cache is accessed. The data returned will be used to set the current state of the cache.
         /// </summary>
-        internal Func<Task<ReadOnlyMemory<byte>>> RefreshCacheFromOptionsAsync;
+        internal Func<TokenCacheRefreshArgs, CancellationToken, Task<TokenCacheData>> RefreshCacheFromOptionsAsync;
 
         internal virtual async Task RegisterCache(bool async, ITokenCache tokenCache, CancellationToken cancellationToken)
         {
@@ -146,7 +142,8 @@ namespace Azure.Identity
             {
                 if (RefreshCacheFromOptionsAsync != null)
                 {
-                    Data = (await RefreshCacheFromOptionsAsync().ConfigureAwait(false)).ToArray();
+                    Data = (await RefreshCacheFromOptionsAsync(new TokenCacheRefreshArgs(args), default).ConfigureAwait(false))
+                        .CacheBytes.ToArray();
                 }
                 args.TokenCache.DeserializeMsalV3(Data, true);
 
@@ -252,7 +249,7 @@ namespace Azure.Identity
 
         private async Task<MsalCacheHelperWrapper> GetProtectedCacheHelperAsync(bool async, string name)
         {
-            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(name, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
+            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(name, Constants.DefaultMsalTokenCacheDirectory)
                 .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, name)
                 .WithLinuxKeyring(Constants.DefaultMsalTokenCacheKeyringSchema, Constants.DefaultMsalTokenCacheKeyringCollection, name, Constants.DefaultMsaltokenCacheKeyringAttribute1, Constants.DefaultMsaltokenCacheKeyringAttribute2)
                 .Build();
@@ -264,7 +261,7 @@ namespace Azure.Identity
 
         private async Task<MsalCacheHelperWrapper> GetFallbackCacheHelperAsync(bool async, string name = Constants.DefaultMsalTokenCacheName)
         {
-            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(name, Constants.DefaultMsalTokenCacheDirectory, s_msalCacheClientId)
+            StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(name, Constants.DefaultMsalTokenCacheDirectory)
                 .WithMacKeyChain(Constants.DefaultMsalTokenCacheKeychainService, name)
                 .WithLinuxUnprotectedFile()
                 .Build();

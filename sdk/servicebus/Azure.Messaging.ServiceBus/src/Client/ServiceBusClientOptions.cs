@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -63,20 +62,10 @@ namespace Azure.Messaging.ServiceBus
         public bool EnableCrossEntityTransactions { get; set; }
 
         /// <summary>
-        /// The list of plugins for the client.
+        /// Gets or sets whether or not to enable metrics for the associated <see cref="ServiceBusClient"/> instance.
+        /// If set to <value>true</value>, <see cref="ServiceBusClient.GetTransportMetrics"/> can be called.
         /// </summary>
-        internal List<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
-
-        /// <summary>
-        /// Register a plugin to be used to alter
-        /// incoming/outgoing messages.
-        /// </summary>
-        /// <param name="plugin">The plugin instance to register.</param>
-        internal void AddPlugin(ServiceBusPlugin plugin)
-        {
-            Argument.AssertNotNull(plugin, nameof(plugin));
-            Plugins.Add(plugin);
-        }
+        public bool EnableTransportMetrics { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -120,7 +109,7 @@ namespace Azure.Messaging.ServiceBus
                 WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
                 EnableCrossEntityTransactions = EnableCrossEntityTransactions,
-                Plugins = new List<ServiceBusPlugin>(Plugins)
+                EnableTransportMetrics = EnableTransportMetrics
             };
     }
 }

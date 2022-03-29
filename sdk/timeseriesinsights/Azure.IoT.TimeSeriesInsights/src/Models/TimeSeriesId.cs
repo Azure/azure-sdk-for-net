@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Text.Json;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -13,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// A single Time Series Id can be composite of multiple properties are specified as Time Series Id at environment creation time.
     /// The position and type of values must match Time Series Id properties specified on the environment and returned by Get Model Setting API.
     /// </remarks>
-    public class TimeSeriesId
+    public struct TimeSeriesId : IEquatable<TimeSeriesId>
     {
         private readonly string[] _keys;
 
@@ -64,7 +67,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Series Insights client library.
         /// </summary>
         /// <returns>An array representing a single Time Series Id.</returns>
-        public string[] ToArray() => _keys;
+        public string[] ToStringArray() => _keys;
 
         /// <summary>
         /// Represent the Time Series Id as a JSON string.
@@ -73,6 +76,37 @@ namespace Azure.IoT.TimeSeriesInsights
         public override string ToString()
         {
             return JsonSerializer.Serialize(_keys);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(TimeSeriesId other)
+        {
+            return _keys.Length == other.ToStringArray().Length
+                && _keys.SequenceEqual(other.ToStringArray());
+        }
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj)
+        {
+            return obj is TimeSeriesId id && Equals(id);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            if (_keys.Length == 1)
+            {
+                return (_keys[0]).GetHashCode();
+            }
+            else if (_keys.Length == 2)
+            {
+                return (_keys[0], _keys[1]).GetHashCode();
+            }
+            else
+            {
+                return (_keys[0], _keys[1], _keys[2]).GetHashCode();
+            }
         }
     }
 }

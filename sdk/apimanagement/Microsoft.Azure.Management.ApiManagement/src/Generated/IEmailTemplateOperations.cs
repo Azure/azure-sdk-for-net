@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface IEmailTemplateOperations
     {
         /// <summary>
-        /// Lists a collection of properties defined within a service instance.
+        /// Gets all email templates
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -33,11 +33,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// The name of the API Management service.
         /// </param>
         /// <param name='filter'>
-        /// |   Field     |     Usage     |     Supported operators     |
+        /// |     Field     |     Usage     |     Supported operators     |
         /// Supported functions
         /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
         /// name | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-        /// startswith, endswith | &lt;/br&gt;
+        /// startswith, endswith |&lt;/br&gt;
         /// </param>
         /// <param name='top'>
         /// Number of records to return.
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<EmailTemplateContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string templateName, EmailTemplateUpdateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the specific Email Template.
+        /// Updates API Management email template
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -202,13 +202,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// 'rejectDeveloperNotificationMessage',
         /// 'requestDeveloperNotificationMessage'
         /// </param>
-        /// <param name='parameters'>
-        /// Update parameters.
-        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from
         /// the header response of the GET request or it should be * for
         /// unconditional update.
+        /// </param>
+        /// <param name='parameters'>
+        /// Update parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -219,10 +219,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string templateName, EmailTemplateUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EmailTemplateContract,EmailTemplateUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string templateName, string ifMatch, EmailTemplateUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Reset the Email Template to default template provided by the API
         /// Management service instance.
@@ -265,7 +268,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string templateName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists a collection of properties defined within a service instance.
+        /// Gets all email templates
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,6 +36,9 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         /// <param name="targetResourceName">Gets or sets the target Resource
         /// name.</param>
+        /// <param name="tags">Gets or sets the Resource tags.</param>
+        /// <param name="userManagedIdentities">Gets or sets user-managed
+        /// identities</param>
         /// <param name="targetAvailabilityZone">Gets or sets the target
         /// availability zone. Possible values include: '1', '2', '3',
         /// 'NA'</param>
@@ -42,9 +47,11 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// <param name="targetAvailabilitySetId">Gets or sets the target
         /// availability set id for virtual machines not in an availability set
         /// at source.</param>
-        public VirtualMachineResourceSettings(string targetResourceName, string targetAvailabilityZone = default(string), string targetVmSize = default(string), string targetAvailabilitySetId = default(string))
+        public VirtualMachineResourceSettings(string targetResourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> userManagedIdentities = default(IList<string>), string targetAvailabilityZone = default(string), string targetVmSize = default(string), string targetAvailabilitySetId = default(string))
             : base(targetResourceName)
         {
+            Tags = tags;
+            UserManagedIdentities = userManagedIdentities;
             TargetAvailabilityZone = targetAvailabilityZone;
             TargetVmSize = targetVmSize;
             TargetAvailabilitySetId = targetAvailabilitySetId;
@@ -55,6 +62,18 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets user-managed identities
+        /// </summary>
+        [JsonProperty(PropertyName = "userManagedIdentities")]
+        public IList<string> UserManagedIdentities { get; set; }
 
         /// <summary>
         /// Gets or sets the target availability zone. Possible values include:

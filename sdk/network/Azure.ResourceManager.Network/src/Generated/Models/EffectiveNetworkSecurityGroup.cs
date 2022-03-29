@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="association"> Associated resources. </param>
         /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
         /// <param name="tagMap"> Mapping of tags to list of IP Addresses included within the tag. </param>
-        internal EffectiveNetworkSecurityGroup(SubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, string tagMap)
+        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, string tagMap)
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
@@ -33,7 +34,14 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of network security group that is applied. </summary>
-        public SubResource NetworkSecurityGroup { get; }
+        internal WritableSubResource NetworkSecurityGroup { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkSecurityGroupId
+        {
+            get => NetworkSecurityGroup.Id;
+            set => NetworkSecurityGroup.Id = value;
+        }
+
         /// <summary> Associated resources. </summary>
         public EffectiveNetworkSecurityGroupAssociation Association { get; }
         /// <summary> A collection of effective security rules. </summary>

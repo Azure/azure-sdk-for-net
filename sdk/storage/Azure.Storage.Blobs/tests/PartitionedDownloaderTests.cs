@@ -77,11 +77,6 @@ namespace Azure.Storage.Blobs.Test
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
-            BlobProperties smallLengthProperties = new BlobProperties()
-            {
-                ContentLength = 100
-            };
-
             SetupDownload(blockClient, dataSource);
 
             PartitionedDownloader downloader = new PartitionedDownloader(
@@ -106,10 +101,6 @@ namespace Azure.Storage.Blobs.Test
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
-            BlobProperties smallLengthProperties = new BlobProperties()
-            {
-                ContentLength = 100
-            };
 
             SetupDownload(blockClient, dataSource);
 
@@ -135,11 +126,6 @@ namespace Azure.Storage.Blobs.Test
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
-            BlobProperties properties = new BlobProperties()
-            {
-                ContentLength = 100,
-                ETag = s_etag
-            };
 
             SetupDownload(blockClient, dataSource);
 
@@ -183,19 +169,19 @@ namespace Azure.Storage.Blobs.Test
             MemoryStream stream = new MemoryStream();
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
             blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
-            BlobProperties smallLengthProperties = new BlobProperties()
-            {
-                ContentLength = 100
-            };
 
             if (_async)
             {
                 blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
                     .ThrowsAsync(e);
+                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
+                    .ThrowsAsync(e);
             }
             else
             {
                 blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
+                    .Throws(e);
+                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
                     .Throws(e);
             }
 
@@ -222,12 +208,28 @@ namespace Azure.Storage.Blobs.Test
             if (_async)
             {
                 blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>(dataSource.GetStreamAsync);
+                    .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>((range, conditions, rangeGetHash, cancellation) =>
+                        dataSource.GetStreamAsync(
+                            range,
+                            conditions,
+                            rangeGetHash,
+                            progress: default,
+                            cancellation));
+                blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
+                    .Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, CancellationToken>(dataSource.GetStreamAsync);
             }
             else
             {
                 blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>(dataSource.GetStream);
+                    .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>((range, conditions, rangeGetHash, cancellation) =>
+                        dataSource.GetStream(
+                            range,
+                            conditions,
+                            rangeGetHash,
+                            progress: default,
+                            cancellation));
+                blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
+                    .Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, CancellationToken>(dataSource.GetStream);
             }
         }
 
@@ -254,15 +256,15 @@ namespace Azure.Storage.Blobs.Test
                 _length = length;
             }
 
-            public async Task<Response<BlobDownloadStreamingResult>> GetStreamAsync(HttpRange range, BlobRequestConditions conditions = default, bool hash = default, CancellationToken token = default)
+            public async Task<Response<BlobDownloadStreamingResult>> GetStreamAsync(HttpRange range, BlobRequestConditions conditions = default, bool hash = default, IProgress<long> progress = default, CancellationToken token = default)
             {
                 await Task.Delay(25);
-                return GetStream(range, conditions, hash, token);
+                return GetStream(range, conditions, hash, progress, token);
             }
 
             public HttpRange FullRange => new HttpRange(0, _length);
 
-            public Response<BlobDownloadStreamingResult> GetStream(HttpRange range, BlobRequestConditions conditions, bool hash, CancellationToken token)
+            public Response<BlobDownloadStreamingResult> GetStream(HttpRange range, BlobRequestConditions conditions, bool hash, IProgress<long> progress, CancellationToken token)
             {
                 lock (Requests)
                 {

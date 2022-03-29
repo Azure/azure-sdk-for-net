@@ -91,7 +91,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                 EnableReceiverRuntimeMetric = this.Host.EventProcessorOptions.EnableReceiverRuntimeMetric,
 
                 // Use host name as the identifier for debugging purpose
-                // Shorten host name if name is longer than max allowed lenght.
+                // Shorten host name if name is longer than max allowed length.
                 Identifier = this.Host.HostName.Length > ClientConstants.MaxReceiverIdentifierLength ?
                     this.Host.HostName.Substring(0, ClientConstants.MaxReceiverIdentifierLength) : this.Host.HostName
             };

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='fabricName'>
-            /// Fabric name
+            /// Fabric name.
             /// </param>
             public static IPage<Network> ListByReplicationFabrics(this IReplicationNetworksOperations operations, string fabricName)
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='fabricName'>
-            /// Fabric name
+            /// Fabric name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of networks. View-only API.
             /// </summary>
             /// <remarks>
-            /// Lists the networks available in a vault
+            /// Lists the networks available in a vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of networks. View-only API.
             /// </summary>
             /// <remarks>
-            /// Lists the networks available in a vault
+            /// Lists the networks available in a vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of networks. View-only API.
             /// </summary>
             /// <remarks>
-            /// Lists the networks available in a vault
+            /// Lists the networks available in a vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of networks. View-only API.
             /// </summary>
             /// <remarks>
-            /// Lists the networks available in a vault
+            /// Lists the networks available in a vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

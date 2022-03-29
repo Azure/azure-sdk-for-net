@@ -6180,6 +6180,73 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadfrg5566/providers/Microsoft.DataFactory/factories/sdktestingfactory352/integrationRuntimes/ssisazureintegrationruntime/outboundNetworkDependenciesEndpoints?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzM5ZGNlMTgtY2VhZC00MDY1LThmYjEtM2FmNzY4M2E1MDM4L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzU1NjYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3RvcnkzNTIvaW50ZWdyYXRpb25SdW50aW1lcy9zc2lzYXp1cmVpbnRlZ3JhdGlvbnJ1bnRpbWUvb3V0Ym91bmROZXR3b3JrRGVwZW5kZW5jaWVzRW5kcG9pbnRzP2FwaS12ZXJzaW9uPTIwMTgtMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a8010bda-5d3a-4a64-8862-cbb79c787d6d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n    \"value\": [\r\n        {\r\n            \"category\": \"Azure Data Factory (Management)\",\r\n            \"endpoints\": [\r\n                {\r\n                    \"domainName\": \"wu.frontend.clouddatahub.net\",\r\n                    \"endpointDetails\": [\r\n                        {\r\n                            \"port\": 443\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"category\": \"Azure Storage (Management)\",\r\n            \"endpoints\": [\r\n                {\r\n                    \"domainName\": \"*.blob.core.windows.net\",\r\n                    \"endpointDetails\": [\r\n                        {\r\n                            \"port\": 443\r\n                        }\r\n                    ]\r\n                },\r\n                {\r\n                    \"domainName\": \"*.table.core.windows.net\",\r\n                    \"endpointDetails\": [\r\n                        {\r\n                            \"port\": 443\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"category\": \"Event Hub (Logging)\",\r\n            \"endpoints\": [\r\n                {\r\n                    \"domainName\": \"*.servicebus.windows.net\",\r\n                    \"endpointDetails\": [\r\n                        {\r\n                            \"port\": 443\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"category\": \"Microsoft Logging service (Internal Use)\",\r\n            \"endpoints\": [\r\n                {\r\n                    \"domainName\": \"gcs.prod.monitoring.core.windows.net\",\r\n                    \"endpointDetails\": [\r\n                        {\r\n                            \"port\": 443\r\n                        }\r\n                    ]\r\n                },\r\n                {\r\n                    \"domainName\": \"prod.warmpath.msftcloudes.com\",\r\n                    \"endpointDetails\": [\r\n                        {\r\n                            \"port\": 443\r\n                        }\r\n                    ]\r\n                },\r\n                {\r\n                    \"domainName\": \"azurewatsonanalysis-prod.core.windows.net\",\r\n                    \"endpointDetails\": [\r\n                        {\r\n                            \"port\": 443\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 22 Jun 2018 09:11:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14911"
+        ],
+        "x-ms-request-id": [
+          "13326532-db8c-4e0e-abfc-9e86764b3c60"
+        ],
+        "x-ms-correlation-request-id": [
+          "13326532-db8c-4e0e-abfc-9e86764b3c60"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180622T091200Z:13326532-db8c-4e0e-abfc-9e86764b3c60"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TREtURVNUSU5HQURGUkc1NTY2LVdFU1RFVVJPUEUiLCJqb2JMb2NhdGlvbiI6Indlc3RldXJvcGUifQ?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzM5ZGNlMTgtY2VhZC00MDY1LThmYjEtM2FmNzY4M2E1MDM4L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUUkV0VVJWTlVTVTVIUVVSR1VrYzFOVFkyTFZkRlUxUkZWVkpQVUVVaUxDSnFiMkpNYjJOaGRHbHZiaUk2SW5kbGMzUmxkWEp2Y0dVaWZRP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
       "RequestMethod": "GET",

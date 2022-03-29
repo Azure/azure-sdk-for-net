@@ -107,10 +107,6 @@ namespace Microsoft.Azure.Management.Avs
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (privateCloudName == null)
             {
@@ -335,10 +331,6 @@ namespace Microsoft.Azure.Management.Avs
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (privateCloudName == null)
             {
@@ -521,9 +513,6 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='hcxEnterpriseSiteName'>
         /// Name of the HCX Enterprise Site in the private cloud
         /// </param>
-        /// <param name='hcxEnterpriseSite'>
-        /// The HCX Enterprise Site
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -545,7 +534,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HcxEnterpriseSite>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, object hcxEnterpriseSite, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HcxEnterpriseSite>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -572,10 +561,6 @@ namespace Microsoft.Azure.Management.Avs
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (privateCloudName == null)
             {
@@ -584,10 +569,6 @@ namespace Microsoft.Azure.Management.Avs
             if (hcxEnterpriseSiteName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hcxEnterpriseSiteName");
-            }
-            if (hcxEnterpriseSite == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hcxEnterpriseSite");
             }
             if (Client.ApiVersion == null)
             {
@@ -600,6 +581,7 @@ namespace Microsoft.Azure.Management.Avs
                     throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
                 }
             }
+            HcxEnterpriseSite hcxEnterpriseSite = new HcxEnterpriseSite();
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -831,10 +813,6 @@ namespace Microsoft.Azure.Management.Avs
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (privateCloudName == null)

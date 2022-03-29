@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2020-06-25",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlVGVzdFJlc291cmNlR3JvdXAwMDIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9HZVdpbjIwMjAwNTA3L3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzP2FwaS12ZXJzaW9uPTIwMjAtMDYtMjU=",
+      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2021-01-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL0d1ZXN0Q29uZmlndXJhdGlvblNES1Rlc3RSZWNvcmQvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9TREtUZXN0UmVjb3JkVk0wMDIvcHJvdmlkZXJzL01pY3Jvc29mdC5HdWVzdENvbmZpZ3VyYXRpb24vZ3Vlc3RDb25maWd1cmF0aW9uQXNzaWdubWVudHM/YXBpLXZlcnNpb249MjAyMS0wMS0yNQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "84f8cc76-5d2e-4645-b152-a85adc4b90c3"
+          "1ec20402-181a-4ec3-9bc4-a8799c1858f9"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.30015.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.3.0"
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -36,25 +36,25 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-request-id": [
-          "071df6ba-fc85-4a6e-aada-d873008a7001"
+          "12318d57-8ef3-4a62-851d-c64bb01d6270"
         ],
         "x-ms-correlation-request-id": [
-          "071df6ba-fc85-4a6e-aada-d873008a7001"
+          "12318d57-8ef3-4a62-851d-c64bb01d6270"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200713T164503Z:071df6ba-fc85-4a6e-aada-d873008a7001"
+          "WESTUS:20210625T012108Z:12318d57-8ef3-4a62-851d-c64bb01d6270"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 13 Jul 2020 16:45:02 GMT"
+          "Fri, 25 Jun 2021 01:21:08 GMT"
         ],
         "Content-Length": [
-          "2697"
+          "966"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"southcentralus\",\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/GeTestCheckBitlockerService\",\r\n      \"name\": \"GeTestCheckBitlockerService\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"NonCompliant\",\r\n        \"assignmentHash\": \"937C6F0D3C89FA524C3112428FE9DD7503EDCB9027B8B60B093CFEBD8C246C33.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855\",\r\n        \"parameterHash\": \"\",\r\n        \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/GeTestCheckBitlockerService/reports/c0ca66d8-26da-422d-9187-850700548765\",\r\n        \"lastComplianceStatusChecked\": \"2020-07-13T16:39:03Z\",\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"GeTestCheckBitlockerService\",\r\n          \"version\": \"1.1.9.10\",\r\n          \"contentUri\": \"https://github.com/gehuang-dut/TestRepo/raw/master/GeTestCheckBitlockerService.zip\",\r\n          \"contentHash\": \"937C6F0D3C89FA524C3112428FE9DD7503EDCB9027B8B60B093CFEBD8C246C33\",\r\n          \"contentType\": null,\r\n          \"assignmentType\": null,\r\n          \"configurationParameter\": [],\r\n          \"configurationProtectedParameter\": [],\r\n          \"configurationSetting\": null\r\n        },\r\n        \"provisioningState\": null\r\n      }\r\n    },\r\n    {\r\n      \"location\": \"westcentralus\",\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"Compliant\",\r\n        \"assignmentHash\": \"E0D8941DD713F284284561648C00C18FA76C8602943C7CD38AFD73B56AE4C35F.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855\",\r\n        \"parameterHash\": \"\",\r\n        \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.Compute/virtualMachines/GeWin20200507/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/7f2510fe-763e-49c5-af84-353d4a453d4f\",\r\n        \"lastComplianceStatusChecked\": \"2020-07-13T16:39:10Z\",\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"version\": \"1.0.0.3\",\r\n          \"contentUri\": \"https://oaasguestconfigscuss1.blob.core.windows.net/builtinconfig/AuditSecureProtocol/AuditSecureProtocol_1.0.0.3.zip\",\r\n          \"contentHash\": \"E0D8941DD713F284284561648C00C18FA76C8602943C7CD38AFD73B56AE4C35F\",\r\n          \"contentType\": null,\r\n          \"assignmentType\": null,\r\n          \"configurationParameter\": [],\r\n          \"configurationProtectedParameter\": [],\r\n          \"configurationSetting\": null\r\n        },\r\n        \"provisioningState\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westcentralus\",\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"Pending\",\r\n        \"assignmentHash\": \"\",\r\n        \"parameterHash\": \"\",\r\n        \"latestReportId\": null,\r\n        \"lastComplianceStatusChecked\": null,\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"version\": \"1.0.0.3\",\r\n          \"contentUri\": null,\r\n          \"contentHash\": null,\r\n          \"contentType\": null,\r\n          \"assignmentType\": null,\r\n          \"configurationParameter\": [],\r\n          \"configurationProtectedParameter\": [],\r\n          \"configurationSetting\": {\r\n            \"configurationMode\": \"MonitorOnly\",\r\n            \"allowModuleOverwrite\": false,\r\n            \"actionAfterReboot\": \"\",\r\n            \"refreshFrequencyMins\": 5,\r\n            \"rebootIfNeeded\": true,\r\n            \"configurationModeFrequencyMins\": 15\r\n          }\r\n        },\r\n        \"provisioningState\": null,\r\n        \"resourceType\": null,\r\n        \"vmssVMList\": null\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

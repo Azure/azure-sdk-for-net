@@ -12,12 +12,18 @@ namespace Azure.Communication.Sms.Tests
     public class SmsClientLiveTestBase : RecordedTestBase<SmsClientTestEnvironment>
     {
         public SmsClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new SmsClientRecordedTestSanitizer();
+        {
+            JsonPathSanitizers.Add("$..from");
+            JsonPathSanitizers.Add("$..to");
+            JsonPathSanitizers.Add("$..repeatabilityRequestId");
+            JsonPathSanitizers.Add("$..repeatabilityFirstSent");
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         [OneTimeSetUp]
         public void Setup()
         {
-            if (TestEnvironment.ShouldIgnoreTests)
+            if (TestEnvironment.ShouldIgnoreSMSTests)
             {
                 Assert.Ignore("SMS tests are skipped " +
                     "because sms package is not included in the TEST_PACKAGES_ENABLED variable");
@@ -26,7 +32,7 @@ namespace Azure.Communication.Sms.Tests
 
         public SmsClient CreateSmsClient()
         {
-            var connectionString = TestEnvironment.LiveTestConnectionString;
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             SmsClient client = new SmsClient(connectionString, CreateSmsClientOptionsWithCorrelationVectorLogs());
 
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
@@ -38,7 +44,7 @@ namespace Azure.Communication.Sms.Tests
 
         public SmsClient CreateSmsClientWithToken()
         {
-            Uri endpoint = TestEnvironment.LiveTestEndpoint;
+            Uri endpoint = TestEnvironment.LiveTestStaticEndpoint;
             TokenCredential tokenCredential;
             if (Mode == RecordedTestMode.Playback)
             {

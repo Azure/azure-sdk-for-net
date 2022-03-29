@@ -1,6 +1,6 @@
 # Azure Quantum Jobs client library for .NET
 
-Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library t
+Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library to:
 - Create, enumerate, and cancel quantum jobs
 - Enumerate provider status and quotas
 
@@ -12,9 +12,9 @@ This section should include everything a developer needs to do to install and cr
 
 ### Install the package
 
-Install the Azure Quantum Jobs client library for .NET with [NuGet][nuget]:
+Install the Azure Quantum Jobs client library for .NET with [NuGet](https://www.nuget.org/):
 
-```Powershell
+```dotnetcli
 dotnet add package Azure.Quantum.Jobs --prerelease -v 1.0.0-beta.1
 ```
 
@@ -22,7 +22,7 @@ dotnet add package Azure.Quantum.Jobs --prerelease -v 1.0.0-beta.1
 
 Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
 
 ### Authenticate the client
 
@@ -47,12 +47,12 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -81,6 +81,7 @@ var resourceGroupName = "your_resource_group_name";
 var workspaceName = "your_quantum_workspace_name";
 var location = "your_location";
 var storageContainerName = "your_container_name";
+
 var credential = new DefaultAzureCredential(true);
 
 var quantumJobClient =
@@ -104,22 +105,59 @@ var containerUri = (quantumJobClient.GetStorageSasUri(
 
 ### Upload Input Data
 
-Using the SAS URI, upload the json input data to the blob client.
+Using the SAS URI, upload the compressed json input data to the blob client.
+Note that we need to compress the json input data before uploading it to the blob storage.
 This contains the parameters to be used with [Quantum Inspired Optimizations](https://docs.microsoft.com/azure/quantum/optimization-overview-introduction)
 
 ```C# Snippet:Azure_Quantum_Jobs_UploadInputData
+string problemFilePath = "./problem.json";
+
 // Get input data blob Uri with SAS key
-string blobName = $"myjobinput.json";
+string blobName = Path.GetFileName(problemFilePath);
 var inputDataUri = (quantumJobClient.GetStorageSasUri(
     new BlobDetails(storageContainerName)
     {
         BlobName = blobName,
     })).Value.SasUri;
 
-// Upload input data to blob
-var blobClient = new BlobClient(new Uri(inputDataUri));
-var problemFilename = "problem.json";
-blobClient.Upload(problemFilename, overwrite: true);
+using (var problemStreamToUpload = new MemoryStream())
+{
+    using (FileStream problemFileStream = File.OpenRead(problemFilePath))
+    {
+        // Check if problem file is a gzip file.
+        // If it is, just read its contents.
+        // If not, read and compress the content.
+        var fileExtension = Path.GetExtension(problemFilePath).ToLower();
+        if (fileExtension == ".gz" ||
+            fileExtension == ".gzip")
+        {
+            problemFileStream.CopyTo(problemStreamToUpload);
+        }
+        else
+        {
+            using (var gzip = new GZipStream(problemStreamToUpload, CompressionMode.Compress, leaveOpen: true))
+            {
+                byte[] buffer = new byte[8192];
+                int count;
+                while ((count = problemFileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    gzip.Write(buffer, 0, count);
+                }
+            }
+        }
+    }
+    problemStreamToUpload.Position = 0;
+
+    // Upload input data to blob
+    var blobClient = new BlobClient(new Uri(inputDataUri));
+    var blobHeaders = new BlobHttpHeaders
+    {
+        ContentType = "application/json",
+        ContentEncoding = "gzip"
+    };
+    var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
+    blobClient.Upload(problemStreamToUpload, options: blobUploadOptions);
+}
 ```
 
 ### Create The Job
@@ -134,14 +172,17 @@ var inputDataFormat = "microsoft.qio.v2";
 var outputDataFormat = "microsoft.qio-results.v2";
 var providerId = "microsoft";
 var target = "microsoft.paralleltempering-parameterfree.cpu";
+var inputParams = new Dictionary<string, object>() { { "params", new Dictionary<string, object>() } };
 var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId, target)
 {
     Id = jobId,
     InputDataUri = inputDataUri,
     Name = jobName,
+    InputParams = inputParams,
     OutputDataFormat = outputDataFormat
 };
-JobDetails createdJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Value;
+
+JobDetails myJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Value;
 ```
 
 ### Get Job
@@ -150,7 +191,7 @@ JobDetails createdJob = (quantumJobClient.CreateJob(jobId, createJobDetails)).Va
 
 ```C# Snippet:Azure_Quantum_Jobs_GetJob
 // Get the job that we've just created based on its jobId
-JobDetails myJob = (quantumJobClient.GetJob(jobId)).Value;
+myJob = (quantumJobClient.GetJob(jobId)).Value;
 ```
 
 ### Get Jobs
@@ -160,10 +201,9 @@ To enumerate all the jobs in the workspace, use the `GetJobs` method.
 ```C# Snippet:Azure_Quantum_Jobs_GetJobs
 foreach (JobDetails job in quantumJobClient.GetJobs())
 {
-    Console.WriteLine($"{job.Name}");
+   Console.WriteLine($"{job.Name}");
 }
 ```
-
 
 ## Troubleshooting
 
@@ -180,21 +220,23 @@ testing, and contributing to this library.
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
-details, visit [cla.microsoft.com][cla].
+details, visit https://cla.microsoft.com.
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
-or contact [opencode@microsoft.com][coc_contact] with any
+or contact opencode@microsoft.com with any
 additional questions or comments.
 
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/quantum/Azure.Quantum.Jobs/src
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/quantum/Azure.Quantum.Jobs/src
 [resource-groups]: https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal
 [workspaces]: https://docs.microsoft.com/azure/quantum/how-to-create-quantum-workspaces-with-the-azure-portal
 [location]: https://azure.microsoft.com/global-infrastructure/services/?products=quantum
 [blob-storage]: https://docs.microsoft.com/azure/storage/blobs/storage-blobs-introduction
-[contributing]: https://github.com/Azure/azure-sdk-for-net/tree/master/CONTRIBUTING.md
+[contributing]: https://github.com/Azure/azure-sdk-for-net/tree/main/CONTRIBUTING.md
 [subscriptions]: https://ms.portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade
 [credentials]: https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme#credentials
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization

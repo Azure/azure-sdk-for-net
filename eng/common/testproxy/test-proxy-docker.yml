@@ -1,0 +1,24 @@
+parameters:
+  rootFolder: '$(Build.SourcesDirectory)'
+  targetVersion: ''
+
+steps:
+  - pwsh: |
+        $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
+    displayName: 'Language Specific Certificate Trust'
+
+  - pwsh: |
+      docker info
+    displayName: 'Dump active docker information'
+
+  - pwsh: |
+      $(Build.SourcesDirectory)/eng/common/testproxy/docker-start-proxy.ps1 -Mode start -TargetFolder "${{ parameters.rootFolder }}" -VersionOverride="${{ parameters.targetVersion }}"
+    displayName: 'Run the docker container'
+
+  - pwsh: |
+      docker container ls -a
+    displayName: Check running container
+
+  - pwsh: |
+      Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
+    displayName: 'Set PROXY_MANUAL_START'

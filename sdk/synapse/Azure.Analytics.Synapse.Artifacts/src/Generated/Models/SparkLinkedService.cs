@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> IP address or host name of the Spark server. </param>
         /// <param name="port"> The TCP port that the Spark server uses to listen for client connections. </param>
         /// <param name="serverType"> The type of Spark server. </param>

@@ -1,0 +1,346 @@
+{
+  "version": "0.1",
+  "language": "en_US",
+  "languageId": "csharp",
+  "dictionaries": ["powershell", "softwareTerms", "csharp"],
+  "ignorePaths": [
+    "**/SessionRecords/**",
+    "**/packages/**",
+    "artifacts/**/*",
+    "*.exe",
+    "*.dll",
+    "*.nupkg",
+    "*.bmp",
+    "*.png",
+    "*.gif",
+    "*.jpg",
+    "*.tiff",
+    "*.wav",
+    "*.pdf",
+    "*.zip",
+    "*.sha512",
+    "*.ico",
+    "*.pri",
+    "*.trx",
+    "*.binlog",
+    "*.log",
+    "*.sln",
+    "*.user",
+    ".vscode/cspell.json",
+
+    // These services are opted out of public API surface spell checking.
+    // Spelling issues must be addressed before adding these back in.
+    "sdk/agrifood/*/api/*.cs",
+    "sdk/communication/*/api/*.cs",
+    "sdk/cosmosdb/*/api/*.cs",
+    "sdk/digitaltwins/*/api/*.cs",
+    "sdk/dns/*/api/*.cs",
+    "sdk/eventgrid/*/api/*.cs",
+    "sdk/insights/*/api/*.cs",
+    "sdk/machinelearningservices/*/api/*.cs",
+    "sdk/modelsrepository/*/api/*.cs",
+    "sdk/monitor/*/api/*.cs",
+    "sdk/objectanchors/*/api/*.cs",
+    "sdk/purview/*/api/*.cs",
+    "sdk/remoterendering/*/api/*.cs",
+    "sdk/videoanalyzer/*/api/*.cs"
+  ],
+  // cspell is not case sensitive
+  // Sort words alphabetically to make this list easier to use
+  "words": [
+    "apos",
+    "azsdk",
+    "blazor",
+    "contoso",
+    "deduplication",
+    "deserializable",
+    "deserializes",
+    "diagnoser",
+    "dont",
+    "dotnetcli",
+    "dtmf",
+    "epsg",
+    "expando",
+    "finalizer",
+    "finalizers",
+    "illumos",
+    "ints",
+    "kubernetes",
+    "lucene",
+    "mgmt",
+    "nunit",
+    "odata",
+    "otel",
+    "overridden",
+    "parallelization",
+    "personalizer",
+    "pkcs",
+    "pstn",
+    "pwsh",
+    "referer",
+    "renormalize",
+    "retriable",
+    "signup",
+    "skus",
+    "structs",
+    "uints",
+    "unencrypted",
+    "unformattable",
+    "unhold",
+    "uninstrumented",
+    "vnet",
+    "westus",
+    "xunit"
+  ],
+  "overrides": [
+    {
+      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
+      "words": ["warnaserror"]
+    },
+    {
+      "filename": "**/sdk/azurestackhci/**/*.cs",
+      "words": [
+        "cref",
+        "imds",
+        "IMDS"
+      ]
+    },
+    {
+      "filename": "**/sdk/cdn/**/*.cs",
+      "words": [
+        "Orqel",
+        "Wafrankingsresponse"
+      ]
+    },
+    {
+      "filename": "**/sdk/compute/**/*.cs",
+      "words": [
+        "reimage",
+        "vmss",
+        "unattend",
+        "ssdlrs",
+        "vcpus",
+        "vmos",
+        "uefi",
+        "vhds",
+        "swappable",
+        "ssdzrs",
+        "dscp",
+        "vmguest"
+      ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/**/*",
+      "words": [
+        "apim",
+        "nigiri",
+        "qnas"
+      ]
+    },
+    {
+      "filename": "**/sdk/connectedvmwarevsphere/**/*",
+      "words": [
+        "Cpus",
+        "Ctlr",
+        "Lsilogic",
+        "Lsilogicsas",
+        "Pcnet",
+        "Pmem",
+        "Pvscsi",
+        "Sesparse",
+        "VCenter",
+        "VMware",
+        "vSphere"
+      ]
+    },
+	{
+      "filename": "**/sdk/desktopvirtualization/**/*.cs",
+      "words": [
+        "adfs",
+        "fslogix",
+        "msix",
+        "sso",
+        "unhide"
+      ]
+    },
+    {
+      "filename": "**/sdk/deviceupdate/**/*.cs",
+      "words": ["Fqdns"]
+    },
+    {
+      "filename": "**/sdk/formrecognizer/**/*.cs",
+      "words": ["ZhHant"]
+    },
+    {
+      "filename": "**/sdk/network/**/*.cs",
+      "words": [
+        "Azfw",
+        "Conditon",
+        "Ddos",
+        "ddos",
+        "Dnat",
+        "Dscp",
+        "dscp",
+        "Eapmscha",
+        "Eaptls",
+        "Fqdns",
+        "Gcmaes",
+        "Generatevirtualwanvpnserverconfigurationvpnprofile",
+        "Ipconfiguration",
+        "Mbps",
+        "Nics",
+        "Owasp",
+        "Pfsmm",
+        "Snat",
+        "Sstp",
+        "TLSDHEDSS",
+        "TLSDHERSA",
+        "Unprepare",
+        "Vmss",
+        "vmssip",
+        "Vnets",
+        "Vxlan",
+        "WAFV",
+        "Wans"
+      ]
+    },
+    {
+      "filename": "**/sdk/keyvault/**/*.cs",
+      "words": [
+        "deletesas",
+        "echsm",
+        "getsas",
+        "listsas",
+        "oaep",
+        "rsahsm",
+        "setsas",
+        "mhsm",
+        "mhsmip"
+      ]
+    },
+    {
+      "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
+      "words": ["Puid"]
+    },
+    {
+      "filename": "**/sdk/sqlmanagement/**/*.cs",
+      "words": [
+        "CIAS",
+        "Droppeded",
+        "Nchar",
+        "Ntext",
+        "Nvarchar",
+        "Stdev",
+        "Unrestorable",
+        "Vcores"
+      ]
+    },
+    {
+      "filename": "**/sdk/search/**/*.cs",
+      "words": [
+        "Adls",
+        "Bangla",
+        "Beider",
+        "Bokmaal",
+        "Cyrl",
+        "Decompounder",
+        "Haase",
+        "Hant",
+        "Koelner",
+        "Latn",
+        "Lovins",
+        "Nysiis",
+        "Phonetik",
+        "Piqd",
+        "Reranker",
+        "Rslp",
+        "Soundex",
+        "Sorani",
+        "Unprocessable",
+        "Beider"
+      ]
+    },
+    {
+      "filename": "**/sdk/storage/**/*.cs",
+      "words": [
+        "Aadds",
+        "Deprovisioning",
+        "Gzrs",
+        "Ntfs",
+        "Posix",
+        "Ragrs",
+        "Ragzrs",
+        "Rehydrated",
+        "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagepool/**/*.cs",
+      "words": [
+        "Iscsi"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.cs",
+      "words": [
+        "adla",
+        "adls",
+        "byoa",
+        "distcp",
+        "eloqua",
+        "exfiltration",
+        "fqdns",
+        "hana",
+        "hcatalog",
+        "hdfs",
+        "informix",
+        "magento",
+        "netezza",
+        "oozie",
+        "responsys",
+        "sasl",
+        "ssis",
+        "ssisdb",
+        "sybase",
+        "sybase",
+        "teradata",
+        "updation",
+        "usql",
+        "vertica",
+        "xero"
+      ]
+    },
+    {
+      "filename": "**/sdk/synapse/**/*.md",
+      "words": [
+        "abfss"
+      ]
+    },
+    {
+      "filename": "**/sdk/textanalytics/**/*.cs",
+      "words": [
+        "Brcpf",
+        "Idrg",
+        "Esdni",
+        "Eugps",
+        "Plregon",
+        "Usuk"
+      ]
+    },
+    {
+      "filename": "**/sdk/websites/**/*.cs",
+      "words": [
+        "Ipssl",
+        "Kube",
+        "Metadatas",
+        "Unparked",
+        "Proto",
+        "Zilla",
+        "Guage",
+        "Plex",
+        "Vstsrm"
+      ]
+    }
+  ],
+  "allowCompoundWords": true
+}

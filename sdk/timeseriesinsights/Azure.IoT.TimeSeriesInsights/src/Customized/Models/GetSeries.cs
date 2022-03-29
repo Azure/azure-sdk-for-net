@@ -12,7 +12,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// </summary>
     [CodeGenModel("GetSeries")]
     [CodeGenSuppress("GetSeries", typeof(IEnumerable<object>), typeof(DateTimeRange))]
-    public partial class GetSeries
+    internal partial class GetSeries
     {
         // Autorest does not support changing type for properties. In order to turn TimeSeriesId
         // from a list of objects to a strongly typed object, TimeSeriesId has been renamed to
@@ -43,12 +43,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The range of time on which the query is executed. Cannot be null.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="timeSeriesId"/> or <paramref name="searchSpan"/> is null.
+        /// <paramref name="searchSpan"/> is null.
         /// </exception>
         public GetSeries(TimeSeriesId timeSeriesId, DateTimeRange searchSpan)
         {
-            TimeSeriesId = timeSeriesId ?? throw new ArgumentNullException(nameof(timeSeriesId));
             SearchSpan = searchSpan ?? throw new ArgumentNullException(nameof(searchSpan));
+            TimeSeriesId = timeSeriesId;
             ProjectedVariables = new ChangeTrackingList<string>();
             InlineVariables = new ChangeTrackingDictionary<string, TimeSeriesVariable>();
         }

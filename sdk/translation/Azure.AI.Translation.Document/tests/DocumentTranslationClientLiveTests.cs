@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Tests
 {
-    public class DocumentTranslationClientLiveTests : DocumentTranslationLiveTestBase
+    public partial class DocumentTranslationClientLiveTests : DocumentTranslationLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentTranslationClientLiveTests"/> class.
@@ -25,20 +25,22 @@ namespace Azure.AI.Translation.Document.Tests
         {
             DocumentTranslationClient client = GetClient(credential: new AzureKeyCredential("fakeKey"));
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDocumentFormatsAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetSupportedDocumentFormatsAsync());
 
             Assert.AreEqual("401", ex.ErrorCode);
         }
 
         [RecordedTest]
-        public async Task GetDocumentFormatsTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDocumentFormatsTest(bool usetokenCredential)
         {
-            DocumentTranslationClient client = GetClient();
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
-            var documentFormats = await client.GetDocumentFormatsAsync();
+            var documentFormats = await client.GetSupportedDocumentFormatsAsync();
 
             Assert.GreaterOrEqual(documentFormats.Value.Count, 0);
-            foreach (FileFormat fileFormat in documentFormats.Value)
+            foreach (DocumentTranslationFileFormat fileFormat in documentFormats.Value)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(fileFormat.Format));
                 Assert.IsNotNull(fileFormat.FileExtensions);
@@ -47,14 +49,16 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetGlossaryFormatsTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetGlossaryFormatsTest(bool usetokenCredential)
         {
-            DocumentTranslationClient client = GetClient();
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
-            var glossaryFormats = await client.GetGlossaryFormatsAsync();
+            var glossaryFormats = await client.GetSupportedGlossaryFormatsAsync();
 
             Assert.GreaterOrEqual(glossaryFormats.Value.Count, 0);
-            foreach (FileFormat glossaryFormat in glossaryFormats.Value)
+            foreach (DocumentTranslationFileFormat glossaryFormat in glossaryFormats.Value)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.Format));
                 Assert.IsNotNull(glossaryFormat.FileExtensions);
@@ -68,30 +72,32 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetTranslationsTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetTranslationStatusesTest(bool usetokenCredential)
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             var input = new DocumentTranslationInput(source, target, "fr");
             await client.StartTranslationAsync(input);
 
-            List<TranslationStatusResult> translations = await client.GetTranslationsAsync().ToEnumerableAsync();
+            List<TranslationStatusResult> translations = await client.GetTranslationStatusesAsync().ToEnumerableAsync();
 
             Assert.GreaterOrEqual(translations.Count, 1);
             TranslationStatusResult oneTranslation = translations[0];
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsCancelled, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsNotStarted, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsSucceeded, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsTotal, 0);
 
-            if (oneTranslation.Error == null && oneTranslation.HasCompleted)
+            if (oneTranslation.Status == DocumentTranslationStatus.Succeeded)
             {
                 Assert.Greater(oneTranslation.TotalCharactersCharged, 0);
             }

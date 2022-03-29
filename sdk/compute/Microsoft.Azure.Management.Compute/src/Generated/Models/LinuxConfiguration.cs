@@ -17,10 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Specifies the Linux operating system settings on the virtual machine.
     /// &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see
     /// [Linux on Azure-Endorsed
-    /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-    /// &lt;br&gt;&lt;br&gt; For running non-endorsed distributions, see
-    /// [Information for Non-Endorsed
-    /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+    /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
     /// </summary>
     public partial class LinuxConfiguration
     {

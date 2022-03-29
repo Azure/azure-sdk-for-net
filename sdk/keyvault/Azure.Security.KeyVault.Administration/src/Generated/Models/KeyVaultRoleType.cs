@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The role type. </summary>
     public readonly partial struct KeyVaultRoleType : IEquatable<KeyVaultRoleType>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="KeyVaultRoleType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultRoleType(string value)
         {

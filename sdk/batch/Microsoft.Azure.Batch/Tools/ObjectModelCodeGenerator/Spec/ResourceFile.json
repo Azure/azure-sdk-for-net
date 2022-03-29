@@ -3,7 +3,7 @@
   "ProtocolName": "Models.ResourceFile",
   "SummaryComment": "A file to be downloaded to a compute node from Azure Blob Storage, such as task executables and task input data files.",
   "IsUsedInCollections": true,
-  "IsConstructorPublic": false,
+  "ConstructorAccess": "internal",
   "Properties": [
     {
       "Key": {
@@ -76,6 +76,19 @@
         "Name": "BlobPrefix",
         "SummaryComment": "The blob prefix to use when downloading blobs from an Azure Storage container. Only the blobs whose names begin with the specified prefix will be downloaded.",
         "RemarksComment": "This property is valid only when <see cref=\"AutoStorageContainerName\" /> or <see cref=\"StorageContainerUrl\" /> is used. This prefix can be a partial filename or a subdirectory. If a prefix is not specified, all the files in the container will be downloaded.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": true
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "ComputeNodeIdentityReference",
+        "Name": "IdentityReference",
+        "SummaryComment": "The reference to the user assigned identity to use to access Azure Blob Storage specified by storageContainerUrl or httpUrl",
+        "RemarksComment": null,
         "BoundAccess": "read",
         "UnboundAccess": "read,write",
         "ConstructorArgumentType": "Optional",

@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="items"> Collection to iterate. </param>
         /// <param name="activities"> List of activities to execute . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/>, or <paramref name="activities"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="activities"/> is null. </exception>
         public ForEachActivity(string name, Expression items, IEnumerable<Activity> activities) : base(name)
         {
             if (name == null)
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="isSequential"> Should the loop be executed in sequence or in parallel (max 50). </param>
         /// <param name="batchCount"> Batch count to be used for controlling the number of parallel execution (when isSequential is set to false). </param>
         /// <param name="items"> Collection to iterate. </param>

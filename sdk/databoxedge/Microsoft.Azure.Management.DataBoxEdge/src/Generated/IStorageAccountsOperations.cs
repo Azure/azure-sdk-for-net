@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
     public partial interface IStorageAccountsOperations
     {
         /// <summary>
-        /// Lists all the storage accounts in a Data Box Edge/Data Box Gateway
+        /// Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway
         /// device.
         /// </summary>
         /// <param name='deviceName'>
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string deviceName, string storageAccountName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all the storage accounts in a Data Box Edge/Data Box Gateway
+        /// Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway
         /// device.
         /// </summary>
         /// <param name='nextPageLink'>

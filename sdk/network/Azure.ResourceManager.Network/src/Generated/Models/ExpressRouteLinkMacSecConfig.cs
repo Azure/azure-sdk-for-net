@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="cknSecretIdentifier"> Keyvault Secret Identifier URL containing Mac security CKN key. </param>
         /// <param name="cakSecretIdentifier"> Keyvault Secret Identifier URL containing Mac security CAK key. </param>
         /// <param name="cipher"> Mac security cipher. </param>
-        internal ExpressRouteLinkMacSecConfig(string cknSecretIdentifier, string cakSecretIdentifier, ExpressRouteLinkMacSecCipher? cipher)
+        /// <param name="sciState"> Sci mode enabled/disabled. </param>
+        internal ExpressRouteLinkMacSecConfig(string cknSecretIdentifier, string cakSecretIdentifier, ExpressRouteLinkMacSecCipher? cipher, ExpressRouteLinkMacSecSciState? sciState)
         {
             CknSecretIdentifier = cknSecretIdentifier;
             CakSecretIdentifier = cakSecretIdentifier;
             Cipher = cipher;
+            SciState = sciState;
         }
 
         /// <summary> Keyvault Secret Identifier URL containing Mac security CKN key. </summary>
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         public string CakSecretIdentifier { get; set; }
         /// <summary> Mac security cipher. </summary>
         public ExpressRouteLinkMacSecCipher? Cipher { get; set; }
+        /// <summary> Sci mode enabled/disabled. </summary>
+        public ExpressRouteLinkMacSecSciState? SciState { get; set; }
     }
 }

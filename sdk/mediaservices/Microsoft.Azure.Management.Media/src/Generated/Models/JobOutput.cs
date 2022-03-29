@@ -31,6 +31,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="error">If the JobOutput is in the Error state, it
         /// contains the details of the error.</param>
+        /// <param name="presetOverride">A preset used to override the preset
+        /// in the corresponding transform output.</param>
         /// <param name="state">Describes the state of the JobOutput. Possible
         /// values include: 'Canceled', 'Canceling', 'Error', 'Finished',
         /// 'Processing', 'Queued', 'Scheduled'</param>
@@ -57,9 +59,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Output began processing.</param>
         /// <param name="endTime">The UTC date and time at which this Job
         /// Output finished processing.</param>
-        public JobOutput(JobError error = default(JobError), JobState state = default(JobState), int progress = default(int), string label = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
+        public JobOutput(JobError error = default(JobError), Preset presetOverride = default(Preset), JobState state = default(JobState), int progress = default(int), string label = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
         {
             Error = error;
+            PresetOverride = presetOverride;
             State = state;
             Progress = progress;
             Label = label;
@@ -79,6 +82,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public JobError Error { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a preset used to override the preset in the
+        /// corresponding transform output.
+        /// </summary>
+        [JsonProperty(PropertyName = "presetOverride")]
+        public Preset PresetOverride { get; set; }
 
         /// <summary>
         /// Gets describes the state of the JobOutput. Possible values include:

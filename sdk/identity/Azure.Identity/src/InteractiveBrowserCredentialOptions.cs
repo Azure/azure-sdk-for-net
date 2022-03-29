@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -34,7 +35,7 @@ namespace Azure.Identity
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
         /// <summary>
-        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted to disk.
         /// </summary>
         public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
@@ -48,5 +49,12 @@ namespace Azure.Identity
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication.
         /// </summary>
         public AuthenticationRecord AuthenticationRecord { get; set; }
+
+        /// <summary>
+        /// Avoids the account prompt and pre-populates the username of the account to login.
+        /// </summary>
+        public string LoginHint { get; set; }
+
+        internal Action<PublicClientApplicationBuilder> BeforeBuildClient { get; set; }
     }
 }

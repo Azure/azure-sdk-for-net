@@ -10,7 +10,7 @@ using System;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to get the event schema of all events within a given search span. </summary>
-    public partial class GetEventSchemaRequest
+    internal partial class GetEventSchemaRequest
     {
         /// <summary> Initializes a new instance of GetEventSchemaRequest. </summary>
         /// <param name="searchSpan"> The range of time on which the query is executed. Cannot be null. </param>

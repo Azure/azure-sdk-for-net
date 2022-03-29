@@ -19,79 +19,58 @@ namespace Sql.Tests
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                ResourceGroup resourceGroup = context.CreateResourceGroup();
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
-                Random r = new Random();
-                string managedInstanceName = "sqlcl-crudtestswithfmw-dotnetsdk1";
-                string login = "dummylogin";
-                string password = "Un53cuRE!";
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         { "tagKey1", "TagValue1" }
                     };
 
-                Microsoft.Azure.Management.Sql.Models.Sku sku = new Microsoft.Azure.Management.Sql.Models.Sku();
-                sku.Name = "MIGP8G4";
-                sku.Tier = "GeneralPurpose";
-                sku.Family = "Gen5";
-
-                string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/v-urmila/providers/Microsoft.Network/virtualNetworks/MIVirtualNetwork/subnets/ManagedInsanceSubnet";
-                string location = "westeurope";
-
                 bool publicDataEndpointEnabled = true;
                 string proxyOverride = ManagedInstanceProxyOverride.Proxy;
-                string storageAccountType = "GRS";
-                string publicResourceName = "MI_Sat_12AM_6AM";
-                string maintenanceConfigurationId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/" + publicResourceName;
+                string requestedBSR = "Geo";
+                string publicResourceName = "SQL_Default";
+                string maintenanceConfigurationId = ManagedInstanceTestUtilities.getManagedInstanceFullMaintenanceResourceid();
 
+                // Create resource group
+                var resourceGroup = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
                 //Create server 
-                var managedInstance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()
+                var managedInstance1 = context.CreateManagedInstance(resourceGroup, new ManagedInstance()
                 {
-                    AdministratorLogin = login,
-                    AdministratorLoginPassword = password,
-                    Sku = sku,
-                    SubnetId = subnetId,
                     Tags = tags,
-                    Location = location,
-                    StorageAccountType = storageAccountType,
                     MaintenanceConfigurationId = maintenanceConfigurationId
                 });
-                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
+                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, tags, shouldCheckState: true);
 
                 // Create second server
-                string managedInstanceName2 = "sqlcl-crudtestswithfmw-dotnetsdk2";
-                var managedInstance2 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName2, new ManagedInstance()
+                var managedInstance2 = context.CreateManagedInstance(resourceGroup, new ManagedInstance()
                 {
-                    AdministratorLogin = login,
-                    AdministratorLoginPassword = password,
-                    Sku = sku,
-                    SubnetId = subnetId,
-                    Tags = tags,
-                    Location = location,
-                    DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/{1}", resourceGroup.Name, managedInstanceName),
+                    DnsZonePartner = string.Format(
+                        "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/managedInstances/{2}",
+                        ManagedInstanceTestUtilities.SubscriptionId,
+                        ManagedInstanceTestUtilities.ResourceGroupName,
+                        managedInstance1.Name),
                     PublicDataEndpointEnabled = publicDataEndpointEnabled,
-                    ProxyOverride = proxyOverride,
-                    StorageAccountType = storageAccountType,
-                    MaintenanceConfigurationId = maintenanceConfigurationId
+                    ProxyOverride = proxyOverride
                 });
-                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
+                SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, shouldCheckState: true);
 
                 // Get first server
-                var getMI1 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstanceName);
-                SqlManagementTestUtilities.ValidateManagedInstance(getMI1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
+                var getMI1 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstance1.Name);
+                SqlManagementTestUtilities.ValidateManagedInstance(getMI1, tags, shouldCheckState: true);
 
                 // Get second server
-                var getMI2 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstanceName2);
-                SqlManagementTestUtilities.ValidateManagedInstance(getMI2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
+                var getMI2 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstance2.Name);
+                SqlManagementTestUtilities.ValidateManagedInstance(getMI2, shouldCheckState: true);
 
                 // Verify that maintenanceConfigurationId value is correctly set
-                Assert.Equal(publicResourceName, getMI1.MaintenanceConfigurationId);
-                Assert.Equal(publicResourceName, getMI2.MaintenanceConfigurationId);
+                Assert.Contains(publicResourceName, getMI1.MaintenanceConfigurationId);
 
                 // Verify that storageAccountType value is correctly set
-                Assert.Equal(storageAccountType, getMI1.StorageAccountType);
-                Assert.Equal(storageAccountType, getMI2.StorageAccountType);
+                Assert.Equal(requestedBSR, getMI1.RequestedBackupStorageRedundancy);
+                Assert.Equal(requestedBSR, getMI2.RequestedBackupStorageRedundancy);
+                Assert.Equal(requestedBSR, getMI1.CurrentBackupStorageRedundancy);
+                Assert.Equal(requestedBSR, getMI2.CurrentBackupStorageRedundancy);
 
                 // Verify that dns zone value is correctly inherited from dns zone partner
                 Assert.Equal(getMI1.DnsZone, getMI2.DnsZone);
@@ -102,7 +81,8 @@ namespace Sql.Tests
                 // Verify ProxyOverride value for second server
                 Assert.Equal(proxyOverride, getMI2.ProxyOverride);
 
-                var listMI = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
+                var listMI = context.ListManagedInstanceByResourceGroup(resourceGroup.Name);
+                
                 Assert.Equal(2, listMI.Count());
 
                 // Update first server
@@ -110,17 +90,21 @@ namespace Sql.Tests
                     {
                         { "asdf", "zxcv" }
                     };
-                var updateMI1 = sqlClient.ManagedInstances.Update(resourceGroup.Name, managedInstanceName, new ManagedInstanceUpdate { Tags = newTags, LicenseType = "LicenseIncluded" });
-                SqlManagementTestUtilities.ValidateManagedInstance(updateMI1, managedInstanceName, login, newTags, TestEnvironmentUtilities.DefaultLocationId);
+                var updateMI1 = sqlClient.ManagedInstances.Update(resourceGroup.Name, getMI1.Name, new ManagedInstanceUpdate
+                {
+                    Tags = newTags,
+                    LicenseType = "LicenseIncluded"
+                });
+                SqlManagementTestUtilities.ValidateManagedInstance(updateMI1, newTags);
 
                 // Drop server, update count
-                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName);
+                sqlClient.ManagedInstances.Delete(resourceGroup.Name, getMI1.Name);
 
-                var listMI2 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
+                var listMI2 = context.ListManagedInstanceByResourceGroup(resourceGroup.Name);
                 Assert.Single(listMI2);
 
-                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName2);
-                var listMI3 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
+                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstance2.Name);
+                var listMI3 = context.ListManagedInstanceByResourceGroup(resourceGroup.Name);
                 Assert.Empty(listMI3);
             }
         }

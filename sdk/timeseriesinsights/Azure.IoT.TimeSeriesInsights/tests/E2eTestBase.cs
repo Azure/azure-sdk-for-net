@@ -28,10 +28,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
         private static readonly SemaphoreSlim s_semaphore = new SemaphoreSlim(1, 1);
 
+        internal const string FAKE_HOST = "fakeHost.api.wus2.timeseriesinsights.azure.com";
+
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
         {
-            Sanitizer = new TestUrlSanitizer();
+            ReplacementHost = FAKE_HOST;
         }
 
         [SetUp]
@@ -97,7 +99,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
         }
 
-        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdKeys)
+        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsInstances instancesClient, int numOfIdKeys)
         {
             numOfIdKeys.Should().BeInRange(1, 3);
 
@@ -117,9 +119,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
                 };
 
-                Response<InstancesOperationResult[]> getInstancesResult = await tsiClient
-                    .Instances
-                    .GetAsync(new List<TimeSeriesId> { tsId })
+                Response<InstancesOperationResult[]> getInstancesResult = await instancesClient
+                    .GetByIdAsync(new List<TimeSeriesId> { tsId })
                     .ConfigureAwait(false);
 
                 if (getInstancesResult.Value?.First()?.Error != null)
@@ -131,9 +132,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             throw new Exception($"Unique Id could not be found");
         }
 
-        protected async Task<string> getDefaultTypeIdAsync(TimeSeriesInsightsClient client)
+        protected async Task<string> getDefaultTypeIdAsync(TimeSeriesInsightsModelSettings modelSettingsClient)
         {
-            Response<TimeSeriesModelSettings> currentSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+            Response<TimeSeriesModelSettings> currentSettings = await modelSettingsClient.GetAsync().ConfigureAwait(false);
             return currentSettings.Value.DefaultTypeId;
         }
 

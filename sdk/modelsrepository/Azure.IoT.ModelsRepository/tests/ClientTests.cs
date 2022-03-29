@@ -21,7 +21,7 @@ namespace Azure.IoT.ModelsRepository.Tests
             new ModelsRepositoryClient().RepositoryUri.Should().Be(defaultRepositoryUri);
             new ModelsRepositoryClient(remoteUri).RepositoryUri.Should().Be(remoteUri);
 
-            string localUriStr = TestLocalModelRepository;
+            string localUriStr = TestLocalModelsRepository;
 
             var localUri = new Uri(localUriStr);
             new ModelsRepositoryClient(localUri).RepositoryUri.Should().Be(localUri);
@@ -40,9 +40,22 @@ namespace Azure.IoT.ModelsRepository.Tests
             Type eventSourceType = typeof(ModelsRepositoryEventSource);
 
             eventSourceType.Should().NotBeNull();
-            EventSource.GetName(eventSourceType).Should().Be(ModelsRepositoryConstants.ModelRepositoryEventSourceName);
+            EventSource.GetName(eventSourceType).Should().Be(ModelsRepositoryConstants.ModelsRepositoryEventSourceName);
             EventSource.GetGuid(eventSourceType).Should().Be(Guid.Parse("7678f8d4-81db-5fd2-39fc-23552d86b171"));
             EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest").Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public void ClientOptions()
+        {
+            var defaultOptions = new ModelsRepositoryClientOptions();
+            defaultOptions.Version.Should().Be(ModelsRepositoryClientOptions.ServiceVersion.V2021_02_11);
+
+            // Default MetadataOptions values
+            defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled.Should().BeTrue();
+
+            // Ensure MetadataOptions properties are settable
+            defaultOptions.RepositoryMetadata.IsMetadataProcessingEnabled = false;
         }
     }
 }

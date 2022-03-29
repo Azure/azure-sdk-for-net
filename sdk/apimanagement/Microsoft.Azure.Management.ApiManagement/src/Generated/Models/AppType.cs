@@ -17,6 +17,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     public static class AppType
     {
         /// <summary>
+        /// User create request was sent by legacy developer portal.
+        /// </summary>
+        public const string Portal = "portal";
+        /// <summary>
         /// User create request was sent by new developer portal.
         /// </summary>
         public const string DeveloperPortal = "developerPortal";

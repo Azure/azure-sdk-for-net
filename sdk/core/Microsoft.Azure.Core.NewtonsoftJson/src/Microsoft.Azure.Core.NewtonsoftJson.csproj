@@ -12,13 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Core\src\Azure.Core.props" />
 </Project>

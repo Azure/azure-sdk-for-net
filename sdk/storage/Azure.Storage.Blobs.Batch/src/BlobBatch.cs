@@ -8,6 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Batch;
 using Azure.Storage.Blobs.Batch.Models;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -158,7 +159,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteBlob(string, string, DeleteSnapshotsOption, BlobRequestConditions)"/>
         /// operation marks the specified blob or snapshot for  deletion. The
-        /// blob is later deleted during garbage collection.
+        /// blob is later deleted during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -181,7 +182,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// deleting this blob.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.  The response
+        /// A <see cref="Response"/> on successfully marking for deletion.  The response
         /// cannot be used until the batch has been submitted with
         /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
         /// </returns>
@@ -195,10 +196,10 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateDeleteRequest(
                 containerName: blobContainerName,
-                blob: blobName,
+                blob: blobName.EscapePath(),
                 timeout: null,
                 leaseId: conditions?.LeaseId,
-                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOptionType?)snapshotsOption,
+                deleteSnapshots: snapshotsOption.ToDeleteSnapshotsOptionType(),
                 ifModifiedSince: conditions?.IfModifiedSince,
                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                 ifMatch: conditions?.IfMatch?.ToString(),
@@ -226,7 +227,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteBlob(Uri, DeleteSnapshotsOption, BlobRequestConditions)"/>
         /// operation marks the specified blob or snapshot for deletion. The
-        /// blob is later deleted during garbage collection.
+        /// blob is later deleted during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -246,7 +247,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// deleting this blob.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.  The response
+        /// A <see cref="Response"/> on successfully marking for deletion.  The response
         /// cannot be used until the batch has been submitted with
         /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
         /// </returns>
@@ -310,7 +311,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
                 containerName: blobContainerName,
-                blob: blobName,
+                blob: blobName.EscapePath(),
                 accessTier.ToBatchAccessTier(),
                 timeout: null,
                 rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),

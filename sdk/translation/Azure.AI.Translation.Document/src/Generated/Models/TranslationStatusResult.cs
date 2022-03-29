@@ -6,32 +6,33 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Job status response. </summary>
+    /// <summary> Translation job status response. </summary>
     public partial class TranslationStatusResult
     {
         /// <summary> Initializes a new instance of TranslationStatusResult. </summary>
-        /// <param name="translationId"> Id of the operation. </param>
+        /// <param name="id"> Id of the operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="summary"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="translationId"/> or <paramref name="summary"/> is null. </exception>
-        internal TranslationStatusResult(string translationId, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, StatusSummary summary)
+        /// <param name="summary"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
+        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, StatusSummary summary)
         {
-            if (translationId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(translationId));
+                throw new ArgumentNullException(nameof(id));
             }
             if (summary == null)
             {
                 throw new ArgumentNullException(nameof(summary));
             }
 
-            TranslationId = translationId;
+            Id = id;
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;
@@ -39,24 +40,22 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Initializes a new instance of TranslationStatusResult. </summary>
-        /// <param name="translationId"> Id of the operation. </param>
+        /// <param name="id"> Id of the operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
-        /// <param name="summary"> . </param>
-        internal TranslationStatusResult(string translationId, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, DocumentTranslationError error, StatusSummary summary)
+        /// <param name="summary"></param>
+        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, JsonElement error, StatusSummary summary)
         {
-            TranslationId = translationId;
+            Id = id;
             CreatedOn = createdOn;
             LastModified = lastModified;
             Status = status;
-            Error = error;
+            _error = error;
             Summary = summary;
         }
         /// <summary> List of possible statuses for job or document. </summary>
-        public TranslationStatus Status { get; }
-        /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
-        public DocumentTranslationError Error { get; }
+        public DocumentTranslationStatus Status { get; }
     }
 }

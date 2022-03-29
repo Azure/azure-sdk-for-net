@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -45,6 +47,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="backendAddressPool">A reference to a pool of DIPs.
         /// Inbound traffic is randomly load balanced across IPs in the backend
         /// IPs.</param>
+        /// <param name="backendAddressPools">An array of references to pool of
+        /// DIPs.</param>
         /// <param name="probe">The reference to the load balancer probe used
         /// by the load balancing rule.</param>
         /// <param name="loadDistribution">The load distribution policy for
@@ -77,11 +81,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public LoadBalancingRule(string protocol, int frontendPort, string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource backendAddressPool = default(SubResource), SubResource probe = default(SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), bool? disableOutboundSnat = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public LoadBalancingRule(string protocol, int frontendPort, string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource backendAddressPool = default(SubResource), IList<SubResource> backendAddressPools = default(IList<SubResource>), SubResource probe = default(SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), bool? disableOutboundSnat = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendAddressPool = backendAddressPool;
+            BackendAddressPools = backendAddressPools;
             Probe = probe;
             Protocol = protocol;
             LoadDistribution = loadDistribution;
@@ -115,6 +120,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPool")]
         public SubResource BackendAddressPool { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of references to pool of DIPs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.backendAddressPools")]
+        public IList<SubResource> BackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to the load balancer probe used by the

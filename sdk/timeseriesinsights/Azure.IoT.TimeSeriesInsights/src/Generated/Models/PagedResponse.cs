@@ -8,7 +8,7 @@
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Partial result that has continuation token to fetch the next partial result. </summary>
-    public partial class PagedResponse
+    internal partial class PagedResponse
     {
         /// <summary> Initializes a new instance of PagedResponse. </summary>
         internal PagedResponse()

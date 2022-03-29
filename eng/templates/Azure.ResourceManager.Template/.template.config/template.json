@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "azhang@microsoft.com",
-  "classifications": [ "ClassLibrary" ],
+  "classifications": [ "Azure", "ClassLibrary" ],
   "identity": "Azure.Management.TemplateProject",
   "name": "Azure Management SDK template: client project",
   "shortName": "azuremgmt",

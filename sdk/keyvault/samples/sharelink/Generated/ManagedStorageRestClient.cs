@@ -19,32 +19,25 @@ namespace Azure.Security.KeyVault.Storage
 {
     internal partial class ManagedStorageRestClient
     {
-        private string vaultBaseUrl;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _vaultBaseUrl;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ManagedStorageRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
         public ManagedStorageRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.1")
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.vaultBaseUrl = vaultBaseUrl;
-            this.apiVersion = apiVersion;
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _vaultBaseUrl = vaultBaseUrl ?? throw new ArgumentNullException(nameof(vaultBaseUrl));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateGetStorageAccountsRequest(int? maxresults)
@@ -53,13 +46,13 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage", false);
             if (maxresults != null)
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -82,7 +75,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -103,7 +96,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -113,13 +106,13 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage", false);
             if (maxresults != null)
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -142,7 +135,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -163,7 +156,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -173,10 +166,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -205,7 +198,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -232,7 +225,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -242,10 +235,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -269,7 +262,7 @@ namespace Azure.Security.KeyVault.Storage
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -291,7 +284,7 @@ namespace Azure.Security.KeyVault.Storage
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -301,11 +294,11 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/recover", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -334,7 +327,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -361,7 +354,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -371,11 +364,11 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/backup", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -404,7 +397,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -431,7 +424,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -441,9 +434,9 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/restore", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -477,7 +470,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -504,7 +497,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -514,10 +507,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -546,7 +539,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -573,7 +566,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -583,10 +576,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -615,7 +608,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -642,7 +635,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -652,10 +645,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -664,9 +657,12 @@ namespace Azure.Security.KeyVault.Storage
                 RegenerationPeriod = regenerationPeriod,
                 StorageAccountAttributes = storageAccountAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                storageAccountCreateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    storageAccountCreateParameters.Tags.Add(value);
+                }
             }
             var model = storageAccountCreateParameters;
             var content = new Utf8JsonRequestContent();
@@ -684,7 +680,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="storageAccountAttributes"> The attributes of the storage account. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/>, or <paramref name="activeKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/> or <paramref name="activeKeyName"/> is null. </exception>
         public async Task<Response<StorageBundle>> SetStorageAccountAsync(string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod = null, StorageAccountAttributes storageAccountAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -712,7 +708,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -725,7 +721,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="storageAccountAttributes"> The attributes of the storage account. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/>, or <paramref name="activeKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/> or <paramref name="activeKeyName"/> is null. </exception>
         public Response<StorageBundle> SetStorageAccount(string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod = null, StorageAccountAttributes storageAccountAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -753,7 +749,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -763,10 +759,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -777,9 +773,12 @@ namespace Azure.Security.KeyVault.Storage
                 RegenerationPeriod = regenerationPeriod,
                 StorageAccountAttributes = storageAccountAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                storageAccountUpdateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    storageAccountUpdateParameters.Tags.Add(value);
+                }
             }
             var model = storageAccountUpdateParameters;
             var content = new Utf8JsonRequestContent();
@@ -816,7 +815,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -848,7 +847,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -858,11 +857,11 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/regeneratekey", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -901,7 +900,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -933,7 +932,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -943,7 +942,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas", false);
@@ -951,7 +950,7 @@ namespace Azure.Security.KeyVault.Storage
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -981,7 +980,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1009,7 +1008,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1019,7 +1018,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas", false);
@@ -1027,7 +1026,7 @@ namespace Azure.Security.KeyVault.Storage
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1057,7 +1056,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1085,7 +1084,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1095,12 +1094,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1134,7 +1133,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1166,7 +1165,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1176,13 +1175,13 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
             uri.AppendPath("/recover", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1216,7 +1215,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1248,7 +1247,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1258,12 +1257,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1297,7 +1296,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1329,7 +1328,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1339,12 +1338,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1378,7 +1377,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1410,7 +1409,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1420,12 +1419,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1433,9 +1432,12 @@ namespace Azure.Security.KeyVault.Storage
             {
                 SasDefinitionAttributes = sasDefinitionAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                sasDefinitionCreateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    sasDefinitionCreateParameters.Tags.Add(value);
+                }
             }
             var model = sasDefinitionCreateParameters;
             var content = new Utf8JsonRequestContent();
@@ -1453,7 +1455,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="sasDefinitionAttributes"> The attributes of the SAS definition. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/>, or <paramref name="validityPeriod"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/> or <paramref name="validityPeriod"/> is null. </exception>
         public async Task<Response<SasDefinitionBundle>> SetSasDefinitionAsync(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1485,7 +1487,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1498,7 +1500,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="sasDefinitionAttributes"> The attributes of the SAS definition. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/>, or <paramref name="validityPeriod"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/> or <paramref name="validityPeriod"/> is null. </exception>
         public Response<SasDefinitionBundle> SetSasDefinition(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1530,7 +1532,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1540,12 +1542,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1556,9 +1558,12 @@ namespace Azure.Security.KeyVault.Storage
                 ValidityPeriod = validityPeriod,
                 SasDefinitionAttributes = sasDefinitionAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                sasDefinitionUpdateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    sasDefinitionUpdateParameters.Tags.Add(value);
+                }
             }
             var model = sasDefinitionUpdateParameters;
             var content = new Utf8JsonRequestContent();
@@ -1600,7 +1605,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1637,7 +1642,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1647,7 +1652,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1678,7 +1683,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1706,7 +1711,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1716,7 +1721,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1747,7 +1752,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1775,7 +1780,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1785,7 +1790,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1821,7 +1826,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1854,7 +1859,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1864,7 +1869,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1900,7 +1905,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1933,7 +1938,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

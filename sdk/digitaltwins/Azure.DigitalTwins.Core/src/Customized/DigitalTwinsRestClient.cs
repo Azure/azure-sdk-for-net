@@ -25,10 +25,10 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsAddOptions?.TraceParent != null)
             {
@@ -64,30 +64,20 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(twin));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.Add");
-            scope.Start();
-            try
+            using HttpMessage message = CreateAddRequest(id, twin, digitalTwinsAddOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateAddRequest(id, twin, digitalTwinsAddOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                        {
-                            Stream value = message.ExtractResponseContent();
-                            return Response.FromValue(value, message.Response);
-                        }
-                    case 202:
-                        return Response.FromValue<Stream>(null, message.Response);
+                case 200:
+                    {
+                        Stream value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 202:
+                    return Response.FromValue<Stream>(null, message.Response);
 
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -119,7 +109,7 @@ namespace Azure.DigitalTwins.Core
                     return Response.FromValue<Stream>(null, message.Response);
 
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -138,26 +128,16 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(patchDocument));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.Update");
-            scope.Start();
-            try
+            using HttpMessage message = CreateUpdateRequest(id, patchDocument, digitalTwinsUpdateOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateUpdateRequest(id, patchDocument, digitalTwinsUpdateOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 202:
-                    case 204:
-                        return message.Response;
+                case 202:
+                case 204:
+                    return message.Response;
 
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -176,26 +156,16 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(patchDocument));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.Update");
-            scope.Start();
-            try
+            using HttpMessage message = CreateUpdateRequest(id, patchDocument, digitalTwinsUpdateOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateUpdateRequest(id, patchDocument, digitalTwinsUpdateOptions);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 202:
-                    case 204:
-                        return message.Response;
+                case 202:
+                case 204:
+                    return message.Response;
 
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -229,7 +199,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -263,7 +233,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -283,23 +253,13 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(relationshipId));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.UpdateRelationship");
-            scope.Start();
-            try
+            using HttpMessage message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, digitalTwinsUpdateRelationshipOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            return message.Response.Status switch
             {
-                using HttpMessage message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, digitalTwinsUpdateRelationshipOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                return message.Response.Status switch
-                {
-                    204 => message.Response,
-                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                204 => message.Response,
+                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
+            };
         }
 
         internal Response UpdateRelationship(
@@ -318,23 +278,13 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(relationshipId));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.UpdateRelationship");
-            scope.Start();
-            try
+            using HttpMessage message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, digitalTwinsUpdateRelationshipOptions);
+            _pipeline.Send(message, cancellationToken);
+            return message.Response.Status switch
             {
-                using HttpMessage message = CreateUpdateRelationshipRequest(id, relationshipId, patchDocument, digitalTwinsUpdateRelationshipOptions);
-                _pipeline.Send(message, cancellationToken);
-                return message.Response.Status switch
-                {
-                    204 => message.Response,
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(message.Response),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                204 => message.Response,
+                _ => throw ClientDiagnostics.CreateRequestFailedException(message.Response),
+            };
         }
 
         internal async Task<Response> UpdateComponentAsync(
@@ -353,26 +303,16 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(componentPath));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.UpdateComponent");
-            scope.Start();
-            try
+            using HttpMessage message = CreateUpdateComponentRequest(id, componentPath, patchDocument, digitalTwinsUpdateComponentOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateUpdateComponentRequest(id, componentPath, patchDocument, digitalTwinsUpdateComponentOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 202:
-                    case 204:
-                        return message.Response;
+                case 202:
+                case 204:
+                    return message.Response;
 
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -392,26 +332,16 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(componentPath));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.UpdateComponent");
-            scope.Start();
-            try
+            using HttpMessage message = CreateUpdateComponentRequest(id, componentPath, patchDocument, digitalTwinsUpdateComponentOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateUpdateComponentRequest(id, componentPath, patchDocument, digitalTwinsUpdateComponentOptions);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 202:
-                    case 204:
-                        return message.Response;
+                case 202:
+                case 204:
+                    return message.Response;
 
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -435,25 +365,15 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(telemetry));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.SendTelemetry");
-            scope.Start();
-            try
+            using HttpMessage message = CreateSendTelemetryRequest(id, messageId, telemetry, digitalTwinsSendTelemetryOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateSendTelemetryRequest(id, messageId, telemetry, digitalTwinsSendTelemetryOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 204:
-                        return message.Response;
+                case 204:
+                    return message.Response;
 
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -477,25 +397,15 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(telemetry));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.SendTelemetry");
-            scope.Start();
-            try
+            using HttpMessage message = CreateSendTelemetryRequest(id, messageId, telemetry, digitalTwinsSendTelemetryOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateSendTelemetryRequest(id, messageId, telemetry, digitalTwinsSendTelemetryOptions);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 204:
-                        return message.Response;
+                case 204:
+                    return message.Response;
 
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -524,25 +434,15 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(telemetry));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.SendComponentTelemetry");
-            scope.Start();
-            try
+            using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, messageId, telemetry, digitalTwinsSendComponentTelemetryOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, messageId, telemetry, digitalTwinsSendComponentTelemetryOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 204:
-                        return message.Response;
+                case 204:
+                    return message.Response;
 
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -571,25 +471,15 @@ namespace Azure.DigitalTwins.Core
                 throw new ArgumentNullException(nameof(telemetry));
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("DigitalTwinsClient.SendComponentTelemetry");
-            scope.Start();
-            try
+            using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, messageId, telemetry, digitalTwinsSendComponentTelemetryOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
             {
-                using HttpMessage message = CreateSendComponentTelemetryRequest(id, componentPath, messageId, telemetry, digitalTwinsSendComponentTelemetryOptions);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 204:
-                        return message.Response;
+                case 204:
+                    return message.Response;
 
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -621,7 +511,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -659,7 +549,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -691,7 +581,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -729,7 +619,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -742,10 +632,10 @@ namespace Azure.DigitalTwins.Core
             Request request = message.Request;
             request.Method = RequestMethod.Patch;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsUpdateOptions?.TraceParent != null)
             {
@@ -775,12 +665,12 @@ namespace Azure.DigitalTwins.Core
             Request request = message.Request;
             request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/", false);
             uri.AppendPath(relationshipId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsAddRelationshipOptions?.TraceParent != null)
             {
@@ -810,12 +700,12 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/", false);
             uri.AppendPath(relationshipId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsUpdateRelationshipOptions?.TraceParent != null)
             {
@@ -845,12 +735,12 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/components/", false);
             uri.AppendPath(componentPath, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsUpdateComponentOptions?.TraceParent != null)
             {
@@ -880,11 +770,11 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/telemetry", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsSendTelemetryOptions?.TraceParent != null)
             {
@@ -916,13 +806,13 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/components/", false);
             uri.AppendPath(componentPath, true);
             uri.AppendPath("/telemetry", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsSendComponentTelemetryOptions?.TraceParent != null)
             {

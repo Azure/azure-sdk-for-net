@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core.TestFramework;
 using Azure.Storage.Sas;
@@ -123,24 +124,34 @@ namespace Azure.Storage.Files.Shares.Tests
         public void FileUriBuilder_SnapshotTest()
         {
             // Arrange
-            var uriString = "https://account.file.core.windows.net/share?sharesnapshot=2011-03-09T01:42:34.9360000Z";
-            var originalUri = new UriBuilder(uriString);
+            IList<string> snapshotUris = new List<string>()
+            {
+                "https://account.file.core.windows.net/share?sharesnapshot=2011-03-09T01:42:34.9360000Z",
+                "https://account.file.core.windows.net/share?ShareSnapshot=2011-03-09T01:42:34.9360000Z",
+                "https://account.file.core.windows.net/share?shareSnapshot=2011-03-09T01:42:34.9360000Z",
+                "https://account.file.core.windows.net/share?SHARESNAPSHOT=2011-03-09T01:42:34.9360000Z",
+            };
 
-            // Act
-            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
-            Uri newUri = fileUriBuilder.ToUri();
+            foreach (var uriString in snapshotUris)
+            {
+                var originalUri = new UriBuilder(uriString);
 
-            // Assert
-            Assert.AreEqual("https", fileUriBuilder.Scheme);
-            Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
-            Assert.AreEqual("account", fileUriBuilder.AccountName);
-            Assert.AreEqual(443, fileUriBuilder.Port);
-            Assert.AreEqual("share", fileUriBuilder.ShareName);
-            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
-            Assert.AreEqual("2011-03-09T01:42:34.9360000Z", fileUriBuilder.Snapshot);
-            Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("", fileUriBuilder.Query);
-            Assert.AreEqual(originalUri, newUri);
+                // Act
+                var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+                Uri newUri = fileUriBuilder.ToUri();
+
+                // Assert
+                Assert.AreEqual("https", fileUriBuilder.Scheme);
+                Assert.AreEqual("account.file.core.windows.net", fileUriBuilder.Host);
+                Assert.AreEqual("account", fileUriBuilder.AccountName);
+                Assert.AreEqual(443, fileUriBuilder.Port);
+                Assert.AreEqual("share", fileUriBuilder.ShareName);
+                Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+                Assert.AreEqual("2011-03-09T01:42:34.9360000Z", fileUriBuilder.Snapshot);
+                Assert.IsNull(fileUriBuilder.Sas);
+                Assert.AreEqual("", fileUriBuilder.Query);
+                Assert.IsTrue(string.Equals(originalUri.Uri.AbsoluteUri, newUri.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         [RecordedTest]
@@ -256,7 +267,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void FileUriBuilder_SasStartExpiryTimeFormats(string startTime, string expiryTime)
         {
             // Arrange
-            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-06-12&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-06-12&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D");
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(initialUri);
 
             // Act
@@ -274,7 +285,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             string startTime = "2020-10-27T12Z";
             string expiryTime = "2020-10-28T13Z";
-            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-06-12&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-06-12&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D");
 
             // Act
             try

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static GremlinDatabaseListResult DeserializeGremlinDatabaseListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<GremlinDatabaseGetResults>> value = default;
+            Optional<IReadOnlyList<GremlinDatabaseData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GremlinDatabaseGetResults> array = new List<GremlinDatabaseGetResults>();
+                    List<GremlinDatabaseData> array = new List<GremlinDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GremlinDatabaseGetResults.DeserializeGremlinDatabaseGetResults(item));
+                        array.Add(GremlinDatabaseData.DeserializeGremlinDatabaseData(item));
                     }
                     value = array;
                     continue;

@@ -50,11 +50,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 .Setup(m => m.GetBackupDetailsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(failedResponse.Object);
 
-            var operation = new BackupOperation(mockClient.Object, JobId);
+            var operation = new KeyVaultBackupOperation(mockClient.Object, JobId);
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync(default));
 
-            operation = new BackupOperation(mockClient.Object, JobId);
+            operation = new KeyVaultBackupOperation(mockClient.Object, JobId);
 
             Assert.Throws<RequestFailedException>(() => operation.UpdateStatus(default));
         }
@@ -78,11 +78,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 .Setup(m => m.GetBackupDetails(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Throws(ex);
 
-            var operation = new BackupOperation(mockClient.Object, JobId);
+            var operation = new KeyVaultBackupOperation(mockClient.Object, JobId);
 
             Exception result = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync(default));
 
-            operation = new BackupOperation(mockClient.Object, JobId);
+            operation = new KeyVaultBackupOperation(mockClient.Object, JobId);
 
             result = Assert.Throws<RequestFailedException>(() => operation.UpdateStatus(default));
         }
@@ -96,11 +96,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 .Setup(m => m.GetBackupDetailsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(failedResponse.Object);
 
-            var operation = new BackupOperation(mockClient.Object, JobId);
+            var operation = new KeyVaultBackupOperation(mockClient.Object, JobId);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync(default));
 
-            Assert.Throws<RequestFailedException>(() => { BackupResult x = operation.Value; });
+            Assert.Throws<RequestFailedException>(() => { KeyVaultBackupResult x = operation.Value; });
             Assert.That(operation.StartTime, Is.EqualTo(failedBackup.StartTime));
             Assert.That(operation.EndTime, Is.EqualTo(failedBackup.EndTime));
         }
@@ -114,9 +114,9 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 .Setup(m => m.GetBackupDetailsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(failedResponse.Object);
 
-            var operation = new BackupOperation(incompleteBackup, Mock.Of<Response>(), Mock.Of<KeyVaultBackupClient>());
+            var operation = new KeyVaultBackupOperation(incompleteBackup, Mock.Of<Response>(), Mock.Of<KeyVaultBackupClient>());
 
-            Assert.Throws<InvalidOperationException>(() => { BackupResult x = operation.Value; });
+            Assert.Throws<InvalidOperationException>(() => { KeyVaultBackupResult x = operation.Value; });
             Assert.That(operation.StartTime, Is.EqualTo(incompleteBackup.StartTime));
             Assert.That(operation.EndTime, Is.EqualTo(incompleteBackup.EndTime));
         }

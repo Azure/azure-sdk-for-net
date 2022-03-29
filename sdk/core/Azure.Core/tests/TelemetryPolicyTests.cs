@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -15,82 +16,34 @@ namespace Azure.Core.Tests
         [Test]
         public async Task IncludesComponentNameAndVersion()
         {
+            var assembly = Assembly.GetAssembly(GetType());
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy("base-test", "1.0.0", null);
+            var telemetryPolicy = new TelemetryPolicy(new TelemetryDetails(GetType().Assembly));
 
             await SendGetRequest(transport, telemetryPolicy);
 
             Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
-            Assert.AreEqual(userAgent, $"azsdk-net-base-test/1.0.0 ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
+
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            string version = versionAttribute.InformationalVersion;
+            int hashSeparator = version.IndexOfOrdinal('+');
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
+            }
+            Assert.AreEqual(userAgent, $"azsdk-net-Core.Tests/{version} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
         }
 
         [Test]
         public async Task ApplicationIdIsIncluded()
         {
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy("base-test", "1.0.0", "application-id");
+            var telemetryPolicy = new TelemetryPolicy(new TelemetryDetails(GetType().Assembly, "application-id"));
 
             await SendGetRequest(transport, telemetryPolicy);
 
             Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
             StringAssert.StartsWith("application-id ", userAgent);
-        }
-
-        [NonParallelizable]
-        [Theory]
-        [TestCase("true")]
-        [TestCase("TRUE")]
-        [TestCase("1")]
-        public void CanDisableTelemetryWithEnvironmentVariable(string value)
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", value);
-
-                var testOptions = new TestOptions();
-                Assert.False(testOptions.Diagnostics.IsTelemetryEnabled);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", null);
-            }
-        }
-
-        [NonParallelizable]
-        [Theory]
-        [TestCase("true")]
-        [TestCase("TRUE")]
-        [TestCase("1")]
-        public void CanDisableDistributedTracingWithEnvironmentVariable(string value)
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable("AZURE_TRACING_DISABLED", value);
-
-                var testOptions = new TestOptions();
-                Assert.False(testOptions.Diagnostics.IsDistributedTracingEnabled);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable("AZURE_TRACING_DISABLED", null);
-            }
-        }
-
-        [NonParallelizable]
-        [Test]
-        public void UsesDefaultApplicationId()
-        {
-            try
-            {
-                DiagnosticsOptions.DefaultApplicationId = "Global-application-id";
-
-                var testOptions = new TestOptions();
-                Assert.AreEqual("Global-application-id", testOptions.Diagnostics.ApplicationId);
-            }
-            finally
-            {
-                DiagnosticsOptions.DefaultApplicationId = null;
-            }
         }
 
         [Test]
@@ -101,7 +54,6 @@ namespace Azure.Core.Tests
         }
 
         private class TestOptions : ClientOptions
-        {
-        }
+        { }
     }
 }

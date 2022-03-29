@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// cluster.</param>
         /// <param name="targetInstanceCount">The instance count of the
         /// cluster.</param>
+        /// <param name="vMGroupName">The name of the virtual machine
+        /// group.</param>
         /// <param name="autoscaleConfiguration">The autoscale
         /// configurations.</param>
         /// <param name="hardwareProfile">The hardware profile.</param>
@@ -48,11 +50,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// role.</param>
         /// <param name="encryptDataDisks">Indicates whether encrypt the data
         /// disks.</param>
-        public Role(string name = default(string), int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), Autoscale autoscaleConfiguration = default(Autoscale), HardwareProfile hardwareProfile = default(HardwareProfile), OsProfile osProfile = default(OsProfile), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IList<DataDisksGroups> dataDisksGroups = default(IList<DataDisksGroups>), IList<ScriptAction> scriptActions = default(IList<ScriptAction>), bool? encryptDataDisks = default(bool?))
+        public Role(string name = default(string), int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), string vMGroupName = default(string), Autoscale autoscaleConfiguration = default(Autoscale), HardwareProfile hardwareProfile = default(HardwareProfile), OsProfile osProfile = default(OsProfile), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IList<DataDisksGroups> dataDisksGroups = default(IList<DataDisksGroups>), IList<ScriptAction> scriptActions = default(IList<ScriptAction>), bool? encryptDataDisks = default(bool?))
         {
             Name = name;
             MinInstanceCount = minInstanceCount;
             TargetInstanceCount = targetInstanceCount;
+            VMGroupName = vMGroupName;
             AutoscaleConfiguration = autoscaleConfiguration;
             HardwareProfile = hardwareProfile;
             OsProfile = osProfile;
@@ -85,6 +88,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetInstanceCount")]
         public int? TargetInstanceCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the virtual machine group.
+        /// </summary>
+        [JsonProperty(PropertyName = "VMGroupName")]
+        public string VMGroupName { get; set; }
 
         /// <summary>
         /// Gets or sets the autoscale configurations.

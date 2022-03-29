@@ -21,25 +21,9 @@ namespace Sql.Tests
 	{
 		private void createManagedInstances(SqlManagementTestContext context, ResourceGroup resourceGroup, IList<string> managedInstanceNames)
 		{
-			SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-
-			Sku sku = new Sku();
-			sku.Name = "MIGP8G4";
-			sku.Tier = "GeneralPurpose";
-
-			VirtualNetwork vnet = ManagedInstanceTestFixture.CreateVirtualNetwork(context, resourceGroup, TestEnvironmentUtilities.DefaultLocationId);
-
 			foreach(string miName in managedInstanceNames) 
 			{
-				ManagedInstance managedInstance = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, miName, new ManagedInstance()
-				{
-					AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
-					AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
-					SubnetId = vnet.Subnets[0].Id,
-					Tags = new Dictionary<string, string>(),
-					Location = TestEnvironmentUtilities.DefaultLocationId,
-					Sku = sku,
-				});
+				ManagedInstance managedInstance = context.CreateManagedInstance(resourceGroup, miName);
 				Assert.NotNull(managedInstance);
 			}
 		}

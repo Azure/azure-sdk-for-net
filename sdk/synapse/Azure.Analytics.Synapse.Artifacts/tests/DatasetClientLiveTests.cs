@@ -23,6 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     {
         public DatasetClientLiveTests(bool isAsync) : base(isAsync)
         {
+            // temporary until https://github.com/Azure/azure-sdk-for-net/issues/27688 is addressed
+            CompareBodies = false;
         }
 
         private DatasetClient CreateClient()
@@ -67,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await createOperation.WaitForCompletionAsync();
 
             DatasetDeleteDatasetOperation deleteOperation = await client.StartDeleteDatasetAsync(datasetName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
+            Response response = await deleteOperation.WaitForCompletionResponseAsync();
             Assert.AreEqual(200, response.Status);
         }
     }

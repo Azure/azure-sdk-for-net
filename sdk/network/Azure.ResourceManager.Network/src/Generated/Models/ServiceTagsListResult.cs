@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListServiceTags API service call. </summary>
-    public partial class ServiceTagsListResult
+    public partial class ServiceTagsListResult : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
         internal ServiceTagsListResult()
@@ -20,33 +21,29 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
-        /// <param name="name"> The name of the cloud. </param>
-        /// <param name="id"> The ID of the cloud. </param>
-        /// <param name="type"> The azure resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="changeNumber"> The iteration number. </param>
         /// <param name="cloud"> The name of the cloud. </param>
         /// <param name="values"> The list of service tag information resources. </param>
-        internal ServiceTagsListResult(string name, string id, string type, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values)
+        /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
+        internal ServiceTagsListResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            Id = id;
-            Type = type;
             ChangeNumber = changeNumber;
             Cloud = cloud;
             Values = values;
+            NextLink = nextLink;
         }
 
-        /// <summary> The name of the cloud. </summary>
-        public string Name { get; }
-        /// <summary> The ID of the cloud. </summary>
-        public string Id { get; }
-        /// <summary> The azure resource type. </summary>
-        public string Type { get; }
         /// <summary> The iteration number. </summary>
         public string ChangeNumber { get; }
         /// <summary> The name of the cloud. </summary>
         public string Cloud { get; }
         /// <summary> The list of service tag information resources. </summary>
         public IReadOnlyList<ServiceTagInformation> Values { get; }
+        /// <summary> The URL to get next page of service tag information resources. </summary>
+        public string NextLink { get; }
     }
 }

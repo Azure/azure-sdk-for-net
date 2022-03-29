@@ -1,10 +1,10 @@
 # Make a Configuration Setting Read-Only
 
-This sample demonstrates how to make a configuration value read-only and return it back to the read-write state, as well as the exception that is thrown if a user attempts to write to a read-only setting. To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md) for links and instructions.
+This sample demonstrates how to make a configuration value read-only and return it back to the read-write state, as well as the exception that is thrown if a user attempts to write to a read-only setting. To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md) for links and instructions.
 
 ## Create a ConfigurationClient
 
-To interact with Azure App Configuration, you need to instantiate a `ConfigurationClient`. You can use either an endpoint URL and a [`TokenCredential`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#credentials) or a connection string.
+To interact with Azure App Configuration, you need to instantiate a `ConfigurationClient`. You can use either an endpoint URL and a [`TokenCredential`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#credentials) or a connection string.
  
 For the sample below, you can set `connectionString` in an environment variable, a configuration setting, or any way that works for your application. The connection string is available from the App Configuration Access Keys view in the Azure Portal.
 

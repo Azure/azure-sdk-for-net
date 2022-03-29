@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,20 +15,26 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableServiceAlias DeserializeAvailableServiceAlias(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> type = default;
             Optional<string> resourceName = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("resourceName"))
                 {
-                    name = property.Value.GetString();
+                    resourceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -35,13 +42,13 @@ namespace Azure.ResourceManager.Network.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("systemData"))
                 {
-                    resourceName = property.Value.GetString();
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new AvailableServiceAlias(name.Value, id.Value, type.Value, resourceName.Value);
+            return new AvailableServiceAlias(id, name, type, systemData, resourceName.Value);
         }
     }
 }

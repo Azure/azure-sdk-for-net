@@ -46,7 +46,7 @@ namespace ComputerVisionSDK.Tests
                 }
             }
 
-            return $"https://raw.githubusercontent.com/{user}/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/";
+            return $"https://raw.githubusercontent.com/{user}/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/";
         });
 
         static BaseTests()

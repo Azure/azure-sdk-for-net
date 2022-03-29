@@ -88,10 +88,10 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
         }
 
         private ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation) where T : notnull
-            => operation.WaitForCompletionAsync(TestEnvironment.Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromSeconds(2), default);
+            => InstrumentOperation(operation).WaitForCompletionAsync(TimeSpan.FromSeconds(2), default);
 
         private ValueTask<Response> WaitForCompletionResponseAsync(Operation operation)
-            => operation.WaitForCompletionResponseAsync(TestEnvironment.Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromSeconds(2), default);
+            => InstrumentOperation(operation).WaitForCompletionResponseAsync(TimeSpan.FromSeconds(2), default);
 
         [Test]
         [SyncOnly]
@@ -100,7 +100,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             if (SkipPhoneNumberLiveTests)
                 Assert.Ignore("Skip phone number live tests flag is on.");
 
-            var connectionString = TestEnvironment.LiveTestConnectionString;
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
             #region Snippet:CreatePhoneNumbersClient
             // Get a connection string to our Azure Communication resource.

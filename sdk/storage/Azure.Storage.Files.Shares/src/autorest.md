@@ -4,9 +4,34 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/011761be1285d14feb41796b5d97df1126495c5c/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-04-08/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e432d9cc87bfed320d8feead4b448be9481c9181/specification/storage/data-plane/Microsoft.FileStorage/preview/2021-06-08/file.json
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
+modelerfour:
+    seal-single-value-enum-by-default: true
+```
+
+### Don't include share name, directory, or file name in path - we have direct URIs.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{shareName}/{directory}/{fileName}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName") && false == param['$ref'].endsWith("#/parameters/DirectoryPath") && false == param['$ref'].endsWith("#/parameters/FilePath"))});
+        } 
+        else if (property.includes('/{shareName}/{directory}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName") && false == param['$ref'].endsWith("#/parameters/DirectoryPath"))});
+        }
+        else if (property.includes('/{shareName}'))
+        {
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName"))});
+        }
+    }
 ```
 
 ### Metrics
@@ -18,7 +43,11 @@ directive:
     $.Metrics.type = "object";
 ```
 
-### Times aren't required
+<<<<<<< HEAD
+### Times aren't required 
+=======
+### Formats aren't required
+>>>>>>> feature/storage/stg82base
 ``` yaml
 directive:
 - from: swagger-document
@@ -27,6 +56,10 @@ directive:
     delete $.format;
 - from: swagger-document
   where: $.parameters.FileLastWriteTime
+  transform: >
+    delete $.format;
+- from: swagger-document
+  where: $.parameters.FileChangeTime
   transform: >
     delete $.format;
 ```
@@ -77,49 +110,26 @@ directive:
     }
 ```
 
-### Replace ShareName, Directory, and FileName with path
+### Remove ShareName, Directory, and FileName - we have direct URIs
 ``` yaml
 directive:
-- from: swagger-document
-  where: $.parameters
-  transform: >
-    $.Path = {
-      "name": "path",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "description": "path.",
-      "x-ms-skip-url-encoding": true
-    };
-- from: swagger-document
-  where: $["x-ms-paths"]
-  transform: >
-    for (const property in $)
-    {
-        if (property.includes('{shareName}'))
-        {
-            $[property].parameters.push({
-                "$ref": "#/parameters/Path"
-            });
-        };
-    }
 - from: swagger-document
   where: $["x-ms-paths"]
   transform: >
    Object.keys($).map(id => {
-     if (id.includes('{shareName}/{directory}/{fileName}'))
+     if (id.includes('/{shareName}/{directory}/{fileName}'))
      {
-       $[id.replace('{shareName}/{directory}/{fileName}', '{path}?restype=file')] = $[id];
+       $[id.replace('/{shareName}/{directory}/{fileName}', '?shareName_dir_file')] = $[id];
        delete $[id];
      }
-     if (id.includes('{shareName}/{directory}'))
+     else if (id.includes('/{shareName}/{directory}'))
      {
-       $[id.replace('{shareName}/{directory}', '{path}?restype=directory')] = $[id];
+       $[id.replace('/{shareName}/{directory}', '?shareName_dir')] = $[id];
        delete $[id];
      }
-     if (id.includes('{shareName}'))
+     else if (id.includes('/{shareName}'))
      {
-       $[id.replace('{shareName}', '{path}')] = $[id];
+       $[id.replace('/{shareName}', '?shareName')] = $[id];
        delete $[id];
      }
    });
@@ -132,4 +142,14 @@ directive:
 - from: swagger-document
   where: $..[?(@.operationId=='File_Download')]
   transform: $["x-csharp-buffer-response"] = false;
+```
+
+### Remove conditions parameter groupings
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.SourceLeaseId["x-ms-parameter-grouping"];
+    delete $.DestinationLeaseId["x-ms-parameter-grouping"];
 ```

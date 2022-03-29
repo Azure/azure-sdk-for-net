@@ -34,8 +34,10 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='clusterName'>
         /// The name of the Event Hubs Cluster.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters for creating an Event Hubs Cluster resource.
+        /// <param name='settings'>
+        /// All possible Cluster settings - a collection of key/value paired
+        /// settings which apply to quotas and configurations imposed on the
+        /// cluster.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,7 +54,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ClusterQuotaConfigurationProperties>> PatchWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ClusterQuotaConfigurationProperties>> PatchWithHttpMessagesAsync(string resourceGroupName, string clusterName, IDictionary<string, string> settings = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all Event Hubs Cluster settings - a collection of key/value
         /// pairs which represent the quotas and settings imposed on the

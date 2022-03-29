@@ -15,14 +15,14 @@ namespace Azure.AI.MetricsAdvisor.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
-            foreach (var _ in Client.GetAnomalies(TestEnvironment.AlertConfigurationId, TestEnvironment.AlertId, cancellationToken: cancellationToken))
+            foreach (var _ in Client.GetAnomaliesForAlert(TestEnvironment.AlertConfigurationId, TestEnvironment.AlertId, cancellationToken: cancellationToken))
             {
             }
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await foreach (var _ in Client.GetAnomaliesAsync(TestEnvironment.AlertConfigurationId, TestEnvironment.AlertId, cancellationToken: cancellationToken))
+            await foreach (var _ in Client.GetAnomaliesForAlertAsync(TestEnvironment.AlertConfigurationId, TestEnvironment.AlertId, cancellationToken: cancellationToken))
             {
             }
         }

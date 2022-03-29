@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static EncryptionProtectorListResult DeserializeEncryptionProtectorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EncryptionProtector>> value = default;
+            Optional<IReadOnlyList<EncryptionProtectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EncryptionProtector> array = new List<EncryptionProtector>();
+                    List<EncryptionProtectorData> array = new List<EncryptionProtectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionProtector.DeserializeEncryptionProtector(item));
+                        array.Add(EncryptionProtectorData.DeserializeEncryptionProtectorData(item));
                     }
                     value = array;
                     continue;

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a pipeline. </summary>
     public partial class PipelineCreateOrUpdatePipelineOperation : Operation<PipelineResource>, IOperationSource<PipelineResource>
     {
-        private readonly ArmOperationHelpers<PipelineResource> _operation;
+        private readonly OperationInternals<PipelineResource> _operation;
 
         /// <summary> Initializes a new instance of PipelineCreateOrUpdatePipelineOperation for mocking. </summary>
         protected PipelineCreateOrUpdatePipelineOperation()
@@ -28,8 +28,9 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal PipelineCreateOrUpdatePipelineOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PipelineResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PipelineCreateOrUpdatePipelineOperation");
+            _operation = new OperationInternals<PipelineResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PipelineCreateOrUpdatePipelineOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -50,6 +51,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<PipelineResource> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<PipelineResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<PipelineResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);

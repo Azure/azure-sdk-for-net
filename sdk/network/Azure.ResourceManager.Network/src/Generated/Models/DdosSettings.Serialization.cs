@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(DdosCustomPolicy))
             {
                 writer.WritePropertyName("ddosCustomPolicy");
-                writer.WriteObjectValue(DdosCustomPolicy);
+                JsonSerializer.Serialize(writer, DdosCustomPolicy);
             }
             if (Optional.IsDefined(ProtectionCoverage))
             {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static DdosSettings DeserializeDdosSettings(JsonElement element)
         {
-            Optional<SubResource> ddosCustomPolicy = default;
+            Optional<WritableSubResource> ddosCustomPolicy = default;
             Optional<DdosSettingsProtectionCoverage> protectionCoverage = default;
             Optional<bool> protectedIP = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ddosCustomPolicy = SubResource.DeserializeSubResource(property.Value);
+                    ddosCustomPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("protectionCoverage"))
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new DdosSettings(ddosCustomPolicy.Value, Optional.ToNullable(protectionCoverage), Optional.ToNullable(protectedIP));
+            return new DdosSettings(ddosCustomPolicy, Optional.ToNullable(protectionCoverage), Optional.ToNullable(protectedIP));
         }
     }
 }

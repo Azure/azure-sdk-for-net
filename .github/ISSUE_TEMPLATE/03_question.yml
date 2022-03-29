@@ -1,0 +1,32 @@
+name: Question/Query
+description: Use this template to file a question/query for the SDK team that are not bugs or feature requests.
+title: "[QUERY]"
+
+body:
+  - type: input
+    id: library
+    attributes:
+      label: Library name and version
+      description: Name and version of the Library package used
+      placeholder: ex. Azure.Storage.Blobs 12.2.0
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: Query/Question
+      description: How can we help?
+      placeholder: Description
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: |
+        Please provide more information on your environment:
+          * Hosting platform or OS and .NET runtime version (`dotnet --info` output for .NET Core projects): [e.g. Azure AppService or Windows 10 .NET Framework 4.8]
+          * IDE and version : [e.g. Visual Studio 16.3]
+      placeholder: Environment
+    validations:
+      required: false

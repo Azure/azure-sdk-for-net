@@ -28,6 +28,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("datasetParameters");
                 writer.WriteObjectValue(DatasetParameters);
             }
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters");
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -41,6 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DataFlowReferenceType type = default;
             string referenceName = default;
             Optional<object> datasetParameters = default;
+            Optional<IDictionary<string, object>> parameters = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -65,10 +77,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     datasetParameters = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("parameters"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    parameters = dictionary;
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowReference(type, referenceName, datasetParameters.Value, additionalProperties);
+            return new DataFlowReference(type, referenceName, datasetParameters.Value, Optional.ToDictionary(parameters), additionalProperties);
         }
 
         internal partial class DataFlowReferenceConverter : JsonConverter<DataFlowReference>

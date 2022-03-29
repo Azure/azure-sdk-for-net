@@ -8,14 +8,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.IoT.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The type of interpolation technique : &quot;Linear&quot; or &quot;Step&quot;. </summary>
     public readonly partial struct InterpolationKind : IEquatable<InterpolationKind>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="InterpolationKind"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="InterpolationKind"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InterpolationKind(string value)
         {

@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public Uri VaultUri
         {
             get => new Uri(_vaultUri);
-            private set => _vaultUri = value.ToString();
+            private set => _vaultUri = value.AbsoluteUri;
         }
 
         /// <summary>

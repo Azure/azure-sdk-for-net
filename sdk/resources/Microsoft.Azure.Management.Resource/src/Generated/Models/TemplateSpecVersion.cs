@@ -42,20 +42,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="type">Type of this resource.</param>
         /// <param name="systemData">Azure Resource Manager metadata containing
         /// createdBy and modifiedBy information.</param>
-        /// <param name="artifacts">An array of Template Spec
-        /// artifacts.</param>
         /// <param name="description">Template Spec version
         /// description.</param>
-        /// <param name="template">The Azure Resource Manager template
+        /// <param name="linkedTemplates">An array of linked template
+        /// artifacts.</param>
+        /// <param name="metadata">The version metadata. Metadata is an
+        /// open-ended object and is typically a collection of key-value
+        /// pairs.</param>
+        /// <param name="mainTemplate">The main Azure Resource Manager template
         /// content.</param>
+        /// <param name="uiFormDefinition">The Azure Resource Manager template
+        /// UI definition content.</param>
         /// <param name="tags">Resource tags.</param>
-        public TemplateSpecVersion(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<TemplateSpecArtifact> artifacts = default(IList<TemplateSpecArtifact>), string description = default(string), object template = default(object), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TemplateSpecVersion(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), IList<LinkedTemplateArtifact> linkedTemplates = default(IList<LinkedTemplateArtifact>), object metadata = default(object), object mainTemplate = default(object), object uiFormDefinition = default(object), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type, systemData)
         {
             Location = location;
-            Artifacts = artifacts;
             Description = description;
-            Template = template;
+            LinkedTemplates = linkedTemplates;
+            Metadata = metadata;
+            MainTemplate = mainTemplate;
+            UiFormDefinition = uiFormDefinition;
             Tags = tags;
             CustomInit();
         }
@@ -73,22 +80,36 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of Template Spec artifacts.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.artifacts")]
-        public IList<TemplateSpecArtifact> Artifacts { get; set; }
-
-        /// <summary>
         /// Gets or sets template Spec version description.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the Azure Resource Manager template content.
+        /// Gets or sets an array of linked template artifacts.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.template")]
-        public object Template { get; set; }
+        [JsonProperty(PropertyName = "properties.linkedTemplates")]
+        public IList<LinkedTemplateArtifact> LinkedTemplates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version metadata. Metadata is an open-ended object
+        /// and is typically a collection of key-value pairs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metadata")]
+        public object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the main Azure Resource Manager template content.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.mainTemplate")]
+        public object MainTemplate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Resource Manager template UI definition
+        /// content.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uiFormDefinition")]
+        public object UiFormDefinition { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.
@@ -108,21 +129,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
-            if (Artifacts != null)
-            {
-                foreach (var element in Artifacts)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
             if (Description != null)
             {
                 if (Description.Length > 4096)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "Description", 4096);
+                }
+            }
+            if (LinkedTemplates != null)
+            {
+                foreach (var element in LinkedTemplates)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
                 }
             }
         }

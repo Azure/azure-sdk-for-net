@@ -31,26 +31,19 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentSettings class.
         /// </summary>
-        /// <param name="cpu">Required CPU, basic tier should be 1, standard
-        /// tier should be in range (1, 4)</param>
-        /// <param name="memoryInGB">Required Memory size in GB, basic tier
-        /// should be in range (1, 2), standard tier should be in range (1,
-        /// 8)</param>
-        /// <param name="jvmOptions">JVM parameter</param>
-        /// <param name="netCoreMainEntryPath">The path to the .NET executable
-        /// relative to zip root</param>
+        /// <param name="resourceRequests">The requested resource quantity for
+        /// required CPU and Memory. It is recommended that using this field to
+        /// represent the required CPU and Memory, the old field cpu and
+        /// memoryInGB will be deprecated later.</param>
         /// <param name="environmentVariables">Collection of environment
         /// variables</param>
-        /// <param name="runtimeVersion">Runtime version. Possible values
-        /// include: 'Java_8', 'Java_11', 'NetCore_31'</param>
-        public DeploymentSettings(int? cpu = default(int?), int? memoryInGB = default(int?), string jvmOptions = default(string), string netCoreMainEntryPath = default(string), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), string runtimeVersion = default(string))
+        /// <param name="addonConfigs">Collection of addons</param>
+        public DeploymentSettings(ResourceRequests resourceRequests = default(ResourceRequests), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), IDictionary<string, IDictionary<string, object>> addonConfigs = default(IDictionary<string, IDictionary<string, object>>), ContainerProbeSettings containerProbeSettings = default(ContainerProbeSettings))
         {
-            Cpu = cpu;
-            MemoryInGB = memoryInGB;
-            JvmOptions = jvmOptions;
-            NetCoreMainEntryPath = netCoreMainEntryPath;
+            ResourceRequests = resourceRequests;
             EnvironmentVariables = environmentVariables;
-            RuntimeVersion = runtimeVersion;
+            AddonConfigs = addonConfigs;
+            ContainerProbeSettings = containerProbeSettings;
             CustomInit();
         }
 
@@ -60,30 +53,13 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets required CPU, basic tier should be 1, standard tier
-        /// should be in range (1, 4)
+        /// Gets or sets the requested resource quantity for required CPU and
+        /// Memory. It is recommended that using this field to represent the
+        /// required CPU and Memory, the old field cpu and memoryInGB will be
+        /// deprecated later.
         /// </summary>
-        [JsonProperty(PropertyName = "cpu")]
-        public int? Cpu { get; set; }
-
-        /// <summary>
-        /// Gets or sets required Memory size in GB, basic tier should be in
-        /// range (1, 2), standard tier should be in range (1, 8)
-        /// </summary>
-        [JsonProperty(PropertyName = "memoryInGB")]
-        public int? MemoryInGB { get; set; }
-
-        /// <summary>
-        /// Gets or sets JVM parameter
-        /// </summary>
-        [JsonProperty(PropertyName = "jvmOptions")]
-        public string JvmOptions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the path to the .NET executable relative to zip root
-        /// </summary>
-        [JsonProperty(PropertyName = "netCoreMainEntryPath")]
-        public string NetCoreMainEntryPath { get; set; }
+        [JsonProperty(PropertyName = "resourceRequests")]
+        public ResourceRequests ResourceRequests { get; set; }
 
         /// <summary>
         /// Gets or sets collection of environment variables
@@ -92,11 +68,15 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public IDictionary<string, string> EnvironmentVariables { get; set; }
 
         /// <summary>
-        /// Gets or sets runtime version. Possible values include: 'Java_8',
-        /// 'Java_11', 'NetCore_31'
+        /// Gets or sets collection of addons
         /// </summary>
-        [JsonProperty(PropertyName = "runtimeVersion")]
-        public string RuntimeVersion { get; set; }
+        [JsonProperty(PropertyName = "addonConfigs")]
+        public IDictionary<string, IDictionary<string, object>> AddonConfigs { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "containerProbeSettings")]
+        public ContainerProbeSettings ContainerProbeSettings { get; set; }
 
     }
 }

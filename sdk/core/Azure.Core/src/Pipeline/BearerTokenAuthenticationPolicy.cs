@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -15,29 +16,37 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {
+        private string[] _scopes;
         private readonly AccessTokenCache _accessTokenCache;
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
-        /// <param name="scope">The scope to authenticate for.</param>
+        /// <param name="scope">The scope to be included in acquired tokens.</param>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
-        /// <param name="scopes">Scopes to authenticate for.</param>
+        /// <param name="scopes">Scopes to be included in acquired tokens.</param>
+        /// <exception cref="ArgumentNullException">When <paramref name="credential"/> or <paramref name="scopes"/> is null.</exception>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
+            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+        { }
 
-        internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
+        internal BearerTokenAuthenticationPolicy(
+            TokenCredential credential,
+            IEnumerable<string> scopes,
+            TimeSpan tokenRefreshOffset,
+            TimeSpan tokenRefreshRetryDelay)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
-            _accessTokenCache = new AccessTokenCache(credential, scopes.ToArray(), tokenRefreshOffset, tokenRefreshRetryDelay);
+            _scopes = scopes.ToArray();
+            _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay);
         }
 
         /// <inheritdoc />
@@ -52,6 +61,55 @@ namespace Azure.Core.Pipeline
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
+        /// <summary>
+        /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or
+        /// <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
+        /// Implementers of this method are expected to call <see cref="AuthenticateAndAuthorizeRequest"/> or <see cref="AuthenticateAndAuthorizeRequestAsync"/>
+        /// if authorization is required for requests not related to handling a challenge response.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
+        /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
+        protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message)
+        {
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            return AuthenticateAndAuthorizeRequestAsync(message, context);
+        }
+
+        /// <summary>
+        /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or
+        /// <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
+        /// Implementers of this method are expected to call <see cref="AuthenticateAndAuthorizeRequest"/> or <see cref="AuthenticateAndAuthorizeRequestAsync"/>
+        /// if authorization is required for requests not related to handling a challenge response.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
+        protected virtual void AuthorizeRequest(HttpMessage message)
+        {
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            AuthenticateAndAuthorizeRequest(message, context);
+        }
+
+        /// <summary>
+        /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
+        /// </summary>
+        /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
+        /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
+        /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
+        protected virtual ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
+        {
+            return default;
+        }
+
+        /// <summary>
+        /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
+        /// </summary>
+        /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
+        /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
+        /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
+        protected virtual bool AuthorizeRequestOnChallenge(HttpMessage message)
+        {
+            return false;
+        }
+
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
@@ -59,38 +117,80 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, async).ConfigureAwait(false);
-            message.Request.SetHeader(HttpHeader.Names.Authorization, headerValue);
-
             if (async)
             {
+                await AuthorizeRequestAsync(message).ConfigureAwait(false);
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
+                AuthorizeRequest(message);
                 ProcessNext(message, pipeline);
             }
+
+            // Check if we have received a challenge or we have not yet issued the first request.
+            if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate))
+            {
+                // Attempt to get the TokenRequestContext based on the challenge.
+                // If we fail to get the context, the challenge was not present or invalid.
+                // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
+                if (async)
+                {
+                    if (await AuthorizeRequestOnChallengeAsync(message).ConfigureAwait(false))
+                    {
+                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    if (AuthorizeRequestOnChallenge(message))
+                    {
+                        ProcessNext(message, pipeline);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the Authorization header on the <see cref="Request"/> by calling GetToken, or from cache, if possible.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
+        /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
+        protected async ValueTask AuthenticateAndAuthorizeRequestAsync(HttpMessage message, TokenRequestContext context)
+        {
+            string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, true).ConfigureAwait(false);
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+        }
+
+        /// <summary>
+        /// Sets the Authorization header on the <see cref="Request"/> by calling GetToken, or from cache, if possible.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
+        /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
+        protected void AuthenticateAndAuthorizeRequest(HttpMessage message, TokenRequestContext context)
+        {
+            string headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, false).EnsureCompleted();
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
         private class AccessTokenCache
         {
             private readonly object _syncObj = new object();
             private readonly TokenCredential _credential;
-            private readonly string[] _scopes;
             private readonly TimeSpan _tokenRefreshOffset;
             private readonly TimeSpan _tokenRefreshRetryDelay;
 
-            private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
-            private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
-            public AccessTokenCache(TokenCredential credential, string[] scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
+            // must be updated under lock (_syncObj)
+            private TokenRequestState? _state;
+
+            public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
             {
                 _credential = credential;
-                _scopes = scopes;
                 _tokenRefreshOffset = tokenRefreshOffset;
                 _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
             }
 
-            public async ValueTask<string> GetHeaderValueAsync(HttpMessage message, bool async)
+            public async ValueTask<string> GetHeaderValueAsync(HttpMessage message, TokenRequestContext context, bool async)
             {
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
@@ -99,30 +199,36 @@ namespace Azure.Core.Pipeline
 
                 while (true)
                 {
-                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources();
+                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
+                    HeaderValueInfo info;
                     if (getTokenFromCredential)
                     {
                         if (backgroundUpdateTcs != null)
                         {
-#pragma warning disable AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
-                            HeaderValueInfo info = headerValueTcs.Task.EnsureCompleted();
-#pragma warning restore AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
-                            _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, message, async));
+                            if (async)
+                            {
+                                info = await headerValueTcs.Task.ConfigureAwait(false);
+                            }
+                            else
+                            {
+#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                                info = headerValueTcs.Task.EnsureCompleted();
+#pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                            }
+                            _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, context, async));
                             return info.HeaderValue;
                         }
 
                         try
                         {
-                            HeaderValueInfo info = await GetHeaderValueFromCredentialAsync(message, async, message.CancellationToken).ConfigureAwait(false);
+                            info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
                             headerValueTcs.SetResult(info);
                         }
                         catch (OperationCanceledException)
                         {
                             headerValueTcs.SetCanceled();
                         }
-#pragma warning disable CA1031 // Catch more specific allowed exception type, or rethrow the exception
                         catch (Exception exception)
-#pragma warning restore CA1031 // Catch more specific allowed exception type, or rethrow the exception
                         {
                             headerValueTcs.SetException(exception);
                             // The exception will be thrown on the next lines when we touch the result of
@@ -148,12 +254,19 @@ namespace Azure.Core.Pipeline
                                 catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
                             }
                         }
+                        if (async)
+                        {
+                            info = await headerValueTcs.Task.ConfigureAwait(false);
+                        }
+                        else
+                        {
+#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                            info = headerValueTcs.Task.EnsureCompleted();
+#pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                        }
 
-#pragma warning disable AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
-                        return headerValueTcs.Task.EnsureCompleted().HeaderValue;
-#pragma warning restore AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
+                        return info.HeaderValue;
                     }
-
                     catch (TaskCanceledException) when (!message.CancellationToken.IsCancellationRequested)
                     {
                         maxCancellationRetries--;
@@ -171,68 +284,88 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> Tcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential) GetTaskCompletionSources()
+            private (TaskCompletionSource<HeaderValueInfo> InfoTcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential)
+                GetTaskCompletionSources(TokenRequestContext context)
             {
+                // Check if the current state requires no updates to _state under lock and is valid.
+                // All checks must be done on the local prefixed variables as _state can be modified by other threads.
+                var localState = _state;
+                if (localState != null && localState.InfoTcs.Task.IsCompleted && !localState.RequestRequiresNewToken(context))
+                {
+                    DateTimeOffset now = DateTimeOffset.UtcNow;
+                    if (!localState.BackgroundTokenAcquiredSuccessfully(now) && !localState.AccessTokenFailedOrExpired(now) && !localState.TokenNeedsBackgroundRefresh(now))
+                    {
+                        // localState entity has a valid token, no need to enter lock.
+                        return (localState.InfoTcs, default, false);
+                    }
+                }
                 lock (_syncObj)
                 {
                     // Initial state. GetTaskCompletionSources has been called for the first time
-                    if (_infoTcs == null)
+                    if (_state == null || _state.RequestRequiresNewToken(context))
                     {
-                        _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
-                        return (_infoTcs, default, true);
+                        _state = new TokenRequestState(context, new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously), default);
+                        return (_state.InfoTcs, _state.BackgroundUpdateTcs, true);
                     }
 
                     // Getting new access token is in progress, wait for it
-                    if (!_infoTcs.Task.IsCompleted)
+                    if (!_state.InfoTcs.Task.IsCompleted)
                     {
-                        _backgroundUpdateTcs = default;
-                        return (_infoTcs, _backgroundUpdateTcs, false);
+                        // Only create new TokenRequestState if necessary.
+                        if (_state.BackgroundUpdateTcs != null)
+                        {
+                            _state = new TokenRequestState(_state.CurrentContext, _state.InfoTcs, default);
+                        }
+                        return (_state.InfoTcs, _state.BackgroundUpdateTcs, false);
                     }
 
                     DateTimeOffset now = DateTimeOffset.UtcNow;
                     // Access token has been successfully acquired in background and it is not expired yet, use it instead of current one
-                    if (_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion && _backgroundUpdateTcs.Task.Result.ExpiresOn > now)
+                    if (_state.BackgroundTokenAcquiredSuccessfully(now))
                     {
-                        _infoTcs = _backgroundUpdateTcs;
-                        _backgroundUpdateTcs = default;
+                        _state = new TokenRequestState(_state.CurrentContext, _state.BackgroundUpdateTcs!, default);
                     }
 
                     // Attempt to get access token has failed or it has already expired. Need to get a new one
-                    if (_infoTcs.Task.Status != TaskStatus.RanToCompletion || now >= _infoTcs.Task.Result.ExpiresOn)
+                    if (_state.AccessTokenFailedOrExpired(now))
                     {
-                        _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
-                        return (_infoTcs, default, true);
+                        _state = new TokenRequestState(_state.CurrentContext, new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously), _state.BackgroundUpdateTcs);
+                        return (_state.InfoTcs, default, true);
                     }
 
                     // Access token is still valid but is about to expire, try to get it in background
-                    if (now >= _infoTcs.Task.Result.RefreshOn && _backgroundUpdateTcs == null)
+                    if (_state.TokenNeedsBackgroundRefresh(now))
                     {
-                        _backgroundUpdateTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
-                        return (_infoTcs, _backgroundUpdateTcs, true);
+                        _state = new TokenRequestState(_state.CurrentContext, _state.InfoTcs, new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously));
+                        return (_state.InfoTcs, _state.BackgroundUpdateTcs, true);
                     }
 
                     // Access token is valid, use it
-                    return (_infoTcs, default, false);
+                    return (_state.InfoTcs, default, false);
                 }
             }
 
-            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, HttpMessage httpMessage, bool async)
+            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(
+                TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs,
+                HeaderValueInfo info,
+                TokenRequestContext context,
+                bool async)
             {
                 var cts = new CancellationTokenSource(_tokenRefreshRetryDelay);
                 try
                 {
-                    HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(httpMessage, async, cts.Token).ConfigureAwait(false);
+                    HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(context, async, cts.Token).ConfigureAwait(false);
                     backgroundUpdateTcs.SetResult(newInfo);
                 }
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow));
-                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(httpMessage.Request.ClientRequestId, oce.ToString());
+                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
                 catch (Exception e)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
-                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(httpMessage.Request.ClientRequestId, e.ToString());
+                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
                 {
@@ -240,12 +373,11 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private async ValueTask<HeaderValueInfo> GetHeaderValueFromCredentialAsync(HttpMessage message, bool async, CancellationToken cancellationToken)
+            private async ValueTask<HeaderValueInfo> GetHeaderValueFromCredentialAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
             {
-                var requestContext = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
                 AccessToken token = async
-                    ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
-                    : _credential.GetToken(requestContext, cancellationToken);
+                    ? await _credential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false)
+                    : _credential.GetToken(context, cancellationToken);
 
                 return new HeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, token.ExpiresOn - _tokenRefreshOffset);
             }
@@ -262,6 +394,36 @@ namespace Azure.Core.Pipeline
                     ExpiresOn = expiresOn;
                     RefreshOn = refreshOn;
                 }
+            }
+
+            private class TokenRequestState
+            {
+                public TokenRequestContext CurrentContext { get; }
+                public TaskCompletionSource<HeaderValueInfo> InfoTcs { get; }
+                public TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs { get; }
+
+                public TokenRequestState(TokenRequestContext currentContext, TaskCompletionSource<HeaderValueInfo> infoTcs,
+                    TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs)
+                {
+                    CurrentContext = currentContext;
+                    InfoTcs = infoTcs;
+                    BackgroundUpdateTcs = backgroundUpdateTcs;
+                }
+
+                public bool RequestRequiresNewToken(TokenRequestContext context) =>
+                    (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(CurrentContext.Scopes.AsSpan())) ||
+                    (context.Claims != null && !string.Equals(context.Claims, CurrentContext.Claims));
+
+                public bool BackgroundTokenAcquiredSuccessfully(DateTimeOffset now) =>
+                    BackgroundUpdateTcs != null &&
+                        BackgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion &&
+                        BackgroundUpdateTcs.Task.Result.ExpiresOn > now;
+
+                public bool AccessTokenFailedOrExpired(DateTimeOffset now) =>
+                    InfoTcs.Task.Status != TaskStatus.RanToCompletion || now >= InfoTcs.Task.Result.ExpiresOn;
+
+                public bool TokenNeedsBackgroundRefresh(DateTimeOffset now) =>
+                    now >= InfoTcs.Task.Result.RefreshOn && BackgroundUpdateTcs == null;
             }
         }
     }

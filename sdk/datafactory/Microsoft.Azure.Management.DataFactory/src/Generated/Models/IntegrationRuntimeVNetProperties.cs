@@ -41,12 +41,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// runtime will join.</param>
         /// <param name="publicIPs">Resource IDs of the public IP addresses
         /// that this integration runtime will use.</param>
-        public IntegrationRuntimeVNetProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string vNetId = default(string), string subnet = default(string), IList<string> publicIPs = default(IList<string>))
+        /// <param name="subnetId">The ID of subnet, to which this Azure-SSIS
+        /// integration runtime will be joined.</param>
+        public IntegrationRuntimeVNetProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string vNetId = default(string), string subnet = default(string), IList<string> publicIPs = default(IList<string>), string subnetId = default(string))
         {
             AdditionalProperties = additionalProperties;
             VNetId = vNetId;
             Subnet = subnet;
             PublicIPs = publicIPs;
+            SubnetId = subnetId;
             CustomInit();
         }
 
@@ -82,6 +85,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "publicIPs")]
         public IList<string> PublicIPs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of subnet, to which this Azure-SSIS integration
+        /// runtime will be joined.
+        /// </summary>
+        [JsonProperty(PropertyName = "subnetId")]
+        public string SubnetId { get; set; }
 
     }
 }

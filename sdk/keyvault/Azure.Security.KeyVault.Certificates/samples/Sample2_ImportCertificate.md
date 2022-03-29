@@ -1,7 +1,7 @@
 # Importing PKCS#12 (PFX) and PEM-formatted certificates
 
 This sample demonstrates how to import both PKCS#12 (PFX) and PEM-formatted certificates into Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
@@ -66,7 +66,7 @@ client.ImportCertificate(importOptions);
 
 To see the full example source, see:
 
-* [Synchronous Sample3_ImportCertificate.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample3_ImportCertificate.cs)
-* [Asynchronous Sample3_ImportCertificateAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample3_ImportCertificateAsync.cs)
+* [Synchronous Sample3_ImportCertificate.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample3_ImportCertificate.cs)
+* [Asynchronous Sample3_ImportCertificateAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample3_ImportCertificateAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

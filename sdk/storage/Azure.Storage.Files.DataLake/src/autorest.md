@@ -4,10 +4,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e3850d6aa56eecad65262d0fc7815be0773bfb85/specification/storage/data-plane/Microsoft.StorageDataLake/stable/2020-06-12/DataLakeStorage.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/6bacb496a7c84297e72747c52f82e4a0e6c8930d/specification/storage/data-plane/Azure.Storage.Files.DataLake/preview/2021-06-08/DataLakeStorage.json
+modelerfour:
+    seal-single-value-enum-by-default: true
 ```
 
-### Added FileSystem and Path as parameters
+### Don't include file system or path in path - we have direct URIs.
 ``` yaml
 directive:
 - from: swagger-document
@@ -15,18 +17,14 @@ directive:
   transform: >
     for (const property in $)
     {
-        if (property.includes('{filesystem}'))
+        if (property.includes('/{filesystem}/{path}'))
         {
-            $[property].parameters.push({
-                "$ref": "#/parameters/FileSystem"
-            });
-        };
-        if (property.includes('{path}'))
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/FileSystem") && false == param['$ref'].endsWith("#/parameters/Path"))});
+        } 
+        else if (property.includes('/{filesystem}'))
         {
-            $[property].parameters.push({
-                "$ref": "#/parameters/Path"
-            });
-        };
+            $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/FileSystem"))});
+        }
     }
 ```
 
@@ -62,6 +60,9 @@ directive:
     delete $.SourceIfNoneMatch["x-ms-parameter-grouping"];
     delete $.SourceIfUnmodifiedSince["x-ms-parameter-grouping"];
     delete $.SourceLeaseId["x-ms-parameter-grouping"];
+    delete $.EncryptionKey["x-ms-parameter-grouping"];
+    delete $.EncryptionKeySha256["x-ms-parameter-grouping"];
+    delete $.EncryptionAlgorithm["x-ms-parameter-grouping"];
 ```
 
 ### Fix Path
@@ -99,4 +100,50 @@ directive:
 - from: swagger-document
   where: $..[?(@.operationId=='Path_Read')]
   transform: $["x-csharp-buffer-response"] = false;
+```
+
+### Don't include FileSystem and Path in path - we have direct URIs.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]
+  transform: >
+    for (const property in $)
+    {
+        if (property.includes('/{filesystem}/{path}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{filesystem}/{path}', '');
+            if (!newName.includes('?'))
+            {
+              newName = newName + '?' + 'filesystem_path'
+            }
+            $[newName] = $[oldName];
+            delete $[oldName];
+        } 
+        else if (property.includes('/{filesystem}'))
+        {
+            var oldName = property;
+            var newName = property.replace('/{filesystem}', '');
+            if (!newName.includes('?'))
+            {
+              newName = newName + '?' + 'filesystem'
+            }
+            $[newName] = $[oldName];
+            delete $[oldName];
+        }
+    }
+```
+
+### Fix EncryptionAlgorithm
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.EncryptionAlgorithm.enum;
+    $.EncryptionAlgorithm.enum = [
+      "None",
+      "AES256"
+    ];
 ```

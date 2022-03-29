@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// customer.</param>
         /// <param name="keyEncryptionKey">Key encryption key for the
         /// job.</param>
-        public UpdateJobDetails(ContactDetails contactDetails = default(ContactDetails), ShippingAddress shippingAddress = default(ShippingAddress), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey))
+        /// <param name="returnToCustomerPackageDetails">Return package details
+        /// of job.</param>
+        public UpdateJobDetails(ContactDetails contactDetails = default(ContactDetails), ShippingAddress shippingAddress = default(ShippingAddress), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), PackageCarrierDetails returnToCustomerPackageDetails = default(PackageCarrierDetails))
         {
             ContactDetails = contactDetails;
             ShippingAddress = shippingAddress;
             KeyEncryptionKey = keyEncryptionKey;
+            ReturnToCustomerPackageDetails = returnToCustomerPackageDetails;
             CustomInit();
         }
 
@@ -65,6 +68,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyEncryptionKey")]
         public KeyEncryptionKey KeyEncryptionKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets return package details of job.
+        /// </summary>
+        [JsonProperty(PropertyName = "returnToCustomerPackageDetails")]
+        public PackageCarrierDetails ReturnToCustomerPackageDetails { get; set; }
 
         /// <summary>
         /// Validate the object.

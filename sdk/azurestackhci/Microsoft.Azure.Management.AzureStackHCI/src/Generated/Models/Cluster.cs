@@ -39,13 +39,27 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// <param name="aadClientId">App id of cluster AAD identity.</param>
         /// <param name="aadTenantId">Tenant id of cluster AAD
         /// identity.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="createdBy">The identity that created the
+        /// resource.</param>
+        /// <param name="createdByType">The type of identity that created the
+        /// resource. Possible values include: 'User', 'Application',
+        /// 'ManagedIdentity', 'Key'</param>
+        /// <param name="createdAt">The timestamp of resource creation
+        /// (UTC).</param>
+        /// <param name="lastModifiedBy">The identity that last modified the
+        /// resource.</param>
+        /// <param name="lastModifiedByType">The type of identity that last
+        /// modified the resource. Possible values include: 'User',
+        /// 'Application', 'ManagedIdentity', 'Key'</param>
+        /// <param name="lastModifiedAt">The timestamp of resource last
+        /// modification (UTC)</param>
         /// <param name="provisioningState">Provisioning state. Possible values
         /// include: 'Succeeded', 'Failed', 'Canceled', 'Accepted',
         /// 'Provisioning'</param>
@@ -53,6 +67,8 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// include: 'NotYetRegistered', 'ConnectedRecently',
         /// 'NotConnectedRecently', 'Disconnected', 'Error'</param>
         /// <param name="cloudId">Unique, immutable resource id.</param>
+        /// <param name="cloudManagementEndpoint">Endpoint configured for
+        /// management from the Azure portal</param>
         /// <param name="reportedProperties">Properties reported by cluster
         /// agent.</param>
         /// <param name="trialDaysRemaining">Number of days remaining in the
@@ -65,12 +81,19 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// timestamp.</param>
         /// <param name="lastBillingTimestamp">Most recent billing meter
         /// timestamp.</param>
-        public Cluster(string location, string aadClientId, string aadTenantId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string status = default(string), string cloudId = default(string), ClusterReportedProperties reportedProperties = default(ClusterReportedProperties), double? trialDaysRemaining = default(double?), string billingModel = default(string), System.DateTime? registrationTimestamp = default(System.DateTime?), System.DateTime? lastSyncTimestamp = default(System.DateTime?), System.DateTime? lastBillingTimestamp = default(System.DateTime?))
+        public Cluster(string location, string aadClientId, string aadTenantId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string createdBy = default(string), string createdByType = default(string), System.DateTime? createdAt = default(System.DateTime?), string lastModifiedBy = default(string), string lastModifiedByType = default(string), System.DateTime? lastModifiedAt = default(System.DateTime?), string provisioningState = default(string), string status = default(string), string cloudId = default(string), string cloudManagementEndpoint = default(string), ClusterReportedProperties reportedProperties = default(ClusterReportedProperties), double? trialDaysRemaining = default(double?), string billingModel = default(string), System.DateTime? registrationTimestamp = default(System.DateTime?), System.DateTime? lastSyncTimestamp = default(System.DateTime?), System.DateTime? lastBillingTimestamp = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
+            CreatedBy = createdBy;
+            CreatedByType = createdByType;
+            CreatedAt = createdAt;
+            LastModifiedBy = lastModifiedBy;
+            LastModifiedByType = lastModifiedByType;
+            LastModifiedAt = lastModifiedAt;
             ProvisioningState = provisioningState;
             Status = status;
             CloudId = cloudId;
+            CloudManagementEndpoint = cloudManagementEndpoint;
             AadClientId = aadClientId;
             AadTenantId = aadTenantId;
             ReportedProperties = reportedProperties;
@@ -86,6 +109,46 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the identity that created the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData.createdBy")]
+        public string CreatedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of identity that created the resource.
+        /// Possible values include: 'User', 'Application', 'ManagedIdentity',
+        /// 'Key'
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData.createdByType")]
+        public string CreatedByType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timestamp of resource creation (UTC).
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData.createdAt")]
+        public System.DateTime? CreatedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity that last modified the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData.lastModifiedBy")]
+        public string LastModifiedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of identity that last modified the resource.
+        /// Possible values include: 'User', 'Application', 'ManagedIdentity',
+        /// 'Key'
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData.lastModifiedByType")]
+        public string LastModifiedByType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timestamp of resource last modification (UTC)
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData.lastModifiedAt")]
+        public System.DateTime? LastModifiedAt { get; set; }
 
         /// <summary>
         /// Gets provisioning state. Possible values include: 'Succeeded',
@@ -109,6 +172,13 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         public string CloudId { get; private set; }
 
         /// <summary>
+        /// Gets or sets endpoint configured for management from the Azure
+        /// portal
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cloudManagementEndpoint")]
+        public string CloudManagementEndpoint { get; set; }
+
+        /// <summary>
         /// Gets or sets app id of cluster AAD identity.
         /// </summary>
         [JsonProperty(PropertyName = "properties.aadClientId")]
@@ -121,10 +191,10 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         public string AadTenantId { get; set; }
 
         /// <summary>
-        /// Gets or sets properties reported by cluster agent.
+        /// Gets properties reported by cluster agent.
         /// </summary>
         [JsonProperty(PropertyName = "properties.reportedProperties")]
-        public ClusterReportedProperties ReportedProperties { get; set; }
+        public ClusterReportedProperties ReportedProperties { get; private set; }
 
         /// <summary>
         /// Gets number of days remaining in the trial period.

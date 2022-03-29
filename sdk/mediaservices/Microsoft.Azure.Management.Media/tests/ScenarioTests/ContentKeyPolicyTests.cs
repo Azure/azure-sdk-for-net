@@ -30,8 +30,7 @@ namespace Media.Tests.ScenarioTests
                     string policyDescription = "Test policy";
 
                     // Try to get the policy, which should not exist
-                    ContentKeyPolicy contentKeyPolicy = MediaClient.ContentKeyPolicies.Get(ResourceGroup, AccountName, policyName);
-                    Assert.Null(contentKeyPolicy);
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.ContentKeyPolicies.Get(ResourceGroup, AccountName, policyName)).Response.StatusCode);
 
                     // Create the policy
                     ContentKeyPolicyOption[] options = new ContentKeyPolicyOption[]
@@ -48,7 +47,7 @@ namespace Media.Tests.ScenarioTests
                     ValidateContentKeyPolicy(createdPolicy, policyName, policyDescription, options);
 
                     // Get the newly created policy
-                    contentKeyPolicy = MediaClient.ContentKeyPolicies.Get(ResourceGroup, AccountName, policyName);
+                    ContentKeyPolicy contentKeyPolicy = MediaClient.ContentKeyPolicies.Get(ResourceGroup, AccountName, policyName);
                     Assert.NotNull(contentKeyPolicy);
                     ValidateContentKeyPolicy(createdPolicy, policyName, policyDescription, options);
 
@@ -86,8 +85,7 @@ namespace Media.Tests.ScenarioTests
                     Assert.Empty(contentKeyPolicies);
 
                     // Try to get the policy, which should not exist
-                    contentKeyPolicy = MediaClient.ContentKeyPolicies.Get(ResourceGroup, AccountName, policyName);
-                    Assert.Null(contentKeyPolicy);
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, Assert.Throws<ErrorResponseException>(() => MediaClient.ContentKeyPolicies.Get(ResourceGroup, AccountName, policyName)).Response.StatusCode);
                 }
                 finally
                 {

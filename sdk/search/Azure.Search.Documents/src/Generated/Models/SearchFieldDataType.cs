@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchFieldDataType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchFieldDataType(string value)
         {

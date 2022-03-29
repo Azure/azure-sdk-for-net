@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
         /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in a
         /// region](
-        /// https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
+        /// https://docs.microsoft.com/rest/api/compute/resourceskus/list)
         /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes for
         /// resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes).
         /// For more information about virtual machine sizes, see [Sizes for
         /// virtual
-        /// machines](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes).
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/sizes).
         /// &lt;br&gt;&lt;br&gt; The available VM sizes depend on region and
         /// availability set. Possible values include: 'Basic_A0', 'Basic_A1',
         /// 'Basic_A2', 'Basic_A3', 'Basic_A4', 'Standard_A0', 'Standard_A1',
@@ -95,9 +95,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Standard_NC24s_v3', 'Standard_NC24rs_v3', 'Standard_ND6s',
         /// 'Standard_ND12s', 'Standard_ND24s', 'Standard_ND24rs',
         /// 'Standard_NV6', 'Standard_NV12', 'Standard_NV24'</param>
-        public HardwareProfile(string vmSize = default(string))
+        /// <param name="vmSizeProperties">Specifies the properties for
+        /// customizing the size of the virtual machine. Minimum api-version:
+        /// 2021-07-01. &lt;br&gt;&lt;br&gt; This feature is still in preview
+        /// mode and is not supported for VirtualMachineScaleSet.
+        /// &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM
+        /// Customization](https://aka.ms/vmcustomization) for more
+        /// details.</param>
+        public HardwareProfile(string vmSize = default(string), VMSizeProperties vmSizeProperties = default(VMSizeProperties))
         {
             VmSize = vmSize;
+            VmSizeProperties = vmSizeProperties;
             CustomInit();
         }
 
@@ -117,13 +125,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all available virtual
         /// machine sizes in a region](
-        /// https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
+        /// https://docs.microsoft.com/rest/api/compute/resourceskus/list)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all available virtual
         /// machine sizes for
         /// resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes).
         /// For more information about virtual machine sizes, see [Sizes for
         /// virtual
-        /// machines](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes).
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/sizes).
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; The available VM sizes depend
         /// on region and availability set. Possible values include:
         /// 'Basic_A0', 'Basic_A1', 'Basic_A2', 'Basic_A3', 'Basic_A4',
@@ -178,6 +186,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the properties for customizing the size of
+        /// the virtual machine. Minimum api-version: 2021-07-01.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This feature is still in
+        /// preview mode and is not supported for VirtualMachineScaleSet.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Please follow the instructions
+        /// in [VM Customization](https://aka.ms/vmcustomization) for more
+        /// details.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmSizeProperties")]
+        public VMSizeProperties VmSizeProperties { get; set; }
 
     }
 }

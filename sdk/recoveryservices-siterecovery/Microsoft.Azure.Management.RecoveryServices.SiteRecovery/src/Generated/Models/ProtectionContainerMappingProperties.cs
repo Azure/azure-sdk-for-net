@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="health">Health of pairing.</param>
         /// <param name="healthErrorDetails">Health error.</param>
         /// <param name="policyId">Policy ARM Id.</param>
-        /// <param name="state">Association Status</param>
+        /// <param name="state">Association Status.</param>
         /// <param name="sourceProtectionContainerFriendlyName">Friendly name
         /// of source protection container.</param>
         /// <param name="sourceFabricFriendlyName">Friendly name of source
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string PolicyId { get; set; }
 
         /// <summary>
-        /// Gets or sets association Status
+        /// Gets or sets association Status.
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }

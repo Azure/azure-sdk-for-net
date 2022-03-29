@@ -107,10 +107,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (clusterName == null)
             {
@@ -126,9 +122,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -350,10 +346,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (clusterName == null)
             {
@@ -369,9 +361,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (dataCenterName == null)
@@ -388,9 +380,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "dataCenterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCenterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCenterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCenterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "dataCenterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -693,10 +685,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (clusterName == null)
             {
@@ -712,9 +700,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (dataCenterName == null)
@@ -731,9 +719,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "dataCenterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCenterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCenterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCenterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "dataCenterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -943,10 +931,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (clusterName == null)
             {
@@ -962,9 +946,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (dataCenterName == null)
@@ -981,9 +965,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "dataCenterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCenterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCenterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCenterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "dataCenterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -1239,10 +1223,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (clusterName == null)
             {
@@ -1258,9 +1238,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (dataCenterName == null)
@@ -1277,9 +1257,9 @@ namespace Microsoft.Azure.Management.CosmosDB
                 {
                     throw new ValidationException(ValidationRules.MinLength, "dataCenterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCenterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCenterName, "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCenterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*");
+                    throw new ValidationException(ValidationRules.Pattern, "dataCenterName", "^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$");
                 }
             }
             if (Client.ApiVersion == null)

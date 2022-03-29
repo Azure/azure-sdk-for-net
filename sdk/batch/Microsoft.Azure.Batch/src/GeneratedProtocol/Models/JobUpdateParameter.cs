@@ -35,6 +35,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="poolInfo">The Pool on which the Batch service runs the
         /// Job's Tasks.</param>
         /// <param name="priority">The priority of the Job.</param>
+        /// <param name="maxParallelTasks">The maximum number of tasks that can
+        /// be executed in parallel for the job.</param>
+        /// <param name="allowTaskPreemption">Whether Tasks in this job can be
+        /// preempted by other high priority jobs</param>
         /// <param name="constraints">The execution constraints for the
         /// Job.</param>
         /// <param name="metadata">A list of name-value pairs associated with
@@ -42,9 +46,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="onAllTasksComplete">The action the Batch service
         /// should take when all Tasks in the Job are in the completed
         /// state.</param>
-        public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), IList<MetadataItem> metadata = default(IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
+        public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), int? maxParallelTasks = default(int?), bool? allowTaskPreemption = default(bool?), JobConstraints constraints = default(JobConstraints), IList<MetadataItem> metadata = default(IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
         {
             Priority = priority;
+            MaxParallelTasks = maxParallelTasks;
+            AllowTaskPreemption = allowTaskPreemption;
             Constraints = constraints;
             PoolInfo = poolInfo;
             Metadata = metadata;
@@ -67,6 +73,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum number of tasks that can be executed in
+        /// parallel for the job.
+        /// </summary>
+        /// <remarks>
+        /// The value of maxParallelTasks must be -1 or greater than 0 if
+        /// specified. If not specified, the default value is -1, which means
+        /// there's no limit to the number of tasks that can be run at once.
+        /// You can update a job's maxParallelTasks after it has been created
+        /// using the update job API.
+        /// </remarks>
+        [JsonProperty(PropertyName = "maxParallelTasks")]
+        public int? MaxParallelTasks { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether Tasks in this job can be preempted by other
+        /// high priority jobs
+        /// </summary>
+        /// <remarks>
+        /// If the value is set to True, other high priority jobs submitted to
+        /// the system will take precedence and will be able requeue tasks from
+        /// this job. You can update a job's allowTaskPreemption after it has
+        /// been created using the update job API.
+        /// </remarks>
+        [JsonProperty(PropertyName = "allowTaskPreemption")]
+        public bool? AllowTaskPreemption { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints for the Job.

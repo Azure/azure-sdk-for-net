@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<bool> hasLegalHold = default;
             Optional<IReadOnlyList<TagProperty>> tags = default;
+            Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasLegalHold"))
@@ -44,8 +45,18 @@ namespace Azure.ResourceManager.Storage.Models
                     tags = array;
                     continue;
                 }
+                if (property.NameEquals("protectedAppendWritesHistory"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value);
+                    continue;
+                }
             }
-            return new LegalHoldProperties(Optional.ToNullable(hasLegalHold), Optional.ToList(tags));
+            return new LegalHoldProperties(Optional.ToNullable(hasLegalHold), Optional.ToList(tags), protectedAppendWritesHistory.Value);
         }
     }
 }

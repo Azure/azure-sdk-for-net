@@ -15,7 +15,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     public partial class AssetConversionConfiguration
     {
         /// <summary>
-        /// Creates an asset conversion configuration from the gravity vector and a model scale
+        /// Creates an asset conversion configuration from the gravity vector and a model scale.
         /// </summary>
         /// <param name="gravity">Gravity vector with respect to object's nominal position.</param>
         /// <param name="scale">Scale of transformation of asset units into meter space.</param>
@@ -29,7 +29,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// Creates an asset conversion configuration from the gravity vector and a model scale
+        /// Creates an asset conversion configuration from the gravity vector and a model scale.
         /// </summary>
         /// <param name="gravityWrapper">Gravity vector with respect to object's nominal position.</param>
         /// <param name="scale">Scale of transformation of asset units into meter space.</param>

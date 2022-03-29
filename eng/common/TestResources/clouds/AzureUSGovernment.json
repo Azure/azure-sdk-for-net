@@ -1,0 +1,15 @@
+{
+    "azConfigEndpointSuffix": ".azconfig.azure.us",
+    "azureAuthorityHost": "https://login.microsoftonline.us/",
+    "cognitiveServicesEndpointSuffix": ".cognitiveservices.azure.us",
+    "containerRegistryEndpointSuffix": ".azurecr.us",
+    "cosmosEndpointSuffix": "cosmos.azure.us",
+    "enableStorageVersioning": false,
+    "formRecognizerLocation": "usgovvirginia",
+    "keyVaultDomainSuffix": ".vault.usgovcloudapi.net",
+    "keyVaultEndpointSuffix": ".vault.usgovcloudapi.net",
+    "keyVaultSku": "premium",
+    "searchEndpointSuffix": "search.azure.us",
+    "serviceBusEndpointSuffix": ".servicebus.usgovcloudapi.net",
+    "storageEndpointSuffix": "core.usgovcloudapi.net"
+}

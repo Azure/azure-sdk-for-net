@@ -217,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout,
                         token).ConfigureAwait(false);
                 },
-                (this, messageBatch.AsEnumerable<ServiceBusMessage>()),
+                (this, messageBatch.AsReadOnly<ServiceBusMessage>()),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -231,11 +231,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
-            IEnumerable<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            var stopWatch = ValueStopwatch.StartNew();
             var link = default(SendingAmqpLink);
 
             try
@@ -254,7 +253,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             timeout).ConfigureAwait(false);
                     }
 
-                    link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                    link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout), cancellationToken).ConfigureAwait(false);
 
                     // Validate that the message is not too large to send.  This is done after the link is created to ensure
                     // that the maximum message size is known, as it is dictated by the service using the link.
@@ -270,15 +269,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Outcome outcome = await link.SendMessageAsync(
                         batchMessage,
                         deliveryTag,
-                    transactionId, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                        transactionId,
+                        cancellationToken).ConfigureAwait(false);
 
                     if (outcome.DescriptorCode != Accepted.Code)
                     {
                         throw (outcome as Rejected)?.Error.ToMessagingContractException();
                     }
-
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 }
             }
             catch (Exception exception)
@@ -304,7 +301,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task SendAsync(
-            IReadOnlyList<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
@@ -342,13 +339,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (_sendLink?.TryGetOpenedObject(out var _) == true)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await _sendLink.CloseAsync().ConfigureAwait(false);
+                    await _sendLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 if (_managementLink?.TryGetOpenedObject(out var _) == true)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await _managementLink.CloseAsync().ConfigureAwait(false);
+                    await _managementLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 _sendLink?.Dispose();
@@ -378,7 +375,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
-            IReadOnlyList<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
@@ -403,7 +400,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task<IReadOnlyList<long>> ScheduleMessageInternalAsync(
-            IReadOnlyList<ServiceBusMessage> messages,
+            IReadOnlyCollection<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
@@ -420,7 +417,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
                 }
 
-                List<AmqpMap> entries = new List<AmqpMap>();
+                List<AmqpMap> entries = new List<AmqpMap>(messages.Count);
                 foreach (ServiceBusMessage message in messages)
                 {
                     using AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message);

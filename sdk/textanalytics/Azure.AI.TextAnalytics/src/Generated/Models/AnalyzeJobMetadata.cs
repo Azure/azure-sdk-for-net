@@ -14,10 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class AnalyzeJobMetadata : JobMetadata
     {
         /// <summary> Initializes a new instance of AnalyzeJobMetadata. </summary>
-        /// <param name="createdDateTime"> . </param>
-        /// <param name="jobId"> . </param>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="status"> . </param>
+        /// <param name="createdDateTime"></param>
+        /// <param name="jobId"></param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         internal AnalyzeJobMetadata(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(createdDateTime, jobId, lastUpdateDateTime, status)
         {
@@ -28,17 +28,18 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AnalyzeJobMetadata. </summary>
-        /// <param name="createdDateTime"> . </param>
-        /// <param name="expirationDateTime"> . </param>
-        /// <param name="jobId"> . </param>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="displayName"> . </param>
+        /// <param name="createdDateTime"></param>
+        /// <param name="expirationDateTime"></param>
+        /// <param name="jobId"></param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
+        /// <param name="displayName"></param>
         internal AnalyzeJobMetadata(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, string displayName) : base(createdDateTime, expirationDateTime, jobId, lastUpdateDateTime, status)
         {
             DisplayName = displayName;
         }
 
+        /// <summary> Gets the display name. </summary>
         public string DisplayName { get; }
     }
 }

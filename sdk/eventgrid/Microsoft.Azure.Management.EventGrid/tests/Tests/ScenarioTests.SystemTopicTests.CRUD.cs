@@ -15,154 +15,153 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        // Disable the test as system topic is not part of GA API yet.
-        //////[Fact]
-        //////public void SystemTopicCreateGetUpdateDelete()
-        //////{
-        //////    using (MockContext context = MockContext.Start(this.GetType()))
-        //////    {
-        //////        this.InitializeClients(context);
+        [Fact]
+        public void systemtopiccreategetupdatedelete()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                this.InitializeClients(context);
 
-        //////        var location = this.ResourceManagementClient.GetLocationFromProvider();
+                var location = this.ResourceManagementClient.GetLocationFromProvider();
 
-        //////        string resourceGroup = "testtobedeleted";
-        //////        var systemTopicName = TestUtilities.GenerateName(EventGridManagementHelper.SystemTopicPrefix);
+                string resourcegroup = "testtobedeleted";
+                var systemtopicname = TestUtilities.GenerateName(EventGridManagementHelper.SystemTopicPrefix);
 
-        //////        // Temporarily commenting this out as this is not yet enabled for the new API version
-        //////        // var operationsResponse = this.EventGridManagementClient.Operations.List();
+                //        // temporarily commenting this out as this is not yet enabled for the new api version
+                // var operationsresponse = this.eventgridmanagementclient.operations.list();
 
-        //////        var originalTagsDictionary = new Dictionary<string, string>()
-        //////        {
-        //////            {"originalTag1", "originalValue1"},
-        //////            {"originalTag2", "originalValue2"}
-        //////        };
+                var originaltagsdictionary = new Dictionary<string, string>()
+                        {
+                            {"originaltag1", "originalvalue1"},
+                            {"originaltag2", "originalvalue2"}
+                        };
 
-        //////        SystemTopic systemTopic = new SystemTopic()
-        //////        {
-        //////            Location = location,
-        //////            Tags = originalTagsDictionary,
-        //////            TopicType = "microsoft.storage.storageaccounts",
-        //////            Source = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testtobedeleted/providers/Microsoft.Storage/storageAccounts/testtrackedsourcev2",
-        //////        };
+                SystemTopic systemtopic = new SystemTopic()
+                {
+                    Location = location,
+                    Tags = originaltagsdictionary,
+                    TopicType = "microsoft.storage.storageaccounts",
+                    Source = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/testtobedeleted/providers/microsoft.storage/storageaccounts/testtrackedsourcev2",
+                };
 
-        //////        try
-        //////        {
-        //////            var createSystemTopicResponse = this.EventGridManagementClient.SystemTopics.CreateOrUpdateAsync(resourceGroup, systemTopicName, systemTopic).Result;
+                try
+                {
+                    var createsystemtopicresponse = this.EventGridManagementClient.SystemTopics.CreateOrUpdateAsync(resourcegroup, systemtopicname, systemtopic).Result;
 
-        //////            Assert.NotNull(createSystemTopicResponse);
-        //////            Assert.Equal(createSystemTopicResponse.Name, systemTopicName);
+                    Assert.NotNull(createsystemtopicresponse);
+                    Assert.Equal(createsystemtopicresponse.Name, systemtopicname);
 
-        //////            TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-        //////            // Get the created systemTopic
-        //////            var getSystemTopicResponse = this.EventGridManagementClient.SystemTopics.Get(resourceGroup, systemTopicName);
-        //////            if (string.Compare(getSystemTopicResponse.ProvisioningState, "Succeeded", true) != 0)
-        //////            {
-        //////                TestUtilities.Wait(TimeSpan.FromSeconds(5));
-        //////            }
+                    // get the created systemtopic
+                    var getsystemtopicresponse = this.EventGridManagementClient.SystemTopics.Get(resourcegroup, systemtopicname);
+                    if (string.Compare(getsystemtopicresponse.ProvisioningState, "succeeded", true) != 0)
+                    {
+                        TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                    }
 
-        //////            getSystemTopicResponse = this.EventGridManagementClient.SystemTopics.Get(resourceGroup, systemTopicName);
-        //////            Assert.NotNull(getSystemTopicResponse);
-        //////            Assert.Equal("Succeeded", getSystemTopicResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-        //////            Assert.Equal(location, getSystemTopicResponse.Location, StringComparer.CurrentCultureIgnoreCase);
+                    getsystemtopicresponse = this.EventGridManagementClient.SystemTopics.Get(resourcegroup, systemtopicname);
+                    Assert.NotNull(getsystemtopicresponse);
+                    Assert.Equal("succeeded", getsystemtopicresponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                    Assert.Equal(location, getsystemtopicresponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
-        //////            // Get all systemTopics created within a resourceGroup
-        //////            IPage<SystemTopic> systemTopicsInResourceGroupPage = this.EventGridManagementClient.SystemTopics.ListByResourceGroupAsync(resourceGroup).Result;
-        //////            var systemTopicsInResourceGroupList = new List<SystemTopic>();
-        //////            if (systemTopicsInResourceGroupPage.Any())
-        //////            {
-        //////                systemTopicsInResourceGroupList.AddRange(systemTopicsInResourceGroupPage);
-        //////                var nextLink = systemTopicsInResourceGroupPage.NextPageLink;
-        //////                while (nextLink != null)
-        //////                {
-        //////                    systemTopicsInResourceGroupPage = this.EventGridManagementClient.SystemTopics.ListByResourceGroupNextAsync(nextLink).Result;
-        //////                    systemTopicsInResourceGroupList.AddRange(systemTopicsInResourceGroupPage);
-        //////                    nextLink = systemTopicsInResourceGroupPage.NextPageLink;
-        //////                }
-        //////            }
+                    // get all systemtopics created within a resourcegroup
+                    IPage<SystemTopic> systemtopicsinresourcegrouppage = this.EventGridManagementClient.SystemTopics.ListByResourceGroupAsync(resourcegroup).Result;
+                    var systemtopicsinresourcegrouplist = new List<SystemTopic>();
+                    if (systemtopicsinresourcegrouppage.Any())
+                    {
+                        systemtopicsinresourcegrouplist.AddRange(systemtopicsinresourcegrouppage);
+                        var nextlink = systemtopicsinresourcegrouppage.NextPageLink;
+                        while (nextlink != null)
+                        {
+                            systemtopicsinresourcegrouppage = this.EventGridManagementClient.SystemTopics.ListByResourceGroupNextAsync(nextlink).Result;
+                            systemtopicsinresourcegrouplist.AddRange(systemtopicsinresourcegrouppage);
+                            nextlink = systemtopicsinresourcegrouppage.NextPageLink;
+                        }
+                    }
 
-        //////            Assert.NotNull(systemTopicsInResourceGroupList);
-        //////            Assert.True(systemTopicsInResourceGroupList.Count() >= 1);
-        //////            Assert.Contains(systemTopicsInResourceGroupList, t => t.Name == systemTopicName);
-        //////            Assert.True(systemTopicsInResourceGroupList.All(ns => ns.Id.Contains(resourceGroup)));
+                    Assert.NotNull(systemtopicsinresourcegrouplist);
+                    Assert.True(systemtopicsinresourcegrouplist.Count() >= 1);
+                    Assert.Contains(systemtopicsinresourcegrouplist, t => t.Name == systemtopicname);
+                    Assert.True(systemtopicsinresourcegrouplist.All(ns => ns.Id.Contains(resourcegroup)));
 
-        //////            IPage<SystemTopic> systemTopicsInResourceGroupPageWithTop = this.EventGridManagementClient.SystemTopics.ListByResourceGroupAsync(resourceGroup, null, 5).Result;
-        //////            var systemTopicsInResourceGroupListWithTop = new List<SystemTopic>();
-        //////            if (systemTopicsInResourceGroupPageWithTop.Any())
-        //////            {
-        //////                systemTopicsInResourceGroupListWithTop.AddRange(systemTopicsInResourceGroupPageWithTop);
-        //////                var nextLink = systemTopicsInResourceGroupPageWithTop.NextPageLink;
-        //////                while (nextLink != null)
-        //////                {
-        //////                    systemTopicsInResourceGroupPageWithTop = this.EventGridManagementClient.SystemTopics.ListByResourceGroupNextAsync(nextLink).Result;
-        //////                    systemTopicsInResourceGroupListWithTop.AddRange(systemTopicsInResourceGroupPageWithTop);
-        //////                    nextLink = systemTopicsInResourceGroupPageWithTop.NextPageLink;
-        //////                }
-        //////            }
+                    IPage<SystemTopic> systemtopicsinresourcegrouppagewithtop = this.EventGridManagementClient.SystemTopics.ListByResourceGroupAsync(resourcegroup, null, 5).Result;
+                    var systemtopicsinresourcegrouplistwithtop = new List<SystemTopic>();
+                    if (systemtopicsinresourcegrouppagewithtop.Any())
+                    {
+                        systemtopicsinresourcegrouplistwithtop.AddRange(systemtopicsinresourcegrouppagewithtop);
+                        var nextlink = systemtopicsinresourcegrouppagewithtop.NextPageLink;
+                        while (nextlink != null)
+                        {
+                            systemtopicsinresourcegrouppagewithtop = this.EventGridManagementClient.SystemTopics.ListByResourceGroupNextAsync(nextlink).Result;
+                            systemtopicsinresourcegrouplistwithtop.AddRange(systemtopicsinresourcegrouppagewithtop);
+                            nextlink = systemtopicsinresourcegrouppagewithtop.NextPageLink;
+                        }
+                    }
 
-        //////            Assert.NotNull(systemTopicsInResourceGroupListWithTop);
-        //////            Assert.True(systemTopicsInResourceGroupListWithTop.Count() >= 1);
-        //////            Assert.Contains(systemTopicsInResourceGroupListWithTop, t => t.Name == systemTopicName);
-        //////            Assert.True(systemTopicsInResourceGroupListWithTop.All(ns => ns.Id.Contains(resourceGroup)));
+                    Assert.NotNull(systemtopicsinresourcegrouplistwithtop);
+                    Assert.True(systemtopicsinresourcegrouplistwithtop.Count() >= 1);
+                    Assert.Contains(systemtopicsinresourcegrouplistwithtop, t => t.Name == systemtopicname);
+                    Assert.True(systemtopicsinresourcegrouplistwithtop.All(ns => ns.Id.Contains(resourcegroup)));
 
-        //////            // Get all systemTopics created within the subscription irrespective of the resourceGroup
-        //////            IPage<SystemTopic> systemTopicsInAzureSubscription = this.EventGridManagementClient.SystemTopics.ListBySubscriptionAsync(null, 100).Result;
-        //////            var systemTopicsInAzureSubscriptionList = new List<SystemTopic>();
-        //////            if (systemTopicsInAzureSubscription.Any())
-        //////            {
-        //////                systemTopicsInAzureSubscriptionList.AddRange(systemTopicsInAzureSubscription);
-        //////                var nextLink = systemTopicsInAzureSubscription.NextPageLink;
-        //////                while (nextLink != null)
-        //////                {
-        //////                    try
-        //////                    {
-        //////                        systemTopicsInAzureSubscription = this.EventGridManagementClient.SystemTopics.ListBySubscriptionNextAsync(nextLink).Result;
-        //////                        systemTopicsInAzureSubscriptionList.AddRange(systemTopicsInAzureSubscription);
-        //////                        nextLink = systemTopicsInAzureSubscription.NextPageLink;
-        //////                    }
-        //////                    catch (Exception ex)
-        //////                    {
-        //////                        Console.WriteLine(ex);
-        //////                        break;
-        //////                    }
-        //////                }
-        //////            }
+                    // get all systemtopics created within the subscription irrespective of the resourcegroup
+                    IPage<SystemTopic> systemtopicsinazuresubscription = this.EventGridManagementClient.SystemTopics.ListBySubscriptionAsync(null, 100).Result;
+                    var systemtopicsinazuresubscriptionlist = new List<SystemTopic>();
+                    if (systemtopicsinazuresubscription.Any())
+                    {
+                        systemtopicsinazuresubscriptionlist.AddRange(systemtopicsinazuresubscription);
+                        var nextlink = systemtopicsinazuresubscription.NextPageLink;
+                        while (nextlink != null)
+                        {
+                            try
+                            {
+                                systemtopicsinazuresubscription = this.EventGridManagementClient.SystemTopics.ListBySubscriptionNextAsync(nextlink).Result;
+                                systemtopicsinazuresubscriptionlist.AddRange(systemtopicsinazuresubscription);
+                                nextlink = systemtopicsinazuresubscription.NextPageLink;
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex);
+                                break;
+                            }
+                        }
+                    }
 
-        //////            Assert.NotNull(systemTopicsInAzureSubscriptionList);
-        //////            Assert.True(systemTopicsInAzureSubscriptionList.Count() >= 1);
-        //////            Assert.Contains(systemTopicsInAzureSubscriptionList, t => t.Name == systemTopicName);
+                    Assert.NotNull(systemtopicsinazuresubscriptionlist);
+                    Assert.True(systemtopicsinazuresubscriptionlist.Count() >= 1);
+                    Assert.Contains(systemtopicsinazuresubscriptionlist, t => t.Name == systemtopicname);
 
-        //////            var replaceSystemTopicTagsDictionary = new Dictionary<string, string>()
-        //////            {
-        //////                { "replacedTag1", "replacedValue1" },
-        //////                { "replacedTag2", "replacedValue2" }
-        //////            };
+                    var replacesystemtopictagsdictionary = new Dictionary<string, string>()
+                                {
+                                    { "replacedtag1", "replacedvalue1" },
+                                    { "replacedtag2", "replacedvalue2" }
+                                };
 
-        //////            // Replace the systemTopic
-        //////            systemTopic.Tags = replaceSystemTopicTagsDictionary;
-        //////            var replaceSystemTopicResponse = this.EventGridManagementClient.SystemTopics.CreateOrUpdateAsync(resourceGroup, systemTopicName, systemTopic).Result;
+                    // replace the systemtopic
+                    systemtopic.Tags = replacesystemtopictagsdictionary;
+                    var replacesystemtopicresponse = this.EventGridManagementClient.SystemTopics.CreateOrUpdateAsync(resourcegroup, systemtopicname, systemtopic).Result;
 
-        //////            Assert.Contains(replaceSystemTopicResponse.Tags, tag => tag.Key == "replacedTag1");
-        //////            Assert.DoesNotContain(replaceSystemTopicResponse.Tags, tag => tag.Key == "originalTag1");
+                    Assert.Contains(replacesystemtopicresponse.Tags, tag => tag.Key == "replacedtag1");
+                    Assert.DoesNotContain(replacesystemtopicresponse.Tags, tag => tag.Key == "originaltag1");
 
-        //////            // Update the systemTopic with tags & allow traffic from all ips
-        //////            SystemTopicUpdateParameters systemTopicUpdateParameters = new SystemTopicUpdateParameters();
-        //////            systemTopicUpdateParameters.Tags = new Dictionary<string, string>()
-        //////            {
-        //////                { "updatedTag1", "updatedValue1" },
-        //////                { "updatedTag2", "updatedValue2" }
-        //////            };
+                    // update the systemtopic with tags & allow traffic from all ips
+                    SystemTopicUpdateParameters systemtopicupdateparameters = new SystemTopicUpdateParameters();
+                    systemtopicupdateparameters.Tags = new Dictionary<string, string>()
+                    {
+                        { "updatedtag1", "updatedvalue1" },
+                        { "updatedtag2", "updatedvalue2" }
+                    };
 
-        //////            var updateSystemTopicResponse = this.EventGridManagementClient.SystemTopics.UpdateAsync(resourceGroup, systemTopicName, systemTopicUpdateParameters.Tags).Result;
-        //////            Assert.Contains(updateSystemTopicResponse.Tags, tag => tag.Key == "updatedTag1");
-        //////            Assert.DoesNotContain(updateSystemTopicResponse.Tags, tag => tag.Key == "replacedTag1");
-        //////        }
-        //////        finally
-        //////        {
-        //////            // Delete systemTopic
-        //////            this.EventGridManagementClient.SystemTopics.DeleteAsync(resourceGroup, systemTopicName).Wait();
-        //////        }
-        //////    }
-        //////}
+                    var updatesystemtopicresponse = this.EventGridManagementClient.SystemTopics.UpdateAsync(resourcegroup, systemtopicname, systemtopicupdateparameters).Result;
+                    Assert.Contains(updatesystemtopicresponse.Tags, tag => tag.Key == "updatedtag1");
+                    Assert.DoesNotContain(updatesystemtopicresponse.Tags, tag => tag.Key == "replacedtag1");
+                }
+                finally
+                {
+                    // delete systemtopic
+                    this.EventGridManagementClient.SystemTopics.DeleteAsync(resourcegroup, systemtopicname).Wait();
+                }
+            }
+        }
     }
 }

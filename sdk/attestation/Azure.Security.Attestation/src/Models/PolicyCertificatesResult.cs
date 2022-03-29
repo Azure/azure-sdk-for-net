@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [CodeGenModel("PolicyCertificatesResult")]
-    public partial class PolicyCertificatesResult
+    internal partial class PolicyCertificatesResult
     {
         private IReadOnlyList<X509Certificate2> _certificateList;
         private object _statelock = new object();

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Partial list of time series hierarchies returned in a single request. </summary>
-    public partial class GetHierarchiesPage : PagedResponse
+    internal partial class GetHierarchiesPage : PagedResponse
     {
         /// <summary> Initializes a new instance of GetHierarchiesPage. </summary>
         internal GetHierarchiesPage()

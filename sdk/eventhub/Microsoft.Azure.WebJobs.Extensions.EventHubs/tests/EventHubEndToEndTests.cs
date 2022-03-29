@@ -56,8 +56,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
 
             var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
-
             CollectionAssert.Contains(logs, $"PocoValues(foo,data)");
+
+            var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
         }
 
         [Test]
@@ -72,8 +74,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(result);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
-
                 CollectionAssert.Contains(logs, $"Input(data)");
+
+                var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
+                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
             }
         }
 
@@ -132,6 +136,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_ProducerClient()
         {
             var (jobHost, host) = BuildHost<EventHubTestClientDispatch>();
@@ -199,12 +204,39 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public void ThrowsIfBindingToASingleEvent()
+        public async Task CanSendAndReceive_BlobServiceUri_InConfiguration()
         {
-            Assert.Throws<NotSupportedException>(() =>
-                BuildHost<EventHubTestSingleDispatchJobWithConnection>(builder =>
-                    builder.ConfigureServices(services =>
-                        services.Configure<EventHubOptions>(options => options.IsSingleDispatchEnabled = false))));
+            await AssertCanSendReceiveMessage(host =>
+                host.ConfigureAppConfiguration(configurationBuilder =>
+                    configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        {"TestConnection:fullyQualifiedNamespace", EventHubsTestEnvironment.Instance.FullyQualifiedNamespace},
+                        {"TestConnection:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"TestConnection:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"TestConnection:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                        {"AzureWebJobsStorage:blobServiceUri", GetServiceUri()},
+                        {"AzureWebJobsStorage:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"AzureWebJobsStorage:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"AzureWebJobsStorage:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                    })));
+        }
+
+        [Test]
+        public async Task CanSendAndReceive_AccountName_InConfiguration()
+        {
+            await AssertCanSendReceiveMessage(host =>
+                host.ConfigureAppConfiguration(configurationBuilder =>
+                    configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        {"TestConnection:fullyQualifiedNamespace", EventHubsTestEnvironment.Instance.FullyQualifiedNamespace},
+                        {"TestConnection:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"TestConnection:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"TestConnection:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                        {"AzureWebJobsStorage:accountName", StorageTestEnvironment.Instance.StorageAccountName},
+                        {"AzureWebJobsStorage:clientId", EventHubsTestEnvironment.Instance.ClientId},
+                        {"AzureWebJobsStorage:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
+                        {"AzureWebJobsStorage:tenantId", EventHubsTestEnvironment.Instance.TenantId},
+                    })));
         }
 
         private static string GetServiceUri()
@@ -281,6 +313,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_PartitionKey()
         {
             var (jobHost, host) = BuildHost<EventHubPartitionKeyTestJobs>();
@@ -353,16 +386,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-webjobs-sdk/issues/2830")]
         public async Task EventHub_InitialOffsetFromEnqueuedTime()
         {
-            var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
             for (int i = 0; i < 3; i++)
             {
                 // send one at a time so they will have slightly different enqueued times
                 await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
                 await Task.Delay(1000);
             }
-            var consumer = new EventHubConsumerClient(
+            await using var consumer = new EventHubConsumerClient(
                 EventHubConsumerClient.DefaultConsumerGroupName,
                 EventHubsTestEnvironment.Instance.EventHubsConnectionString,
                 _eventHubScope.EventHubName);
@@ -385,8 +419,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         services.Configure<EventHubOptions>(options =>
                         {
                             options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
-                            // for some reason, this doesn't seem to work reliably if including milliseconds in the format
-                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                            // Reads from enqueue time are non-inclusive.  To ensure that we start with the desired event, set the time slightly in the past.
+                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.AddMilliseconds(-150).ToString("yyyy-MM-ddTHH:mm:ssZ"));
                             options.InitialOffsetOptions.EnqueuedTimeUtc = dto;
                         });
                     });
@@ -474,6 +508,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        IDictionary<string, object> systemProperties)
             {
                 Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
+                Assert.AreEqual("data", evt.ToString());
                 _eventWait.Set();
             }
         }

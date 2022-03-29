@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Secrets
         public Uri RecoveryId
         {
             get => _recoveryId is null ? null : new Uri(_recoveryId);
-            internal set => _recoveryId = value?.ToString();
+            internal set => _recoveryId = value?.AbsoluteUri;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (RecoveryId != null)
             {
-                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId.ToString());
+                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId.AbsoluteUri);
             }
 
             if (DeletedOn.HasValue)

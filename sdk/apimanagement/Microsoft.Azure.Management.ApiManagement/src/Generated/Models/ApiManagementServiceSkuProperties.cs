@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// class.
         /// </summary>
         /// <param name="name">Name of the Sku. Possible values include:
-        /// 'Developer', 'Standard', 'Premium', 'Basic', 'Consumption'</param>
+        /// 'Developer', 'Standard', 'Premium', 'Basic', 'Consumption',
+        /// 'Isolated'</param>
         /// <param name="capacity">Capacity of the SKU (number of deployed
         /// units of the SKU). For Consumption SKU capacity must be specified
         /// as 0.</param>
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets name of the Sku. Possible values include: 'Developer',
-        /// 'Standard', 'Premium', 'Basic', 'Consumption'
+        /// 'Standard', 'Premium', 'Basic', 'Consumption', 'Isolated'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

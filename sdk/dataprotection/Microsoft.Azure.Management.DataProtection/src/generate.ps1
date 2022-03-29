@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "dataprotection/resource-manager" -AutoRestVersion "v2"

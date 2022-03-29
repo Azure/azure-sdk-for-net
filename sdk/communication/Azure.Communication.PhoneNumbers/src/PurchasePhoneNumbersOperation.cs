@@ -38,17 +38,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <inheritdoc />
         public override async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
         {
-            Response<Response> response = await _operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            Response response = await _operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
 
-            return response.GetRawResponse();
+            return response;
         }
 
         /// <inheritdoc />
         public override async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            Response<Response> response = await _operation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+            Response response = await _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
-            return response.GetRawResponse();
+            return response;
         }
     }
 }

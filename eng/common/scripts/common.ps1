@@ -1,3 +1,5 @@
+# cSpell:ignore Apireview
+# cSpell:ignore Onboarded
 $RepoRoot = Resolve-Path "${PSScriptRoot}..\..\..\.."
 $EngDir = Join-Path $RepoRoot "eng"
 $EngCommonDir = Join-Path $EngDir "common"
@@ -12,6 +14,7 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir Invoke-GitHubAPI.ps1)
 . (Join-Path $EngCommonScriptsDir Invoke-DevOpsAPI.ps1)
 . (Join-Path $EngCommonScriptsDir artifact-metadata-parsing.ps1)
+. (Join-Path $EngCommonScriptsDir "Helpers" git-helpers.ps1)
 
 # Setting expected from common languages settings
 $Language = "Unknown"
@@ -39,6 +42,14 @@ if (!(Get-Variable -Name "LanguageDisplayName" -ValueOnly -ErrorAction "Ignore")
 $GetPackageInfoFromRepoFn = "Get-${Language}-PackageInfoFromRepo"
 $GetPackageInfoFromPackageFileFn = "Get-${Language}-PackageInfoFromPackageFile"
 $PublishGithubIODocsFn = "Publish-${Language}-GithubIODocs"
-$UpdateDocCIFn = "Update-${Language}-CIConfig"
+$UpdateDocsMsPackagesFn = "Update-${Language}-DocsMsPackages"
+$GetDocsMsMetadataForPackageFn = "Get-${Language}-DocsMsMetadataForPackage"
+$GetDocsMsDevLanguageSpecificPackageInfoFn = "Get-${Language}-DocsMsDevLanguageSpecificPackageInfo"
 $GetGithubIoDocIndexFn = "Get-${Language}-GithubIoDocIndex"
 $FindArtifactForApiReviewFn = "Find-${Language}-Artifacts-For-Apireview"
+$TestProxyTrustCertFn = "Import-Dev-Cert-${Language}"
+$ValidateDocsMsPackagesFn = "Validate-${Language}-DocMsPackages"
+$GetOnboardedDocsMsPackagesFn = "Get-${Language}-OnboardedDocsMsPackages"
+$GetDocsMsTocDataFn = "Get-${Language}-DocsMsTocData"
+$GetDocsMsTocChildrenForManagementPackagesFn = "Get-${Language}-DocsMsTocChildrenForManagementPackages"
+$UpdateDocsMsTocFn = "Get-${Language}-UpdatedDocsMsToc"

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2018-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljTWFuYWdlckdlb2dyYXBoaWNIaWVyYXJjaGllcy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2018-08-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljTWFuYWdlckdlb2dyYXBoaWNIaWVyYXJjaGllcy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTgtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

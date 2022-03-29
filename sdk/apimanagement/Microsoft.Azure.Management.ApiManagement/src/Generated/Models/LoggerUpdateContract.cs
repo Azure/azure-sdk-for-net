@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the LoggerUpdateContract class.
         /// </summary>
         /// <param name="loggerType">Logger type. Possible values include:
-        /// 'azureEventHub', 'applicationInsights'</param>
+        /// 'azureEventHub', 'applicationInsights', 'azureMonitor'</param>
         /// <param name="description">Logger description.</param>
         /// <param name="credentials">Logger credentials.</param>
         /// <param name="isBuffered">Whether records are buffered in the logger
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets logger type. Possible values include: 'azureEventHub',
-        /// 'applicationInsights'
+        /// 'applicationInsights', 'azureMonitor'
         /// </summary>
         [JsonProperty(PropertyName = "properties.loggerType")]
         public string LoggerType { get; set; }

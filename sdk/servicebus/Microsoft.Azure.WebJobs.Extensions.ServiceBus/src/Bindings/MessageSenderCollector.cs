@@ -3,8 +3,6 @@
 
 using System;
 using System.Threading;
-using Microsoft.Azure.WebJobs.Host.Converters;
-using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
@@ -39,12 +37,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
             if (message == null)
             {
-                throw new InvalidOperationException("Cannot enqueue a null brokered message instance.");
+                throw new InvalidOperationException("Cannot enqueue a null message instance.");
             }
-#pragma warning disable AZC0106
-            _entity.SendAndCreateEntityIfNotExistsAsync(message, _functionInstanceId,
-                CancellationToken.None).EnsureCompleted();
-#pragma warning restore AZC0106
+            _entity.SendAndCreateEntityIfNotExistsAsync(message, _functionInstanceId, CancellationToken.None)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). There are no synchronous methods in SB SDK, so we have to do sync over async to support this.
+                .GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }

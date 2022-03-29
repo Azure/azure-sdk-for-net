@@ -147,6 +147,26 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IImagesOperations Images { get; private set; }
 
         /// <summary>
+        /// Gets the IRestorePointCollectionsOperations.
+        /// </summary>
+        public virtual IRestorePointCollectionsOperations RestorePointCollections { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorePointsOperations.
+        /// </summary>
+        public virtual IRestorePointsOperations RestorePoints { get; private set; }
+
+        /// <summary>
+        /// Gets the ICapacityReservationGroupsOperations.
+        /// </summary>
+        public virtual ICapacityReservationGroupsOperations CapacityReservationGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ICapacityReservationsOperations.
+        /// </summary>
+        public virtual ICapacityReservationsOperations CapacityReservations { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetExtensionsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; private set; }
@@ -235,6 +255,41 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IGalleryApplicationVersionsOperations.
         /// </summary>
         public virtual IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the IGallerySharingProfileOperations.
+        /// </summary>
+        public virtual IGallerySharingProfileOperations GallerySharingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleriesOperations.
+        /// </summary>
+        public virtual ISharedGalleriesOperations SharedGalleries { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImagesOperations.
+        /// </summary>
+        public virtual ISharedGalleryImagesOperations SharedGalleryImages { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImageVersionsOperations.
+        /// </summary>
+        public virtual ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the ICommunityGalleriesOperations.
+        /// </summary>
+        public virtual ICommunityGalleriesOperations CommunityGalleries { get; private set; }
+
+        /// <summary>
+        /// Gets the ICommunityGalleryImagesOperations.
+        /// </summary>
+        public virtual ICommunityGalleryImagesOperations CommunityGalleryImages { get; private set; }
+
+        /// <summary>
+        /// Gets the ICommunityGalleryImageVersionsOperations.
+        /// </summary>
+        public virtual ICommunityGalleryImageVersionsOperations CommunityGalleryImageVersions { get; private set; }
 
         /// <summary>
         /// Gets the ICloudServiceRoleInstancesOperations.
@@ -517,6 +572,10 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             Images = new ImagesOperations(this);
+            RestorePointCollections = new RestorePointCollectionsOperations(this);
+            RestorePoints = new RestorePointsOperations(this);
+            CapacityReservationGroups = new CapacityReservationGroupsOperations(this);
+            CapacityReservations = new CapacityReservationsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
             VirtualMachineScaleSetVMExtensions = new VirtualMachineScaleSetVMExtensionsOperations(this);
@@ -535,6 +594,13 @@ namespace Microsoft.Azure.Management.Compute
             GalleryImageVersions = new GalleryImageVersionsOperations(this);
             GalleryApplications = new GalleryApplicationsOperations(this);
             GalleryApplicationVersions = new GalleryApplicationVersionsOperations(this);
+            GallerySharingProfile = new GallerySharingProfileOperations(this);
+            SharedGalleries = new SharedGalleriesOperations(this);
+            SharedGalleryImages = new SharedGalleryImagesOperations(this);
+            SharedGalleryImageVersions = new SharedGalleryImageVersionsOperations(this);
+            CommunityGalleries = new CommunityGalleriesOperations(this);
+            CommunityGalleryImages = new CommunityGalleryImagesOperations(this);
+            CommunityGalleryImageVersions = new CommunityGalleryImageVersionsOperations(this);
             CloudServiceRoleInstances = new CloudServiceRoleInstancesOperations(this);
             CloudServiceRoles = new CloudServiceRolesOperations(this);
             CloudServices = new CloudServicesOperations(this);

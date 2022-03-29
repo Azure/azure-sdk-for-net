@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataMigration</PackageId>
 		<Description>Provides developers with libraries for the Database Migration Service (DMS) under Azure Resource manager to deploy an instance of DMS. Create, Delete, Read Projects, Files and Tasks and more.</Description>
-		<Version>0.11.0-preview</Version>
+		<Version>0.12.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataMigration</AssemblyName>
-		<PackageTags>DataMigration;Data Migration;DataMigration_2018-07-15-preview;</PackageTags>
-		<PackageReleaseNotes>This SDK now supports MySQL migrations as well as several features and options for Postgres.</PackageReleaseNotes>
+		<PackageTags>DataMigration;Data Migration;DataMigration_2021-06-30;</PackageTags>
+		<PackageReleaseNotes>This SDK now supports MySQL offline migrations.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

@@ -12,15 +12,18 @@ This script will do a number of things when ran:
   - If there is existing release work item it will update it and if not it will create one.
 - It will validate that the changelog has a entry for the package version that you want to release as well as a timestamp.
 
+For more information see https://aka.ms/azsdk/mark-release-status.
+
 .PARAMETER PackageName
 The full package name of the package you want to prepare for release. (i.e Azure.Core, azure-core, @azure/core-https)
 
 .PARAMETER ServiceDirectory
-Optional: The service directory where the package lives (e.g. /sdk/<service directory>/<package>). If a service directory isn't provided the script
-will search for the package project by traversing all the packages under /sdk/, so the service directory is only a scoping mechanism.
+Optional: Provide a service directory to scope the search of the entire repo to speed-up the project search. This should be the directory
+name under the 'sdk' folder (i.e for the core package which lives under 'sdk\core' the value to pass would be 'core').
 
 .PARAMETER ReleaseDate
-Optional: If not shipping on the normal first Tuesday of the month you can specify a specific release date in the form of "MM/dd/yyyy".
+Optional: Provide a specific date for when you plan to release the package. Should be the date (MM/dd/yyyy) that the given package is going to ship.
+If one isn't provided, then it will compute the next ship date or today's date if past the ship date for the month as the planned date.
 
 .PARAMETER ReleaseTrackingOnly
 Optional: If this switch is passed then the script will only update the release work items and not update the versions in the local repo or validate the changelog.
@@ -49,6 +52,7 @@ param(
 Set-StrictMode -Version 3
 
 . ${PSScriptRoot}\common.ps1
+. ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
 
 function Get-ReleaseDay($baseDate)
 {
@@ -108,11 +112,18 @@ else
 $releaseDateString = $ParsedReleaseDate.ToString("MM/dd/yyyy")
 $month = $ParsedReleaseDate.ToString("MMMM")
 
-Write-Host
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
+if (Test-Path "Function:GetExistingPackageVersions")
+{
+    $releasedVersions = GetExistingPackageVersions -PackageName $packageProperties.Name -GroupId $packageProperties.Group
+    if ($null -ne $releasedVersions -and $releasedVersions.Count -gt 0)
+    {
+      $latestReleasedVersion = $releasedVersions[$releasedVersions.Count - 1]
+      Write-Host "Latest released version: ${latestReleasedVersion}" -ForegroundColor Green
+    }
+}
 
 $currentProjectVersion = $packageProperties.Version
-
 $newVersion = Read-Host -Prompt "Input the new version, or press Enter to use use current project version '$currentProjectVersion'"
 
 if (!$newVersion)
@@ -136,6 +147,31 @@ if ($null -eq $newVersionParsed)
   -packageType $packageProperties.SDKType `
   -packageNewLibrary $packageProperties.IsNewSDK
 
+if ($LASTEXITCODE -ne 0) {
+  Write-Error "Updating of the Devops Release WorkItem failed."
+  exit 1
+}
+
+# Check API status if version is GA
+if (!$newVersionParsed.IsPrerelease)
+{
+  try
+  {
+    az account show *> $null
+    if (!$?) {
+      Write-Host 'Running az login...'
+      az login *> $null
+    }
+    $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+    $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+    Check-ApiReviewStatus -PackageName $packageProperties.Name -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
+  }
+  catch
+  {
+    Write-Warning "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
+  }
+}
+
 if ($releaseTrackingOnly)
 {
   Write-Host
@@ -147,15 +183,31 @@ if ($releaseTrackingOnly)
 
 if (Test-Path "Function:SetPackageVersion")
 {
-  SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion -ServiceDirectory $packageProperties.ServiceDirectory -ReleaseDate $releaseDateString `
-    -PackageProperties $packageProperties
+  $replaceLatestEntryTitle = $true
+  $latestVersion = Get-LatestReleaseDateFromChangeLog -ChangeLogLocation $packageProperties.ChangeLogPath
+  if ($latestVersion)
+  {
+    $promptMessage = "The latest entry in the CHANGELOG.md already has a release date. Do you want to replace the latest entry title? Please enter (y or n)."
+    while (($readInput = Read-Host -Prompt $promptMessage) -notmatch '^[yn]$'){ }
+    $replaceLatestEntryTitle = ($readInput -eq "y")
+  }
+  SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion `
+    -ServiceDirectory $packageProperties.ServiceDirectory -ReleaseDate $releaseDateString `
+    -PackageProperties $packageProperties -ReplaceLatestEntryTitle $replaceLatestEntryTitle
 }
 else
 {
   LogError "The function 'SetPackageVersion' was not found.`
     Make sure it is present in eng/scripts/Language-Settings.ps1.`
-    See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+    See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
   exit 1
+}
+
+$changelogIsValid = Confirm-ChangeLogEntry -ChangeLogLocation $packageProperties.ChangeLogPath -VersionString $newVersion -ForRelease $true -SantizeEntry
+
+if (!$changelogIsValid)
+{
+  Write-Warning "The changelog [$($packageProperties.ChangeLogPath)] is not valid for release. Please make sure it is valid before queuing release build."
 }
 
 git diff -s --exit-code $packageProperties.DirectoryPath

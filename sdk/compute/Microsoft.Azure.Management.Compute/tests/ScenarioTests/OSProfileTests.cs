@@ -208,17 +208,17 @@ namespace Compute.Tests
                     osProfile.CustomData = CustomData;
                     osProfile.LinuxConfiguration = new LinuxConfiguration
                     {
-                        DisablePasswordAuthentication = false,
+                        DisablePasswordAuthentication = true,
                         Ssh = new SshConfiguration
                         {
                             PublicKeys = new List<SshPublicKey>
-                        {
-                            new SshPublicKey
                             {
-                                Path = sshPath,
-                                KeyData = DefaultSshPublicKey,
+                                new SshPublicKey
+                                {
+                                    Path = sshPath,
+                                    KeyData = DefaultSshPublicKey,
+                                }
                             }
-                        }
                         }
                     };
                 };
@@ -234,7 +234,7 @@ namespace Compute.Tests
                     var publicKeys = osProfile.LinuxConfiguration.Ssh.PublicKeys;
                     Assert.NotNull(osProfile.LinuxConfiguration.Ssh.PublicKeys);
 
-                    Assert.True(osProfile.LinuxConfiguration.DisablePasswordAuthentication != null && !osProfile.LinuxConfiguration.DisablePasswordAuthentication.Value);
+                    Assert.True(osProfile.LinuxConfiguration.DisablePasswordAuthentication != null && osProfile.LinuxConfiguration.DisablePasswordAuthentication.Value);
 
                     Assert.Equal(1, publicKeys.Count);
                     Assert.Equal(sshPath, publicKeys[0].Path);

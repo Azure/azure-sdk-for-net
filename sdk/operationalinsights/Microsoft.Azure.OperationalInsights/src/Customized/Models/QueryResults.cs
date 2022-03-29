@@ -38,5 +38,10 @@ namespace Microsoft.Azure.OperationalInsights.Models
         /// If requested, contains query statistics. See https://dev.loganalytics.io/documentation/Using-the-API/RequestOptions for more info.
         /// </summary>
         public IDictionary<string, object> Statistics{ get; set; }
+
+        /// <summary>
+        /// Contains information of errors, may contain partial query errors.
+        /// </summary>
+        public QueryResponseError Error { get; set; }
     }
 }

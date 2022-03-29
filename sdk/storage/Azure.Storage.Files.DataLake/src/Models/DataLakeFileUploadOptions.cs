@@ -69,5 +69,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// parallel transfer behavior.
         /// </summary>
         public StorageTransferOptions TransferOptions { get; set; }
+
+        ///// <summary>
+        ///// Options for hashing upload contents for greater data transit integrity protections.
+        ///// </summary>
+        // TODO #27253
+        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

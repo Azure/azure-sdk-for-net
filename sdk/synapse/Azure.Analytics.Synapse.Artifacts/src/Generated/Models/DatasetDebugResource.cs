@@ -25,7 +25,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of DatasetDebugResource. </summary>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="properties"> Dataset properties. </param>
+        internal DatasetDebugResource(string name, Dataset properties) : base(name)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Dataset properties. </summary>
-        public Dataset Properties { get; }
+        public Dataset Properties { get; set; }
     }
 }

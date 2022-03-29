@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="KeyValueType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValueType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyValueType(string value)
         {

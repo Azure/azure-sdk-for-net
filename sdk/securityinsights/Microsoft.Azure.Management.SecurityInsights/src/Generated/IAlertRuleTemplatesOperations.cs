@@ -27,8 +27,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets all alert rule templates.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.
@@ -53,8 +52,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// Gets the alert rule template.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace.

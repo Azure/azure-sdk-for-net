@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -18,6 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal static AcsChatMessageReceivedInThreadEventData DeserializeAcsChatMessageReceivedInThreadEventData(JsonElement element)
         {
             Optional<string> messageBody = default;
+            Optional<IReadOnlyDictionary<string, string>> metadata = default;
             Optional<string> messageId = default;
             Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
             Optional<string> senderDisplayName = default;
@@ -31,6 +33,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 if (property.NameEquals("messageBody"))
                 {
                     messageBody = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("metadata"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
                     continue;
                 }
                 if (property.NameEquals("messageId"))
@@ -89,7 +106,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatMessageReceivedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value);
+            return new AcsChatMessageReceivedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToDictionary(metadata));
         }
 
         internal partial class AcsChatMessageReceivedInThreadEventDataConverter : JsonConverter<AcsChatMessageReceivedInThreadEventData>

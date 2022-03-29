@@ -15,7 +15,7 @@ namespace TestSchema
 	
 	public partial class Employee : ISpecificRecord
 	{
-		public static Schema _SCHEMA = Avro.Schema.Parse("{\"type\":\"record\",\"name\":\"Employee\",\"namespace\":\"TestSchema\",\"fields\":[{\"name\":\"Na" +
+		public static Schema _SCHEMA = Avro.Schema.Parse("{\"type\":\"record\",\"name\":\"Employee\",\"aliases\": [\"EmployeeV2\"],\"namespace\":\"TestSchema\",\"fields\":[{\"name\":\"Na" +
 				"me\",\"type\":\"string\"},{\"name\":\"Age\",\"type\":\"int\"}]}");
 		private string _Name;
 		private int _Age;

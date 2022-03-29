@@ -54,7 +54,8 @@ namespace Azure.Core.TestFramework
                     // If the recording succeeded, set an error result.
                     if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
                     {
-                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run).");
+                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run)."+ Environment.NewLine + Environment.NewLine +
+                            originalResult.Message);
                     }
                     else
                     {

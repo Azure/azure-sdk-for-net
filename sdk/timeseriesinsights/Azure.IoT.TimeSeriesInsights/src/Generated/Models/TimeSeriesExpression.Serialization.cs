@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tsx");
-            writer.WriteStringValue(Tsx);
+            writer.WriteStringValue(Expression);
             writer.WriteEndObject();
         }
 

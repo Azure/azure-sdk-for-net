@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -14,15 +13,15 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Notebook. </summary>
-    public partial class Notebook : IDictionary<string, object>
+    public partial class Notebook
     {
         /// <summary> Initializes a new instance of Notebook. </summary>
         /// <param name="metadata"> Notebook root-level metadata. </param>
-        /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
-        /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
+        /// <param name="notebookFormat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
+        /// <param name="notebookFormatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
         /// <param name="cells"> Array of cells of the current notebook. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="cells"/> is null. </exception>
-        public Notebook(NotebookMetadata metadata, int nbformat, int nbformatMinor, IEnumerable<NotebookCell> cells)
+        public Notebook(NotebookMetadata metadata, int notebookFormat, int notebookFormatMinor, IEnumerable<NotebookCell> cells)
         {
             if (metadata == null)
             {
@@ -34,8 +33,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             Metadata = metadata;
-            Nbformat = nbformat;
-            NbformatMinor = nbformatMinor;
+            NotebookFormat = notebookFormat;
+            NotebookFormatMinor = notebookFormatMinor;
             Cells = cells.ToList();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
@@ -45,19 +44,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="bigDataPool"> Big data pool reference. </param>
         /// <param name="sessionProperties"> Session properties. </param>
         /// <param name="metadata"> Notebook root-level metadata. </param>
-        /// <param name="nbformat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
-        /// <param name="nbformatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
+        /// <param name="notebookFormat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
+        /// <param name="notebookFormatMinor"> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </param>
         /// <param name="cells"> Array of cells of the current notebook. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal Notebook(string description, BigDataPoolReference bigDataPool, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int nbformat, int nbformatMinor, IList<NotebookCell> cells, IDictionary<string, object> additionalProperties)
+        /// <param name="folder"> The folder that this notebook is in. If not specified, this notebook will appear at the root level. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal Notebook(string description, BigDataPoolReference bigDataPool, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int notebookFormat, int notebookFormatMinor, IList<NotebookCell> cells, NotebookFolder folder, IDictionary<string, object> additionalProperties)
         {
             Description = description;
             BigDataPool = bigDataPool;
             SessionProperties = sessionProperties;
             Metadata = metadata;
-            Nbformat = nbformat;
-            NbformatMinor = nbformatMinor;
+            NotebookFormat = notebookFormat;
+            NotebookFormatMinor = notebookFormatMinor;
             Cells = cells;
+            Folder = folder;
             AdditionalProperties = additionalProperties;
         }
 
@@ -70,47 +71,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Notebook root-level metadata. </summary>
         public NotebookMetadata Metadata { get; set; }
         /// <summary> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </summary>
-        public int Nbformat { get; set; }
+        public int NotebookFormat { get; set; }
         /// <summary> Notebook format (minor number). Incremented for backward compatible changes to the notebook format. </summary>
-        public int NbformatMinor { get; set; }
+        public int NotebookFormatMinor { get; set; }
         /// <summary> Array of cells of the current notebook. </summary>
         public IList<NotebookCell> Cells { get; }
-        internal IDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public ICollection<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="ICollection{T}.Count"/>
-        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
-        /// <inheritdoc />
-        public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc cref="ICollection{T}.Add"/>
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc cref="ICollection{T}.Remove"/>
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc cref="ICollection{T}.Contains"/>
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc cref="ICollection{T}.Clear"/>
-        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-            set => AdditionalProperties[key] = value;
-        }
+        /// <summary> The folder that this notebook is in. If not specified, this notebook will appear at the root level. </summary>
+        public NotebookFolder Folder { get; set; }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -22,16 +23,27 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static VaultAccessPolicyParameters DeserializeVaultAccessPolicyParameters(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
             Optional<string> location = default;
             VaultAccessPolicyProperties properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    properties = VaultAccessPolicyProperties.DeserializeVaultAccessPolicyProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -44,18 +56,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("systemData"))
                 {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    properties = VaultAccessPolicyProperties.DeserializeVaultAccessPolicyProperties(property.Value);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new VaultAccessPolicyParameters(id.Value, name.Value, type.Value, location.Value, properties);
+            return new VaultAccessPolicyParameters(id, name, type, systemData, location.Value, properties);
         }
     }
 }

@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "vmware/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider vmware/resource-manager -AutoRestVersion v2 -SpecsRepoBranch main

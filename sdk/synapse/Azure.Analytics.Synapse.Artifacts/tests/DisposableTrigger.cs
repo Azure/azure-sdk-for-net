@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async ValueTask DisposeAsync()
         {
             TriggerDeleteTriggerOperation deleteOperation = await _client.StartDeleteTriggerAsync (Name);
-            await deleteOperation.WaitForCompletionAsync();
+            await deleteOperation.WaitForCompletionResponseAsync();
         }
     }
 }

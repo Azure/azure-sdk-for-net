@@ -39,10 +39,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// hasLegalHold public property is set to false by SRP if all existing
         /// legal hold tags are cleared out. There can be a maximum of 1000
         /// blob containers with hasLegalHold=true for a given account.</param>
-        public LegalHold(IList<string> tags, bool? hasLegalHold = default(bool?))
+        /// <param name="allowProtectedAppendWritesAll">When enabled, new
+        /// blocks can be written to both 'Append and Bock Blobs' while
+        /// maintaining legal hold protection and compliance. Only new blocks
+        /// can be added and any existing blocks cannot be modified or
+        /// deleted.</param>
+        public LegalHold(IList<string> tags, bool? hasLegalHold = default(bool?), bool? allowProtectedAppendWritesAll = default(bool?))
         {
             HasLegalHold = hasLegalHold;
             Tags = tags;
+            AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
             CustomInit();
         }
 
@@ -67,6 +73,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets when enabled, new blocks can be written to both
+        /// 'Append and Bock Blobs' while maintaining legal hold protection and
+        /// compliance. Only new blocks can be added and any existing blocks
+        /// cannot be modified or deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowProtectedAppendWritesAll")]
+        public bool? AllowProtectedAppendWritesAll { get; set; }
 
         /// <summary>
         /// Validate the object.

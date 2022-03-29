@@ -253,6 +253,80 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
+            /// Rotate the vCenter password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static void RotateVcenterPassword(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                operations.RotateVcenterPasswordAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate the vCenter password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RotateVcenterPasswordAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RotateVcenterPasswordWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Rotate the NSX-T Manager password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static void RotateNsxtPassword(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                operations.RotateNsxtPasswordAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate the NSX-T Manager password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RotateNsxtPasswordAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RotateNsxtPasswordWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// List the admin credentials for the private cloud
             /// </summary>
             /// <param name='operations'>
@@ -419,6 +493,80 @@ namespace Microsoft.Azure.Management.Avs
             public static async Task BeginDeleteAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Rotate the vCenter password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static void BeginRotateVcenterPassword(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                operations.BeginRotateVcenterPasswordAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate the vCenter password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRotateVcenterPasswordAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRotateVcenterPasswordWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Rotate the NSX-T Manager password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static void BeginRotateNsxtPassword(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                operations.BeginRotateNsxtPasswordAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate the NSX-T Manager password
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRotateNsxtPasswordAsync(this IPrivateCloudsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRotateNsxtPasswordWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

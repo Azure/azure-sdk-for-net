@@ -88,6 +88,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ReadResults");
             }
+            if (ModelVersion != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(ModelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "ModelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
+                }
+            }
             if (ReadResults != null)
             {
                 foreach (var element in ReadResults)

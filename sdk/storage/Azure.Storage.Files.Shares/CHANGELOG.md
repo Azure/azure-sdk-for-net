@@ -1,9 +1,61 @@
 # Release History
 
-## 12.7.0-beta.4 (Unreleased)
+## 12.10.0-beta.1 (Unreleased)
+- Added support for service version 2021-06-08.
+- Added ability to maintain a file's current LastWrittenOn time when calling ShareFileClient.PutRange(), .PutRangeAsync(), .PutRangeFromUri(), and .PutRangeFromUriAsync().
+- Added ability to specify a file or directory's ChangedOn time when calling ShareFileClient/ShareDirectoryClient.Create(), .CreateAsync(), .SetProperties(), .SetPropertiesAsync(), .Rename(), and .RenameAsync().
+- Added ability to specify Content-Type on a file when calling ShareFileClient.Rename(), .RenameAsync().
+
+## 12.9.0 (2022-03-10)
+- Includes all features from 12.9.0-beta.1, 12.9.0-beta.2, and 12.9.0-beta.3 except SDK-calculated transactional checksums on data transfer.
+- Fixed bug where ShareFileClient.StartCopy() and .StartCopyAsync() were not sending the ignoreReadonly parameter correctly.
+- Added new overload of ShareFileClient.StartCopy() and .StartCopyAsync(), added new parameters allowing the copying of the source file's CreatedOn, LastWrittenOn, and FileAttributes properties.
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+- Fixed bug where ShareUriBuilder was case sensitive for parameter names.
+
+## 12.9.0-beta.3 (2022-02-07)
+- Added support for service version 2021-04-10.
+- Added support for ShareDirectoryClient.Rename() and ShareFileClient.Rename().
+- Fixed a memory leak in ShareFileClient.UploadAsync().
+
+## 12.9.0-beta.2 (2021-11-30)
+- Added support for service version 2021-02-12.
+- Added support for premium file share ProvisionedBandwidthMiBps property.
+
+## 12.9.0-beta.1 (2021-11-03)
+- Added support for service version 2020-12-06.
+- Added support for SDK-calculated transactional hash checksums on data transfer.
+- Fixed bug / regression where the ETag values that had quotation marks surrounding it were being removed starting in version 12.7.0.
+
+## 12.8.0 (2021-09-08)
+- Includes all features from 12.8.0-beta.1 and 12.8.0-beta.2.
+
+## 12.8.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
+
+## 12.8.0-beta.1 (2021-07-22)
+- Added support for service version 2020-10-02.
+- Added support for OAuth copy sources in ShareFileClient.UploadRangeFromUri()
+- Added support for including additional information in ShareDirectoryClient.GetFilesAndDirectories().
+- Fixed bug where ShareDirectoryClient.SetMetadataAsync() would not property parse Last-Modified response header.
+- Fixed bug where ShareFileClient.DownloadAsync() would fail downloading zero-length file.
+
+## 12.7.0 (2021-06-08)
+- Includes all features from 12.7.0-beta.4.
+- Fixed bug where specifying conditions in ShareFileClient.OpenRead could override allowModifications flag in ShareFileOpenReadOptions leading to inconsistent read.
+- Fixed bug where retry during streaming of ShareFileClient.Download result could lead to inconsistent read.
+- TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
+    - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
+
+## 12.6.2 (2021-05-20)
+- This release contains bug fixes to improve quality.
+
+## 12.7.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
 - Added support for Share and Share Snapshot Lease.
+- ShareLeaseClient now remembers the Lease ID after a lease change.
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a ShareSasBuilder parameter.
+- Deprecated property ShareSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
 
 ## 12.7.0-beta.3 (2021-04-09)
 - This release contains bug fixes to improve quality.

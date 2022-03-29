@@ -32,11 +32,17 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// Initializes a new instance of the CapabilityProperties class.
         /// </summary>
         /// <param name="zone">zone name</param>
+        /// <param name="supportedHAMode">Supported high availability
+        /// mode</param>
+        /// <param name="supportedGeoBackupRegions">supported geo backup
+        /// regions</param>
         /// <param name="supportedFlexibleServerEditions">A list of supported
         /// flexible server editions.</param>
-        public CapabilityProperties(string zone = default(string), IList<ServerEditionCapability> supportedFlexibleServerEditions = default(IList<ServerEditionCapability>))
+        public CapabilityProperties(string zone = default(string), IList<string> supportedHAMode = default(IList<string>), IList<string> supportedGeoBackupRegions = default(IList<string>), IList<ServerEditionCapability> supportedFlexibleServerEditions = default(IList<ServerEditionCapability>))
         {
             Zone = zone;
+            SupportedHAMode = supportedHAMode;
+            SupportedGeoBackupRegions = supportedGeoBackupRegions;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
             CustomInit();
         }
@@ -51,6 +57,18 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "zone")]
         public string Zone { get; private set; }
+
+        /// <summary>
+        /// Gets supported high availability mode
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedHAMode")]
+        public IList<string> SupportedHAMode { get; private set; }
+
+        /// <summary>
+        /// Gets supported geo backup regions
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedGeoBackupRegions")]
+        public IList<string> SupportedGeoBackupRegions { get; private set; }
 
         /// <summary>
         /// Gets a list of supported flexible server editions.

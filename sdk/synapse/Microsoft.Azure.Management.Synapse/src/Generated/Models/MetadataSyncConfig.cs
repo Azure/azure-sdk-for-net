@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.Synapse.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -23,7 +22,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// Configuration for metadata sync
     /// </remarks>
     [Rest.Serialization.JsonTransformation]
-    public partial class MetadataSyncConfig : IResource
+    public partial class MetadataSyncConfig : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the MetadataSyncConfig class.
@@ -36,11 +35,18 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the MetadataSyncConfig class.
         /// </summary>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="enabled">Indicates whether the metadata sync is
         /// enabled or disabled</param>
         /// <param name="syncIntervalInMinutes">The Sync Interval in
         /// minutes.</param>
-        public MetadataSyncConfig(bool? enabled = default(bool?), int? syncIntervalInMinutes = default(int?))
+        public MetadataSyncConfig(string id = default(string), string name = default(string), string type = default(string), bool? enabled = default(bool?), int? syncIntervalInMinutes = default(int?))
+            : base(id, name, type)
         {
             Enabled = enabled;
             SyncIntervalInMinutes = syncIntervalInMinutes;

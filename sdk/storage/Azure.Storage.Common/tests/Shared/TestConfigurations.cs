@@ -45,6 +45,8 @@ namespace Azure.Storage.Test
         /// </summary>
         private IDictionary<string, KeyVaultConfiguration> KeyVaults { get; set; }
 
+        private IDictionary<string, ManagedDiskConfiguration> ManagedDisks { get; set; }
+
         /// <summary>
         /// Gets the name of the tenant in the Tenants dictionary to use by
         /// default for our tests.
@@ -80,6 +82,8 @@ namespace Azure.Storage.Test
         /// any tests that require integration with key vault.
         /// </summary>
         private string TargetKeyVaultName { get; set; }
+
+        private string TargetManagedDiskName { get; set; }
 
         /// <summary>
         /// Gets the name of the tenant in the Tenants dictionary to use for
@@ -142,6 +146,9 @@ namespace Azure.Storage.Test
         /// </summary>
         public static KeyVaultConfiguration DefaultTargetKeyVault =>
             GetKeyVault("TargetKeyVault", s_configurations.Value.TargetKeyVaultName);
+
+        public static ManagedDiskConfiguration DefaultTargetManagedDisk =>
+            GetManagedDisk("TargetManagedDisk", s_configurations.Value.TargetManagedDiskName);
 
         /// <summary>
         /// Gets a tenant to use for any tests that require hierarchical namespace.
@@ -233,6 +240,15 @@ namespace Azure.Storage.Test
             return config;
         }
 
+        private static ManagedDiskConfiguration GetManagedDisk(string type, string name)
+        {
+            if (!s_configurations.Value.ManagedDisks.TryGetValue(name, out ManagedDiskConfiguration config))
+            {
+                Assert.Inconclusive($"Live test configuration managed disk type '{type}' named '{name}' was not found in file {TestConfigurationsPath}!");
+            }
+            return config;
+        }
+
         /// <summary>
         /// Load the test configurations file from the path pointed to by the
         /// AZ_STORAGE_CONFIG_PATH environment variable or the local copy of
@@ -250,7 +266,7 @@ namespace Azure.Storage.Test
                 TestConfigurationsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, DefaultTestConfigFilePath);
                 if (string.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
                 {
-                    Assert.Inconclusive($"Live test configuration not found at file {TestConfigurationsPath}!");
+                    Assert.Inconclusive($"Live test configuration not found at file {TestConfigurationsPath}! If you've not yet run New-TestResources.ps1, please do that first.");
                 }
             }
 
@@ -283,6 +299,7 @@ namespace Azure.Storage.Test
                 TargetPreviewBlobTenantName = Get("TargetPreviewBlobTenant"),
                 TargetOAuthTenantName = Get("TargetOAuthTenant"),
                 TargetKeyVaultName = Get("TargetKeyVault"),
+                TargetManagedDiskName = Get("TargetManagedDisk"),
                 TargetHierarchicalNamespaceTenantName = Get("TargetHierarchicalNamespaceTenant"),
                 TargetManagedDiskTenantName = Get("TargetManagedDiskTenant"),
                 TargetSoftDeleteTenantName = Get("TargetBlobAndContainerSoftDeleteTenant"),
@@ -294,7 +311,10 @@ namespace Azure.Storage.Test
                 KeyVaults =
                     config.Element("KeyVaultConfigurations").Elements("KeyVaultConfiguration")
                     .Select(KeyVaultConfiguration.Parse)
-                    .ToDictionary(keyvault => keyvault.VaultName)
+                    .ToDictionary(keyvault => keyvault.VaultName),
+                ManagedDisks = config.Element("ManagedDiskConfigurations").Elements("ManagedDiskConfiguration")
+                    .Select(ManagedDiskConfiguration.Parse)
+                    .ToDictionary(managedDisk => managedDisk.Name),
             };
         }
     }

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static RouteFilterRuleListResult DeserializeRouteFilterRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RouteFilterRule>> value = default;
+            Optional<IReadOnlyList<RouteFilterRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RouteFilterRule> array = new List<RouteFilterRule>();
+                    List<RouteFilterRuleData> array = new List<RouteFilterRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteFilterRule.DeserializeRouteFilterRule(item));
+                        array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item));
                     }
                     value = array;
                     continue;

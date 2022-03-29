@@ -1,7 +1,89 @@
 # Release History
 
-## 0.1.0-preview.12 (Unreleased)
+## 0.1.0-preview.22 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 0.1.0-preview.21 (2022-03-09)
+
+### Breaking Changes
+
+- Rename `MessageWithMetadata` to `BinaryContent`
+
+## 0.1.0-preview.20 (2022-02-07)
+
+### Features Added
+
+- `MessageWithMetadata` is now a concrete rather than abstract class.
+
+### Breaking Changes
+
+- `MessageWithMetadata` is now in the `Azure` namespace rather than `Azure.Messaging`.
+- Changed `ContentType` property of `MessageWithMetadata` from a `string` to a `ContentType`
+
+## 0.1.0-preview.19 (2022-01-11)
+
+### Features Added
+
+- Added `RequestOptions` to enable per-invocation control of the request pipeline.
+
+### Breaking Changes
+
+- The following types were removed:
+    - `ClassifiedResponse`
+    - `ExceptionFormattingResponseClassifier`
+    - `ResponseExtensions`
+    - `ResponsePropertiesPolicy`
+
+## 0.1.0-preview.18 (2021-11-03)
+
+- The following types were removed:
+    - `RequestOptions`
+    - `ResponseStatusOption`
+
+## 0.1.0-preview.17 (2021-10-01)
+
+### Breaking Changes
+
+- The following types were removed:
+    - `DynamicContent`
+    - `DynamicRequest`
+    - `DynamicResponse`
+    - `ProtocolClientOptions`
+
+## 0.1.0-preview.16 (2021-09-07)
+
+### Other Changes
+
+- Update `Azure.Core` version.
+
+## 0.1.0-preview.15 (2021-08-18)
+
+### Features Added
+
+- Added support for per call response classification.
+
+## 0.1.0-preview.14 (2021-06-30)
+
+### New Features
+- Added `ResponseError` type to represent the standard Azure error response.
+
+
+## 0.1.0-preview.13 (2021-06-08)
+
+### New Features
+- Added `DateTimeRange` type to represent ISO 8601 time interval.
+
+## 0.1.0-preview.12 (2021-05-11)
+
+### New Features
+- Added `RequestOptions`.
 
 ## 0.1.0-preview.11 (2021-03-22)
 

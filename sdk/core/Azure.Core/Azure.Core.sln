@@ -21,13 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatia
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\tests\Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.csproj", "{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.Spatial", "..\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.csproj", "{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial", "..\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.csproj", "{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.Spatial.Tests", "..\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj", "{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.Tests", "..\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj", "{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Perf", "perf\Azure.Core.Perf.csproj", "{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Perf", "perf\Azure.Core.Perf.csproj", "{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{33A10110-D88A-459B-82C1-FECEF86A822A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{96E9F605-9C38-4D77-96F4-679EF8B9390F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{8E60A748-3973-471A-B103-EC9406BB3313}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,10 +85,14 @@ Global
 		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33A10110-D88A-459B-82C1-FECEF86A822A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33A10110-D88A-459B-82C1-FECEF86A822A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33A10110-D88A-459B-82C1-FECEF86A822A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33A10110-D88A-459B-82C1-FECEF86A822A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96E9F605-9C38-4D77-96F4-679EF8B9390F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E60A748-3973-471A-B103-EC9406BB3313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E60A748-3973-471A-B103-EC9406BB3313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E60A748-3973-471A-B103-EC9406BB3313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E60A748-3973-471A-B103-EC9406BB3313}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

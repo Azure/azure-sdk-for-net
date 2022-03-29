@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tierToCool"> The function to tier blobs to cool storage. Support blobs currently at Hot tier. </param>
         /// <param name="tierToArchive"> The function to tier blobs to archive storage. Support blobs currently at Hot or Cool tier. </param>
         /// <param name="delete"> The function to delete the blob. </param>
-        internal ManagementPolicyBaseBlob(DateAfterModification tierToCool, DateAfterModification tierToArchive, DateAfterModification delete)
+        /// <param name="enableAutoTierToHotFromCool"> This property enables auto tiering of a blob from cool to hot on a blob access. This property requires tierToCool.daysAfterLastAccessTimeGreaterThan. </param>
+        internal ManagementPolicyBaseBlob(DateAfterModification tierToCool, DateAfterModification tierToArchive, DateAfterModification delete, bool? enableAutoTierToHotFromCool)
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
             Delete = delete;
+            EnableAutoTierToHotFromCool = enableAutoTierToHotFromCool;
         }
 
         /// <summary> The function to tier blobs to cool storage. Support blobs currently at Hot tier. </summary>
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         public DateAfterModification TierToArchive { get; set; }
         /// <summary> The function to delete the blob. </summary>
         public DateAfterModification Delete { get; set; }
+        /// <summary> This property enables auto tiering of a blob from cool to hot on a blob access. This property requires tierToCool.daysAfterLastAccessTimeGreaterThan. </summary>
+        public bool? EnableAutoTierToHotFromCool { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             if (async)
             {
@@ -64,11 +64,17 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Returns(Mock.Of<EventHubConnection>());
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             if (async)
             {
@@ -108,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer.SetupAllProperties();
             mockLoadBalancer.Object.LoadBalanceInterval = TimeSpan.FromSeconds(1);
@@ -125,6 +131,12 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             if (async)
             {
@@ -166,11 +178,17 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Returns(Mock.Of<EventHubConnection>());
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             if (async)
             {
@@ -214,13 +232,241 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        public async Task StartProcessingValidatesTheEventHubsConnectionCanBeCreated(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var capturedException = default(Exception);
+            var expectedException = new DivideByZeroException("The universe will now end.");
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Throws(expectedException);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            try
+            {
+                if (async)
+                {
+                    await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+                }
+                else
+                {
+                    mockProcessor.Object.StartProcessing(cancellationSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                capturedException = ex;
+            }
+
+            Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
+            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+            Assert.That(((AggregateException)capturedException).InnerExceptions.Count, Is.EqualTo(1), "There should have been a single validation exception.");
+
+            var innerException = ((AggregateException)capturedException).InnerExceptions.First();
+            Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
+            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.StartProcessing" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartProcessingValidatesTheEventHubCanBeQueried(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var capturedException = default(Exception);
+            var expectedException = new DivideByZeroException("The universe will now end.");
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                 .Protected()
+                 .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                     ItExpr.IsAny<string>(),
+                     ItExpr.IsAny<CancellationToken>())
+                 .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            mockConnection
+                .Setup(connection => connection.GetPropertiesAsync(
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(expectedException);
+
+            try
+            {
+                if (async)
+                {
+                    await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+                }
+                else
+                {
+                    mockProcessor.Object.StartProcessing(cancellationSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                capturedException = ex;
+            }
+
+            Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
+            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+            Assert.That(((AggregateException)capturedException).InnerExceptions.Count, Is.EqualTo(1), "There should have been a single validation exception.");
+
+            var innerException = ((AggregateException)capturedException).InnerExceptions.First();
+            Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
+            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.StartProcessing" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartProcessingValidatesCheckpointsCanBeQueried(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var capturedException = default(Exception);
+            var expectedException = new DivideByZeroException("The universe will now end.");
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(Mock.Of<EventHubConnection>());
+
+            mockProcessor
+                .Protected()
+                .Setup("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(expectedException);
+
+            try
+            {
+                if (async)
+                {
+                    await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+                }
+                else
+                {
+                    mockProcessor.Object.StartProcessing(cancellationSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                capturedException = ex;
+            }
+
+            Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
+            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+            Assert.That(((AggregateException)capturedException).InnerExceptions.Count, Is.EqualTo(1), "There should have been a single validation exception.");
+
+            var innerException = ((AggregateException)capturedException).InnerExceptions.First();
+            Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
+            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.StartProcessing" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartProcessingSurfacesMultipleValidationFailures(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var capturedException = default(Exception);
+            var eventHubException = new DivideByZeroException("The universe will now end.");
+            var storageException = new FormatException("I find your format offensive.");
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+             mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Protected()
+                .Setup("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(storageException);
+
+            mockConnection
+                .Setup(connection => connection.GetPropertiesAsync(
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(eventHubException);
+
+            try
+            {
+                if (async)
+                {
+                    await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+                }
+                else
+                {
+                    mockProcessor.Object.StartProcessing(cancellationSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                capturedException = ex;
+            }
+
+            Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
+            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+
+            var aggregateException = (AggregateException)capturedException;
+            Assert.That(aggregateException.InnerExceptions.Count, Is.EqualTo(2), "There should have been two validation exceptions.");
+
+            var eventHubInnerException = aggregateException.InnerExceptions.Where(ex => ReferenceEquals(ex, eventHubException)).FirstOrDefault();
+            Assert.That(eventHubInnerException, Is.Not.Null, "The Event Hub exception should have been surfaced.");
+
+            var storageInnerException = aggregateException.InnerExceptions.Where(ex => ReferenceEquals(ex, storageException)).FirstOrDefault();
+            Assert.That(storageInnerException, Is.Not.Null, "The storage exception should have been surfaced.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.StartProcessing" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartProcessingLogsNormalStartup(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor.Object.Logger = mockEventSource.Object;
 
@@ -273,7 +519,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockEventSource
                 .Setup(log => log.EventProcessorStart(
@@ -338,7 +584,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             if (async)
             {
@@ -363,7 +609,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -406,7 +652,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var stopCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
 
             mockLoadBalancer.SetupAllProperties();
             mockLoadBalancer.Object.LoadBalanceInterval = TimeSpan.FromSeconds(1);
@@ -465,7 +711,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             if (async)
             {
@@ -497,7 +743,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -553,12 +799,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Callback(() => completionSource.TrySetResult(true))
                 .Throws(expectedException);
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             await completionSource.Task;
@@ -594,12 +846,18 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new DivideByZeroException("BOOM!");
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .SetupSequence(processor => processor.CreateConnection())
                 .Throws(expectedException)
                 .Returns(Mock.Of<EventHubConnection>());
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             // Starting the processor should result in an exception on the first call, which should leave it in a faulted state.
 
@@ -670,7 +928,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor.Object.Logger = mockEventSource.Object;
 
@@ -723,7 +981,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockEventSource
                 .Setup(log => log.EventProcessorStop(
@@ -737,6 +995,12 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Returns(default(EventHubConnection));
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should be running.");
@@ -789,13 +1053,19 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DivideByZeroException("BOOM!");
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor.Object.Logger = mockEventSource.Object;
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Throws(expectedException);
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should have faulted during startup.");
@@ -856,7 +1126,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(1) };
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
             var mockConnection = new Mock<EventHubConnection>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
 
             mockEventSource
                 .Setup(log => log.EventProcessorStopComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))

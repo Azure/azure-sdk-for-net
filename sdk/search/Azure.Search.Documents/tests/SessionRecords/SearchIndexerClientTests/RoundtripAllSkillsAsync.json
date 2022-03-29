@@ -1,24 +1,37 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2021-04-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "3541",
+        "Content-Length": "5222",
         "Content-Type": "application/json",
-        "traceparent": "00-cb2176a4cef27f459fce7bc822c0474e-549def3b4f12dd48-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210402.1",
-          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "8e39ba448961d14a4b538fa82f0f897a",
+        "traceparent": "00-d1276d033108710938df4b75b9c728fe-73de8f2010c67ce3-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "391b863d4dd210533a1ff2828501570a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "lefvvewn",
+        "name": "sxakkmlo",
         "skills": [
+          {
+            "uri": "https://microsoft.com",
+            "@odata.type": "#Microsoft.Skills.Custom.AmlSkill",
+            "inputs": [
+              {
+                "name": "input",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "farsurvi"
+              }
+            ]
+          },
           {
             "@odata.type": "#Microsoft.Skills.Util.ConditionalSkill",
             "inputs": [
@@ -38,12 +51,12 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "sfvgibhd"
+                "targetName": "nkwswlkh"
               }
             ]
           },
           {
-            "entitiesDefinitionUri": "https://microsoft.com",
+            "entitiesDefinitionUri": "https://microsoft.com/",
             "@odata.type": "#Microsoft.Skills.Text.CustomEntityLookupSkill",
             "inputs": [
               {
@@ -58,7 +71,7 @@
             "outputs": [
               {
                 "name": "entities",
-                "targetName": "xnehbjyk"
+                "targetName": "dtanfgnp"
               }
             ]
           },
@@ -73,11 +86,30 @@
             "outputs": [
               {
                 "name": "content",
-                "targetName": "alqyjdbi"
+                "targetName": "akahyxji"
               },
               {
                 "name": "normalized_images",
-                "targetName": "ptidacek"
+                "targetName": "myyiamjt"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.V3.EntityLinkingSkill",
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              },
+              {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "entities",
+                "targetName": "knrxwmoh"
               }
             ]
           },
@@ -96,7 +128,7 @@
             "outputs": [
               {
                 "name": "persons",
-                "targetName": "niyhrstv"
+                "targetName": "mshplwiy"
               }
             ]
           },
@@ -111,7 +143,7 @@
             "outputs": [
               {
                 "name": "categories",
-                "targetName": "wgomeenc"
+                "targetName": "lbrjrnjo"
               }
             ]
           },
@@ -130,7 +162,7 @@
             "outputs": [
               {
                 "name": "keyPhrases",
-                "targetName": "fuvknxeo"
+                "targetName": "bngxlbgp"
               }
             ]
           },
@@ -145,15 +177,15 @@
             "outputs": [
               {
                 "name": "languageCode",
-                "targetName": "dmqnsedu"
+                "targetName": "kfcropsn"
               },
               {
                 "name": "languageName",
-                "targetName": "jtsskqrg"
+                "targetName": "urufqswo"
               },
               {
                 "name": "score",
-                "targetName": "qtbcoodl"
+                "targetName": "pawyuycv"
               }
             ]
           },
@@ -176,11 +208,14 @@
             "outputs": [
               {
                 "name": "mergedText",
-                "targetName": "fgxegswp"
+                "targetName": "dcvjgqvk"
               }
             ]
           },
           {
+            "defaultLanguageCode": "en",
+            "detectOrientation": false,
+            "lineEnding": "space",
             "@odata.type": "#Microsoft.Skills.Vision.OcrSkill",
             "inputs": [
               {
@@ -191,30 +226,56 @@
             "outputs": [
               {
                 "name": "text",
-                "targetName": "ejefcfds"
+                "targetName": "mqffuqju"
               },
               {
                 "name": "layoutText",
-                "targetName": "dtcklurn"
+                "targetName": "ieoysexi"
               }
             ]
           },
           {
-            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "defaultLanguageCode": "en",
+            "maskingMode": "none",
+            "@odata.type": "#Microsoft.Skills.Text.PIIDetectionSkill",
             "inputs": [
               {
-                "name": "text",
+                "name": "languageCode",
                 "source": "/document/content"
               },
               {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "piiEntities",
+                "targetName": "qqhleguk"
+              },
+              {
+                "name": "maskedText",
+                "targetName": "dgnmtihd"
+              }
+            ]
+          },
+          {
+            "defaultLanguageCode": "en",
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "inputs": [
+              {
                 "name": "languageCode",
+                "source": "/document/content"
+              },
+              {
+                "name": "text",
                 "source": "/document/content"
               }
             ],
             "outputs": [
               {
                 "name": "score",
-                "targetName": "dpsswbyn"
+                "targetName": "vkrymqty"
               }
             ]
           },
@@ -229,7 +290,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "ieilgxop"
+                "targetName": "pbpqkddy"
               }
             ]
           },
@@ -249,7 +310,7 @@
             "outputs": [
               {
                 "name": "textItems",
-                "targetName": "wdnammdl"
+                "targetName": "dnspjjff"
               }
             ]
           },
@@ -273,15 +334,15 @@
             "outputs": [
               {
                 "name": "translatedText",
-                "targetName": "pixulsyk"
+                "targetName": "vucncwby"
               },
               {
                 "name": "translatedToLanguageCode",
-                "targetName": "ojbpydrd"
+                "targetName": "wkcilxuy"
               },
               {
                 "name": "translatedFromLanguageCode",
-                "targetName": "jpvwwqmf"
+                "targetName": "vhvcpeya"
               }
             ]
           },
@@ -297,39 +358,116 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "fmmhhqbp"
+                "targetName": "dnifpqsm"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              },
+              {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "persons",
+                "targetName": "emdrogvs"
+              }
+            ]
+          },
+          {
+            "defaultLanguageCode": "en",
+            "@odata.type": "#Microsoft.Skills.Text.V3.SentimentSkill",
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              },
+              {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "sentiment",
+                "targetName": "aqtyatne"
+              },
+              {
+                "name": "confidenceScores",
+                "targetName": "rssbndoq"
+              },
+              {
+                "name": "sentences",
+                "targetName": "ubknnujf"
               }
             ]
           }
         ],
         "cognitiveServices": {
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
+        },
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=PTzW6XFeH7IsvWOdK\u002B0vmav7H1Zsuq4NKvOVViBttqAixm7smFzZtvUdAAGQb/zBPw2nwifF4e4CSUU9qvdjNQ==;EndpointSuffix=core.windows.net",
+          "projections": []
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "8e39ba44-8961-d14a-4b53-8fa82f0f897a",
-        "Content-Length": "6085",
+        "client-request-id": "391b863d-4dd2-1053-3a1f-f2828501570a",
+        "Content-Length": "8621",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 02 Apr 2021 19:02:41 GMT",
-        "elapsed-time": "137",
-        "ETag": "W/\u00220x8D8F609E42A8004\u0022",
+        "Date": "Tue, 25 Jan 2022 22:16:12 GMT",
+        "elapsed-time": "82",
+        "ETag": "W/\u00220x8D9E0504C9311E4\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027lefvvewn\u0027)?api-version=2020-06-30",
+        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027sxakkmlo\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "8e39ba44-8961-d14a-4b53-8fa82f0f897a",
+        "request-id": "391b863d-4dd2-1053-3a1f-f2828501570a",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "8e39ba44-8961-d14a-4b53-8fa82f0f897a"
+        "x-ms-client-request-id": "391b863d-4dd2-1053-3a1f-f2828501570a"
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D8F609E42A8004\u0022",
-        "name": "lefvvewn",
+        "@odata.etag": "\u00220x8D9E0504C9311E4\u0022",
+        "name": "sxakkmlo",
         "description": null,
         "skills": [
+          {
+            "@odata.type": "#Microsoft.Skills.Custom.AmlSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "uri": "https://microsoft.com",
+            "key": null,
+            "resourceId": null,
+            "region": null,
+            "timeout": null,
+            "degreeOfParallelism": null,
+            "inputs": [
+              {
+                "name": "input",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "farsurvi"
+              }
+            ]
+          },
           {
             "@odata.type": "#Microsoft.Skills.Util.ConditionalSkill",
             "name": null,
@@ -358,7 +496,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "sfvgibhd"
+                "targetName": "nkwswlkh"
               }
             ]
           },
@@ -368,7 +506,7 @@
             "description": null,
             "context": null,
             "defaultLanguageCode": null,
-            "entitiesDefinitionUri": "https://microsoft.com",
+            "entitiesDefinitionUri": "https://microsoft.com/",
             "globalDefaultCaseSensitive": null,
             "globalDefaultAccentSensitive": null,
             "globalDefaultFuzzyEditDistance": null,
@@ -389,7 +527,7 @@
             "outputs": [
               {
                 "name": "entities",
-                "targetName": "xnehbjyk"
+                "targetName": "dtanfgnp"
               }
             ],
             "inlineEntitiesDefinition": []
@@ -412,14 +550,43 @@
             "outputs": [
               {
                 "name": "content",
-                "targetName": "alqyjdbi"
+                "targetName": "akahyxji"
               },
               {
                 "name": "normalized_images",
-                "targetName": "ptidacek"
+                "targetName": "myyiamjt"
               }
             ],
             "configuration": null
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.V3.EntityLinkingSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": null,
+            "minimumPrecision": null,
+            "modelVersion": null,
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "entities",
+                "targetName": "knrxwmoh"
+              }
+            ]
           },
           {
             "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
@@ -447,7 +614,7 @@
             "outputs": [
               {
                 "name": "persons",
-                "targetName": "niyhrstv"
+                "targetName": "mshplwiy"
               }
             ]
           },
@@ -470,7 +637,7 @@
             "outputs": [
               {
                 "name": "categories",
-                "targetName": "wgomeenc"
+                "targetName": "lbrjrnjo"
               }
             ]
           },
@@ -499,7 +666,7 @@
             "outputs": [
               {
                 "name": "keyPhrases",
-                "targetName": "fuvknxeo"
+                "targetName": "bngxlbgp"
               }
             ]
           },
@@ -521,15 +688,15 @@
             "outputs": [
               {
                 "name": "languageCode",
-                "targetName": "dmqnsedu"
+                "targetName": "kfcropsn"
               },
               {
                 "name": "languageName",
-                "targetName": "jtsskqrg"
+                "targetName": "urufqswo"
               },
               {
                 "name": "score",
-                "targetName": "qtbcoodl"
+                "targetName": "pawyuycv"
               }
             ]
           },
@@ -563,7 +730,7 @@
             "outputs": [
               {
                 "name": "mergedText",
-                "targetName": "fgxegswp"
+                "targetName": "dcvjgqvk"
               }
             ]
           },
@@ -573,9 +740,9 @@
             "description": null,
             "context": null,
             "textExtractionAlgorithm": null,
-            "lineEnding": null,
-            "defaultLanguageCode": null,
-            "detectOrientation": null,
+            "lineEnding": "space",
+            "defaultLanguageCode": "en",
+            "detectOrientation": false,
             "inputs": [
               {
                 "name": "image",
@@ -587,11 +754,48 @@
             "outputs": [
               {
                 "name": "text",
-                "targetName": "ejefcfds"
+                "targetName": "mqffuqju"
               },
               {
                 "name": "layoutText",
-                "targetName": "dtcklurn"
+                "targetName": "ieoysexi"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.PIIDetectionSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": "en",
+            "minimumPrecision": null,
+            "maskingMode": "none",
+            "maskingCharacter": null,
+            "modelVersion": null,
+            "piiCategories": [],
+            "domain": null,
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "piiEntities",
+                "targetName": "qqhleguk"
+              },
+              {
+                "name": "maskedText",
+                "targetName": "dgnmtihd"
               }
             ]
           },
@@ -600,16 +804,16 @@
             "name": null,
             "description": null,
             "context": null,
-            "defaultLanguageCode": null,
+            "defaultLanguageCode": "en",
             "inputs": [
               {
-                "name": "text",
+                "name": "languageCode",
                 "source": "/document/content",
                 "sourceContext": null,
                 "inputs": []
               },
               {
-                "name": "languageCode",
+                "name": "text",
                 "source": "/document/content",
                 "sourceContext": null,
                 "inputs": []
@@ -618,7 +822,7 @@
             "outputs": [
               {
                 "name": "score",
-                "targetName": "dpsswbyn"
+                "targetName": "vkrymqty"
               }
             ]
           },
@@ -638,7 +842,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "ieilgxop"
+                "targetName": "pbpqkddy"
               }
             ]
           },
@@ -667,7 +871,7 @@
             "outputs": [
               {
                 "name": "textItems",
-                "targetName": "wdnammdl"
+                "targetName": "dnspjjff"
               }
             ]
           },
@@ -702,20 +906,20 @@
             "outputs": [
               {
                 "name": "translatedText",
-                "targetName": "pixulsyk"
+                "targetName": "vucncwby"
               },
               {
                 "name": "translatedToLanguageCode",
-                "targetName": "ojbpydrd"
+                "targetName": "wkcilxuy"
               },
               {
                 "name": "translatedFromLanguageCode",
-                "targetName": "jpvwwqmf"
+                "targetName": "vhvcpeya"
               }
             ]
           },
           {
-            "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+            "@odata.type": "#Microsoft.Azure.Search.V2021_04_30_Preview.WebApiSkill",
             "name": null,
             "description": null,
             "context": null,
@@ -724,6 +928,7 @@
             "timeout": null,
             "batchSize": null,
             "degreeOfParallelism": null,
+            "authResourceId": null,
             "inputs": [
               {
                 "name": "input",
@@ -735,26 +940,100 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "fmmhhqbp"
+                "targetName": "dnifpqsm"
               }
             ],
             "httpHeaders": null
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "categories": [],
+            "defaultLanguageCode": null,
+            "minimumPrecision": null,
+            "modelVersion": null,
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "persons",
+                "targetName": "emdrogvs"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.V3.SentimentSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": "en",
+            "modelVersion": null,
+            "includeOpinionMining": false,
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "sentiment",
+                "targetName": "aqtyatne"
+              },
+              {
+                "name": "confidenceScores",
+                "targetName": "rssbndoq"
+              },
+              {
+                "name": "sentences",
+                "targetName": "ubknnujf"
+              }
+            ]
           }
         ],
         "cognitiveServices": {
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
           "description": null
         },
-        "knowledgeStore": null,
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=PTzW6XFeH7IsvWOdK\u002B0vmav7H1Zsuq4NKvOVViBttqAixm7smFzZtvUdAAGQb/zBPw2nwifF4e4CSUU9qvdjNQ==;EndpointSuffix=core.windows.net",
+          "projections": [],
+          "parameters": null
+        },
         "encryptionKey": null
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1020949430",
+    "RandomSeed": "825136735",
     "SearchIndexName": null,
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_SERVICE_NAME": "mohitc-acs",
+    "SEARCH_STORAGE_KEY": "Sanitized",
+    "SEARCH_STORAGE_NAME": "mohitcsablob",
+    "STORAGE_ENDPOINT_SUFFIX": null
   }
 }

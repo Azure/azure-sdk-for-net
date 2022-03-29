@@ -9,23 +9,12 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal class ServiceBusAttributeBindingProvider : IBindingProvider
     {
-        private static readonly IQueueArgumentBindingProvider InnerProvider =
-            new CompositeArgumentBindingProvider(
-                new MessageSenderArgumentBindingProvider(),
-                new MessageArgumentBindingProvider(),
-                new StringArgumentBindingProvider(),
-                new ByteArrayArgumentBindingProvider(),
-                new UserTypeArgumentBindingProvider(),
-                new CollectorArgumentBindingProvider(),
-                new AsyncCollectorArgumentBindingProvider());
-
+        private readonly IQueueArgumentBindingProvider _innerProvider;
         private readonly INameResolver _nameResolver;
         private readonly MessagingProvider _messagingProvider;
         private readonly ServiceBusClientFactory _clientFactory;
@@ -38,6 +27,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _messagingProvider = messagingProvider ?? throw new ArgumentNullException(nameof(messagingProvider));
             _clientFactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
+            var jsonSettings = _messagingProvider.Options.JsonSerializerSettings;
+            _innerProvider = new CompositeArgumentBindingProvider(
+                new MessageSenderArgumentBindingProvider(),
+                new MessageArgumentBindingProvider(),
+                new StringArgumentBindingProvider(),
+                new ByteArrayArgumentBindingProvider(),
+                new BinaryDataArgumentBindingProvider(),
+                new UserTypeArgumentBindingProvider(jsonSettings),
+                new SyncCollectorArgumentBindingProvider(jsonSettings),
+                new AsyncCollectorArgumentBindingProvider(jsonSettings));
         }
 
         public Task<IBinding> TryCreateAsync(BindingProviderContext context)
@@ -59,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             IBindableServiceBusPath path = BindableServiceBusPath.Create(queueOrTopicName);
             ValidateContractCompatibility(path, context.BindingDataContract);
 
-            IArgumentBinding<ServiceBusEntity> argumentBinding = InnerProvider.TryCreate(parameter);
+            IArgumentBinding<ServiceBusEntity> argumentBinding = _innerProvider.TryCreate(parameter);
             if (argumentBinding == null)
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "Can't bind ServiceBus to type '{0}'.", parameter.ParameterType));

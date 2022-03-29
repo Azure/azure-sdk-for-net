@@ -3,7 +3,7 @@
     {
       "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.Storage/storageAccounts/hdicsharpstorage29539?api-version=2018-07-01",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\"\r\n  },\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"East US 2\"\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\"\r\n  },\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "eb899a0a-c895-4126-ba2f-24a00fec85b2"
@@ -255,9 +255,9 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729?api-version=2021-06-01",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6\",\r\n    \"osType\": \"Linux\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"admin583\",\r\n          \"restAuthCredential.password\": \"Password11145\"\r\n        },\r\n        \"clusterIdentity\": {\r\n          \"clusterIdentity.applicationId\": \"c91b9663-9c0f-41a9-91b4-f75cc846dfc1\",\r\n          \"clusterIdentity.certificate\": \"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\",\r\n          \"clusterIdentity.aadTenantId\": \"https://login.windows.net/e57c2b05-229f-4db7-b629-57f5f4f12ae8\",\r\n          \"clusterIdentity.resourceUri\": \"https://datalake.azure.net/\",\r\n          \"clusterIdentity.certificatePassword\": \"123\"\r\n        },\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"adl://home\",\r\n          \"dfs.adls.home.hostname\": \"fakehdiadlsaccount3118.azuredatalakestore.net\",\r\n          \"dfs.adls.home.mountpoint\": \"/clusters/hdi\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\",\r\n              \"password\": \"Password18038\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\",\r\n              \"password\": \"Password18038\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Small\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\",\r\n              \"password\": \"Password18038\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"storageProfile\": {\r\n      \"storageaccounts\": [\r\n        {\r\n          \"name\": \"hdicsharpstorage4647.blob.core.windows.net\",\r\n          \"isDefault\": false,\r\n          \"container\": \"default4471\",\r\n          \"key\": \"Iut4Xm649HPAknczedPknUmFmqU6FXXuRxxAjrmPEXCFGXLQWuF19rqeF2gVtK/cdN2bE93/c4u0imDiIQmljQ==\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6\",\r\n    \"osType\": \"Linux\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"admin583\",\r\n          \"restAuthCredential.password\": \"Password11145\"\r\n        },\r\n        \"clusterIdentity\": {\r\n          \"clusterIdentity.applicationId\": \"c91b9663-9c0f-41a9-91b4-f75cc846dfc1\",\r\n          \"clusterIdentity.certificate\": \"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\",\r\n          \"clusterIdentity.aadTenantId\": \"https://login.windows.net/e57c2b05-229f-4db7-b629-57f5f4f12ae8\",\r\n          \"clusterIdentity.resourceUri\": \"https://datalake.azure.net/\",\r\n          \"clusterIdentity.certificatePassword\": \"123\"\r\n        },\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"adl://home\",\r\n          \"dfs.adls.home.hostname\": \"fakehdiadlsaccount3118.azuredatalakestore.net\",\r\n          \"dfs.adls.home.mountpoint\": \"/clusters/hdi\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\",\r\n              \"password\": \"Password18038\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\",\r\n              \"password\": \"Password18038\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Small\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\",\r\n              \"password\": \"Password18038\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"storageProfile\": {\r\n      \"storageaccounts\": [\r\n        {\r\n          \"name\": \"hdicsharpstorage4647.blob.core.windows.net\",\r\n          \"isDefault\": false,\r\n          \"container\": \"default4471\",\r\n          \"key\": \"Iut4Xm649HPAknczedPknUmFmqU6FXXuRxxAjrmPEXCFGXLQWuF19rqeF2gVtK/cdN2bE93/c4u0imDiIQmljQ==\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "0d28be6b-bb63-49f1-b33c-c62aba3d7571"
@@ -289,10 +289,10 @@
           "\"20815d20-7160-43f2-8132-0c6597e9d738\""
         ],
         "x-ms-hdi-clusteruri": [
-          "https://management.azure.com/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729?api-version=2018-06-01-preview"
+          "https://management.azure.com/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729?api-version=2021-06-01"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview"
+          "https://management.azure.com:443/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01"
         ],
         "x-ms-request-id": [
           "4c3cb76a-5f27-4944-8d7d-a0c621b2f963"
@@ -328,11 +328,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729\",\r\n  \"name\": \"hdisdk-adlgen11729\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US 2\",\r\n  \"etag\": \"20815d20-7160-43f2-8132-0c6597e9d738\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.1000.67\",\r\n    \"clusterHdpVersion\": \"\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.1000.67.1901050618.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2019-01-31T06:07:29.81\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729\",\r\n  \"name\": \"hdisdk-adlgen11729\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"etag\": \"20815d20-7160-43f2-8132-0c6597e9d738\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.1000.67\",\r\n    \"clusterHdpVersion\": \"\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.1000.67.1901050618.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2019-01-31T06:07:29.81\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -388,7 +388,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -444,7 +444,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -500,7 +500,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -556,7 +556,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -612,7 +612,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -668,7 +668,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -724,7 +724,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -780,7 +780,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -836,7 +836,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -892,7 +892,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -948,7 +948,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1004,7 +1004,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1060,7 +1060,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1116,7 +1116,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1172,7 +1172,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1228,7 +1228,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1284,7 +1284,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1340,7 +1340,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1396,7 +1396,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1452,7 +1452,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1508,7 +1508,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1564,7 +1564,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1620,7 +1620,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1676,7 +1676,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1732,7 +1732,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1788,7 +1788,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1844,7 +1844,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1900,7 +1900,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1956,7 +1956,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2012,7 +2012,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2068,7 +2068,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2124,7 +2124,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2180,7 +2180,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2236,7 +2236,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2292,7 +2292,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2348,7 +2348,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2404,7 +2404,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2460,7 +2460,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2516,7 +2516,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2572,7 +2572,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2628,7 +2628,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2684,7 +2684,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2740,7 +2740,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2796,7 +2796,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729/azureasyncoperations/create?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2852,7 +2852,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2904,7 +2904,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729\",\r\n  \"name\": \"hdisdk-adlgen11729\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US 2\",\r\n  \"etag\": \"20815d20-7160-43f2-8132-0c6597e9d738\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.1000.67\",\r\n    \"clusterHdpVersion\": \"2.6.5.3005-27\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.1000.67.1901050618.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2019-01-31T06:07:29.81\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-adlgen11729-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-adlgen11729.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7b4fd446-0501-4f23-8015-41b1832b6f0a/resourceGroups/hdicsharprg6423/providers/Microsoft.HDInsight/clusters/hdisdk-adlgen11729\",\r\n  \"name\": \"hdisdk-adlgen11729\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"South Central US\",\r\n  \"etag\": \"20815d20-7160-43f2-8132-0c6597e9d738\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.1000.67\",\r\n    \"clusterHdpVersion\": \"2.6.5.3005-27\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.1000.67.1901050618.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser8684\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2019-01-31T06:07:29.81\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-adlgen11729-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-adlgen11729.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

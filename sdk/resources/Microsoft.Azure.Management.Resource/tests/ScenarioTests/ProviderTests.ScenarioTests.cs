@@ -181,6 +181,40 @@ namespace ResourceGroups.Tests
                             provider.RegistrationState);
             }
         }
+
+        [Fact]
+        public void GetProviderPermissions()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+
+                var reg = client.Providers.Register(
+                    ProviderName,
+                    new ProviderRegistrationRequest
+                    {
+                        ThirdPartyProviderConsent = new ProviderConsentDefinition
+                        {
+                            ConsentToAuthorization = true
+                        }
+                    });
+                Assert.NotNull(reg);
+
+                var result = client.Providers.ProviderPermissions(ProviderName);
+
+                // Validate headers
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                // Validate result
+                Assert.NotNull(result);
+                Assert.True(result.Value.Count() > 0);
+                Assert.NotEmpty(result.Value[0].ApplicationId);
+                Assert.NotNull(result.Value[0].RoleDefinition);
+                Assert.True(result.Value[0].RoleDefinition.Permissions.Count() > 0);
+            }
+        }
     }
 }
 

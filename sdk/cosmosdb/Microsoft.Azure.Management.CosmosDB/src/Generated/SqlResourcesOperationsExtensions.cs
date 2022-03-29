@@ -401,6 +401,168 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Lists the ClientEncryptionKeys under an existing Azure Cosmos DB SQL
+            /// database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static IEnumerable<ClientEncryptionKeyGetResults> ListClientEncryptionKeys(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.ListClientEncryptionKeysAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the ClientEncryptionKeys under an existing Azure Cosmos DB SQL
+            /// database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<ClientEncryptionKeyGetResults>> ListClientEncryptionKeysAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListClientEncryptionKeysWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the ClientEncryptionKey under an existing Azure Cosmos DB SQL
+            /// database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='clientEncryptionKeyName'>
+            /// Cosmos DB ClientEncryptionKey name.
+            /// </param>
+            public static ClientEncryptionKeyGetResults GetClientEncryptionKey(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName)
+            {
+                return operations.GetClientEncryptionKeyAsync(resourceGroupName, accountName, databaseName, clientEncryptionKeyName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the ClientEncryptionKey under an existing Azure Cosmos DB SQL
+            /// database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='clientEncryptionKeyName'>
+            /// Cosmos DB ClientEncryptionKey name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClientEncryptionKeyGetResults> GetClientEncryptionKeyAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetClientEncryptionKeyWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, clientEncryptionKeyName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create or update a ClientEncryptionKey. This API is meant to be invoked via
+            /// tools such as the Azure Powershell (instead of directly).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='clientEncryptionKeyName'>
+            /// Cosmos DB ClientEncryptionKey name.
+            /// </param>
+            /// <param name='createUpdateClientEncryptionKeyParameters'>
+            /// The parameters to provide for the client encryption key.
+            /// </param>
+            public static ClientEncryptionKeyGetResults CreateUpdateClientEncryptionKey(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters)
+            {
+                return operations.CreateUpdateClientEncryptionKeyAsync(resourceGroupName, accountName, databaseName, clientEncryptionKeyName, createUpdateClientEncryptionKeyParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update a ClientEncryptionKey. This API is meant to be invoked via
+            /// tools such as the Azure Powershell (instead of directly).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='clientEncryptionKeyName'>
+            /// Cosmos DB ClientEncryptionKey name.
+            /// </param>
+            /// <param name='createUpdateClientEncryptionKeyParameters'>
+            /// The parameters to provide for the client encryption key.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClientEncryptionKeyGetResults> CreateUpdateClientEncryptionKeyAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateUpdateClientEncryptionKeyWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, clientEncryptionKeyName, createUpdateClientEncryptionKeyParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the SQL container under an existing Azure Cosmos DB database account.
             /// </summary>
             /// <param name='operations'>
@@ -1889,6 +2051,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Retrieves continuous backup information for a container resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            public static BackupInformation RetrieveContinuousBackupInformation(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location)
+            {
+                return operations.RetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, databaseName, containerName, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a container resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInformation> RetrieveContinuousBackupInformationAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RetrieveContinuousBackupInformationWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an Azure Cosmos DB SQL database
             /// </summary>
             /// <param name='operations'>
@@ -2124,6 +2344,66 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginMigrateSqlDatabaseToManualThroughputAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginMigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create or update a ClientEncryptionKey. This API is meant to be invoked via
+            /// tools such as the Azure Powershell (instead of directly).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='clientEncryptionKeyName'>
+            /// Cosmos DB ClientEncryptionKey name.
+            /// </param>
+            /// <param name='createUpdateClientEncryptionKeyParameters'>
+            /// The parameters to provide for the client encryption key.
+            /// </param>
+            public static ClientEncryptionKeyGetResults BeginCreateUpdateClientEncryptionKey(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters)
+            {
+                return operations.BeginCreateUpdateClientEncryptionKeyAsync(resourceGroupName, accountName, databaseName, clientEncryptionKeyName, createUpdateClientEncryptionKeyParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update a ClientEncryptionKey. This API is meant to be invoked via
+            /// tools such as the Azure Powershell (instead of directly).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='clientEncryptionKeyName'>
+            /// Cosmos DB ClientEncryptionKey name.
+            /// </param>
+            /// <param name='createUpdateClientEncryptionKeyParameters'>
+            /// The parameters to provide for the client encryption key.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClientEncryptionKeyGetResults> BeginCreateUpdateClientEncryptionKeyAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateUpdateClientEncryptionKeyWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, clientEncryptionKeyName, createUpdateClientEncryptionKeyParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2949,6 +3229,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task BeginDeleteSqlRoleAssignmentAsync(this ISqlResourcesOperations operations, string roleAssignmentId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteSqlRoleAssignmentWithHttpMessagesAsync(roleAssignmentId, resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a container resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            public static BackupInformation BeginRetrieveContinuousBackupInformation(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location)
+            {
+                return operations.BeginRetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, databaseName, containerName, location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves continuous backup information for a container resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='location'>
+            /// The name of the continuous backup restore location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupInformation> BeginRetrieveContinuousBackupInformationAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRetrieveContinuousBackupInformationWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

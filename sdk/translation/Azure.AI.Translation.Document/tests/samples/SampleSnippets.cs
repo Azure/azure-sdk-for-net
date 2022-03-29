@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.Translation.Document.Tests;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
@@ -15,34 +16,49 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class SampleSnippets : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public void CreateDocumentTranslationClient()
         {
+            #region Snippet:CreateDocumentTranslationClient
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            #region Snippet:CreateDocumentTranslationClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
         }
 
         [Test]
-        [Ignore("Samples not working yet")]
+        public void CreateDocumentTranslationClientTokenCredential()
+        {
+            #region Snippet:CreateDocumentTranslationClientTokenCredential
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+#endif
+            var client = new DocumentTranslationClient(new Uri(endpoint), new DefaultAzureCredential());
+            #endregion
+        }
+
+        [Test]
         public void BadRequestSnippet()
         {
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var credentials = new AzureKeyCredential(apiKey);
             var client = new DocumentTranslationClient(new Uri(endpoint), credentials);
 
-            var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
-
             #region Snippet:BadRequest
-
-            //@@ var invalidInput = new DocumentTranslationInput(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+            var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
 
             try
             {
@@ -56,29 +72,32 @@ namespace Azure.AI.Translation.Document.Samples
         }
 
         [Test]
-        [Ignore("Samples not working yet")]
         public void DocumentTranslationInput()
         {
+            #region Snippet:DocumentTranslationSingleInput
+#if SNIPPET
             Uri sourceSasUri = new Uri("<source SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
-            Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
-            Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
-
-            #region Snippet:DocumentTranslationSingleInput
-            //@@ Uri sourceSasUri = <source SAS URI>;
-            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
-
+#else
+            Uri sourceSasUri = new Uri("https://soure.storage.blob.core.windows.net/source1");
+            Uri frenchTargetSasUri = new Uri("https://target.storage.blob.core.windows.net/frenchcontainer");
+#endif
             var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
             #endregion
 
+            #region Snippet:DocumentTranslationMultipleInputs
+
+#if SNIPPET
+            Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
+            Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
             Uri source1SasUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
-
-            #region Snippet:DocumentTranslationMultipleInputs
-            //@@ Uri source1SasUri = <source1 SAS URI>;
-            //@@ Uri source2SasUri = <source2 SAS URI>;
-            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
-            //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
+#else
+            Uri source1SasUri = new Uri("https://soure.storage.blob.core.windows.net/source1");
+            Uri source2SasUri = new Uri("https://soure.storage.blob.core.windows.net/source2");
+            Uri arabicTargetSasUri = new Uri("https://target.storage.blob.core.windows.net/arabiccontainer");
+            Uri spanishTargetSasUri = new Uri("https://target.storage.blob.core.windows.net/spanishcontainer");
+#endif
 
             var inputs = new List<DocumentTranslationInput>
             {
@@ -88,10 +107,10 @@ namespace Azure.AI.Translation.Document.Samples
                     targets: new List<TranslationTarget>
                     {
                         new TranslationTarget(frenchTargetSasUri, "fr"),
-                        new TranslationTarget(spanishTargetSasUri, "es")
+                        new TranslationTarget(arabicTargetSasUri, "ar")
                     }),
             };
-            #endregion
+#endregion
         }
     }
 }

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MetricListResult. </summary>
         internal MetricListResult()
         {
-            Value = new ChangeTrackingList<Metric>();
+            Value = new ChangeTrackingList<BaseMetric>();
         }
 
         /// <summary> Initializes a new instance of MetricListResult. </summary>
         /// <param name="value"> The list of metrics for the account. </param>
-        internal MetricListResult(IReadOnlyList<Metric> value)
+        internal MetricListResult(IReadOnlyList<BaseMetric> value)
         {
             Value = value;
         }
 
         /// <summary> The list of metrics for the account. </summary>
-        public IReadOnlyList<Metric> Value { get; }
+        public IReadOnlyList<BaseMetric> Value { get; }
     }
 }

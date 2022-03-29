@@ -14,12 +14,12 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static TextAppearance DeserializeTextAppearance(JsonElement element)
         {
-            TextStyle style = default;
+            Style style = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("style"))
                 {
-                    style = TextStyle.DeserializeTextStyle(property.Value);
+                    style = FormRecognizer.Models.Style.DeserializeStyle(property.Value);
                     continue;
                 }
             }

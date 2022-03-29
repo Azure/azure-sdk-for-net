@@ -42,12 +42,15 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// ExpressRoute Circuit Authorization</param>
         /// <param name="expressRouteAuthorizationKey">The key of the
         /// ExpressRoute Circuit Authorization</param>
-        public ExpressRouteAuthorization(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string expressRouteAuthorizationId = default(string), string expressRouteAuthorizationKey = default(string))
+        /// <param name="expressRouteId">The ID of the ExpressRoute
+        /// Circuit</param>
+        public ExpressRouteAuthorization(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string expressRouteAuthorizationId = default(string), string expressRouteAuthorizationKey = default(string), string expressRouteId = default(string))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
             ExpressRouteAuthorizationId = expressRouteAuthorizationId;
             ExpressRouteAuthorizationKey = expressRouteAuthorizationKey;
+            ExpressRouteId = expressRouteId;
             CustomInit();
         }
 
@@ -75,6 +78,12 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.expressRouteAuthorizationKey")]
         public string ExpressRouteAuthorizationKey { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the ExpressRoute Circuit
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expressRouteId")]
+        public string ExpressRouteId { get; set; }
 
     }
 }

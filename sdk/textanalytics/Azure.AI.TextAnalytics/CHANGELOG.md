@@ -1,7 +1,86 @@
 # Release History
 
-## 5.1.0-beta.7 (Unreleased)
+## 5.2.0-beta.3 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+- Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior.
+
+### Bugs Fixed
+- Long-Running operation rehydration has been patched to stop throwing a `NullReferenceException`. Issue [24692](https://github.com/Azure/azure-sdk-for-net/issues/24692).
+- TextAnalyticsAudience has been added to allow the user to select the Azure cloud where the resource is located. Issue [18520](https://github.com/Azure/azure-sdk-for-net/issues/18520).
+
+### Other Changes
+
+## 5.1.1 (2021-11-19)
+### Breaking changes
+- Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior.
+
+### Bug Fixes
+- Long-Running operation rehydration has been patched to stop throwing a `NullReferenceException`. Issue [24692](https://github.com/Azure/azure-sdk-for-net/issues/24692).
+
+## 5.2.0-beta.2 (2021-11-02)
+
+### Features Added
+- Adding support for three new actions in `StartAnalyzeActions`: `RecognizeCustomEntities`, `SingleCategoryClassify`, and `MultiCategoriesClassify`. The new actions allow you to use custom models to perform entity recognition and category classification.
+- Added property `ActionName` to all `xxActions` input types so user can specify a name per action. If not provided, service will generate a name.
+- Added property `ActionName` to all `xxActionResult` output types that displays the name of each action.
+- Added suppport for multiple actions of the same type.
+
+### Bugs Fixed
+- `AnalyzeActionsOperation.GetValuesAsync()` and `AnalyzeHealthcareEntitiesOperation.GetValuesAsync()` are now validating that the operation has completed successfully before attempting to return any values. An `InvalidOperationException` is thrown if this is not true.
+
+### Other Changes
+- We are now targeting the service version `3.2-preview.2` API as the default instead of `3.2-preview.1`.
+
+## 5.2.0-beta.1 (2021-08-09)
+
+### Features Added
+- The client defaults to the latest supported service version, which currently is `3.2-preview.1`.
+- Added property `ExtractSummaryActions` to `TextAnalyticsActions` to support the new 'extractive text summarization' API. This action can be used to get a summary for the input document by extracting the most relevant sentences.
+
+## 5.1.0 (2021-07-07)
+### New features
+- Added support for service version `3.0`. This can be specified in the `TextAnalyticsClientOptions` object under the `ServiceVersion` enum. By default the SDK targets latest supported service version.
+- Added AAD support for the `StartAnalyzeHealthcareEntities` methods.
+- Added value `None` to enum `PiiEntityDomainType` to allow user to specify no domain.
+- Added new overload methods to all `xxActions` types that take a `xxOptions` object to facilitate a transition from a singular method to an actions method.
+- The parameter `CategoriesFilter` in `RecognizePiiEntitiesActions` has been enabled for `StartAnalyzeActions` methods.
+
+### Breaking changes
+- Changed behavior in `StartAnalyzeActions` and `StartAnalyzeActionsAsync` where now accepts a single action per action type. An `ArgumentException` is raised if duplicate actions are passed.
+- Changed type `RecognizePiiEntitiesOptions.DomainFilter` from `PiiEntityDomainType?` to `PiiEntityDomainType`.
+- Changed type `AnalyzeActionsOptions.IncludeStatistics` from `bool` to `bool?`.
+- Renamed `StartAnalyzeBatchActions` to `StartAnalyzeActions`.
+- Renamed `AnalyzeBatchActionsOperation` to `AnalyzeActionsOperation`.
+- Renamed `AnalyzeBatchActionsResult` to `AnalyzeActionsResult`.
+- Renamed `AnalyzeBatchActionsOptions` to `AnalyzeActionsOptions`.
+- `TextAnalyticsActions` now takes `xxAction` types, instead of `xxOptions` types. Renames and types are as follow:
+  - `ExtractKeyPhrasesOptions` changed to new type `ExtractKeyPhrasesActions`.
+  - `RecognizeEntitiesOptions` changed to new type `RecognizeEntitiesActions`.
+  - `RecognizePiiEntitiesOptions` changed to new type `RecognizePiiEntitiesActions`.
+  - `RecognizeLinkedEntitiesOptions` changed to new type `RecognizeLinkedEntitiesActions`.
+  - `AnalyzeSentimentOptions` changed to new type `AnalyzeSentimentActions`.
+- Renamed type `TextAnalyticsActionDetails` to `TextAnalyticsActionResult`.
+- Renamed type `PiiEntityDomainType` to `PiiEntityDomain`.
+- Renamed type `Results` to `DocumentsResults` in `AnalyzeSentimentActionResult`, `ExtractKeyPhrasesActionResult`, `RecognizeEntitiesActionResult`, `RecognizeLinkedEntitiesActionResult`, and `RecognizePiiEntitiesActionResult`.
+- Renamed all types under `AnalyzeActionsResult` from `xxActionsResults` to ``xxResults`.
+- Removed property `Statistics` from `AnalyzeActionsResult` as it is not currently returned by the service even if the user passes `IncludeStatistics  = true`.
+- Removed property `StringIndexType` from `TextAnalyticsRequestOptions`. This SDK will keep using `UTF-16` code unit as the default encoding.
+- Removed type `ExtractKeyPhrasesOptions` and respective exposure.
+- Removed type `RecognizeEntitiesOptions` and respective exposure.
+- Removed type `RecognizeLinkedEntitiesOptions` and respective exposure.
+
+## 5.1.0-beta.7 (2021-05-18)
+### New features
+- Added property `DisableServiceLogs` to `TextAnalyticsRequestOptions`.
+- Added support for Sentiment Analysis as an action type for `StartAnalyzeBatchActions`.
+- Changed type of `IncludeOpinionMining` to `bool?`.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `3.1-preview.5`.
+- Renamed type `TextElementsV8` to `TextElementV8` in model `StringIndexType`.
 
 ## 5.1.0-beta.6 (2021-04-06)
 ### New features
@@ -21,7 +100,7 @@
 - `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
 - Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
 - Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
-- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainity` and `EntityConditionality`.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainty` and `EntityConditionality`.
 - Added new types under `HealthcareRelationType` class.
 
 ### Breaking changes
@@ -145,7 +224,7 @@
 - `CharacterCount` in `TextDocumentStatistics` has been renamed to `GraphemeCount`.
 - Unified `DocumentSentimentLabel` and `SentenceSentimentLabel` into `TextSentiment`.
 - `SentimentConfidenceScorePerLabel` renamed to `SentimentConfidenceScores`.
-- Extensible ENUM `SubCategory` has been deleted and managed as a string trhought the code.
+- Extensible ENUM `SubCategory` has been deleted and managed as a string throughout the code.
 - `Score` has been renamed to `ConfidenceScore` for types `CategorizedEntity`, `LinkedEntityMatch`, and `PiiEntity`.
 
 ### New Features
@@ -157,7 +236,7 @@
 - The `TextAnalyticsError` model has been simplified to an object with properties `Code`, `Message`, and `Target`.
 - To use an API key as the credential for authenticating the client, a new credential class `TextAnalyticsApiKeyCredential("<api_key>")` must be passed in for the credential parameter.
 Passing the API key as a string is no longer supported.
-- Reference to `subcription key` changed to `API key`.
+- Reference to `subscription key` changed to `API key`.
 - `DetectLanguages` has been renamed to `DetectLanguage`. Same applies for `DetectLanguagesAsync` to `DetectLanguageAsync`.
 - All batch overload methods have been renamed by adding the suffix `Batch` or `BatchAsync` accordingly. For example, instead of `AnalyzeSentimentAsync` now we have `AnalyzeSentimentBatchAsync`.
 - Added a new parameter `TextAnalyticsRequestOptions` options to batch method overloads accepting a list of documents for allowing the users to opt for batch operation statistics.
@@ -180,12 +259,12 @@ Credential class `TextAnalyticsApiKeyCredential` provides an `UpdateCredential()
 
 ### Fixes and improvements
 A new `HasError` property has added to `<document>Collection` types to allow you to check if an operation on a particular document succeeded or failed.
-If you try to access a result attribute where the operation was unsuccesful, an `InvalidOperationException` is raised with a custom error message that provides information about the error.
+If you try to access a result attribute where the operation was unsuccessful, an `InvalidOperationException` is raised with a custom error message that provides information about the error.
 
 ## 1.0.0-preview.1 (2020-01-09)
 This is the first preview of the `Azure.AI.TextAnalytics` client library. It is not a direct replacement for `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`, as applications currently using that library would require code changes to use `Azure.AI.TextAnalytics`.
 
-This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md) and [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples) demonstrate the new API.
+This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md) and [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples) demonstrate the new API.
 
 
 ### Major changes from `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`

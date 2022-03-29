@@ -83,5 +83,10 @@ namespace Microsoft.Azure.Management.Confluent
         /// </summary>
         IOrganizationOperationsOperations Organization { get; }
 
+        /// <summary>
+        /// Gets the IValidationsOperations.
+        /// </summary>
+        IValidationsOperations Validations { get; }
+
     }
 }

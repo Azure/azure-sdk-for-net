@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -23,6 +25,7 @@ namespace Azure.Communication.Chat
             }
 
             Content = content;
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Chat message content. </summary>
@@ -31,5 +34,7 @@ namespace Azure.Communication.Chat
         public string SenderDisplayName { get; set; }
         /// <summary> The chat message type. </summary>
         public ChatMessageType? Type { get; set; }
+        /// <summary> Message metadata. </summary>
+        public IDictionary<string, string> Metadata { get; }
     }
 }

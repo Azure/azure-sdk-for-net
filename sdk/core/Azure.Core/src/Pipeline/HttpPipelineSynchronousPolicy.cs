@@ -49,7 +49,7 @@ namespace Azure.Core.Pipeline
 
             if (!_hasOnReceivedResponse)
             {
-                // If OnReceivedResponse was not overriden we can avoid creating a state machine and return the task directly
+                // If OnReceivedResponse was not overridden we can avoid creating a state machine and return the task directly
                 OnSendingRequest(message);
                 return ProcessNextAsync(message, pipeline);
             }

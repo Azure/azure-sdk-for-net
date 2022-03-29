@@ -44,6 +44,12 @@ namespace Azure.IoT.TimeSeriesInsights
         public TimeSeriesId TimeSeriesId { get; }
 
         /// <summary>
+        /// This represents the type that this instance belongs to. Never null.
+        /// </summary>
+        [CodeGenMember("TypeId")]
+        public string TimeSeriesTypeId { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of TimeSeriesInstance.
         /// </summary>
         /// <param name="timeSeriesId">
@@ -54,12 +60,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// This represents the type that this instance belongs to. Never null.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="timeSeriesId"/> or <paramref name="typeId"/> is null.
+        /// <paramref name="typeId"/> is null.
         /// </exception>
         public TimeSeriesInstance(TimeSeriesId timeSeriesId, string typeId)
         {
-            TimeSeriesId = timeSeriesId ?? throw new ArgumentNullException(nameof(timeSeriesId));
-            TypeId = typeId ?? throw new ArgumentNullException(nameof(typeId));
+            TimeSeriesTypeId = typeId ?? throw new ArgumentNullException(nameof(typeId));
+            TimeSeriesId = timeSeriesId;
             HierarchyIds = new ChangeTrackingList<string>();
             InstanceFields = new ChangeTrackingDictionary<string, object>();
         }
@@ -91,7 +97,7 @@ namespace Azure.IoT.TimeSeriesInsights
             IDictionary<string, object> instanceFields)
         {
             TimeSeriesId = timeSeriesId;
-            TypeId = typeId;
+            TimeSeriesTypeId = typeId;
             Name = name;
             Description = description;
             HierarchyIds = hierarchyIds;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -20,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("endTime");
             writer.WriteStringValue(EndTime, "O");
             writer.WritePropertyName("timeMode");
-            writer.WriteStringValue(TimeMode.ToString());
+            writer.WriteStringValue(TimeMode.ToSerialString());
             writer.WriteEndObject();
         }
     }

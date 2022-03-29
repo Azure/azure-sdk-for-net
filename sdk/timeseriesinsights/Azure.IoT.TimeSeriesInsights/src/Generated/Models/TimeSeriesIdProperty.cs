@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.IoT.TimeSeriesInsights.Models;
-
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> A definition of a single property that can be used in time series ID properties defined during environment creation. </summary>
@@ -17,18 +15,9 @@ namespace Azure.IoT.TimeSeriesInsights
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesIdProperty. </summary>
-        /// <param name="name"> The name of the property. </param>
-        /// <param name="type"> The type of the property. Currently, only &quot;String&quot; is supported. </param>
-        internal TimeSeriesIdProperty(string name, TimeSeriesIdPropertyTypes? type)
-        {
-            Name = name;
-            Type = type;
-        }
-
         /// <summary> The name of the property. </summary>
         public string Name { get; }
         /// <summary> The type of the property. Currently, only &quot;String&quot; is supported. </summary>
-        public TimeSeriesIdPropertyTypes? Type { get; }
+        public TimeSeriesIdPropertyType? Type { get; }
     }
 }

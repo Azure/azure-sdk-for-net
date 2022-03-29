@@ -28,11 +28,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The date and time, in UTC, in which this alert entry has been created.
         /// </summary>
-        public DateTimeOffset CreatedTime { get; }
+        [CodeGenMember("CreatedTime")]
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
         /// The date and time, in UTC, in which this alert entry has been modified for the last time.
         /// </summary>
-        public DateTimeOffset ModifiedTime { get; }
+        [CodeGenMember("ModifiedTime")]
+        public DateTimeOffset LastModified { get; }
     }
 }

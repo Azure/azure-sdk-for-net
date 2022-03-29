@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,9 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
     internal partial class GalleryImageVersionList
     {
         /// <summary> Initializes a new instance of GalleryImageVersionList. </summary>
-        /// <param name="value"> A list of gallery Image Versions. </param>
+        /// <param name="value"> A list of gallery image versions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GalleryImageVersionList(IEnumerable<GalleryImageVersion> value)
+        internal GalleryImageVersionList(IEnumerable<GalleryImageVersionData> value)
         {
             if (value == null)
             {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of GalleryImageVersionList. </summary>
-        /// <param name="value"> A list of gallery Image Versions. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of gallery Image Versions. Call ListNext() with this to fetch the next page of gallery Image Versions. </param>
-        internal GalleryImageVersionList(IReadOnlyList<GalleryImageVersion> value, string nextLink)
+        /// <param name="value"> A list of gallery image versions. </param>
+        /// <param name="nextLink"> The uri to fetch the next page of gallery image versions. Call ListNext() with this to fetch the next page of gallery image versions. </param>
+        internal GalleryImageVersionList(IReadOnlyList<GalleryImageVersionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of gallery Image Versions. </summary>
-        public IReadOnlyList<GalleryImageVersion> Value { get; }
-        /// <summary> The uri to fetch the next page of gallery Image Versions. Call ListNext() with this to fetch the next page of gallery Image Versions. </summary>
+        /// <summary> A list of gallery image versions. </summary>
+        public IReadOnlyList<GalleryImageVersionData> Value { get; }
+        /// <summary> The uri to fetch the next page of gallery image versions. Call ListNext() with this to fetch the next page of gallery image versions. </summary>
         public string NextLink { get; }
     }
 }

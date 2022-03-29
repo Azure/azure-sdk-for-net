@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ExtensionsTimeBudget))
+            {
+                writer.WritePropertyName("extensionsTimeBudget");
+                writer.WriteStringValue(ExtensionsTimeBudget);
+            }
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineScaleSetExtensionProfile DeserializeVirtualMachineScaleSetExtensionProfile(JsonElement element)
         {
-            Optional<IList<VirtualMachineScaleSetExtension>> extensions = default;
+            Optional<IList<VirtualMachineScaleSetExtensionData>> extensions = default;
+            Optional<string> extensionsTimeBudget = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensions"))
@@ -41,16 +48,21 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineScaleSetExtension> array = new List<VirtualMachineScaleSetExtension>();
+                    List<VirtualMachineScaleSetExtensionData> array = new List<VirtualMachineScaleSetExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetExtension.DeserializeVirtualMachineScaleSetExtension(item));
+                        array.Add(VirtualMachineScaleSetExtensionData.DeserializeVirtualMachineScaleSetExtensionData(item));
                     }
                     extensions = array;
                     continue;
                 }
+                if (property.NameEquals("extensionsTimeBudget"))
+                {
+                    extensionsTimeBudget = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetExtensionProfile(Optional.ToList(extensions));
+            return new VirtualMachineScaleSetExtensionProfile(Optional.ToList(extensions), extensionsTimeBudget.Value);
         }
     }
 }

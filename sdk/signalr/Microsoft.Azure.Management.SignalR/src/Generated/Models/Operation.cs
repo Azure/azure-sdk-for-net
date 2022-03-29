@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// REST API operation supported by SignalR resource provider.
+    /// REST API operation supported by resource provider.
     /// </summary>
     public partial class Operation
     {

@@ -2,25 +2,30 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus.Amqp;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    [Category(TestCategory.Live)]
-    [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
+    [LiveOnly(true)]
+    public abstract class ServiceBusLiveTestBase : LiveTestBase<ServiceBusTestEnvironment>
     {
-        public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
+        private const int DefaultTryTimeout = 10;
 
-        protected ServiceBusClient CreateNoRetryClient()
+        protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
+
+        protected ServiceBusClient CreateNoRetryClient(int tryTimeout = DefaultTryTimeout)
         {
             var options =
                 new ServiceBusClientOptions
                 {
                     RetryOptions = new ServiceBusRetryOptions
                     {
-                        TryTimeout = TimeSpan.FromSeconds(10),
+                        TryTimeout = TimeSpan.FromSeconds(tryTimeout),
                         MaxRetries = 0
                     }
                 };
@@ -29,19 +34,57 @@ namespace Azure.Messaging.ServiceBus.Tests
                 options);
         }
 
-        protected ServiceBusClient CreateClient(int tryTimeout = 15)
+        protected ServiceBusClient CreateClient(int tryTimeout = DefaultTryTimeout)
         {
-            var retryOptions = new ServiceBusRetryOptions();
-            if (tryTimeout != default)
-            {
-                retryOptions.TryTimeout = TimeSpan.FromSeconds(tryTimeout);
-            }
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
+            var options =
                 new ServiceBusClientOptions
                 {
-                    RetryOptions = retryOptions
-                });
+                    RetryOptions = new ServiceBusRetryOptions
+                    {
+                        TryTimeout = TimeSpan.FromSeconds(tryTimeout),
+                    }
+                };
+            return new ServiceBusClient(
+                TestEnvironment.ServiceBusConnectionString,
+                options);
+        }
+
+        protected static async Task SendMessagesAsync(
+            ServiceBusClient client,
+            string entityPath,
+            int numberOfMessages)
+        {
+            await using var sender = client.CreateSender(entityPath);
+
+            var batch = default(ServiceBusMessageBatch);
+
+            while (numberOfMessages > 0)
+            {
+                batch ??= await sender.CreateMessageBatchAsync();
+
+                while ((numberOfMessages > 0) && (batch.TryAddMessage(new ServiceBusMessage(Guid.NewGuid().ToString()))))
+                {
+                    --numberOfMessages;
+                }
+
+                await sender.SendMessagesAsync(batch);
+
+                batch.Dispose();
+                batch = default;
+            }
+        }
+
+        protected static void SimulateNetworkFailure(ServiceBusClient client)
+        {
+            var amqpClient = client.Connection.InnerClient;
+            AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
+                "ConnectionScope",
+                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(amqpClient);
+            ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
+                "ActiveConnection",
+                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
+
+            typeof(AmqpConnection).GetMethod("AbortInternal", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(activeConnection, null);
         }
     }
 }

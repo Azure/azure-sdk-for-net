@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     {
         public const string Java8 = "Java_8";
         public const string Java11 = "Java_11";
+        public const string Java17 = "Java_17";
         public const string NetCore31 = "NetCore_31";
     }
 }

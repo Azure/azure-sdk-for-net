@@ -37,13 +37,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="location">Resource location</param>
+        /// <param name="extendedLocation">Resource extended location.</param>
         /// <param name="tags">Resource tags</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
+            ExtendedLocation = extendedLocation;
             Tags = tags;
             CustomInit();
         }
@@ -76,6 +78,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource extended location.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags

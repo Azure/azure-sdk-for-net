@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The effective network security group association. </summary>
@@ -16,17 +19,41 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupAssociation. </summary>
+        /// <param name="networkManager"> The ID of the Azure network manager if assigned. </param>
         /// <param name="subnet"> The ID of the subnet if assigned. </param>
         /// <param name="networkInterface"> The ID of the network interface if assigned. </param>
-        internal EffectiveNetworkSecurityGroupAssociation(SubResource subnet, SubResource networkInterface)
+        internal EffectiveNetworkSecurityGroupAssociation(WritableSubResource networkManager, WritableSubResource subnet, WritableSubResource networkInterface)
         {
+            NetworkManager = networkManager;
             Subnet = subnet;
             NetworkInterface = networkInterface;
         }
 
+        /// <summary> The ID of the Azure network manager if assigned. </summary>
+        internal WritableSubResource NetworkManager { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkManagerId
+        {
+            get => NetworkManager.Id;
+            set => NetworkManager.Id = value;
+        }
+
         /// <summary> The ID of the subnet if assigned. </summary>
-        public SubResource Subnet { get; }
+        internal WritableSubResource Subnet { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet.Id;
+            set => Subnet.Id = value;
+        }
+
         /// <summary> The ID of the network interface if assigned. </summary>
-        public SubResource NetworkInterface { get; }
+        internal WritableSubResource NetworkInterface { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkInterfaceId
+        {
+            get => NetworkInterface.Id;
+            set => NetworkInterface.Id = value;
+        }
     }
 }

@@ -17,30 +17,30 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMetricSeriesDataOptions"/> class.
         /// </summary>
-        /// <param name="startTime">Filters the result. Only data points ingested from this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only data points ingested up to this point in time, in UTC, will be returned.</param>
-        public GetMetricSeriesDataOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="startsOn">Filters the result. Only data points ingested from this point in time, in UTC, will be returned.</param>
+        /// <param name="endsOn">Filters the result. Only data points ingested up to this point in time, in UTC, will be returned.</param>
+        public GetMetricSeriesDataOptions(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
-            SeriesToFilter = new ChangeTrackingList<DimensionKey>();
-            StartTime = startTime;
-            EndTime = endTime;
+            SeriesKeys = new ChangeTrackingList<DimensionKey>();
+            StartsOn = startsOn;
+            EndsOn = endsOn;
         }
 
         /// <summary>
-        /// Only time series with the specified series keys will be returned. These keys uniquely identify
-        /// a time series within a metric. Every dimension contained in the associated <see cref="DataFeed"/>
-        /// must be assigned a value.
+        /// Filters the result by time series. Each element in this list represents a single time series, and only
+        /// anomalies detected in one of these series will be returned. For every element, all possible dimensions
+        /// must be set.
         /// </summary>
-        public ICollection<DimensionKey> SeriesToFilter { get; }
+        public IList<DimensionKey> SeriesKeys { get; }
 
         /// <summary>
         /// Filters the result. Only data points ingested from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary>
         /// Filters the result. Only data points ingested up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndsOn { get; }
     }
 }

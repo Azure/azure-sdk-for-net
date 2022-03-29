@@ -1,0 +1,13 @@
+trigger: none
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    EnvVars:
+      CONVERSATIONS_KEY: $(clu-key)
+      CONVERSATIONS_PROJECT: antischOne
+      CONVERSATIONS_URI: $(clu-uri)
+      QUESTIONANSWERING_KEY: $(qna-key)
+      QUESTIONANSWERING_PROJECT: 190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c
+      QUESTIONANSWERING_ENDPOINT: $(qna-uri)
+    ServiceDirectory: cognitivelanguage

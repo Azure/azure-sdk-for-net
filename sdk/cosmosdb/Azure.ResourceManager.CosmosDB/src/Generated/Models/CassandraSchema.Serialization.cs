@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraSchema DeserializeCassandraSchema(JsonElement element)
         {
-            Optional<IList<Column>> columns = default;
+            Optional<IList<CassandraColumn>> columns = default;
             Optional<IList<CassandraPartitionKey>> partitionKeys = default;
             Optional<IList<ClusterKey>> clusterKeys = default;
             foreach (var property in element.EnumerateObject())
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Column> array = new List<Column>();
+                    List<CassandraColumn> array = new List<CassandraColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Column.DeserializeColumn(item));
+                        array.Add(CassandraColumn.DeserializeCassandraColumn(item));
                     }
                     columns = array;
                     continue;

@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
+        [LiveOnly]
         public async Task SimpleIndexing()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -157,6 +157,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [LiveOnly]
         public async Task BufferedSender()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -167,6 +168,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Simple
                 {
+                    searchClient = GetOriginal(searchClient);
+
                     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender1
                     await using SearchIndexingBufferedSender<Product> indexer =
                         new SearchIndexingBufferedSender<Product>(searchClient);

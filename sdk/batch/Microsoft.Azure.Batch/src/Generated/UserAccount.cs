@@ -92,6 +92,14 @@ namespace Microsoft.Azure.Batch
             this.WindowsUserConfiguration = windowsUserConfiguration;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="UserAccount"/> class.
+        /// </summary>
+        protected UserAccount()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal UserAccount(Models.UserAccount protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

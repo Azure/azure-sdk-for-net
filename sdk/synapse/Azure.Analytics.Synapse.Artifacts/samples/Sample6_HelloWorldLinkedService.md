@@ -4,7 +4,6 @@ string endpoint = "<my-endpoint-url>";
 
 // Replace the string below with your actual datalake endpoint url.
 string dataLakeEndpoint = "<my-datalake-url>";
-
 string serviceName = "Test-LinkedService";
 ```
 
@@ -32,5 +31,5 @@ foreach (LinkedServiceResource linkedService in linkedServices)
 
 ```C# Snippet:DeleteLinkedService
 LinkedServiceDeleteLinkedServiceOperation deleteLinkedServiceOperation = client.StartDeleteLinkedService(serviceName);
-await deleteLinkedServiceOperation.WaitForCompletionAsync();
+await deleteLinkedServiceOperation.WaitForCompletionResponseAsync();
 ```

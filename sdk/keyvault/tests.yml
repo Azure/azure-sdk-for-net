@@ -5,7 +5,8 @@ extends:
   parameters:
     ServiceDirectory: keyvault
     MaxParallel: 5
-    TimeoutInMinutes: 180
+    TimeoutInMinutes: 240
+    SupportedClouds: 'Public,UsGov,China,Canary'
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
@@ -14,6 +15,14 @@ extends:
         Location: 'eastus2euap'
         # Managed HSM test resources are expensive and provisioning has not been reliable.
         # Given test coverage of non-canary regions we probably don't need to test in canary.
+        MatrixFilters:
+         - ArmTemplateParameters=^(?!.*enableHsm.*true)
+      UsGov:
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        MatrixFilters:
+         - ArmTemplateParameters=^(?!.*enableHsm.*true)
+      China:
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
         MatrixFilters:
          - ArmTemplateParameters=^(?!.*enableHsm.*true)
     AdditionalMatrixConfigs:

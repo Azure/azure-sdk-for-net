@@ -51,12 +51,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureFunctionLinkedService(object functionAppUrl, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase functionKey = default(SecretBase), object encryptedCredential = default(object))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        /// <param name="resourceId">Allowed token audiences for azure
+        /// function.</param>
+        /// <param name="authentication">Type of authentication (Required to
+        /// specify MSI) used to connect to AzureFunction. Type: string (or
+        /// Expression with resultType string).</param>
+        public AzureFunctionLinkedService(object functionAppUrl, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase functionKey = default(SecretBase), object encryptedCredential = default(object), CredentialReference credential = default(CredentialReference), object resourceId = default(object), object authentication = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             FunctionAppUrl = functionAppUrl;
             FunctionKey = functionKey;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
+            ResourceId = resourceId;
+            Authentication = authentication;
             CustomInit();
         }
 
@@ -87,6 +97,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object EncryptedCredential { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
+        /// Gets or sets allowed token audiences for azure function.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.resourceId")]
+        public object ResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of authentication (Required to specify MSI) used
+        /// to connect to AzureFunction. Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.authentication")]
+        public object Authentication { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -98,6 +129,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (FunctionAppUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FunctionAppUrl");
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }

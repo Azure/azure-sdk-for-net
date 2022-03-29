@@ -3,7 +3,8 @@ trigger: none
 resources:
   containers:
     - container: 'ubuntu_netcore_keyring'
-      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:689585'
+      # See ./eng/containers/UbuntuNetCoreKeyring/Dockerfile for tool versions
+      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:1347171'
       endpoint: 'azsdkengsys'
       options: -ti --cap-add=IPC_LOCK
 
@@ -17,6 +18,7 @@ extends:
         Selection: sparse
         GenerateContainerJobs: true
     ServiceDirectory: identity
+    SupportedClouds: 'Public,UsGov,China,Canary'
     PreSteps:
       - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
         displayName: Install Azure PowerShell module

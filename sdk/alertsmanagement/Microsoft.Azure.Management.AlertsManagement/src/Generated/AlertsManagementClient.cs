@@ -52,11 +52,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// client API version
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -75,6 +70,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IAlertProcessingRulesOperations.
+        /// </summary>
+        public virtual IAlertProcessingRulesOperations AlertProcessingRules { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -88,11 +88,6 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// Gets the ISmartGroupsOperations.
         /// </summary>
         public virtual ISmartGroupsOperations SmartGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the IActionRulesOperations.
-        /// </summary>
-        public virtual IActionRulesOperations ActionRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AlertsManagementClient class.
@@ -335,12 +330,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// </summary>
         private void Initialize()
         {
+            AlertProcessingRules = new AlertProcessingRulesOperations(this);
             Operations = new Operations(this);
             Alerts = new AlertsOperations(this);
             SmartGroups = new SmartGroupsOperations(this);
-            ActionRules = new ActionRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-05-05-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -370,8 +364,10 @@ namespace Microsoft.Azure.Management.AlertsManagement
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ActionRuleProperties>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ActionRuleProperties>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Recurrence>("recurrenceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Recurrence>("recurrenceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Action>("actionType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Action>("actionType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AlertsMetaDataProperties>("metadataIdentifier"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AlertsMetaDataProperties>("metadataIdentifier"));
             CustomInitialize();

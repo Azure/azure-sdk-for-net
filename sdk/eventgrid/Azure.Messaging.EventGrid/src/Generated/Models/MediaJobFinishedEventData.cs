@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Job finished event data. </summary>
+    /// <summary> Job finished event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobFinished event. </summary>
     public partial class MediaJobFinishedEventData : MediaJobStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobFinishedEventData. </summary>

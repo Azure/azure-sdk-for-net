@@ -16,7 +16,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class DiagnosticTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "glfeokti")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -45,7 +45,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var credentials = new Dictionary<string, string>();
                     credentials.Add("instrumentationKey", applicationInsightsGuid.ToString());
 
-                    var loggerCreateParameters = new LoggerContract(LoggerType.ApplicationInsights, credentials);
+                    var loggerCreateParameters = new LoggerContract(LoggerType.ApplicationInsights, credentials: credentials);
                     var loggerContract = await testBase.client.Logger.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,

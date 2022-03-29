@@ -56,8 +56,7 @@ namespace NetApp.Tests.ResourceTests
 
                 // create a volume, get all and check
                 var resource = ResourceUtils.CreateVolume(netAppMgmtClient);
-                Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), resource.ExportPolicy.ToString());
-                Assert.Null(resource.Tags);
+                Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), resource.ExportPolicy.ToString());                
                 // check DP properties exist but unassigned because
                 // dataprotection volume was not created
                 Assert.Null(resource.VolumeType);
@@ -284,6 +283,42 @@ namespace NetApp.Tests.ResourceTests
                 var response = netAppMgmtClient.NetAppResource.CheckNameAvailability(ResourceUtils.location, ResourceUtils.accountName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccounts, ResourceUtils.resourceGroup);
                 Assert.True(response.IsAvailable);
 
+                // now check file path availability                
+                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, ResourceUtils.subnetId);
+                Assert.True(response.IsAvailable);
+
+                // create the volume
+                var volume = ResourceUtils.CreateVolume(netAppMgmtClient);
+
+                // check volume resource name - should be unavailable after its creation
+                var resourceName = ResourceUtils.accountName1 + '/' + ResourceUtils.poolName1 + '/' + ResourceUtils.volumeName1;
+
+                response = netAppMgmtClient.NetAppResource.CheckNameAvailability(ResourceUtils.location, resourceName, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
+                Assert.False(response.IsAvailable);
+
+                // now check file path availability again
+                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, ResourceUtils.subnetId);
+                Assert.False(response.IsAvailable);
+
+                // clean up
+                ResourceUtils.DeleteVolume(netAppMgmtClient);
+                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
+            }
+        }
+
+        [Fact]
+        public void CheckAvailabilityPre2021_04()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // check account resource name - should be available
+                var response = netAppMgmtClient.NetAppResource.CheckNameAvailability(ResourceUtils.location, ResourceUtils.accountName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccounts, ResourceUtils.resourceGroup);
+                Assert.True(response.IsAvailable);
+
                 // now check file path availability
                 response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
                 Assert.True(response.IsAvailable);
@@ -356,8 +391,7 @@ namespace NetApp.Tests.ResourceTests
                 Assert.Equal("Premium", volume.ServiceLevel);
                 Assert.Equal(100 * ResourceUtils.gibibyte, volume.UsageThreshold);
                 Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), volume.ExportPolicy.ToString());
-                Assert.Null(volume.Tags);
-
+                
                 // create a volume with tags and export policy
                 var dict = new Dictionary<string, string>();
                 dict.Add("Tag2", "Value2");
@@ -604,21 +638,102 @@ namespace NetApp.Tests.ResourceTests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                //get list of volumnes                
-                var volumesPage = netAppMgmtClient.Volumes.List("sara-systemic", "Sara-Systemic-NA", "Sara-Systemic-CP");
-                // Get all resources by polling on next page link
-                var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
-                var volumesList = new List<Volume>();
 
-                foreach (var volume in volumeResponseList)
+                //Create 100 volumes
+                var createdVolumes = new List<string>();
+                int length = 103;
+                try
                 {
-                    volumesList.Add(volume);
+                    long setPoolSize = 11*ResourceUtils.tebibyte;
+                    ResourceUtils.CreateVolume(netAppMgmtClient, poolSize: setPoolSize);
+                    createdVolumes.Add(ResourceUtils.volumeName1);
+                    for (int i = 0; i < length-1; i++)
+                    {                        
+                        ResourceUtils.CreateVolume(netAppMgmtClient, $"{ResourceUtils.volumeName1}-{i}", volumeOnly: true);
+                        createdVolumes.Add($"{ResourceUtils.volumeName1}-{i}");
+                    }
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record") 
+                    {
+                        Thread.Sleep(30000);
+                    }
+
+                    //get list of volumnes                
+                    var volumesPage = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                    // Get all resources by polling on next page link
+                    var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
+                    Assert.Equal(length, volumeResponseList.Count);
+
+                    // cleanup                    
+                    foreach(var volumeName in createdVolumes)
+                    {
+                        ResourceUtils.DeleteVolume(netAppMgmtClient, volumeName: volumeName);
+                        if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                        {
+                            Thread.Sleep(10000);
+                        }
+                    }
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                    {
+                        Thread.Sleep(30000);
+                    }
+                }   
+                catch (CloudException cex)
+                {
+                    if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                    {
+                        Thread.Sleep(30000);
+                    }
+                    string ble = cex.Message;
+                    //get list of volumnes                
+                    var volumesPage = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                    // Get all resources by polling on next page link
+                    var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);
+
+                    foreach (var volume in volumeResponseList)
+                    {
+                        string volumeName = volume.Name.Split(@"/").Last();
+                        try
+                        {
+                            ResourceUtils.DeleteVolume(netAppMgmtClient, volumeName: volumeName);
+                        }
+                        catch
+                        {                            
+                        }
+                    }
+                }
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
                 }
 
-                Assert.Equal(166, volumesList.Count());
-
+                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
         }
+
+        //[Fact]
+        //public void CleanLongListVolumes()
+        //{
+        //    HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+        //    using (MockContext context = MockContext.Start(this.GetType()))
+        //    {
+        //        var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                
+        //        //get list of volumes                
+        //        var volumesPage = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+        //        // Get all resources by polling on next page link
+        //        var volumeResponseList = ListNextLink<Volume>.GetAllResourcesByPollingNextLink(volumesPage, netAppMgmtClient.Volumes.ListNext);               
+
+        //        foreach (var volume in volumeResponseList)
+        //        {
+        //            var volumeName = volume.Name.Split('/').Last();
+        //            ResourceUtils.DeleteVolume(netAppMgmtClient, resourceGroup: ResourceUtils.resourceGroup, accountName: ResourceUtils.accountName1, poolName: ResourceUtils.poolName1, volumeName: volumeName);
+        //        }
+
+        //        ResourceUtils.DeletePool(netAppMgmtClient);
+        //        ResourceUtils.DeleteAccount(netAppMgmtClient);
+        //    }
+        //}
 
         private static string GetSessionsDirectoryPath()
         {

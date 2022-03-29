@@ -92,6 +92,34 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
+            if (Name != null)
+            {
+                if (Name.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 256);
+                }
+            }
+            if (City != null)
+            {
+                if (City.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "City", 256);
+                }
+            }
+            if (District != null)
+            {
+                if (District.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "District", 256);
+                }
+            }
+            if (CountryOrRegion != null)
+            {
+                if (CountryOrRegion.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "CountryOrRegion", 256);
+                }
+            }
         }
     }
 }

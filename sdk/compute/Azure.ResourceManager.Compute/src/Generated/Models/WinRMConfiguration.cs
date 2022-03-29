@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes Windows Remote Management configuration of the VM. </summary>
-    public partial class WinRMConfiguration
+    internal partial class WinRMConfiguration
     {
         /// <summary> Initializes a new instance of WinRMConfiguration. </summary>
         public WinRMConfiguration()

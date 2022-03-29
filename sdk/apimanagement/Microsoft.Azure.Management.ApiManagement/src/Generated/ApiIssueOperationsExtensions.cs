@@ -300,9 +300,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch)
+            public static IssueContract Update(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, apiId, issueId, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, apiId, issueId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -336,9 +336,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IssueContract> UpdateAsync(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, issueId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, issueId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

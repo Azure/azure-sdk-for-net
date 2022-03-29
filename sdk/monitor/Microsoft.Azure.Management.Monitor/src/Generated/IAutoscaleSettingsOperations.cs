@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Lists the autoscale settings for a resource group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Creates or updates an autoscale setting.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='autoscaleSettingName'>
         /// The autoscale setting name.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Deletes and autoscale setting
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='autoscaleSettingName'>
         /// The autoscale setting name.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets an autoscale setting
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='autoscaleSettingName'>
         /// The autoscale setting name.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// fields use the CreateOrUpdate method.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='autoscaleSettingName'>
         /// The autoscale setting name.

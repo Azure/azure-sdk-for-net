@@ -18,37 +18,74 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataFlowName))
+            if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("dataFlowName");
-                writer.WriteStringValue(DataFlowName);
+                writer.WritePropertyName("computeType");
+                writer.WriteStringValue(ComputeType);
             }
-            if (Optional.IsDefined(ExistingClusterId))
+            if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("existingClusterId");
-                writer.WriteStringValue(ExistingClusterId);
+                writer.WritePropertyName("coreCount");
+                writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(ClusterTimeout))
+            if (Optional.IsDefined(TimeToLive))
             {
-                writer.WritePropertyName("clusterTimeout");
-                writer.WriteNumberValue(ClusterTimeout.Value);
+                writer.WritePropertyName("timeToLive");
+                writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (Optional.IsDefined(NewClusterName))
+            if (Optional.IsDefined(IntegrationRuntime))
             {
-                writer.WritePropertyName("newClusterName");
-                writer.WriteStringValue(NewClusterName);
-            }
-            if (Optional.IsDefined(NewClusterNodeType))
-            {
-                writer.WritePropertyName("newClusterNodeType");
-                writer.WriteStringValue(NewClusterNodeType);
-            }
-            if (Optional.IsDefined(DataBricksLinkedService))
-            {
-                writer.WritePropertyName("dataBricksLinkedService");
-                writer.WriteObjectValue(DataBricksLinkedService);
+                writer.WritePropertyName("integrationRuntime");
+                writer.WriteObjectValue(IntegrationRuntime);
             }
             writer.WriteEndObject();
+        }
+
+        internal static CreateDataFlowDebugSessionRequest DeserializeCreateDataFlowDebugSessionRequest(JsonElement element)
+        {
+            Optional<string> computeType = default;
+            Optional<int> coreCount = default;
+            Optional<int> timeToLive = default;
+            Optional<IntegrationRuntimeDebugResource> integrationRuntime = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("computeType"))
+                {
+                    computeType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("coreCount"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    coreCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("timeToLive"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    timeToLive = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("integrationRuntime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    integrationRuntime = IntegrationRuntimeDebugResource.DeserializeIntegrationRuntimeDebugResource(property.Value);
+                    continue;
+                }
+            }
+            return new CreateDataFlowDebugSessionRequest(computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), integrationRuntime.Value);
         }
 
         internal partial class CreateDataFlowDebugSessionRequestConverter : JsonConverter<CreateDataFlowDebugSessionRequest>
@@ -59,7 +96,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override CreateDataFlowDebugSessionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCreateDataFlowDebugSessionRequest(document.RootElement);
             }
         }
     }

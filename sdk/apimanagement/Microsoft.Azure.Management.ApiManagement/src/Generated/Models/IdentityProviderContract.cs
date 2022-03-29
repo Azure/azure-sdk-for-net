@@ -37,10 +37,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="clientId">Client Id of the Application in the external
         /// Identity Provider. It is App ID for Facebook login, Client ID for
         /// Google login, App ID for Microsoft.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="identityProviderContractType">Identity Provider Type
         /// identifier. Possible values include: 'facebook', 'google',
         /// 'microsoft', 'twitter', 'aad', 'aadB2C'</param>
@@ -171,6 +173,55 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (ClientId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClientId");
+            }
+            if (AllowedTenants != null)
+            {
+                if (AllowedTenants.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "AllowedTenants", 32);
+                }
+            }
+            if (SignupPolicyName != null)
+            {
+                if (SignupPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SignupPolicyName", 1);
+                }
+            }
+            if (SigninPolicyName != null)
+            {
+                if (SigninPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SigninPolicyName", 1);
+                }
+            }
+            if (ProfileEditingPolicyName != null)
+            {
+                if (ProfileEditingPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ProfileEditingPolicyName", 1);
+                }
+            }
+            if (PasswordResetPolicyName != null)
+            {
+                if (PasswordResetPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "PasswordResetPolicyName", 1);
+                }
+            }
+            if (ClientId != null)
+            {
+                if (ClientId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ClientId", 1);
+                }
+            }
+            if (ClientSecret != null)
+            {
+                if (ClientSecret.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ClientSecret", 1);
+                }
             }
         }
     }

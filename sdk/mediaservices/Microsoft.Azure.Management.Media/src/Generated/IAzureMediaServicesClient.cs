@@ -69,11 +69,6 @@ namespace Microsoft.Azure.Management.Media
 
 
         /// <summary>
-        /// Gets the IAccountFiltersOperations.
-        /// </summary>
-        IAccountFiltersOperations AccountFilters { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
@@ -97,6 +92,11 @@ namespace Microsoft.Azure.Management.Media
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
+
+        /// <summary>
+        /// Gets the IAccountFiltersOperations.
+        /// </summary>
+        IAccountFiltersOperations AccountFilters { get; }
 
         /// <summary>
         /// Gets the IAssetsOperations.

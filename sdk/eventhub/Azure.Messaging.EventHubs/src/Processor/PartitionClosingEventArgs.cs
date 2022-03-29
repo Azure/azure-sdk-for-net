@@ -25,8 +25,16 @@ namespace Azure.Messaging.EventHubs.Processor
         public ProcessingStoppedReason Reason { get; }
 
         /// <summary>
-        ///   A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        ///   A <see cref="System.Threading.CancellationToken"/> to indicate that the processor is requesting that the
+        ///   handler stop its activities.  If this token is requesting cancellation, then the processor is attempting
+        ///   to shutdown.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   The handler for closing has responsibility for deciding whether or not to honor
+        ///   the cancellation request.  If the application chooses not to do so, the processor will wait for the
+        ///   handler to complete before taking further action.
+        /// </remarks>
         ///
         public CancellationToken CancellationToken { get; }
 

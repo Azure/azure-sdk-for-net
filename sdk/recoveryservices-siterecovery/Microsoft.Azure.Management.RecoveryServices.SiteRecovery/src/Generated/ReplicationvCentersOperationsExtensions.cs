@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the details of a vCenter.
             /// </summary>
             /// <remarks>
-            /// Gets the details of a registered vCenter server(Add vCenter server.)
+            /// Gets the details of a registered vCenter server(Add vCenter server).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -73,19 +73,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
-            public static VCenter Get(this IReplicationvCentersOperations operations, string fabricName, string vCenterName)
+            public static VCenter Get(this IReplicationvCentersOperations operations, string fabricName, string vcenterName)
             {
-                return operations.GetAsync(fabricName, vCenterName).GetAwaiter().GetResult();
+                return operations.GetAsync(fabricName, vcenterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Gets the details of a vCenter.
             /// </summary>
             /// <remarks>
-            /// Gets the details of a registered vCenter server(Add vCenter server.)
+            /// Gets the details of a registered vCenter server(Add vCenter server).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,15 +93,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VCenter> GetAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VCenter> GetAsync(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(fabricName, vCenterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(fabricName, vcenterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -119,15 +119,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='addVCenterRequest'>
             /// The input to the add vCenter operation.
             /// </param>
-            public static VCenter Create(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest)
+            public static VCenter Create(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, AddVCenterRequest addVCenterRequest)
             {
-                return operations.CreateAsync(fabricName, vCenterName, addVCenterRequest).GetAwaiter().GetResult();
+                return operations.CreateAsync(fabricName, vcenterName, addVCenterRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -142,8 +142,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='addVCenterRequest'>
             /// The input to the add vCenter operation.
@@ -151,16 +151,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VCenter> CreateAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VCenter> CreateAsync(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, AddVCenterRequest addVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(fabricName, vCenterName, addVCenterRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(fabricName, vcenterName, addVCenterRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Remove vCenter operation.
+            /// Remove vcenter operation.
             /// </summary>
             /// <remarks>
             /// The operation to remove(unregister) a registered vCenter server from the
@@ -172,16 +172,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
-            public static void Delete(this IReplicationvCentersOperations operations, string fabricName, string vCenterName)
+            public static void Delete(this IReplicationvCentersOperations operations, string fabricName, string vcenterName)
             {
-                operations.DeleteAsync(fabricName, vCenterName).GetAwaiter().GetResult();
+                operations.DeleteAsync(fabricName, vcenterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Remove vCenter operation.
+            /// Remove vcenter operation.
             /// </summary>
             /// <remarks>
             /// The operation to remove(unregister) a registered vCenter server from the
@@ -193,15 +193,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(fabricName, vCenterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(fabricName, vcenterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -216,15 +216,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='updateVCenterRequest'>
             /// The input to the update vCenter operation.
             /// </param>
-            public static VCenter Update(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest)
+            public static VCenter Update(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, UpdateVCenterRequest updateVCenterRequest)
             {
-                return operations.UpdateAsync(fabricName, vCenterName, updateVCenterRequest).GetAwaiter().GetResult();
+                return operations.UpdateAsync(fabricName, vcenterName, updateVCenterRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -239,8 +239,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='updateVCenterRequest'>
             /// The input to the update vCenter operation.
@@ -248,9 +248,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VCenter> UpdateAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VCenter> UpdateAsync(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, UpdateVCenterRequest updateVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(fabricName, vCenterName, updateVCenterRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(fabricName, vcenterName, updateVCenterRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -302,15 +302,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='addVCenterRequest'>
             /// The input to the add vCenter operation.
             /// </param>
-            public static VCenter BeginCreate(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest)
+            public static VCenter BeginCreate(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, AddVCenterRequest addVCenterRequest)
             {
-                return operations.BeginCreateAsync(fabricName, vCenterName, addVCenterRequest).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(fabricName, vcenterName, addVCenterRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -325,8 +325,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='addVCenterRequest'>
             /// The input to the add vCenter operation.
@@ -334,16 +334,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VCenter> BeginCreateAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VCenter> BeginCreateAsync(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, AddVCenterRequest addVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(fabricName, vCenterName, addVCenterRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(fabricName, vcenterName, addVCenterRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Remove vCenter operation.
+            /// Remove vcenter operation.
             /// </summary>
             /// <remarks>
             /// The operation to remove(unregister) a registered vCenter server from the
@@ -355,16 +355,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
-            public static void BeginDelete(this IReplicationvCentersOperations operations, string fabricName, string vCenterName)
+            public static void BeginDelete(this IReplicationvCentersOperations operations, string fabricName, string vcenterName)
             {
-                operations.BeginDeleteAsync(fabricName, vCenterName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(fabricName, vcenterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Remove vCenter operation.
+            /// Remove vcenter operation.
             /// </summary>
             /// <remarks>
             /// The operation to remove(unregister) a registered vCenter server from the
@@ -376,15 +376,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name.
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(fabricName, vCenterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(fabricName, vcenterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -399,15 +399,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='updateVCenterRequest'>
             /// The input to the update vCenter operation.
             /// </param>
-            public static VCenter BeginUpdate(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest)
+            public static VCenter BeginUpdate(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, UpdateVCenterRequest updateVCenterRequest)
             {
-                return operations.BeginUpdateAsync(fabricName, vCenterName, updateVCenterRequest).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(fabricName, vcenterName, updateVCenterRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -422,8 +422,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='fabricName'>
             /// Fabric name.
             /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name
+            /// <param name='vcenterName'>
+            /// vcenter name.
             /// </param>
             /// <param name='updateVCenterRequest'>
             /// The input to the update vCenter operation.
@@ -431,9 +431,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VCenter> BeginUpdateAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VCenter> BeginUpdateAsync(this IReplicationvCentersOperations operations, string fabricName, string vcenterName, UpdateVCenterRequest updateVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(fabricName, vCenterName, updateVCenterRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(fabricName, vcenterName, updateVCenterRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

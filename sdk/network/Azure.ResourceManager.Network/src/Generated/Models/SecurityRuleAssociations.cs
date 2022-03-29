@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SecurityRuleAssociations. </summary>
         internal SecurityRuleAssociations()
         {
-            DefaultSecurityRules = new ChangeTrackingList<SecurityRule>();
+            DefaultSecurityRules = new ChangeTrackingList<SecurityRuleData>();
             EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
         }
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnetAssociation"> Subnet and it&apos;s custom security rules. </param>
         /// <param name="defaultSecurityRules"> Collection of default security rules of the network security group. </param>
         /// <param name="effectiveSecurityRules"> Collection of effective security rules. </param>
-        internal SecurityRuleAssociations(NetworkInterfaceAssociation networkInterfaceAssociation, SubnetAssociation subnetAssociation, IReadOnlyList<SecurityRule> defaultSecurityRules, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules)
+        internal SecurityRuleAssociations(NetworkInterfaceAssociation networkInterfaceAssociation, SubnetAssociation subnetAssociation, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules)
         {
             NetworkInterfaceAssociation = networkInterfaceAssociation;
             SubnetAssociation = subnetAssociation;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Subnet and it&apos;s custom security rules. </summary>
         public SubnetAssociation SubnetAssociation { get; }
         /// <summary> Collection of default security rules of the network security group. </summary>
-        public IReadOnlyList<SecurityRule> DefaultSecurityRules { get; }
+        public IReadOnlyList<SecurityRuleData> DefaultSecurityRules { get; }
         /// <summary> Collection of effective security rules. </summary>
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }
     }

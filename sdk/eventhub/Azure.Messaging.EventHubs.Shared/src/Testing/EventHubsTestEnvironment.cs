@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The name of the environment variable used to specify an override for the Event Hub instance to use for all tests.</summary>
         private const string EventHubNameOverrideEnvironmentVariable = "EVENTHUB_OVERRIDE_EVENT_HUB_NAME";
 
-        /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.</summary>
+        /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk of not responding.</summary>
         private const int DefaultPerTestExecutionLimitMinutes = 5;
 
         /// <summary>The singleton instance of the <see cref="EventHubsTestEnvironment" />, lazily created.</summary>
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The active Event Hubs namespace for this test run, lazily created.</summary>
         private readonly Lazy<NamespaceProperties> ActiveEventHubsNamespace;
 
-        /// <summary> The environment variable value, or default, for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung, lazily evaluated.</summary>
+        /// <summary>The environment variable value, or default, for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk of not responding, lazily evaluated.</summary>
         private readonly Lazy<TimeSpan> ActivePerTestExecutionLimit;
 
         /// <summary>The connection string for the active Event Hubs namespace for this test run, lazily created.</summary>
@@ -50,16 +50,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public static EventHubsTestEnvironment Instance => Singleton.Value;
 
         /// <summary>
-        ///   Indicates whether or not an ephemeral namespace was created for the current test execution.
-        /// </summary>
-        ///
-        /// <value><c>true</c> if an Event Hubs namespace should be removed after the current test run; otherwise, <c>false</c>.</value>
-        ///
-        public bool ShouldRemoveNamespaceAfterTestRunCompletion => (ActiveEventHubsNamespace.IsValueCreated && ActiveEventHubsNamespace.Value.ShouldRemoveAtCompletion);
-
-        /// <summary>
         ///   The environment variable value, or default, for the maximum duration, in minutes,
-        ///   that a single test is permitted to run before it is considered at-risk for being hung.
+        ///   that a single test is permitted to run before it is considered at-risk of not responding.
         /// </summary>
         ///
         public TimeSpan TestExecutionTimeLimit => ActivePerTestExecutionLimit.Value;
@@ -114,12 +106,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public string SharedAccessKey => ParsedConnectionString.Value.SharedAccessKey;
 
         /// <summary>
-        ///   The Azure Authority host to be used for authentication with the active cloud environment.
-        /// </summary>
-        ///
-        public new string AuthorityHostUrl => base.AuthorityHostUrl ?? "https://login.microsoftonline.com/";
-
-        /// <summary>
         ///   The Azure Service Management endpoint to be used for management plane authentication with the active cloud environment.
         /// </summary>
         ///
@@ -165,34 +151,24 @@ namespace Azure.Messaging.EventHubs.Tests
         public string BuildConnectionStringForEventHub(string eventHubName) => $"{ EventHubsConnectionString };EntityPath={ eventHubName }";
 
         /// <summary>
-        ///   Ensures that an Event Hubs namespace is available for the test run, using one if provided by the
-        ///   <see cref="EventHubsNamespaceConnectionStringEnvironmentVariable" /> or creating a new Azure resource specific
-        ///   to the current run.
+        ///   Ensures that an Event Hubs namespace is available for the test run and captures its properties.
         /// </summary>
         ///
         /// <returns>The active Event Hubs namespace for this test run.</returns>
         ///
         private NamespaceProperties EnsureEventHubsNamespace()
         {
-            var environmentConnectionString = GetOptionalVariable(EventHubsNamespaceConnectionStringEnvironmentVariable);
+            // The call to "GetVariable" will validate the environment variable and bootstrap
+            // test resource creation if needed.
 
-            if (!string.IsNullOrEmpty(environmentConnectionString))
-            {
-                var parsed = EventHubsConnectionStringProperties.Parse(environmentConnectionString);
+            var environmentConnectionString = GetVariable(EventHubsNamespaceConnectionStringEnvironmentVariable);
+            var parsed = EventHubsConnectionStringProperties.Parse(environmentConnectionString);
 
-                return new NamespaceProperties
-                (
-                    parsed.FullyQualifiedNamespace.Substring(0, parsed.FullyQualifiedNamespace.IndexOf('.')),
-                    environmentConnectionString.Replace($";EntityPath={ parsed.EventHubName }", string.Empty),
-                    shouldRemoveAtCompletion: false
-                );
-            }
-
-            return Task
-                .Run(async () => await EventHubScope.CreateNamespaceAsync().ConfigureAwait(false))
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+            return new NamespaceProperties
+            (
+                parsed.FullyQualifiedNamespace.Substring(0, parsed.FullyQualifiedNamespace.IndexOf('.')),
+                environmentConnectionString.Replace($";EntityPath={ parsed.EventHubName }", string.Empty)
+            );
         }
 
         /// <summary>
@@ -208,24 +184,17 @@ namespace Azure.Messaging.EventHubs.Tests
             /// <summary>The connection string to use for accessing the dynamically created namespace.</summary>
             public readonly string ConnectionString;
 
-            /// <summary>A flag indicating if the namespace was created or referenced from environment variables.</summary>
-            public readonly bool ShouldRemoveAtCompletion;
-
             /// <summary>
             ///   Initializes a new instance of the <see cref="NamespaceProperties"/> struct.
             /// </summary>
             ///
             /// <param name="name">The name of the namespace.</param>
             /// <param name="connectionString">The connection string to use for accessing the namespace.</param>
-            /// <param name="shouldRemoveAtCompletion">A flag indicating if the namespace should be removed when the test run has completed.</param>
-            ///
             internal NamespaceProperties(string name,
-                                         string connectionString,
-                                         bool shouldRemoveAtCompletion)
+                                         string connectionString)
             {
                 Name = name;
                 ConnectionString = connectionString;
-                ShouldRemoveAtCompletion = shouldRemoveAtCompletion;
             }
         }
     }

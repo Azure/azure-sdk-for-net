@@ -30,9 +30,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Initializes a new instance of the PeriodicModeBackupPolicy class.
         /// </summary>
+        /// <param name="migrationState">The object representing the state of
+        /// the migration between the backup policies.</param>
         /// <param name="periodicModeProperties">Configuration values for
         /// periodic mode backup</param>
-        public PeriodicModeBackupPolicy(PeriodicModeProperties periodicModeProperties = default(PeriodicModeProperties))
+        public PeriodicModeBackupPolicy(BackupPolicyMigrationState migrationState = default(BackupPolicyMigrationState), PeriodicModeProperties periodicModeProperties = default(PeriodicModeProperties))
+            : base(migrationState)
         {
             PeriodicModeProperties = periodicModeProperties;
             CustomInit();

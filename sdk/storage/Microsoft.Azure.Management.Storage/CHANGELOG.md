@@ -1,5 +1,63 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 24.0.0
+- Upgrade to rest api version 2021-09-01.
+- Support create/update Storage account with new property dnsEndpointType.
+- Support Storage account new access tier Premium.
+- Support Storage account new readonly property storageAccountSkuConversionStatus.
+- Support Storage account new readonly property Encryption.KeyVaultProperties.CurrentVersionedKeyExpirationTimestamp.
+- Support ManagementPolicy action condition daysAfterCreationGreaterThan on base blob.
+- Support ManagementPolicy action condition daysAfterLastTierChangeTimeGreaterThan, only apply to tierToArchive action.
+- Support Blob service new property DeleteRetentionPolicy.AllowPermanentDelete.
+- Support CORS rule AllowedMethods Patch. 
+- Support table new property SignedIdentifiers.
+- Support output BlobInventoryPolicySchema property Destination which can be input from old API version.
+- Support blob inventory new filter IncludeDeleted, ExcludePrefix.
+- Support blob inventory new blob SchemaFields: Tags, Etag, ContentType, ContentEncoding, ContentLanguage, ContentCRC64, CacheControl, ContentDisposition, LeaseStatus, LeaseState, LeaseDuration, ServerEncrypted, Deleted, DeletionId, DeletedTime, RemainingRetentionDays, ImmutabilityPolicyUntilDate, ImmutabilityPolicyMode, LegalHold, CopyId, CopyStatus, CopySource, CopyProgress, CopyCompletionTime, CopyStatusDescription, CustomerProvidedKeySha256, RehydratePriority, ArchiveStatus, XmsBlobSequenceNumber, EncryptionScope, IncrementalCopy, TagCount.
+- Support blob inventory new container SchemaFields: Etag, DefaultEncryptionScope, DenyEncryptionScopeOverride, ImmutableStorageWithVersioningEnabled, Deleted, Version, DeletedTime, RemainingRetentionDays.
+
+**Breaking changes**
+
+- StorageManagementClient.LocalUsers.List() output type change from LocalUsers to IEnumerable<LocalUser>.
+
+### Changes in 23.1.0
+- Upgrade to rest api version 2021-08-01.
+- Support create/update Storage account with enable/disable Sftp and Localuser.
+- Support CreateOrUpdate/Delete/Get/List/ListKeys/RegeneratePassword on Storage account local users.
+- Support create/update account with AllowedCopyScope.
+- Support create/update account with 2 new ActiveDirectoryProperties: samAccountName, accountType.
+- Support create/update account with new EncryptionIdentity: FederatedIdentityClientId.
+
+### Changes in 23.0.0
+- Upgrade to rest api version 2021-06-01.
+- Support Storage account HierarchicalNamespace migration.
+- Support create/update Storage account with enable/disable PublicNetworkAccess.
+- Support create/update account with ImmutableStorageWithVersioning.
+- Support create/update account with defaultToOAuthAuthentication.
+- Support blob Inventory new schema fields: AccessTierInferred and Tags.
+- Support create/update Blob Container with enableNfsV3RootSquash and enableNfsV3AllSquash.
+- Support AllowProtectedAppendWritesAll in set container ImmutabilityPolicy and set container LegalHold.
+
+**Breaking changes**
+
+- Remove StorageFileDataSmbShareOwner from Microsoft.Azure.Management.Storage.Models.DefaultSharePermission.
+- In StorageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(), StorageManagementClient.BlobContainers.ExtendImmutabilityPolicy(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.ImmutabilityPolicy, to input all ImmutabilityPolicy properties, and remove 2 parameters to input ImmutabilityPolicy properties: immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites.
+- In Microsoft.Azure.Management.Storage.Models.AccessPolicy, rename Start to StartTime, Expiry to ExpiryTime.
+
+### Changes in 22.0.0
+- Upgrade to rest api version 2021-04-01.
+- Support File Share lease and delete share with leased share snapshots.
+- Support File Share access policy
+- Support Blob Container with ImmutableStorageWithVersioning enabled.
+- Support new account property AllowCrossTenantReplication
+- Support DefaultSharePermission
+- Support Blob Inventory GA policy
+
+**Breaking changes**
+
+- BlobInventoryPolicySchema property Destination is removed, and Destination is added to BlobInventoryPolicyRule.
+- Following Enum are removed: PutSharesExpand, GetShareExpand, ListSharesExpand. Need to input the expand string in Put/Get/List file share API according to the parameter description.
+
 ### Changes in 21.0.0
 
 **Breaking changes**

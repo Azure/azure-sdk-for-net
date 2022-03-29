@@ -7,26 +7,27 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The ListQueueServices. </summary>
-    public partial class ListQueueServices
+    internal partial class ListQueueServices
     {
         /// <summary> Initializes a new instance of ListQueueServices. </summary>
         internal ListQueueServices()
         {
-            Value = new ChangeTrackingList<QueueServiceProperties>();
+            Value = new ChangeTrackingList<QueueServiceData>();
         }
 
         /// <summary> Initializes a new instance of ListQueueServices. </summary>
         /// <param name="value"> List of queue services returned. </param>
-        internal ListQueueServices(IReadOnlyList<QueueServiceProperties> value)
+        internal ListQueueServices(IReadOnlyList<QueueServiceData> value)
         {
             Value = value;
         }
 
         /// <summary> List of queue services returned. </summary>
-        public IReadOnlyList<QueueServiceProperties> Value { get; }
+        public IReadOnlyList<QueueServiceData> Value { get; }
     }
 }

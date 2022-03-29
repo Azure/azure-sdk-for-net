@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='type'>
             /// The Type of the resource.
             /// </param>
-            public static CheckSkuAvailabilityResultList CheckSkuAvailability(this ICognitiveServicesManagementClient operations, string location, IList<string> skus, string kind, string type)
+            public static SkuAvailabilityListResult CheckSkuAvailability(this ICognitiveServicesManagementClient operations, string location, IList<string> skus, string kind, string type)
             {
                 return operations.CheckSkuAvailabilityAsync(location, skus, kind, type).GetAwaiter().GetResult();
             }
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckSkuAvailabilityResultList> CheckSkuAvailabilityAsync(this ICognitiveServicesManagementClient operations, string location, IList<string> skus, string kind, string type, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SkuAvailabilityListResult> CheckSkuAvailabilityAsync(this ICognitiveServicesManagementClient operations, string location, IList<string> skus, string kind, string type, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckSkuAvailabilityWithHttpMessagesAsync(location, skus, kind, type, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -87,9 +87,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='type'>
             /// The Type of the resource.
             /// </param>
-            public static CheckDomainAvailabilityResult CheckDomainAvailability(this ICognitiveServicesManagementClient operations, string subdomainName, string type)
+            /// <param name='kind'>
+            /// The Kind of the resource.
+            /// </param>
+            public static DomainAvailability CheckDomainAvailability(this ICognitiveServicesManagementClient operations, string subdomainName, string type, string kind = default(string))
             {
-                return operations.CheckDomainAvailabilityAsync(subdomainName, type).GetAwaiter().GetResult();
+                return operations.CheckDomainAvailabilityAsync(subdomainName, type, kind).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,12 +107,15 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='type'>
             /// The Type of the resource.
             /// </param>
+            /// <param name='kind'>
+            /// The Kind of the resource.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckDomainAvailabilityResult> CheckDomainAvailabilityAsync(this ICognitiveServicesManagementClient operations, string subdomainName, string type, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainAvailability> CheckDomainAvailabilityAsync(this ICognitiveServicesManagementClient operations, string subdomainName, string type, string kind = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckDomainAvailabilityWithHttpMessagesAsync(subdomainName, type, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckDomainAvailabilityWithHttpMessagesAsync(subdomainName, type, kind, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

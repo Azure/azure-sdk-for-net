@@ -55,7 +55,7 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddOptions<QueuesOptions>()
                 .Configure<IHostingEnvironment>((options, env) =>
                 {
-                    if (env.IsDevelopment())
+                    if (env.IsDevelopment() && options.MaxPollingInterval == QueuePollingIntervals.DefaultMaximum)
                     {
                         options.MaxPollingInterval = TimeSpan.FromSeconds(2);
                     }

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -41,27 +42,27 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool");
-                writer.WriteObjectValue(BackendAddressPool);
+                JsonSerializer.Serialize(writer, BackendAddressPool);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings");
-                writer.WriteObjectValue(BackendHttpSettings);
+                JsonSerializer.Serialize(writer, BackendHttpSettings);
             }
             if (Optional.IsDefined(RedirectConfiguration))
             {
                 writer.WritePropertyName("redirectConfiguration");
-                writer.WriteObjectValue(RedirectConfiguration);
+                JsonSerializer.Serialize(writer, RedirectConfiguration);
             }
             if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet");
-                writer.WriteObjectValue(RewriteRuleSet);
+                JsonSerializer.Serialize(writer, RewriteRuleSet);
             }
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy");
-                writer.WriteObjectValue(FirewallPolicy);
+                JsonSerializer.Serialize(writer, FirewallPolicy);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -74,12 +75,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> id = default;
             Optional<IList<string>> paths = default;
-            Optional<SubResource> backendAddressPool = default;
-            Optional<SubResource> backendHttpSettings = default;
-            Optional<SubResource> redirectConfiguration = default;
-            Optional<SubResource> rewriteRuleSet = default;
+            Optional<WritableSubResource> backendAddressPool = default;
+            Optional<WritableSubResource> backendHttpSettings = default;
+            Optional<WritableSubResource> redirectConfiguration = default;
+            Optional<WritableSubResource> rewriteRuleSet = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<SubResource> firewallPolicy = default;
+            Optional<WritableSubResource> firewallPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendAddressPool = DeserializeSubResource(property0.Value);
+                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("backendHttpSettings"))
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendHttpSettings = DeserializeSubResource(property0.Value);
+                            backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("redirectConfiguration"))
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            redirectConfiguration = DeserializeSubResource(property0.Value);
+                            redirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("rewriteRuleSet"))
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            rewriteRuleSet = DeserializeSubResource(property0.Value);
+                            rewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -183,14 +184,14 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallPolicy = DeserializeSubResource(property0.Value);
+                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayPathRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(paths), backendAddressPool.Value, backendHttpSettings.Value, redirectConfiguration.Value, rewriteRuleSet.Value, Optional.ToNullable(provisioningState), firewallPolicy.Value);
+            return new ApplicationGatewayPathRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(paths), backendAddressPool, backendHttpSettings, redirectConfiguration, rewriteRuleSet, Optional.ToNullable(provisioningState), firewallPolicy);
         }
     }
 }

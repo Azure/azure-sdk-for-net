@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.ContainerService
     public partial interface IOperations
     {
         /// <summary>
-        /// Gets a list of compute operations.
+        /// Gets a list of operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

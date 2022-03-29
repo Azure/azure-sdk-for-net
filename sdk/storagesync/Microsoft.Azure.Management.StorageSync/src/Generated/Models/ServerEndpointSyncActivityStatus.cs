@@ -40,7 +40,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// available)</param>
         /// <param name="appliedBytes">Applied bytes</param>
         /// <param name="totalBytes">Total bytes (if available)</param>
-        public ServerEndpointSyncActivityStatus(System.DateTime? timestamp = default(System.DateTime?), long? perItemErrorCount = default(long?), long? appliedItemCount = default(long?), long? totalItemCount = default(long?), long? appliedBytes = default(long?), long? totalBytes = default(long?))
+        /// <param name="syncMode">Sync mode. Possible values include:
+        /// 'Regular', 'NamespaceDownload', 'InitialUpload', 'SnapshotUpload',
+        /// 'InitialFullDownload'</param>
+        /// <param name="sessionMinutesRemaining">Session minutes remaining (if
+        /// available)</param>
+        public ServerEndpointSyncActivityStatus(System.DateTime? timestamp = default(System.DateTime?), long? perItemErrorCount = default(long?), long? appliedItemCount = default(long?), long? totalItemCount = default(long?), long? appliedBytes = default(long?), long? totalBytes = default(long?), string syncMode = default(string), int? sessionMinutesRemaining = default(int?))
         {
             Timestamp = timestamp;
             PerItemErrorCount = perItemErrorCount;
@@ -48,6 +53,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             TotalItemCount = totalItemCount;
             AppliedBytes = appliedBytes;
             TotalBytes = totalBytes;
+            SyncMode = syncMode;
+            SessionMinutesRemaining = sessionMinutesRemaining;
             CustomInit();
         }
 
@@ -93,6 +100,20 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public long? TotalBytes { get; private set; }
 
         /// <summary>
+        /// Gets sync mode. Possible values include: 'Regular',
+        /// 'NamespaceDownload', 'InitialUpload', 'SnapshotUpload',
+        /// 'InitialFullDownload'
+        /// </summary>
+        [JsonProperty(PropertyName = "syncMode")]
+        public string SyncMode { get; private set; }
+
+        /// <summary>
+        /// Gets session minutes remaining (if available)
+        /// </summary>
+        [JsonProperty(PropertyName = "sessionMinutesRemaining")]
+        public int? SessionMinutesRemaining { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -119,6 +140,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             if (TotalBytes < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "TotalBytes", 0);
+            }
+            if (SessionMinutesRemaining < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "SessionMinutesRemaining", 0);
             }
         }
     }

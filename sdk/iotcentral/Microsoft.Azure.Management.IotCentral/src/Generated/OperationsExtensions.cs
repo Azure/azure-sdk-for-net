@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.IotCentral
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available IoT Central application REST API operations.
+            /// Lists all of the available IoT Central Resource Provider operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.IotCentral
             }
 
             /// <summary>
-            /// Lists all of the available IoT Central application REST API operations.
+            /// Lists all of the available IoT Central Resource Provider operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.IotCentral
             }
 
             /// <summary>
-            /// Lists all of the available IoT Central application REST API operations.
+            /// Lists all of the available IoT Central Resource Provider operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.IotCentral
             }
 
             /// <summary>
-            /// Lists all of the available IoT Central application REST API operations.
+            /// Lists all of the available IoT Central Resource Provider operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

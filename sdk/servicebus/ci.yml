@@ -3,7 +3,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -17,7 +16,6 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -34,6 +32,7 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: servicebus
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.ServiceBus

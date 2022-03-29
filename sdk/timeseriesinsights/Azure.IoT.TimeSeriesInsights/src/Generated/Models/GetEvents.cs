@@ -13,14 +13,14 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Get Events query. Allows to retrieve raw events for a given Time Series ID and search span. </summary>
-    public partial class GetEvents
+    internal partial class GetEvents
     {
         /// <summary> The range of time on which the query is executed. Cannot be null. </summary>
         public DateTimeRange SearchSpan { get; }
         /// <summary> Optional top-level filter for the query which will be applied to all the variables in the query. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;.  Can be null. </summary>
         public TimeSeriesExpression Filter { get; set; }
         /// <summary> Projected properties is an array of properties which you want to project. These properties must appear in the events; otherwise, they are not returned. </summary>
-        public IList<EventProperty> ProjectedProperties { get; }
+        public IList<TimeSeriesInsightsEventProperty> ProjectedProperties { get; }
         /// <summary> Maximum number of property values in the whole response set, not the maximum number of property values per page. Defaults to 10,000 when not set. Maximum value of take can be 250,000. </summary>
         public int? Take { get; set; }
     }

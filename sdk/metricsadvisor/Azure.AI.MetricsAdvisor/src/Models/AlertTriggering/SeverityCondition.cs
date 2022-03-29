@@ -6,15 +6,15 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Sets a range of severity levels in which an anomaly must be to be able to trigger alerts.
+    /// Sets a range of severity levels in which an anomaly must be to be included in an alert.
     /// </summary>
     public partial class SeverityCondition
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SeverityCondition"/> class.
         /// </summary>
-        /// <param name="minimumAlertSeverity">The minimum severity an anomaly must have to trigger alerts.</param>
-        /// <param name="maximumAlertSeverity">The maximum severity an anomaly must have to trigger alerts.</param>
+        /// <param name="minimumAlertSeverity">The minimum severity an anomaly must have to be included in an alert.</param>
+        /// <param name="maximumAlertSeverity">The maximum severity an anomaly must have to be included in an alert.</param>
         public SeverityCondition(AnomalySeverity minimumAlertSeverity, AnomalySeverity maximumAlertSeverity)
         {
             MinimumAlertSeverity = minimumAlertSeverity;
@@ -22,13 +22,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The minimum severity an anomaly must have to be able to trigger alerts.
+        /// The minimum severity an anomaly must have to be included in an alert.
         /// </summary>
         [CodeGenMember("MinAlertSeverity")]
         public AnomalySeverity MinimumAlertSeverity { get; set; }
 
         /// <summary>
-        /// The maximum severity an anomaly must have to be able to trigger alerts.
+        /// The maximum severity an anomaly must have to be included in an alert
         /// </summary>
         [CodeGenMember("MaxAlertSeverity")]
         public AnomalySeverity MaximumAlertSeverity { get; set; }

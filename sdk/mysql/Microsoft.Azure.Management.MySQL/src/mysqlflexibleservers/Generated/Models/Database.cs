@@ -32,19 +32,22 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <summary>
         /// Initializes a new instance of the Database class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="charset">The charset of the database.</param>
         /// <param name="collation">The collation of the database.</param>
-        public Database(string id = default(string), string name = default(string), string type = default(string), string charset = default(string), string collation = default(string))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Database(string id = default(string), string name = default(string), string type = default(string), string charset = default(string), string collation = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Charset = charset;
             Collation = collation;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -64,6 +67,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.collation")]
         public string Collation { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

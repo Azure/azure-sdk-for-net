@@ -57,12 +57,12 @@ namespace Azure.IoT.Hub.Service
         /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created device identity and the http response <see cref="Response{T}"/>.</returns>
-        /// <code snippet="Snippet:IotHubCreateDeviceIdentity">
+        /// <code snippet="Snippet:IotHubCreateDeviceIdentity" language="csharp">
         /// Response&lt;DeviceIdentity&gt; response = await IoTHubServiceClient.Devices.CreateOrUpdateIdentityAsync(deviceIdentity);
         ///
         /// SampleLogger.PrintSuccess($&quot;Successfully create a new device identity with Id: &apos;{response.Value.DeviceId}&apos;, ETag: &apos;{response.Value.Etag}&apos;&quot;);
         /// </code>
-        /// <code snippet="Snippet:IotHubUpdateDeviceIdentity">
+        /// <code snippet="Snippet:IotHubUpdateDeviceIdentity" language="csharp">
         /// Response&lt;DeviceIdentity&gt; getResponse = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
         ///
         /// DeviceIdentity deviceIdentity = getResponse.Value;
@@ -113,7 +113,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity to get.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The retrieved device identity and the http response <see cref="Response{T}"/>.</returns>
-        /// <code snippet="Snippet:IotHubGetDeviceIdentity">
+        /// <code snippet="Snippet:IotHubGetDeviceIdentity" language="csharp">
         /// Response&lt;DeviceIdentity&gt; response = await IoTHubServiceClient.Devices.GetIdentityAsync(deviceId);
         ///
         /// DeviceIdentity deviceIdentity = response.Value;
@@ -143,7 +143,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="precondition">The condition on which to delete the device.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
-        /// <code snippet="Snippet:IotHubDeleteDeviceIdentity">
+        /// <code snippet="Snippet:IotHubDeleteDeviceIdentity" language="csharp">
         /// Response response = await IoTHubServiceClient.Devices.DeleteIdentityAsync(deviceIdentity);
         ///
         /// SampleLogger.PrintSuccess($&quot;Successfully deleted device identity with Id: &apos;{deviceIdentity.DeviceId}&apos;&quot;);
@@ -421,7 +421,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="deviceId">The unique identifier of the device identity to get the twin of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The device's twin, including reported properties and desired properties and the http response <see cref="Response{T}"/>.</returns>
-        /// <code snippet="Snippet:IotHubGetDeviceTwin">
+        /// <code snippet="Snippet:IotHubGetDeviceTwin" language="csharp">
         /// Response&lt;TwinData&gt; response = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
         ///
         /// SampleLogger.PrintSuccess($&quot;\t- Device Twin: DeviceId: &apos;{response.Value.DeviceId}&apos;, Status: &apos;{response.Value.Status}&apos;, ETag: &apos;{response.Value.Etag}&apos;&quot;);
@@ -449,7 +449,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="precondition">The condition for which this operation will execute.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The new representation of the device twin and the http response <see cref="Response{T}"/>.</returns>
-        /// <code snippet="Snippet:IotHubUpdateDeviceTwin">
+        /// <code snippet="Snippet:IotHubUpdateDeviceTwin" language="csharp">
         /// Response&lt;TwinData&gt; getResponse = await IoTHubServiceClient.Devices.GetTwinAsync(deviceId);
         /// TwinData deviceTwin = getResponse.Value;
         ///

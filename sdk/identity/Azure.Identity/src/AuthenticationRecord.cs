@@ -14,6 +14,7 @@ namespace Azure.Identity
     /// <summary>
     /// Account information relating to an authentication request.
     /// </summary>
+    /// <seealso cref="TokenCachePersistenceOptions"/>.
     public class AuthenticationRecord
     {
         internal const string CurrentVersion = "1.0";

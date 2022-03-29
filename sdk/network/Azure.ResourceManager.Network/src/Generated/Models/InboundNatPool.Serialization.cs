@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration");
-                writer.WriteObjectValue(FrontendIPConfiguration);
+                JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> type = default;
             Optional<string> id = default;
-            Optional<SubResource> frontendIPConfiguration = default;
+            Optional<WritableSubResource> frontendIPConfiguration = default;
             Optional<TransportProtocol> protocol = default;
             Optional<int> frontendPortRangeStart = default;
             Optional<int> frontendPortRangeEnd = default;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            frontendIPConfiguration = DeserializeSubResource(property0.Value);
+                            frontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("protocol"))
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new InboundNatPool(id.Value, name.Value, etag.Value, type.Value, frontendIPConfiguration.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
+            return new InboundNatPool(id.Value, name.Value, etag.Value, type.Value, frontendIPConfiguration, Optional.ToNullable(protocol), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
         }
     }
 }

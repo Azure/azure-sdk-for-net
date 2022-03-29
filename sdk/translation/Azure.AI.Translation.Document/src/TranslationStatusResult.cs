@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
@@ -10,14 +11,17 @@ namespace Azure.AI.Translation.Document
     /// <summary>
     /// Status information about the translation operation.
     /// </summary>
-    [CodeGenModel("BatchStatusDetail")]
+    [CodeGenModel("TranslationStatus")]
     public partial class TranslationStatusResult
     {
+        [CodeGenMember("Error")]
+        private readonly JsonElement _error;
+
         /// <summary>
         /// Id of the translation operation.
         /// </summary>
         [CodeGenMember("Id")]
-        public string TranslationId { get; }
+        public string Id { get; }
 
         /// <summary>
         /// The date time when the translation operation was created.
@@ -57,20 +61,19 @@ namespace Azure.AI.Translation.Document
         public int DocumentsNotStarted => Summary.NotYetStarted;
 
         /// <summary>
-        /// Number of documents cancelled.
+        /// Number of documents canceled.
         /// </summary>
-        public int DocumentsCancelled => Summary.Cancelled;
+        public int DocumentsCanceled => Summary.Cancelled;
 
         /// <summary>
         /// Total characters charged by the Document Translation service
         /// </summary>
         public long TotalCharactersCharged => Summary.TotalCharacterCharged;
 
-        /// <summary> Returns true if the translation operation is completed. </summary>
-        public bool HasCompleted => Status == TranslationStatus.Succeeded
-                                    || Status == TranslationStatus.Failed
-                                    || Status == TranslationStatus.Cancelled
-                                    || Status == TranslationStatus.ValidationFailed;
+        /// <summary>
+        /// This contains an outer error with the error code, message, details, target and an inner error with more descriptive details.
+        /// </summary>
+        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
 
         /// <summary> The Status Summary of the operation. </summary>
         [CodeGenMember("Summary")]

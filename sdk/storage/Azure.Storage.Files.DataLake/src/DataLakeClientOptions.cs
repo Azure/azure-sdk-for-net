@@ -6,13 +6,14 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
     /// Provides the client configuration options for connecting to Azure Data Lake service.
     /// </summary>
-    public class DataLakeClientOptions : ClientOptions
+    public class DataLakeClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -65,7 +66,32 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// The 2020-08-14 service version.
             /// </summary>
-            V2020_08_04 = 7
+            V2020_08_04 = 7,
+
+            /// <summary>
+            /// The 2020-10-02 service version.
+            /// </summary>
+            V2020_10_02 = 8,
+
+            /// <summary>
+            /// The 2020-12-06 service version.
+            /// </summary>
+            V2020_12_06 = 9,
+
+            /// <summary>
+            /// The 2021-02-12 service version.
+            /// </summary>
+            V2021_02_12 = 10,
+
+            /// <summary>
+            /// The 2021-04-10 serivce version.
+            /// </summary>
+            V2021_04_10 = 11,
+
+            /// <summary>
+            /// The 2021-06-08 service version.
+            /// </summary>
+            V2021_06_08 = 12
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -76,6 +102,11 @@ namespace Azure.Storage.Files.DataLake
         /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
+        /// </summary>
+        public DataLakeCustomerProvidedKey? CustomerProvidedKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeClientOptions"/>
@@ -112,6 +143,9 @@ namespace Azure.Storage.Files.DataLake
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <inheritdoc />
+        public bool EnableTenantDiscovery { get; set; }
 
         /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>

@@ -32,15 +32,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// HyperVReplicaAzureApplyRecoveryPointInput class.
         /// </summary>
-        /// <param name="vaultLocation">The vault location where the recovery
-        /// Vm resides.</param>
         /// <param name="primaryKekCertificatePfx">The primary kek certificate
         /// pfx.</param>
         /// <param name="secondaryKekCertificatePfx">The secondary kek
         /// certificate pfx.</param>
-        public HyperVReplicaAzureApplyRecoveryPointInput(string vaultLocation = default(string), string primaryKekCertificatePfx = default(string), string secondaryKekCertificatePfx = default(string))
+        public HyperVReplicaAzureApplyRecoveryPointInput(string primaryKekCertificatePfx = default(string), string secondaryKekCertificatePfx = default(string))
         {
-            VaultLocation = vaultLocation;
             PrimaryKekCertificatePfx = primaryKekCertificatePfx;
             SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
             CustomInit();
@@ -50,12 +47,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the vault location where the recovery Vm resides.
-        /// </summary>
-        [JsonProperty(PropertyName = "vaultLocation")]
-        public string VaultLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the primary kek certificate pfx.

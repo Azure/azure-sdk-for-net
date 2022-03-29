@@ -3,6 +3,10 @@
 ## 4.4.0-beta.1 (Unreleased)
 
 
+## 4.3.2 (2021-04-15)
+
+Update package description to include pointer to the new Azure.Messaging.EventHubs package and the migration guide.
+
 ## 4.3.1 (2020-10-29)
 ### Breaking Changes
 None

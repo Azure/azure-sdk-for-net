@@ -259,6 +259,95 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Swaps VIPs between two load balancers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region where load balancers are located at.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that define which VIPs should be swapped.
+            /// </param>
+            public static void SwapPublicIpAddresses(this ILoadBalancersOperations operations, string location, LoadBalancerVipSwapRequest parameters)
+            {
+                operations.SwapPublicIpAddressesAsync(location, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Swaps VIPs between two load balancers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region where load balancers are located at.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that define which VIPs should be swapped.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SwapPublicIpAddressesAsync(this ILoadBalancersOperations operations, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SwapPublicIpAddressesWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List of inbound NAT rule port mappings.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='loadBalancerName'>
+            /// The name of the load balancer.
+            /// </param>
+            /// <param name='backendPoolName'>
+            /// The name of the load balancer backend address pool.
+            /// </param>
+            /// <param name='parameters'>
+            /// Query inbound NAT rule port mapping request.
+            /// </param>
+            public static BackendAddressInboundNatRulePortMappings ListInboundNatRulePortMappings(this ILoadBalancersOperations operations, string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingRequest parameters)
+            {
+                return operations.ListInboundNatRulePortMappingsAsync(groupName, loadBalancerName, backendPoolName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of inbound NAT rule port mappings.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='loadBalancerName'>
+            /// The name of the load balancer.
+            /// </param>
+            /// <param name='backendPoolName'>
+            /// The name of the load balancer backend address pool.
+            /// </param>
+            /// <param name='parameters'>
+            /// Query inbound NAT rule port mapping request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackendAddressInboundNatRulePortMappings> ListInboundNatRulePortMappingsAsync(this ILoadBalancersOperations operations, string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListInboundNatRulePortMappingsWithHttpMessagesAsync(groupName, loadBalancerName, backendPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified load balancer.
             /// </summary>
             /// <param name='operations'>
@@ -336,6 +425,95 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<LoadBalancer> BeginCreateOrUpdateAsync(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, loadBalancerName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Swaps VIPs between two load balancers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region where load balancers are located at.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that define which VIPs should be swapped.
+            /// </param>
+            public static void BeginSwapPublicIpAddresses(this ILoadBalancersOperations operations, string location, LoadBalancerVipSwapRequest parameters)
+            {
+                operations.BeginSwapPublicIpAddressesAsync(location, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Swaps VIPs between two load balancers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region where load balancers are located at.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that define which VIPs should be swapped.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginSwapPublicIpAddressesAsync(this ILoadBalancersOperations operations, string location, LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginSwapPublicIpAddressesWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List of inbound NAT rule port mappings.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='loadBalancerName'>
+            /// The name of the load balancer.
+            /// </param>
+            /// <param name='backendPoolName'>
+            /// The name of the load balancer backend address pool.
+            /// </param>
+            /// <param name='parameters'>
+            /// Query inbound NAT rule port mapping request.
+            /// </param>
+            public static BackendAddressInboundNatRulePortMappings BeginListInboundNatRulePortMappings(this ILoadBalancersOperations operations, string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingRequest parameters)
+            {
+                return operations.BeginListInboundNatRulePortMappingsAsync(groupName, loadBalancerName, backendPoolName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of inbound NAT rule port mappings.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='loadBalancerName'>
+            /// The name of the load balancer.
+            /// </param>
+            /// <param name='backendPoolName'>
+            /// The name of the load balancer backend address pool.
+            /// </param>
+            /// <param name='parameters'>
+            /// Query inbound NAT rule port mapping request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackendAddressInboundNatRulePortMappings> BeginListInboundNatRulePortMappingsAsync(this ILoadBalancersOperations operations, string groupName, string loadBalancerName, string backendPoolName, QueryInboundNatRulePortMappingRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginListInboundNatRulePortMappingsWithHttpMessagesAsync(groupName, loadBalancerName, backendPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

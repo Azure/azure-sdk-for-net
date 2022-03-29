@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="lastSkuUpdate">Time when the sku was last updated for
         /// the workspace. Returned for the Capacity Reservation Service
         /// Tier.</param>
-        public AvailableServiceTier(string serviceTier = default(string), bool? enabled = default(bool?), long? minimumRetention = default(long?), long? maximumRetention = default(long?), long? defaultRetention = default(long?), long? capacityReservationLevel = default(long?), System.DateTime? lastSkuUpdate = default(System.DateTime?))
+        public AvailableServiceTier(string serviceTier = default(string), bool? enabled = default(bool?), long? minimumRetention = default(long?), long? maximumRetention = default(long?), long? defaultRetention = default(long?), long? capacityReservationLevel = default(long?), string lastSkuUpdate = default(string))
         {
             ServiceTier = serviceTier;
             Enabled = enabled;
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// for the Capacity Reservation Service Tier.
         /// </summary>
         [JsonProperty(PropertyName = "lastSkuUpdate")]
-        public System.DateTime? LastSkuUpdate { get; private set; }
+        public string LastSkuUpdate { get; private set; }
 
     }
 }

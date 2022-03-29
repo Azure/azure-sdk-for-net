@@ -2,7 +2,7 @@
   "Name": "TaskContainerSettings",
   "ProtocolName": "Models.TaskContainerSettings",
   "SummaryComment": "The container settings for a task.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "Properties": [
     {
       "Key": {

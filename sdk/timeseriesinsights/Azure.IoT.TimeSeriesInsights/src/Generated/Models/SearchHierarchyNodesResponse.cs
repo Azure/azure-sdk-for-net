@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The hierarchy nodes which contains the instances matching the query based on the input. May be empty or null. </summary>
-    public partial class SearchHierarchyNodesResponse
+    internal partial class SearchHierarchyNodesResponse
     {
         /// <summary> Initializes a new instance of SearchHierarchyNodesResponse. </summary>
         internal SearchHierarchyNodesResponse()

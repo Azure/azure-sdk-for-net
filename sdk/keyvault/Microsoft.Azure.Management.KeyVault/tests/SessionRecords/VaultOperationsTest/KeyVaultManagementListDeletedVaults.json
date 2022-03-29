@@ -127,8 +127,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault2417?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault2417?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"North Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"properties\": {\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"sku\": {\r\n      \"name\": \"standard\",\r\n      \"family\": \"A\"\r\n    },\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"0df1a52f-0f10-4c0f-88bd-5c3260deb0a5\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"all\"\r\n          ],\r\n          \"secrets\": [\r\n            \"all\"\r\n          ],\r\n          \"certificates\": [\r\n            \"all\"\r\n          ],\r\n          \"storage\": [\r\n            \"all\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"vaultUri\": \"\",\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForDiskEncryption\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"enableSoftDelete\": true,\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"defaultAction\": \"Allow\",\r\n      \"ipRules\": [\r\n        {\r\n          \"value\": \"1.2.3.4/32\"\r\n        },\r\n        {\r\n          \"value\": \"1.0.0.0/25\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -205,8 +205,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault2417?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault2417?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -271,8 +271,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault2417?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault2417?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -340,8 +340,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault2417?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault2417?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -412,8 +412,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault2417?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault2417?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0MjQxNz9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -484,8 +484,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault7075?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault7075?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"North Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"properties\": {\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"sku\": {\r\n      \"name\": \"standard\",\r\n      \"family\": \"A\"\r\n    },\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"0df1a52f-0f10-4c0f-88bd-5c3260deb0a5\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"all\"\r\n          ],\r\n          \"secrets\": [\r\n            \"all\"\r\n          ],\r\n          \"certificates\": [\r\n            \"all\"\r\n          ],\r\n          \"storage\": [\r\n            \"all\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"vaultUri\": \"\",\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForDiskEncryption\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"enableSoftDelete\": true,\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"defaultAction\": \"Allow\",\r\n      \"ipRules\": [\r\n        {\r\n          \"value\": \"1.2.3.4/32\"\r\n        },\r\n        {\r\n          \"value\": \"1.0.0.0/25\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -562,8 +562,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault7075?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault7075?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -628,8 +628,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault7075?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault7075?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -697,8 +697,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault7075?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault7075?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -769,8 +769,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault7075?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault7075?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0NzA3NT9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -841,8 +841,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault8210?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault8210?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"North Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"properties\": {\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"sku\": {\r\n      \"name\": \"standard\",\r\n      \"family\": \"A\"\r\n    },\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"0df1a52f-0f10-4c0f-88bd-5c3260deb0a5\",\r\n        \"permissions\": {\r\n          \"keys\": [\r\n            \"all\"\r\n          ],\r\n          \"secrets\": [\r\n            \"all\"\r\n          ],\r\n          \"certificates\": [\r\n            \"all\"\r\n          ],\r\n          \"storage\": [\r\n            \"all\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"vaultUri\": \"\",\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForDiskEncryption\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"enableSoftDelete\": true,\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"defaultAction\": \"Allow\",\r\n      \"ipRules\": [\r\n        {\r\n          \"value\": \"1.2.3.4/32\"\r\n        },\r\n        {\r\n          \"value\": \"1.0.0.0/25\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -919,8 +919,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault8210?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault8210?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -985,8 +985,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault8210?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault8210?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzg0NzMvcHJvdmlkZXJzL01pY3Jvc29mdC5LZXlWYXVsdC92YXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1054,8 +1054,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault8210?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault8210?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1126,8 +1126,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault8210?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault8210?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0ODIxMD9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1198,8 +1198,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/deletedVaults?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvZGVsZXRlZFZhdWx0cz9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvZGVsZXRlZFZhdWx0cz9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1286,12 +1286,12 @@
           "3781"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault8210\",\r\n      \"name\": \"sdktestvault8210\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault8210\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:11:06Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:11:06Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault7075\",\r\n      \"name\": \"sdktestvault7075\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault7075\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:10:29Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:10:29Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault2417\",\r\n      \"name\": \"sdktestvault2417\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault2417\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:09:50Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:09:50Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault5714\",\r\n      \"name\": \"sdktestvault5714\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg7090/providers/Microsoft.KeyVault/vaults/sdktestvault5714\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:08:54Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:08:54Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault9018\",\r\n      \"name\": \"sdktestvault9018\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg2371/providers/Microsoft.KeyVault/vaults/sdktestvault9018\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:07:41Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:07:41Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/westus/deletedVaults/ps4177\",\r\n      \"name\": \"ps4177\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/ps8088/providers/Microsoft.KeyVault/vaults/ps4177\",\r\n        \"location\": \"West US\",\r\n        \"tags\": {},\r\n        \"deletionDate\": \"2019-11-29T06:24:52Z\",\r\n        \"scheduledPurgeDate\": \"2020-02-27T06:24:52Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/deletedVaults?api-version=2019-09-01&%24skiptoken=3ZDRboIwAEX%2fpVn2NKSymYGJWZyUTWdLqC2GvRWoDkEgtCrW%2bO8j%2b4wl9%2bUkN%2fcm5wZq2et1UZcKTG%2bAhJR9LhBhdL7mGzAFP1q3amrbR1GLvTzKWo%2bEOXVylDVHW51SlXVFq4umVnbmZWnuOdDKIMysF%2bc1s9yJk1quELtnNxW5kKndds25yGWnbFxkXaOanR59yWssTpW2c1lJLfM%2fUG%2biLazz0BzGZw4cexYcMn58UOXw2JSynvEy3tJ4xSinAUMx33AvXPOK7%2fzlGLP9lZg5DH1sQj8xxKArZoFLEe6xif2QJxfqk4AguqBotaAcO5QFiPDIoYhPMIvAE9iiDfsPHpYTfEAXYvYmZGWPWe5GLIIhwiaCycCDCb96xxz1pPz%2boGUC8WHwh7hDeQTu918%3d\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault8210\",\r\n      \"name\": \"sdktestvault8210\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault8210\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:11:06Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:11:06Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault7075\",\r\n      \"name\": \"sdktestvault7075\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault7075\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:10:29Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:10:29Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault2417\",\r\n      \"name\": \"sdktestvault2417\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg8473/providers/Microsoft.KeyVault/vaults/sdktestvault2417\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:09:50Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:09:50Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault5714\",\r\n      \"name\": \"sdktestvault5714\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg7090/providers/Microsoft.KeyVault/vaults/sdktestvault5714\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:08:54Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:08:54Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault9018\",\r\n      \"name\": \"sdktestvault9018\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg2371/providers/Microsoft.KeyVault/vaults/sdktestvault9018\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:07:41Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:07:41Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/westus/deletedVaults/ps4177\",\r\n      \"name\": \"ps4177\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/ps8088/providers/Microsoft.KeyVault/vaults/ps4177\",\r\n        \"location\": \"West US\",\r\n        \"tags\": {},\r\n        \"deletionDate\": \"2019-11-29T06:24:52Z\",\r\n        \"scheduledPurgeDate\": \"2020-02-27T06:24:52Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-06-01-preview&%24skiptoken=3ZDRboIwAEX%2fpVn2NKSymYGJWZyUTWdLqC2GvRWoDkEgtCrW%2bO8j%2b4wl9%2bUkN%2fcm5wZq2et1UZcKTG%2bAhJR9LhBhdL7mGzAFP1q3amrbR1GLvTzKWo%2bEOXVylDVHW51SlXVFq4umVnbmZWnuOdDKIMysF%2bc1s9yJk1quELtnNxW5kKndds25yGWnbFxkXaOanR59yWssTpW2c1lJLfM%2fUG%2biLazz0BzGZw4cexYcMn58UOXw2JSynvEy3tJ4xSinAUMx33AvXPOK7%2fzlGLP9lZg5DH1sQj8xxKArZoFLEe6xif2QJxfqk4AguqBotaAcO5QFiPDIoYhPMIvAE9iiDfsPHpYTfEAXYvYmZGWPWe5GLIIhwiaCycCDCb96xxz1pPz%2boGUC8WHwh7hDeQTu918%3d\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault8210/purge?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0ODIxMC9wdXJnZT9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault8210/purge?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0ODIxMC9wdXJnZT9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1316,7 +1316,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2019-09-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2021-06-01-preview"
         ],
         "Retry-After": [
           "5"
@@ -1365,8 +1365,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EY3pNek14T0RnMk1IeEROekl4TkRNeU5VUXpSa00wUmpkRk9ETkJRa0UyUlRCRFFUaENSalpFUVE/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EY3pNek14T0RnMk1IeEROekl4TkRNeU5VUXpSa00wUmpkRk9ETkJRa0UyUlRCRFFUaENSalpFUVE/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1385,7 +1385,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2019-09-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2021-06-01-preview"
         ],
         "Retry-After": [
           "5"
@@ -1437,8 +1437,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EY3pNek14T0RnMk1IeEROekl4TkRNeU5VUXpSa00wUmpkRk9ETkJRa0UyUlRCRFFUaENSalpFUVE/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EY3pNek14T0RnMk1IeEROekl4TkRNeU5VUXpSa00wUmpkRk9ETkJRa0UyUlRCRFFUaENSalpFUVE/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1503,8 +1503,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EY3pNek14T0RnMk1IeEROekl4TkRNeU5VUXpSa00wUmpkRk9ETkJRa0UyUlRCRFFUaENSalpFUVE/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDczMzMxODg2MHxDNzIxNDMyNUQzRkM0RjdFODNBQkE2RTBDQThCRjZEQQ?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EY3pNek14T0RnMk1IeEROekl4TkRNeU5VUXpSa00wUmpkRk9ETkJRa0UyUlRCRFFUaENSalpFUVE/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1569,8 +1569,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault7075/purge?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0NzA3NS9wdXJnZT9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault7075/purge?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0NzA3NS9wdXJnZT9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1595,7 +1595,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2019-09-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2021-06-01-preview"
         ],
         "Retry-After": [
           "5"
@@ -1644,8 +1644,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EZzJNakUzTVRNd09YdzBPRE01UlVaR1FqZ3dNRE0wUWpoRlFUVTBNRFJFTkRkR1JUVTNRVEl4Tnc/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EZzJNakUzTVRNd09YdzBPRE01UlVaR1FqZ3dNRE0wUWpoRlFUVTBNRFJFTkRkR1JUVTNRVEl4Tnc/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1664,7 +1664,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2019-09-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2021-06-01-preview"
         ],
         "Retry-After": [
           "5"
@@ -1716,8 +1716,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EZzJNakUzTVRNd09YdzBPRE01UlVaR1FqZ3dNRE0wUWpoRlFUVTBNRFJFTkRkR1JUVTNRVEl4Tnc/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EZzJNakUzTVRNd09YdzBPRE01UlVaR1FqZ3dNRE0wUWpoRlFUVTBNRFJFTkRkR1JUVTNRVEl4Tnc/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1736,7 +1736,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2019-09-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2021-06-01-preview"
         ],
         "Retry-After": [
           "5"
@@ -1788,8 +1788,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EZzJNakUzTVRNd09YdzBPRE01UlVaR1FqZ3dNRE0wUWpoRlFUVTBNRFJFTkRkR1JUVTNRVEl4Tnc/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EZzJNakUzTVRNd09YdzBPRE01UlVaR1FqZ3dNRE0wUWpoRlFUVTBNRFJFTkRkR1JUVTNRVEl4Tnc/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1854,8 +1854,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EZzJNakUzTVRNd09YdzBPRE01UlVaR1FqZ3dNRE0wUWpoRlFUVTBNRFJFTkRkR1JUVTNRVEl4Tnc/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NDg2MjE3MTMwOXw0ODM5RUZGQjgwMDM0QjhFQTU0MDRENDdGRTU3QTIxNw?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5EZzJNakUzTVRNd09YdzBPRE01UlVaR1FqZ3dNRE0wUWpoRlFUVTBNRFJFTkRkR1JUVTNRVEl4Tnc/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1920,8 +1920,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault2417/purge?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0MjQxNy9wdXJnZT9hcGktdmVyc2lvbj0yMDE5LTA5LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/North%20Central%20US/deletedVaults/sdktestvault2417/purge?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL05vcnRoJTIwQ2VudHJhbCUyMFVTL2RlbGV0ZWRWYXVsdHMvc2RrdGVzdHZhdWx0MjQxNy9wdXJnZT9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1946,7 +1946,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2019-09-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2021-06-01-preview"
         ],
         "Retry-After": [
           "5"
@@ -1995,8 +1995,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5UQXpNVFU1TnpRek9YdzRSalJFUVVKRk1qazBNa1UwT0VJNFFqazROVEUyTXpNeVJUaEZSVVl4TUE/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5UQXpNVFU1TnpRek9YdzRSalJFUVVKRk1qazBNa1UwT0VJNFFqazROVEUyTXpNeVJUaEZSVVl4TUE/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2015,7 +2015,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2019-09-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2021-06-01-preview"
         ],
         "Retry-After": [
           "5"
@@ -2067,8 +2067,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5UQXpNVFU1TnpRek9YdzRSalJFUVVKRk1qazBNa1UwT0VJNFFqazROVEUyTXpNeVJUaEZSVVl4TUE/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5UQXpNVFU1TnpRek9YdzRSalJFUVVKRk1qazBNa1UwT0VJNFFqazROVEUyTXpNeVJUaEZSVVl4TUE/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2133,8 +2133,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5UQXpNVFU1TnpRek9YdzRSalJFUVVKRk1qazBNa1UwT0VJNFFqazROVEUyTXpNeVJUaEZSVVl4TUE/YXBpLXZlcnNpb249MjAxOS0wOS0wMQ==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/operationResults/VVR8MDYzNzEwODQ5NTAzMTU5NzQzOXw4RjREQUJFMjk0MkU0OEI4Qjk4NTE2MzMyRThFRUYxMA?api-version=2021-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL25vcnRoY2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvVlZSOE1EWXpOekV3T0RRNU5UQXpNVFU1TnpRek9YdzRSalJFUVVKRk1qazBNa1UwT0VJNFFqazROVEUyTXpNeVJUaEZSVVl4TUE/YXBpLXZlcnNpb249MjAyMS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2199,8 +2199,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/deletedVaults?api-version=2019-09-01&%24skiptoken=3ZDRboIwAEX%2fpVn2NKSymYGJWZyUTWdLqC2GvRWoDkEgtCrW%2bO8j%2b4wl9%2bUkN%2fcm5wZq2et1UZcKTG%2bAhJR9LhBhdL7mGzAFP1q3amrbR1GLvTzKWo%2bEOXVylDVHW51SlXVFq4umVnbmZWnuOdDKIMysF%2bc1s9yJk1quELtnNxW5kKndds25yGWnbFxkXaOanR59yWssTpW2c1lJLfM%2fUG%2biLazz0BzGZw4cexYcMn58UOXw2JSynvEy3tJ4xSinAUMx33AvXPOK7%2fzlGLP9lZg5DH1sQj8xxKArZoFLEe6xif2QJxfqk4AguqBotaAcO5QFiPDIoYhPMIvAE9iiDfsPHpYTfEAXYvYmZGWPWe5GLIIhwiaCycCDCb96xxz1pPz%2boGUC8WHwh7hDeQTu918%3d",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvZGVsZXRlZFZhdWx0cz9hcGktdmVyc2lvbj0yMDE5LTA5LTAxJiUyNHNraXB0b2tlbj0zWkRSYm9Jd0FFWCUyZnBWbjJOS1N5bVlHSldaeVVUV2RMcUMyR3ZSV29Ea0VndENyVyUyYk84aiUyYjR3bDklMmJVa04lMmZjbTV3WnEyZXQxVVpjS1RHJTJiQWhKUjlMaEJoZEw3bUd6QUZQMXEzYW1yYlIxR0x2VHpLV28lMmJFT1hWeWxEVkhXNTFTbFhWRnE0dW1WbmJtWldudU9kREtJTXlzRiUyYmMxczl5SmsxcXVFTHRuTnhXNWtLbmRkczI1eUdXbmJGeGtYYU9hblI1OXlXc3NUcFcyYzFsSkxmTSUyZlVHJTJiaUxhenowQnpHWnc0Y2V4WWNNbjU4VU9YdzJKU3ludkV5M3RKNHhTaW5BVU14MzNBdlhQT0s3JTJmemxHTFA5bFpnNURIMXNRajh4eEtBclpvRkxFZTZ4aWYyUUp4ZnFrNEFndXFCb3RhQWNPNVFGaVBESW9ZaFBNSXZBRTlpaURmc1BIcFlUZkVBWFl2WW1aR1dQV2U1R0xJSWh3aWFDeWNDRENiOTZ4eHoxcFB6JTJib0dVQzhXSHdoN2hEZVFUdTkxOCUzZA==",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-06-01-preview&%24skiptoken=3ZDRboIwAEX%2fpVn2NKSymYGJWZyUTWdLqC2GvRWoDkEgtCrW%2bO8j%2b4wl9%2bUkN%2fcm5wZq2et1UZcKTG%2bAhJR9LhBhdL7mGzAFP1q3amrbR1GLvTzKWo%2bEOXVylDVHW51SlXVFq4umVnbmZWnuOdDKIMysF%2bc1s9yJk1quELtnNxW5kKndds25yGWnbFxkXaOanR59yWssTpW2c1lJLfM%2fUG%2biLazz0BzGZw4cexYcMn58UOXw2JSynvEy3tJ4xSinAUMx33AvXPOK7%2fzlGLP9lZg5DH1sQj8xxKArZoFLEe6xif2QJxfqk4AguqBotaAcO5QFiPDIoYhPMIvAE9iiDfsPHpYTfEAXYvYmZGWPWe5GLIIhwiaCycCDCb96xxz1pPz%2boGUC8WHwh7hDeQTu918%3d",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvZGVsZXRlZFZhdWx0cz9hcGktdmVyc2lvbj0yMDIxLTA2LTAxLXByZXZpZXcmJTI0c2tpcHRva2VuPTNaRFJib0l3QUVYJTJmcFZuMk5LU3ltWUdKV1p5VVRXZExxQzJHdlJXb0RrRWd0Q3JXJTJiTzhqJTJiNHdsOSUyYlVrTiUyZmNtNXdacTJldDFVWmNLVEclMmJBaEpSOUxoQmhkTDdtR3pBRlAxcTNhbXJiUjFHTHZUektXbyUyYkVPWFZ5bERWSFc1MVNsWFZGcTR1bVZuYm1aV251T2RES0lNeXNGJTJiYzFzOXlKazFxdUVMdG5OeFc1a0tuZGRzMjV5R1duYkZ4a1hhT2FuUjU5eVdzc1RwVzJjMWxKTGZNJTJmVUclMmJpTGF6ejBCekdadzRjZXhZY01uNThVT1h3MkpTeW52RXkzdEo0eFNpbkFVTXgzM0F2WFBPSzclMmZ6bEdMUDlsWmc1REgxc1FqOHh4S0FyWm9GTEVlNnhpZjJRSnhmcWs0QWd1cUJvdGFBY081UUZpUERJb1loUE1JdkFFOWlpRGZzUEhwWVRmRUFYWXZZbVpHV1BXZTVHTElJaHdpYUN5Y0NEQ2I5Nnh4ejFwUHolMmJvR1VDOFdId2g3aERlUVR1OTE4JTNk",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2259,7 +2259,7 @@
           "3260"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault4201\",\r\n      \"name\": \"sdktestvault4201\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg2371/providers/Microsoft.KeyVault/vaults/sdktestvault4201\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:07:37Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:07:37Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault3903\",\r\n      \"name\": \"sdktestvault3903\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg2371/providers/Microsoft.KeyVault/vaults/sdktestvault3903\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:07:34Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:07:34Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault9622\",\r\n      \"name\": \"sdktestvault9622\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg3177/providers/Microsoft.KeyVault/vaults/sdktestvault9622\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-11-29T07:42:33Z\",\r\n        \"scheduledPurgeDate\": \"2020-02-27T07:42:33Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault3798\",\r\n      \"name\": \"sdktestvault3798\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg4718/providers/Microsoft.KeyVault/vaults/sdktestvault3798\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-11-29T07:42:09Z\",\r\n        \"scheduledPurgeDate\": \"2020-02-27T07:42:09Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault6374\",\r\n      \"name\": \"sdktestvault6374\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg7723/providers/Microsoft.KeyVault/vaults/sdktestvault6374\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-11-29T07:41:03Z\",\r\n        \"scheduledPurgeDate\": \"2020-02-27T07:41:03Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/deletedVaults?api-version=2019-09-01&%24skiptoken=HY1da4MwAEX%2fi4y9aaKzTIUytqqbm7E0NQ72FmNsXfzCxDIt%2fe8Ng%2ftyuId7r0bP%2f1Ta9EIawdXI9jj%2f2EVZjl9TcjQC46zUKAMAOtrTE%2b94ryy6zhO32NABOZeSTc2omqGXgPmsrHwHmgxCZrrOMzO9jVOaHqX1k1fSivISjNNwaSo%2bSYAaNg1yqJX1xZeCzq0CFW%2b54tU%2fyBc6NuZFm3p860DbN6GO%2ffgghX4cBO%2b3RBTfuPjMMcFxHhXkSPx9SlpSh4mN8tOSrYmbrWTNftGCVs3hm4dgscMEQZRHLgqZm4Xndywi50CSzQH%2bRFjEse5WJJBxu90B\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault4201\",\r\n      \"name\": \"sdktestvault4201\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg2371/providers/Microsoft.KeyVault/vaults/sdktestvault4201\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:07:37Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:07:37Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault3903\",\r\n      \"name\": \"sdktestvault3903\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg2371/providers/Microsoft.KeyVault/vaults/sdktestvault3903\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-12-02T02:07:34Z\",\r\n        \"scheduledPurgeDate\": \"2020-03-01T02:07:34Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault9622\",\r\n      \"name\": \"sdktestvault9622\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg3177/providers/Microsoft.KeyVault/vaults/sdktestvault9622\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-11-29T07:42:33Z\",\r\n        \"scheduledPurgeDate\": \"2020-02-27T07:42:33Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault3798\",\r\n      \"name\": \"sdktestvault3798\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg4718/providers/Microsoft.KeyVault/vaults/sdktestvault3798\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-11-29T07:42:09Z\",\r\n        \"scheduledPurgeDate\": \"2020-02-27T07:42:09Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/locations/northcentralus/deletedVaults/sdktestvault6374\",\r\n      \"name\": \"sdktestvault6374\",\r\n      \"type\": \"Microsoft.KeyVault/deletedVaults\",\r\n      \"properties\": {\r\n        \"vaultId\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/sdktestrg7723/providers/Microsoft.KeyVault/vaults/sdktestvault6374\",\r\n        \"location\": \"North Central US\",\r\n        \"tags\": {\r\n          \"tag1\": \"value1\",\r\n          \"tag2\": \"value2\",\r\n          \"tag3\": \"value3\"\r\n        },\r\n        \"deletionDate\": \"2019-11-29T07:41:03Z\",\r\n        \"scheduledPurgeDate\": \"2020-02-27T07:41:03Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.KeyVault/deletedVaults?api-version=2021-06-01-preview&%24skiptoken=HY1da4MwAEX%2fi4y9aaKzTIUytqqbm7E0NQ72FmNsXfzCxDIt%2fe8Ng%2ftyuId7r0bP%2f1Ta9EIawdXI9jj%2f2EVZjl9TcjQC46zUKAMAOtrTE%2b94ryy6zhO32NABOZeSTc2omqGXgPmsrHwHmgxCZrrOMzO9jVOaHqX1k1fSivISjNNwaSo%2bSYAaNg1yqJX1xZeCzq0CFW%2b54tU%2fyBc6NuZFm3p860DbN6GO%2ffgghX4cBO%2b3RBTfuPjMMcFxHhXkSPx9SlpSh4mN8tOSrYmbrWTNftGCVs3hm4dgscMEQZRHLgqZm4Xndywi50CSzQH%2bRFjEse5WJJBxu90B\"\r\n}",
       "StatusCode": 200
     }
   ],

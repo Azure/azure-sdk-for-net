@@ -16,7 +16,16 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class ManagedClusterSKUTier
     {
+        /// <summary>
+        /// Guarantees 99.95% availability of the Kubernetes API server
+        /// endpoint for clusters that use Availability Zones and 99.9% of
+        /// availability for clusters that don't use Availability Zones.
+        /// </summary>
         public const string Paid = "Paid";
+        /// <summary>
+        /// No guaranteed SLA, no additional charges. Free tier clusters have
+        /// an SLO of 99.5%.
+        /// </summary>
         public const string Free = "Free";
     }
 }

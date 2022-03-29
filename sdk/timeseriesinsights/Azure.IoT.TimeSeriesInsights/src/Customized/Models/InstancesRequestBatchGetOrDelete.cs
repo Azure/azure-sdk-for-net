@@ -11,7 +11,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// Exactly one of &quot;timeSeriesIds&quot; or &quot;names&quot; must be set.
     /// </summary>
     [CodeGenModel("InstancesRequestBatchGetOrDelete")]
-    public partial class InstancesRequestBatchGetOrDelete
+    internal partial class InstancesRequestBatchGetOrDelete
     {
         // Autorest does not support changing type for properties. In order to turn TimeSeriesId
         // from a list of objects to a strongly typed object, TimeSeriesId has been renamed to

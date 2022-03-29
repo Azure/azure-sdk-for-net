@@ -16,12 +16,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of ManifestAttributesManifest. </summary>
         internal ManifestAttributesManifest()
         {
-            References = new ChangeTrackingList<ManifestAttributesManifestReferences>();
+            References = new ChangeTrackingList<ArtifactManifestPlatform>();
         }
 
         /// <summary> List of manifest attributes details. </summary>
-        public IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
-        /// <summary> Quarantine tag name. </summary>
-        public string QuarantineTag { get; }
+        public IReadOnlyList<ArtifactManifestPlatform> References { get; }
     }
 }

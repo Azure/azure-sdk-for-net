@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="tags">Azure resource tags.</param>
+        /// <param name="dataDiskType">Possible values include: 'Standard_LRS',
+        /// 'StandardSSD_LRS', 'Premium_LRS'</param>
         /// <param name="placementProperties">The placement tags applied to
         /// nodes in the node type, which can be used to indicate where certain
         /// services (workload) should run.</param>
@@ -74,16 +76,22 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// 'latest'.</param>
         /// <param name="vmSecrets">virtual machine secretes.</param>
         /// <param name="vmExtensions">virtual machine extensions.</param>
+        /// <param name="isStateless">Indicates if the node type can only host
+        /// Stateless workloads.</param>
+        /// <param name="multiplePlacementGroups">Indicates if scale set
+        /// associated with the node type can be composed of multiple placement
+        /// groups.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// managed cluster resource. Possible values include: 'None',
         /// 'Creating', 'Created', 'Updating', 'Succeeded', 'Failed',
         /// 'Canceled', 'Deleting', 'Deleted', 'Other'</param>
-        public NodeType(bool isPrimary, int vmInstanceCount, int dataDiskSizeGB, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), string vmSize = default(string), string vmImagePublisher = default(string), string vmImageOffer = default(string), string vmImageSku = default(string), string vmImageVersion = default(string), IList<VaultSecretGroup> vmSecrets = default(IList<VaultSecretGroup>), IList<VMSSExtension> vmExtensions = default(IList<VMSSExtension>), VmManagedIdentity vmManagedIdentity = default(VmManagedIdentity), string provisioningState = default(string))
+        public NodeType(bool isPrimary, int vmInstanceCount, int dataDiskSizeGB, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string dataDiskType = default(string), IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), string vmSize = default(string), string vmImagePublisher = default(string), string vmImageOffer = default(string), string vmImageSku = default(string), string vmImageVersion = default(string), IList<VaultSecretGroup> vmSecrets = default(IList<VaultSecretGroup>), IList<VMSSExtension> vmExtensions = default(IList<VMSSExtension>), VmManagedIdentity vmManagedIdentity = default(VmManagedIdentity), bool? isStateless = default(bool?), bool? multiplePlacementGroups = default(bool?), string provisioningState = default(string))
             : base(id, name, type, tags, systemData)
         {
             IsPrimary = isPrimary;
             VmInstanceCount = vmInstanceCount;
             DataDiskSizeGB = dataDiskSizeGB;
+            DataDiskType = dataDiskType;
             PlacementProperties = placementProperties;
             Capacities = capacities;
             ApplicationPorts = applicationPorts;
@@ -96,6 +104,8 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
             VmSecrets = vmSecrets;
             VmExtensions = vmExtensions;
             VmManagedIdentity = vmManagedIdentity;
+            IsStateless = isStateless;
+            MultiplePlacementGroups = multiplePlacementGroups;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -124,6 +134,13 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataDiskSizeGB")]
         public int DataDiskSizeGB { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Standard_LRS',
+        /// 'StandardSSD_LRS', 'Premium_LRS'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataDiskType")]
+        public string DataDiskType { get; set; }
 
         /// <summary>
         /// Gets or sets the placement tags applied to nodes in the node type,
@@ -215,6 +232,20 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmManagedIdentity")]
         public VmManagedIdentity VmManagedIdentity { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if the node type can only host Stateless
+        /// workloads.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isStateless")]
+        public bool? IsStateless { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if scale set associated with the node type
+        /// can be composed of multiple placement groups.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.multiplePlacementGroups")]
+        public bool? MultiplePlacementGroups { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the managed cluster resource.

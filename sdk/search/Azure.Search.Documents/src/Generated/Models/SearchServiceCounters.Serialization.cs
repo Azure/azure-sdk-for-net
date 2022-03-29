@@ -14,15 +14,26 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceCounters DeserializeSearchServiceCounters(JsonElement element)
         {
+            Optional<SearchResourceCounter> aliasesCount = default;
             SearchResourceCounter documentCount = default;
             SearchResourceCounter indexesCount = default;
             SearchResourceCounter indexersCount = default;
             SearchResourceCounter dataSourcesCount = default;
             SearchResourceCounter storageSize = default;
             SearchResourceCounter synonymMaps = default;
-            SearchResourceCounter skillsetCount = default;
+            Optional<SearchResourceCounter> skillsetCount = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("aliasesCount"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    aliasesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("documentCount"))
                 {
                     documentCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
@@ -55,11 +66,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("skillsetCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     skillsetCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
             }
-            return new SearchServiceCounters(documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount);
+            return new SearchServiceCounters(aliasesCount.Value, documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount.Value);
         }
     }
 }

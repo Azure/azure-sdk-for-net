@@ -56,7 +56,9 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the number of Compute Nodes in each state, grouped by Pool.
+            /// Gets the number of Compute Nodes in each state, grouped by Pool. Note that
+            /// the numbers returned may not always be up to date. If you need exact node
+            /// counts, use a list query.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,7 +72,9 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the number of Compute Nodes in each state, grouped by Pool.
+            /// Gets the number of Compute Nodes in each state, grouped by Pool. Note that
+            /// the numbers returned may not always be up to date. If you need exact node
+            /// counts, use a list query.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -130,7 +134,9 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the number of Compute Nodes in each state, grouped by Pool.
+            /// Gets the number of Compute Nodes in each state, grouped by Pool. Note that
+            /// the numbers returned may not always be up to date. If you need exact node
+            /// counts, use a list query.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -147,7 +153,9 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the number of Compute Nodes in each state, grouped by Pool.
+            /// Gets the number of Compute Nodes in each state, grouped by Pool. Note that
+            /// the numbers returned may not always be up to date. If you need exact node
+            /// counts, use a list query.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

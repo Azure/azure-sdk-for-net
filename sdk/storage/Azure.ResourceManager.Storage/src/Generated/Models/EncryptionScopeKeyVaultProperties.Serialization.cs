@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,23 +19,45 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri");
-                writer.WriteStringValue(KeyUri);
+                writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
 
         internal static EncryptionScopeKeyVaultProperties DeserializeEncryptionScopeKeyVaultProperties(JsonElement element)
         {
-            Optional<string> keyUri = default;
+            Optional<Uri> keyUri = default;
+            Optional<string> currentVersionedKeyIdentifier = default;
+            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUri"))
                 {
-                    keyUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyUri = null;
+                        continue;
+                    }
+                    keyUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("currentVersionedKeyIdentifier"))
+                {
+                    currentVersionedKeyIdentifier = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastKeyRotationTimestamp"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new EncryptionScopeKeyVaultProperties(keyUri.Value);
+            return new EncryptionScopeKeyVaultProperties(keyUri.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp));
         }
     }
 }

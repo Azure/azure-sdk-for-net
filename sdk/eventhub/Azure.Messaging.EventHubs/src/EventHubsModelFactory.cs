@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -59,11 +60,11 @@ namespace Azure.Messaging.EventHubs
         /// <param name="ownerLevel">The owner level associated with the partition.</param>
         /// <param name="lastPublishedSequenceNumber">The sequence number assigned to the event that was last successfully published to the partition.</param>
         ///
-        internal static PartitionPublishingProperties PartitionPublishingProperties(bool isIdempotentPublishingEnabled,
+        internal static PartitionPublishingPropertiesInternal PartitionPublishingProperties(bool isIdempotentPublishingEnabled,
                                                                                     long? producerGroupId,
                                                                                     short? ownerLevel,
                                                                                     int? lastPublishedSequenceNumber) =>
-            new PartitionPublishingProperties(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
+            new PartitionPublishingPropertiesInternal(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
@@ -81,15 +82,33 @@ namespace Azure.Messaging.EventHubs
             new LastEnqueuedEventProperties(lastSequenceNumber, lastOffset, lastEnqueuedTime, lastReceivedTime);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PartitionContext"/> class.
+        ///   Initializes a new instance of the <see cref="Consumer.PartitionContext"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this context is associated with.</param>
+        /// <param name="eventHubName">The name of the Event Hub partition this context is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
+        /// <param name="lastEnqueuedEventProperties">The set of properties to be returned when <see cref="PartitionContext.ReadLastEnqueuedEventProperties" /> is invoked.</param>
+        ///
+        public static PartitionContext PartitionContext(string fullyQualifiedNamespace,
+                                                        string eventHubName,
+                                                        string consumerGroup,
+                                                        string partitionId,
+                                                        LastEnqueuedEventProperties lastEnqueuedEventProperties = default) =>
+            new FactoryPartitionContext(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, lastEnqueuedEventProperties);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Consumer.PartitionContext"/> class.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
         /// <param name="lastEnqueuedEventProperties">The set of properties to be returned when <see cref="PartitionContext.ReadLastEnqueuedEventProperties" /> is invoked.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PartitionContext PartitionContext(string partitionId,
                                                         LastEnqueuedEventProperties lastEnqueuedEventProperties = default) =>
-            new FactoryPartitionContext(partitionId, lastEnqueuedEventProperties);
+            new FactoryPartitionContext("<< NULL >>", "<< NULL >>", "<< NULL >>", partitionId, lastEnqueuedEventProperties);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventData"/> class.
@@ -169,11 +188,17 @@ namespace Azure.Messaging.EventHubs
             ///   Initializes a new instance of the <see cref="FactoryPartitionContext"/> class.
             /// </summary>
             ///
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this context is associated with.</param>
+            /// <param name="eventHubName">The name of the Event Hub partition this context is associated with.</param>
+            /// <param name="consumerGroup">The name of the consumer group this context is associated with.</param>
             /// <param name="partitionId">The identifier of the Event Hub partition this context is associated with.</param>
             /// <param name="lastEnqueuedEventProperties">The set of properties to be returned when <see cref="ReadLastEnqueuedEventProperties" /> is invoked.</param>
             ///
-            internal FactoryPartitionContext(string partitionId,
-                                             LastEnqueuedEventProperties lastEnqueuedEventProperties) : base(partitionId) =>
+            internal FactoryPartitionContext(string fullyQualifiedNamespace,
+                                             string eventHubName,
+                                             string consumerGroup,
+                                             string partitionId,
+                                             LastEnqueuedEventProperties lastEnqueuedEventProperties) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId) =>
                 _lastEnqueuedEventProperties = lastEnqueuedEventProperties;
         }
 
@@ -266,7 +291,11 @@ namespace Azure.Messaging.EventHubs
             ///
             /// <returns>The set of events as an enumerable of the requested type.</returns>
             ///
-            public override IEnumerable<T> AsEnumerable<T>() => (IEnumerable<T>)_backingStore;
+            public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => _backingStore switch
+            {
+                IReadOnlyCollection<T> storeCollection => storeCollection,
+                _ => new List<T>((IEnumerable<T>)_backingStore)
+            };
 
             /// <summary>
             ///   Performs the task needed to clean up resources used by the <see cref="TransportEventBatch" />.

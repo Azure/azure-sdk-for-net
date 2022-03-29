@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,29 +16,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagsListResult DeserializeServiceTagsListResult(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> type = default;
             Optional<string> changeNumber = default;
             Optional<string> cloud = default;
             Optional<IReadOnlyList<ServiceTagInformation>> values = default;
+            Optional<string> nextLink = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("changeNumber"))
                 {
                     changeNumber = property.Value.GetString();
@@ -63,8 +51,33 @@ namespace Azure.ResourceManager.Network.Models
                     values = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new ServiceTagsListResult(name.Value, id.Value, type.Value, changeNumber.Value, cloud.Value, Optional.ToList(values));
+            return new ServiceTagsListResult(id, name, type, systemData, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value);
         }
     }
 }

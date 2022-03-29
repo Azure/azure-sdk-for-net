@@ -38,6 +38,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <param name="type">Resource type</param>
         /// <param name="datasource">Describes the data source that output will
         /// be written to. Required on PUT (CreateOrReplace) requests.</param>
+        /// <param name="timeWindow">The time frame for filtering Stream
+        /// Analytics job outputs.</param>
+        /// <param name="sizeWindow">The size window to constrain a Stream
+        /// Analytics output to.</param>
         /// <param name="serialization">Describes how data from an input is
         /// serialized or how data is serialized when written to an output.
         /// Required on PUT (CreateOrReplace) requests.</param>
@@ -74,11 +78,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public OutputDataSource Datasource { get; set; }
 
         /// <summary>
+        /// Gets or sets the time frame for filtering Stream Analytics job
+        /// outputs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeWindow")]
         public string TimeWindow { get; set; }
 
         /// <summary>
+        /// Gets or sets the size window to constrain a Stream Analytics output
+        /// to.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sizeWindow")]
         public double? SizeWindow { get; set; }

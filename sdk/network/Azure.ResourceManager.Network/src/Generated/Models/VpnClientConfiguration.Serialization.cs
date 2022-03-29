@@ -51,11 +51,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientIpsecPolicies))
+            if (Optional.IsCollectionDefined(VpnAuthenticationTypes))
+            {
+                writer.WritePropertyName("vpnAuthenticationTypes");
+                writer.WriteStartArray();
+                foreach (var item in VpnAuthenticationTypes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VpnClientIPsecPolicies))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies");
                 writer.WriteStartArray();
-                foreach (var item in VpnClientIpsecPolicies)
+                foreach (var item in VpnClientIPsecPolicies)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -105,7 +115,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<VpnClientRootCertificate>> vpnClientRootCertificates = default;
             Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
             Optional<IList<VpnClientProtocol>> vpnClientProtocols = default;
-            Optional<IList<IpsecPolicy>> vpnClientIpsecPolicies = default;
+            Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
+            Optional<IList<IPsecPolicy>> vpnClientIpsecPolicies = default;
             Optional<string> radiusServerAddress = default;
             Optional<string> radiusServerSecret = default;
             Optional<IList<RadiusServer>> radiusServers = default;
@@ -169,6 +180,21 @@ namespace Azure.ResourceManager.Network.Models
                     vpnClientProtocols = array;
                     continue;
                 }
+                if (property.NameEquals("vpnAuthenticationTypes"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<VpnAuthenticationType> array = new List<VpnAuthenticationType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new VpnAuthenticationType(item.GetString()));
+                    }
+                    vpnAuthenticationTypes = array;
+                    continue;
+                }
                 if (property.NameEquals("vpnClientIpsecPolicies"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -176,10 +202,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IpsecPolicy> array = new List<IpsecPolicy>();
+                    List<IPsecPolicy> array = new List<IPsecPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IpsecPolicy.DeserializeIpsecPolicy(item));
+                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                     }
                     vpnClientIpsecPolicies = array;
                     continue;
@@ -225,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnClientIpsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value);
+            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIpsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value);
         }
     }
 }

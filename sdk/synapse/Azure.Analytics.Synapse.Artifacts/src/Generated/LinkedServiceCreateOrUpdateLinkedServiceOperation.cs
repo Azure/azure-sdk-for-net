@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a linked service. </summary>
     public partial class LinkedServiceCreateOrUpdateLinkedServiceOperation : Operation<LinkedServiceResource>, IOperationSource<LinkedServiceResource>
     {
-        private readonly ArmOperationHelpers<LinkedServiceResource> _operation;
+        private readonly OperationInternals<LinkedServiceResource> _operation;
 
         /// <summary> Initializes a new instance of LinkedServiceCreateOrUpdateLinkedServiceOperation for mocking. </summary>
         protected LinkedServiceCreateOrUpdateLinkedServiceOperation()
@@ -28,8 +28,9 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal LinkedServiceCreateOrUpdateLinkedServiceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<LinkedServiceResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LinkedServiceCreateOrUpdateLinkedServiceOperation");
+            _operation = new OperationInternals<LinkedServiceResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LinkedServiceCreateOrUpdateLinkedServiceOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -50,6 +51,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<LinkedServiceResource> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<LinkedServiceResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<LinkedServiceResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);

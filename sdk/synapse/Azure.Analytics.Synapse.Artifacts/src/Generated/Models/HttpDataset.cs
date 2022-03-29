@@ -35,15 +35,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="relativeUrl"> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </param>
         /// <param name="requestMethod"> The HTTP method for the HTTP request. Type: string (or Expression with resultType string). </param>
         /// <param name="requestBody"> The body for the HTTP request. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalHeaders">
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
-        /// 
         /// ...
-        /// 
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </param>
         /// <param name="format"> The format of files. </param>
@@ -67,9 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object RequestBody { get; set; }
         /// <summary>
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
-        /// 
         /// ...
-        /// 
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </summary>
         public object AdditionalHeaders { get; set; }

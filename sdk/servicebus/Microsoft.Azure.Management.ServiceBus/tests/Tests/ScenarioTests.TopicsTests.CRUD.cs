@@ -6,6 +6,7 @@ namespace ServiceBus.Tests.ScenarioTests
 {
     using System;
     using System.Linq;
+    using System.Threading;
     using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Azure.Management.ServiceBus.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -37,8 +38,8 @@ namespace ServiceBus.Tests.ScenarioTests
                         Location = location,
                         Sku = new SBSku
                         {
-                            Name = SkuName.Standard,
-                            Tier = SkuTier.Standard
+                            Name = SkuName.Premium,
+                            Tier = SkuTier.Premium
                         }
                     });
 
@@ -50,9 +51,10 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create a Topic
                 var topicName = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
                 var createTopicResponse = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName,
-                new SBTopic() { EnableExpress = true });
+                new SBTopic() { MaxMessageSizeInKilobytes = 14336 });
                 Assert.NotNull(createTopicResponse);
                 Assert.Equal(createTopicResponse.Name, topicName);
+                Assert.Equal(14336, createTopicResponse.MaxMessageSizeInKilobytes);
 
                 // Get the created topic
                 var getTopicResponse = ServiceBusManagementClient.Topics.Get(resourceGroup, namespaceName, topicName);
@@ -67,26 +69,25 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getTopicsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Update Topic
-                var updateTopicsParameter = new SBTopic() {EnableExpress = true};
+                getTopicResponse.MaxMessageSizeInKilobytes = 13312;
 
-                var updateTopicsResponse = ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName, updateTopicsParameter);
+                var updateTopicsResponse = ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName, getTopicResponse);
                 Assert.NotNull(updateTopicsResponse);
-                Assert.True(updateTopicsResponse.EnableExpress);
                 Assert.NotEqual(updateTopicsResponse.UpdatedAt, getTopicResponse.UpdatedAt);
+                Assert.Equal(13312, updateTopicsResponse.MaxMessageSizeInKilobytes);
 
                 // Get the created topic to check the Updated values. 
                 getTopicResponse = ServiceBusManagementClient.Topics.Get(resourceGroup, namespaceName, topicName);
                 Assert.NotNull(getTopicResponse);
                 Assert.Equal(EntityStatus.Active, getTopicResponse.Status);
                 Assert.Equal(getTopicResponse.Name, topicName);
-                Assert.True(updateTopicsResponse.EnableExpress);
                 Assert.NotEqual(updateTopicsResponse.UpdatedAt, getTopicResponse.UpdatedAt);
 
                 // Delete Created Topics 
                 ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);                
 
                 // Delete namespace                                   
-                ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);                
+                ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
             }
         }
     }

@@ -21,7 +21,7 @@ parameters:
 
 steps:
   - pwsh: |
-      eng/common/TestResources/Import-AzModules.ps1
+      eng/common/scripts/Import-AzModules.ps1
 
       $subscriptionConfiguration = @"
         ${{ parameters.SubscriptionConfiguration }}

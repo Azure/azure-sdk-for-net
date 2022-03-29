@@ -76,10 +76,6 @@ if (!$DeploymentOutputs['AZURE_MANAGEDHSM_URL']) {
 [Uri] $hsmUrl = $DeploymentOutputs['AZURE_MANAGEDHSM_URL']
 $hsmName = $hsmUrl.Host.Substring(0, $hsmUrl.Host.IndexOf('.'))
 
-$tenant = $DeploymentOutputs['KEYVAULT_TENANT_ID']
-$username = $DeploymentOutputs['KEYVAULT_CLIENT_ID']
-$password = $DeploymentOutputs['KEYVAULT_CLIENT_SECRET']
-
 Log 'Creating 3 X509 certificates to activate security domain'
 $wrappingFiles = foreach ($i in 0..2) {
     $certificate = New-X509Certificate2 "CN=$($hsmUrl.Host)"
@@ -91,10 +87,6 @@ $wrappingFiles = foreach ($i in 0..2) {
     Resolve-Path "$baseName.cer"
 }
 
-# TODO: Use Az module when available; for now, assumes Azure CLI is installed and in $Env:PATH.
-Log "Logging '$username' into the Azure CLI"
-az login --service-principal --tenant "$tenant" --username "$username" --password="$password"
-
 Log "Downloading security domain from '$hsmUrl'"
 
 $sdPath = "$PSScriptRoot\$hsmName-security-domain.key"
@@ -103,7 +95,7 @@ if (Test-Path $sdpath) {
     Remove-Item $sdPath -Force
 }
 
-az keyvault security-domain download --hsm-name $hsmName --security-domain-file $sdPath --sd-quorum 2 --sd-wrapping-keys $wrappingFiles
+Export-AzKeyVaultSecurityDomain -Name $hsmName -Quorum 2 -Certificates $wrappingFiles -OutputPath $sdPath
 
 Log "Security domain downloaded to '$sdPath'; Managed HSM is now active at '$hsmUrl'"
 

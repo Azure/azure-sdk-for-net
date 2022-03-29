@@ -99,6 +99,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
+        /// <param name="operationTimeout">The amount of time to allow for an AMQP operation using the link to complete before attempting to cancel it.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
@@ -113,8 +114,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public AmqpClient(string host,
                           string eventHubName,
+                          TimeSpan operationTimeout,
                           EventHubTokenCredential credential,
-                          EventHubConnectionOptions clientOptions) : this(host, eventHubName, credential, clientOptions, null, null)
+                          EventHubConnectionOptions clientOptions) : this(host, eventHubName, operationTimeout, credential, clientOptions, null, null)
         {
         }
 
@@ -124,6 +126,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
+        /// <param name="operationTimeout">The amount of time to allow for an AMQP operation using the link to complete before attempting to cancel it.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         /// <param name="connectionScope">The optional scope to use for AMQP connection management.  If <c>null</c>, a new scope will be created.</param>
@@ -140,6 +143,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         protected AmqpClient(string host,
                              string eventHubName,
+                             TimeSpan operationTimeout,
                              EventHubTokenCredential credential,
                              EventHubConnectionOptions clientOptions,
                              AmqpConnectionScope connectionScope,
@@ -147,6 +151,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNullOrEmpty(host, nameof(host));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNegative(operationTimeout, nameof(operationTimeout));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(clientOptions, nameof(clientOptions));
 
@@ -174,14 +179,27 @@ namespace Azure.Messaging.EventHubs.Amqp
                 EventHubName = eventHubName;
                 Credential = credential;
                 MessageConverter = messageConverter ?? new AmqpMessageConverter();
-                ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, ConnectionEndpoint, eventHubName, credential, clientOptions.TransportType, clientOptions.Proxy);
+
+                ConnectionScope = connectionScope ?? new AmqpConnectionScope(
+                    ServiceEndpoint,
+                    ConnectionEndpoint,
+                    eventHubName,
+                    credential,
+                    clientOptions.TransportType,
+                    clientOptions.Proxy,
+                    clientOptions.ConnectionIdleTimeout,
+                    null,
+                    clientOptions.SendBufferSizeInBytes,
+                    clientOptions.ReceiveBufferSizeInBytes,
+                    clientOptions.CertificateValidationCallback);
 
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
-                    timeout => ConnectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None),
+                    linkTimeout => ConnectionScope.OpenManagementLinkAsync(operationTimeout, linkTimeout, CancellationToken.None),
                     link =>
                     {
                         link.Session?.SafeClose();
                         link.SafeClose();
+                        EventHubsEventSource.Log.FaultTolerantAmqpObjectClose(nameof(RequestResponseAmqpLink), "", EventHubName, "", "", link.TerminalException?.Message);
                     });
             }
             finally
@@ -208,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             var failedAttemptCount = 0;
             var retryDelay = default(TimeSpan?);
-
+            var link = default(RequestResponseAmqpLink);
             var stopWatch = ValueStopwatch.StartNew();
 
             try
@@ -225,17 +243,17 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         var token = await AcquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
                         using AmqpMessage request = MessageConverter.CreateEventHubPropertiesRequest(EventHubName, token);
+
+                        if (!ManagementLink.TryGetOpenedObject(out link))
+                        {
+                            link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                        }
+
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime()))).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                        // Send the request and process the response.
 
-                        // Send the request and wait for the response.
-
-                        using AmqpMessage response = await link.RequestAsync(request, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        // Process the response.
+                        using AmqpMessage response = await link.RequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                         AmqpError.ThrowIfErrorResponse(response, EventHubName);
                         return MessageConverter.CreateEventHubPropertiesFromResponse(response);
@@ -325,17 +343,17 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         token = await AcquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
                         using AmqpMessage request = MessageConverter.CreatePartitionPropertiesRequest(EventHubName, partitionId, token);
+
+                        if (!ManagementLink.TryGetOpenedObject(out link))
+                        {
+                            link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                        }
+
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime()))).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                        // Send the request and process the response.
 
-                        // Send the request and wait for the response.
-
-                        using AmqpMessage response = await link.RequestAsync(request, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        // Process the response.
+                        using AmqpMessage response = await link.RequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                         AmqpError.ThrowIfErrorResponse(response, EventHubName);
                         return MessageConverter.CreatePartitionPropertiesFromResponse(response);
@@ -391,6 +409,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
+        /// <param name="producerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="requestedFeatures">The flags specifying the set of special transport features that should be opted-into.</param>
         /// <param name="partitionOptions">The set of options, if any, that should be considered when initializing the producer.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
@@ -398,8 +417,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
         public override TransportProducer CreateProducer(string partitionId,
+                                                         string producerIdentifier,
                                                          TransportProducerFeatures requestedFeatures,
-                                                         PartitionPublishingOptions partitionOptions,
+                                                         PartitionPublishingOptionsInternal partitionOptions,
                                                          EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
@@ -408,6 +428,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             (
                 EventHubName,
                 partitionId,
+                producerIdentifier,
                 ConnectionScope,
                 MessageConverter,
                 retryPolicy,
@@ -435,9 +456,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="consumerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="invalidateConsumerWhenPartitionStolen">Indicates whether or not the consumer should consider itself invalid when a partition is stolen.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
@@ -446,9 +469,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public override TransportConsumer CreateConsumer(string consumerGroup,
                                                          string partitionId,
+                                                         string consumerIdentifier,
                                                          EventPosition eventPosition,
                                                          EventHubsRetryPolicy retryPolicy,
                                                          bool trackLastEnqueuedEventProperties,
+                                                         bool invalidateConsumerWhenPartitionStolen,
                                                          long? ownerLevel,
                                                          uint? prefetchCount,
                                                          long? prefetchSizeInBytes)
@@ -460,8 +485,10 @@ namespace Azure.Messaging.EventHubs.Amqp
                 EventHubName,
                 consumerGroup,
                 partitionId,
+                consumerIdentifier,
                 eventPosition,
                 trackLastEnqueuedEventProperties,
+                invalidateConsumerWhenPartitionStolen,
                 ownerLevel,
                 prefetchCount,
                 prefetchSizeInBytes,
@@ -484,6 +511,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return;
             }
 
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             _closed = true;
 
             var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
@@ -492,12 +520,10 @@ namespace Azure.Messaging.EventHubs.Amqp
             try
             {
                 EventHubsEventSource.Log.ClientCloseStart(clientType, EventHubName, clientId);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (ManagementLink?.TryGetOpenedObject(out var _) == true)
                 {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await ManagementLink.CloseAsync().ConfigureAwait(false);
+                    await ManagementLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
 
                 ManagementLink?.Dispose();

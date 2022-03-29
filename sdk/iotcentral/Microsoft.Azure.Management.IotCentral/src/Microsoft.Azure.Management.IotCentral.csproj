@@ -8,13 +8,14 @@
     <Description>Provides management capabilities for Microsoft Azure IotCentral.</Description>
     <AssemblyTitle>Microsoft Azure IotCentral Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.IotCentral</AssemblyName>
-    <Version>3.1.0</Version>
+    <Version>4.0.0</Version>
     <PackageTags>Microsoft Azure IotCentral;IotCentral management;IotCentral;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This release made sure the resourceType, iotApps is in camel case.
-        This release also added origin and properties field to operations API.
-        This release also added industry and locations field to appTemplate API.
+        This release removes legacy S1 SKU, 
+        adds support for regions while removing geographies (for location), 
+        releases new RP version 2021-06-01,
+        and adds support system-assigned Managed Identities in IoT Central.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

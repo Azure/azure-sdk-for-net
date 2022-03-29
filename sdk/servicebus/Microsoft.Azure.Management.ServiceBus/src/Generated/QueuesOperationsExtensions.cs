@@ -22,215 +22,6 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class QueuesOperationsExtensions
     {
             /// <summary>
-            /// Gets the queues within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='skip'>
-            /// Skip is only used if a previous operation returned a partial result. If a
-            /// previous response contains a nextLink element, the value of the nextLink
-            /// element will include a skip parameter that specifies a starting point to
-            /// use for subsequent calls.
-            /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N
-            /// usageDetails.
-            /// </param>
-            public static IPage<SBQueue> ListByNamespace(this IQueuesOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?))
-            {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName, skip, top).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the queues within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='skip'>
-            /// Skip is only used if a previous operation returned a partial result. If a
-            /// previous response contains a nextLink element, the value of the nextLink
-            /// element will include a skip parameter that specifies a starting point to
-            /// use for subsequent calls.
-            /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N
-            /// usageDetails.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<SBQueue>> ListByNamespaceAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, skip, top, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates a Service Bus queue. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update a queue resource.
-            /// </param>
-            public static SBQueue CreateOrUpdate(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, SBQueue parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, queueName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a Service Bus queue. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update a queue resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SBQueue> CreateOrUpdateAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, SBQueue parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes a queue from the specified namespace in a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            public static void Delete(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, queueName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a queue from the specified namespace in a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Returns a description for the specified queue.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            public static SBQueue Get(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, queueName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns a description for the specified queue.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SBQueue> GetAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all authorization rules for a queue.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
             /// </summary>
@@ -562,12 +353,25 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
-            public static IPage<SBQueue> ListByNamespaceNext(this IQueuesOperations operations, string nextPageLink)
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
+            /// </param>
+            public static IPage<SBQueue> ListByNamespace(this IQueuesOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?))
             {
-                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName, skip, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -577,15 +381,175 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SBQueue>> ListByNamespaceNextAsync(this IQueuesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SBQueue>> ListByNamespaceAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, skip, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a Service Bus queue. This operation is idempotent.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='queueName'>
+            /// The queue name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create or update a queue resource.
+            /// </param>
+            public static SBQueue CreateOrUpdate(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, SBQueue parameters)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, queueName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a Service Bus queue. This operation is idempotent.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='queueName'>
+            /// The queue name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create or update a queue resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SBQueue> CreateOrUpdateAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, SBQueue parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a queue from the specified namespace in a resource group.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='queueName'>
+            /// The queue name.
+            /// </param>
+            public static void Delete(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
+            {
+                operations.DeleteAsync(resourceGroupName, namespaceName, queueName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a queue from the specified namespace in a resource group.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='queueName'>
+            /// The queue name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Returns a description for the specified queue.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='queueName'>
+            /// The queue name.
+            /// </param>
+            public static SBQueue Get(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
+            {
+                return operations.GetAsync(resourceGroupName, namespaceName, queueName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a description for the specified queue.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='queueName'>
+            /// The queue name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SBQueue> GetAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -622,6 +586,42 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<IPage<SBAuthorizationRule>> ListAuthorizationRulesNextAsync(this IQueuesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the queues within a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SBQueue> ListByNamespaceNext(this IQueuesOperations operations, string nextPageLink)
+            {
+                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the queues within a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SBQueue>> ListByNamespaceNextAsync(this IQueuesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

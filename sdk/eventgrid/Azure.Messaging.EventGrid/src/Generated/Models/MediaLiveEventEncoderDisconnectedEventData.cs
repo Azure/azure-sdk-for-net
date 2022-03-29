@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Encoder disconnected event data. </summary>
+    /// <summary> Encoder disconnected event data. Schema of the Data property of an EventGridEvent for a Microsoft.Media.LiveEventEncoderDisconnected event. </summary>
     public partial class MediaLiveEventEncoderDisconnectedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventEncoderDisconnectedEventData. </summary>

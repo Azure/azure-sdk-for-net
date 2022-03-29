@@ -40,9 +40,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ProtectableItem> ListByReplicationProtectionContainers(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<ProtectableItemQueryParameter> odataQuery = default(ODataQuery<ProtectableItemQueryParameter>))
+            /// <param name='take'>
+            /// take OData query parameter.
+            /// </param>
+            /// <param name='skipToken'>
+            /// skipToken OData query parameter.
+            /// </param>
+            public static IPage<ProtectableItem> ListByReplicationProtectionContainers(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<ProtectableItemQueryParameter> odataQuery = default(ODataQuery<ProtectableItemQueryParameter>), string take = default(string), string skipToken = default(string))
             {
-                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName, odataQuery, take, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -63,12 +69,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='take'>
+            /// take OData query parameter.
+            /// </param>
+            /// <param name='skipToken'>
+            /// skipToken OData query parameter.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ProtectableItem>> ListByReplicationProtectionContainersAsync(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<ProtectableItemQueryParameter> odataQuery = default(ODataQuery<ProtectableItemQueryParameter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ProtectableItem>> ListByReplicationProtectionContainersAsync(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<ProtectableItemQueryParameter> odataQuery = default(ODataQuery<ProtectableItemQueryParameter>), string take = default(string), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, odataQuery, take, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

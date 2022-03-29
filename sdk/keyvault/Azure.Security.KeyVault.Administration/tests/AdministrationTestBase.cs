@@ -15,15 +15,20 @@ namespace Azure.Security.KeyVault.Administration.Tests
     /// <summary>
     /// Base class for recorded Administration tests.
     /// </summary>
+    [ClientTestFixture(
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_2,
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_3)]
     public abstract class AdministrationTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _keysToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
+        private readonly KeyVaultAdministrationClientOptions.ServiceVersion _serviceVersion;
 
-        protected AdministrationTestBase(bool isAsync, RecordedTestMode? mode)
+        protected AdministrationTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         /// <summary>
@@ -42,11 +47,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         /// <summary>
-        /// Gets a polling interval based on whether we're playing back recorded tests (0s) or not (2s).
+        /// Gets a polling interval based on whether we're playing back recorded tests (0s) or not (<see cref="KeyVaultTestEnvironment.DefaultPollingInterval"/>).
         /// </summary>
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
             ? TimeSpan.Zero
-            : TimeSpan.FromSeconds(2);
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
 
         [TearDown]
         public virtual async Task Cleanup()
@@ -85,7 +90,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await Task.Delay(delay ?? TimeSpan.FromSeconds(1));
+                await Task.Delay(delay ?? PollingInterval);
             }
             else if (playbackDelay != null)
             {
@@ -94,9 +99,9 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         /// <inheritdoc/>
-        public sealed override void StartTestRecording()
+        public sealed override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             // Clear the challenge cache to force a challenge response.
             // This results in consistent results when recording or playing back recorded tests.
@@ -187,7 +192,16 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await KeyClient.GetDeletedKeyAsync(name), delay: PollingInterval);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await KeyClient.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for key '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
     }

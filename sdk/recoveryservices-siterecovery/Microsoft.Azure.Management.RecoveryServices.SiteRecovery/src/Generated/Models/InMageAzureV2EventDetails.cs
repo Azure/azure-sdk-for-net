@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the InMageAzureV2EventDetails class.
         /// </summary>
         /// <param name="eventType">InMage Event type. Takes one of the values
-        /// of {InMageDataContract.InMageMonitoringEventType}.</param>
+        /// of InMageDataContract.InMageMonitoringEventType.</param>
         /// <param name="category">InMage Event Category.</param>
         /// <param name="component">InMage Event Component.</param>
         /// <param name="correctiveAction">Corrective Action string for the
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets inMage Event type. Takes one of the values of
-        /// {InMageDataContract.InMageMonitoringEventType}.
+        /// InMageDataContract.InMageMonitoringEventType.
         /// </summary>
         [JsonProperty(PropertyName = "eventType")]
         public string EventType { get; set; }

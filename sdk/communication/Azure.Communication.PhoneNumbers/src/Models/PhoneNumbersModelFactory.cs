@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 
 namespace Azure.Communication.PhoneNumbers
@@ -9,7 +10,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary>
     /// Model factory that enables mocking for the Azure.Communication.PhoneNumbers library.
     /// </summary>
-    public static class PhoneNumbersModelFactory
+    public static partial class PhoneNumbersModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
         /// <param name="id"> The id of the phone number, e.g. 14255550123. </param>
@@ -25,10 +26,11 @@ namespace Azure.Communication.PhoneNumbers
 #pragma warning restore CA1054 // URI-like parameters should not be strings
             => new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumberCost"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberCost"/>. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency)
             => new PhoneNumberCost(amount, currencyCode, billingFrequency);
 

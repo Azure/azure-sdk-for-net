@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ListContainerItem : IUtf8JsonSerializable
+    internal partial class ListContainerItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -45,6 +46,21 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(ImmutableStorageWithVersioning))
+            {
+                writer.WritePropertyName("immutableStorageWithVersioning");
+                writer.WriteObjectValue(ImmutableStorageWithVersioning);
+            }
+            if (Optional.IsDefined(EnableNfsV3RootSquash))
+            {
+                writer.WritePropertyName("enableNfsV3RootSquash");
+                writer.WriteBooleanValue(EnableNfsV3RootSquash.Value);
+            }
+            if (Optional.IsDefined(EnableNfsV3AllSquash))
+            {
+                writer.WritePropertyName("enableNfsV3AllSquash");
+                writer.WriteBooleanValue(EnableNfsV3AllSquash.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -52,9 +68,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal static ListContainerItem DeserializeListContainerItem(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> version = default;
             Optional<bool> deleted = default;
             Optional<DateTimeOffset> deletedTime = default;
@@ -71,6 +88,9 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<LegalHoldProperties> legalHold = default;
             Optional<bool> hasLegalHold = default;
             Optional<bool> hasImmutabilityPolicy = default;
+            Optional<ImmutableStorageWithVersioning> immutableStorageWithVersioning = default;
+            Optional<bool> enableNfsV3RootSquash = default;
+            Optional<bool> enableNfsV3AllSquash = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -80,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -91,6 +111,11 @@ namespace Azure.ResourceManager.Storage.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -257,11 +282,41 @@ namespace Azure.ResourceManager.Storage.Models
                             hasImmutabilityPolicy = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("immutableStorageWithVersioning"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            immutableStorageWithVersioning = ImmutableStorageWithVersioning.DeserializeImmutableStorageWithVersioning(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("enableNfsV3RootSquash"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enableNfsV3RootSquash = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableNfsV3AllSquash"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enableNfsV3AllSquash = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ListContainerItem(id.Value, name.Value, type.Value, etag.Value, version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), defaultEncryptionScope.Value, Optional.ToNullable(denyEncryptionScopeOverride), Optional.ToNullable(publicAccess), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToDictionary(metadata), immutabilityPolicy.Value, legalHold.Value, Optional.ToNullable(hasLegalHold), Optional.ToNullable(hasImmutabilityPolicy));
+            return new ListContainerItem(id, name, type, systemData, etag.Value, version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), defaultEncryptionScope.Value, Optional.ToNullable(denyEncryptionScopeOverride), Optional.ToNullable(publicAccess), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToDictionary(metadata), immutabilityPolicy.Value, legalHold.Value, Optional.ToNullable(hasLegalHold), Optional.ToNullable(hasImmutabilityPolicy), immutableStorageWithVersioning.Value, Optional.ToNullable(enableNfsV3RootSquash), Optional.ToNullable(enableNfsV3AllSquash));
         }
     }
 }

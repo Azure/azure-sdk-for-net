@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Sql
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -23,6 +21,54 @@ namespace Microsoft.Azure.Management.Sql
     /// </summary>
     public static partial class FirewallRulesOperationsExtensions
     {
+            /// <summary>
+            /// Gets a firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule.
+            /// </param>
+            public static FirewallRule Get(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, string firewallRuleName)
+            {
+                return operations.GetAsync(resourceGroupName, serverName, firewallRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FirewallRule> GetAsync(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, firewallRuleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <summary>
             /// Creates or updates a firewall rule.
             /// </summary>
@@ -123,7 +169,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a firewall rule.
+            /// Gets a list of firewall rules.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,16 +181,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule.
-            /// </param>
-            public static FirewallRule Get(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, string firewallRuleName)
+            public static IPage<FirewallRule> ListByServer(this IFirewallRulesOperations operations, string resourceGroupName, string serverName)
             {
-                return operations.GetAsync(resourceGroupName, serverName, firewallRuleName).GetAwaiter().GetResult();
+                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a firewall rule.
+            /// Gets a list of firewall rules.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -155,23 +198,20 @@ namespace Microsoft.Azure.Management.Sql
             /// </param>
             /// <param name='serverName'>
             /// The name of the server.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> GetAsync(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FirewallRule>> ListByServerAsync(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, firewallRuleName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns a list of firewall rules.
+            /// Replaces all firewall rules on the server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -183,13 +223,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IEnumerable<FirewallRule> ListByServer(this IFirewallRulesOperations operations, string resourceGroupName, string serverName)
+            /// <param name='parameters'>
+            /// </param>
+            public static FirewallRule Replace(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, FirewallRuleList parameters)
             {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                return operations.ReplaceAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a list of firewall rules.
+            /// Replaces all firewall rules on the server.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -200,13 +242,49 @@ namespace Microsoft.Azure.Management.Sql
             /// </param>
             /// <param name='serverName'>
             /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<FirewallRule>> ListByServerAsync(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FirewallRule> ReplaceAsync(this IFirewallRulesOperations operations, string resourceGroupName, string serverName, FirewallRuleList parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ReplaceWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of firewall rules.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<FirewallRule> ListByServerNext(this IFirewallRulesOperations operations, string nextPageLink)
+            {
+                return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of firewall rules.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FirewallRule>> ListByServerNextAsync(this IFirewallRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -15,6 +15,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Configuration settings for the Azure App Service Authentication /
+    /// Authorization V2 feature.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SiteAuthSettingsV2 : ProxyOnlyResource
     {
@@ -33,6 +37,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="platform">The configuration settings of the platform
+        /// of App Service Authentication/Authorization.</param>
+        /// <param name="globalValidation">The configuration settings that
+        /// determines the validation flow of users using App Service
+        /// Authentication/Authorization.</param>
+        /// <param name="identityProviders">The configuration settings of each
+        /// of the identity providers used to configure App Service
+        /// Authentication/Authorization.</param>
+        /// <param name="login">The configuration settings of the login flow of
+        /// users using App Service Authentication/Authorization.</param>
+        /// <param name="httpSettings">The configuration settings of the HTTP
+        /// requests for authentication and authorization requests made against
+        /// App Service Authentication/Authorization.</param>
         public SiteAuthSettingsV2(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), AuthPlatform platform = default(AuthPlatform), GlobalValidation globalValidation = default(GlobalValidation), IdentityProviders identityProviders = default(IdentityProviders), Login login = default(Login), HttpSettings httpSettings = default(HttpSettings))
             : base(id, name, kind, type)
         {
@@ -50,26 +67,39 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the configuration settings of the platform of App
+        /// Service Authentication/Authorization.
         /// </summary>
         [JsonProperty(PropertyName = "properties.platform")]
         public AuthPlatform Platform { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings that determines the
+        /// validation flow of users using App Service
+        /// Authentication/Authorization.
         /// </summary>
         [JsonProperty(PropertyName = "properties.globalValidation")]
         public GlobalValidation GlobalValidation { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of each of the identity
+        /// providers used to configure App Service
+        /// Authentication/Authorization.
         /// </summary>
         [JsonProperty(PropertyName = "properties.identityProviders")]
         public IdentityProviders IdentityProviders { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the login flow of users
+        /// using App Service Authentication/Authorization.
         /// </summary>
         [JsonProperty(PropertyName = "properties.login")]
         public Login Login { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the HTTP requests for
+        /// authentication and authorization requests made against App Service
+        /// Authentication/Authorization.
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpSettings")]
         public HttpSettings HttpSettings { get; set; }

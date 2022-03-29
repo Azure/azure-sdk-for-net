@@ -241,5 +241,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             return Encoding.ASCII.GetBytes(str);
         }
+
+        internal static void VaidateMessageState(IEnumerable<Message> messages, MessageState expectedState)
+        {
+            if (messages.Any(m => m.SystemProperties.State != expectedState))
+            {
+                throw new Exception($"At least one message has state that is not {expectedState}");
+            }
+        }
     }
 }

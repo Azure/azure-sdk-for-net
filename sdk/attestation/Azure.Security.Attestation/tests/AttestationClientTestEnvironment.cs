@@ -39,49 +39,57 @@ namespace Azure.Security.Attestation.Tests
         public bool IsLiveMode { get => Mode == RecordedTestMode.Live; }
         public bool IsTalkingToLiveServer { get => IsRecordMode || IsLiveMode; }
 
-        internal AttestationClient GetSharedAttestationClient(RecordedTestBase testBase, TokenValidationOptions tokenValidation = default)
+        internal AttestationClient GetSharedAttestationClient(RecordedTestBase testBase, AttestationTokenValidationOptions tokenValidation = default)
         {
             return GetAttestationClient(SharedAttestationUrl, testBase, tokenValidation);
         }
 
-        internal AttestationClient GetAadAttestationClient(RecordedTestBase testBase, TokenValidationOptions tokenValidation = default)
+        internal AttestationClient GetAadAttestationClient(RecordedTestBase testBase, AttestationTokenValidationOptions tokenValidation = default)
         {
             return GetAttestationClient(AadAttestationUrl, testBase, tokenValidation);
         }
 
-        internal AttestationClient GetIsolatedAttestationClient(RecordedTestBase testBase, TokenValidationOptions tokenValidation = default)
+        internal AttestationClient GetIsolatedAttestationClient(RecordedTestBase testBase, AttestationTokenValidationOptions tokenValidation = default)
         {
             return GetAttestationClient(IsolatedAttestationUrl, testBase, tokenValidation);
         }
 
-        internal AttestationAdministrationClient GetIsolatedAdministrationClient(RecordedTestBase testBase, TokenValidationOptions tokenValidation = default)
+        internal AttestationAdministrationClient GetIsolatedAdministrationClient(RecordedTestBase testBase, AttestationTokenValidationOptions tokenValidation = default)
         {
             return GetAdministrationClient(IsolatedAttestationUrl, testBase, tokenValidation);
         }
 
-        internal AttestationAdministrationClient GetAadAdministrationClient(RecordedTestBase testBase, TokenValidationOptions tokenValidation = default)
+        internal AttestationAdministrationClient GetAadAdministrationClient(RecordedTestBase testBase, AttestationTokenValidationOptions tokenValidation = default)
         {
             return GetAdministrationClient(AadAttestationUrl, testBase, tokenValidation);
         }
 
-        internal AttestationAdministrationClient GetSharedAdministrationClient(RecordedTestBase testBase, TokenValidationOptions tokenValidation = default)
+        internal AttestationAdministrationClient GetSharedAdministrationClient(RecordedTestBase testBase, AttestationTokenValidationOptions tokenValidation = default)
         {
             return GetAdministrationClient(SharedAttestationUrl, testBase, tokenValidation);
         }
 
-        private AttestationAdministrationClient GetAdministrationClient(string endpoint, RecordedTestBase testBase, TokenValidationOptions tokenValidation = default)
+        private AttestationAdministrationClient GetAdministrationClient(string endpoint, RecordedTestBase testBase, AttestationTokenValidationOptions tokenValidation = default)
         {
             // If we're not using live data, we want to disable expiration time checks.
             var options = testBase.InstrumentClientOptions(
-                new AttestationClientOptions(
-                    tokenOptions: tokenValidation?? new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
+                new AttestationClientOptions(tokenOptions: tokenValidation ?? new AttestationTokenValidationOptions
+                    {
+                        ValidateExpirationTime = IsTalkingToLiveServer,
+                    }
+                ));
             return testBase.InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), GetClientSecretCredential(), options));
         }
 
-        private AttestationClient GetAttestationClient(string endpoint, RecordedTestBase testBase, TokenValidationOptions tokenValidation)
+        private AttestationClient GetAttestationClient(string endpoint, RecordedTestBase testBase, AttestationTokenValidationOptions tokenValidation)
         {
             // If we're not using live data, we want to disable expiration time checks.
-            var options = testBase.InstrumentClientOptions(new AttestationClientOptions(tokenOptions: tokenValidation?? new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
+            var options = testBase.InstrumentClientOptions(
+                new AttestationClientOptions(tokenOptions:
+                    tokenValidation ?? new AttestationTokenValidationOptions
+                    {
+                        ValidateExpirationTime = IsTalkingToLiveServer,
+                    }));
             return testBase.InstrumentClient(new AttestationClient(new Uri(endpoint), GetClientSecretCredential(), options));
         }
 

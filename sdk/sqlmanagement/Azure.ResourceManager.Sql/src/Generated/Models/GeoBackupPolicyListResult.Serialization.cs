@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static GeoBackupPolicyListResult DeserializeGeoBackupPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<GeoBackupPolicy>> value = default;
+            Optional<IReadOnlyList<GeoBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GeoBackupPolicy> array = new List<GeoBackupPolicy>();
+                    List<GeoBackupPolicyData> array = new List<GeoBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeoBackupPolicy.DeserializeGeoBackupPolicy(item));
+                        array.Add(GeoBackupPolicyData.DeserializeGeoBackupPolicyData(item));
                     }
                     value = array;
                     continue;

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a dataset. </summary>
     public partial class DatasetCreateOrUpdateDatasetOperation : Operation<DatasetResource>, IOperationSource<DatasetResource>
     {
-        private readonly ArmOperationHelpers<DatasetResource> _operation;
+        private readonly OperationInternals<DatasetResource> _operation;
 
         /// <summary> Initializes a new instance of DatasetCreateOrUpdateDatasetOperation for mocking. </summary>
         protected DatasetCreateOrUpdateDatasetOperation()
@@ -28,8 +28,9 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal DatasetCreateOrUpdateDatasetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DatasetResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatasetCreateOrUpdateDatasetOperation");
+            _operation = new OperationInternals<DatasetResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatasetCreateOrUpdateDatasetOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -50,6 +51,12 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<DatasetResource> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<DatasetResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<DatasetResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);

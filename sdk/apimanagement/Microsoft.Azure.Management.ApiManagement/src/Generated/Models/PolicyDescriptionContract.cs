@@ -32,13 +32,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the PolicyDescriptionContract class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="description">Policy description.</param>
         /// <param name="scope">Binary OR value of the Snippet scope.</param>
-        public PolicyDescriptionContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), int? scope = default(int?))
+        public PolicyDescriptionContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), long? scope = default(long?))
             : base(id, name, type)
         {
             Description = description;
@@ -61,7 +63,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets binary OR value of the Snippet scope.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scope")]
-        public int? Scope { get; private set; }
+        public long? Scope { get; private set; }
 
     }
 }

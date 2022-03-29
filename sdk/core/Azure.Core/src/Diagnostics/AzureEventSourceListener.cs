@@ -23,7 +23,6 @@ namespace Azure.Core.Diagnostics
         /// The trait value that has to be present on all event sources collected by this listener.
         /// </summary>
         public const string TraitValue = "true";
-
         private readonly List<EventSource> _eventSources = new List<EventSource>();
 
         private readonly Action<EventWrittenEventArgs, string> _log;

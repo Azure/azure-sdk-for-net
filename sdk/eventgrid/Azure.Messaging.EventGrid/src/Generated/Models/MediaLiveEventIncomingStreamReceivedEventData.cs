@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Encoder connect event data. </summary>
+    /// <summary> Encoder connect event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingStreamReceived event. </summary>
     public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamReceivedEventData. </summary>

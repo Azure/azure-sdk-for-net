@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static SqlTriggerListResult DeserializeSqlTriggerListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SqlTriggerGetResults>> value = default;
+            Optional<IReadOnlyList<SqlTriggerData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SqlTriggerGetResults> array = new List<SqlTriggerGetResults>();
+                    List<SqlTriggerData> array = new List<SqlTriggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlTriggerGetResults.DeserializeSqlTriggerGetResults(item));
+                        array.Add(SqlTriggerData.DeserializeSqlTriggerData(item));
                     }
                     value = array;
                     continue;

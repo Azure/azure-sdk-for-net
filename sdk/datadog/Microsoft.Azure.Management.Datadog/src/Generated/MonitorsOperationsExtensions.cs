@@ -578,6 +578,50 @@ namespace Microsoft.Azure.Management.Datadog
             }
 
             /// <summary>
+            /// Update a monitor resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='monitorName'>
+            /// Monitor resource name
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static DatadogMonitorResource BeginUpdate(this IMonitorsOperations operations, string resourceGroupName, string monitorName, DatadogMonitorResourceUpdateParameters body = default(DatadogMonitorResourceUpdateParameters))
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, monitorName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a monitor resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='monitorName'>
+            /// Monitor resource name
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DatadogMonitorResource> BeginUpdateAsync(this IMonitorsOperations operations, string resourceGroupName, string monitorName, DatadogMonitorResourceUpdateParameters body = default(DatadogMonitorResourceUpdateParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, monitorName, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Delete a monitor resource.
             /// </summary>
             /// <param name='operations'>

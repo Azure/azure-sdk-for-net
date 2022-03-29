@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the TagDescriptionContract class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="description">Description of the Tag.</param>
         /// <param name="externalDocsUrl">Absolute URL of external resources
         /// describing the tag.</param>
@@ -91,5 +93,32 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ExternalDocsUrl != null)
+            {
+                if (ExternalDocsUrl.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ExternalDocsUrl", 2000);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 160)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 160);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+            }
+        }
     }
 }

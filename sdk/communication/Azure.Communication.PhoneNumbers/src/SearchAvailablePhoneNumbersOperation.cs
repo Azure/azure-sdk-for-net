@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal SearchAvailablePhoneNumbersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PhoneNumberSearchResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SearchAvailablePhoneNumbersOperation");
+            _operation = new OperationInternals<PhoneNumberSearchResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SearchAvailablePhoneNumbersOperation");
 
             if (response.Headers.TryGetValue<string>("operation-id", out var id))
             {

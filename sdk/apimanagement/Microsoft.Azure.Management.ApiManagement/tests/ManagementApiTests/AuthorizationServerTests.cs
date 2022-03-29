@@ -18,7 +18,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class AuthorizationServerTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "sasolank")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -94,8 +94,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(authorizationServerContract.ClientId, getResponse.Body.ClientId);
                     Assert.Equal(authorizationServerContract.ClientRegistrationEndpoint, getResponse.Body.ClientRegistrationEndpoint);
                     Assert.Null(getResponse.Body.ClientSecret);
-                    Assert.Equal(authorizationServerContract.ResourceOwnerPassword, getResponse.Body.ResourceOwnerPassword);
-                    Assert.Equal(authorizationServerContract.ResourceOwnerUsername, getResponse.Body.ResourceOwnerUsername);
+                    Assert.Null(getResponse.Body.ResourceOwnerPassword);
+                    Assert.Null(getResponse.Body.ResourceOwnerUsername);
                     Assert.Equal(authorizationServerContract.GrantTypes.Count, getResponse.Body.GrantTypes.Count);
                     Assert.True(getResponse.Body.GrantTypes.All(gt => authorizationServerContract.GrantTypes.Contains(gt)));
                     Assert.Equal(authorizationServerContract.AuthorizationMethods.Count, getResponse.Body.AuthorizationMethods.Count);
@@ -111,6 +111,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         authsid);
                     Assert.Equal(authorizationServerContract.ClientSecret, secretsResponse.ClientSecret);
+                    Assert.Equal(authorizationServerContract.ResourceOwnerUsername, secretsResponse.ResourceOwnerUsername);
+                    Assert.Equal(authorizationServerContract.ResourceOwnerPassword, secretsResponse.ResourceOwnerPassword);
 
                     // list again
                     listResponse = testBase.client.AuthorizationServer.ListByService(
@@ -154,8 +156,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(authorizationServerContract.ClientId, getResponse.Body.ClientId);
                     Assert.Equal(authorizationServerContract.ClientRegistrationEndpoint, getResponse.Body.ClientRegistrationEndpoint);
                     Assert.Null(getResponse.Body.ClientSecret);
-                    Assert.Equal(authorizationServerContract.ResourceOwnerPassword, getResponse.Body.ResourceOwnerPassword);
-                    Assert.Equal(authorizationServerContract.ResourceOwnerUsername, getResponse.Body.ResourceOwnerUsername);
+                    Assert.Null(getResponse.Body.ResourceOwnerPassword);
+                    Assert.Null(getResponse.Body.ResourceOwnerUsername);
                     Assert.Equal(updateParameters.GrantTypes.Count, getResponse.Body.GrantTypes.Count);
                     Assert.True(getResponse.Body.GrantTypes.All(gt => updateParameters.GrantTypes.Contains(gt)));
                     Assert.Equal(authorizationServerContract.AuthorizationMethods.Count, getResponse.Body.AuthorizationMethods.Count);

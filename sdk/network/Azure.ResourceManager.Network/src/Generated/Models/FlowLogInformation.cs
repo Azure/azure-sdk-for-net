@@ -53,7 +53,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of the resource to configure for flow log and traffic analytics (optional) . </summary>
         public string TargetResourceId { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        public TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        {
+            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+            set
+            {
+                if (FlowAnalyticsConfiguration is null)
+                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
+                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+            }
+        }
+
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
         public string StorageId { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>

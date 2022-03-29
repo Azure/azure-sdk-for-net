@@ -10,6 +10,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Logging;
@@ -31,6 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
         private readonly IHostSingletonManager _singletonManager;
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _logger;
+        private readonly ConcurrencyManager _concurrencyManager;
 
         public BlobTriggerAttributeBindingProvider(
             INameResolver nameResolver,
@@ -43,7 +45,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             ISharedContextProvider sharedContextProvider,
             IHostSingletonManager singletonManager,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ConcurrencyManager concurrencyManager)
         {
             _blobServiceClientProvider = blobServiceClientProvider ?? throw new ArgumentNullException(nameof(blobServiceClientProvider));
             _queueServiceClientProvider = queueServiceClientProvider ?? throw new ArgumentNullException(nameof(queueServiceClientProvider));
@@ -54,6 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory ?? throw new ArgumentNullException(nameof(blobTriggerQueueWriterFactory));
             _sharedContextProvider = sharedContextProvider ?? throw new ArgumentNullException(nameof(sharedContextProvider));
             _singletonManager = singletonManager ?? throw new ArgumentNullException(nameof(singletonManager));
+            _concurrencyManager = concurrencyManager ?? throw new ArgumentNullException(nameof(concurrencyManager));
 
             _nameResolver = nameResolver;
             _loggerFactory = loggerFactory;
@@ -91,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             ITriggerBinding binding = new BlobTriggerBinding(parameter, hostBlobServiceClient, hostQueueServiceClient,
                 dataBlobServiceClient, dataQueueServiceClient, path, blobTriggerAttribute.Source,
                 _hostIdProvider, _blobsOptions, _exceptionHandler, _blobWrittenWatcherSetter,
-                _blobTriggerQueueWriterFactory, _sharedContextProvider, _singletonManager, _loggerFactory);
+                _blobTriggerQueueWriterFactory, _sharedContextProvider, _singletonManager, _loggerFactory, _concurrencyManager);
 
             return Task.FromResult(binding);
         }

@@ -42,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="interpolation"> Categorical variable supports only &apos;step&apos; interpolation. </param>
         /// <param name="categories"> &lt;This property needs a description&gt;. </param>
         /// <param name="defaultCategory"> Represents the default category. </param>
-        internal CategoricalVariable(string kind, TimeSeriesExpression filter, TimeSeriesExpression value, InterpolationOperation interpolation, IList<TimeSeriesAggregateCategory> categories, TimeSeriesDefaultCategory defaultCategory) : base(kind, filter)
+        internal CategoricalVariable(string kind, TimeSeriesExpression filter, TimeSeriesExpression value, TimeSeriesInterpolation interpolation, IList<TimeSeriesAggregateCategory> categories, TimeSeriesDefaultCategory defaultCategory) : base(kind, filter)
         {
             Value = value;
             Interpolation = interpolation;
@@ -54,7 +54,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Value time series expression is used to represent the value of the signal that is going to be categorized. It can evaluate to only &apos;String&apos; or &apos;Long&apos; type for categorical variables. </summary>
         public TimeSeriesExpression Value { get; set; }
         /// <summary> Categorical variable supports only &apos;step&apos; interpolation. </summary>
-        public InterpolationOperation Interpolation { get; set; }
+        public TimeSeriesInterpolation Interpolation { get; set; }
         /// <summary> &lt;This property needs a description&gt;. </summary>
         public IList<TimeSeriesAggregateCategory> Categories { get; }
         /// <summary> Represents the default category. </summary>

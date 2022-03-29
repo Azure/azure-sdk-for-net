@@ -13,15 +13,14 @@ namespace Microsoft.Azure.Management.LabServices.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The User registered to a lab
+    /// User of a lab that can register for and use virtual machines within the
+    /// lab.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class User : Resource
+    public partial class User : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the User class.
@@ -34,38 +33,44 @@ namespace Microsoft.Azure.Management.LabServices.Models
         /// <summary>
         /// Initializes a new instance of the User class.
         /// </summary>
-        /// <param name="id">The identifier of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">The tags of the resource.</param>
-        /// <param name="email">The user email address, as it was specified
-        /// during registration.</param>
-        /// <param name="familyName">The user family name, as it was specified
-        /// during registration.</param>
-        /// <param name="givenName">The user given name, as it was specified
-        /// during registration.</param>
-        /// <param name="tenantId">The user tenant ID, as it was specified
-        /// during registration.</param>
-        /// <param name="totalUsage">How long the user has used his VMs in this
-        /// lab</param>
-        /// <param name="provisioningState">The provisioning status of the
-        /// resource.</param>
-        /// <param name="uniqueIdentifier">The unique immutable identifier of a
-        /// resource (Guid).</param>
-        /// <param name="latestOperationResult">The details of the latest
-        /// operation. ex: status, error</param>
-        public User(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string email = default(string), string familyName = default(string), string givenName = default(string), string tenantId = default(string), System.TimeSpan? totalUsage = default(System.TimeSpan?), string provisioningState = default(string), string uniqueIdentifier = default(string), LatestOperationResult latestOperationResult = default(LatestOperationResult))
-            : base(id, name, type, location, tags)
+        /// <param name="email">Email address of the user.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the user resource.</param>
+        /// <param name="additionalUsageQuota">The amount of usage quota time
+        /// the user gets in addition to the lab usage quota.</param>
+        /// <param name="provisioningState">Current provisioning state of the
+        /// user resource. Possible values include: 'Creating', 'Updating',
+        /// 'Deleting', 'Succeeded', 'Failed', 'Locked'</param>
+        /// <param name="displayName">Display name of the user, for example
+        /// user's full name.</param>
+        /// <param name="registrationState">State of the user's registration
+        /// within the lab. Possible values include: 'Registered',
+        /// 'NotRegistered'</param>
+        /// <param name="invitationState">State of the invitation message for
+        /// the user. Possible values include: 'NotSent', 'Sending', 'Sent',
+        /// 'Failed'</param>
+        /// <param name="invitationSent">Date and time when the invitation
+        /// message was sent to the user.</param>
+        /// <param name="totalUsage">How long the user has used their virtual
+        /// machines in this lab.</param>
+        public User(string email, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.TimeSpan? additionalUsageQuota = default(System.TimeSpan?), ProvisioningState? provisioningState = default(ProvisioningState?), string displayName = default(string), RegistrationState? registrationState = default(RegistrationState?), InvitationState? invitationState = default(InvitationState?), System.DateTime? invitationSent = default(System.DateTime?), System.TimeSpan? totalUsage = default(System.TimeSpan?))
+            : base(id, name, type)
         {
-            Email = email;
-            FamilyName = familyName;
-            GivenName = givenName;
-            TenantId = tenantId;
-            TotalUsage = totalUsage;
+            SystemData = systemData;
+            AdditionalUsageQuota = additionalUsageQuota;
             ProvisioningState = provisioningState;
-            UniqueIdentifier = uniqueIdentifier;
-            LatestOperationResult = latestOperationResult;
+            DisplayName = displayName;
+            Email = email;
+            RegistrationState = registrationState;
+            InvitationState = invitationState;
+            InvitationSent = invitationSent;
+            TotalUsage = totalUsage;
             CustomInit();
         }
 
@@ -75,53 +80,78 @@ namespace Microsoft.Azure.Management.LabServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the user email address, as it was specified during
-        /// registration.
+        /// Gets metadata pertaining to creation and last modification of the
+        /// user resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the amount of usage quota time the user gets in
+        /// addition to the lab usage quota.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalUsageQuota")]
+        public System.TimeSpan? AdditionalUsageQuota { get; set; }
+
+        /// <summary>
+        /// Gets current provisioning state of the user resource. Possible
+        /// values include: 'Creating', 'Updating', 'Deleting', 'Succeeded',
+        /// 'Failed', 'Locked'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public ProvisioningState? ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets display name of the user, for example user's full name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.displayName")]
+        public string DisplayName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets email address of the user.
         /// </summary>
         [JsonProperty(PropertyName = "properties.email")]
-        public string Email { get; private set; }
+        public string Email { get; set; }
 
         /// <summary>
-        /// Gets the user family name, as it was specified during registration.
+        /// Gets state of the user's registration within the lab. Possible
+        /// values include: 'Registered', 'NotRegistered'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.familyName")]
-        public string FamilyName { get; private set; }
+        [JsonProperty(PropertyName = "properties.registrationState")]
+        public RegistrationState? RegistrationState { get; private set; }
 
         /// <summary>
-        /// Gets the user given name, as it was specified during registration.
+        /// Gets state of the invitation message for the user. Possible values
+        /// include: 'NotSent', 'Sending', 'Sent', 'Failed'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.givenName")]
-        public string GivenName { get; private set; }
+        [JsonProperty(PropertyName = "properties.invitationState")]
+        public InvitationState? InvitationState { get; private set; }
 
         /// <summary>
-        /// Gets the user tenant ID, as it was specified during registration.
+        /// Gets date and time when the invitation message was sent to the
+        /// user.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tenantId")]
-        public string TenantId { get; private set; }
+        [JsonProperty(PropertyName = "properties.invitationSent")]
+        public System.DateTime? InvitationSent { get; private set; }
 
         /// <summary>
-        /// Gets how long the user has used his VMs in this lab
+        /// Gets how long the user has used their virtual machines in this lab.
         /// </summary>
         [JsonProperty(PropertyName = "properties.totalUsage")]
         public System.TimeSpan? TotalUsage { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning status of the resource.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// Gets or sets the unique immutable identifier of a resource (Guid).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
-        public string UniqueIdentifier { get; set; }
-
-        /// <summary>
-        /// Gets the details of the latest operation. ex: status, error
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.latestOperationResult")]
-        public LatestOperationResult LatestOperationResult { get; private set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Email == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Email");
+            }
+        }
     }
 }

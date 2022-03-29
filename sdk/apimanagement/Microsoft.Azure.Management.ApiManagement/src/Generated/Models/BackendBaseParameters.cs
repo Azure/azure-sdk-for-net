@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="description">Backend Description.</param>
         /// <param name="resourceId">Management Uri of the Resource in External
         /// System. This url can be the Arm Resource Id of Logic Apps, Function
-        /// Apps or Api Apps.</param>
+        /// Apps or API Apps.</param>
         /// <param name="properties">Backend Properties contract</param>
         /// <param name="credentials">Backend Credentials Contract
         /// Properties</param>
@@ -71,7 +72,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets management Uri of the Resource in External System.
         /// This url can be the Arm Resource Id of Logic Apps, Function Apps or
-        /// Api Apps.
+        /// API Apps.
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
@@ -103,11 +104,44 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Title != null)
+            {
+                if (Title.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Title", 300);
+                }
+                if (Title.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Title", 1);
+                }
+            }
+            if (Description != null)
+            {
+                if (Description.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 2000);
+                }
+                if (Description.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Description", 1);
+                }
+            }
+            if (ResourceId != null)
+            {
+                if (ResourceId.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ResourceId", 2000);
+                }
+                if (ResourceId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ResourceId", 1);
+                }
+            }
             if (Properties != null)
             {
                 Properties.Validate();

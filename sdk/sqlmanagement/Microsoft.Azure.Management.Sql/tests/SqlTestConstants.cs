@@ -13,9 +13,6 @@ namespace Sql.Tests
         // Default database edition
         public static readonly string DefaultDatabaseEdition = "Basic";
 
-        // Default elastic pool edition
-        public static readonly string DefaultElasticPoolEdition = ElasticPoolEdition.Basic;
-
         public static Sku DefaultDatabaseSku()
         {
             return new Sku(ServiceObjectiveName.Basic);
@@ -24,15 +21,6 @@ namespace Sql.Tests
         public static Sku DefaultDataWarehouseSku()
         {
             return new Sku(ServiceObjectiveName.DW100);
-        }
-
-        public static Sku DefaultElasticPoolSku()
-        {
-            return new Sku(DefaultElasticPoolEdition + "Pool")
-            {
-                Tier = DefaultElasticPoolEdition, // todo: should be optional
-                Capacity = 100
-            };
         }
     }
 }
