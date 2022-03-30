@@ -29,7 +29,7 @@ body:
     attributes:
       label: API / Feature Proposal
       description: |
-        Please provide the specific public API signature diff that you are proposing and/or proposed feature designs
+        Please provide the specific public API signature diff that you are proposing and/or proposed feature designs. Include a link to Api View if one exists. ```
       placeholder: API declaration (no method bodies)
       value: |
         ```C#
@@ -47,7 +47,7 @@ body:
     id: constraints
     attributes:
       label: Time Constraints and Dependencies
-      description: Please outline any relevant dates related to this feature and reference any issues that are dependent on this feature
+      description: Please outline any relevant deadline dates related to this feature. Please also list any client libraries that will consume these changes and describe the scenario this enables.```
       placeholder: This feature is a dependency for Azure.Foo.Bar to Release in October 2023.
     validations:
       required: true
