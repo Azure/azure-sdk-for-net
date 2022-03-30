@@ -894,8 +894,8 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class JitSchedulingPolicy
     {
-        public JitSchedulingPolicy(Azure.ResourceManager.Resources.Models.JitSchedulingType jitSchedulingType, System.TimeSpan interval, System.DateTimeOffset startOn) { }
-        public System.TimeSpan Interval { get { throw null; } set { } }
+        public JitSchedulingPolicy(Azure.ResourceManager.Resources.Models.JitSchedulingType jitSchedulingType, System.TimeSpan duration, System.DateTimeOffset startOn) { }
+        public System.TimeSpan Duration { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.JitSchedulingType JitSchedulingType { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
     }
