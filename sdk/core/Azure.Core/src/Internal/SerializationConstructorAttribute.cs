@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// An attribute class indicating the constructor to use for serialization.
+    /// An attribute class indicating to AutoRest which constructor to use for serialization.
     /// </summary>
     [AttributeUsage(AttributeTargets.Constructor)]
     internal class SerializationConstructorAttribute : Attribute

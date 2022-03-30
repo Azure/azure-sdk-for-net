@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// An attribute class indicating the constructor to use for initialization.
+    /// An attribute class indicating to AutoRest which constructor to use for initialization.
     /// </summary>
     [AttributeUsage(AttributeTargets.Constructor)]
     internal class InitializationConstructorAttribute : Attribute

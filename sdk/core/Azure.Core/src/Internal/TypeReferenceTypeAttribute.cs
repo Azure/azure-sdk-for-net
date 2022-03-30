@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// An attribute class indicating a reference type which can replace a type in target RPs.
+    /// An attribute class indicating to Autorest a reference type which can replace a type in target SDKs.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     internal class TypeReferenceTypeAttribute : Attribute
