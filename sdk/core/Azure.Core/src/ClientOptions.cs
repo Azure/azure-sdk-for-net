@@ -31,7 +31,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions(): this(Default, null, null)
+        protected ClientOptions(): this(Default, null)
         {
         }
 
@@ -40,15 +40,15 @@ namespace Azure.Core
         /// </summary>
         /// <param name="diagnostics"><see cref="DiagnosticsOptions"/> to be used for <see cref="Diagnostics"/>.</param>
         protected ClientOptions(DiagnosticsOptions? diagnostics)
-            : this(Default, diagnostics, null)
+            : this(Default, diagnostics)
         {
         }
 
-        internal ClientOptions(ClientOptions? clientOptions, DiagnosticsOptions? diagnostics, RetryOptions? retry)
+        internal ClientOptions(ClientOptions? clientOptions, DiagnosticsOptions? diagnostics)
         {
             if (clientOptions != null)
             {
-                Retry = retry ?? new RetryOptions(clientOptions.Retry);
+                Retry = new RetryOptions(clientOptions.Retry);
                 Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
                 if (clientOptions.Policies != null)
