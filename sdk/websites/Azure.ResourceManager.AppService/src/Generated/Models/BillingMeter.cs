@@ -21,24 +21,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of BillingMeter. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="meterId"> Meter GUID onboarded in Commerce. </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="shortName"> Short Name from App Service Azure pricing Page. </param>
         /// <param name="friendlyName"> Friendly name of the meter. </param>
-        /// <param name="resourceType"> App Service ResourceType meter used for. </param>
         /// <param name="osType"> App Service OS type meter used for. </param>
         /// <param name="multiplier"> Meter Multiplier. </param>
-        internal BillingMeter(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string meterId, string billingLocation, string shortName, string friendlyName, string resourceType, string osType, double? multiplier) : base(id, name, type, systemData, kind)
+        internal BillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string meterId, string billingLocation, string shortName, string friendlyName, string osType, double? multiplier) : base(id, name, resourceType, systemData, kind)
         {
             MeterId = meterId;
             BillingLocation = billingLocation;
             ShortName = shortName;
             FriendlyName = friendlyName;
-            ResourceType = resourceType;
-            OsType = osType;
+            OSType = osType;
             Multiplier = multiplier;
         }
 
@@ -50,10 +48,8 @@ namespace Azure.ResourceManager.AppService.Models
         public string ShortName { get; set; }
         /// <summary> Friendly name of the meter. </summary>
         public string FriendlyName { get; set; }
-        /// <summary> App Service ResourceType meter used for. </summary>
-        public string ResourceType { get; set; }
         /// <summary> App Service OS type meter used for. </summary>
-        public string OsType { get; set; }
+        public string OSType { get; set; }
         /// <summary> Meter Multiplier. </summary>
         public double? Multiplier { get; set; }
     }

@@ -18,40 +18,40 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
         public AseV3NetworkingConfigurationData()
         {
-            WindowsOutboundIpAddresses = new ChangeTrackingList<string>();
-            LinuxOutboundIpAddresses = new ChangeTrackingList<string>();
-            ExternalInboundIpAddresses = new ChangeTrackingList<string>();
-            InternalInboundIpAddresses = new ChangeTrackingList<string>();
+            WindowsOutboundIPAddresses = new ChangeTrackingList<string>();
+            LinuxOutboundIPAddresses = new ChangeTrackingList<string>();
+            ExternalInboundIPAddresses = new ChangeTrackingList<string>();
+            InternalInboundIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="windowsOutboundIpAddresses"></param>
-        /// <param name="linuxOutboundIpAddresses"></param>
-        /// <param name="externalInboundIpAddresses"></param>
-        /// <param name="internalInboundIpAddresses"></param>
+        /// <param name="windowsOutboundIPAddresses"></param>
+        /// <param name="linuxOutboundIPAddresses"></param>
+        /// <param name="externalInboundIPAddresses"></param>
+        /// <param name="internalInboundIPAddresses"></param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IReadOnlyList<string> windowsOutboundIpAddresses, IReadOnlyList<string> linuxOutboundIpAddresses, IReadOnlyList<string> externalInboundIpAddresses, IReadOnlyList<string> internalInboundIpAddresses, bool? allowNewPrivateEndpointConnections) : base(id, name, type, systemData, kind)
+        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IReadOnlyList<string> windowsOutboundIPAddresses, IReadOnlyList<string> linuxOutboundIPAddresses, IReadOnlyList<string> externalInboundIPAddresses, IReadOnlyList<string> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections) : base(id, name, resourceType, systemData, kind)
         {
-            WindowsOutboundIpAddresses = windowsOutboundIpAddresses;
-            LinuxOutboundIpAddresses = linuxOutboundIpAddresses;
-            ExternalInboundIpAddresses = externalInboundIpAddresses;
-            InternalInboundIpAddresses = internalInboundIpAddresses;
+            WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
+            LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
+            ExternalInboundIPAddresses = externalInboundIPAddresses;
+            InternalInboundIPAddresses = internalInboundIPAddresses;
             AllowNewPrivateEndpointConnections = allowNewPrivateEndpointConnections;
         }
 
         /// <summary> Gets the windows outbound ip addresses. </summary>
-        public IReadOnlyList<string> WindowsOutboundIpAddresses { get; }
+        public IReadOnlyList<string> WindowsOutboundIPAddresses { get; }
         /// <summary> Gets the linux outbound ip addresses. </summary>
-        public IReadOnlyList<string> LinuxOutboundIpAddresses { get; }
+        public IReadOnlyList<string> LinuxOutboundIPAddresses { get; }
         /// <summary> Gets the external inbound ip addresses. </summary>
-        public IReadOnlyList<string> ExternalInboundIpAddresses { get; }
+        public IReadOnlyList<string> ExternalInboundIPAddresses { get; }
         /// <summary> Gets the internal inbound ip addresses. </summary>
-        public IReadOnlyList<string> InternalInboundIpAddresses { get; }
+        public IReadOnlyList<string> InternalInboundIPAddresses { get; }
         /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
         public bool? AllowNewPrivateEndpointConnections { get; set; }
     }

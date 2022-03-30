@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Rule Group type. </param>
+        /// <param name="resourceType"> Rule Group type. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
-        internal FirewallPolicyRuleCollectionGroupData(string id, string name, string etag, string type, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, ProvisioningState? provisioningState) : base(id)
+        internal FirewallPolicyRuleCollectionGroupData(string id, string name, string etag, string resourceType, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Priority = priority;
             RuleCollections = ruleCollections;
             ProvisioningState = provisioningState;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Rule Group type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Priority of the Firewall Policy Rule Collection Group resource. </summary>
         public int? Priority { get; set; }
         /// <summary> Group of Firewall Policy rule collections. </summary>

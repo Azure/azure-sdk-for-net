@@ -13,11 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteRecommendation and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteRecommendationResource" /> and their operations.
+    /// Each <see cref="SiteRecommendationResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteRecommendationCollection" /> instance call the GetSiteRecommendations method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteRecommendationCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteRecommendationRecommendationsClientDiagnostics;
@@ -33,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteRecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendation.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteRecommendation.ResourceType, out string siteRecommendationRecommendationsApiVersion);
-            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_siteRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
+            _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteRecommendationResource.ResourceType, out string siteRecommendationRecommendationsApiVersion);
+            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,8 +46,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSite.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<SiteRecommendation>> GetAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecommendationResource>> GetAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -68,8 +71,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteRecommendationRecommendationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteRecommendation(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -89,7 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<SiteRecommendation> Get(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecommendationResource> Get(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -99,8 +102,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
                 if (response.Value == null)
-                    throw _siteRecommendationRecommendationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteRecommendation(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -178,7 +181,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<SiteRecommendation>> GetIfExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecommendationResource>> GetIfExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -188,8 +191,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteRecommendation>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteRecommendation(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteRecommendationResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +212,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<SiteRecommendation> GetIfExists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecommendationResource> GetIfExists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -219,8 +222,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteRecommendation>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteRecommendation(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteRecommendationResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

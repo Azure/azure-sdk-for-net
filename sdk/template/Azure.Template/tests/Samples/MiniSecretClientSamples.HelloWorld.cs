@@ -5,7 +5,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+#region Snippet:Azure_Template_Namespaces
 using Azure.Template.Models;
+#endregion
 using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
@@ -18,7 +20,7 @@ namespace Azure.Template.Tests.Samples
         {
             var endpoint = TestEnvironment.KeyVaultUri;
 
-            #region Snippet:GetSecret
+            #region Snippet:Azure_Template_GetSecret
 #if SNIPPET
             string endpoint = "https://myvault.vault.azure.net";
 #endif
@@ -38,7 +40,7 @@ namespace Azure.Template.Tests.Samples
         {
             var endpoint = TestEnvironment.KeyVaultUri;
 
-            #region Snippet:GetSecretAsync
+            #region Snippet:Azure_Template_GetSecretAsync
 #if SNIPPET
             string endpoint = "https://myvault.vault.azure.net";
 #endif

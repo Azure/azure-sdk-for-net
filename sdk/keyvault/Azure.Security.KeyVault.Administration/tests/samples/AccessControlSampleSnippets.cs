@@ -71,12 +71,6 @@ namespace Azure.Security.KeyVault.Administration.Samples
             Pageable<KeyVaultRoleDefinition> allDefinitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global);
             _roleDefinitionId = allDefinitions.First(d => d.RoleName == RoleName).Id;
 
-            // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
-            string definitionIdToAssign = _roleDefinitionId;
-
-            // Replace objectId with the service principal object id from the Create/Get credentials section above
-            string servicePrincipalObjectId = _objectId;
-
 #if SNIPPET
             // Replace <roleDefinitionId> with a role definition Id from the definitions returned from the List the role definitions section above
             string definitionIdToAssign = "<roleDefinitionId>";
@@ -86,6 +80,12 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
             KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 #else
+            // Replace roleDefinitionId with a role definition Id from the definitions returned from the List the role definitions section above
+            string definitionIdToAssign = _roleDefinitionId;
+
+            // Replace objectId with the service principal object id from the Create/Get credentials section above
+            string servicePrincipalObjectId = _objectId;
+
             Guid roleDefinitionName = Recording.Random.NewGuid();
             KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, roleDefinitionName);
 #endif

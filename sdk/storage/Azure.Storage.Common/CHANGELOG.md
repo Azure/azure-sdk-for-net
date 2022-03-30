@@ -1,6 +1,10 @@
 # Release History
 
-## 12.10.0-beta.4 (Unreleased)
+## 12.11.0-beta.1 (Unreleased)
+- This release contains bug fixes to improve quality.
+
+## 12.10.0 (2022-03-10)
+- Includes all features from 12.10.0-beta.1, 12.10.0-beta.2, and 12.10.0-beta.3 except SDK-calculated transactional checksums on data transfer.
 - Updated StorageBearerTokenChallengeAuthorizationPolicy to use the AAD scope returned by a bearer challenges.
 - Removed preview support for SDK-calculated transactional checksums on data transfer.
 - Fixed bug where Storage Uri Builder was case sensitive for parameter names.

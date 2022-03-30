@@ -16,11 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of PrivateLinkResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="PrivateLinkResource" /> and their operations.
+    /// Each <see cref="PrivateLinkResource" /> in the collection will belong to the same instance of <see cref="DatabaseAccountResource" />.
+    /// To get a <see cref="PrivateLinkResourceCollection" /> instance call the GetPrivateLinkResources method from an instance of <see cref="DatabaseAccountResource" />.
+    /// </summary>
     public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkResourceClientDiagnostics;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", PrivateLinkResource.ResourceType.Namespace, DiagnosticOptions);
+            _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
-            _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(_privateLinkResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkResourceApiVersion);
+            _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DatabaseAccount.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccount.ResourceType), nameof(id));
+            if (id.ResourceType != DatabaseAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public async virtual Task<Response<PrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _privateLinkResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _privateLinkResourceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _privateLinkResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
                 if (response.Value == null)
-                    throw _privateLinkResourceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
@@ -225,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public async virtual Task<Response<PrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 

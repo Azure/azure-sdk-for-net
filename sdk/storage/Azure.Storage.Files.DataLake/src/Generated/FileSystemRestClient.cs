@@ -33,14 +33,14 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="resource"> The value must be &quot;filesystem&quot; for all filesystem operations. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="resource"/> or <paramref name="version"/> is null. </exception>
-        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string resource = "filesystem", string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="resource"/> or <paramref name="version"/> is null. </exception>
+        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string resource = "filesystem", string version = "2021-06-08")
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _resource = resource ?? throw new ArgumentNullException(nameof(resource));
             _version = version ?? throw new ArgumentNullException(nameof(version));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateCreateRequest(int? timeout, string properties)

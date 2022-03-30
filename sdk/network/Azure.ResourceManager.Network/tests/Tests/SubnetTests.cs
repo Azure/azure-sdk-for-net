@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class SubnetTests : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
         public SubnetTests(bool isAsync) : base(isAsync)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             // Create a Subnet
             // Populate paramters for a Subnet
@@ -69,23 +69,23 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             #region Verification
-            var putSubnetResponseOperation = await vnetResponse.Value.GetSubnets().CreateOrUpdateAsync(true, subnet2Name, subnet);
+            var putSubnetResponseOperation = await vnetResponse.Value.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, subnet2Name, subnet);
             await putSubnetResponseOperation.WaitForCompletionAsync();;
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
+            Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
             Assert.AreEqual(2, getVnetResponse.Value.Data.Subnets.Count());
 
-            Response<Subnet> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnet2Name);
+            Response<SubnetResource> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnet2Name);
 
             // Verify the getSubnetResponse
             Assert.True(AreSubnetsEqual(getVnetResponse.Value.Data.Subnets[1], getSubnetResponse.Value.Data));
 
-            AsyncPageable<Subnet> getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
-            List<Subnet> getSubnetListResponse = await getSubnetListResponseAP.ToEnumerableAsync();
+            AsyncPageable<SubnetResource> getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
+            List<SubnetResource> getSubnetListResponse = await getSubnetListResponseAP.ToEnumerableAsync();
             // Verify ListSubnets
             Assert.True(AreSubnetListsEqual(getVnetResponse.Value.Data.Subnets, getSubnetListResponse));
 
             // Delete the subnet "subnet1"
-            await getSubnetResponse.Value.DeleteAsync(true);
+            await getSubnetResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // Verify that the deletion was successful
             getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(true, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
-            Response<Subnet> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
+            Response<SubnetResource> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
             Assert.Null(getSubnetResponse.Value.Data.ResourceNavigationLinks);
 
             //TODO:Need RedisManagementClient
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Tests
                    subnet1.AddressPrefix == subnet2.AddressPrefix;
         }
 
-        private bool AreSubnetListsEqual(IEnumerable<SubnetData> subnets1, IEnumerable<Subnet> subnets2)
+        private bool AreSubnetListsEqual(IEnumerable<SubnetData> subnets1, IEnumerable<SubnetResource> subnets2)
         {
             var subnetCollection = subnets1.Zip(subnets2, (s1, s2) => new { subnet1 = s1, subnet2 = s2.Data });
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class RouteTests : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
         public RouteTests(bool isAsync) : base(isAsync)
         {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put RouteTable
             var routeTableCollection = resourceGroup.GetRouteTables();
-            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(true, routeTableName, routeTable);
-            Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
+            var putRouteTableResponseOperation = await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
+            Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
 
             // Get RouteTable
-            Response<RouteTable> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
+            Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
             Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
             Assert.AreEqual(1, getRouteTableResponse.Value.Data.Routes.Count);
             Assert.AreEqual(route1Name, getRouteTableResponse.Value.Data.Routes[0].Name);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(RouteNextHopType.VirtualAppliance, getRouteTableResponse.Value.Data.Routes[0].NextHopType);
 
             // Get Route
-            Response<Route> getRouteResponse = await getRouteTableResponse.Value.GetRoutes().GetAsync(route1Name);
+            Response<RouteResource> getRouteResponse = await getRouteTableResponse.Value.GetRoutes().GetAsync(route1Name);
             Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
             Assert.AreEqual(1, getRouteTableResponse.Value.Data.Routes.Count);
             Assert.AreEqual(getRouteResponse.Value.Data.Name, getRouteTableResponse.Value.Data.Routes[0].Name);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Tests
                 NextHopType = RouteNextHopType.VnetLocal
             };
 
-            await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(true, route2Name, route2);
+            await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route2Name, route2);
 
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
             Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
@@ -97,15 +97,15 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(string.IsNullOrEmpty(getRouteTableResponse.Value.Data.Routes[1].NextHopIPAddress));
             Assert.AreEqual(RouteNextHopType.VnetLocal, getRouteTableResponse.Value.Data.Routes[1].NextHopType);
 
-            Response<Route> getRouteResponse2 = await getRouteTableResponse.Value.GetRoutes().GetAsync(route2Name);
+            Response<RouteResource> getRouteResponse2 = await getRouteTableResponse.Value.GetRoutes().GetAsync(route2Name);
             Assert.AreEqual(getRouteResponse2.Value.Data.Name, getRouteTableResponse.Value.Data.Routes[1].Name);
             Assert.AreEqual(getRouteResponse2.Value.Data.AddressPrefix, getRouteTableResponse.Value.Data.Routes[1].AddressPrefix);
             Assert.AreEqual(getRouteResponse2.Value.Data.NextHopIPAddress, getRouteTableResponse.Value.Data.Routes[1].NextHopIPAddress);
             Assert.AreEqual(getRouteResponse2.Value.Data.NextHopType, getRouteTableResponse.Value.Data.Routes[1].NextHopType);
 
             // list route
-            AsyncPageable<Route> listRouteResponseAP = getRouteTableResponse.Value.GetRoutes().GetAllAsync();
-            List<Route> listRouteResponse = await listRouteResponseAP.ToEnumerableAsync();
+            AsyncPageable<RouteResource> listRouteResponseAP = getRouteTableResponse.Value.GetRoutes().GetAllAsync();
+            List<RouteResource> listRouteResponse = await listRouteResponseAP.ToEnumerableAsync();
             Assert.AreEqual(2, listRouteResponse.Count());
             Assert.AreEqual(getRouteResponse.Value.Data.Name, listRouteResponse.First().Data.Name);
             Assert.AreEqual(getRouteResponse.Value.Data.AddressPrefix, listRouteResponse.First().Data.AddressPrefix);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getRouteResponse2.Value.Data.NextHopType, listRouteResponse.ElementAt(1).Data.NextHopType);
 
             // Delete a route
-            await getRouteResponse.Value.DeleteAsync(true);
+            await getRouteResponse.Value.DeleteAsync(WaitUntil.Completed);
             listRouteResponseAP = getRouteTableResponse.Value.GetRoutes().GetAllAsync();
             listRouteResponse = await listRouteResponseAP.ToEnumerableAsync();
             Has.One.EqualTo(listRouteResponse);
@@ -127,18 +127,18 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(getRouteResponse2.Value.Data.NextHopType, listRouteResponse.First().Data.NextHopType);
 
             // Delete route
-            await getRouteResponse2.Value.DeleteAsync(true);
+            await getRouteResponse2.Value.DeleteAsync(WaitUntil.Completed);
 
             listRouteResponseAP = getRouteTableResponse.Value.GetRoutes().GetAllAsync();
             listRouteResponse = await listRouteResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(listRouteResponse);
 
             // Delete RouteTable
-            await getRouteTableResponse.Value.DeleteAsync(true);
+            await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // Verify delete
-            AsyncPageable<RouteTable> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
-            List<RouteTable> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
+            AsyncPageable<RouteTableResource> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
+            List<RouteTableResource> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(listRouteTableResponse);
         }
 
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.Network.Tests
             // Put RouteTable
             var routeTableCollection = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation =
-                await routeTableCollection.CreateOrUpdateAsync(true, routeTableName, routeTable);
-            Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
+                await routeTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTable);
+            Response<RouteTableResource> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
 
             // Get RouteTable
-            Response<RouteTable> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
+            Response<RouteTableResource> getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
             Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
             Assert.AreEqual(1, getRouteTableResponse.Value.Data.Routes.Count);
             Assert.AreEqual(route1Name, getRouteTableResponse.Value.Data.Routes[0].Name);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Name = route2Name,
                 NextHopType = RouteNextHopType.VnetLocal
             };
-            await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(true, route2Name, route2);
+            await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route2Name, route2);
 
             // Add another route
             var route3 = new RouteData()
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Name = route3Name,
                 NextHopType = RouteNextHopType.Internet
             };
-            await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(true, route3Name, route3);
+            await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route3Name, route3);
 
             // Add another route
             var route4 = new RouteData()
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Name = route4Name,
                 NextHopType = RouteNextHopType.None
             };
-            await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(true, route4Name, route4);
+            await getRouteTableResponse.Value.GetRoutes().CreateOrUpdateAsync(WaitUntil.Completed, route4Name, route4);
 
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
             Assert.AreEqual(routeTableName, getRouteTableResponse.Value.Data.Name);
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(RouteNextHopType.None, getRouteTableResponse.Value.Data.Routes[3].NextHopType);
 
             // Delete RouteTable
-            await getRouteTableResponse.Value.DeleteAsync(true);
+            await getRouteTableResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // Verify delete
-            AsyncPageable<RouteTable> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
-            List<RouteTable> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
+            AsyncPageable<RouteTableResource> listRouteTableResponseAP = routeTableCollection.GetAllAsync();
+            List<RouteTableResource> listRouteTableResponse = await listRouteTableResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(listRouteTableResponse);
         }
     }

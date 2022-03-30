@@ -28,9 +28,10 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following:
 
-```C# Snippet:Managing_Namespaces_AuthClient
+```C# Snippet:Managing_Namespaces_AuthClient_Usings
 using Azure.Identity;
-
+```
+```C# Snippet:Managing_Namespaces_AuthClient
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
@@ -48,11 +49,11 @@ Before creating a namespace, we need to have a resource group.
 
 ```C# Snippet:Managing_Namespaces_CreateResourceGroup
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = operation.Value;
+ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = operation.Value;
 ```
 
 Then we can create a namespace inside this resource group.
@@ -61,14 +62,14 @@ Then we can create a namespace inside this resource group.
 string namespaceName = "myNamespace";
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
 AzureLocation location = AzureLocation.EastUS2;
-EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(location))).Value;
+EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(location))).Value;
 ```
 
 ### Get all namespaces in a resource group
 
 ```C# Snippet:Managing_Namespaces_ListNamespaces
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-await foreach (EventHubNamespace eventHubNamespace in namespaceCollection.GetAllAsync())
+await foreach (EventHubNamespaceResource eventHubNamespace in namespaceCollection.GetAllAsync())
 {
     Console.WriteLine(eventHubNamespace.Id.Name);
 }
@@ -78,7 +79,7 @@ await foreach (EventHubNamespace eventHubNamespace in namespaceCollection.GetAll
 
 ```C# Snippet:Managing_Namespaces_GetNamespace
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
+EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
 Console.WriteLine(eventHubNamespace.Id.Name);
 ```
 
@@ -87,7 +88,7 @@ Console.WriteLine(eventHubNamespace.Id.Name);
 
 ```C# Snippet:Managing_Namespaces_GetNamespaceIfExists
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eventHubNamespace = await namespaceCollection.GetIfExistsAsync("foo");
+EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetIfExistsAsync("foo");
 if (eventHubNamespace != null)
 {
     Console.WriteLine("namespace 'foo' exists");
@@ -101,15 +102,15 @@ if (await namespaceCollection.ExistsAsync("bar"))
 ### Delete a namespace
 ```C# Snippet:Managing_Namespaces_DeleteNamespace
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-await eventHubNamespace.DeleteAsync(true);
+EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
+await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
 ```
 
 ### Add a tag to the namespace
 
 ```C# Snippet:Managing_Namespaces_AddTag
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
+EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
 await eventHubNamespace.AddTagAsync("key","value");
 ```
 
@@ -158,4 +159,4 @@ more information see the Code of Conduct FAQ or contact
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.ResourceManager.EventHubs%2FREADME.png)

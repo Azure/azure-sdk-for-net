@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         private readonly string _functionId;
         private readonly IEventHubConsumerClient _client;
         private readonly ILogger _logger;
-        private readonly BlobsCheckpointStore _checkpointStore;
+        private readonly BlobCheckpointStoreInternal _checkpointStore;
 
         private DateTime _nextPartitionLogTime;
         private DateTime _nextPartitionWarningTime;
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         public EventHubsScaleMonitor(
             string functionId,
             IEventHubConsumerClient client,
-            BlobsCheckpointStore checkpointStore,
+            BlobCheckpointStoreInternal checkpointStore,
             ILogger logger)
         {
             _functionId = functionId;
@@ -69,32 +69,36 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             // Get the PartitionRuntimeInformation for all partitions
             _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
-            var tasks = new Task<PartitionProperties>[partitions.Length];
+            var partitionPropertiesTasks = new Task<PartitionProperties>[partitions.Length];
+            var checkpointTasks = new Task<EventProcessorCheckpoint>[partitionPropertiesTasks.Length];
 
             for (int i = 0; i < partitions.Length; i++)
             {
-                tasks[i] = _client.GetPartitionPropertiesAsync(partitions[i]);
-            }
+                partitionPropertiesTasks[i] = _client.GetPartitionPropertiesAsync(partitions[i]);
 
-            await Task.WhenAll(tasks).ConfigureAwait(false);
-
-            IEnumerable<EventProcessorCheckpoint> checkpoints;
-            try
-            {
-                checkpoints = await _checkpointStore.ListCheckpointsAsync(
+                checkpointTasks[i] = _checkpointStore.GetCheckpointAsync(
                         _client.FullyQualifiedNamespace,
                         _client.EventHubName,
                         _client.ConsumerGroup,
-                        default)
+                        partitions[i],
+                        CancellationToken.None);
+            }
+
+            await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
+            EventProcessorCheckpoint[] checkpoints;
+
+            try
+            {
+                checkpoints = await Task.WhenAll(checkpointTasks)
                     .ConfigureAwait(false);
             }
             catch
             {
-                // ListCheckpointsAsync would log
+                // GetCheckpointsAsync would log
                 return metrics;
             }
 
-            return CreateTriggerMetrics(tasks.Select(t => t.Result).ToList(), checkpoints.ToArray());
+            return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);
         }
 
         private EventHubsTriggerMetrics CreateTriggerMetrics(List<PartitionProperties> partitionRuntimeInfo, EventProcessorCheckpoint[] checkpoints, bool alwaysLog = false)
@@ -111,7 +115,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             {
                 var partitionProperties = partitionRuntimeInfo[i];
 
-                var checkpoint = (BlobsCheckpointStore.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c.PartitionId == partitionProperties.Id);
+                var checkpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c.PartitionId == partitionProperties.Id);
                 if (checkpoint == null)
                 {
                     partitionErrors.Add($"Unable to find a checkpoint information for partition: {partitionProperties.Id}");
@@ -151,7 +155,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         }
 
         // Get the number of unprocessed events by deriving the delta between the server side info and the partition lease info,
-        private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobsCheckpointStore.BlobStorageCheckpoint partitionLeaseInfo)
+        private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobCheckpointStoreInternal.BlobStorageCheckpoint partitionLeaseInfo)
         {
             long partitionLeaseInfoSequenceNumber = partitionLeaseInfo.SequenceNumber ?? 0;
 

@@ -54,17 +54,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// Gets details of the Source Control Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -143,8 +141,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
+            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();
@@ -276,17 +274,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// Create a new Kubernetes Source Control Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -373,8 +369,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
+            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();
@@ -531,17 +527,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// configuration, thus stopping future sync from the source repo.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -566,17 +560,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// List all Source Control Configurations.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -647,8 +639,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
+            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -780,17 +772,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// configuration, thus stopping future sync from the source repo.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
-        /// clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters). Possible
-        /// values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for AKS
-        /// clusters) or connectedClusters (for OnPrem K8S clusters). Possible values
-        /// include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -866,8 +856,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterRp, Client.SerializationSettings).Trim('"')));
-            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
+            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();

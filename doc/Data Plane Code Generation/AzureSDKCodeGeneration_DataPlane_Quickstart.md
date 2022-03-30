@@ -1,14 +1,14 @@
-# Azure SDK Code Geneneration Quickstart Tutorial (Data Plane)
+# Azure SDK Code Generation Quickstart Tutorial (Data Plane)
 
 We build Azure SDK libraries to give developers a consistent, unified experience working with Azure services, in the language ecosystem where they're most comfortable.  Azure SDK Code Generation allows you to quickly and easily create a client library so customers can work with your service as part of the SDK.  In this tutorial, we will step through the process of creating a new Azure SDK Generated Client library for a data plane Azure service.  The output library will have an API that follows [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html), which will give it the same look and feel of other .NET libraries in the Azure SDK.
 
 Azure SDK Code Generation takes an Open API spec as input, and uses the [autorest.csharp](https://github.com/Azure/autorest.csharp) generator to output a generated library.  It is important that the input API spec follows the [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md), to enable the output library to be consistent with the Azure SDK Guidelines.
 
-**Learn more**: You can learn more about Azure SDK Data Plane Code Generation in the [Azure SDK Code Geneneration docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
+**Learn more**: You can learn more about Azure SDK Data Plane Code Generation in the [Azure SDK Code Generation docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
 
 This tutorial has following sections:
 
-- [Azure SDK Code Geneneration Quickstart Tutorial (Data Plane)](#azure-sdk-code-geneneration-quickstart-tutorial-data-plane)
+- [Azure SDK Code Generation Quickstart Tutorial (Data Plane)](#azure-sdk-code-generation-quickstart-tutorial-data-plane)
   - [Prerequisites](#prerequisites)
   - [Setup your repo](#setup-your-repo)
   - [Create starter package](#create-starter-package)

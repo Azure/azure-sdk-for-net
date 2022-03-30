@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of HybridConnectionLimitsData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="current"> The current number of Hybrid Connections. </param>
         /// <param name="maximum"> The maximum number of Hybrid Connections allowed. </param>
-        internal HybridConnectionLimitsData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? current, int? maximum) : base(id, name, type, systemData, kind)
+        internal HybridConnectionLimitsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? current, int? maximum) : base(id, name, resourceType, systemData, kind)
         {
             Current = current;
             Maximum = maximum;

@@ -22,7 +22,7 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", fileUri);
 

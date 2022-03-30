@@ -71,6 +71,32 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<IPage<DataCollectionRuleAssociationProxyOnlyResource>>> ListByRuleWithHttpMessagesAsync(string resourceGroupName, string dataCollectionRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists associations for the specified data collection endpoint.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='dataCollectionEndpointName'>
+        /// The name of the data collection endpoint. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseCommonV2Exception">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<DataCollectionRuleAssociationProxyOnlyResource>>> ListByDataCollectionEndpointWithHttpMessagesAsync(string resourceGroupName, string dataCollectionEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Returns the specified association.
         /// </summary>
         /// <param name='resourceUri'>
@@ -189,5 +215,27 @@ namespace Microsoft.Azure.Management.Monitor
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<DataCollectionRuleAssociationProxyOnlyResource>>> ListByRuleNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists associations for the specified data collection endpoint.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseCommonV2Exception">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<DataCollectionRuleAssociationProxyOnlyResource>>> ListByDataCollectionEndpointNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

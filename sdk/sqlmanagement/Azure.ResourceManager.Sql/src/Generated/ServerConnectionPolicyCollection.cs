@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerConnectionPolicy and their operations over its parent. </summary>
-    public partial class ServerConnectionPolicyCollection : ArmCollection, IEnumerable<ServerConnectionPolicy>, IAsyncEnumerable<ServerConnectionPolicy>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerConnectionPolicyResource" /> and their operations.
+    /// Each <see cref="ServerConnectionPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServerConnectionPolicyCollection" /> instance call the GetServerConnectionPolicies method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
+    public partial class ServerConnectionPolicyCollection : ArmCollection, IEnumerable<ServerConnectionPolicyResource>, IAsyncEnumerable<ServerConnectionPolicyResource>
     {
         private readonly ClientDiagnostics _serverConnectionPolicyClientDiagnostics;
         private readonly ServerConnectionPoliciesRestOperations _serverConnectionPolicyRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerConnectionPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverConnectionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerConnectionPolicy.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ServerConnectionPolicy.ResourceType, out string serverConnectionPolicyApiVersion);
-            _serverConnectionPolicyRestClient = new ServerConnectionPoliciesRestOperations(_serverConnectionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverConnectionPolicyApiVersion);
+            _serverConnectionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerConnectionPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerConnectionPolicyResource.ResourceType, out string serverConnectionPolicyApiVersion);
+            _serverConnectionPolicyRestClient = new ServerConnectionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverConnectionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlServer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+            if (id.ResourceType != SqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,22 +59,22 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// Operation Id: ServerConnectionPolicies_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
-        /// <param name="parameters"> The required parameters for updating a server connection policy. </param>
+        /// <param name="data"> The required parameters for updating a server connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ServerConnectionPolicy>> CreateOrUpdateAsync(bool waitForCompletion, ConnectionPolicyName connectionPolicyName, ServerConnectionPolicyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServerConnectionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ConnectionPolicyName connectionPolicyName, ServerConnectionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverConnectionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ServerConnectionPolicy>(new ServerConnectionPolicyOperationSource(Client), _serverConnectionPolicyClientDiagnostics, Pipeline, _serverConnectionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var response = await _serverConnectionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ServerConnectionPolicyResource>(new ServerConnectionPolicyOperationSource(Client), _serverConnectionPolicyClientDiagnostics, Pipeline, _serverConnectionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -87,22 +90,22 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
         /// Operation Id: ServerConnectionPolicies_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
-        /// <param name="parameters"> The required parameters for updating a server connection policy. </param>
+        /// <param name="data"> The required parameters for updating a server connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ServerConnectionPolicy> CreateOrUpdate(bool waitForCompletion, ConnectionPolicyName connectionPolicyName, ServerConnectionPolicyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ServerConnectionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, ConnectionPolicyName connectionPolicyName, ServerConnectionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverConnectionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ServerConnectionPolicy>(new ServerConnectionPolicyOperationSource(Client), _serverConnectionPolicyClientDiagnostics, Pipeline, _serverConnectionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var response = _serverConnectionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data, cancellationToken);
+                var operation = new SqlArmOperation<ServerConnectionPolicyResource>(new ServerConnectionPolicyOperationSource(Client), _serverConnectionPolicyClientDiagnostics, Pipeline, _serverConnectionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -120,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerConnectionPolicy>> GetAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerConnectionPolicyResource>> GetAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.Get");
             scope.Start();
@@ -128,8 +131,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverConnectionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverConnectionPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerConnectionPolicy(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerConnectionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +148,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerConnectionPolicy> Get(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerConnectionPolicyResource> Get(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.Get");
             scope.Start();
@@ -153,8 +156,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverConnectionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverConnectionPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerConnectionPolicy(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerConnectionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,17 +172,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerConnectionPolicies_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerConnectionPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerConnectionPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerConnectionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerConnectionPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerConnectionPolicy>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerConnectionPolicyResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverConnectionPolicyRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -187,14 +190,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerConnectionPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerConnectionPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverConnectionPolicyRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +214,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerConnectionPolicies_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerConnectionPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerConnectionPolicy> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerConnectionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerConnectionPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServerConnectionPolicy> FirstPageFunc(int? pageSizeHint)
+            Page<ServerConnectionPolicyResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverConnectionPolicyRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +232,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerConnectionPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerConnectionPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverConnectionPolicyRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerConnectionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +257,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.Exists");
             scope.Start();
@@ -300,7 +303,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerConnectionPolicy>> GetIfExistsAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerConnectionPolicyResource>> GetIfExistsAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetIfExists");
             scope.Start();
@@ -308,8 +311,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverConnectionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ServerConnectionPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerConnectionPolicy(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerConnectionPolicyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerConnectionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,7 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerConnectionPolicy> GetIfExists(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerConnectionPolicyResource> GetIfExists(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicyCollection.GetIfExists");
             scope.Start();
@@ -333,8 +336,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverConnectionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ServerConnectionPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerConnectionPolicy(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerConnectionPolicyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerConnectionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -343,7 +346,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ServerConnectionPolicy> IEnumerable<ServerConnectionPolicy>.GetEnumerator()
+        IEnumerator<ServerConnectionPolicyResource> IEnumerable<ServerConnectionPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -353,7 +356,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerConnectionPolicy> IAsyncEnumerable<ServerConnectionPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServerConnectionPolicyResource> IAsyncEnumerable<ServerConnectionPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

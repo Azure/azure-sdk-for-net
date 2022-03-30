@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             };
 
             // Create
-            var createAddressOperation = await _addressResourceCollection.CreateOrUpdateAsync(true, addressName, addressResourceData);
+            var createAddressOperation = await _addressResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, addressName, addressResourceData);
             await createAddressOperation.WaitForCompletionAsync();
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase, Order(1)]
         public async Task TestListAddressesAtSubscriptionLevel()
         {
-            AsyncPageable<AddressResource> addresses = SubscriptionExtensions.GetAddressResourcesAsync(Subscription);
+            AsyncPageable<AddressResource> addresses = EdgeOrderExtensions.GetAddressResourcesAsync(Subscription);
             List<AddressResource> addressesResult = await addresses.ToEnumerableAsync();
 
             Assert.NotNull(addressesResult);

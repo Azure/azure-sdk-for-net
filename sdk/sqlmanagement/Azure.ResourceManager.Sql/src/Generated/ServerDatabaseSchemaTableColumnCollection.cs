@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerDatabaseSchemaTableColumn and their operations over its parent. </summary>
-    public partial class ServerDatabaseSchemaTableColumnCollection : ArmCollection, IEnumerable<ServerDatabaseSchemaTableColumn>, IAsyncEnumerable<ServerDatabaseSchemaTableColumn>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerDatabaseSchemaTableColumnResource" /> and their operations.
+    /// Each <see cref="ServerDatabaseSchemaTableColumnResource" /> in the collection will belong to the same instance of <see cref="ServerDatabaseSchemaTableResource" />.
+    /// To get a <see cref="ServerDatabaseSchemaTableColumnCollection" /> instance call the GetServerDatabaseSchemaTableColumns method from an instance of <see cref="ServerDatabaseSchemaTableResource" />.
+    /// </summary>
+    public partial class ServerDatabaseSchemaTableColumnCollection : ArmCollection, IEnumerable<ServerDatabaseSchemaTableColumnResource>, IAsyncEnumerable<ServerDatabaseSchemaTableColumnResource>
     {
         private readonly ClientDiagnostics _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics;
         private readonly DatabaseColumnsRestOperations _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerDatabaseSchemaTableColumnCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumn.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ServerDatabaseSchemaTableColumn.ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
-            _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(_serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
+            _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumnResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerDatabaseSchemaTableColumnResource.ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
+            _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerDatabaseSchemaTable.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseSchemaTable.ResourceType), nameof(id));
+            if (id.ResourceType != ServerDatabaseSchemaTableResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseSchemaTableResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseSchemaTableColumn>> GetAsync(string columnName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDatabaseSchemaTableColumnResource>> GetAsync(string columnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
@@ -69,8 +72,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerDatabaseSchemaTableColumn(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTableColumnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public virtual Response<ServerDatabaseSchemaTableColumn> Get(string columnName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerDatabaseSchemaTableColumnResource> Get(string columnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
@@ -98,8 +101,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchemaTableColumn(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTableColumnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,17 +118,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumn" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchemaTableColumn> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerDatabaseSchemaTableColumn>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableColumnResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumn(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -133,14 +136,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerDatabaseSchemaTableColumn>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByTableNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumn(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -158,17 +161,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumn" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchemaTableColumn> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerDatabaseSchemaTableColumnResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ServerDatabaseSchemaTableColumn> FirstPageFunc(int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableColumnResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumn(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -176,14 +179,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerDatabaseSchemaTableColumn> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumnCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByTableNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumn(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,7 +206,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string columnName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string columnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
@@ -257,7 +260,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseSchemaTableColumn>> GetIfExistsAsync(string columnName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDatabaseSchemaTableColumnResource>> GetIfExistsAsync(string columnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
@@ -267,8 +270,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ServerDatabaseSchemaTableColumn>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchemaTableColumn(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerDatabaseSchemaTableColumnResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTableColumnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,7 +289,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public virtual Response<ServerDatabaseSchemaTableColumn> GetIfExists(string columnName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerDatabaseSchemaTableColumnResource> GetIfExists(string columnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
@@ -296,8 +299,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ServerDatabaseSchemaTableColumn>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchemaTableColumn(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerDatabaseSchemaTableColumnResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTableColumnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,7 +309,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ServerDatabaseSchemaTableColumn> IEnumerable<ServerDatabaseSchemaTableColumn>.GetEnumerator()
+        IEnumerator<ServerDatabaseSchemaTableColumnResource> IEnumerable<ServerDatabaseSchemaTableColumnResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -316,7 +319,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerDatabaseSchemaTableColumn> IAsyncEnumerable<ServerDatabaseSchemaTableColumn>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServerDatabaseSchemaTableColumnResource> IAsyncEnumerable<ServerDatabaseSchemaTableColumnResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

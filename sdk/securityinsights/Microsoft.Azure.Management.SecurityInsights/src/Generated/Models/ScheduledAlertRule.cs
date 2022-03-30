@@ -35,17 +35,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the ScheduledAlertRule class.
         /// </summary>
-        /// <param name="queryFrequency">The frequency (in ISO 8601 duration
-        /// format) for this alert rule to run.</param>
-        /// <param name="queryPeriod">The period (in ISO 8601 duration format)
-        /// that this alert rule looks at.</param>
-        /// <param name="triggerOperator">The operation against the threshold
-        /// that triggers alert rule. Possible values include: 'GreaterThan',
-        /// 'LessThan', 'Equal', 'NotEqual'</param>
-        /// <param name="triggerThreshold">The threshold triggers this alert
-        /// rule.</param>
-        /// <param name="query">The query that creates alerts for this
-        /// rule.</param>
         /// <param name="displayName">The display name for alerts created by
         /// this alert rule.</param>
         /// <param name="enabled">Determines whether this alert rule is enabled
@@ -55,9 +44,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// triggered.</param>
         /// <param name="suppressionEnabled">Determines whether the suppression
         /// for this alert rule is enabled or disabled.</param>
-        /// <param name="severity">The severity for alerts created by this
-        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
-        /// 'Informational'</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -67,8 +53,28 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="systemData">Azure Resource Manager metadata containing
         /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
+        /// <param name="query">The query that creates alerts for this
+        /// rule.</param>
+        /// <param name="queryFrequency">The frequency (in ISO 8601 duration
+        /// format) for this alert rule to run.</param>
+        /// <param name="queryPeriod">The period (in ISO 8601 duration format)
+        /// that this alert rule looks at.</param>
+        /// <param name="severity">The severity for alerts created by this
+        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
+        /// 'Informational'</param>
+        /// <param name="triggerOperator">The operation against the threshold
+        /// that triggers alert rule. Possible values include: 'GreaterThan',
+        /// 'LessThan', 'Equal', 'NotEqual'</param>
+        /// <param name="triggerThreshold">The threshold triggers this alert
+        /// rule.</param>
         /// <param name="eventGroupingSettings">The event grouping
         /// settings.</param>
+        /// <param name="customDetails">Dictionary of string key-value pairs of
+        /// columns to be attached to the alert</param>
+        /// <param name="entityMappings">Array of the entity mappings of the
+        /// alert rule</param>
+        /// <param name="alertDetailsOverride">The alert details override
+        /// settings</param>
         /// <param name="alertRuleTemplateName">The Name of the alert rule
         /// template used to create this rule.</param>
         /// <param name="templateVersion">The version of the alert rule
@@ -79,37 +85,33 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="lastModifiedUtc">The last time that this alert rule
         /// has been modified.</param>
         /// <param name="tactics">The tactics of the alert rule</param>
+        /// <param name="techniques">The techniques of the alert rule</param>
         /// <param name="incidentConfiguration">The settings of the incidents
         /// that created from alerts triggered by this analytics rule</param>
-        /// <param name="customDetails">Dictionary of string key-value pairs of
-        /// columns to be attached to the alert</param>
-        /// <param name="entityMappings">Array of the entity mappings of the
-        /// alert rule</param>
-        /// <param name="alertDetailsOverride">The alert details override
-        /// settings</param>
-        public ScheduledAlertRule(System.TimeSpan queryFrequency, System.TimeSpan queryPeriod, TriggerOperator triggerOperator, int triggerThreshold, string query, string displayName, bool enabled, System.TimeSpan suppressionDuration, bool suppressionEnabled, string severity, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), EventGroupingSettings eventGroupingSettings = default(EventGroupingSettings), string alertRuleTemplateName = default(string), string templateVersion = default(string), string description = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), IList<string> tactics = default(IList<string>), IncidentConfiguration incidentConfiguration = default(IncidentConfiguration), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride))
+        public ScheduledAlertRule(string displayName, bool enabled, System.TimeSpan suppressionDuration, bool suppressionEnabled, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string query = default(string), System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), string severity = default(string), TriggerOperator? triggerOperator = default(TriggerOperator?), int? triggerThreshold = default(int?), EventGroupingSettings eventGroupingSettings = default(EventGroupingSettings), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride), string alertRuleTemplateName = default(string), string templateVersion = default(string), string description = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), IList<string> tactics = default(IList<string>), IList<string> techniques = default(IList<string>), IncidentConfiguration incidentConfiguration = default(IncidentConfiguration))
             : base(id, name, type, systemData, etag)
         {
+            Query = query;
             QueryFrequency = queryFrequency;
             QueryPeriod = queryPeriod;
+            Severity = severity;
             TriggerOperator = triggerOperator;
             TriggerThreshold = triggerThreshold;
             EventGroupingSettings = eventGroupingSettings;
+            CustomDetails = customDetails;
+            EntityMappings = entityMappings;
+            AlertDetailsOverride = alertDetailsOverride;
             AlertRuleTemplateName = alertRuleTemplateName;
             TemplateVersion = templateVersion;
             Description = description;
-            Query = query;
             DisplayName = displayName;
             Enabled = enabled;
             LastModifiedUtc = lastModifiedUtc;
             SuppressionDuration = suppressionDuration;
             SuppressionEnabled = suppressionEnabled;
-            Severity = severity;
             Tactics = tactics;
+            Techniques = techniques;
             IncidentConfiguration = incidentConfiguration;
-            CustomDetails = customDetails;
-            EntityMappings = entityMappings;
-            AlertDetailsOverride = alertDetailsOverride;
             CustomInit();
         }
 
@@ -119,18 +121,31 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the query that creates alerts for this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.query")]
+        public string Query { get; set; }
+
+        /// <summary>
         /// Gets or sets the frequency (in ISO 8601 duration format) for this
         /// alert rule to run.
         /// </summary>
         [JsonProperty(PropertyName = "properties.queryFrequency")]
-        public System.TimeSpan QueryFrequency { get; set; }
+        public System.TimeSpan? QueryFrequency { get; set; }
 
         /// <summary>
         /// Gets or sets the period (in ISO 8601 duration format) that this
         /// alert rule looks at.
         /// </summary>
         [JsonProperty(PropertyName = "properties.queryPeriod")]
-        public System.TimeSpan QueryPeriod { get; set; }
+        public System.TimeSpan? QueryPeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets the severity for alerts created by this alert rule.
+        /// Possible values include: 'High', 'Medium', 'Low', 'Informational'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.severity")]
+        public string Severity { get; set; }
 
         /// <summary>
         /// Gets or sets the operation against the threshold that triggers
@@ -138,19 +153,38 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// 'Equal', 'NotEqual'
         /// </summary>
         [JsonProperty(PropertyName = "properties.triggerOperator")]
-        public TriggerOperator TriggerOperator { get; set; }
+        public TriggerOperator? TriggerOperator { get; set; }
 
         /// <summary>
         /// Gets or sets the threshold triggers this alert rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.triggerThreshold")]
-        public int TriggerThreshold { get; set; }
+        public int? TriggerThreshold { get; set; }
 
         /// <summary>
         /// Gets or sets the event grouping settings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.eventGroupingSettings")]
         public EventGroupingSettings EventGroupingSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets dictionary of string key-value pairs of columns to be
+        /// attached to the alert
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customDetails")]
+        public IDictionary<string, string> CustomDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of the entity mappings of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.entityMappings")]
+        public IList<EntityMapping> EntityMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alert details override settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.alertDetailsOverride")]
+        public AlertDetailsOverride AlertDetailsOverride { get; set; }
 
         /// <summary>
         /// Gets or sets the Name of the alert rule template used to create
@@ -172,12 +206,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the query that creates alerts for this rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.query")]
-        public string Query { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for alerts created by this alert
@@ -214,17 +242,16 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public bool SuppressionEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the severity for alerts created by this alert rule.
-        /// Possible values include: 'High', 'Medium', 'Low', 'Informational'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.severity")]
-        public string Severity { get; set; }
-
-        /// <summary>
         /// Gets or sets the tactics of the alert rule
         /// </summary>
         [JsonProperty(PropertyName = "properties.tactics")]
         public IList<string> Tactics { get; set; }
+
+        /// <summary>
+        /// Gets or sets the techniques of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.techniques")]
+        public IList<string> Techniques { get; set; }
 
         /// <summary>
         /// Gets or sets the settings of the incidents that created from alerts
@@ -234,25 +261,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public IncidentConfiguration IncidentConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets dictionary of string key-value pairs of columns to be
-        /// attached to the alert
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.customDetails")]
-        public IDictionary<string, string> CustomDetails { get; set; }
-
-        /// <summary>
-        /// Gets or sets array of the entity mappings of the alert rule
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.entityMappings")]
-        public IList<EntityMapping> EntityMappings { get; set; }
-
-        /// <summary>
-        /// Gets or sets the alert details override settings
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.alertDetailsOverride")]
-        public AlertDetailsOverride AlertDetailsOverride { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -260,17 +268,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Query == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Query");
-            }
             if (DisplayName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
-            }
-            if (Severity == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Severity");
             }
             if (IncidentConfiguration != null)
             {

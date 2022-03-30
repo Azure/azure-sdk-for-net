@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The action type of a Filter rule collection. </summary>
         internal FirewallPolicyFilterRuleCollectionAction Action { get; set; }
         /// <summary> The type of action. </summary>
-        public FirewallPolicyFilterRuleCollectionActionType? ActionType
+        public FirewallPolicyFilterRuleCollectionActionType? FirewallPolicyFilterRuleCollectionActionType
         {
-            get => Action is null ? default : Action.Type;
+            get => Action is null ? default : Action.FirewallPolicyFilterRuleCollectionActionType;
             set
             {
                 if (Action is null)
                     Action = new FirewallPolicyFilterRuleCollectionAction();
-                Action.Type = value;
+                Action.FirewallPolicyFilterRuleCollectionActionType = value;
             }
         }
 

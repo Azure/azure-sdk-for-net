@@ -56,14 +56,19 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="privateEndpointConnections">The private endpoint
         /// connection associated with the Cognitive Services account.</param>
         /// <param name="publicNetworkAccess">Whether or not public endpoint
-        /// access is allowed for this account. Value is optional but if passed
-        /// in, must be 'Enabled' or 'Disabled'. Possible values include:
+        /// access is allowed for this account. Possible values include:
         /// 'Enabled', 'Disabled'</param>
         /// <param name="apiProperties">The api properties for special
         /// APIs.</param>
         /// <param name="dateCreated">Gets the date of cognitive services
         /// account creation.</param>
-        public AccountProperties(string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), IList<SkuCapability> capabilities = default(IList<SkuCapability>), bool? isMigrated = default(bool?), string migrationToken = default(string), SkuChangeInfo skuChangeInfo = default(SkuChangeInfo), string customSubDomainName = default(string), NetworkRuleSet networkAcls = default(NetworkRuleSet), Encryption encryption = default(Encryption), IList<UserOwnedStorage> userOwnedStorage = default(IList<UserOwnedStorage>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string), ApiProperties apiProperties = default(ApiProperties), string dateCreated = default(string), CallRateLimit callRateLimit = default(CallRateLimit), QuotaLimit quotaLimit = default(QuotaLimit), bool? restrictOutboundNetworkAccess = default(bool?), IList<string> allowedFqdnList = default(IList<string>), bool? disableLocalAuth = default(bool?), IDictionary<string, string> endpoints = default(IDictionary<string, string>), bool? restore = default(bool?))
+        /// <param name="dynamicThrottlingEnabled">The flag to enable dynamic
+        /// throttling.</param>
+        /// <param name="deletionDate">The deletion date, only available for
+        /// deleted account.</param>
+        /// <param name="scheduledPurgeDate">The scheduled purge date, only
+        /// available for deleted account.</param>
+        public AccountProperties(string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), IList<SkuCapability> capabilities = default(IList<SkuCapability>), bool? isMigrated = default(bool?), string migrationToken = default(string), SkuChangeInfo skuChangeInfo = default(SkuChangeInfo), string customSubDomainName = default(string), NetworkRuleSet networkAcls = default(NetworkRuleSet), Encryption encryption = default(Encryption), IList<UserOwnedStorage> userOwnedStorage = default(IList<UserOwnedStorage>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string), ApiProperties apiProperties = default(ApiProperties), string dateCreated = default(string), CallRateLimit callRateLimit = default(CallRateLimit), bool? dynamicThrottlingEnabled = default(bool?), QuotaLimit quotaLimit = default(QuotaLimit), bool? restrictOutboundNetworkAccess = default(bool?), IList<string> allowedFqdnList = default(IList<string>), bool? disableLocalAuth = default(bool?), IDictionary<string, string> endpoints = default(IDictionary<string, string>), bool? restore = default(bool?), string deletionDate = default(string), string scheduledPurgeDate = default(string))
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
@@ -81,12 +86,15 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
             ApiProperties = apiProperties;
             DateCreated = dateCreated;
             CallRateLimit = callRateLimit;
+            DynamicThrottlingEnabled = dynamicThrottlingEnabled;
             QuotaLimit = quotaLimit;
             RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
             AllowedFqdnList = allowedFqdnList;
             DisableLocalAuth = disableLocalAuth;
             Endpoints = endpoints;
             Restore = restore;
+            DeletionDate = deletionDate;
+            ScheduledPurgeDate = scheduledPurgeDate;
             CustomInit();
         }
 
@@ -178,8 +186,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets whether or not public endpoint access is allowed for
-        /// this account. Value is optional but if passed in, must be 'Enabled'
-        /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// this account. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
@@ -200,6 +207,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "callRateLimit")]
         public CallRateLimit CallRateLimit { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the flag to enable dynamic throttling.
+        /// </summary>
+        [JsonProperty(PropertyName = "dynamicThrottlingEnabled")]
+        public bool? DynamicThrottlingEnabled { get; set; }
 
         /// <summary>
         /// </summary>
@@ -230,6 +243,18 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "restore")]
         public bool? Restore { get; set; }
+
+        /// <summary>
+        /// Gets the deletion date, only available for deleted account.
+        /// </summary>
+        [JsonProperty(PropertyName = "deletionDate")]
+        public string DeletionDate { get; private set; }
+
+        /// <summary>
+        /// Gets the scheduled purge date, only available for deleted account.
+        /// </summary>
+        [JsonProperty(PropertyName = "scheduledPurgeDate")]
+        public string ScheduledPurgeDate { get; private set; }
 
         /// <summary>
         /// Validate the object.

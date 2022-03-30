@@ -48,14 +48,16 @@ namespace Azure.Storage.Files.DataLake
                 await _fileClient.AppendInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    options: new DataLakeFileAppendOptions
-                    {
-                        // TODO #27253
-                        //TransactionalHashingOptions = _hashingOptions,
-                        ProgressHandler = _progressHandler,
-                        LeaseId = _conditions?.LeaseId
-                    },
+                    // TODO #27253
+                    //options: new DataLakeFileAppendOptions
+                    //{
+                    //    TransactionalHashingOptions = _hashingOptions,
+                    //    ProgressHandler = _progressHandler,
+                    //    LeaseId = _conditions?.LeaseId
+                    //},
                     rangeContentMD5: default,
+                    leaseId: _conditions.LeaseId,
+                    progressHandler: _progressHandler,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

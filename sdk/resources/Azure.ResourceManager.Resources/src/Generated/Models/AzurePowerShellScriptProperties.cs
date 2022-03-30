@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Properties of the Azure PowerShell script object. </summary>
-    internal partial class AzurePowerShellScriptProperties : DeploymentScriptPropertiesBase
+    internal partial class AzurePowerShellScriptProperties : ArmDeploymentScriptPropertiesBase
     {
         /// <summary> Initializes a new instance of AzurePowerShellScriptProperties. </summary>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             AzPowerShellVersion = azPowerShellVersion;
             SupportingScriptUris = new ChangeTrackingList<string>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
         public string Arguments { get; }
         /// <summary> The environment variables to pass over to the script. </summary>
-        public IReadOnlyList<EnvironmentVariable> EnvironmentVariables { get; }
+        public IReadOnlyList<ScriptEnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
         public string ForceUpdateTag { get; }
         /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </summary>

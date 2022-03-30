@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "5ec4e436-8de7-dad8-feed-8bfc8e87831b",
         "x-ms-date": "Wed, 22 Sep 2021 17:29:25 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "5ec4e436-8de7-dad8-feed-8bfc8e87831b",
         "x-ms-request-id": "1f21a662-401a-0005-7fd7-afbb1b000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "04540f5b-5869-917f-431e-c83adba3b0a4",
         "x-ms-date": "Wed, 22 Sep 2021 17:29:25 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -61,7 +61,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "04540f5b-5869-917f-431e-c83adba3b0a4",
         "x-ms-request-id": "1f21a665-401a-0005-80d7-afbb1b000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://idoxscnapsat20py01c.file.preprod.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Eshare1\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 22 Sep 2021 03:31:23 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D97D7973AEC90E\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CAccessTier\u003EPremium\u003C/AccessTier\u003E\u003CProvisionedIops\u003E500\u003C/ProvisionedIops\u003E\u003CProvisionedBandwidthMiBps\u003E110\u003C/ProvisionedBandwidthMiBps\u003E\u003CProvisionedIngressMBps\u003E110\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E110\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EWed, 22 Sep 2021 03:31:23 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-4e384871-ece2-d493-fa6d-918ae82eb667\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 22 Sep 2021 17:29:26 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D97DEE86E3FC48\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CAccessTier\u003EPremium\u003C/AccessTier\u003E\u003CProvisionedIops\u003E500\u003C/ProvisionedIops\u003E\u003CProvisionedBandwidthMiBps\u003E110\u003C/ProvisionedBandwidthMiBps\u003E\u003CProvisionedIngressMBps\u003E110\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E110\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EWed, 22 Sep 2021 17:29:26 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -80,7 +80,7 @@
         "x-ms-date": "Wed, 22 Sep 2021 17:29:25 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -93,7 +93,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "7ea0db8a-7f33-16b1-4475-379085082f04",
         "x-ms-request-id": "1f21a666-401a-0005-01d7-afbb1b000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

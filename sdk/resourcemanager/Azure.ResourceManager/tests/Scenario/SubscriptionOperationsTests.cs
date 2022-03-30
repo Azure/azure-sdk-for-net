@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Tests
         public void NoDataValidation()
         {
             ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c
-            var resource = Client.GetSubscription(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}"));
+            var resource = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}"));
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task GetSubscriptionOperation()
         {
-            Subscription sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
+            SubscriptionResource sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
             Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Tests
             var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
-                ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                ResourceGroupResource rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected exception was not thrown");
             }
             catch (RequestFailedException e) when (e.Status == 400)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Tests
             var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
-                ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                ResourceGroupResource rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected exception was not thrown");
             }
             catch (ArgumentException)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Tests
             var subscription = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetAsync();
             Assert.NotNull(subscription.Value.Data.Id);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscription(new ResourceIdentifier($"/subscriptions/{new Guid()}")).GetAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{new Guid()}")).GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 
@@ -174,15 +174,15 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ListFeatures()
         {
-            Feature testFeature = null;
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            FeatureResource testFeature = null;
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             await foreach (var feature in subscription.GetFeaturesAsync())
             {
                 testFeature = feature;
                 break;
             }
             Assert.IsNotNull(testFeature);
-            // TODO: Update when we can return Feature instead of FeatureData in subscription.GetFeaturesAsync.
+            // TODO: Update when we can return FeatureResource instead of FeatureData in subscription.GetFeaturesAsync.
             //Assert.IsNotNull(testFeature.Data.Id);
             //Assert.IsNotNull(testFeature.Data.Name);
             //Assert.IsNotNull(testFeature.Data.Properties);
@@ -222,6 +222,46 @@ namespace Azure.ResourceManager.Tests
             Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
             Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(key));
             Assert.AreEqual(subscription2.Value.Data.Tags[key], value);
+        }
+
+        [RecordedTest]
+        public async Task ValidateResourceInRestApi()
+        {
+#if NET461
+            await Task.Delay(1); //no op due to header differences on 461
+#else
+            var namespacesToSkip = new HashSet<string>
+            {
+                "Microsoft.MarketplaceNotifications",
+                "Microsoft.Notebooks",
+                "Microsoft.App",
+                "Microsoft.ClassicSubscription",
+                "Microsoft.AVS",
+                "Microsoft.DataReplication",
+                "Microsoft.ImportExport",
+                "Microsoft.NetworkFunction",
+                "Microsoft.ProjectBabylon",
+                "Microsoft.Scheduler",
+                "Microsoft.ServicesHub",
+                "Microsoft.SoftwarePlan",
+                "Microsoft.TimeSeriesInsights",
+            };
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            await foreach (var provider in subscription.GetResourceProviders())
+            {
+                if (namespacesToSkip.Contains(provider.Data.Namespace))
+                    continue;
+                if (!provider.Data.ResourceTypes.Any(rt => rt.ResourceType == "operations"))
+                    continue;
+                Assert.DoesNotThrowAsync(async () =>
+                {
+                    await foreach (var restApi in subscription.GetArmRestApis(provider.Data.Namespace))
+                    {
+                        Assert.IsNotNull(restApi);
+                    }
+                }, $"Error getting rest apis for {provider.Data.Namespace}");
+            }
+#endif
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UserManagedHttpsOptions : IUtf8JsonSerializable
+    internal partial class UserManagedHttpsOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

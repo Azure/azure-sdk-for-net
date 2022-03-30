@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// </summary>
         public int? NumCoresPerSocket { get; }
         /// <summary> Gets or sets the type of the os. </summary>
-        public OSType? OsType { get; }
+        public OSType? OSType { get; }
         /// <summary> Gets or sets os name. </summary>
-        public string OsName { get; }
+        public string OSName { get; }
         /// <summary> Gets or sets the folder path of the template. </summary>
         public string FolderPath { get; }
     }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IReadOnlyDictionary<string, string> tags, string etag, SubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, type, systemData, location, tags)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IReadOnlyDictionary<string, string> tags, string etag, SubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, tags)
         {
             Etag = etag;
             PrivateEndpoint = privateEndpoint;

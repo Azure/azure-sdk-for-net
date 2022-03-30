@@ -1790,7 +1790,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         internal HttpMessage CreateGetKeyVaultReferenceRequest(string keyVaultName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1800,13 +1800,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateKeyVaultReferenceRequest(string keyVaultName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1818,13 +1817,12 @@ namespace Azure.Analytics.Purview.Scanning
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteKeyVaultReferenceRequest(string keyVaultName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1834,13 +1832,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetKeyVaultReferencesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1849,13 +1846,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetClassificationRulesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1864,13 +1860,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDataSourcesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1879,13 +1874,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetScanRulesetRequest(string scanRulesetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1895,13 +1889,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateScanRulesetRequest(string scanRulesetName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1913,13 +1906,12 @@ namespace Azure.Analytics.Purview.Scanning
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200201.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteScanRulesetRequest(string scanRulesetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1929,13 +1921,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetScanRulesetsRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1944,13 +1935,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1959,13 +1949,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsForDataSourceRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1975,13 +1964,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsForVersionRequest(int version, string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1995,13 +1983,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetLatestSystemRulesetsRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2014,13 +2001,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsVersionsRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2033,13 +2019,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetKeyVaultReferencesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2047,13 +2032,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetClassificationRulesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2061,13 +2045,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDataSourcesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2075,13 +2058,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetScanRulesetsNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2089,13 +2071,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2103,13 +2084,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsVersionsNextPageRequest(string nextLink, string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2117,50 +2097,14 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200201 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    201 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200204;
+        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
     }
 }
