@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }
         /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeDate { get; set; }
+        public DateTimeOffset? EndOfLifeOn { get; set; }
         /// <summary> This is the gallery image definition identifier. </summary>
         public GalleryImageIdentifier Identifier { get; set; }
         /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>

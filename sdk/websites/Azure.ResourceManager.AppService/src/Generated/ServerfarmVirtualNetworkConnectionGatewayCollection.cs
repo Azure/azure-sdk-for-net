@@ -13,11 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ServerfarmVirtualNetworkConnectionGateway and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> and their operations.
+    /// Each <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> in the collection will belong to the same instance of <see cref="ServerfarmVirtualNetworkConnectionResource" />.
+    /// To get a <see cref="ServerfarmVirtualNetworkConnectionGatewayCollection" /> instance call the GetServerfarmVirtualNetworkConnectionGateways method from an instance of <see cref="ServerfarmVirtualNetworkConnectionResource" />.
+    /// </summary>
     public partial class ServerfarmVirtualNetworkConnectionGatewayCollection : ArmCollection
     {
         private readonly ClientDiagnostics _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics;
@@ -33,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerfarmVirtualNetworkConnectionGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnectionGateway.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ServerfarmVirtualNetworkConnectionGateway.ResourceType, out string serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
-            _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
+            _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnectionGatewayResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerfarmVirtualNetworkConnectionGatewayResource.ResourceType, out string serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
+            _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverfarmVirtualNetworkConnectionGatewayAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,8 +46,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerfarmVirtualNetworkConnection.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerfarmVirtualNetworkConnection.ResourceType), nameof(id));
+            if (id.ResourceType != ServerfarmVirtualNetworkConnectionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerfarmVirtualNetworkConnectionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -54,21 +57,21 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="gatewayName"> Name of the gateway. Only the &apos;primary&apos; gateway is supported. </param>
-        /// <param name="connectionEnvelope"> Definition of the gateway. </param>
+        /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerfarmVirtualNetworkConnectionGateway>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<ServerfarmVirtualNetworkConnectionGateway>(Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(Client, response), response.GetRawResponse()));
+                var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>(Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,21 +90,21 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="gatewayName"> Name of the gateway. Only the &apos;primary&apos; gateway is supported. </param>
-        /// <param name="connectionEnvelope"> Definition of the gateway. </param>
+        /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual ArmOperation<ServerfarmVirtualNetworkConnectionGateway> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, VnetGatewayData connectionEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, connectionEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation<ServerfarmVirtualNetworkConnectionGateway>(Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(Client, response), response.GetRawResponse()));
+                var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.UpdateVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken);
+                var operation = new AppServiceArmOperation<ServerfarmVirtualNetworkConnectionGatewayResource>(Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -122,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual async Task<Response<ServerfarmVirtualNetworkConnectionGateway>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerfarmVirtualNetworkConnectionGatewayResource>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
@@ -133,7 +136,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual Response<ServerfarmVirtualNetworkConnectionGateway> Get(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerfarmVirtualNetworkConnectionGatewayResource> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
@@ -162,7 +165,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,7 +237,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual async Task<Response<ServerfarmVirtualNetworkConnectionGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerfarmVirtualNetworkConnectionGatewayResource>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
@@ -244,8 +247,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ServerfarmVirtualNetworkConnectionGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerfarmVirtualNetworkConnectionGatewayResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,7 +266,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual Response<ServerfarmVirtualNetworkConnectionGateway> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerfarmVirtualNetworkConnectionGatewayResource> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
@@ -273,8 +276,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _serverfarmVirtualNetworkConnectionGatewayAppServicePlansRestClient.GetVnetGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ServerfarmVirtualNetworkConnectionGateway>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGateway(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerfarmVirtualNetworkConnectionGatewayResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerfarmVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

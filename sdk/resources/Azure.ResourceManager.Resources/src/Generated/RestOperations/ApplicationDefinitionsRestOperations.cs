@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string applicationDefinitionName)
+        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string applicationDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmApplicationDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationDefinitionData value = default;
+                        ArmApplicationDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationDefinitionData.DeserializeApplicationDefinitionData(document.RootElement);
+                        value = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationDefinitionData)null, message.Response);
+                    return Response.FromValue((ArmApplicationDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationDefinitionData> Get(string subscriptionId, string resourceGroupName, string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public Response<ArmApplicationDefinitionData> Get(string subscriptionId, string resourceGroupName, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationDefinitionData value = default;
+                        ArmApplicationDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationDefinitionData.DeserializeApplicationDefinitionData(document.RootElement);
+                        value = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationDefinitionData)null, message.Response);
+                    return Response.FromValue((ArmApplicationDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string applicationDefinitionName)
+        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string applicationDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationDefinitionName, ApplicationDefinitionData parameters)
+        internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationDefinitionName, ArmApplicationDefinitionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update an managed application definition. </param>
+        /// <param name="data"> Parameters supplied to the create or update an managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationDefinitionName, ArmApplicationDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, applicationDefinitionName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, applicationDefinitionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -246,18 +246,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update an managed application definition. </param>
+        /// <param name="data"> Parameters supplied to the create or update an managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationDefinitionName, ApplicationDefinitionData parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationDefinitionName, ArmApplicationDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, applicationDefinitionName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, applicationDefinitionName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        internal Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationDefinitionListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmApplicationDefinitionListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationDefinitionListResult value = default;
+                        ArmApplicationDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
+                        value = ArmApplicationDefinitionListResult.DeserializeArmApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationDefinitionListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ArmApplicationDefinitionListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -332,9 +332,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationDefinitionListResult value = default;
+                        ArmApplicationDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
+                        value = ArmApplicationDefinitionListResult.DeserializeArmApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        internal Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationDefinitionListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmApplicationDefinitionListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -375,9 +375,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationDefinitionListResult value = default;
+                        ArmApplicationDefinitionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
+                        value = ArmApplicationDefinitionListResult.DeserializeArmApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationDefinitionListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ArmApplicationDefinitionListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ApplicationDefinitionListResult value = default;
+                        ArmApplicationDefinitionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationDefinitionListResult.DeserializeApplicationDefinitionListResult(document.RootElement);
+                        value = ArmApplicationDefinitionListResult.DeserializeArmApplicationDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

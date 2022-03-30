@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var siteName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, siteName, input);
-            WebSite site1 = lro.Value;
-            WebSite site2 = await container.GetAsync(siteName);
+            WebSiteResource site1 = lro.Value;
+            WebSiteResource site2 = await container.GetAsync(siteName);
             ResourceDataHelper.AssertSite(site1.Data, site2.Data);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var siteName = Recording.GenerateAssetName("testSite-");
             var input = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, siteName, input);
-            WebSite site = lro.Value;
+            WebSiteResource site = lro.Value;
             Assert.IsTrue(await container.ExistsAsync(siteName));
             Assert.IsFalse(await container.ExistsAsync(siteName + "1"));
 

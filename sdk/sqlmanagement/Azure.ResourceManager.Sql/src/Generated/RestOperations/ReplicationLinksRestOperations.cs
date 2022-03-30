@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateUnlinkRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions parameters)
+        internal HttpMessage CreateUnlinkRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Sql
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(options);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -316,20 +316,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database that has the replication link to be failed over. </param>
         /// <param name="linkId"> The ID of the replication link to be failed over. </param>
-        /// <param name="parameters"> The required parameters for unlinking replication link. </param>
+        /// <param name="options"> The required parameters for unlinking replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="linkId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UnlinkAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UnlinkAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using var message = CreateUnlinkRequest(subscriptionId, resourceGroupName, serverName, databaseName, linkId, parameters);
+            using var message = CreateUnlinkRequest(subscriptionId, resourceGroupName, serverName, databaseName, linkId, options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -347,20 +347,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database that has the replication link to be failed over. </param>
         /// <param name="linkId"> The ID of the replication link to be failed over. </param>
-        /// <param name="parameters"> The required parameters for unlinking replication link. </param>
+        /// <param name="options"> The required parameters for unlinking replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="linkId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="linkId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Unlink(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions parameters, CancellationToken cancellationToken = default)
+        public Response Unlink(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using var message = CreateUnlinkRequest(subscriptionId, resourceGroupName, serverName, databaseName, linkId, parameters);
+            using var message = CreateUnlinkRequest(subscriptionId, resourceGroupName, serverName, databaseName, linkId, options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

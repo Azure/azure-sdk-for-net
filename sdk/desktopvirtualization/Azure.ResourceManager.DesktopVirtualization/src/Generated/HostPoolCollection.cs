@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of HostPool and their operations over its parent. </summary>
-    public partial class HostPoolCollection : ArmCollection, IEnumerable<HostPool>, IAsyncEnumerable<HostPool>
+    /// <summary>
+    /// A class representing a collection of <see cref="HostPoolResource" /> and their operations.
+    /// Each <see cref="HostPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="HostPoolCollection" /> instance call the GetHostPools method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class HostPoolCollection : ArmCollection, IEnumerable<HostPoolResource>, IAsyncEnumerable<HostPoolResource>
     {
         private readonly ClientDiagnostics _hostPoolClientDiagnostics;
         private readonly HostPoolsRestOperations _hostPoolRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HostPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hostPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPool.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(HostPool.ResourceType, out string hostPoolApiVersion);
-            _hostPoolRestClient = new HostPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostPoolApiVersion);
+            _hostPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HostPoolResource.ResourceType, out string hostPoolApiVersion);
+            _hostPoolRestClient = new HostPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,21 +61,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="hostPool"> Object containing HostPool definitions. </param>
+        /// <param name="data"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="hostPool"/> is null. </exception>
-        public virtual async Task<ArmOperation<HostPool>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostPoolName, HostPoolData hostPool, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<HostPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostPoolName, HostPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-            Argument.AssertNotNull(hostPool, nameof(hostPool));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hostPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, hostPool, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<HostPool>(Response.FromValue(new HostPool(Client, response), response.GetRawResponse()));
+                var response = await _hostPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DesktopVirtualizationArmOperation<HostPoolResource>(Response.FromValue(new HostPoolResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,21 +94,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="hostPool"> Object containing HostPool definitions. </param>
+        /// <param name="data"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="hostPool"/> is null. </exception>
-        public virtual ArmOperation<HostPool> CreateOrUpdate(WaitUntil waitUntil, string hostPoolName, HostPoolData hostPool, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<HostPoolResource> CreateOrUpdate(WaitUntil waitUntil, string hostPoolName, HostPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-            Argument.AssertNotNull(hostPool, nameof(hostPool));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hostPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, hostPool, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<HostPool>(Response.FromValue(new HostPool(Client, response), response.GetRawResponse()));
+                var response = _hostPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, data, cancellationToken);
+                var operation = new DesktopVirtualizationArmOperation<HostPoolResource>(Response.FromValue(new HostPoolResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public virtual async Task<Response<HostPool>> GetAsync(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPoolResource>> GetAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public virtual Response<HostPool> Get(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<HostPoolResource> Get(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +184,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: HostPools_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HostPool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HostPool> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HostPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HostPool>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HostPoolResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _hostPoolRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +202,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<HostPool>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HostPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _hostPoolRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +226,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: HostPools_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HostPool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HostPool> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HostPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HostPool> FirstPageFunc(int? pageSizeHint)
+            Page<HostPoolResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _hostPoolRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +244,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<HostPool> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HostPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _hostPoolRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +325,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public virtual async Task<Response<HostPool>> GetIfExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPoolResource>> GetIfExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
@@ -332,8 +335,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<HostPool>(null, response.GetRawResponse());
-                return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<HostPoolResource>(null, response.GetRawResponse());
+                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +354,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public virtual Response<HostPool> GetIfExists(string hostPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<HostPoolResource> GetIfExists(string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
@@ -361,8 +364,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<HostPool>(null, response.GetRawResponse());
-                return Response.FromValue(new HostPool(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<HostPoolResource>(null, response.GetRawResponse());
+                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +374,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        IEnumerator<HostPool> IEnumerable<HostPool>.GetEnumerator()
+        IEnumerator<HostPoolResource> IEnumerable<HostPoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +384,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<HostPool> IAsyncEnumerable<HostPool>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HostPoolResource> IAsyncEnumerable<HostPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

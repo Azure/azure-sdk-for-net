@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
     public class IscsiTargetTests : StoragePoolTestBase
     {
         private string SubnetResourceId;
-        protected ResourceGroup _resourceGroup;
+        protected ResourceGroupResource _resourceGroup;
 
         public IscsiTargetTests(bool isAsync) : base(isAsync)
         {

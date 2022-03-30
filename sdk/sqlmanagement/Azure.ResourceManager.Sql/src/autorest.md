@@ -11,11 +11,11 @@ model-namespace: false
 public-clients: false
 head-as-boolean: false
 clear-output-folder: true
-modelerfour:
-  seal-single-value-enum-by-default: true
 skip-csproj: true
 
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -29,6 +29,11 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}

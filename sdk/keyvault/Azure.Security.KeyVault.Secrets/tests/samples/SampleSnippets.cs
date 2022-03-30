@@ -192,11 +192,13 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Ignore("Used only for the migration guide")]
         private async Task MigrationGuide()
         {
+            {
             #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_Create
             SecretClient client = new SecretClient(
                 new Uri("https://myvault.vault.azure.net"),
                 new DefaultAzureCredential());
             #endregion Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_Create
+            }
 
             #region Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
             using (HttpClient httpClient = new HttpClient())

@@ -14,11 +14,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a StaticSiteBuildARMResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a StaticSiteBuildARMResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteBuildARMResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteBuildARMResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteARMResource" /> using the GetStaticSiteBuildARMResource method.
+    /// </summary>
     public partial class StaticSiteBuildARMResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StaticSiteBuildARMResource"/> instance. </summary>
@@ -51,9 +55,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteBuildARMResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteBuildARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _staticSiteBuildARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string staticSiteBuildARMResourceStaticSitesApiVersion);
-            _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteBuildARMResourceStaticSitesApiVersion);
+            _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -83,8 +87,8 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of StaticSiteBuildUserProvidedFunctionApps in the StaticSiteBuildUserProvidedFunctionApp. </summary>
-        /// <returns> An object representing collection of StaticSiteBuildUserProvidedFunctionApps and their operations over a StaticSiteBuildUserProvidedFunctionApp. </returns>
+        /// <summary> Gets a collection of StaticSiteBuildUserProvidedFunctionAppResources in the StaticSiteBuildARMResource. </summary>
+        /// <returns> An object representing collection of StaticSiteBuildUserProvidedFunctionAppResources and their operations over a StaticSiteBuildUserProvidedFunctionAppResource. </returns>
         public virtual StaticSiteBuildUserProvidedFunctionAppCollection GetStaticSiteBuildUserProvidedFunctionApps()
         {
             return GetCachedClient(Client => new StaticSiteBuildUserProvidedFunctionAppCollection(Client, Id));
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
-        public virtual async Task<Response<StaticSiteBuildUserProvidedFunctionApp>> GetStaticSiteBuildUserProvidedFunctionAppAsync(string functionAppName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteBuildUserProvidedFunctionAppResource>> GetStaticSiteBuildUserProvidedFunctionAppAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSiteBuildUserProvidedFunctionApps().GetAsync(functionAppName, cancellationToken).ConfigureAwait(false);
         }
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
-        public virtual Response<StaticSiteBuildUserProvidedFunctionApp> GetStaticSiteBuildUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSiteBuildUserProvidedFunctionAppResource> GetStaticSiteBuildUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteBuildUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
         }

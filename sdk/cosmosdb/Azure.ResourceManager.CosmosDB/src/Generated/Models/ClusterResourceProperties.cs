@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Hostname or IP address where the Prometheus endpoint containing data about the managed Cassandra nodes can be reached. </summary>
         internal SeedNode PrometheusEndpoint { get; set; }
         /// <summary> IP address of this seed node. </summary>
-        public string PrometheusEndpointIpAddress
+        public string PrometheusEndpointIPAddress
         {
-            get => PrometheusEndpoint is null ? default : PrometheusEndpoint.IpAddress;
+            get => PrometheusEndpoint is null ? default : PrometheusEndpoint.IPAddress;
             set
             {
                 if (PrometheusEndpoint is null)
                     PrometheusEndpoint = new SeedNode();
-                PrometheusEndpoint.IpAddress = value;
+                PrometheusEndpoint.IPAddress = value;
             }
         }
 

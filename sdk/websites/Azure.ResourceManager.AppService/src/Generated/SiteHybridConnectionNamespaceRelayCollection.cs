@@ -13,11 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteHybridConnectionNamespaceRelay and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteHybridConnectionNamespaceRelayResource" /> and their operations.
+    /// Each <see cref="SiteHybridConnectionNamespaceRelayResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteHybridConnectionNamespaceRelayCollection" /> instance call the GetSiteHybridConnectionNamespaceRelays method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteHybridConnectionNamespaceRelayCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics;
@@ -33,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteHybridConnectionNamespaceRelayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteHybridConnectionNamespaceRelay.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteHybridConnectionNamespaceRelay.ResourceType, out string siteHybridConnectionNamespaceRelayWebAppsApiVersion);
-            _siteHybridConnectionNamespaceRelayWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteHybridConnectionNamespaceRelayWebAppsApiVersion);
+            _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteHybridConnectionNamespaceRelayResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteHybridConnectionNamespaceRelayResource.ResourceType, out string siteHybridConnectionNamespaceRelayWebAppsApiVersion);
+            _siteHybridConnectionNamespaceRelayWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteHybridConnectionNamespaceRelayWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,8 +46,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSite.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -55,22 +58,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteHybridConnectionNamespaceRelay>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SiteHybridConnectionNamespaceRelayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelay>(Response.FromValue(new SiteHybridConnectionNamespaceRelay(Client, response), response.GetRawResponse()));
+                var response = await _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,22 +93,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
         /// <param name="relayName"> The relay name for this hybrid connection. </param>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual ArmOperation<SiteHybridConnectionNamespaceRelay> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SiteHybridConnectionNamespaceRelayResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, connectionEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelay>(Response.FromValue(new SiteHybridConnectionNamespaceRelay(Client, response), response.GetRawResponse()));
+                var response = _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -127,7 +130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual async Task<Response<SiteHybridConnectionNamespaceRelay>> GetAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteHybridConnectionNamespaceRelayResource>> GetAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -139,7 +142,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnectionNamespaceRelay(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual Response<SiteHybridConnectionNamespaceRelay> Get(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteHybridConnectionNamespaceRelayResource> Get(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -170,7 +173,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnectionNamespaceRelay(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual async Task<Response<SiteHybridConnectionNamespaceRelay>> GetIfExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteHybridConnectionNamespaceRelayResource>> GetIfExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -258,8 +261,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteHybridConnectionNamespaceRelay>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnectionNamespaceRelay(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteHybridConnectionNamespaceRelayResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +281,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual Response<SiteHybridConnectionNamespaceRelay> GetIfExists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteHybridConnectionNamespaceRelayResource> GetIfExists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -289,8 +292,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteHybridConnectionNamespaceRelay>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnectionNamespaceRelay(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteHybridConnectionNamespaceRelayResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

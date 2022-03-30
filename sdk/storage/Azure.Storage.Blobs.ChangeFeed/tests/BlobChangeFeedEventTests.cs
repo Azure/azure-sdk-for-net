@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Internal.Avro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -400,6 +402,26 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(2, changeFeedEvent.EventData.UpdatedBlobTags.NewTags.Count);
             Assert.AreEqual("Value1_4", changeFeedEvent.EventData.UpdatedBlobTags.NewTags["Tag1"]);
             Assert.AreEqual("Value2_4", changeFeedEvent.EventData.UpdatedBlobTags.NewTags["Tag2"]);
+        }
+
+        [Test]
+        [Ignore("For debugging specific avro files")]
+        public async Task AvroTest()
+        {
+            using Stream stream = File.OpenRead($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{""}");
+            AvroReader avroReader = new AvroReader(stream);
+            Chunk chunk = new Chunk(
+                avroReader: avroReader,
+                blockOffset: 0,
+                eventIndex: 0,
+                chunkPath: null);
+
+            List<BlobChangeFeedEvent> events = new List<BlobChangeFeedEvent>();
+            while (chunk.HasNext())
+            {
+                BlobChangeFeedEvent changeFeedEvent = await chunk.Next(async: true);
+                events.Add(changeFeedEvent);
+            }
         }
 
         private Dictionary<string, object> DeserializeEvent(string rawText)

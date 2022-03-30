@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("agreedBy");
                 writer.WriteStringValue(AgreedBy);
             }
-            if (Optional.IsDefined(AgreedAt))
+            if (Optional.IsDefined(AgreedOn))
             {
                 writer.WritePropertyName("agreedAt");
-                writer.WriteStringValue(AgreedAt.Value, "O");
+                writer.WriteStringValue(AgreedOn.Value, "O");
             }
             writer.WriteEndObject();
         }

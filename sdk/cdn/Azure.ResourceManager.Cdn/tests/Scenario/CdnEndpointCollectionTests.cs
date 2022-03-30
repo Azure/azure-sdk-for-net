@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-            CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
+            CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             Assert.AreEqual(cdnEndpointName, cdnEndpoint.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, null, cdnEndpoint.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, cdnEndpointName, null));
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             _ = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             int count = 0;
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-            CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
-            CdnEndpoint getCdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync(cdnEndpointName);
+            CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
+            CdnEndpointResource getCdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync(cdnEndpointName);
             ResourceDataHelper.AssertValidEndpoint(cdnEndpoint, getCdnEndpoint);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnProfile.GetCdnEndpoints().GetAsync(null));
         }

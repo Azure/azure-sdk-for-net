@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class GalleryImageVersionOperationSource : IOperationSource<GalleryImageVersion>
+    internal class GalleryImageVersionOperationSource : IOperationSource<GalleryImageVersionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        GalleryImageVersion IOperationSource<GalleryImageVersion>.CreateResult(Response response, CancellationToken cancellationToken)
+        GalleryImageVersionResource IOperationSource<GalleryImageVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement);
-            return new GalleryImageVersion(_client, data);
+            return new GalleryImageVersionResource(_client, data);
         }
 
-        async ValueTask<GalleryImageVersion> IOperationSource<GalleryImageVersion>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GalleryImageVersionResource> IOperationSource<GalleryImageVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement);
-            return new GalleryImageVersion(_client, data);
+            return new GalleryImageVersionResource(_client, data);
         }
     }
 }

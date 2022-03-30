@@ -51,12 +51,20 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
-                writer.WriteObjectValue(Settings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Settings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings");
-                writer.WriteObjectValue(ProtectedSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProtectedSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -72,10 +80,10 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("createdByType");
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedAt))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedAt.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedBy))
             {
@@ -87,10 +95,10 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("lastModifiedByType");
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
-            if (Optional.IsDefined(LastModifiedAt))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedAt");
-                writer.WriteStringValue(LastModifiedAt.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -110,8 +118,8 @@ namespace Azure.ResourceManager.Hci
             Optional<string> type0 = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<object> settings = default;
-            Optional<object> protectedSettings = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
             Optional<string> createdBy = default;
             Optional<Models.CreatedByType> createdByType = default;
             Optional<DateTimeOffset> createdAt = default;
@@ -230,7 +238,7 @@ namespace Azure.ResourceManager.Hci
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    settings = property1.Value.GetObject();
+                                    settings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
                                 if (property1.NameEquals("protectedSettings"))
@@ -240,7 +248,7 @@ namespace Azure.ResourceManager.Hci
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    protectedSettings = property1.Value.GetObject();
+                                    protectedSettings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
                             }

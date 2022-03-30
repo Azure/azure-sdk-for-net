@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class SqlTriggerOperationSource : IOperationSource<SqlTrigger>
+    internal class SqlTriggerOperationSource : IOperationSource<SqlTriggerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        SqlTrigger IOperationSource<SqlTrigger>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlTriggerResource IOperationSource<SqlTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlTriggerData.DeserializeSqlTriggerData(document.RootElement);
-            return new SqlTrigger(_client, data);
+            return new SqlTriggerResource(_client, data);
         }
 
-        async ValueTask<SqlTrigger> IOperationSource<SqlTrigger>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlTriggerResource> IOperationSource<SqlTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlTriggerData.DeserializeSqlTriggerData(document.RootElement);
-            return new SqlTrigger(_client, data);
+            return new SqlTriggerResource(_client, data);
         }
     }
 }

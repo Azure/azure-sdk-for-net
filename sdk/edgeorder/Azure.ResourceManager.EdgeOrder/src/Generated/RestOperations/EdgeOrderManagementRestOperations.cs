@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource)
+        internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addressResource);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -710,18 +710,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressResource"> Address details from request body. </param>
+        /// <param name="data"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(addressResource, nameof(addressResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, addressResource);
+            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -737,18 +737,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressResource"> Address details from request body. </param>
+        /// <param name="data"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(addressResource, nameof(addressResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, addressResource);
+            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1262,7 +1262,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource)
+        internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(orderItemResource);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1290,18 +1290,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="orderItemResource"> Order item details from request body. </param>
+        /// <param name="data"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(orderItemResource, nameof(orderItemResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, orderItemResource);
+            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1317,18 +1317,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="orderItemResource"> Order item details from request body. </param>
+        /// <param name="data"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
+        public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(orderItemResource, nameof(orderItemResource));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, orderItemResource);
+            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

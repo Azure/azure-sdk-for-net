@@ -1,3 +1,4 @@
+      $["x-ms-client-name"] = "PatchMode"
 # Generated code configuration
 
 Run `dotnet build /t:GenerateCode` to generate code.
@@ -28,6 +29,29 @@ namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - remove-model: "AzureEntityResource"
   - remove-model: "ProxyResource"
@@ -40,6 +64,8 @@ directive:
   - remove-model: "CheckNameAvailabilityRequest"
   - remove-model: "CheckNameAvailabilityResponse"
   - remove-model: "ErrorResponse"
+  - remove-model: "ErrorDetail"
+  - remove-model: "ErrorAdditionalInfo"
   - from: types.json
     where: $.definitions['Resource']
     transform: >
@@ -107,7 +133,7 @@ request-path-to-resource-data:
   # tenant does not have name and type
   /: Tenant
   # provider does not have name and type
-  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
+  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: ResourceProvider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
@@ -144,15 +170,39 @@ override-operation-name:
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
   Tags_CreateOrUpdate: CreateOrUpdatePredefinedTag
   Tags_Delete: DeletePredefinedTag
-  Providers_ListAtTenantScope: GetTenantProviders
-  Providers_GetAtTenantScope: GetTenantProvider
+  Providers_ListAtTenantScope: GetTenantResourceProviders
+  Providers_GetAtTenantScope: GetTenantResourceProvider
   Resources_MoveResources: MoveResources
   Resources_ValidateMoveResources: ValidateMoveResources
   Resources_List: GetGenericResources
   Resources_ListByResourceGroup: GetGenericResources
-  Providers_RegisterAtManagementGroupScope: RegisterProvider
+  Providers_RegisterAtManagementGroupScope: RegisterResourceProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider;
+
+no-property-type-replacement: ResourceProviderData;ResourceProvider;
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -237,6 +287,12 @@ directive:
       from: Location
       to: LocationExpanded
   - rename-model:
+      from: Provider
+      to: ResourceProvider
+  - rename-model:
+      from: ProviderListResult
+      to: ResourceProviderListResult
+  - rename-model:
       from: TenantIdDescription
       to: Tenant
   - rename-model:
@@ -265,10 +321,58 @@ directive:
       to: Feature
   - rename-model:
       from: Resource
-      to: TrackedResourceExtended
+      to: TrackedResourceExtendedData
   - rename-model:
       from: ProviderRegistrationRequest
-      to: ProviderRegistrationOptions
+      to: ResourceProviderRegistrationOptions
+  - from: resources.json
+    where: $.definitions.Provider
+    transform:
+      $["x-ms-client-name"] = "ResourceProvider";
+  - from: resources.json
+    where: $.definitions.Alias
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAlias";
+  - from: resources.json
+    where: $.definitions.AliasPath
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPath";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.attributes["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathAttributes";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPathMetadata";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathTokenType";
+  - from: resources.json
+    where: $.definitions.AliasPattern
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPattern";
+  - from: resources.json
+    where: $.definitions.AliasPattern.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPatternType";
+  - from: resources.json
+    where: $.definitions.Alias.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasType";
+  - from: policyDefinitions.json
+    where: $.definitions.ParameterDefinitionsValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameter";
+  - from: policyDefinitions.json
+    where: $.definitions.ParameterDefinitionsValue.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ArmPolicyParameterType";
+  - from: policyAssignments.json
+    where: $.definitions.ParameterValuesValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameterValue";
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json
@@ -307,7 +411,7 @@ directive:
   - from: resources.json
     where: $.definitions
     transform: >
-      $["ProviderInfo"] = {
+      $["TenantResourceProvider"] = {
         "properties": {
           "namespace": {
             "type": "string",
@@ -328,12 +432,12 @@ directive:
   - from: resources.json
     where: $.definitions
     transform: >
-      $["ProviderInfoListResult"] = {
+      $["TenantResourceProviderListResult"] = {
         "properties": {
           "value": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ProviderInfo"
+              "$ref": "#/definitions/TenantResourceProvider"
             },
             "description": "An array of resource providers."
           },
@@ -346,14 +450,14 @@ directive:
         "description": "List of resource providers."
       }
   - from: resources.json
-    where: $.definitions.ProviderInfoListResult.properties.value.items["$ref"]
-    transform: return "#/definitions/ProviderInfo"
+    where: $.definitions.TenantResourceProviderListResult.properties.value.items["$ref"]
+    transform: return "#/definitions/TenantResourceProvider"
   - from: resources.json
     where: $.paths["/providers"].get.responses["200"].schema["$ref"]
-    transform: return "#/definitions/ProviderInfoListResult"
+    transform: return "#/definitions/TenantResourceProviderListResult"
   - from: resources.json
     where: $.paths["/providers/{resourceProviderNamespace}"].get.responses["200"].schema["$ref"]
-    transform: return "#/definitions/ProviderInfo"
+    transform: return "#/definitions/TenantResourceProvider"
 
   - from: resources.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
@@ -403,6 +507,86 @@ directive:
     transform: >
       $["x-ms-client-name"] = "ResourceType";
       $["type"] = "string";
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataEffect
+    transform: >
+      $["x-ms-client-name"] = "DataPolicyManifestEffect";
+  - from: locks.json
+    where: $.definitions.ManagementLockProperties.properties.level["x-ms-enum"]
+    transform: >
+      $["name"] = "ManagementLockLevel"
+  - from: subscriptions.json
+    where: $.definitions.Subscription.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: subscriptions.json
+    where: $.definitions.Tenant.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: subscriptions.json
+    where: $.definitions.ManagedByTenant.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: resources.json
+    where: $.definitions.ResourcesMoveInfo.properties.resources.items
+    transform: >
+      $["x-ms-format"] = "arm-id"
+  - from: resources.json
+    where: $.definitions.RoleDefinition
+    transform: >
+      $["x-ms-client-name"] = "AzureRoleDefinition";
+  - from: resources.json
+    where: $.definitions.TagPatchResource.properties.operation["x-ms-enum"]
+    transform: >
+      $["name"] = "TagPatchMode"
+  - from: resources.json
+    where: $.definitions.TagPatchResource.properties.operation
+    transform: >
+      $["x-ms-client-name"] = "PatchMode"
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataManifestResourceFunctionsDefinition.properties.custom
+    transform: >
+      $["x-ms-client-name"] = "CustomDefinitions"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignmentProperties.properties.notScopes
+    transform: >
+      $["x-ms-client-name"] = "ExcludedScopes"
+  - from: resources.json
+    where: $.definitions.ExportTemplateRequest
+    transform: >
+      $["x-ms-client-name"] = "ExportTemplate"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignmentProperties.properties.enforcementMode["x-ms-enum"].values[0]
+    transform: >
+      $["value"] = "Enforced"
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataManifestCustomResourceFunctionDefinition.properties.fullyQualifiedResourceType
+    transform: >
+      $["x-ms-format"] = "resource-type"
+  - from: resources.json
+    where: $.definitions.Permission.properties.actions
+    transform: >
+      $["x-ms-client-name"] = "AllowedActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.notActions
+    transform: >
+      $["x-ms-client-name"] = "DeniedActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.dataActions
+    transform: >
+      $["x-ms-client-name"] = "AllowedDataActions"
+  - from: resources.json
+    where: $.definitions.Permission.properties.notDataActions
+    transform: >
+      $["x-ms-client-name"] = "DeniedDataActions"
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignment.properties.location
+    transform: >
+      $["x-ms-format"] = "azure-location"
+  - from: resources.json
+    where: $.definitions.ProviderExtendedLocation.properties.location
+    transform: >
+      $["x-ms-format"] = "azure-location"
 ```
 
 ### Tag: package-management
@@ -411,7 +595,7 @@ These settings apply only when `--tag=package-management` is specified on the co
 
 ``` yaml $(tag) == 'package-management'
 output-folder: $(this-folder)/ManagementGroup/Generated
-namespace: Azure.ResourceManager.Management
+namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/94a37114e8f4067410b52d3b1c75aa6e09180658/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
@@ -425,7 +609,31 @@ operation-groups-to-omit:
   - ManagementGroupSubscriptions
   - Entities
   - TenantBackfill
-no-property-type-replacement: CheckNameAvailabilityOptions;DescendantParentGroupInfo
+no-property-type-replacement: DescendantParentGroupInfo
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+override-operation-name:
+  ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
   - rename-model:
       from: PatchManagementGroupRequest
@@ -445,7 +653,7 @@ directive:
       $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: CheckNameAvailabilityOptions
+      to: ManagementGroupNameAvailabilityOptions
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -455,6 +663,10 @@ directive:
   - rename-operation:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
+  - from: management.json
+    where: $.parameters.CheckNameAvailabilityParameter
+    transform: >
+      $['name'] = "checkNameAvailabilityOptions"
   - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
@@ -474,8 +686,12 @@ directive:
     where: $.definitions.CheckNameAvailabilityResult.properties.reason
     transform: >
       $['x-ms-enum'] = {
-        name: "NameUnavailableReason"
+        name: "ManagementGroupNameUnavailableReason"
       }
+  - from: management.json
+    where: $.definitions.CheckNameAvailabilityResult
+    transform: >
+      $['x-ms-client-name'] = "ManagementGroupNameAvailabilityResult"
   - from: management.json
     where: $.parameters.SearchParameter
     transform: >
@@ -494,4 +710,32 @@ directive:
     reason: omit operation group does not clean this enum parameter, rename it and then suppress with codegen attribute.
   - remove-model: EntityHierarchyItem
   - remove-model: EntityHierarchyItemProperties
+  - from: management.json
+    where: $.definitions.CreateManagementGroupProperties.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: management.json
+    where: $.definitions.DescendantInfo
+    transform: >
+      $['x-ms-client-name'] = "DescendantData"
+  - from: management.json
+    where: $.definitions.DescendantParentGroupInfo.properties.id
+    transform: >
+      $["x-ms-format"] = "arm-id"
+  - from: management.json
+    where: $.definitions.ManagementGroupDetails.properties.managementGroupAncestorsChain
+    transform: >
+      $["x-ms-client-name"] = "managementGroupAncestorChain"
+  - from: management.json
+    where: $.definitions.ManagementGroupDetails
+    transform: >
+      $["x-ms-client-name"] = "ManagementGroupInfo"
+  - from: management.json
+    where: $.definitions.ParentGroupInfo
+    transform: >
+      $["x-ms-client-name"] = "ParentManagementGroupInfo"
+  - from: management.json
+    where: $.definitions.ManagementGroupProperties.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```

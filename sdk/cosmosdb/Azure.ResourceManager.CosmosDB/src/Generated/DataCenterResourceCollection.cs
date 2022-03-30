@@ -16,11 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of DataCenterResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DataCenterResource" /> and their operations.
+    /// Each <see cref="DataCenterResource" /> in the collection will belong to the same instance of <see cref="ClusterResource" />.
+    /// To get a <see cref="DataCenterResourceCollection" /> instance call the GetDataCenterResources method from an instance of <see cref="ClusterResource" />.
+    /// </summary>
     public partial class DataCenterResourceCollection : ArmCollection, IEnumerable<DataCenterResource>, IAsyncEnumerable<DataCenterResource>
     {
         private readonly ClientDiagnostics _dataCenterResourceCassandraDataCentersClientDiagnostics;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataCenterResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataCenterResourceCassandraDataCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DataCenterResource.ResourceType.Namespace, DiagnosticOptions);
+            _dataCenterResourceCassandraDataCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DataCenterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DataCenterResource.ResourceType, out string dataCenterResourceCassandraDataCentersApiVersion);
-            _dataCenterResourceCassandraDataCentersRestClient = new CassandraDataCentersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCenterResourceCassandraDataCentersApiVersion);
+            _dataCenterResourceCassandraDataCentersRestClient = new CassandraDataCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCenterResourceCassandraDataCentersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,21 +60,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
-        /// <param name="body"> Parameters specifying the managed Cassandra data center. </param>
+        /// <param name="data"> Parameters specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> or <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCenterName, DataCenterResourceData body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCenterName, DataCenterResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataCenterResourceCassandraDataCentersRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataCenterName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DataCenterResource>(new DataCenterResourceOperationSource(Client), _dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataCenterName, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataCenterResourceCassandraDataCentersRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataCenterName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<DataCenterResource>(new DataCenterResourceOperationSource(Client), _dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataCenterName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,21 +93,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
-        /// <param name="body"> Parameters specifying the managed Cassandra data center. </param>
+        /// <param name="data"> Parameters specifying the managed Cassandra data center. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> or <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<DataCenterResource> CreateOrUpdate(WaitUntil waitUntil, string dataCenterName, DataCenterResourceData body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DataCenterResource> CreateOrUpdate(WaitUntil waitUntil, string dataCenterName, DataCenterResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCenterResourceCassandraDataCentersClientDiagnostics.CreateScope("DataCenterResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataCenterResourceCassandraDataCentersRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataCenterName, body, cancellationToken);
-                var operation = new CosmosDBArmOperation<DataCenterResource>(new DataCenterResourceOperationSource(Client), _dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataCenterName, body).Request, response, OperationFinalStateVia.Location);
+                var response = _dataCenterResourceCassandraDataCentersRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataCenterName, data, cancellationToken);
+                var operation = new CosmosDBArmOperation<DataCenterResource>(new DataCenterResourceOperationSource(Client), _dataCenterResourceCassandraDataCentersClientDiagnostics, Pipeline, _dataCenterResourceCassandraDataCentersRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataCenterName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

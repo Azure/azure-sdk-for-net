@@ -28,9 +28,11 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following:
 
-```C# Snippet:Managing_ServiceBus_AuthClient
+```C# Snippet:Managing_ServiceBus_AuthClient_Usings
 using Azure.Identity;
+```
 
+```C# Snippet:Managing_ServiceBus_AuthClient
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
@@ -57,13 +59,13 @@ Before creating a namespace, we need to have a resource group.
 
 ```C# Snippet:Managing_ServiceBusNamespaces_GetSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 ```C# Snippet:Managing_ServiceBusNamespaces_CreateResourceGroup
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = operation.Value;
+ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = operation.Value;
 ```
 
 Then we can create a namespace inside this resource group.
@@ -72,14 +74,14 @@ Then we can create a namespace inside this resource group.
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
 AzureLocation location = AzureLocation.EastUS2;
-ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
+ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
 ```
 
 ### Get all namespaces in a resource group
 
 ```C# Snippet:Managing_ServiceBusNamespaces_ListNamespaces
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-await foreach (ServiceBusNamespace serviceBusNamespace in namespaceCollection.GetAllAsync())
+await foreach (ServiceBusNamespaceResource serviceBusNamespace in namespaceCollection.GetAllAsync())
 {
     Console.WriteLine(serviceBusNamespace.Id.Name);
 }
@@ -89,7 +91,7 @@ await foreach (ServiceBusNamespace serviceBusNamespace in namespaceCollection.Ge
 
 ```C# Snippet:Managing_ServiceBusNamespaces_GetNamespace
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespace serviceBusNamespace = await namespaceCollection.GetAsync("myNamespace");
+ServiceBusNamespaceResource serviceBusNamespace = await namespaceCollection.GetAsync("myNamespace");
 Console.WriteLine(serviceBusNamespace.Id.Name);
 ```
 
@@ -98,7 +100,7 @@ Console.WriteLine(serviceBusNamespace.Id.Name);
 
 ```C# Snippet:Managing_ServiceBusNamespaces_GetNamespaceIfExists
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespace serviceBusNamespace = await namespaceCollection.GetIfExistsAsync("foo");
+ServiceBusNamespaceResource serviceBusNamespace = await namespaceCollection.GetIfExistsAsync("foo");
 if (serviceBusNamespace != null)
 {
     Console.WriteLine("namespace 'foo' exists");
@@ -112,7 +114,7 @@ if (await namespaceCollection.ExistsAsync("bar"))
 ### Delete a namespace
 ```C# Snippet:Managing_ServiceBusNamespaces_DeleteNamespace
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespace serviceBusNamespace = await namespaceCollection.GetAsync("myNamespace");
+ServiceBusNamespaceResource serviceBusNamespace = await namespaceCollection.GetAsync("myNamespace");
 await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
 ```
 
@@ -156,4 +158,4 @@ more information see the Code of Conduct FAQ or contact
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.ResourceManager.ServiceBus%2FREADME.png)

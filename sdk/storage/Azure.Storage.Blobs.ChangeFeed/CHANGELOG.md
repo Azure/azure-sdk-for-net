@@ -2,6 +2,7 @@
 
 ## 12.0.0-preview.21 (Unreleased)
 - Added support for service version 2021-06-08.
+- Fixed bug where BlobChangeFeedEvent.BlobChangeFeedEventData.AsyncOperationInfo.IsAsync was not being deserialized correctly.
 
 ## 12.0.0-preview.20 (2022-03-10)
 - Added support for event schema V3, V4, and V5.
