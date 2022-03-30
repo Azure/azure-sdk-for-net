@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,66 +239,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(stepName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
-        /// Operation Id: JobSteps_GetByVersion
-        /// </summary>
-        /// <param name="stepName"> The name of the job step. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public virtual async Task<Response<ServerJobAgentJobVersionStepResource>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
-
-            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerJobAgentJobVersionStepResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobVersionStepResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
-        /// Operation Id: JobSteps_GetByVersion
-        /// </summary>
-        /// <param name="stepName"> The name of the job step. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public virtual Response<ServerJobAgentJobVersionStepResource> GetIfExists(string stepName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
-
-            using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStepCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServerJobAgentJobVersionStepResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobVersionStepResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

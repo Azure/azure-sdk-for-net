@@ -15,7 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(policyExemptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _policyExemptionRestClient.GetAsync(Id, policyExemptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -520,66 +520,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = GetIfExists(policyExemptionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// Operation Id: PolicyExemptions_Get
-        /// </summary>
-        /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public virtual async Task<Response<PolicyExemptionResource>> GetIfExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
-
-            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemptionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _policyExemptionRestClient.GetAsync(Id, policyExemptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<PolicyExemptionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new PolicyExemptionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// Operation Id: PolicyExemptions_Get
-        /// </summary>
-        /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public virtual Response<PolicyExemptionResource> GetIfExists(string policyExemptionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
-
-            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemptionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _policyExemptionRestClient.Get(Id, policyExemptionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<PolicyExemptionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new PolicyExemptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

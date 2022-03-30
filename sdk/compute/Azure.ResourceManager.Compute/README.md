@@ -161,30 +161,6 @@ else
 }
 ```
 
-If you want to first check if the availability set exists, and if it does, you want to do something else on it, you should use the function `GetIfExists()`:
-
-```C# Snippet:Managing_Availability_Set_GetIfExistsForAvailabilitySet
-// First, initialize the ArmClient and get the default subscription
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-// Now we get a ResourceGroupResource collection for that subscription
-SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-
-string rgName = "myRgName";
-ResourceGroupResource resourceGroup = await rgCollection.GetAsync(rgName);
-AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
-string availabilitySetName = "myAvailabilitySet";
-AvailabilitySetResource availabilitySet = await availabilitySetCollection.GetIfExistsAsync(availabilitySetName);
-
-if (availabilitySet == null)
-{
-    Console.WriteLine($"Availability Set {availabilitySetName} does not exist.");
-    return;
-}
-
-// At this point, we are sure that availabilitySet is a not null Availability Set, so we can use this object to perform any operations we want.
-```
-
 ### Add a tag to an availability set
 
 ```C# Snippet:Managing_Availability_Set_AddTagAvailabilitySet

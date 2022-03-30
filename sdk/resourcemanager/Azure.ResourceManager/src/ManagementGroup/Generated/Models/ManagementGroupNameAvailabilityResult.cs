@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> Describes the result of the request to check management group name availability. </summary>
     public partial class ManagementGroupNameAvailabilityResult

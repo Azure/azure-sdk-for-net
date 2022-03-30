@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
-        public ExpressionEvaluationOptionsScopeType? Scope { get; set; }
+        public ExpressionEvaluationScope? Scope { get; set; }
     }
 }

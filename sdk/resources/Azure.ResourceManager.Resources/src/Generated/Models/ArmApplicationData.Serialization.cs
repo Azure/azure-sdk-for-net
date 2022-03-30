@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
             Optional<ArmApplicationManagementMode> managementMode = default;
             Optional<ArmApplicationPackageContact> customerSupport = default;
-            Optional<ArmApplicationPackageSupportUrls> supportUrls = default;
+            Optional<ArmApplicationPackageSupportUris> supportUrls = default;
             Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
             Optional<ArmApplicationDetails> createdBy = default;
             Optional<ArmApplicationDetails> updatedBy = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportUrls = ArmApplicationPackageSupportUrls.DeserializeArmApplicationPackageSupportUrls(property0.Value);
+                            supportUrls = ArmApplicationPackageSupportUris.DeserializeArmApplicationPackageSupportUris(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("artifacts"))

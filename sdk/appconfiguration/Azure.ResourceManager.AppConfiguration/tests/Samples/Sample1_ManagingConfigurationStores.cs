@@ -60,26 +60,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_ConfigurationStores_GetAConfigurationStoreIfExists
-            ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
-
-            ConfigurationStoreResource configurationStore = await configurationStoreCollection.GetIfExistsAsync("foo");
-            if (configurationStore != null)
-            {
-                Console.WriteLine(configurationStore.Data.Name);
-            }
-
-            if (await configurationStoreCollection.ExistsAsync("myApp"))
-            {
-                Console.WriteLine("ConfigurationStoreResource 'myApp' exists.");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task Delete()
         {
             #region Snippet:Managing_ConfigurationStores_DeleteAConfigurationStore

@@ -15,7 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,66 +301,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = GetIfExists(deploymentName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
-        /// Operation Id: Deployments_GetAtScope
-        /// </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual async Task<Response<ArmDeploymentResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ArmDeploymentResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
-        /// Operation Id: Deployments_GetAtScope
-        /// </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<ArmDeploymentResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _armDeploymentDeploymentsRestClient.GetAtScope(Id, deploymentName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ArmDeploymentResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

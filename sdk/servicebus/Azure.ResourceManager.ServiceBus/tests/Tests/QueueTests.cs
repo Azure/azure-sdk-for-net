@@ -47,16 +47,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(queue.Id.Name, queueName);
 
             //validate if created successfully
-            queue = await _queueCollection.GetIfExistsAsync(queueName);
-            Assert.NotNull(queue);
             Assert.IsTrue(await _queueCollection.ExistsAsync(queueName));
+            queue = await _queueCollection.GetAsync(queueName);
 
             //delete queue
             await queue.DeleteAsync(WaitUntil.Completed);
 
             //validate
-            queue = await _queueCollection.GetIfExistsAsync(queueName);
-            Assert.Null(queue);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _queueCollection.GetAsync(queueName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _queueCollection.ExistsAsync(queueName));
         }
 

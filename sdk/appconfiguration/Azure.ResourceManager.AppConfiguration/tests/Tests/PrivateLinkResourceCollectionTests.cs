@@ -53,15 +53,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
         [Ignore("Error resource id without '/' in the beginning")]
         [Test]
-        public async Task GetIfExistsTest()
-        {
-            PrivateLinkResource linkResource = await ConfigStore.GetPrivateLinkResources().GetIfExistsAsync("configurationStores");
-
-            Assert.NotNull(linkResource);
-        }
-
-        [Ignore("Error resource id without '/' in the beginning")]
-        [Test]
         public async Task GetAllTest()
         {
             List<PrivateLinkResource> linkResources = await ConfigStore.GetPrivateLinkResources().GetAllAsync().ToEnumerableAsync();

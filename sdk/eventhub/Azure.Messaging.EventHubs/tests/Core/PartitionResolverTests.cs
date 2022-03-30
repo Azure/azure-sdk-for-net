@@ -42,6 +42,26 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Provides the test cases for partition hashing stability.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> PartitionHashTestCases()
+        {
+            yield return new object[] { "7", (short)-15263 };
+            yield return new object[] { "131", (short)30562 };
+            yield return new object[] { "7149583486996073602", (short)12977 };
+            yield return new object[] { "FWfAT", (short)-22341 };
+            yield return new object[] { "sOdeEAsyQoEuEFPGerWO", (short)-6503 };
+            yield return new object[] { "FAyAIctPeCgmiwLKbJcyswoHglHVjQdvtBowLACDNORsYvOcLddNJYDmhAVkbyLOrHTKLneMNcbgWVlasVywOByANjs", (short)5226 };
+            yield return new object[] { "1XYM6!(7(lF5wq4k4m*e$Nc!1ezLJv*1YK1Y-C^*&B$O)lq^iUkG(TNzXG;Zi#z2Og*Qq0#^*k):vXh$3,C7We7%W0meJ;b3,rQCg^J;^twXgs5E$$hWKxqp", (short)23950 };
+            yield return new object[] { "E(x;RRIaQcJs*P;D&jTPau-4K04oqr:lF6Z):ERpo&;9040qyV@G1_c9mgOs-8_8/10Fwa-7b7-yP!T-!IH&968)FWuI;(^g$2fN;)HJ^^yTn:", (short)-29304 };
+            yield return new object[] { "!c*_!I@1^c", (short)15372 };
+            yield return new object[] { "p4*!jioeO/z-!-;w:dh", (short)-3104 };
+            yield return new object[] { "$0cb", (short)26269 };
+            yield return new object[] { "-4189260826195535198", (short)453 };
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="PartitionResolver.AssignRoundRobin" />
         ///   method.
         /// </summary>
@@ -317,6 +337,19 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of hash code generation for the <see cref="PartitionResolver" />.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(PartitionHashTestCases))]
+        public void HashCodeAssignmentIsStable(string partitionKey,
+                                               short hashCode)
+        {
+            var actual = InvokeGenerateHashcode(partitionKey);
+            Assert.That(actual, Is.EqualTo(hashCode), $"The value for key: { partitionKey } was incorrect.");
+        }
+
+        /// <summary>
         ///   Sets the partition index for a <see cref="PartitionResolver" />
         ///   by directly accessing its private field.
         /// </summary>
@@ -329,5 +362,16 @@ namespace Azure.Messaging.EventHubs.Tests
             typeof(PartitionResolver)
                 .GetField("_partitionAssignmentIndex", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(target, partitionIndexValue);
+
+        /// <summary>
+        ///   Invokes the method used to generate hash codes for a <see cref="PartitionResolver" />
+        ///   by directly using its private method.
+        /// </summary>
+        ///
+        private static short InvokeGenerateHashcode(string partitionKey) =>
+            (short)
+                typeof(PartitionResolver)
+                    .GetMethod("GenerateHashCode", BindingFlags.Static | BindingFlags.NonPublic)
+                    .Invoke(null, new[] { partitionKey });
     }
 }

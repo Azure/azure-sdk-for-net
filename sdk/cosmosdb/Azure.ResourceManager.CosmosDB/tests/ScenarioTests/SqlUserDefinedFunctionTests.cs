@@ -54,9 +54,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            SqlUserDefinedFunctionResource userDefinedFunction = await SqlUserDefinedFunctionCollection.GetIfExistsAsync(_userDefinedFunctionName);
-            if (userDefinedFunction != null)
+            if (await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName))
             {
+                var id = SqlUserDefinedFunctionCollection.Id;
+                id = SqlUserDefinedFunctionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _userDefinedFunctionName);
+                SqlUserDefinedFunctionResource userDefinedFunction = this.ArmClient.GetSqlUserDefinedFunctionResource(id);
                 await userDefinedFunction.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -115,8 +117,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var userDefinedFunction = await CreateSqlUserDefinedFunction(null);
             await userDefinedFunction.DeleteAsync(WaitUntil.Completed);
 
-            userDefinedFunction = await SqlUserDefinedFunctionCollection.GetIfExistsAsync(_userDefinedFunctionName);
-            Assert.Null(userDefinedFunction);
+            bool exists = await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<SqlUserDefinedFunctionResource> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)

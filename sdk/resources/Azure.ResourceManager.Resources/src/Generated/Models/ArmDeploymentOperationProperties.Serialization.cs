@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentOperationProperties DeserializeArmDeploymentOperationProperties(JsonElement element)
         {
-            Optional<ProvisioningOperation> provisioningOperation = default;
+            Optional<ProvisioningOperationKind> provisioningOperation = default;
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<TimeSpan> duration = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningOperation = property.Value.GetString().ToProvisioningOperation();
+                    provisioningOperation = property.Value.GetString().ToProvisioningOperationKind();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))

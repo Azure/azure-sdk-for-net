@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vMwareClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,66 +304,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             scope.Start();
             try
             {
-                var response = GetIfExists(clusterName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
-        /// </summary>
-        /// <param name="clusterName"> Name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual async Task<Response<VMwareClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _vMwareClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VMwareClusterResource>(null, response.GetRawResponse());
-                return Response.FromValue(new VMwareClusterResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
-        /// </summary>
-        /// <param name="clusterName"> Name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<VMwareClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _vMwareClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VMwareClusterResource>(null, response.GetRawResponse());
-                return Response.FromValue(new VMwareClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

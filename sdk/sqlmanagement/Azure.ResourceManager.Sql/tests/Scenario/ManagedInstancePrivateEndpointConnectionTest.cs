@@ -69,8 +69,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.IsNotNull(getprivateEndpoint.Value.Data);
 
             // 4.GetAll
-            var getIfExistsprivateEndpoint = await collection.GetIfExistsAsync(privateEndpointName);
-            Assert.IsNotNull(getIfExistsprivateEndpoint.Value.Data);
+            Assert.IsTrue(await collection.ExistsAsync(privateEndpointName));
         }
     }
 }

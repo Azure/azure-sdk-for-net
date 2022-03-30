@@ -8,7 +8,7 @@
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The descendant. </summary>
     public partial class DescendantData : ResourceData

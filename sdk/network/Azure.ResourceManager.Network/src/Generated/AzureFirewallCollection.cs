@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(azureFirewallName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _azureFirewallRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,66 +306,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(azureFirewallName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
-        /// Operation Id: AzureFirewalls_Get
-        /// </summary>
-        /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public virtual async Task<Response<AzureFirewallResource>> GetIfExistsAsync(string azureFirewallName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
-
-            using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _azureFirewallRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<AzureFirewallResource>(null, response.GetRawResponse());
-                return Response.FromValue(new AzureFirewallResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
-        /// Operation Id: AzureFirewalls_Get
-        /// </summary>
-        /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public virtual Response<AzureFirewallResource> GetIfExists(string azureFirewallName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
-
-            using var scope = _azureFirewallClientDiagnostics.CreateScope("AzureFirewallCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _azureFirewallRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureFirewallName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<AzureFirewallResource>(null, response.GetRawResponse());
-                return Response.FromValue(new AzureFirewallResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -76,23 +76,6 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         }
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_FileShares_GetFileShareIFExists
-            FileShareCollection fileShareCollection = fileService.GetFileShares();
-            FileShareResource fileShare = await fileShareCollection.GetIfExistsAsync("foo");
-            if (fileShare != null)
-            {
-                Console.WriteLine(fileShare.Id.Name);
-            }
-            if (await fileShareCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("file share 'bar' exists");
-            }
-            #endregion
-        }
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task Delete()
         {
             #region Snippet:Managing_FileShares_DeleteFileShare

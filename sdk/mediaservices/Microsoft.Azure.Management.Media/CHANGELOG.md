@@ -1,5 +1,13 @@
 # Microsoft.Azure.Management.Media release notes
 
+## Changes in 6.0.0
+
+- Added new tracks API under asset to manage the tracks available in the asset.
+- dded Main10 Encoding Profile for H265 encoding.
+- Exposed RateControlMode for H264 encoding, enabling 2 new ratecontrol modes - CBR (Constant Bit Rate) and CRF (Constant Rate Factor).
+- Added skus property on streaming endpooint.
+- New LowLatencyV2 type added to the streamOptions for a live event.
+
 ## Changes in 5.0.0
 
 - The Media Services account now supports system and user assigned managed identities.

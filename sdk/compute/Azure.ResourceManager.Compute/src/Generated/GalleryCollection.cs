@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(galleryName, select: select, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _galleryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -311,68 +311,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = GetIfExists(galleryName, select: select, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}
-        /// Operation Id: Galleries_Get
-        /// </summary>
-        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
-        /// <param name="select"> The select expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public virtual async Task<Response<GalleryResource>> GetIfExistsAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-
-            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _galleryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<GalleryResource>(null, response.GetRawResponse());
-                return Response.FromValue(new GalleryResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}
-        /// Operation Id: Galleries_Get
-        /// </summary>
-        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
-        /// <param name="select"> The select expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public virtual Response<GalleryResource> GetIfExists(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-
-            using var scope = _galleryClientDiagnostics.CreateScope("GalleryCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _galleryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<GalleryResource>(null, response.GetRawResponse());
-                return Response.FromValue(new GalleryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

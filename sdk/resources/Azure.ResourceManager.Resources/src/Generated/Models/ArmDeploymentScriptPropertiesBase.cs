@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Storage Account settings. </summary>
-        public StorageAccountConfiguration StorageAccountSettings { get; }
+        public ScriptStorageConfiguration StorageAccountSettings { get; }
         /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </summary>
-        public CleanupOptions? CleanupPreference { get; }
+        public ScriptCleanupOptions? CleanupPreference { get; }
         /// <summary> State of the script execution. This only appears in the response. </summary>
         public ScriptProvisioningState? ProvisioningState { get; }
         /// <summary> Contains the results of script execution. </summary>

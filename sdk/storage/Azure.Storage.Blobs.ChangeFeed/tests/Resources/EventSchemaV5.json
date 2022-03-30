@@ -54,7 +54,7 @@
         },
         "asyncOperationInfo": {
             "DestinationTier": "Hot",
-            "WasAsyncOperation": true,
+            "WasAsyncOperation": "true",
             "CopyId": "copyId"
         },
         "blobTagsUpdated": {

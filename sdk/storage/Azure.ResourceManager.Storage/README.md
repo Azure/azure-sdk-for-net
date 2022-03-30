@@ -92,22 +92,6 @@ StorageAccountResource storageAccount = await accountCollection.GetAsync("myAcco
 Console.WriteLine(storageAccount.Id.Name);
 ```
 
-### Try to get a storage account if it exists
-
-
-```C# Snippet:Managing_StorageAccounts_GetStorageAccountIfExists
-StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-StorageAccountResource storageAccount = await accountCollection.GetIfExistsAsync("foo");
-if (storageAccount != null)
-{
-    Console.WriteLine(storageAccount.Id.Name);
-}
-if (await accountCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("storage account 'bar' exists");
-}
-```
-
 ### Delete a storage account
 
 ```C# Snippet:Managing_StorageAccounts_DeleteStorageAccount
