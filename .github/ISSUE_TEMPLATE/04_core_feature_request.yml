@@ -2,7 +2,7 @@ name: Core Feature Request
 description: Create a feature request for Azure.Core
 title: "[Core] "
 labels: ["Azure.Core", "feature-request"]
-assignees: ["christothes","annelo-msft", "Josh-Love-msft"]
+assignees: ["christothes","annelo-msft","JoshLove-msft"]
 
 body:
   - type: dropdown
@@ -56,7 +56,6 @@ body:
     attributes:
       label: Stakeholders
       description: Please tag any parties that are stakeholders in this feature
-      placeholder: GitHub handles
-      value: "@johndoe ,  @sallymae"
+      placeholder: GitHub handles eg. @johndoe ,  @sallymae
     validations:
       required: false
