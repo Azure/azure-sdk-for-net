@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
@@ -1655,14 +1654,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
         /// <param name="recordingStartTime"> The time at which the recording started. </param>
         /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>
-        /// <param name="recordingContentType"> The recording content type- AudioVideo, or Audio. </param>
-        /// <param name="recordingChannelType"> The recording  channel type - Mixed, Unmixed. </param>
-        /// <param name="recordingFormatType"> The recording format type - Mp4, Mp3, Wav. </param>
+        /// <param name="contentType"> The recording content type- AudioVideo, or Audio. </param>
+        /// <param name="channelType"> The recording  channel type - Mixed, Unmixed. </param>
+        /// <param name="formatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, string sessionEndReason = null)
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, RecordingContentType? contentType = null, RecordingChannelType? channelType = null, RecordingFormatType? formatType = null, string sessionEndReason = null)
         {
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, recordingContentType, recordingChannelType, recordingFormatType, sessionEndReason);
+            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, contentType, channelType, formatType, sessionEndReason);
         }
 
         /// <summary> Initializes a new instance of AcsRecordingStorageInfoProperties. </summary>

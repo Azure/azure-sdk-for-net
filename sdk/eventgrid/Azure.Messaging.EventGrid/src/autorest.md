@@ -113,6 +113,15 @@ directive:
           $[path]["properties"]["x509Thumbprint"]["x-namespace"] = namespace;
           $[path]["properties"]["x509Thumbprint"]["x-csharp-formats"] = "json";
       }
+      if (path.includes("AcsRecordingFileStatusUpdatedEventData"))
+      {
+          $[path]["properties"]["recordingContentType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingContentType"]["x-ms-client-name"] = "ContentType";
+          $[path]["properties"]["recordingChannelType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingChannelType"]["x-ms-client-name"] = "ChannelType";
+          $[path]["properties"]["recordingFormatType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingFormatType"]["x-ms-client-name"] = "FormatType";
+      }
     }
 ```
 
