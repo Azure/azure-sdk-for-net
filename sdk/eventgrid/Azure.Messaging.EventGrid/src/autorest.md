@@ -117,10 +117,13 @@ directive:
       {
           $[path]["properties"]["recordingContentType"]["x-namespace"] = namespace;
           $[path]["properties"]["recordingContentType"]["x-ms-client-name"] = "ContentType";
+          $[path]["properties"]["recordingContentType"]["x-ms-enum"]["name"] = "AcsRecordingContentType";
           $[path]["properties"]["recordingChannelType"]["x-namespace"] = namespace;
           $[path]["properties"]["recordingChannelType"]["x-ms-client-name"] = "ChannelType";
+          $[path]["properties"]["recordingChannelType"]["x-ms-enum"]["name"] = "AcsRecordingChannelType";
           $[path]["properties"]["recordingFormatType"]["x-namespace"] = namespace;
           $[path]["properties"]["recordingFormatType"]["x-ms-client-name"] = "FormatType";
+          $[path]["properties"]["recordingFormatType"]["x-ms-enum"]["name"] = "AcsRecordingFormatType";
       }
     }
 ```

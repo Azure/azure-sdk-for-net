@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using BackCompat = Azure.Messaging.EventGrid.Models;
+using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -11,50 +11,50 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> The recording content type- AudioVideo, or Audio. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BackCompat.RecordingContentType? RecordingContentType
+        public RecordingContentType? RecordingContentType
         {
             get
             {
                 if (ContentType != null && _recordingContentType == null)
                 {
-                    _recordingContentType = new BackCompat.RecordingContentType(ContentType.Value.ToString());
+                    _recordingContentType = new RecordingContentType(ContentType.Value.ToString());
                 }
 
                 return _recordingContentType;
             }
         }
-        private BackCompat.RecordingContentType? _recordingContentType;
+        private RecordingContentType? _recordingContentType;
         /// <summary> The recording  channel type - Mixed, Unmixed. </summary>
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BackCompat.RecordingChannelType? RecordingChannelType
+        public RecordingChannelType? RecordingChannelType
         {
             get
             {
                 if (ChannelType != null && _recordingChannelType == null)
                 {
-                    _recordingChannelType = new BackCompat.RecordingChannelType(ChannelType.Value.ToString());
+                    _recordingChannelType = new RecordingChannelType(ChannelType.Value.ToString());
                 }
 
                 return _recordingChannelType;
             }
         }
-        private BackCompat.RecordingChannelType? _recordingChannelType;
+        private RecordingChannelType? _recordingChannelType;
 
         /// <summary> The recording format type - Mp4, Mp3, Wav. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BackCompat.RecordingFormatType? RecordingFormatType
+        public RecordingFormatType? RecordingFormatType
         {
             get
             {
                 if (FormatType != null && _recordingFormatType == null)
                 {
-                    _recordingFormatType = new BackCompat.RecordingFormatType(FormatType.Value.ToString());
+                    _recordingFormatType = new RecordingFormatType(FormatType.Value.ToString());
                 }
 
                 return _recordingFormatType;
             }
         }
-        private BackCompat.RecordingFormatType? _recordingFormatType;
+        private RecordingFormatType? _recordingFormatType;
     }
 }

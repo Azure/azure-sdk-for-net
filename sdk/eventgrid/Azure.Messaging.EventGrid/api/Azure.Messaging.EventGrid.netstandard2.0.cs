@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = null, long? index = default(long?), string endReason = null, string metadataLocation = null, string contentLocation = null, string deleteLocation = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo = null, System.DateTimeOffset? recordingStartTime = default(System.DateTimeOffset?), long? recordingDurationMs = default(long?), Azure.Messaging.EventGrid.Models.RecordingContentType? recordingContentType = default(Azure.Messaging.EventGrid.Models.RecordingContentType?), Azure.Messaging.EventGrid.Models.RecordingChannelType? recordingChannelType = default(Azure.Messaging.EventGrid.Models.RecordingChannelType?), Azure.Messaging.EventGrid.Models.RecordingFormatType? recordingFormatType = default(Azure.Messaging.EventGrid.Models.RecordingFormatType?), string sessionEndReason = null) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo = null, System.DateTimeOffset? recordingStartTime = default(System.DateTimeOffset?), long? recordingDurationMs = default(long?), Azure.Messaging.EventGrid.SystemEvents.RecordingContentType? contentType = default(Azure.Messaging.EventGrid.SystemEvents.RecordingContentType?), Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType? channelType = default(Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType?), Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType? formatType = default(Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType?), string sessionEndReason = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo = null, System.DateTimeOffset? recordingStartTime = default(System.DateTimeOffset?), long? recordingDurationMs = default(long?), Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType? contentType = default(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType?), Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType? channelType = default(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType?), Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType? formatType = default(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType?), string sessionEndReason = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo, System.DateTimeOffset? recordingStartTime, long? recordingDurationMs, string sessionEndReason) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties AcsRecordingStorageInfoProperties(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties> recordingChunks = null) { throw null; }
@@ -625,6 +625,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel DeletedByCommunicationIdentifier { get { throw null; } }
         public System.DateTimeOffset? DeleteTime { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsRecordingChannelType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsRecordingChannelType(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType Mixed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType Unmixed { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AcsRecordingChunkInfoProperties
     {
         internal AcsRecordingChunkInfoProperties() { }
@@ -635,12 +653,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public long? Index { get { throw null; } }
         public string MetadataLocation { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsRecordingContentType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsRecordingContentType(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType Audio { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType AudioVideo { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AcsRecordingFileStatusUpdatedEventData
     {
         internal AcsRecordingFileStatusUpdatedEventData() { }
-        public Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType? ChannelType { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.RecordingContentType? ContentType { get { throw null; } }
-        public Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType? FormatType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType? ChannelType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType? ContentType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType? FormatType { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Messaging.EventGrid.Models.RecordingChannelType? RecordingChannelType { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -651,6 +687,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public System.DateTimeOffset? RecordingStartTime { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties RecordingStorageInfo { get { throw null; } }
         public string SessionEndReason { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsRecordingFormatType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsRecordingFormatType(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType Mp3 { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType Mp4 { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType Wav { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AcsRecordingStorageInfoProperties
     {
@@ -1552,61 +1607,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string PolicyDefinitionReferenceId { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingChannelType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecordingChannelType(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType Mixed { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType Unmixed { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType left, Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType left, Azure.Messaging.EventGrid.SystemEvents.RecordingChannelType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingContentType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.RecordingContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecordingContentType(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.RecordingContentType Audio { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.RecordingContentType AudioVideo { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.RecordingContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.RecordingContentType left, Azure.Messaging.EventGrid.SystemEvents.RecordingContentType right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.RecordingContentType (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.RecordingContentType left, Azure.Messaging.EventGrid.SystemEvents.RecordingContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingFormatType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecordingFormatType(string value) { throw null; }
-        public static Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType Mp3 { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType Mp4 { get { throw null; } }
-        public static Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType Wav { get { throw null; } }
-        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType left, Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType right) { throw null; }
-        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType (string value) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType left, Azure.Messaging.EventGrid.SystemEvents.RecordingFormatType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class RedisExportRdbCompletedEventData
     {

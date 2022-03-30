@@ -450,11 +450,11 @@ namespace Azure.Messaging.EventGrid
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, Models.RecordingContentType? recordingContentType = null, Models.RecordingChannelType? recordingChannelType = null, Models.RecordingFormatType? recordingFormatType = null, string sessionEndReason = null)
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, string sessionEndReason = null)
         {
-            var contentType = recordingContentType != null ? new SystemEvents.RecordingContentType(recordingContentType.ToString()) : null;
-            var channelType = recordingChannelType != null ? new SystemEvents.RecordingChannelType(recordingChannelType.ToString()) : null;
-            var formatType = recordingFormatType != null ? new SystemEvents.RecordingFormatType(recordingFormatType.ToString()) : null;
+            var contentType = recordingContentType != null ? new AcsRecordingContentType(recordingContentType.ToString()) : null;
+            var channelType = recordingChannelType != null ? new AcsRecordingChannelType(recordingChannelType.ToString()) : null;
+            var formatType = recordingFormatType != null ? new AcsRecordingFormatType(recordingFormatType.ToString()) : null;
             return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, contentType, channelType, formatType, sessionEndReason);
         }
 
