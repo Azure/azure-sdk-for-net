@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (2022-03-29)
+## 1.1.0-beta.2 (2022-03-30)
 ### Features Added
 - Added environment variable `AZURE_USERAGENT_OVERRIDE`, that overrides the HTTP header `x-ms-useragent` on the tests
 
