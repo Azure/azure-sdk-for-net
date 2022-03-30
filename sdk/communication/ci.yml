@@ -36,6 +36,8 @@ extends:
       safeName: AzureCommunicationEmail
     - name: Azure.Communication.Sms
       safeName: AzureCommunicationSms
+    - name: Azure.Communication.Rooms
+      safeName: AzureCommunicationRooms
     - name: Azure.Communication.Identity
       safeName: AzureCommunicationIdentity
     - name: Azure.Communication.MediaComposition

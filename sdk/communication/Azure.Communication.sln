@@ -47,9 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ShortCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ShortCodes.Tests", "Azure.Communication.ShortCodes\tests\Azure.Communication.ShortCodes.Tests.csproj", "{A3D05FF9-848B-483E-A34E-49C50E73F675}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email", "Azure.Communication.Email\src\Azure.Communication.Email.csproj", "{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Rooms", "Azure.Communication.Rooms\src\Azure.Communication.Rooms.csproj", "{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email.Tests", "Azure.Communication.Email\tests\Azure.Communication.Email.Tests.csproj", "{F564FD34-F010-41FA-A58C-51558FB9FE89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Rooms.Tests", "Azure.Communication.Rooms\tests\Azure.Communication.Rooms.Tests.csproj", "{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.MediaComposition", "Azure.Communication.MediaComposition\src\Azure.Communication.MediaComposition.csproj", "{D5445861-C735-4A13-900F-3745FBD9566A}"
 EndProject
@@ -137,14 +137,14 @@ Global
 		{A3D05FF9-848B-483E-A34E-49C50E73F675}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3D05FF9-848B-483E-A34E-49C50E73F675}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3D05FF9-848B-483E-A34E-49C50E73F675}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D5445861-C735-4A13-900F-3745FBD9566A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D5445861-C735-4A13-900F-3745FBD9566A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5445861-C735-4A13-900F-3745FBD9566A}.Release|Any CPU.ActiveCfg = Release|Any CPU
