@@ -83,7 +83,7 @@ function Get-TocMapping {
             $serviceName = $packageInfo[0].ServiceName.Trim()
         }
         $displayName = $packageInfo[0].DisplayName.Trim()
-        $isTrack2 = $packageInfo[0].New -eq 'true'
+        $isNew = $packageInfo[0].New -eq 'true'
         $isClient = $packageInfo[0].Type -eq 'client'
         $orderServiceMapping[$artifact] = [PSCustomObject][ordered]@{
           New = $packageInfo[0].New
