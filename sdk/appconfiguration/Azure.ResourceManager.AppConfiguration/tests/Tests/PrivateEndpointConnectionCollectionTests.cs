@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class PrivateEndpointConnectionCollectionTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
-        private ConfigurationStore ConfigStore { get; set; }
-        private Network.PrivateEndpoint PrivateEndpoint { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
+        private ConfigurationStoreResource ConfigStore { get; set; }
+        private Network.PrivateEndpointResource PrivateEndpointResource { get; set; }
 
         public PrivateEndpointConnectionCollectionTests(bool isAsync)
             : base(isAsync)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 vnetData.AddressPrefixes.Add("10.0.0.0/16");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.2.4");
-                VirtualNetwork vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData)).Value;
+                VirtualNetworkResource vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData)).Value;
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                         },
                     Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 };
-                PrivateEndpoint = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
+                PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
             }
         }
 
@@ -75,23 +75,23 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task CreateOrUpdateTest()
         {
             // Only support update
-            List<PrivateEndpointConnection> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            List<PrivateEndpointConnectionResource> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.FirstOrDefault().Data.Name;
             PrivateEndpointConnectionData privateEndpointConnectionData = connections.FirstOrDefault().Data;
             privateEndpointConnectionData.PrivateLinkServiceConnectionState.Description = "Update descriptions";
-            PrivateEndpointConnection privateEndpointConnection = (await ConfigStore.GetPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, privateEndpointConnectionData)).Value;
+            PrivateEndpointConnectionResource privateEndpointConnection = (await ConfigStore.GetPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, privateEndpointConnectionData)).Value;
 
             Assert.IsTrue(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name));
-            Assert.IsTrue(PrivateEndpoint.Data.Id.Equals(privateEndpointConnection.Data.PrivateEndpoint.Id));
+            Assert.IsTrue(PrivateEndpointResource.Data.Id.Equals(privateEndpointConnection.Data.PrivateEndpoint.Id));
             Assert.IsTrue(privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Description.Equals("Update descriptions"));
         }
 
         [Test]
         public async Task GetTest()
         {
-            List<PrivateEndpointConnection> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            List<PrivateEndpointConnectionResource> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.First().Data.Name;
-            PrivateEndpointConnection privateEndpointConnection = await ConfigStore.GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName);
+            PrivateEndpointConnectionResource privateEndpointConnection = await ConfigStore.GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName);
 
             Assert.IsTrue(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name));
             Assert.IsTrue(privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status == Models.ConnectionStatus.Approved);
@@ -108,28 +108,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             };
             await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName1, configurationStoreData);
             await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName2, configurationStoreData);
-            List<ConfigurationStore> configurationStores = await ResGroup.GetConfigurationStores().GetAllAsync().ToEnumerableAsync();
+            List<ConfigurationStoreResource> configurationStores = await ResGroup.GetConfigurationStores().GetAllAsync().ToEnumerableAsync();
 
             Assert.IsTrue(configurationStores.Count >= 2);
             Assert.IsTrue(configurationStores.Where(x => x.Data.Name == configurationStoreName1).FirstOrDefault().Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
-        }
-
-        [Test]
-        public async Task GetIfExistsTest()
-        {
-            string configurationStoreName = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
-            {
-                PublicNetworkAccess = PublicNetworkAccess.Disabled
-            };
-            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData);
-            ConfigurationStore configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(configurationStoreName);
-
-            Assert.IsTrue(configurationStore.Data.Name == configurationStoreName);
-
-            configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync("foo");
-
-            Assert.IsNull(configurationStore);
         }
     }
 }

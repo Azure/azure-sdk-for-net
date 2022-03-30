@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
             BillingLocation = billingLocation;
             ShortName = shortName;
             FriendlyName = friendlyName;
-            OsType = osType;
+            OSType = osType;
             Multiplier = multiplier;
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Friendly name of the meter. </summary>
         public string FriendlyName { get; set; }
         /// <summary> App Service OS type meter used for. </summary>
-        public string OsType { get; set; }
+        public string OSType { get; set; }
         /// <summary> Meter Multiplier. </summary>
         public double? Multiplier { get; set; }
     }

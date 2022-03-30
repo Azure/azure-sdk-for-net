@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteBooleanValue(KeepAtLeastOneBackup);
             writer.WritePropertyName("retentionPeriodInDays");
             writer.WriteNumberValue(RetentionPeriodInDays);
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             writer.WriteEndObject();
         }

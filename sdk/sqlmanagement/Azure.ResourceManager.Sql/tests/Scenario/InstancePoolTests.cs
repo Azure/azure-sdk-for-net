@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class InstancePoolTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
 
         public InstancePoolTests(bool isAsync)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             //var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("Sql-RG-1000");
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
-        private async Task<InstancePool> CreateInstancePool(string instancePoolName)
+        private async Task<InstancePoolResource> CreateInstancePool(string instancePoolName)
         {
             //Prerequisites: 1. create NetworkSecurityGroup
             string networkSecurityGroupName = SessionRecording.GenerateAssetName("networkSecurityGroup-");
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             string instancePoolName = Recording.GenerateAssetName("instance-pool-");
             var collection = _resourceGroup.GetInstancePools();
-            InstancePool instancePool = await CreateInstancePool(instancePoolName);
+            InstancePoolResource instancePool = await CreateInstancePool(instancePoolName);
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);
 

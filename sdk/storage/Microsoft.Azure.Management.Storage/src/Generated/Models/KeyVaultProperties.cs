@@ -36,13 +36,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// of the current versioned Key Vault Key in use.</param>
         /// <param name="lastKeyRotationTimestamp">Timestamp of last rotation
         /// of the Key Vault Key.</param>
-        public KeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUri = default(string), string currentVersionedKeyIdentifier = default(string), System.DateTime? lastKeyRotationTimestamp = default(System.DateTime?))
+        /// <param name="currentVersionedKeyExpirationTimestamp">This is a read
+        /// only property that represents the expiration time of the current
+        /// version of the customer managed key used for encryption.</param>
+        public KeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUri = default(string), string currentVersionedKeyIdentifier = default(string), System.DateTime? lastKeyRotationTimestamp = default(System.DateTime?), System.DateTime? currentVersionedKeyExpirationTimestamp = default(System.DateTime?))
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             KeyVaultUri = keyVaultUri;
             CurrentVersionedKeyIdentifier = currentVersionedKeyIdentifier;
             LastKeyRotationTimestamp = lastKeyRotationTimestamp;
+            CurrentVersionedKeyExpirationTimestamp = currentVersionedKeyExpirationTimestamp;
             CustomInit();
         }
 
@@ -81,6 +85,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastKeyRotationTimestamp")]
         public System.DateTime? LastKeyRotationTimestamp { get; private set; }
+
+        /// <summary>
+        /// Gets this is a read only property that represents the expiration
+        /// time of the current version of the customer managed key used for
+        /// encryption.
+        /// </summary>
+        [JsonProperty(PropertyName = "currentVersionedKeyExpirationTimestamp")]
+        public System.DateTime? CurrentVersionedKeyExpirationTimestamp { get; private set; }
 
     }
 }

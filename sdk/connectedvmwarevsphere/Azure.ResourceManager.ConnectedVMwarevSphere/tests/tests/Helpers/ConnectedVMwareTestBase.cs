@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
     {
         public const string DefaultLocation = "eastus";
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
         public const string EXTENDED_LOCATION_TYPE = "CustomLocation";
         public const string CustomLocationId  = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ExtendedLocation/customLocations/service-sdk-test-cl";
         public const string VcenterId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/VCenters/service-sdk-test-vcenter";
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroupAsync()
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testConnectedVMwareRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(

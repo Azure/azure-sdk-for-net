@@ -42,3 +42,11 @@ extends:
       safeName: AzureCommunicationPhoneNumbers
     - name: Azure.ResourceManager.Communication
       safeName: AzureResourceManagerCommunication
+    - name: Azure.Communication.ShortCodes
+      safeName: AzureCommunicationShortCodes
+      skipTagRepository: true
+      skipPublishPackage: true
+      skipSymbolsUpload: true
+      skipPublishDocMs: true
+      skipPublishDocGithubIo: true
+      skipUpdatePackageVersion: true

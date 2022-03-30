@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class PublicIpPrefixTests : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
         public PublicIpPrefixTests(bool isAsync) : base(isAsync)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests
             var name = Recording.GenerateAssetName("test_public_ip_prefix_");
 
             // create
-            PublicIPPrefix prefix = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new PublicIPPrefixData()
+            PublicIPPrefixResource prefix = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new PublicIPPrefixData()
             {
                 Location = TestEnvironment.Location,
                 PrefixLength = 28,

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualNetworkOperationSource : IOperationSource<VirtualNetwork>
+    internal class VirtualNetworkOperationSource : IOperationSource<VirtualNetworkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualNetwork IOperationSource<VirtualNetwork>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualNetworkResource IOperationSource<VirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
-            return new VirtualNetwork(_client, data);
+            return new VirtualNetworkResource(_client, data);
         }
 
-        async ValueTask<VirtualNetwork> IOperationSource<VirtualNetwork>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualNetworkResource> IOperationSource<VirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
-            return new VirtualNetwork(_client, data);
+            return new VirtualNetworkResource(_client, data);
         }
     }
 }

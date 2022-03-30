@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzureCliScript DeserializeAzureCliScript(JsonElement element)
         {
-            Optional<DeploymentScriptManagedIdentity> identity = default;
-            string location = default;
+            Optional<ArmDeploymentScriptManagedIdentity> identity = default;
+            AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
             ResourceIdentifier id = default;
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Resources.Models
             ResourceType type = default;
             SystemData systemData = default;
             Optional<ContainerConfiguration> containerSettings = default;
-            Optional<StorageAccountConfiguration> storageAccountSettings = default;
-            Optional<CleanupOptions> cleanupPreference = default;
+            Optional<ScriptStorageConfiguration> storageAccountSettings = default;
+            Optional<ScriptCleanupOptions> cleanupPreference = default;
             Optional<ScriptProvisioningState> provisioningState = default;
             Optional<ScriptStatus> status = default;
-            Optional<IReadOnlyDictionary<string, object>> outputs = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> outputs = default;
             Optional<Uri> primaryScriptUri = default;
             Optional<IList<string>> supportingScriptUris = default;
             Optional<string> scriptContent = default;
             Optional<string> arguments = default;
-            Optional<IList<EnvironmentVariable>> environmentVariables = default;
+            Optional<IList<ScriptEnvironmentVariable>> environmentVariables = default;
             Optional<string> forceUpdateTag = default;
             TimeSpan retentionInterval = default;
             Optional<TimeSpan> timeout = default;
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = DeploymentScriptManagedIdentity.DeserializeDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageAccountSettings = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property0.Value);
+                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cleanupPreference"))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cleanupPreference = new CleanupOptions(property0.Value.GetString());
+                            cleanupPreference = new ScriptCleanupOptions(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                             }
                             outputs = dictionary;
                             continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                primaryScriptUri = null;
                                 continue;
                             }
                             primaryScriptUri = new Uri(property0.Value.GetString());
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                            List<ScriptEnvironmentVariable> array = new List<ScriptEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item));
+                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item));
                             }
                             environmentVariables = array;
                             continue;

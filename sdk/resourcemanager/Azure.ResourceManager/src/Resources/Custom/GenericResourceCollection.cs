@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 
 [assembly: CodeGenSuppressType("GenericResourceCollection")]
 namespace Azure.ResourceManager.Resources
@@ -30,14 +29,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GenericResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _resourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _resourcesRestClient = new ResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Tenant.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+            if (id.ResourceType != TenantResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
         }
 
         // Collection level operations.
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Resources
             return version;
         }
 
-        private ProviderCollection GetProviderCollectionForSubscription(ResourceIdentifier subscriptionId)
-            => GetCachedClient((client) => { return new ProviderCollection(client, subscriptionId); });
+        private ResourceProviderCollection GetProviderCollectionForSubscription(ResourceIdentifier subscriptionId)
+            => GetCachedClient((client) => { return new ResourceProviderCollection(client, subscriptionId); });
     }
 }

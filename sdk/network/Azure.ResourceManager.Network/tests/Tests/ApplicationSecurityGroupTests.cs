@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
     public class ApplicationSecurityGroupTests
         : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
         public ApplicationSecurityGroupTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)

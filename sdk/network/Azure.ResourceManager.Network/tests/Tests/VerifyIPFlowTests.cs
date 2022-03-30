@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
             //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
 
             string localIPAddress = GetNetworkInterfaceCollection(resourceGroupName).GetAsync(networkInterfaceName1).Result.Value.Data.IPConfigurations.FirstOrDefault().PrivateIPAddress;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Tests
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
 
             // Add a security rule
-            var SecurityRule = new SecurityRuleData()
+            var securityRule = new SecurityRuleData()
             {
                 Name = securityRule1,
                 Access = SecurityRuleAccess.Deny,
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var networkSecurityGroupCollection = GetNetworkSecurityGroupCollection(resourceGroupName);
-            Response<NetworkSecurityGroup> nsg = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
-            nsg.Value.Data.SecurityRules.Add(SecurityRule);
+            Response<NetworkSecurityGroupResource> nsg = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
+            nsg.Value.Data.SecurityRules.Add(securityRule);
             var createOrUpdateOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, nsg.Value.Data);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 

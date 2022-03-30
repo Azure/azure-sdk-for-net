@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of VaultKeyVersion and their operations over its parent. </summary>
-    public partial class VaultKeyVersionCollection : ArmCollection, IEnumerable<VaultKeyVersion>, IAsyncEnumerable<VaultKeyVersion>
+    /// <summary>
+    /// A class representing a collection of <see cref="VaultKeyVersionResource" /> and their operations.
+    /// Each <see cref="VaultKeyVersionResource" /> in the collection will belong to the same instance of <see cref="VaultKeyResource" />.
+    /// To get a <see cref="VaultKeyVersionCollection" /> instance call the GetVaultKeyVersions method from an instance of <see cref="VaultKeyResource" />.
+    /// </summary>
+    public partial class VaultKeyVersionCollection : ArmCollection, IEnumerable<VaultKeyVersionResource>, IAsyncEnumerable<VaultKeyVersionResource>
     {
         private readonly ClientDiagnostics _vaultKeyVersionKeysClientDiagnostics;
         private readonly KeysRestOperations _vaultKeyVersionKeysRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VaultKeyVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vaultKeyVersionKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultKeyVersion.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(VaultKeyVersion.ResourceType, out string vaultKeyVersionKeysApiVersion);
-            _vaultKeyVersionKeysRestClient = new KeysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultKeyVersionKeysApiVersion);
+            _vaultKeyVersionKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultKeyVersionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VaultKeyVersionResource.ResourceType, out string vaultKeyVersionKeysApiVersion);
+            _vaultKeyVersionKeysRestClient = new KeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vaultKeyVersionKeysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VaultKey.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VaultKey.ResourceType), nameof(id));
+            if (id.ResourceType != VaultKeyResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VaultKeyResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
-        public virtual async Task<Response<VaultKeyVersion>> GetAsync(string keyVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultKeyVersionResource>> GetAsync(string keyVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = await _vaultKeyVersionKeysRestClient.GetVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VaultKeyVersion(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VaultKeyVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
-        public virtual Response<VaultKeyVersion> Get(string keyVersion, CancellationToken cancellationToken = default)
+        public virtual Response<VaultKeyVersionResource> Get(string keyVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
 
@@ -99,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = _vaultKeyVersionKeysRestClient.GetVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyVersion, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VaultKeyVersion(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VaultKeyVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +117,17 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Keys_ListVersions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VaultKeyVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VaultKeyVersion> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VaultKeyVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VaultKeyVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VaultKeyVersion>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VaultKeyVersionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vaultKeyVersionKeysClientDiagnostics.CreateScope("VaultKeyVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _vaultKeyVersionKeysRestClient.ListVersionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +135,14 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            async Task<Page<VaultKeyVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VaultKeyVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _vaultKeyVersionKeysClientDiagnostics.CreateScope("VaultKeyVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _vaultKeyVersionKeysRestClient.ListVersionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +159,17 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Keys_ListVersions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VaultKeyVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VaultKeyVersion> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VaultKeyVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VaultKeyVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VaultKeyVersion> FirstPageFunc(int? pageSizeHint)
+            Page<VaultKeyVersionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vaultKeyVersionKeysClientDiagnostics.CreateScope("VaultKeyVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _vaultKeyVersionKeysRestClient.ListVersions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +177,14 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            Page<VaultKeyVersion> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VaultKeyVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _vaultKeyVersionKeysClientDiagnostics.CreateScope("VaultKeyVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _vaultKeyVersionKeysRestClient.ListVersionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VaultKeyVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -209,7 +212,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(keyVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vaultKeyVersionKeysRestClient.GetVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,7 +239,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = GetIfExists(keyVersion, cancellationToken: cancellationToken);
+                var response = _vaultKeyVersionKeysRestClient.GetVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyVersion, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,65 +249,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
-        /// Operation Id: Keys_GetVersion
-        /// </summary>
-        /// <param name="keyVersion"> The version of the key to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
-        public virtual async Task<Response<VaultKeyVersion>> GetIfExistsAsync(string keyVersion, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
-
-            using var scope = _vaultKeyVersionKeysClientDiagnostics.CreateScope("VaultKeyVersionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _vaultKeyVersionKeysRestClient.GetVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VaultKeyVersion>(null, response.GetRawResponse());
-                return Response.FromValue(new VaultKeyVersion(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
-        /// Operation Id: Keys_GetVersion
-        /// </summary>
-        /// <param name="keyVersion"> The version of the key to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
-        public virtual Response<VaultKeyVersion> GetIfExists(string keyVersion, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyVersion, nameof(keyVersion));
-
-            using var scope = _vaultKeyVersionKeysClientDiagnostics.CreateScope("VaultKeyVersionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _vaultKeyVersionKeysRestClient.GetVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyVersion, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VaultKeyVersion>(null, response.GetRawResponse());
-                return Response.FromValue(new VaultKeyVersion(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<VaultKeyVersion> IEnumerable<VaultKeyVersion>.GetEnumerator()
+        IEnumerator<VaultKeyVersionResource> IEnumerable<VaultKeyVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +259,7 @@ namespace Azure.ResourceManager.KeyVault
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VaultKeyVersion> IAsyncEnumerable<VaultKeyVersion>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VaultKeyVersionResource> IAsyncEnumerable<VaultKeyVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

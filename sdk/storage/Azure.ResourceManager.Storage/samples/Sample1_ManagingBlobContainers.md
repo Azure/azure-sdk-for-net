@@ -18,7 +18,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Managing_StorageAccounts_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -26,8 +26,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ```C# Snippet:Managing_StorageAccounts_GetResourceGroupCollection
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = operation.Value;
+ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = operation.Value;
 ```
 
 After we have the resource group created, we can create a storage account
@@ -41,15 +41,15 @@ StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(s
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
-ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters);
-StorageAccount storageAccount = accountCreateOperation.Value;
+ArmOperation<StorageAccountResource> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters);
+StorageAccountResource storageAccount = accountCreateOperation.Value;
 ```
 
 
 Then we need to get the blob service, which is a singleton resource and the name is "default"
 
 ```C# Snippet:Managing_BlobContainers_GetBlobService
-BlobService blobService = storageAccount.GetBlobService();
+BlobServiceResource blobService = storageAccount.GetBlobService();
 ```
 
 
@@ -61,16 +61,16 @@ Now that we have the blob service, we can manage the blob containers inside this
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
 string blobContainerName = "myBlobContainer";
 BlobContainerData blobContainerData = new BlobContainerData();
-ArmOperation<BlobContainer> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, blobContainerName, blobContainerData);
-BlobContainer blobContainer = blobContainerCreateOperation.Value;
+ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, blobContainerName, blobContainerData);
+BlobContainerResource blobContainer = blobContainerCreateOperation.Value;
 ```
 
 ***List all blob containers***
 
 ```C# Snippet:Managing_BlobContainers_ListBlobContainers
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-AsyncPageable<BlobContainer> response = blobContainerCollection.GetAllAsync();
-await foreach (BlobContainer blobContainer in response)
+AsyncPageable<BlobContainerResource> response = blobContainerCollection.GetAllAsync();
+await foreach (BlobContainerResource blobContainer in response)
 {
     Console.WriteLine(blobContainer.Id.Name);
 }
@@ -80,30 +80,15 @@ await foreach (BlobContainer blobContainer in response)
 
 ```C# Snippet:Managing_BlobContainers_GetBlobContainer
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-BlobContainer blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
+BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
 Console.WriteLine(blobContainer.Id.Name);
-```
-
-***Try to get a blob container if it exists***
-
-```C# Snippet:Managing_BlobContainers_GetBlobContainerIfExists
-BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-BlobContainer blobContainer = await blobContainerCollection.GetIfExistsAsync("foo");
-if (blobContainer != null)
-{
-    Console.WriteLine(blobContainer.Id.Name);
-}
-if (await blobContainerCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("blob container 'bar' exists");
-}
 ```
 
 ***Delete a blob container***
 
 ```C# Snippet:Managing_BlobContainers_DeleteBlobContainer
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-BlobContainer blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
+BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
 await blobContainer.DeleteAsync(WaitUntil.Completed);
 ```
 

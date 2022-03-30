@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing collection of HciCluster and their operations over its parent. </summary>
-    public partial class HciClusterCollection : ArmCollection, IEnumerable<HciCluster>, IAsyncEnumerable<HciCluster>
+    /// <summary>
+    /// A class representing a collection of <see cref="HciClusterResource" /> and their operations.
+    /// Each <see cref="HciClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="HciClusterCollection" /> instance call the GetHciClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class HciClusterCollection : ArmCollection, IEnumerable<HciClusterResource>, IAsyncEnumerable<HciClusterResource>
     {
         private readonly ClientDiagnostics _hciClusterClustersClientDiagnostics;
         private readonly ClustersRestOperations _hciClusterClustersRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HciClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciCluster.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(HciCluster.ResourceType, out string hciClusterClustersApiVersion);
-            _hciClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hciClusterClustersApiVersion);
+            _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HciClusterResource.ResourceType, out string hciClusterClustersApiVersion);
+            _hciClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.Hci
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,21 +61,21 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
-        /// <param name="cluster"> Details of the HCI cluster. </param>
+        /// <param name="data"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="cluster"/> is null. </exception>
-        public virtual async Task<ArmOperation<HciCluster>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, HciClusterData cluster, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<HciClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, HciClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(cluster, nameof(cluster));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciClusterClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cluster, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<HciCluster>(Response.FromValue(new HciCluster(Client, response), response.GetRawResponse()));
+                var response = await _hciClusterClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<HciClusterResource>(Response.FromValue(new HciClusterResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,21 +94,21 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
-        /// <param name="cluster"> Details of the HCI cluster. </param>
+        /// <param name="data"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="cluster"/> is null. </exception>
-        public virtual ArmOperation<HciCluster> CreateOrUpdate(WaitUntil waitUntil, string clusterName, HciClusterData cluster, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<HciClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, HciClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(cluster, nameof(cluster));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciClusterClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cluster, cancellationToken);
-                var operation = new HciArmOperation<HciCluster>(Response.FromValue(new HciCluster(Client, response), response.GetRawResponse()));
+                var response = _hciClusterClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
+                var operation = new HciArmOperation<HciClusterResource>(Response.FromValue(new HciClusterResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual async Task<Response<HciCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.Hci
                 var response = await _hciClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<HciCluster> Get(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<HciClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.Hci
                 var response = _hciClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +184,17 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: Clusters_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HciCluster> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HciCluster>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HciClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _hciClusterClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HciCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HciClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +202,14 @@ namespace Azure.ResourceManager.Hci
                     throw;
                 }
             }
-            async Task<Page<HciCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HciClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _hciClusterClustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HciCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HciClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +226,17 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: Clusters_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HciCluster> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HciCluster> FirstPageFunc(int? pageSizeHint)
+            Page<HciClusterResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _hciClusterClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HciCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HciClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +244,14 @@ namespace Azure.ResourceManager.Hci
                     throw;
                 }
             }
-            Page<HciCluster> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HciClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _hciClusterClustersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HciCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HciClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -276,7 +279,7 @@ namespace Azure.ResourceManager.Hci
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hciClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.Hci
             scope.Start();
             try
             {
-                var response = GetIfExists(clusterName, cancellationToken: cancellationToken);
+                var response = _hciClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -313,65 +316,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
-        /// </summary>
-        /// <param name="clusterName"> The name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual async Task<Response<HciCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _hciClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<HciCluster>(null, response.GetRawResponse());
-                return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
-        /// </summary>
-        /// <param name="clusterName"> The name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<HciCluster> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _hciClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<HciCluster>(null, response.GetRawResponse());
-                return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<HciCluster> IEnumerable<HciCluster>.GetEnumerator()
+        IEnumerator<HciClusterResource> IEnumerable<HciClusterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +326,7 @@ namespace Azure.ResourceManager.Hci
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<HciCluster> IAsyncEnumerable<HciCluster>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HciClusterResource> IAsyncEnumerable<HciClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

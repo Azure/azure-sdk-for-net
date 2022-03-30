@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class QueueTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private StorageAccount _storageAccount;
-        private QueueService _queueService;
+        private ResourceGroupResource _resourceGroup;
+        private StorageAccountResource _storageAccount;
+        private QueueServiceResource _queueService;
         private StorageQueueCollection _storageQueueCollection;
         public QueueTests(bool async) : base(async)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Tests
             if (_resourceGroup != null)
             {
                 var storageAccountCollection = _resourceGroup.GetStorageAccounts();
-                await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
+                await foreach (StorageAccountResource account in storageAccountCollection.GetAllAsync())
                 {
                     await account.DeleteAsync(WaitUntil.Completed);
                 }
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create storage queue
             string storageQueueName = Recording.GenerateAssetName("testqueue");
-            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageQueueName, new StorageQueueData())).Value;
+            StorageQueueResource queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageQueueName, new StorageQueueData())).Value;
             Assert.IsNotNull(queue1);
             Assert.AreEqual(queue1.Id.Name, storageQueueName);
 
             //validate if successfully created
-            StorageQueue queue2 = await _storageQueueCollection.GetAsync(storageQueueName);
+            StorageQueueResource queue2 = await _storageQueueCollection.GetAsync(storageQueueName);
             AssertStorageQueueEqual(queue1, queue2);
             Assert.IsTrue(await _storageQueueCollection.ExistsAsync(storageQueueName));
             Assert.IsFalse(await _storageQueueCollection.ExistsAsync(storageQueueName + "1"));
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate if successfully deleted
             Assert.IsFalse(await _storageQueueCollection.ExistsAsync(storageQueueName));
-            StorageQueue queue3 = await _storageQueueCollection.GetIfExistsAsync(storageQueueName);
-            Assert.IsNull(queue3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _storageQueueCollection.GetAsync(storageQueueName); });
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //create two blob containers
             string queueName1 = Recording.GenerateAssetName("testqueue1");
             string queueName2 = Recording.GenerateAssetName("testqueue2");
-            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName1, new StorageQueueData())).Value;
-            StorageQueue queue2 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName2, new StorageQueueData())).Value;
+            StorageQueueResource queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName1, new StorageQueueData())).Value;
+            StorageQueueResource queue2 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName2, new StorageQueueData())).Value;
 
             //validate if there are two queues
-            StorageQueue queue3 = null;
-            StorageQueue queue4 = null;
+            StorageQueueResource queue3 = null;
+            StorageQueueResource queue4 = null;
             int count = 0;
-            await foreach (StorageQueue queue in _storageQueueCollection.GetAllAsync())
+            await foreach (StorageQueueResource queue in _storageQueueCollection.GetAllAsync())
             {
                 count++;
                 if (queue.Id.Name == queueName1)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create storage queue
             string storageQueueName = Recording.GenerateAssetName("testqueue");
-            StorageQueue queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageQueueName, new StorageQueueData())).Value;
+            StorageQueueResource queue1 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, storageQueueName, new StorageQueueData())).Value;
             Assert.IsNotNull(queue1);
             Assert.AreEqual(queue1.Id.Name, storageQueueName);
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageQueueData queueData = new StorageQueueData();
             queueData.Metadata.Add("key1", "value1");
             queueData.Metadata.Add("key2", "value2");
-            StorageQueue queue2 = await queue1.UpdateAsync(queueData);
+            StorageQueueResource queue2 = await queue1.UpdateAsync(queueData);
             //validate
             Assert.NotNull(queue2);
             Assert.NotNull(queue2.Data.Metadata);

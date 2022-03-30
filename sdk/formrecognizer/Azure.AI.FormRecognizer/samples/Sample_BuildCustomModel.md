@@ -31,11 +31,14 @@ A `DocumentModel` is returned indicating the document types the model will recog
 
 ```C# Snippet:FormRecognizerSampleBuildModel
 // For this sample, you can use the training documents found in the `trainingFiles` folder.
-// Upload the forms to your storage container and then generate a container SAS URL.
-// For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-// https://aka.ms/azsdk/formrecognizer/buildtrainingset
+// Upload the documents to your storage container and then generate a container SAS URL. Note
+// that a container URI without SAS is accepted only when the container is public or has a
+// managed identity configured.
+//
+// For instructions to set up documents for training in an Azure Blob Storage Container, please see:
+// https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // We are selecting the Template build mode in this sample. For more information about the available

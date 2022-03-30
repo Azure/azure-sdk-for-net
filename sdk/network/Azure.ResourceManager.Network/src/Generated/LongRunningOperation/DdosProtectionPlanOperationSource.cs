@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class DdosProtectionPlanOperationSource : IOperationSource<DdosProtectionPlan>
+    internal class DdosProtectionPlanOperationSource : IOperationSource<DdosProtectionPlanResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        DdosProtectionPlan IOperationSource<DdosProtectionPlan>.CreateResult(Response response, CancellationToken cancellationToken)
+        DdosProtectionPlanResource IOperationSource<DdosProtectionPlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement);
-            return new DdosProtectionPlan(_client, data);
+            return new DdosProtectionPlanResource(_client, data);
         }
 
-        async ValueTask<DdosProtectionPlan> IOperationSource<DdosProtectionPlan>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DdosProtectionPlanResource> IOperationSource<DdosProtectionPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement);
-            return new DdosProtectionPlan(_client, data);
+            return new DdosProtectionPlanResource(_client, data);
         }
     }
 }
