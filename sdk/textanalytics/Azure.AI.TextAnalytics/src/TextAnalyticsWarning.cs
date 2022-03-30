@@ -16,6 +16,12 @@ namespace Azure.AI.TextAnalytics
             Message = warning.Message;
         }
 
+        internal TextAnalyticsWarning(DocumentWarning warning)
+        {
+            WarningCode = warning.Code.ToString();
+            Message = warning.Message;
+        }
+
         /// <summary>
         /// Code indicating the type of warning.
         /// </summary>
