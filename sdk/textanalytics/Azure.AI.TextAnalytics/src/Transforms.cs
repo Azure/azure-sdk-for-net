@@ -32,6 +32,22 @@ namespace Azure.AI.TextAnalytics
             return new TextAnalyticsError(errorCode, message, target);
         }
 
+        internal static TextAnalyticsError ConvertToError(DocumentError error)
+        {
+            string errorCode = error.Error.Code.ToString();
+            string message = error.Error.Message;
+            string target = error.Error.Target;
+            InnerErrorModel innerError = error.Error.Innererror;
+
+            if (innerError != null)
+            {
+                // Return the innermost error, which should be only one level down.
+                return new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target);
+            }
+
+            return new TextAnalyticsError(errorCode, message, target);
+        }
+
         internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors)
         {
             var errors = new List<TextAnalyticsError>();
@@ -68,9 +84,20 @@ namespace Azure.AI.TextAnalytics
 
         #region DetectLanguage
 
-        internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage) //TODO: CHANGED
+        internal static DetectedLanguage ConvertToDetectedLanguage(DocumentLanguage documentLanguage)
         {
             return new DetectedLanguage(documentLanguage.DetectedLanguage, ConvertToWarnings(documentLanguage.Warnings));
+        }
+
+        // CHANGED: added overload for New Swagger
+        internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage)
+        {
+            List<TextAnalyticsWarning> warnings = new List<TextAnalyticsWarning>();
+            foreach (var warning in documentLanguage.Warnings)
+            {
+                warnings.Add(new TextAnalyticsWarning(warning));
+            }
+            return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
         }
 
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageResult results, IDictionary<string, int> idToIndexMap)
@@ -94,8 +121,30 @@ namespace Azure.AI.TextAnalytics
             return new DetectLanguageResultCollection(detectedLanguages, results.Statistics, results.ModelVersion);
         }
 
-        #endregion
+        // CHANGED: added overload for New Swagger
+        internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageDetectionTaskResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var detectedLanguages = new List<DetectLanguageResult>(results.Results.Errors.Count);
 
+            //Read errors
+            foreach (DocumentError error in results.Results.Errors)
+            {
+                detectedLanguages.Add(new DetectLanguageResult(error.Id, ConvertToError(error)));
+            }
+
+            //Read languages
+            foreach (var language in results.Results.Documents)
+            {
+                detectedLanguages.Add(new DetectLanguageResult(language.Id, language.Statistics ?? default, ConvertToDetectedLanguage(language)));
+            }
+
+            detectedLanguages = SortHeterogeneousCollection(detectedLanguages, idToIndexMap);
+
+            return new DetectLanguageResultCollection(detectedLanguages, results.Results.Statistics, results.Results.ModelVersion);
+        }
+
+        #endregion
+        //HERE
         #region AnalyzeSentiment
 
         internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(SentimentResponse results, IDictionary<string, int> idToIndexMap)
@@ -159,6 +208,17 @@ namespace Azure.AI.TextAnalytics
         internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(DocumentEntities documentEntities)
         {
             return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        // CHANGED: added overload for New Swagger
+        internal static CategorizedEntityCollection ConvertToCategorizedEntityCollection(EntitiesResultDocumentsItem documentEntities)
+        {
+            List<TextAnalyticsWarning> warnings = new List<TextAnalyticsWarning>();
+            foreach (var warning in documentEntities.Warnings)
+            {
+                warnings.Add(new TextAnalyticsWarning(warning));
+            }
+            return new CategorizedEntityCollection(ConvertToCategorizedEntityList(documentEntities.Entities.ToList()), warnings);
         }
 
         internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)
