@@ -11,9 +11,9 @@ flowchart TD
     AtS --> DI{Design and<Br/> Implementation}
     DI --> DDes{{Document Design}}
     DDes --> Cost{{Costing of Feature}}
-    Cost --> DDec{{Document Decisions}}
+    Cost --> DDec{{Document Design Changes}}
     DDec --> AP{Approval Phase}
-    AP --> Arch{{Arch Board}}
+    AP --> Arch{{Arch Board Meeting}}
     Arch --> DocCh{{Document any Changes}}
     DocCh --> ApplyFB{{Apply Feedback}}
     ApplyFB --> Merge{{Merge to Main}}
