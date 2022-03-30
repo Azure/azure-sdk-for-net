@@ -15,10 +15,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a CloudServiceResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a CloudService along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudServiceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCloudServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCloudService method.
+    /// </summary>
     public partial class CloudServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceResource"/> instance. </summary>
@@ -632,7 +638,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> WalkUpdateDomainAsync(WaitUntil waitUntil, int updateDomain, UpdateDomain parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> WalkUpdateDomainAsync(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.WalkUpdateDomain");
             scope.Start();
@@ -660,7 +666,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation WalkUpdateDomain(WaitUntil waitUntil, int updateDomain, UpdateDomain parameters = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation WalkUpdateDomain(WaitUntil waitUntil, int updateDomain, UpdateDomainIdentifier parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.WalkUpdateDomain");
             scope.Start();
@@ -686,7 +692,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UpdateDomain>> GetUpdateDomainAsync(int updateDomain, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UpdateDomainIdentifier>> GetUpdateDomainAsync(int updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.GetUpdateDomain");
             scope.Start();
@@ -709,7 +715,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UpdateDomain> GetUpdateDomain(int updateDomain, CancellationToken cancellationToken = default)
+        public virtual Response<UpdateDomainIdentifier> GetUpdateDomain(int updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.GetUpdateDomain");
             scope.Start();
@@ -731,10 +737,10 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServicesUpdateDomain_ListUpdateDomains
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UpdateDomain> GetUpdateDomainsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="UpdateDomainIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UpdateDomainIdentifier> GetUpdateDomainsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<UpdateDomain>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<UpdateDomainIdentifier>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.GetUpdateDomains");
                 scope.Start();
@@ -749,7 +755,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<UpdateDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<UpdateDomainIdentifier>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.GetUpdateDomains");
                 scope.Start();
@@ -773,10 +779,10 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServicesUpdateDomain_ListUpdateDomains
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UpdateDomain> GetUpdateDomains(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="UpdateDomainIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UpdateDomainIdentifier> GetUpdateDomains(CancellationToken cancellationToken = default)
         {
-            Page<UpdateDomain> FirstPageFunc(int? pageSizeHint)
+            Page<UpdateDomainIdentifier> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.GetUpdateDomains");
                 scope.Start();
@@ -791,7 +797,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<UpdateDomain> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<UpdateDomainIdentifier> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _cloudServicesUpdateDomainClientDiagnostics.CreateScope("CloudServiceResource.GetUpdateDomains");
                 scope.Start();
@@ -827,9 +833,9 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cloudServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -858,9 +864,9 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var originalTags = TagHelper.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -887,10 +893,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                await TagHelper.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cloudServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -917,10 +923,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                TagHelper.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = TagHelper.Get(cancellationToken);
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -947,9 +953,9 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cloudServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -976,9 +982,9 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var originalTags = TagHelper.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cloudServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new CloudServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

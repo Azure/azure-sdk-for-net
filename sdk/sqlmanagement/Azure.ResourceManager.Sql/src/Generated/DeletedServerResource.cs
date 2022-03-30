@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a DeletedServerResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a DeletedServer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedServerResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDeletedServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedServer method.
+    /// </summary>
     public partial class DeletedServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedServerResource"/> instance. </summary>

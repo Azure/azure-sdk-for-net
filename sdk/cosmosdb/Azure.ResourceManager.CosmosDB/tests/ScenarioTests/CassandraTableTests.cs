@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            CassandraTableResource table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
-            if (table != null)
+            if (await CassandraTableCollection.ExistsAsync(_tableName))
             {
+                var id = CassandraTableCollection.Id;
+                id = CassandraTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _tableName);
+                CassandraTableResource table = this.ArmClient.GetCassandraTableResource(id);
                 await table.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -159,8 +161,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var table = await CreateCassandraTable(null);
             await table.DeleteAsync(WaitUntil.Completed);
 
-            table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
-            Assert.Null(table);
+            bool exists = await CassandraTableCollection.ExistsAsync(_tableName);
+            Assert.IsFalse(exists);
         }
 
         protected async Task<CassandraTableResource> CreateCassandraTable(CassandraTableCreateUpdateData parameters)

@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
@@ -88,8 +89,8 @@ namespace Azure.ResourceManager.TestFramework
             if (baseUri == ArmEnvironment.AzureChina.Endpoint)
                 return ArmEnvironment.AzureChina;
 
-            if (baseUri == ArmEnvironment.AzureGerman.Endpoint)
-                return ArmEnvironment.AzureGerman;
+            if (baseUri == ArmEnvironment.AzureGermany.Endpoint)
+                return ArmEnvironment.AzureGermany;
 
             if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
                 return ArmEnvironment.AzureGovernment;
@@ -112,8 +113,10 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
-                        sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
+                        SubscriptionResource sub = _cleanupClient.GetSubscriptions().Exists(TestEnvironment.SubscriptionId)
+                            ? _cleanupClient.GetSubscriptions().Get(TestEnvironment.SubscriptionId)
+                            : null;
+                        sub?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
                     }
                     catch (RequestFailedException e) when (e.Status == 404)
                     {
@@ -213,8 +216,10 @@ namespace Azure.ResourceManager.TestFramework
             {
                 Parallel.ForEach(OneTimeResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
-                    var sub = _cleanupClient.GetSubscriptions().GetIfExists(SessionEnvironment.SubscriptionId);
-                    sub.Value?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
+                    SubscriptionResource sub = _cleanupClient.GetSubscriptions().Exists(SessionEnvironment.SubscriptionId)
+                        ? _cleanupClient.GetSubscriptions().Get(SessionEnvironment.SubscriptionId)
+                        : null;
+                    sub?.GetResourceGroups().Get(resourceGroup).Value.Delete(_waitForCleanup);
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {

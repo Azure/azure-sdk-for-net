@@ -135,6 +135,11 @@ namespace Azure.Core.TestFramework
                 await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
             }
 
+            foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
+            {
+                await _proxy.Client.AddBodyKeySanitizerAsync(sanitizer, RecordingId);
+            }
+
             foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);

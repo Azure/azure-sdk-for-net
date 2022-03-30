@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         KeyClientOptions.ServiceVersion.V7_0,
         KeyClientOptions.ServiceVersion.V7_1,
         KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        KeyClientOptions.ServiceVersion.V7_3)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
@@ -39,8 +39,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : base(isAsync, mode /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
-            // temporary until https://github.com/Azure/azure-sdk-for-net/issues/27688 is addressed
-            CompareBodies = false;
         }
 
         [SetUp]

@@ -17,7 +17,12 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A Class representing a RestorableDatabaseAccountResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a RestorableDatabaseAccount along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RestorableDatabaseAccountResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetRestorableDatabaseAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBLocationResource" /> using the GetRestorableDatabaseAccount method.
+    /// </summary>
     public partial class RestorableDatabaseAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorableDatabaseAccountResource"/> instance. </summary>

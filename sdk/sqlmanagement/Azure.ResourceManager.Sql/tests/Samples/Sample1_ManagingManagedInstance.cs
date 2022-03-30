@@ -129,26 +129,6 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Sql_GetAManagedInstanceIfExists
-            ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
-
-            ManagedInstanceResource managedInstance = await managedInstanceCollection.GetIfExistsAsync("foo");
-            if (managedInstance != null)
-            {
-                Console.WriteLine(managedInstance.Data.Name);
-            }
-
-            if (await managedInstanceCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Virtual network 'bar' exists.");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task DeleteManagedInstance()
         {
             #region Snippet:Managing_Sql_DeleteAManagedInstance

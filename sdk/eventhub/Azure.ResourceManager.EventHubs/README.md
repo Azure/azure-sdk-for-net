@@ -28,9 +28,10 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following:
 
-```C# Snippet:Managing_Namespaces_AuthClient
+```C# Snippet:Managing_Namespaces_AuthClient_Usings
 using Azure.Identity;
-
+```
+```C# Snippet:Managing_Namespaces_AuthClient
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
@@ -80,22 +81,6 @@ await foreach (EventHubNamespaceResource eventHubNamespace in namespaceCollectio
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
 EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
 Console.WriteLine(eventHubNamespace.Id.Name);
-```
-
-### Try to get a namespace if it exists
-
-
-```C# Snippet:Managing_Namespaces_GetNamespaceIfExists
-EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetIfExistsAsync("foo");
-if (eventHubNamespace != null)
-{
-    Console.WriteLine("namespace 'foo' exists");
-}
-if (await namespaceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("namespace 'bar' exists");
-}
 ```
 
 ### Delete a namespace
@@ -158,4 +143,4 @@ more information see the Code of Conduct FAQ or contact
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.ResourceManager.EventHubs%2FREADME.png)

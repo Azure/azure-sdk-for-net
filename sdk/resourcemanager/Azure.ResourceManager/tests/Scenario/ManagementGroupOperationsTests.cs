@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.ManagementGroups.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Tests
         public async Task GetDescendants()
         {
             ManagementGroupResource mgmtGroup = await Client.GetManagementGroupResource(_mgmtGroup.Id).GetAsync();
-            DescendantInfo descendant = null;
+            DescendantData descendant = null;
             await foreach(var desc in mgmtGroup.GetDescendantsAsync())
             {
                 descendant = desc;

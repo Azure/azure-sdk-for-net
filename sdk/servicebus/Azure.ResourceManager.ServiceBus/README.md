@@ -28,9 +28,11 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following:
 
-```C# Snippet:Managing_ServiceBus_AuthClient
+```C# Snippet:Managing_ServiceBus_AuthClient_Usings
 using Azure.Identity;
+```
 
+```C# Snippet:Managing_ServiceBus_AuthClient
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
@@ -93,22 +95,6 @@ ServiceBusNamespaceResource serviceBusNamespace = await namespaceCollection.GetA
 Console.WriteLine(serviceBusNamespace.Id.Name);
 ```
 
-### Try to get a namespace if it exists
-
-
-```C# Snippet:Managing_ServiceBusNamespaces_GetNamespaceIfExists
-ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespaceResource serviceBusNamespace = await namespaceCollection.GetIfExistsAsync("foo");
-if (serviceBusNamespace != null)
-{
-    Console.WriteLine("namespace 'foo' exists");
-}
-if (await namespaceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("namespace 'bar' exists");
-}
-```
-
 ### Delete a namespace
 ```C# Snippet:Managing_ServiceBusNamespaces_DeleteNamespace
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
@@ -156,4 +142,4 @@ more information see the Code of Conduct FAQ or contact
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.ResourceManager.ServiceBus%2FREADME.png)

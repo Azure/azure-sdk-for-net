@@ -20,7 +20,11 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of Secret and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SecretResource" /> and their operations.
+    /// Each <see cref="SecretResource" /> in the collection will belong to the same instance of <see cref="VaultResource" />.
+    /// To get a <see cref="SecretCollection" /> instance call the GetSecrets method from an instance of <see cref="VaultResource" />.
+    /// </summary>
     public partial class SecretCollection : ArmCollection, IEnumerable<SecretResource>, IAsyncEnumerable<SecretResource>
     {
         private readonly ClientDiagnostics _secretClientDiagnostics;
@@ -277,7 +281,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _secretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,66 +308,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = GetIfExists(secretName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
-        /// Operation Id: Secrets_Get
-        /// </summary>
-        /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public virtual async Task<Response<SecretResource>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
-            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _secretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SecretResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SecretResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}
-        /// Operation Id: Secrets_Get
-        /// </summary>
-        /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        public virtual Response<SecretResource> GetIfExists(string secretName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
-            using var scope = _secretClientDiagnostics.CreateScope("SecretCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _secretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SecretResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SecretResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

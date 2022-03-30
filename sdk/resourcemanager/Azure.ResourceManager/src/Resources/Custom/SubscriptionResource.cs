@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -110,9 +109,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
         /// <returns> A collection representing the rest apis for the namespace. </returns>
-        public virtual RestApiCollection GetRestApis(string azureNamespace)
+        public virtual ArmRestApiCollection GetArmRestApis(string azureNamespace)
         {
-            return new RestApiCollection(this, azureNamespace);
+            return new ArmRestApiCollection(this, azureNamespace);
         }
     }
 }

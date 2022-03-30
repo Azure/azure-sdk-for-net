@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                keyVaultKeyUri = null;
                                 continue;
                             }
                             keyVaultKeyUri = new Uri(property0.Value.GetString());

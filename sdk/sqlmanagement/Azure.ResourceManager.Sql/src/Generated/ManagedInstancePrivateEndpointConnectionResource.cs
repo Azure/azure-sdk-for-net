@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ManagedInstancePrivateEndpointConnectionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagedInstancePrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstancePrivateEndpointConnectionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstancePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedInstancePrivateEndpointConnection method.
+    /// </summary>
     public partial class ManagedInstancePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstancePrivateEndpointConnectionResource"/> instance. </summary>

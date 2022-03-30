@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task ReleaseCreatedKey()
         {
             string keyName = Recording.GenerateId();
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task ReleaseUpdatedKey()
         {
             string keyName = Recording.GenerateId();
@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [KeyVaultOnly] // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/26792 is resolved.
         [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task UpdateReleasePolicy([Values] bool immutable)
         {
             string keyName = Recording.GenerateId();

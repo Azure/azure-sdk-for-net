@@ -17,7 +17,12 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A Class representing a IscsiTargetResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an IscsiTarget along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IscsiTargetResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetIscsiTargetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DiskPoolResource" /> using the GetIscsiTarget method.
+    /// </summary>
     public partial class IscsiTargetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IscsiTargetResource"/> instance. </summary>

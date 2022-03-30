@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Tests
             {
                 Assert.NotNull(model.Data.SystemData);
                 Assert.NotNull(getResult.Data.SystemData);
-                Assert.AreEqual(model.Data.SystemData.CreatedAt, getResult.Data.SystemData.CreatedAt);
+                Assert.AreEqual(model.Data.SystemData.CreatedOn, getResult.Data.SystemData.CreatedOn);
                 Assert.AreEqual(model.Data.SystemData.CreatedBy, getResult.Data.SystemData.CreatedBy);
                 Assert.AreEqual(model.Data.SystemData.CreatedByType, getResult.Data.SystemData.CreatedByType);
-                Assert.AreEqual(model.Data.SystemData.LastModifiedAt, getResult.Data.SystemData.LastModifiedAt);
+                Assert.AreEqual(model.Data.SystemData.LastModifiedOn, getResult.Data.SystemData.LastModifiedOn);
                 Assert.AreEqual(model.Data.SystemData.LastModifiedBy, getResult.Data.SystemData.LastModifiedBy);
                 Assert.AreEqual(model.Data.SystemData.LastModifiedByType, getResult.Data.SystemData.LastModifiedByType);
             }

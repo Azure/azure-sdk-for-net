@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.ManagementGroups.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -57,15 +57,6 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task TryGet()
-        {
-            ManagementGroupResource mgmtGroup = await Client.GetManagementGroups().GetIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
-            CompareMgmtGroups(_mgmtGroup, mgmtGroup);
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
-            Assert.AreEqual(403, ex.Status);
-        }
-
-        [RecordedTest]
         public async Task Exists()
         {
             Assert.IsTrue(await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));
@@ -100,9 +91,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task CheckNameAvailability()
         {
-            var rq = new CheckNameAvailabilityOptions();
+            var rq = new ManagementGroupNameAvailabilityOptions();
             rq.Name = "this-should-not-exist";
-            var rs = await Client.GetManagementGroups().CheckNameAvailabilityAsync(rq);
+            var rs = await Client.GetManagementGroups().CheckManagementGroupNameAvailabilityAsync(rq);
             Assert.IsTrue(rs.Value.NameAvailable);
         }
     }

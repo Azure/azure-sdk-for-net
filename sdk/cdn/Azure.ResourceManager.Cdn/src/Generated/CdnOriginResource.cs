@@ -17,7 +17,12 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A Class representing a CdnOriginResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a CdnOrigin along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CdnOriginResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCdnOriginResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource" /> using the GetCdnOrigin method.
+    /// </summary>
     public partial class CdnOriginResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CdnOriginResource"/> instance. </summary>

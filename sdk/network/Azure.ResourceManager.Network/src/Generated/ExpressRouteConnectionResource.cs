@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a ExpressRouteConnectionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an ExpressRouteConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteConnectionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteGatewayResource" /> using the GetExpressRouteConnection method.
+    /// </summary>
     public partial class ExpressRouteConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteConnectionResource"/> instance. </summary>

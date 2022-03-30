@@ -34,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            DatabaseAccountResource account = await DatabaseAccountCollection.GetIfExistsAsync(_databaseAccountName);
-            if (account != null)
+            if (await DatabaseAccountCollection.ExistsAsync(_databaseAccountName))
             {
+                var id = DatabaseAccountCollection.Id;
+                id = DatabaseAccountResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, _databaseAccountName);
+                DatabaseAccountResource account = this.ArmClient.GetDatabaseAccountResource(id);
                 await account.DeleteAsync(WaitUntil.Completed);
             }
         }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Filter on the event time. </summary>
-        public DateTimeOffset? EventTime { get; }
+        public DateTimeOffset? EventOn { get; }
         /// <summary> Whether to show server records or not. </summary>
         public bool? ShowServerRecords { get; }
     }

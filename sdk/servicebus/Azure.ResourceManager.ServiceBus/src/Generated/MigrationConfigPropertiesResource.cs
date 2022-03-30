@@ -17,7 +17,12 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A Class representing a MigrationConfigPropertiesResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a MigrationConfigProperties along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MigrationConfigPropertiesResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetMigrationConfigPropertiesResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource" /> using the GetMigrationConfigProperties method.
+    /// </summary>
     public partial class MigrationConfigPropertiesResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MigrationConfigPropertiesResource"/> instance. </summary>

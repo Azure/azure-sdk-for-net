@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A Class representing a CosmosDBLocationResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a CosmosDBLocation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBLocationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBLocationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCosmosDBLocation method.
+    /// </summary>
     public partial class CosmosDBLocationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBLocationResource"/> instance. </summary>

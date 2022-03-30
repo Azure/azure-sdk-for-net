@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a LogicalDatabaseTransparentDataEncryptionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a LogicalDatabaseTransparentDataEncryption along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicalDatabaseTransparentDataEncryptionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetLogicalDatabaseTransparentDataEncryptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetLogicalDatabaseTransparentDataEncryption method.
+    /// </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> instance. </summary>

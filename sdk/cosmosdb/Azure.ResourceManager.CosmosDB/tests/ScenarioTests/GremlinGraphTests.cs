@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            GremlinGraphResource graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
-            if (graph != null)
+            if (await GremlinGraphContainer.ExistsAsync(_graphName))
             {
+                var id = GremlinGraphContainer.Id;
+                id = GremlinGraphResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _graphName);
+                GremlinGraphResource graph = this.ArmClient.GetGremlinGraphResource(id);
                 await graph.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -159,8 +161,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var graph = await CreateGremlinGraph(null);
             await graph.DeleteAsync(WaitUntil.Completed);
 
-            graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
-            Assert.Null(graph);
+            bool exists = await GremlinGraphContainer.ExistsAsync(_graphName);
+            Assert.IsFalse(exists);
         }
 
         protected async Task<GremlinGraphResource> CreateGremlinGraph(GremlinGraphCreateUpdateData parameters)

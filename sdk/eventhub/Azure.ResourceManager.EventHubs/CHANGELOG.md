@@ -49,7 +49,8 @@ Before upgrade:
 ```csharp
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
-
+```
+```csharp
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
 var eventHubManagementClient = new EventHubManagementClient(tokenCredentials);
 eventHubManagementClient.SubscriptionId = subscriptionId;
@@ -100,12 +101,13 @@ var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpd
 ```
 
 After upgrade:
-```C# Snippet:ChangeLog_Sample
+```C# Snippet:ChangeLog_Sample_Usings
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.Core;
-
+```
+```C# Snippet:ChangeLog_Sample
 string namespaceName = "myNamespace";
 string eventhubName = "myEventhub";
 string resourceGroupName = "myResourceGroup";

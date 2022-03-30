@@ -17,7 +17,12 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotFunctionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteSlotFunction along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotFunctionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotFunctionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotFunction method.
+    /// </summary>
     public partial class SiteSlotFunctionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotFunctionResource"/> instance. </summary>

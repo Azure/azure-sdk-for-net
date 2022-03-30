@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<ManagementLockResource> CreateManagementLockObject(ArmResource armResource, string lockName)
         {
-            ManagementLockData input = new ManagementLockData(new LockLevel("CanNotDelete"));
+            ManagementLockData input = new ManagementLockData(new ManagementLockLevel("CanNotDelete"));
             ArmOperation<ManagementLockResource> lro = await armResource.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, lockName, input);
             return lro.Value;
         }

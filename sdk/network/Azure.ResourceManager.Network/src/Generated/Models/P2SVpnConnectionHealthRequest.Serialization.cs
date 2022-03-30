@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputBlobSasUrl))
+            if (Optional.IsDefined(OutputBlobSasUri))
             {
                 writer.WritePropertyName("outputBlobSasUrl");
-                writer.WriteStringValue(OutputBlobSasUrl);
+                writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }

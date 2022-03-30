@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SourceControlResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SourceControl along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SourceControlResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSourceControlResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetSourceControl method.
+    /// </summary>
     public partial class SourceControlResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SourceControlResource"/> instance. </summary>
