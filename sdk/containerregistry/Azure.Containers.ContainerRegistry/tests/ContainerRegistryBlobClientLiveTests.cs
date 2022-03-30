@@ -248,7 +248,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        [Ignore("Investigate service error")]
         public async Task CanUploadBlob()
         {
             // Arrange
