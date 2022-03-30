@@ -120,7 +120,7 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang, [String]
     $visitedService = @{}
     # Sort and display toc service name by alphabetical order, and then sort artifact by order.
     # Track 2 packages go first, then others.
-    foreach ($serviceMapping in ($tocContent.GetEnumerator() | Sort-Object Value[0], Value[1], Value[2], Value[3])) {
+    foreach ($serviceMapping in ($tocContent.GetEnumerator() | Sort-Object New, Type, ServiceName, DisplayName)) {
         $artifact = $serviceMapping.Key
         $serviceName = $serviceMapping.ServiceName
         $displayName = $serviceMapping.DisplayName
