@@ -122,8 +122,8 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang, [String]
     # Track 2 packages go first, then others.
     foreach ($serviceMapping in ($tocContent.GetEnumerator() | Sort-Object Value[0], Value[1], Value[2], Value[3])) {
         $artifact = $serviceMapping.Key
-        $serviceName = $serviceMapping.Value[2]
-        $displayName = $serviceMapping.Value[3]
+        $serviceName = $serviceMapping.ServiceName
+        $displayName = $serviceMapping.DisplayName
 
         # handle spaces in service name, EG "Confidential Ledger"
         # handle / in service name, EG "Database for MySQL/PostgreSQL". Leaving a "/" present will generate a bad link location.
