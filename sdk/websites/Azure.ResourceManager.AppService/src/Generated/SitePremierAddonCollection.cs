@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sitePremierAddonWebAppsRestClient.GetPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,66 +218,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(premierAddOnName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// Operation Id: WebApps_GetPremierAddOn
-        /// </summary>
-        /// <param name="premierAddOnName"> Add-on name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual async Task<Response<SitePremierAddonResource>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
-
-            using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _sitePremierAddonWebAppsRestClient.GetPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SitePremierAddonResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SitePremierAddonResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
-        /// Operation Id: WebApps_GetPremierAddOn
-        /// </summary>
-        /// <param name="premierAddOnName"> Add-on name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual Response<SitePremierAddonResource> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
-
-            using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddonCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _sitePremierAddonWebAppsRestClient.GetPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SitePremierAddonResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SitePremierAddonResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

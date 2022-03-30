@@ -59,16 +59,15 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHub.Id.Name, eventhubName);
 
             //validate if created successfully
-            eventHub = await _eventHubCollection.GetIfExistsAsync(eventhubName);
-            Assert.NotNull(eventHub);
             Assert.IsTrue(await _eventHubCollection.ExistsAsync(eventhubName));
+            eventHub = await _eventHubCollection.GetAsync(eventhubName);
 
             //delete eventhub
             await eventHub.DeleteAsync(WaitUntil.Completed);
 
             //validate
-            eventHub = await _eventHubCollection.GetIfExistsAsync(eventhubName);
-            Assert.Null(eventHub);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _eventHubCollection.GetAsync(eventhubName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _eventHubCollection.ExistsAsync(eventhubName));
         }
 

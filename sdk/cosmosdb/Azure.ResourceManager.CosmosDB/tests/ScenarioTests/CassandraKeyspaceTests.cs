@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            CassandraKeyspaceResource keyspace = await CassandraKeyspaceCollection.GetIfExistsAsync(_keyspaceName);
-            if (keyspace != null)
+            if (await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName))
             {
+                var id = CassandraKeyspaceCollection.Id;
+                id = CassandraKeyspaceResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _keyspaceName);
+                CassandraKeyspaceResource keyspace = this.ArmClient.GetCassandraKeyspaceResource(id);
                 await keyspace.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -155,8 +157,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var keyspace = await CreateCassandraKeyspace(null);
             await keyspace.DeleteAsync(WaitUntil.Completed);
 
-            keyspace = await CassandraKeyspaceCollection.GetIfExistsAsync(_keyspaceName);
-            Assert.Null(keyspace);
+            bool exists = await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<CassandraKeyspaceResource> CreateCassandraKeyspace(AutoscaleSettings autoscale)

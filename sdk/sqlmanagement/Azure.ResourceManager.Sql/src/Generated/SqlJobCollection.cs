@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,66 +305,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(jobName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// Operation Id: Jobs_Get
-        /// </summary>
-        /// <param name="jobName"> The name of the job to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual async Task<Response<SqlJobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _sqlJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SqlJobResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlJobResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// Operation Id: Jobs_Get
-        /// </summary>
-        /// <param name="jobName"> The name of the job to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual Response<SqlJobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var scope = _sqlJobJobsClientDiagnostics.CreateScope("SqlJobCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _sqlJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SqlJobResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

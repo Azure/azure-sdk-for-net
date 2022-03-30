@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(username, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _localUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -275,66 +275,8 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = GetIfExists(username, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
-        /// Operation Id: LocalUsers_Get
-        /// </summary>
-        /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public virtual async Task<Response<LocalUserResource>> GetIfExistsAsync(string username, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(username, nameof(username));
-
-            using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _localUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<LocalUserResource>(null, response.GetRawResponse());
-                return Response.FromValue(new LocalUserResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
-        /// Operation Id: LocalUsers_Get
-        /// </summary>
-        /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public virtual Response<LocalUserResource> GetIfExists(string username, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(username, nameof(username));
-
-            using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _localUserRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<LocalUserResource>(null, response.GetRawResponse());
-                return Response.FromValue(new LocalUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

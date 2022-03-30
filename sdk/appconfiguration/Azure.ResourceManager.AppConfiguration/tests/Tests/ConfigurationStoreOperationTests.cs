@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task DeleteTest()
         {
             await ConfigStore.DeleteAsync(WaitUntil.Completed);
-            ConfigurationStoreResource configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(ConfigurationStoreName);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { ConfigurationStoreResource configurationStore = await ResGroup.GetConfigurationStores().GetAsync(ConfigurationStoreName); });
 
-            Assert.IsNull(configurationStore);
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]

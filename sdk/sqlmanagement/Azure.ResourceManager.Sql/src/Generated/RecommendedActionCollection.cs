@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -209,66 +209,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(recommendedActionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
-        /// Operation Id: DatabaseRecommendedActions_Get
-        /// </summary>
-        /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual async Task<Response<RecommendedActionResource>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
-
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<RecommendedActionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}
-        /// Operation Id: DatabaseRecommendedActions_Get
-        /// </summary>
-        /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual Response<RecommendedActionResource> GetIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
-
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<RecommendedActionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

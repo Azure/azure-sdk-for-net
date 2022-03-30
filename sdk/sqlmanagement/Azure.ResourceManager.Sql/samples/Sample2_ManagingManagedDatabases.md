@@ -75,23 +75,6 @@ ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetAsy
 Console.WriteLine(managedDatabase.Data.Name);
 ```
 
-***Try to get a managed databases if it exists***
-
-```C# Snippet:Managing_Sql_GetAManagedDatabasesIfExists
-ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
-
-ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetIfExistsAsync("foo");
-if (managedInstance != null)
-{
-    Console.WriteLine(managedDatabase.Data.Name);
-}
-
-if (await managedDatabaseCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Virtual network 'bar' exists.");
-}
-```
-
 ***Delete a managed databases***
 
 ```C# Snippet:Managing_Sql_DeleteAManagedDatabases

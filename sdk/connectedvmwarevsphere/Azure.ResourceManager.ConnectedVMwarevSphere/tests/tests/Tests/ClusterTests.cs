@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             // check for exists cluster
-            cluster1 = await _clusterCollection.GetIfExistsAsync(clusterName);
-            Assert.AreEqual(cluster1.Id.Name, clusterName);
+            bool exists = await _clusterCollection.ExistsAsync(clusterName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]

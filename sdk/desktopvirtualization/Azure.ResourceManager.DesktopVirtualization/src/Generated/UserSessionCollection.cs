@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(userSessionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _userSessionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,66 +239,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = GetIfExists(userSessionId, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}
-        /// Operation Id: UserSessions_Get
-        /// </summary>
-        /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public virtual async Task<Response<UserSessionResource>> GetIfExistsAsync(string userSessionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
-
-            using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _userSessionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<UserSessionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new UserSessionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}
-        /// Operation Id: UserSessions_Get
-        /// </summary>
-        /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public virtual Response<UserSessionResource> GetIfExists(string userSessionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
-
-            using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _userSessionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<UserSessionResource>(null, response.GetRawResponse());
-                return Response.FromValue(new UserSessionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -70,23 +70,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_EventHubs_GetEventHubIfExists
-            EventHubResource eventHub = await eventHubCollection.GetIfExistsAsync("foo");
-            if (eventHub != null)
-            {
-                Console.WriteLine("eventHub 'foo' exists");
-            }
-            if (await eventHubCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("eventHub 'bar' exists");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task Delete()
         {
             #region Snippet:Managing_EventHubs_DeleteEventHub

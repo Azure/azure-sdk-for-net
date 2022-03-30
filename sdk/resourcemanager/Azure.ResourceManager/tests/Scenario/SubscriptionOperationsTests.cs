@@ -34,14 +34,6 @@ namespace Azure.ResourceManager.Tests
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task GetSubscriptionOperation()
-        {
-            SubscriptionResource sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
-            Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
-        }
-
         [TestCase(null)]
         [RecordedTest]
         public async Task TestGetResourceGroupOpsArgNullException(string resourceGroupName)

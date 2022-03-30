@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            GremlinDatabaseResource database = await GremlinDatabaseCollection.GetIfExistsAsync(_databaseName);
-            if (database != null)
+            if (await GremlinDatabaseCollection.ExistsAsync(_databaseName))
             {
+                var id = GremlinDatabaseCollection.Id;
+                id = GremlinDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                GremlinDatabaseResource database = ArmClient.GetGremlinDatabaseResource(id);
                 await database.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -152,8 +154,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateGremlinDatabase(null);
             await database.DeleteAsync(WaitUntil.Completed);
 
-            database = await GremlinDatabaseCollection.GetIfExistsAsync(_databaseName);
-            Assert.Null(database);
+            bool exists = await GremlinDatabaseCollection.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<GremlinDatabaseResource> CreateGremlinDatabase(AutoscaleSettings autoscale)

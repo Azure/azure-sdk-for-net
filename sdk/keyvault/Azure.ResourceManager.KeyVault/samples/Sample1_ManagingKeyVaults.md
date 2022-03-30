@@ -96,23 +96,6 @@ VaultResource vault = await vaultCollection.GetAsync("myVault");
 Console.WriteLine(vault.Data.Name);
 ```
 
-***Try to get a vault if it exists***
-
-```C# Snippet:Managing_KeyVaults_GetAVaultIfExists
-VaultCollection vaultCollection = resourceGroup.GetVaults();
-
-VaultResource vault = await vaultCollection.GetIfExistsAsync("foo");
-if (vault != null)
-{
-    Console.WriteLine(vault.Data.Name);
-}
-
-if (await vaultCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("KeyVault 'bar' exists.");
-}
-```
-
 ***Delete a vault***
 
 ```C# Snippet:Managing_KeyVaults_DeleteAVault

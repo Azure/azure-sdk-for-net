@@ -57,15 +57,6 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task TryGet()
-        {
-            ManagementGroupResource mgmtGroup = await Client.GetManagementGroups().GetIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
-            CompareMgmtGroups(_mgmtGroup, mgmtGroup);
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
-            Assert.AreEqual(403, ex.Status);
-        }
-
-        [RecordedTest]
         public async Task Exists()
         {
             Assert.IsTrue(await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));

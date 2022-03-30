@@ -74,23 +74,6 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         }
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_StorageAccounts_GetStorageAccountIfExists
-            StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-            StorageAccountResource storageAccount = await accountCollection.GetIfExistsAsync("foo");
-            if (storageAccount != null)
-            {
-                Console.WriteLine(storageAccount.Id.Name);
-            }
-            if (await accountCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("storage account 'bar' exists");
-            }
-            #endregion
-        }
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task Delete()
         {
             #region Snippet:Managing_StorageAccounts_DeleteStorageAccount
