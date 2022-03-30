@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ResourceGroupExportResult DeserializeResourceGroupExportResult(JsonElement element)
         {
             Optional<BinaryData> template = default;
-            Optional<ErrorResponse> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("template"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ResponseError.DeserializeResponseError(property.Value);
                     continue;
                 }
             }

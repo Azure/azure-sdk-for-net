@@ -385,21 +385,6 @@ namespace Azure.ResourceManager.Models
         public static bool operator !=(Azure.ResourceManager.Models.EncryptionStatus left, Azure.ResourceManager.Models.EncryptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ErrorAdditionalInfo
-    {
-        public ErrorAdditionalInfo() { }
-        public string ErrorAdditionalInfoType { get { throw null; } }
-        public System.BinaryData Info { get { throw null; } }
-    }
-    public partial class ErrorDetail
-    {
-        public ErrorDetail() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.ErrorDetail> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
     public partial class KeyVaultProperties
     {
         public KeyVaultProperties() { }
@@ -1270,6 +1255,12 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.EnforcementMode left, Azure.ResourceManager.Resources.Models.EnforcementMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ErrorAdditionalInfo
+    {
+        internal ErrorAdditionalInfo() { }
+        public string ErrorAdditionalInfoType { get { throw null; } }
+        public System.BinaryData Info { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExemptionCategory : System.IEquatable<Azure.ResourceManager.Resources.Models.ExemptionCategory>
     {
@@ -1565,7 +1556,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ResourceGroupExportResult
     {
         internal ResourceGroupExportResult() { }
-        public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResponseError Error { get { throw null; } }
         public System.BinaryData Template { get { throw null; } }
     }
     public partial class ResourceLinkProperties
@@ -1685,6 +1676,15 @@ namespace Azure.ResourceManager.Resources.Models
         NotSpecified = 0,
         PlainText = 1,
         Mask = 2,
+    }
+    public partial class ResponseError
+    {
+        internal ResponseError() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResponseError> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
     }
     public enum SpendingLimit
     {

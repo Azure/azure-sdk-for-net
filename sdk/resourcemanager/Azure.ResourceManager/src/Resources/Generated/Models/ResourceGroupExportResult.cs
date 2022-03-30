@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
         /// <param name="template"> The template content. </param>
         /// <param name="error"> The template export error. </param>
-        internal ResourceGroupExportResult(BinaryData template, ErrorResponse error)
+        internal ResourceGroupExportResult(BinaryData template, ResponseError error)
         {
             Template = template;
             Error = error;
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The template content. </summary>
         public BinaryData Template { get; }
         /// <summary> The template export error. </summary>
-        public ErrorResponse Error { get; }
+        public ResponseError Error { get; }
     }
 }
