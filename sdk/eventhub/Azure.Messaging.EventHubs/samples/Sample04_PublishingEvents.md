@@ -411,6 +411,8 @@ It is also important that you guard against exceptions in your handler code; it 
 
 To ensure consistent performance and throughput, it is common for applications to make decisions around the pattern of publishing that they use - adjusting the frequency that batches are sent and how many operations take place concurrently.  Because the `EventHubBufferedProducerClient` manages batches and publishing in the background, your application cannot directly control these aspects.  
 
+Because the handlers are awaited, it is strongly advised that you *not* invoke `CloseAsync` or `DisposeAsync` from the handlers; doing so is likely to result in a deadlock scenario.  It is safe to attempt to resend events by adding them to the back of the buffer by calling `EnqueueEventAsync` or `EnqueueEventsAsync`
+
 By default, the `EventHubBufferedProducerClient` uses a set of values that will perform well for general-case scenarios, balancing consistent performance with ensuring that the order of events is maintained.  In the case where your application has different needs, it can provide a set of options when constructing the producer that will influence publishing behavior and help ensure that it is optimal for your specific scenarios.  
 
 The performance-related settings are:

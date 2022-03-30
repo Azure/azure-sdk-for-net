@@ -31,8 +31,8 @@ namespace Azure.Messaging.EventHubs.Core
         /// <seealso href="https://docs.microsoft.com/dotnet/api/system.text.encoding.getbytes?view=netstandard-2.1#system-text-encoding-getbytes(system-readonlyspan((system-char))-system-span((system-byte)))" />
         ///
         public static unsafe int GetBytes(this Encoding encoding,
-            ReadOnlySpan<char> src,
-            Span<byte> dest)
+                                          ReadOnlySpan<char> src,
+                                          Span<byte> dest)
         {
             if (src.Length == 0)
             {
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///  <seealso href="https://docs.microsoft.com/dotnet/api/system.text.encoding.getbytes?view=netstandard-2.1#system-text-encoding-getbytes(system-readonlyspan((system-char))-system-span((system-byte)))" />
         ///
         public static unsafe int GetByteCount(this Encoding encoding,
-            ReadOnlySpan<char> src)
+                                              ReadOnlySpan<char> src)
         {
             if (src.IsEmpty)
             {
