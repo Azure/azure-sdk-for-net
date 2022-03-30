@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CommunityGallery. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        internal CommunityGallery(string name, string location, string type, string uniqueId) : base(name, location, type, uniqueId)
+        internal CommunityGallery(string name, string location, string resourceType, string uniqueId) : base(name, location, resourceType, uniqueId)
         {
         }
     }

@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // Set project and deployment names of the target model
 #if SNIPPET
-            // To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities            
+            // To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";
 #else

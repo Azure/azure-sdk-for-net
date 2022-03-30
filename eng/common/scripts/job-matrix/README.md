@@ -56,7 +56,12 @@ jobs:
         Cloud: Public
       MatrixFilters: []
       MatrixReplace: []
+      PreGenerationSteps: []
 ```
+
+### A note regarding PreGenerationSteps
+
+The generation template laid out above runs as its own job. A limitation of this method is that it disallows any runtime matrix customization due to the fact that an individual job clones the targeted build SHA. The stepList `PreGenerationSteps` allows users to update matrix json however they like prior to actually invoking the matrix generation. Injected steps are run after the repository checkout, but before any matrix generation is invoked.
 
 ## Matrix config file syntax
 

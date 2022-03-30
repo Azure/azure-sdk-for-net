@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Dashboard
         /// <summary> Initializes a new instance of GrafanaResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The Sku of the grafana resource. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
         /// <param name="identity"> The managed identity of the grafana resource. </param>
-        internal GrafanaResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, GrafanaResourceProperties properties, ManagedIdentity identity) : base(id, name, type, systemData, tags, location)
+        internal GrafanaResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, GrafanaResourceProperties properties, ManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Properties = properties;

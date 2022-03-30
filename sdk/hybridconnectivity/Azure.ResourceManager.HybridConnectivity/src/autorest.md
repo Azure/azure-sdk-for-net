@@ -1,0 +1,46 @@
+# Generated code configuration
+
+Run `dotnet build /t:GenerateCode` to generate code.
+
+``` yaml
+
+azure-arm: true
+csharp: true
+library-name: HybridConnectivity
+namespace: Azure.ResourceManager.HybridConnectivity
+require: https://github.com/Azure/azure-rest-api-specs/blob/3c162c839b8fe17544d9a3be8383a835dd42eb28/specification/hybridconnectivity/resource-manager/readme.md
+tag: package-2021-10-06-preview
+output-folder: Generated/
+clear-output-folder: true
+skip-csproj: true
+ 
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
+directive:
+  - from: swagger-document
+    where: $.definitions.EndpointProperties.properties.type
+    transform: >
+      $["x-ms-client-name"] = "EndpointType";
+      $["x-ms-enum"]["name"] = "EndpointType"
+
+```

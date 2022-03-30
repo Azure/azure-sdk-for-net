@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dashboard
 {
-    /// <summary> A class representing collection of GrafanaResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="GrafanaResource" /> and their operations.
+    /// Each <see cref="GrafanaResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="GrafanaResourceCollection" /> instance call the GetGrafanaResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class GrafanaResourceCollection : ArmCollection, IEnumerable<GrafanaResource>, IAsyncEnumerable<GrafanaResource>
     {
         private readonly ClientDiagnostics _grafanaResourceGrafanaClientDiagnostics;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GrafanaResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _grafanaResourceGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dashboard", GrafanaResource.ResourceType.Namespace, DiagnosticOptions);
+            _grafanaResourceGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dashboard", GrafanaResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GrafanaResource.ResourceType, out string grafanaResourceGrafanaApiVersion);
-            _grafanaResourceGrafanaRestClient = new GrafanaRestOperations(_grafanaResourceGrafanaClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, grafanaResourceGrafanaApiVersion);
+            _grafanaResourceGrafanaRestClient = new GrafanaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaResourceGrafanaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.Dashboard
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,13 +59,13 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
-        /// <param name="body"> The GrafanaResource to use. </param>
+        /// <param name="data"> The GrafanaResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<ArmOperation<GrafanaResource>> CreateOrUpdateAsync(bool waitForCompletion, string workspaceName, GrafanaResourceData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GrafanaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, GrafanaResourceData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -70,9 +73,9 @@ namespace Azure.ResourceManager.Dashboard
             scope.Start();
             try
             {
-                var response = await _grafanaResourceGrafanaRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new DashboardArmOperation<GrafanaResource>(new GrafanaResourceOperationSource(Client), _grafanaResourceGrafanaClientDiagnostics, Pipeline, _grafanaResourceGrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                var response = await _grafanaResourceGrafanaRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DashboardArmOperation<GrafanaResource>(new GrafanaResourceOperationSource(Client), _grafanaResourceGrafanaClientDiagnostics, Pipeline, _grafanaResourceGrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +91,13 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
-        /// <param name="body"> The GrafanaResource to use. </param>
+        /// <param name="data"> The GrafanaResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual ArmOperation<GrafanaResource> CreateOrUpdate(bool waitForCompletion, string workspaceName, GrafanaResourceData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GrafanaResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, GrafanaResourceData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -102,9 +105,9 @@ namespace Azure.ResourceManager.Dashboard
             scope.Start();
             try
             {
-                var response = _grafanaResourceGrafanaRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, body, cancellationToken);
-                var operation = new DashboardArmOperation<GrafanaResource>(new GrafanaResourceOperationSource(Client), _grafanaResourceGrafanaClientDiagnostics, Pipeline, _grafanaResourceGrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                var response = _grafanaResourceGrafanaRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
+                var operation = new DashboardArmOperation<GrafanaResource>(new GrafanaResourceOperationSource(Client), _grafanaResourceGrafanaClientDiagnostics, Pipeline, _grafanaResourceGrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -124,7 +127,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<GrafanaResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GrafanaResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -134,7 +137,7 @@ namespace Azure.ResourceManager.Dashboard
             {
                 var response = await _grafanaResourceGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _grafanaResourceGrafanaClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.Dashboard
             {
                 var response = _grafanaResourceGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
-                    throw _grafanaResourceGrafanaClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,7 +269,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
@@ -274,7 +277,7 @@ namespace Azure.ResourceManager.Dashboard
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaResourceGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,66 +304,8 @@ namespace Azure.ResourceManager.Dashboard
             scope.Start();
             try
             {
-                var response = GetIfExists(workspaceName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
-        /// Operation Id: Grafana_Get
-        /// </summary>
-        /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public async virtual Task<Response<GrafanaResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            using var scope = _grafanaResourceGrafanaClientDiagnostics.CreateScope("GrafanaResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _grafanaResourceGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<GrafanaResource>(null, response.GetRawResponse());
-                return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
-        /// Operation Id: Grafana_Get
-        /// </summary>
-        /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual Response<GrafanaResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            using var scope = _grafanaResourceGrafanaClientDiagnostics.CreateScope("GrafanaResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _grafanaResourceGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<GrafanaResource>(null, response.GetRawResponse());
-                return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

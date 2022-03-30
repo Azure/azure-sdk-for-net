@@ -309,6 +309,26 @@ namespace Azure.Storage.Files.DataLake
         #endregion ctors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="DataLakeDirectoryClient"/>.
+        /// </remarks>
+        public new DataLakeDirectoryClient WithCustomerProvidedKey(Models.DataLakeCustomerProvidedKey? customerProvidedKey)
+        {
+            DataLakeClientConfiguration newClientConfiguration = DataLakeClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new DataLakeDirectoryClient(
+                directoryUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
+
+        /// <summary>
         /// Creates a new <see cref="DataLakeFileClient"/> object by appending
         /// <paramref name="fileName"/> to the end of <see cref="Uri"/>.  The
         /// new <see cref="DataLakeFileClient"/> uses the same request policy

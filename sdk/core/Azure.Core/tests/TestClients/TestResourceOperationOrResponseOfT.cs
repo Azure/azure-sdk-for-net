@@ -8,7 +8,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests
 {
-    public class TestResourceOperationOrResponseOfT : Operation<TestResource>, IOperationSource<TestResource>
+    internal class TestResourceOperationOrResponseOfT : Operation<TestResource>, IOperationSource<TestResource>
     {
         private TestResource _value;
         private bool _exceptionOnWait;

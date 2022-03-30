@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of MsDeployLog. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="entries"> List of log entry messages. </param>
-        internal MsDeployLog(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IReadOnlyList<MsDeployLogEntry> entries) : base(id, name, type, systemData, kind)
+        internal MsDeployLog(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IReadOnlyList<MsDeployLogEntry> entries) : base(id, name, resourceType, systemData, kind)
         {
             Entries = entries;
         }

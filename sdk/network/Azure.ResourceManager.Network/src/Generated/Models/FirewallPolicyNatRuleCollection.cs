@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The action type of a Nat rule collection. </summary>
         internal FirewallPolicyNatRuleCollectionAction Action { get; set; }
         /// <summary> The type of action. </summary>
-        public FirewallPolicyNatRuleCollectionActionType? ActionType
+        public FirewallPolicyNatRuleCollectionActionType? FirewallPolicyNatRuleCollectionActionType
         {
-            get => Action is null ? default : Action.Type;
+            get => Action is null ? default : Action.FirewallPolicyNatRuleCollectionActionType;
             set
             {
                 if (Action is null)
                     Action = new FirewallPolicyNatRuleCollectionAction();
-                Action.Type = value;
+                Action.FirewallPolicyNatRuleCollectionActionType = value;
             }
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -30,25 +31,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StatusUrl))
+            if (Optional.IsDefined(StatusUri))
             {
                 writer.WritePropertyName("statusUrl");
-                writer.WriteStringValue(StatusUrl);
+                writer.WriteStringValue(StatusUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DetectorUrl))
+            if (Optional.IsDefined(DetectorUri))
             {
                 writer.WritePropertyName("detectorUrl");
-                writer.WriteStringValue(DetectorUrl);
+                writer.WriteStringValue(DetectorUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ConsoleUrl))
+            if (Optional.IsDefined(ConsoleUri))
             {
                 writer.WritePropertyName("consoleUrl");
-                writer.WriteStringValue(ConsoleUrl);
+                writer.WriteStringValue(ConsoleUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(HealthCheckUrl))
+            if (Optional.IsDefined(HealthCheckUri))
             {
                 writer.WritePropertyName("healthCheckUrl");
-                writer.WriteStringValue(HealthCheckUrl);
+                writer.WriteStringValue(HealthCheckUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Containers))
             {
@@ -73,10 +74,10 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             SystemData systemData = default;
             Optional<SiteRuntimeState> state = default;
-            Optional<string> statusUrl = default;
-            Optional<string> detectorUrl = default;
-            Optional<string> consoleUrl = default;
-            Optional<string> healthCheckUrl = default;
+            Optional<Uri> statusUrl = default;
+            Optional<Uri> detectorUrl = default;
+            Optional<Uri> consoleUrl = default;
+            Optional<Uri> healthCheckUrl = default;
             Optional<IDictionary<string, ContainerInfo>> containers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -126,22 +127,42 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("statusUrl"))
                         {
-                            statusUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                statusUrl = null;
+                                continue;
+                            }
+                            statusUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("detectorUrl"))
                         {
-                            detectorUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                detectorUrl = null;
+                                continue;
+                            }
+                            detectorUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("consoleUrl"))
                         {
-                            consoleUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                consoleUrl = null;
+                                continue;
+                            }
+                            consoleUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("healthCheckUrl"))
                         {
-                            healthCheckUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                healthCheckUrl = null;
+                                continue;
+                            }
+                            healthCheckUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("containers"))

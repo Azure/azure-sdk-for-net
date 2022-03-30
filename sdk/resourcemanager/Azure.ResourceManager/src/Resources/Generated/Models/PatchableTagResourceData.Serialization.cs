@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Operation))
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("operation");
-                writer.WriteStringValue(Operation.Value.ToString());
+                writer.WriteStringValue(PatchMode.Value.ToString());
             }
             if (Optional.IsDefined(Properties))
             {

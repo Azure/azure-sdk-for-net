@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of PatchableSessionHostData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="allowNewSession"> Allow a new session. </param>
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
-        internal PatchableSessionHostData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? allowNewSession, string assignedUser) : base(id, name, type, systemData)
+        internal PatchableSessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? allowNewSession, string assignedUser) : base(id, name, resourceType, systemData)
         {
             AllowNewSession = allowNewSession;
             AssignedUser = assignedUser;

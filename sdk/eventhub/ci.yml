@@ -38,6 +38,7 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: eventhub
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.EventHubs

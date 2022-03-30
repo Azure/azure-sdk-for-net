@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Package shipping details. </summary>
@@ -22,6 +24,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> TrackingId of the package. </summary>
         public string TrackingId { get; }
         /// <summary> TrackingUrl of the package. </summary>
-        public string TrackingUrl { get; }
+        public Uri TrackingUri { get; }
     }
 }

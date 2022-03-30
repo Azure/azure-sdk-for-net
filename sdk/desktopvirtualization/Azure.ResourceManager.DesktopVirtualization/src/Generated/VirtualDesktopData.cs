@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of VirtualDesktopData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="objectId"> ObjectId of Desktop. (internal use). </param>
         /// <param name="description"> Description of Desktop. </param>
         /// <param name="friendlyName"> Friendly name of Desktop. </param>
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> The icon a 64 bit string as a byte array. </param>
-        internal VirtualDesktopData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, string description, string friendlyName, string iconHash, byte[] iconContent) : base(id, name, type, systemData)
+        internal VirtualDesktopData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string description, string friendlyName, string iconHash, byte[] iconContent) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             Description = description;

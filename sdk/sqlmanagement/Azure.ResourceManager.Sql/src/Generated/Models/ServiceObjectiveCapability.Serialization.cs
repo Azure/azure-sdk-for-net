@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> name = default;
             Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
             Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<Sku> sku = default;
+            Optional<SqlSku> sku = default;
             Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
             Optional<MaxSizeCapability> includedMaxSize = default;
             Optional<bool> zoneRedundant = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"))
