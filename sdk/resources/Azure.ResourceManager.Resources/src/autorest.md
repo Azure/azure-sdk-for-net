@@ -210,7 +210,6 @@ directive:
       $.ApplicationLockLevel['x-ms-enum'].name = 'ArmApplicationLockLevel';
       $.ApplicationManagementMode['x-ms-enum'].name = 'ArmApplicationManagementMode';
       $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
-      $.JitSchedulingPolicy.properties.duration["x-ms-client-name"] = "Interval";
       $.JitSchedulingPolicy.properties.duration["format"] = "duration";
       $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";

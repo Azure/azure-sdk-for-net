@@ -14,19 +14,19 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of JitSchedulingPolicy. </summary>
         /// <param name="jitSchedulingType"> The type of JIT schedule. </param>
-        /// <param name="interval"> The required duration of the JIT request. </param>
+        /// <param name="duration"> The required duration of the JIT request. </param>
         /// <param name="startOn"> The start time of the request. </param>
-        public JitSchedulingPolicy(JitSchedulingType jitSchedulingType, TimeSpan interval, DateTimeOffset startOn)
+        public JitSchedulingPolicy(JitSchedulingType jitSchedulingType, TimeSpan duration, DateTimeOffset startOn)
         {
             JitSchedulingType = jitSchedulingType;
-            Interval = interval;
+            Duration = duration;
             StartOn = startOn;
         }
 
         /// <summary> The type of JIT schedule. </summary>
         public JitSchedulingType JitSchedulingType { get; }
         /// <summary> The required duration of the JIT request. </summary>
-        public TimeSpan Interval { get; set; }
+        public TimeSpan Duration { get; set; }
         /// <summary> The start time of the request. </summary>
         public DateTimeOffset StartOn { get; set; }
     }
