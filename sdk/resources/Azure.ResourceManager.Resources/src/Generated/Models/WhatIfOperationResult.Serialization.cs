@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static WhatIfOperationResult DeserializeWhatIfOperationResult(JsonElement element)
         {
             Optional<string> status = default;
-            Optional<ErrorResponse> error = default;
+            Optional<ResourcesResponseError> error = default;
             Optional<IReadOnlyList<WhatIfChange>> changes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ResourcesResponseError.DeserializeResourcesResponseError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))

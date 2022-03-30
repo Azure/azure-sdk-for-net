@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
-    public partial class ErrorResponse
+    public partial class ResourcesResponseError
     {
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        internal ErrorResponse()
+        /// <summary> Initializes a new instance of ResourcesResponseError. </summary>
+        internal ResourcesResponseError()
         {
-            Details = new ChangeTrackingList<ErrorResponse>();
-            AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
+            Details = new ChangeTrackingList<ResourcesResponseError>();
+            AdditionalInfo = new ChangeTrackingList<ResourcesErrorAdditionalInfo>();
         }
 
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
+        /// <summary> Initializes a new instance of ResourcesResponseError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="details"> The error details. </param>
         /// <param name="additionalInfo"> The error additional info. </param>
-        internal ErrorResponse(string code, string message, string target, IReadOnlyList<ErrorResponse> details, IReadOnlyList<ErrorAdditionalInfo> additionalInfo)
+        internal ResourcesResponseError(string code, string message, string target, IReadOnlyList<ResourcesResponseError> details, IReadOnlyList<ResourcesErrorAdditionalInfo> additionalInfo)
         {
             Code = code;
             Message = message;
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The error target. </summary>
         public string Target { get; }
         /// <summary> The error details. </summary>
-        public IReadOnlyList<ErrorResponse> Details { get; }
+        public IReadOnlyList<ResourcesResponseError> Details { get; }
         /// <summary> The error additional info. </summary>
-        public IReadOnlyList<ErrorAdditionalInfo> AdditionalInfo { get; }
+        public IReadOnlyList<ResourcesErrorAdditionalInfo> AdditionalInfo { get; }
     }
 }

@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource management error additional info. </summary>
-    public partial class ErrorAdditionalInfo
+    public partial class ResourcesErrorAdditionalInfo
     {
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
-        internal ErrorAdditionalInfo()
+        /// <summary> Initializes a new instance of ResourcesErrorAdditionalInfo. </summary>
+        internal ResourcesErrorAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of ResourcesErrorAdditionalInfo. </summary>
         /// <param name="errorAdditionalInfoType"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
-        internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info)
+        internal ResourcesErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info)
         {
             ErrorAdditionalInfoType = errorAdditionalInfoType;
             Info = info;

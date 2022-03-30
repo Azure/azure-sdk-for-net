@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="endOn"> End time of the script execution. </param>
         /// <param name="expirationOn"> Time the deployment script resource will expire. </param>
         /// <param name="error"> Error that is relayed from the script execution. </param>
-        internal ScriptStatus(string containerInstanceId, string storageAccountId, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? expirationOn, ErrorResponse error)
+        internal ScriptStatus(string containerInstanceId, string storageAccountId, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? expirationOn, ResourcesResponseError error)
         {
             ContainerInstanceId = containerInstanceId;
             StorageAccountId = storageAccountId;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Time the deployment script resource will expire. </summary>
         public DateTimeOffset? ExpirationOn { get; }
         /// <summary> Error that is relayed from the script execution. </summary>
-        public ErrorResponse Error { get; }
+        public ResourcesResponseError Error { get; }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorAdditionalInfo
+    public partial class ResourcesErrorAdditionalInfo
     {
-        internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
+        internal static ResourcesErrorAdditionalInfo DeserializeResourcesErrorAdditionalInfo(JsonElement element)
         {
             Optional<string> type = default;
             Optional<BinaryData> info = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ErrorAdditionalInfo(type.Value, info.Value);
+            return new ResourcesErrorAdditionalInfo(type.Value, info.Value);
         }
     }
 }

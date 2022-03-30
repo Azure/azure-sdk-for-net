@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorResponse
+    public partial class ResourcesResponseError
     {
-        internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
+        internal static ResourcesResponseError DeserializeResourcesResponseError(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<ErrorResponse>> details = default;
-            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
+            Optional<IReadOnlyList<ResourcesResponseError>> details = default;
+            Optional<IReadOnlyList<ResourcesErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<ResourcesResponseError> array = new List<ResourcesResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorResponse(item));
+                        array.Add(DeserializeResourcesResponseError(item));
                     }
                     details = array;
                     continue;
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
+                    List<ResourcesErrorAdditionalInfo> array = new List<ResourcesErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                        array.Add(ResourcesErrorAdditionalInfo.DeserializeResourcesErrorAdditionalInfo(item));
                     }
                     additionalInfo = array;
                     continue;
                 }
             }
-            return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            return new ResourcesResponseError(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentValidateResult DeserializeArmDeploymentValidateResult(JsonElement element)
         {
-            Optional<ErrorResponse> error = default;
+            Optional<ResourcesResponseError> error = default;
             Optional<ArmDeploymentPropertiesExtended> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ResourcesResponseError.DeserializeResourcesResponseError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
