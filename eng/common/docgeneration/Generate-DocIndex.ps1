@@ -66,6 +66,7 @@ function Get-TocMapping {
 
     foreach ($artifact in $artifacts) {
         $packageInfo = $metadata | ? { $_.Package -eq $artifact -and $_.Hide -ne "true" }
+      
         $serviceName = ""
         if (!$packageInfo) {
             LogDebug "There is no service name for artifact $artifact or it is marked as hidden. Please check csv of Azure/azure-sdk/_data/release/latest repo if this is intended. "
@@ -82,14 +83,11 @@ function Get-TocMapping {
             }
             $serviceName = $packageInfo[0].ServiceName.Trim()
         }
-        $displayName = $packageInfo[0].DisplayName.Trim()
-        $isNew = $packageInfo[0].New -eq 'true'
-        $isClient = $packageInfo[0].Type -eq 'client'
         $orderServiceMapping[$artifact] = [PSCustomObject][ordered]@{
-          New = $packageInfo[0].New
-          Type = $packageInfo[0].Type
+          New = $packageInfo[0].New -ne 'true'
+          Type = $packageInfo[0].Type -ne 'client'
           ServiceName = $serviceName
-          DisplayName =$packageInfo[0].DisplayName.Trim()
+          DisplayName = $packageInfo[0].DisplayName.Trim()
        }
     }
     return $orderServiceMapping
@@ -120,10 +118,16 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang, [String]
     $visitedService = @{}
     # Sort and display toc service name by alphabetical order, and then sort artifact by order.
     # Track 2 packages go first, then others.
-    foreach ($serviceMapping in ($tocContent.GetEnumerator() | Sort-Object New, Type, ServiceName, DisplayName)) {
+    $sortedToc = $tocContent.GetEnumerator() | Sort {
+        $_.Value.New, 
+        $_.Value.Type, 
+        $_.Value.ServiceName, 
+        $_.Value.DisplayName,
+        $_.Key}
+    foreach ($serviceMapping in sortedToc) {
         $artifact = $serviceMapping.Key
-        $serviceName = $serviceMapping.ServiceName
-        $displayName = $serviceMapping.DisplayName
+        $serviceName = $serviceMapping.Value.ServiceName
+        $displayName = $serviceMapping.Value.DisplayName
 
         # handle spaces in service name, EG "Confidential Ledger"
         # handle / in service name, EG "Database for MySQL/PostgreSQL". Leaving a "/" present will generate a bad link location.
