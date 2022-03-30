@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string ScriptContent { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptStatus Status { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration StorageAccountSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SupportingScriptUris { get { throw null; } }
+        public System.Collections.Generic.IList<System.Uri> SupportingScriptUris { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
     public partial class AzurePowerShellScript : Azure.ResourceManager.Resources.ArmDeploymentScriptData
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string ScriptContent { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptStatus Status { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration StorageAccountSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SupportingScriptUris { get { throw null; } }
+        public System.Collections.Generic.IList<System.Uri> SupportingScriptUris { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
     public partial class BasicArmDependency

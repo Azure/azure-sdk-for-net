@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             AzPowerShellVersion = azPowerShellVersion;
-            SupportingScriptUris = new ChangeTrackingList<string>();
+            SupportingScriptUris = new ChangeTrackingList<Uri>();
             EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
         public Uri PrimaryScriptUri { get; }
         /// <summary> Supporting files for the external script. </summary>
-        public IReadOnlyList<string> SupportingScriptUris { get; }
+        public IReadOnlyList<Uri> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
         public string ScriptContent { get; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>

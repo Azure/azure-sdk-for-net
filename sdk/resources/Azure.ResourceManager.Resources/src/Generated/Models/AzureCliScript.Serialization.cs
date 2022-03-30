@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportingScriptUris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ScriptStatus> status = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> outputs = default;
             Optional<Uri> primaryScriptUri = default;
-            Optional<IList<string>> supportingScriptUris = default;
+            Optional<IList<Uri>> supportingScriptUris = default;
             Optional<string> scriptContent = default;
             Optional<string> arguments = default;
             Optional<IList<ScriptEnvironmentVariable>> environmentVariables = default;
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new Uri(item.GetString()));
                             }
                             supportingScriptUris = array;
                             continue;
