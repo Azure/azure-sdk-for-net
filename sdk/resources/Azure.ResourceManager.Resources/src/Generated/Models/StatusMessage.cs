@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Models;
-
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Operation status message object. </summary>
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of StatusMessage. </summary>
         /// <param name="status"> Status of the deployment operation. </param>
         /// <param name="error"> The error reported by the operation. </param>
-        internal StatusMessage(string status, ErrorDetail error)
+        internal StatusMessage(string status, ErrorResponse error)
         {
             Status = status;
             Error = error;
@@ -29,6 +27,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Status of the deployment operation. </summary>
         public string Status { get; }
         /// <summary> The error reported by the operation. </summary>
-        public ErrorDetail Error { get; }
+        public ErrorResponse Error { get; }
     }
 }
