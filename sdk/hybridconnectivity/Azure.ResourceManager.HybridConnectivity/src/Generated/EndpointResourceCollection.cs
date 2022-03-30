@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _endpointResourceEndpointsRestClient.GetAsync(Id, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -289,64 +289,8 @@ namespace Azure.ResourceManager.HybridConnectivity
             scope.Start();
             try
             {
-                var response = GetIfExists(endpointName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
-        /// </summary>
-        /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual async Task<Response<EndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
-
-            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _endpointResourceEndpointsRestClient.GetAsync(Id, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<EndpointResource>(null, response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
-        /// </summary>
-        /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual Response<EndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
-
-            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _endpointResourceEndpointsRestClient.Get(Id, endpointName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<EndpointResource>(null, response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Dashboard
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaResourceGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,66 +304,8 @@ namespace Azure.ResourceManager.Dashboard
             scope.Start();
             try
             {
-                var response = GetIfExists(workspaceName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
-        /// Operation Id: Grafana_Get
-        /// </summary>
-        /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual async Task<Response<GrafanaResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            using var scope = _grafanaResourceGrafanaClientDiagnostics.CreateScope("GrafanaResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _grafanaResourceGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<GrafanaResource>(null, response.GetRawResponse());
-                return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
-        /// Operation Id: Grafana_Get
-        /// </summary>
-        /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual Response<GrafanaResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
-            using var scope = _grafanaResourceGrafanaClientDiagnostics.CreateScope("GrafanaResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _grafanaResourceGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<GrafanaResource>(null, response.GetRawResponse());
-                return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
