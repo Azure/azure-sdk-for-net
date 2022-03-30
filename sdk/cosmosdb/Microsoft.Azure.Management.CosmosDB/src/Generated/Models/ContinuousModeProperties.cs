@@ -13,25 +13,28 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ApiProperties
+    /// <summary>
+    /// Configuration values for periodic mode backup
+    /// </summary>
+    public partial class ContinuousModeProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ApiProperties class.
+        /// Initializes a new instance of the ContinuousModeProperties class.
         /// </summary>
-        public ApiProperties()
+        public ContinuousModeProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiProperties class.
+        /// Initializes a new instance of the ContinuousModeProperties class.
         /// </summary>
-        /// <param name="serverVersion">Describes the ServerVersion of an a
-        /// MongoDB account. Possible values include: '3.2', '3.6', '4.0',
-        /// '4.2'</param>
-        public ApiProperties(string serverVersion = default(string))
+        /// <param name="tier">Enum to indicate type of Continuos backup mode.
+        /// Possible values include: 'Continuous7Days',
+        /// 'Continuous30Days'</param>
+        public ContinuousModeProperties(string tier = default(string))
         {
-            ServerVersion = serverVersion;
+            Tier = tier;
             CustomInit();
         }
 
@@ -41,11 +44,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes the ServerVersion of an a MongoDB account.
-        /// Possible values include: '3.2', '3.6', '4.0', '4.2'
+        /// Gets or sets enum to indicate type of Continuos backup mode.
+        /// Possible values include: 'Continuous7Days', 'Continuous30Days'
         /// </summary>
-        [JsonProperty(PropertyName = "serverVersion")]
-        public string ServerVersion { get; set; }
+        [JsonProperty(PropertyName = "tier")]
+        public string Tier { get; set; }
 
     }
 }

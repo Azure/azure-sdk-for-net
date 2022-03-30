@@ -13,25 +13,27 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ApiProperties
+    /// <summary>
+    /// The properties of an Azure Cosmos DB merge operations
+    /// </summary>
+    public partial class MergeParameters
     {
         /// <summary>
-        /// Initializes a new instance of the ApiProperties class.
+        /// Initializes a new instance of the MergeParameters class.
         /// </summary>
-        public ApiProperties()
+        public MergeParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiProperties class.
+        /// Initializes a new instance of the MergeParameters class.
         /// </summary>
-        /// <param name="serverVersion">Describes the ServerVersion of an a
-        /// MongoDB account. Possible values include: '3.2', '3.6', '4.0',
-        /// '4.2'</param>
-        public ApiProperties(string serverVersion = default(string))
+        /// <param name="isDryRun">Specifies whether the operation is a real
+        /// merge operation or a simulation.</param>
+        public MergeParameters(bool? isDryRun = default(bool?))
         {
-            ServerVersion = serverVersion;
+            IsDryRun = isDryRun;
             CustomInit();
         }
 
@@ -41,11 +43,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes the ServerVersion of an a MongoDB account.
-        /// Possible values include: '3.2', '3.6', '4.0', '4.2'
+        /// Gets or sets specifies whether the operation is a real merge
+        /// operation or a simulation.
         /// </summary>
-        [JsonProperty(PropertyName = "serverVersion")]
-        public string ServerVersion { get; set; }
+        [JsonProperty(PropertyName = "isDryRun")]
+        public bool? IsDryRun { get; set; }
 
     }
 }

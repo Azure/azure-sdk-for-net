@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 {
 
     /// <summary>
-    /// Defines values for ServerVersion.
+    /// Defines values for ContinuousTier.
     /// </summary>
-    public static class ServerVersion
+    public static class ContinuousTier
     {
-        public const string ThreeFullStopTwo = "3.2";
-        public const string ThreeFullStopSix = "3.6";
-        public const string FourFullStopZero = "4.0";
-        public const string FourFullStopTwo = "4.2";
+        public const string Continuous7Days = "Continuous7Days";
+        public const string Continuous30Days = "Continuous30Days";
     }
 }

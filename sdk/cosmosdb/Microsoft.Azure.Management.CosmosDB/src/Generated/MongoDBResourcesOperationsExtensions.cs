@@ -616,6 +616,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Merges the partitions of a MongoDB Collection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='mergeParameters'>
+            /// The parameters for the merge operation.
+            /// </param>
+            public static PhysicalPartitionStorageInfoCollection ListMongoDBCollectionPartitionMerge(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, MergeParameters mergeParameters)
+            {
+                return operations.ListMongoDBCollectionPartitionMergeAsync(resourceGroupName, accountName, databaseName, collectionName, mergeParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Merges the partitions of a MongoDB Collection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='mergeParameters'>
+            /// The parameters for the merge operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PhysicalPartitionStorageInfoCollection> ListMongoDBCollectionPartitionMergeAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, MergeParameters mergeParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListMongoDBCollectionPartitionMergeWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, mergeParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the RUs per second of the MongoDB collection under an existing Azure
             /// Cosmos DB database account with the provided name.
             /// </summary>
@@ -1611,6 +1669,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task BeginDeleteMongoDBCollectionAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Merges the partitions of a MongoDB Collection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='mergeParameters'>
+            /// The parameters for the merge operation.
+            /// </param>
+            public static PhysicalPartitionStorageInfoCollection BeginListMongoDBCollectionPartitionMerge(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, MergeParameters mergeParameters)
+            {
+                return operations.BeginListMongoDBCollectionPartitionMergeAsync(resourceGroupName, accountName, databaseName, collectionName, mergeParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Merges the partitions of a MongoDB Collection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='mergeParameters'>
+            /// The parameters for the merge operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PhysicalPartitionStorageInfoCollection> BeginListMongoDBCollectionPartitionMergeAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, MergeParameters mergeParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginListMongoDBCollectionPartitionMergeWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, mergeParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

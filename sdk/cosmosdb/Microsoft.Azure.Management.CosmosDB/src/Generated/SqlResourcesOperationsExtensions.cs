@@ -768,6 +768,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Merges the partitions of a SQL Container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='mergeParameters'>
+            /// The parameters for the merge operation.
+            /// </param>
+            public static PhysicalPartitionStorageInfoCollection ListSqlContainerPartitionMerge(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters)
+            {
+                return operations.ListSqlContainerPartitionMergeAsync(resourceGroupName, accountName, databaseName, containerName, mergeParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Merges the partitions of a SQL Container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='mergeParameters'>
+            /// The parameters for the merge operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PhysicalPartitionStorageInfoCollection> ListSqlContainerPartitionMergeAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSqlContainerPartitionMergeWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, mergeParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the RUs per second of the SQL container under an existing Azure Cosmos
             /// DB database account.
             /// </summary>
@@ -2514,6 +2572,64 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task BeginDeleteSqlContainerAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteSqlContainerWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Merges the partitions of a SQL Container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='mergeParameters'>
+            /// The parameters for the merge operation.
+            /// </param>
+            public static PhysicalPartitionStorageInfoCollection BeginListSqlContainerPartitionMerge(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters)
+            {
+                return operations.BeginListSqlContainerPartitionMergeAsync(resourceGroupName, accountName, databaseName, containerName, mergeParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Merges the partitions of a SQL Container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='containerName'>
+            /// Cosmos DB container name.
+            /// </param>
+            /// <param name='mergeParameters'>
+            /// The parameters for the merge operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PhysicalPartitionStorageInfoCollection> BeginListSqlContainerPartitionMergeAsync(this ISqlResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginListSqlContainerPartitionMergeWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, containerName, mergeParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
