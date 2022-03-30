@@ -6,23 +6,20 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource management error additional info. </summary>
-    public partial class ErrorAdditionalInfo
+    internal partial class ErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
-        [InitializationConstructor]
-        public ErrorAdditionalInfo()
+        internal ErrorAdditionalInfo()
         {
         }
 
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
         /// <param name="errorAdditionalInfoType"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
-        [SerializationConstructor]
         internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info)
         {
             ErrorAdditionalInfoType = errorAdditionalInfoType;
