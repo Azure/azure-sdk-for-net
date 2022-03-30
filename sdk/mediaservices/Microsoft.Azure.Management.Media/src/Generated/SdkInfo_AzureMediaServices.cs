@@ -19,63 +19,38 @@ namespace Microsoft.Azure.Management.Media
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Media", "AccountFilters", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "AssetFilters", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "Assets", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "ContentKeyPolicies", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "Jobs", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "LiveEvents", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "LiveOutputs", "2021-06-01"),
+                new Tuple<string, string, string>("Media", "AccountFilters", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "AssetFilters", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "Assets", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "ContentKeyPolicies", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "Jobs", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "LiveEvents", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "LiveOutputs", "2021-11-01"),
                 new Tuple<string, string, string>("Media", "Locations", "2021-06-01"),
                 new Tuple<string, string, string>("Media", "Mediaservices", "2021-06-01"),
+                new Tuple<string, string, string>("Media", "OperationResults", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "OperationStatuses", "2021-11-01"),
                 new Tuple<string, string, string>("Media", "Operations", "2021-06-01"),
                 new Tuple<string, string, string>("Media", "PrivateEndpointConnections", "2021-06-01"),
                 new Tuple<string, string, string>("Media", "PrivateLinkResources", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "StreamingEndpoints", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "StreamingLocators", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "StreamingPolicies", "2021-06-01"),
-                new Tuple<string, string, string>("Media", "Transforms", "2021-06-01"),
+                new Tuple<string, string, string>("Media", "StreamingEndpoints", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "StreamingLocators", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "StreamingPolicies", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "Tracks", "2021-11-01"),
+                new Tuple<string, string, string>("Media", "Transforms", "2021-11-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@1.9.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mediaservices/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --tag=package-2021-06 --csharp-sdks-folder=D:\\GitHub\\Azure\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.4.0";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/mediaservices/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --tag=package-2021-11 --csharp-sdks-folder=D:\\GitHub\\Azure\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "c2ec03e5faa411e9a6785c15c3ddbd812e67ba7b";
-      public static readonly String CodeGenerationErrors = "System.Management.Automation.RuntimeException: Cannot convert value to type System.String. ---> System.Management.Automation.PSInvalidCastException: Cannot convert value to type System.String. ---> System.InvalidOperationException: Process has exited, so the requested information is not available.
-   at System.Diagnostics.Process.EnsureState(State state)
-   at System.Diagnostics.Process.get_ProcessName()
-   at System.Diagnostics.Process.ToString()
-   at System.Management.Automation.PSObject.ToString(ExecutionContext context, Object obj, String separator, String format, IFormatProvider formatProvider, Boolean recurse, Boolean unravelEnumeratorOnRecurse)
-   --- End of inner exception stack trace ---
-   at System.Management.Automation.PSObject.ToStringParser(ExecutionContext context, Object obj)
-   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
-   at CallSite.Target(Closure , CallSite , Object , ExecutionContext )
-   at CallSite.Target(Closure , CallSite , Object , ExecutionContext )
-   at System.Management.Automation.Interpreter.DynamicInstruction`3.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   --- End of inner exception stack trace ---
-   at System.Management.Automation.ExceptionHandlingOps.CheckActionPreference(FunctionContext funcContext, Exception exception)
-   at System.Management.Automation.Interpreter.ActionCallInstruction`2.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.Interpreter.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.LightLambda.RunVoid1[T0](T0 arg0)
-   at System.Management.Automation.PSScriptCmdlet.RunClause(Action`1 clause, Object dollarUnderbar, Object inputToProcess)
-   at System.Management.Automation.PSScriptCmdlet.DoEndProcessing()
-   at System.Management.Automation.CommandProcessorBase.Complete()
-AutoRest code generation for https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mediaservices/resource-manager/readme.md failed. Please try again"
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "e43e7725f1eb439f6dcece681ad7852c47a6a9ac";
+      public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
-
-
-
-
-
-
 

@@ -3,17 +3,10 @@
 ## Changes in 6.0.0
 
 - Added new tracks API under asset to manage the tracks available in the asset.
-- Added Main10 profile for H265Layer.
-- Added rateControlMode and crf properties to support 
-- Added skus API under streaming endpoint to list various skus supported.
+- dded Main10 Encoding Profile for H265 encoding.
+- Exposed RateControlMode for H264 encoding, enabling 2 new ratecontrol modes - CBR (Constant Bit Rate) and CRF (Constant Rate Factor).
+- Added skus property on streaming endpooint.
 - New LowLatencyV2 type added to the streamOptions for a live event.
-
-### Breaking changes
-
-- ApiErrorException has been replaced with ErrorResponseException to be consistent with all other Azure SDKs. Exception body has not changed.
-- All calls returning 404 Not found raises an ErrorResponseException instead of returning null. This change was make to be consistent with other Azure SDKs.
-- Media service constructor has new optional PublicNetworkAccess parameter after KeyDelivery parameter.
-- Type property in MediaServiceIdentity has been changed from ManagedIdentityType enum to string, to accommodate comma separated multiple types. Valid strings for type are SystemAssigned or SystemAssigned,UserAssigned or UserAssigned.
 
 ## Changes in 5.0.0
 
