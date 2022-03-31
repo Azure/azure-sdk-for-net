@@ -1,12 +1,27 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.3 (2022-03-31)
 
 ### Features Added
 
 ### Breaking Changes
 
 - The models that are not directly referenced by public API now are internal.
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one)
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations
+- Move optional body parameters right after required parameters
+- Location class from `Location` to `AzureLocation`
+- Removed `GetIfExists` methods from all the resource classes.
 
 ### Bugs Fixed
 
