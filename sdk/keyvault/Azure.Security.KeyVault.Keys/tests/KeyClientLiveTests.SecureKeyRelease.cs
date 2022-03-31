@@ -56,10 +56,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey key = await Client.CreateRsaKeyAsync(options);
             RegisterForCleanup(key.Name);
 
-            // BUGBUG: Remove check when https://github.com/Azure/azure-sdk-for-net/issues/22750 is resolved.
+            // Managed HSM and Key Vault return different values by default.
             if (IsManagedHSM)
             {
                 Assert.IsFalse(key.Properties.Exportable);
+            }
+            else
+            {
+                Assert.IsNull(key.Properties.Exportable);
             }
 
             KeyProperties keyProperties = new(key.Id)
@@ -74,7 +78,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        [KeyVaultOnly] // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/26792 is resolved.
         [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
