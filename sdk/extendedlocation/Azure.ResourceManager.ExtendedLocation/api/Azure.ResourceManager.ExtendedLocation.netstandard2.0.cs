@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
     public partial class CustomLocationPropertiesAuthentication
     {
         public CustomLocationPropertiesAuthentication() { }
-        public string CustomLocationPropertiesAuthenticationType { get { throw null; } set { } }
+        public string AuthenticationType { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
     public partial class EnabledResourceType : Azure.ResourceManager.Models.ResourceData

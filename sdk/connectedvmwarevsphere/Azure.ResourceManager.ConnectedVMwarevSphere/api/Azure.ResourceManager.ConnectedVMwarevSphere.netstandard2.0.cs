@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
-        public string ExtendedLocationType { get { throw null; } set { } }
+        public string LocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -795,10 +795,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     public partial class MachineExtensionInstanceView
     {
         public MachineExtensionInstanceView() { }
-        public string MachineExtensionInstanceViewType { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionInstanceViewStatus Status { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } }
+        public string ViewType { get { throw null; } }
     }
     public partial class MachineExtensionInstanceViewStatus
     {
@@ -1009,9 +1009,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
-        public string ResourceStatusType { get { throw null; } }
         public string Severity { get { throw null; } }
         public string Status { get { throw null; } }
+        public string StatusType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScsiControllerType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType>
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         internal VirtualScsiController() { }
         public int? BusNumber { get { throw null; } }
         public int? ControllerKey { get { throw null; } }
-        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType? ScsiControllerType { get { throw null; } }
+        public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType? ControllerType { get { throw null; } }
         public int? ScsiCtlrUnitNumber { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing? Sharing { get { throw null; } }
     }

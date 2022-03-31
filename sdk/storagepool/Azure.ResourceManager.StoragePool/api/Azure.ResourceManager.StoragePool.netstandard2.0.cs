@@ -300,8 +300,8 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal ResourceSkuRestrictions() { }
         public Azure.ResourceManager.StoragePool.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
-        public Azure.ResourceManager.StoragePool.Models.ResourceSkuRestrictionsType? ResourceSkuRestrictionsType { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.ResourceSkuRestrictionInfo RestrictionInfo { get { throw null; } }
+        public Azure.ResourceManager.StoragePool.Models.ResourceSkuRestrictionsType? RestrictionsType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     public enum ResourceSkuRestrictionsReasonCode
