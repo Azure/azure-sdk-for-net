@@ -59,8 +59,6 @@
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
-    <Compile Include="Shared\PropertyReferenceTypeAttribute.cs" />
-    <Compile Include="Shared\ReferenceTypeAttribute.cs" />
     <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
