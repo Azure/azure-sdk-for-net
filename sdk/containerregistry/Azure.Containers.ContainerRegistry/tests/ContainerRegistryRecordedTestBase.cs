@@ -37,9 +37,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 GroupForReplace = "group"
             });
-
-            // JsonPathSanitizers.Add("$..access_token");
-            // JsonPathSanitizers.Add("$..refresh_token");
         }
 
         public ContainerRegistryClient CreateClient(bool anonymousAccess = false)
@@ -53,20 +50,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Uri authorityHost = GetAuthorityHost(endpoint);
             ContainerRegistryAudience audience = GetAudience(authorityHost);
 
-            MockAuthenticationClient mockAuthenticationClient = new(
-                service =>
-                {
-                    return new AcrRefreshToken(GetMockJwt(TimeSpan.FromSeconds(5)));
-                },
-                (service, scope) =>
-                {
-                    return new AcrAccessToken($"TestAcrAccessToken");
-                });
-
             return InstrumentClient(new ContainerRegistryClient(
                     new Uri(endpoint),
                     TestEnvironment.Credential,
-                    null, // mockAuthenticationClient,
                     InstrumentClientOptions(new ContainerRegistryClientOptions()
                     {
                         Audience = audience
@@ -94,35 +80,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Uri authorityHost = GetAuthorityHost(endpoint);
             ContainerRegistryAudience audience = GetAudience(authorityHost);
 
-            MockAuthenticationClient mockAuthenticationClient = new(
-                service =>
-                {
-                    return new AcrRefreshToken(GetMockJwt(TimeSpan.FromSeconds(5)));
-                },
-                (service, scope) =>
-                {
-                    return new AcrAccessToken($"TestAcrAccessToken");
-                });
-
             return InstrumentClient(new ContainerRegistryBlobClient(
                     new Uri(endpoint),
                     TestEnvironment.Credential,
                     repository,
-                    null, // mockAuthenticationClient,
                     InstrumentClientOptions(new ContainerRegistryClientOptions()
                     {
                         Audience = audience
                     })
                 ));
-        }
-
-        private string GetMockJwt(TimeSpan expireIn)
-        {
-            long expireOn = (DateTimeOffset.UtcNow + expireIn).ToUnixTimeSeconds();
-            string decodedHeader = "{header}";
-            string decodedBody = $"{{ \"exp\": {expireOn} }}";
-            string decodedSignature = "{signature}";
-            return $"{Base64Url.EncodeString(decodedHeader)}.{Base64Url.EncodeString(decodedBody)}.{Base64Url.EncodeString(decodedSignature)}";
         }
 
         internal static Uri GetAuthorityHost(string endpoint)
