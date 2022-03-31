@@ -1,23 +1,14 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0-beta.2 (2022-03-31)
 
 ### Breaking Changes
-- Now all the resource classes would have a `Resource` suffix (if it previously does not have one)
-- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations
-- Move optional body parameters right after required parameters
-- Location class from `Location` to `AzureLocation`
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
+- Move optional body parameters right after required parameters.
+- Location class from `Location` to `AzureLocation`.
 - Removed `GetIfExists` methods from all the resource classes.
+- All properties of the type `object` were changed to `BinaryData`.
 
 ## 1.1.0-beta.1 (2022-01-06)
 
