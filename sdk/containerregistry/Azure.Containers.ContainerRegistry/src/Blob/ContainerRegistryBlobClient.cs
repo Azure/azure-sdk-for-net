@@ -97,6 +97,16 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 throw new InvalidOperationException($"{nameof(ContainerRegistryClientOptions.Audience)} property must be set to initialize a {nameof(ContainerRegistryBlobClient)}.");
             }
 
+            // ***Uncomment to capture Fiddler traces***
+            //HttpClientHandler httpHandler = new()
+            //{
+            //    ServerCertificateCustomValidationCallback = (_, _, _, _) =>
+            //    {
+            //        return true;
+            //    }
+            //};
+            //options.Transport = new HttpClientTransport(httpHandler);
+
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _repositoryName = repository;
