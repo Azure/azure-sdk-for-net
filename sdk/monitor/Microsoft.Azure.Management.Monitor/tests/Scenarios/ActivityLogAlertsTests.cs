@@ -42,7 +42,7 @@ namespace Monitor.Tests.Scenarios
                 ActivityLogAlertResource result = insightsClient.ActivityLogAlerts.CreateOrUpdate(
                     resourceGroupName: ResourceGroupName, 
                     activityLogAlertName: ActivityLogRuleName, 
-                    activityLogAlert: bodyParameter);
+                    activityLogAlertRule: bodyParameter);
 
                 if (!this.IsRecording)
                 {
@@ -94,7 +94,7 @@ namespace Monitor.Tests.Scenarios
                 }
 
                 // TODO: Verify: Actions cannot be null or the request fails with BadRequest
-                ActivityLogAlertPatchBody patchBodyParameter = new ActivityLogAlertPatchBody
+                AlertRulePatchObject patchBodyParameter = new AlertRulePatchObject
                 {
                     Enabled = true,
                     Tags = null
@@ -106,7 +106,7 @@ namespace Monitor.Tests.Scenarios
                     () => patchResponse = insightsClient.ActivityLogAlerts.Update(
                     resourceGroupName: ResourceGroupName,
                     activityLogAlertName: ActivityLogRuleName,
-                    activityLogAlertPatch: patchBodyParameter));
+                    activityLogAlertRulePatch: patchBodyParameter));
 
                 if (!this.IsRecording && patchResponse != null)
                 {
@@ -146,21 +146,22 @@ namespace Monitor.Tests.Scenarios
                 tags: new Dictionary<string, string>(),
                 enabled: true,
                 description: null,
-                actions: new ActivityLogAlertActionList(
-                    actionGroups: new List<ActivityLogAlertActionGroup>
+                actions: new ActionList(
+                    actionGroups: new List<ActionGroup>
                         {
-                            new ActivityLogAlertActionGroup(
-                                actionGroupId: string.Format(
+                            new ActionGroup(
+                                groupShortName: string.Format(
                                     provider: CultureInfo.InvariantCulture, 
                                     format: "/subscriptions/{0}/resourceGroups/{1}/providers/microsoft.insights/actionGroups/andygroup-donotuse", 
-                                    args: new [] { subscriptionId, ResourceGroupName }), 
-                                webhookProperties: new Dictionary<string, string>())
+                                    args: new [] { subscriptionId, ResourceGroupName }),
+                                enabled: true,
+                                webhookReceivers: new List<WebhookReceiver>())
                         }),
-                condition: new ActivityLogAlertAllOfCondition(
-                    allOf: new List<ActivityLogAlertLeafCondition>
+                condition: new AlertRuleAllOfCondition(
+                    allOf: new List<AlertRuleAnyOfOrLeafCondition>
                         {
-                            new ActivityLogAlertLeafCondition(field: "category", equals: "Administrative"),
-                            new ActivityLogAlertLeafCondition(field: "resourceGroup", equals: "andy0307"),
+                            new AlertRuleAnyOfOrLeafCondition(field: "category", equals: "Administrative"),
+                            new AlertRuleAnyOfOrLeafCondition(field: "resourceGroup", equals: "andy0307"),
                         }),
                 scopes: new List<string> { string.Format(CultureInfo.InvariantCulture, "/subscriptions/{0}", subscriptionId) }
             );

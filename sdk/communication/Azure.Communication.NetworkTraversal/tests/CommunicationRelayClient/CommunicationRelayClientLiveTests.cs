@@ -7,6 +7,7 @@ using Azure.Communication.Tests;
 using Azure.Communication.Identity;
 using NUnit.Framework;
 using System.Text.Json;
+using Azure.Core.TestFramework;
 
 namespace Azure.Communication.NetworkTraversal.Tests
 {
@@ -17,6 +18,7 @@ namespace Azure.Communication.NetworkTraversal.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27522")]
     public class CommunicationRelayClientLiveTests : CommunicationRelayClientLiveTestBase
     {
         /// <summary>
@@ -134,6 +136,92 @@ namespace Azure.Communication.NetworkTraversal.Tests
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
                 Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
                 Assert.IsNotNull((serverCredential.RouteType));
+            }
+        }
+
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringWithTtl")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialWithTtl")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialWithTtl")]
+        public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithTtl(AuthMethod authMethod, params string[] scopes)
+        {
+            CommunicationRelayClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+            DateTimeOffset currentTime = DateTimeOffset.Now;
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(ttl : 5000);
+            currentTime.AddSeconds(5000);
+
+            Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+
+            // We only check if we are actually hitting an endpoint.
+            // If we compare them when running from playback, the expiresOn value will be the one that was previously recorded so it will always fail.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.IsTrue(currentTime <= turnCredentialsResponse.Value.ExpiresOn);
+            }
+
+            Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
+
+            foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
+            {
+                foreach (string url in serverCredential.Urls)
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
+                }
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
+                Assert.IsNotNull((serverCredential.RouteType));
+            }
+        }
+
+        [Test]
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTurnCredentialsWithConnectionStringWithAllParameters")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTurnCredentialsWithKeyCredentialWithAllParameters")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTurnCredentialsWithTokenCredentialWithAllParameters")]
+        public async Task GettingTurnCredentialsGeneratesTurnCredentialsWithAllparameters(AuthMethod authMethod, params string[] scopes)
+        {
+            CommunicationRelayClient client = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+
+            Response<CommunicationUserIdentifier> userResponse = await communicationIdentityClient.CreateUserAsync();
+            DateTimeOffset currentTime = DateTimeOffset.Now;
+            Response<CommunicationRelayConfiguration> turnCredentialsResponse = await client.GetRelayConfigurationAsync(userResponse.Value, RouteType.Nearest, 5000);
+            currentTime.AddSeconds(5000);
+
+            Assert.IsNotNull(turnCredentialsResponse.Value);
+            Assert.IsNotNull(turnCredentialsResponse.Value.ExpiresOn);
+
+            // We only check if we are actually hitting an endpoint.
+            // If we compare them when running from playback, the expiresOn value will be the one that was previously recorded so it will always fail.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.IsTrue(currentTime <= turnCredentialsResponse.Value.ExpiresOn);
+            }
+
+            Assert.IsNotNull(turnCredentialsResponse.Value.IceServers);
+
+            foreach (CommunicationIceServer serverCredential in turnCredentialsResponse.Value.IceServers)
+            {
+                foreach (string url in serverCredential.Urls)
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(url));
+                }
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Username));
+                Assert.IsFalse(string.IsNullOrWhiteSpace(serverCredential.Credential));
+                Assert.AreEqual(RouteType.Nearest, serverCredential.RouteType);
             }
         }
 

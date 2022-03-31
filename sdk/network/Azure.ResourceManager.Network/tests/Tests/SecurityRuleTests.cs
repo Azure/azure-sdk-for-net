@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class SecurityRuleTests : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
         public SecurityRuleTests(bool isAsync) : base(isAsync)
         {
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nsg
             var networkSecurityGroupCollection = resourceGroup.GetNetworkSecurityGroups();
-            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
-            Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
+            var putNsgResponseOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroup);
+            Response<NetworkSecurityGroupResource> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
             // Get NSG
-            Response<NetworkSecurityGroup> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
+            Response<NetworkSecurityGroupResource> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
             Assert.AreEqual(networkSecurityGroupName, getNsgResponse.Value.Data.Name);
 
             // Get SecurityRule
-            Response<SecurityRule> getSecurityRuleResponse = await getNsgResponse.Value.GetSecurityRules().GetAsync(securityRule1);
+            Response<SecurityRuleResource> getSecurityRuleResponse = await getNsgResponse.Value.GetSecurityRules().GetAsync(securityRule1);
             Assert.AreEqual(securityRule1, getSecurityRuleResponse.Value.Data.Name);
 
             CompareSecurityRule(getNsgResponse.Value.Data.SecurityRules[0], getSecurityRuleResponse.Value.Data);
@@ -96,15 +96,15 @@ namespace Azure.ResourceManager.Network.Tests
                 SourcePortRange = "656",
             };
 
-            var putSecurityRuleResponseOperation = await getNsgResponse.Value.GetSecurityRules().CreateOrUpdateAsync(true, securityRule2, securityRule);
-            Response<SecurityRule> putSecurityRuleResponse = await putSecurityRuleResponseOperation.WaitForCompletionAsync();;
+            var putSecurityRuleResponseOperation = await getNsgResponse.Value.GetSecurityRules().CreateOrUpdateAsync(WaitUntil.Completed, securityRule2, securityRule);
+            Response<SecurityRuleResource> putSecurityRuleResponse = await putSecurityRuleResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putSecurityRuleResponse.Value.Data.ProvisioningState.ToString());
 
             // Get NSG
             getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
 
             // Get the SecurityRule2
-            Response<SecurityRule> getSecurityRule2Response = await getNsgResponse.Value.GetSecurityRules().GetAsync(securityRule2);
+            Response<SecurityRuleResource> getSecurityRule2Response = await getNsgResponse.Value.GetSecurityRules().GetAsync(securityRule2);
             Assert.AreEqual(securityRule2, getSecurityRule2Response.Value.Data.Name);
 
             // Verify the security rule
@@ -122,25 +122,25 @@ namespace Azure.ResourceManager.Network.Tests
             CompareSecurityRule(getNsgResponse.Value.Data.SecurityRules[1], getSecurityRule2Response.Value.Data);
 
             // List all SecurityRules
-            AsyncPageable<SecurityRule> getsecurityRulesAP = getNsgResponse.Value.GetSecurityRules().GetAllAsync();
-            List<SecurityRule> getsecurityRules = await getsecurityRulesAP.ToEnumerableAsync();
+            AsyncPageable<SecurityRuleResource> getsecurityRulesAP = getNsgResponse.Value.GetSecurityRules().GetAllAsync();
+            List<SecurityRuleResource> getsecurityRules = await getsecurityRulesAP.ToEnumerableAsync();
             Assert.AreEqual(2, getsecurityRules.Count());
             CompareSecurityRule(getNsgResponse.Value.Data.SecurityRules[0], getsecurityRules.ElementAt(0).Data);
             CompareSecurityRule(getNsgResponse.Value.Data.SecurityRules[1], getsecurityRules.ElementAt(1).Data);
 
             // Delete a SecurityRule
-            await getSecurityRule2Response.Value.DeleteAsync(true);
+            await getSecurityRule2Response.Value.DeleteAsync(WaitUntil.Completed);
 
             getsecurityRulesAP = getNsgResponse.Value.GetSecurityRules().GetAllAsync();
             getsecurityRules = await getsecurityRulesAP.ToEnumerableAsync();
             Has.One.EqualTo(getsecurityRules);
 
             // Delete NSG
-            await getNsgResponse.Value.DeleteAsync(true);
+            await getNsgResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // List NSG
-            AsyncPageable<NetworkSecurityGroup> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
-            List<NetworkSecurityGroup> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
+            AsyncPageable<NetworkSecurityGroupResource> listNsgResponseAP = networkSecurityGroupCollection.GetAllAsync();
+            List<NetworkSecurityGroupResource> listNsgResponse = await listNsgResponseAP.ToEnumerableAsync();
             Assert.IsEmpty(listNsgResponse);
         }
 

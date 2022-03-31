@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Tests
         private static readonly IDictionary<string, string> ExpectedAddTags = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" }, { "UpdateKey3", "UpdateValue3" } };
         private static readonly IDictionary<string, string> OriTags = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
 
-        private ResourceGroup _rg;
+        private ResourceGroupResource _rg;
         private string _rgPrefix = "rg";
 
         public TaggableResourceTests(bool isAsync)

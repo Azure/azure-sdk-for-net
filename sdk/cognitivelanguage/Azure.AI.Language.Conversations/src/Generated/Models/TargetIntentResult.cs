@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations
     {
         /// <summary> Initializes a new instance of TargetIntentResult. </summary>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal TargetIntentResult(double confidence)
+        internal TargetIntentResult(float confidence)
         {
             Confidence = confidence;
         }
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal TargetIntentResult(TargetKind targetKind, string apiVersion, double confidence)
+        internal TargetIntentResult(TargetKind targetKind, string apiVersion, float confidence)
         {
             TargetKind = targetKind;
             ApiVersion = apiVersion;
@@ -30,6 +30,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The API version used to call a target service. </summary>
         public string ApiVersion { get; }
         /// <summary> The prediction score and it ranges from 0.0 to 1.0. </summary>
-        public double Confidence { get; }
+        public float Confidence { get; }
     }
 }

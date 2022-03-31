@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of CertificateOrderAction. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="actionType"> Action type. </param>
-        /// <param name="createdAt"> Time at which the certificate action was performed. </param>
-        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, CertificateOrderActionType? actionType, DateTimeOffset? createdAt) : base(id, name, type, systemData, kind)
+        /// <param name="createdOn"> Time at which the certificate action was performed. </param>
+        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, CertificateOrderActionType? actionType, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData, kind)
         {
             ActionType = actionType;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
         }
 
         /// <summary> Action type. </summary>
         public CertificateOrderActionType? ActionType { get; }
         /// <summary> Time at which the certificate action was performed. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

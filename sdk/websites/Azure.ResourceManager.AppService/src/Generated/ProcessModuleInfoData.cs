@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="baseAddress"> Base address. Used as module identifier in ARM resource URI. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="productVersion"> Product version. </param>
         /// <param name="isDebug"> Is debug?. </param>
         /// <param name="language"> Module language (locale). </param>
-        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language) : base(id, name, type, systemData, kind)
+        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language) : base(id, name, resourceType, systemData, kind)
         {
             BaseAddress = baseAddress;
             FileName = fileName;

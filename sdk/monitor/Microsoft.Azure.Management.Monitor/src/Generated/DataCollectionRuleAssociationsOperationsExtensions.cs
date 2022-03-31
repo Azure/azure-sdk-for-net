@@ -96,6 +96,46 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
+            /// Lists associations for the specified data collection endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='dataCollectionEndpointName'>
+            /// The name of the data collection endpoint. The name is case insensitive.
+            /// </param>
+            public static IPage<DataCollectionRuleAssociationProxyOnlyResource> ListByDataCollectionEndpoint(this IDataCollectionRuleAssociationsOperations operations, string resourceGroupName, string dataCollectionEndpointName)
+            {
+                return operations.ListByDataCollectionEndpointAsync(resourceGroupName, dataCollectionEndpointName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists associations for the specified data collection endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='dataCollectionEndpointName'>
+            /// The name of the data collection endpoint. The name is case insensitive.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DataCollectionRuleAssociationProxyOnlyResource>> ListByDataCollectionEndpointAsync(this IDataCollectionRuleAssociationsOperations operations, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDataCollectionEndpointWithHttpMessagesAsync(resourceGroupName, dataCollectionEndpointName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns the specified association.
             /// </summary>
             /// <param name='operations'>
@@ -281,6 +321,40 @@ namespace Microsoft.Azure.Management.Monitor
             public static async Task<IPage<DataCollectionRuleAssociationProxyOnlyResource>> ListByRuleNextAsync(this IDataCollectionRuleAssociationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByRuleNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists associations for the specified data collection endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DataCollectionRuleAssociationProxyOnlyResource> ListByDataCollectionEndpointNext(this IDataCollectionRuleAssociationsOperations operations, string nextPageLink)
+            {
+                return operations.ListByDataCollectionEndpointNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists associations for the specified data collection endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DataCollectionRuleAssociationProxyOnlyResource>> ListByDataCollectionEndpointNextAsync(this IDataCollectionRuleAssociationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDataCollectionEndpointNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

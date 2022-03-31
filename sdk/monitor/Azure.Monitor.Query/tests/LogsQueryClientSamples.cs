@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -14,6 +15,68 @@ namespace Azure.Monitor.Query.Tests
 {
     public class LogsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
+        [Test]
+        [Explicit]
+        public async Task QueryLogsWithStatistics()
+        {
+            #region Snippet:QueryLogsWithStatistics
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+                workspaceId,
+                "AzureActivity | top 10 by TimeGenerated",
+                new QueryTimeRange(TimeSpan.FromDays(1)),
+                new LogsQueryOptions
+                {
+                    IncludeStatistics = true,
+                });
+
+            BinaryData stats = response.Value.GetStatistics();
+            using var statsDoc = JsonDocument.Parse(stats);
+            var queryStats = statsDoc.RootElement.GetProperty("query");
+            Console.WriteLine(queryStats.GetProperty("executionTime").GetDouble());
+
+            #endregion
+        }
+
+        [Test]
+        [Explicit]
+        public async Task QueryLogsWithVisualization()
+        {
+            #region Snippet:QueryLogsWithVisualization
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+                workspaceId,
+                @"StormEvents
+                    | summarize event_count = count() by State
+                    | where event_count > 10
+                    | project State, event_count
+                    | render columnchart",
+                new QueryTimeRange(TimeSpan.FromDays(1)),
+                new LogsQueryOptions
+                {
+                    IncludeVisualization = true,
+                });
+
+            BinaryData viz = response.Value.GetVisualization();
+            using var vizDoc = JsonDocument.Parse(viz);
+            var queryViz = vizDoc.RootElement.GetProperty("visualization");
+            Console.WriteLine(queryViz.GetString());
+
+            #endregion
+        }
+
         [Test]
         [Explicit]
         public async Task QueryLogsAsTable()

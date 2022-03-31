@@ -89,10 +89,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public System.TimeSpan? HotCachePeriod { get; set; }
 
         /// <summary>
-        /// Gets or sets the statistics of the database.
+        /// Gets the statistics of the database.
         /// </summary>
         [JsonProperty(PropertyName = "properties.statistics")]
-        public DatabaseStatistics Statistics { get; set; }
+        public DatabaseStatistics Statistics { get; private set; }
 
         /// <summary>
         /// Gets indicates whether the database is followed.

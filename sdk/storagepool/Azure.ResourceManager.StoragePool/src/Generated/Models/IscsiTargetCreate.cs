@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of IscsiTargetCreate. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </param>
         /// <param name="staticAcls"> Access Control List (ACL) for an iSCSI Target; defines LUN masking policy. </param>
         /// <param name="luns"> List of LUNs to be exposed through iSCSI Target. </param>
-        internal IscsiTargetCreate(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string managedBy, IList<string> managedByExtended, IscsiTargetAclMode aclMode, string targetIqn, IList<Acl> staticAcls, IList<IscsiLun> luns) : base(id, name, type, systemData)
+        internal IscsiTargetCreate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IList<string> managedByExtended, IscsiTargetAclMode aclMode, string targetIqn, IList<Acl> staticAcls, IList<IscsiLun> luns) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;

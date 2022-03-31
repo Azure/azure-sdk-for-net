@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("outputBlobSasUrl");
-            writer.WriteStringValue(OutputBlobSasUrl);
+            writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
             writer.WriteEndObject();
         }
     }

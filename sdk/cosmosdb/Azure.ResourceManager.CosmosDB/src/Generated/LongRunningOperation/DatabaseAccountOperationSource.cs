@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountOperationSource : IOperationSource<DatabaseAccount>
+    internal class DatabaseAccountOperationSource : IOperationSource<DatabaseAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        DatabaseAccount IOperationSource<DatabaseAccount>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountResource IOperationSource<DatabaseAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement);
-            return new DatabaseAccount(_client, data);
+            return new DatabaseAccountResource(_client, data);
         }
 
-        async ValueTask<DatabaseAccount> IOperationSource<DatabaseAccount>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountResource> IOperationSource<DatabaseAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DatabaseAccountData.DeserializeDatabaseAccountData(document.RootElement);
-            return new DatabaseAccount(_client, data);
+            return new DatabaseAccountResource(_client, data);
         }
     }
 }

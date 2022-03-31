@@ -20,7 +20,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 To export a Question Answering project, you will need to set your project name and choose an export format before calling c as shown below:
 
 ```C# Snippet:QuestionAnsweringProjectsClient_ExportProject
-Operation<BinaryData> exportOperation = client.Export(waitForCompletion: true, exportedProjectName, format: "json");
+Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -52,7 +52,7 @@ RequestContent importRequestContent = RequestContent.Create(new
     }
 });
 
-Operation<BinaryData> importOperation = client.Import(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
+Operation<BinaryData> importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
 ```
@@ -72,7 +72,7 @@ Console.WriteLine(projectDetails.Content);
 ### Exporting a Project
 
 ```C# Snippet:QuestionAnsweringProjectsClient_ExportProjectAsync
-Operation<BinaryData> exportOperation = await client.ExportAsync(waitForCompletion: true, exportedProjectName, format : "json");
+Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
 // retrieve export operation response, and extract url of exported file
 JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -102,7 +102,7 @@ RequestContent importRequestContent = RequestContent.Create(new
     }
 });
 
-Operation<BinaryData> importOperation = await client.ImportAsync(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
+Operation<BinaryData> importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
 ```
 

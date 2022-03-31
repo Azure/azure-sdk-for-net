@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -48,7 +49,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var sub = client.DefaultSubscription;
-            var operation = (await sub.GetLroAsync(true)).Value;
+            var operation = (await sub.GetLroAsync(WaitUntil.Completed)).Value;
             var result = operation.Method();
 
             Assert.AreEqual("TestResourceProxy", operation.GetType().Name);
@@ -60,7 +61,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var sub = client.DefaultSubscription;
-            var response = (await sub.GetLroAsync(true)).Value;
+            var response = (await sub.GetLroAsync(WaitUntil.Completed)).Value;
             var result = response.Method();
 
             Assert.AreEqual("TestResourceProxy", response.GetType().Name);
@@ -118,7 +119,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.GetLroAsync(true);
+            var testResourceOp = await rgOp.GetLroAsync(WaitUntil.Completed);
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
@@ -137,7 +138,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetLroExceptionAsync(true));
+            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetLroExceptionAsync(WaitUntil.Completed));
         }
 
         [Test]
@@ -145,8 +146,8 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.GetLroAsync(true, true);
-            Assert.ThrowsAsync(typeof(ArgumentException), async () => await testResourceOp.WaitForCompletionAsync());
+            var testResourceOp = await rgOp.GetLroAsync(WaitUntil.Started, true);
+            Assert.ThrowsAsync(typeof(RequestFailedException), async () => await testResourceOp.WaitForCompletionAsync());
         }
 
         [Test]
@@ -154,7 +155,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.StartLroWrapperAsync(true);
+            var testResourceOp = await rgOp.StartLroWrapperAsync(WaitUntil.Completed);
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
@@ -165,7 +166,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.StartLroWrapperAsync(true);
+            var testResourceOp = await rgOp.StartLroWrapperAsync(WaitUntil.Completed);
             Stopwatch timer = Stopwatch.StartNew();
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             timer.Stop();
@@ -179,7 +180,7 @@ namespace Azure.Core.Tests.Management
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource testResource = client.GetTestResource();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
-            Assert.DoesNotThrowAsync( async () => testResource = await testResource.GetForwardsCallTrueAsync());
+            Assert.DoesNotThrowAsync(async () => testResource = await testResource.GetForwardsCallTrueAsync());
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
         }
 
@@ -201,6 +202,38 @@ namespace Azure.Core.Tests.Management
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallDefaultAsync());
             Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
+        }
+
+        [TestCase(RecordedTestMode.Record)]
+        [TestCase(RecordedTestMode.Playback)]
+        [TestCase(RecordedTestMode.Live)]
+        public async Task ValidateWaitOverride(RecordedTestMode mode)
+        {
+            // keep the curent test mode and restore it back when finished, otherwise it will invoke unnecessary clean-up
+            var currentMode = Mode;
+
+            Mode = mode;
+            try
+            {
+                ManagementTestClient testClient = InstrumentClient(new ManagementTestClient());
+                TestResource testResource = testClient.GetTestResource();
+                Stopwatch sw = Stopwatch.StartNew();
+                testResource = (await testResource.GetLroAsync(WaitUntil.Completed)).Value;
+                sw.Stop();
+                Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+                if (mode == RecordedTestMode.Playback)
+                {
+                    Assert.Less(sw.ElapsedMilliseconds, 1000);
+                }
+                else
+                {
+                    Assert.That(sw.ElapsedMilliseconds, Is.GreaterThanOrEqualTo(1000).Within(25));
+                }
+            }
+            finally
+            {
+                Mode = currentMode;
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PremierAddOnOffer. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Premier add on SKU. </param>
@@ -30,11 +31,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="promoCodeRequired"> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="quota"> Premier add on offer Quota. </param>
         /// <param name="webHostingPlanRestrictions"> App Service plans this offer is restricted to. </param>
-        /// <param name="privacyPolicyUrl"> Privacy policy URL. </param>
-        /// <param name="legalTermsUrl"> Legal terms URL. </param>
+        /// <param name="privacyPolicyUri"> Privacy policy URL. </param>
+        /// <param name="legalTermsUri"> Legal terms URL. </param>
         /// <param name="marketplacePublisher"> Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Marketplace offer. </param>
-        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string sku, string product, string vendor, bool? promoCodeRequired, int? quota, AppServicePlanRestrictions? webHostingPlanRestrictions, string privacyPolicyUrl, string legalTermsUrl, string marketplacePublisher, string marketplaceOffer) : base(id, name, type, systemData, kind)
+        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string sku, string product, string vendor, bool? promoCodeRequired, int? quota, AppServicePlanRestrictions? webHostingPlanRestrictions, Uri privacyPolicyUri, Uri legalTermsUri, string marketplacePublisher, string marketplaceOffer) : base(id, name, resourceType, systemData, kind)
         {
             Sku = sku;
             Product = product;
@@ -42,8 +43,8 @@ namespace Azure.ResourceManager.AppService.Models
             PromoCodeRequired = promoCodeRequired;
             Quota = quota;
             WebHostingPlanRestrictions = webHostingPlanRestrictions;
-            PrivacyPolicyUrl = privacyPolicyUrl;
-            LegalTermsUrl = legalTermsUrl;
+            PrivacyPolicyUri = privacyPolicyUri;
+            LegalTermsUri = legalTermsUri;
             MarketplacePublisher = marketplacePublisher;
             MarketplaceOffer = marketplaceOffer;
         }
@@ -61,9 +62,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> App Service plans this offer is restricted to. </summary>
         public AppServicePlanRestrictions? WebHostingPlanRestrictions { get; set; }
         /// <summary> Privacy policy URL. </summary>
-        public string PrivacyPolicyUrl { get; set; }
+        public Uri PrivacyPolicyUri { get; set; }
         /// <summary> Legal terms URL. </summary>
-        public string LegalTermsUrl { get; set; }
+        public Uri LegalTermsUri { get; set; }
         /// <summary> Marketplace publisher. </summary>
         public string MarketplacePublisher { get; set; }
         /// <summary> Marketplace offer. </summary>

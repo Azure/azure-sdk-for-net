@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string GETValue = "GET";
+        private const string GetValue = "GET";
         private const string HeadValue = "HEAD";
         private const string PostValue = "POST";
-        private const string PUTValue = "PUT";
+        private const string PutValue = "PUT";
         private const string DeleteValue = "DELETE";
         private const string OptionsValue = "OPTIONS";
         private const string TraceValue = "TRACE";
 
         /// <summary> GET. </summary>
-        public static RequestMethodMatchConditionParametersMatchValuesItem GET { get; } = new RequestMethodMatchConditionParametersMatchValuesItem(GETValue);
+        public static RequestMethodMatchConditionParametersMatchValuesItem Get { get; } = new RequestMethodMatchConditionParametersMatchValuesItem(GetValue);
         /// <summary> HEAD. </summary>
         public static RequestMethodMatchConditionParametersMatchValuesItem Head { get; } = new RequestMethodMatchConditionParametersMatchValuesItem(HeadValue);
         /// <summary> POST. </summary>
         public static RequestMethodMatchConditionParametersMatchValuesItem Post { get; } = new RequestMethodMatchConditionParametersMatchValuesItem(PostValue);
         /// <summary> PUT. </summary>
-        public static RequestMethodMatchConditionParametersMatchValuesItem PUT { get; } = new RequestMethodMatchConditionParametersMatchValuesItem(PUTValue);
+        public static RequestMethodMatchConditionParametersMatchValuesItem Put { get; } = new RequestMethodMatchConditionParametersMatchValuesItem(PutValue);
         /// <summary> DELETE. </summary>
         public static RequestMethodMatchConditionParametersMatchValuesItem Delete { get; } = new RequestMethodMatchConditionParametersMatchValuesItem(DeleteValue);
         /// <summary> OPTIONS. </summary>

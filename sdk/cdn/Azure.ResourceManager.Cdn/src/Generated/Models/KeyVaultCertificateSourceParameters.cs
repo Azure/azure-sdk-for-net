@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes the parameters for using a user&apos;s KeyVault certificate for securing custom domain. </summary>
-    public partial class KeyVaultCertificateSourceParameters
+    internal partial class KeyVaultCertificateSourceParameters
     {
         /// <summary> Initializes a new instance of KeyVaultCertificateSourceParameters. </summary>
         /// <param name="odataType"></param>

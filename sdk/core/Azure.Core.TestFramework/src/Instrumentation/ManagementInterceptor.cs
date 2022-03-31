@@ -13,24 +13,26 @@ namespace Azure.Core.TestFramework
     public class ManagementInterceptor : IInterceptor
     {
         private readonly ClientTestBase _testBase;
+        private readonly RecordedTestMode _testMode;
         private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
 
         public ManagementInterceptor(ClientTestBase testBase)
         {
             _testBase = testBase;
+            _testMode = testBase is RecordedTestBase recordedTestBase ? recordedTestBase.Mode : RecordedTestMode.Playback;
         }
 
         public void Intercept(IInvocation invocation)
         {
             bool modifiedAskToWait = false;
 
-            if (IsLro(invocation.Method.ReturnType))
+            if (_testMode == RecordedTestMode.Playback && IsLro(invocation.Method.ReturnType))
             {
-                bool current = (bool)invocation.Arguments[0];
-                if (current)
+                WaitUntil current = (WaitUntil)invocation.Arguments[0];
+                if (current == WaitUntil.Completed)
                 {
                     modifiedAskToWait = true;
-                    invocation.Arguments[0] = false;
+                    invocation.Arguments[0] = WaitUntil.Started;
                 }
             }
 
@@ -40,15 +42,13 @@ namespace Azure.Core.TestFramework
             {
                 if (IsTaskFaulted(invocation.ReturnValue))
                     return;
+
                 object lro = GetResultFromTask(invocation.ReturnValue);
-                if (lro.GetType().IsSubclassOf(typeof(Operation)))
-                {
-                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, (CancellationToken)invocation.Arguments.Last());
-                }
-                else
-                {
-                    _ = OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last());
-                }
+                var valueTask = lro.GetType().BaseType.IsGenericType
+                    ? OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last())
+                    : OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, (CancellationToken)invocation.Arguments.Last());
+                _ = GetResultFromTask(valueTask);
+
                 return;
             }
 

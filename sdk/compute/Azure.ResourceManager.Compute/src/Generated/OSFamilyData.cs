@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of OSFamilyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS family properties. </param>
-        internal OSFamilyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, OSFamilyProperties properties) : base(id, name, type, systemData)
+        internal OSFamilyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, OSFamilyProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;

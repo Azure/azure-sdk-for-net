@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Conversations
             }
             TargetKind targetKind = default;
             Optional<string> apiVersion = default;
-            double confidenceScore = default;
+            float confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetKind"))
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations
                 }
                 if (property.NameEquals("confidenceScore"))
                 {
-                    confidenceScore = property.Value.GetDouble();
+                    confidenceScore = property.Value.GetSingle();
                     continue;
                 }
             }
