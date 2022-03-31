@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Tests
         private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
 
         public TemplateSpecVersionOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 {key, value}
             };
             var templateSpecVersion2 = await templateSpecVersion.SetTagsAsync(tags);
-            Assert.IsFalse(templateSpecVersion2.Value.Data.Tags.ContainsKey(key));
+            //Assert.IsFalse(templateSpecVersion2.Value.Data.Tags.ContainsKey(key));
             Assert.IsTrue(templateSpecVersion2.Value.Data.Tags.ContainsKey(key));
             Assert.AreEqual(templateSpecVersion2.Value.Data.Tags[key], value);
         }

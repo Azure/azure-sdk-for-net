@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Tests
         private string _tagValue;
         private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
         public DeploymentScriptOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 {key, value}
             };
             var deploymentScript2 = await deploymentScript.SetTagsAsync(tags);
-            Assert.IsFalse(deploymentScript2.Value.Data.Tags.ContainsKey(key));
+            //Assert.IsFalse(deploymentScript2.Value.Data.Tags.ContainsKey(key));
             Assert.IsTrue(deploymentScript2.Value.Data.Tags.ContainsKey(key));
             Assert.AreEqual(deploymentScript2.Value.Data.Tags[key], value);
         }

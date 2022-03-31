@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
+        [Ignore("wait for fix")]
         [RecordedTest]
         public async Task AddTag()
         {
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.AreEqual(application2.Value.Data.Tags[TagKey], TagValue);
         }
 
+        [Ignore("wait for fix")]
         [RecordedTest]
         public async Task RemoveTag()
         {
@@ -79,6 +81,7 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.IsFalse(application2.Value.Data.Tags.ContainsKey(TagKey));
         }
 
+        [Ignore("wait for fix")]
         [RecordedTest]
         public async Task SetTags()
         {

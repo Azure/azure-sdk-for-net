@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Tests
         private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
 
         public ApplicationDefinitionOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task SetTags()
         {
-            await AddTag();
+            //await AddTag();
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
@@ -85,10 +85,11 @@ namespace Azure.ResourceManager.Resources.Tests
             ArmApplicationDefinitionResource applicationDefinition = (await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
             var key = Recording.GenerateAssetName("TagKey-");
             var value = Recording.GenerateAssetName("TagValue-");
-            var tags = new Dictionary<string, string>();
-            tags.Add(key, value);
+            var tags = new Dictionary<string, string>()
+            {
+                {key, value}
+            };
             var applicationDefinition2 = await applicationDefinition.SetTagsAsync(tags);
-            Assert.IsFalse(applicationDefinition2.Value.Data.Tags.ContainsKey(key));
             Assert.IsTrue(applicationDefinition2.Value.Data.Tags.ContainsKey(key));
             Assert.AreEqual(applicationDefinition2.Value.Data.Tags[key], value);
         }
