@@ -222,8 +222,6 @@ namespace Azure.Communication.Identity.Tests
             {
                 appId = TestEnvironment.CommunicationWrongAppId;
             }
-
-            appId = appId.ToLower();
             try
             {
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
