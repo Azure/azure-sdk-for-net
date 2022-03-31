@@ -13,31 +13,31 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheExpirationActionParameters
     {
         /// <summary> Initializes a new instance of CacheExpirationActionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
-        public CacheExpirationActionParameters(CacheExpirationActionParametersOdataType odataType, CacheBehavior cacheBehavior, CacheType cacheType)
+        public CacheExpirationActionParameters(CacheExpirationActionParametersTypeName typeName, CacheBehavior cacheBehavior, CacheType cacheType)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
         }
 
         /// <summary> Initializes a new instance of CacheExpirationActionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheExpirationActionParameters(CacheExpirationActionParametersOdataType odataType, CacheBehavior cacheBehavior, CacheType cacheType, TimeSpan? cacheDuration)
+        internal CacheExpirationActionParameters(CacheExpirationActionParametersTypeName typeName, CacheBehavior cacheBehavior, CacheType cacheType, TimeSpan? cacheDuration)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
             CacheDuration = cacheDuration;
         }
 
-        /// <summary> Gets or sets the odata type. </summary>
-        public CacheExpirationActionParametersOdataType OdataType { get; set; }
+        /// <summary> Gets or sets the type name. </summary>
+        public CacheExpirationActionParametersTypeName TypeName { get; set; }
         /// <summary> Caching behavior for the requests. </summary>
         public CacheBehavior CacheBehavior { get; set; }
         /// <summary> The level at which the content needs to be cached. </summary>
