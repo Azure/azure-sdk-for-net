@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         internal ManagementGroupChildInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> Children { get { throw null; } }
+        public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? ChildType { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? ManagementGroupChildType { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class ManagementGroupChildOptions
     {
         internal ManagementGroupChildOptions() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions> Children { get { throw null; } }
+        public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? ChildType { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? ManagementGroupChildType { get { throw null; } }
         public string Name { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1128,9 +1128,9 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public ArmPolicyParameter() { }
         public System.Collections.Generic.IList<System.BinaryData> AllowedValues { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ArmPolicyParameterType? ArmPolicyParameterType { get { throw null; } set { } }
         public System.BinaryData DefaultValue { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata Metadata { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ArmPolicyParameterType? ParameterType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArmPolicyParameterType : System.IEquatable<Azure.ResourceManager.Resources.Models.ArmPolicyParameterType>
@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
-        public Azure.ResourceManager.Resources.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocationType? LocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class PredefinedTagCount
     {
         internal PredefinedTagCount() { }
-        public string PredefinedTagCountType { get { throw null; } }
+        public string CountType { get { throw null; } }
         public int? Value { get { throw null; } }
     }
     public partial class PredefinedTagValue
@@ -1425,7 +1425,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal ProviderExtendedLocation() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string ProviderExtendedLocationType { get { throw null; } }
+        public string LocationType { get { throw null; } }
     }
     public partial class ProviderPermission
     {
@@ -1522,12 +1522,12 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ResourceTypeAlias
     {
         internal ResourceTypeAlias() { }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasType? AliasType { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata DefaultMetadata { get { throw null; } }
         public string DefaultPath { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern DefaultPattern { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath> Paths { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasType? ResourceTypeAliasType { get { throw null; } }
     }
     public partial class ResourceTypeAliases
     {
@@ -1565,7 +1565,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ResourceTypeAliasPathMetadata() { }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes? Attributes { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType? ResourceTypeAliasPathTokenType { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType? TokenType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceTypeAliasPathTokenType : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType>
@@ -1594,8 +1594,8 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ResourceTypeAliasPattern
     {
         internal ResourceTypeAliasPattern() { }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPatternType? PatternType { get { throw null; } }
         public string Phrase { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPatternType? ResourceTypeAliasPatternType { get { throw null; } }
         public string Variable { get { throw null; } }
     }
     public enum ResourceTypeAliasPatternType

@@ -2242,8 +2242,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public CloudServiceExtensionProperties() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
-        public string CloudServiceExtensionPropertiesType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
+        public string PropertiesType { get { throw null; } set { } }
         public string ProtectedSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CloudServiceVaultAndSecretReference ProtectedSettingsFromKeyVault { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -2830,7 +2830,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocationTypes? ExtendedLocationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ExtendedLocationTypes? LocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4290,8 +4290,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ResourceSkuLocationInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } }
         public string Location { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ExtendedLocationType? LocationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
@@ -4305,8 +4305,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ResourceSkuRestrictions() { }
         public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsType? ResourceSkuRestrictionsType { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionInfo RestrictionInfo { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsType? RestrictionsType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     public enum ResourceSkuRestrictionsReasonCode
@@ -4489,9 +4489,9 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal RunCommandParameterDefinition() { }
         public string DefaultValue { get { throw null; } }
+        public string DefinitionType { get { throw null; } }
         public string Name { get { throw null; } }
         public bool? Required { get { throw null; } }
-        public string RunCommandParameterDefinitionType { get { throw null; } }
     }
     public partial class RunCommandResult
     {
@@ -4581,8 +4581,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class SharingProfileGroup
     {
         public SharingProfileGroup() { }
+        public Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes? GroupType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Ids { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes? SharingProfileGroupType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SharingProfileGroupTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes>
@@ -4795,9 +4795,9 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class UpgradeOperationHistoricalStatusInfo
     {
         internal UpgradeOperationHistoricalStatusInfo() { }
+        public string InfoType { get { throw null; } }
         public string Location { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.UpgradeOperationHistoricalStatusInfoProperties Properties { get { throw null; } }
-        public string UpgradeOperationHistoricalStatusInfoType { get { throw null; } }
     }
     public partial class UpgradeOperationHistoricalStatusInfoProperties
     {
@@ -4924,7 +4924,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineExtensionHandlerInstanceView() { }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus Status { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } }
-        public string VirtualMachineExtensionHandlerInstanceViewType { get { throw null; } }
+        public string ViewType { get { throw null; } }
     }
     public partial class VirtualMachineExtensionInstanceView
     {
@@ -4933,7 +4933,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Substatuses { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } set { } }
-        public string VirtualMachineExtensionInstanceViewType { get { throw null; } set { } }
+        public string ViewType { get { throw null; } set { } }
     }
     public partial class VirtualMachineImage : Azure.ResourceManager.Compute.Models.VirtualMachineImageResource
     {
