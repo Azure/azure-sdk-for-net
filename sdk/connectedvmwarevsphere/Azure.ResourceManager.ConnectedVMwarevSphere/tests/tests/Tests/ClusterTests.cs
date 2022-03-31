@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";

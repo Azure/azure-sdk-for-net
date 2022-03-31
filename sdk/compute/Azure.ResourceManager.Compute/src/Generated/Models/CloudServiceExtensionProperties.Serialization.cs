@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(CloudServiceExtensionPropertiesType))
+            if (Optional.IsDefined(PropertiesType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(CloudServiceExtensionPropertiesType);
+                writer.WriteStringValue(PropertiesType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {

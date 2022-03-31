@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(JitApproverType))
+            if (Optional.IsDefined(ApproverType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(JitApproverType.Value.ToString());
+                writer.WriteStringValue(ApproverType.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {

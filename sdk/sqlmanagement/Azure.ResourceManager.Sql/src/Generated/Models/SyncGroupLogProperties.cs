@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of SyncGroupLogProperties. </summary>
         /// <param name="timestamp"> Timestamp of the sync group log. </param>
-        /// <param name="syncGroupLogType"> Type of the sync group log. </param>
+        /// <param name="logType"> Type of the sync group log. </param>
         /// <param name="source"> Source of the sync group log. </param>
         /// <param name="details"> Details of the sync group log. </param>
         /// <param name="tracingId"> TracingId of the sync group log. </param>
         /// <param name="operationStatus"> OperationStatus of the sync group log. </param>
-        internal SyncGroupLogProperties(DateTimeOffset? timestamp, SyncGroupLogType? syncGroupLogType, string source, string details, Guid? tracingId, string operationStatus)
+        internal SyncGroupLogProperties(DateTimeOffset? timestamp, SyncGroupLogType? logType, string source, string details, Guid? tracingId, string operationStatus)
         {
             Timestamp = timestamp;
-            SyncGroupLogType = syncGroupLogType;
+            LogType = logType;
             Source = source;
             Details = details;
             TracingId = tracingId;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Timestamp of the sync group log. </summary>
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Type of the sync group log. </summary>
-        public SyncGroupLogType? SyncGroupLogType { get; }
+        public SyncGroupLogType? LogType { get; }
         /// <summary> Source of the sync group log. </summary>
         public string Source { get; }
         /// <summary> Details of the sync group log. </summary>

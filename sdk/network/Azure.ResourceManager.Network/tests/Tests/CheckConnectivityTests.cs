@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Network.Tests
             //Validation
             Assert.AreEqual("Reachable", connectivityCheck.Value.ConnectionStatus.ToString());
             Assert.AreEqual(0, connectivityCheck.Value.ProbesFailed);
-            Assert.AreEqual("Source", connectivityCheck.Value.Hops.FirstOrDefault().ConnectivityHopType);
-            Assert.AreEqual("Internet", connectivityCheck.Value.Hops.LastOrDefault().ConnectivityHopType);
+            Assert.AreEqual("Source", connectivityCheck.Value.Hops.FirstOrDefault().HopType);
+            Assert.AreEqual("Internet", connectivityCheck.Value.Hops.LastOrDefault().HopType);
         }
     }
 }

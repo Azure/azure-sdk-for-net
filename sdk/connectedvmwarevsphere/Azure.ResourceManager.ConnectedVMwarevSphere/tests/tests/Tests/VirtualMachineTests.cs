@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var _placementProfile = new PlacementProfile()
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var _placementProfile = new PlacementProfile()
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var _placementProfile = new PlacementProfile()
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var _placementProfile = new PlacementProfile()
             {

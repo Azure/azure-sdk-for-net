@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLocationPropertiesAuthenticationType))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(CustomLocationPropertiesAuthenticationType);
+                writer.WriteStringValue(AuthenticationType);
             }
             if (Optional.IsDefined(Value))
             {

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ExtendedLocationType))
+            if (Optional.IsDefined(LocationType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ExtendedLocationType.Value.ToString());
+                writer.WriteStringValue(LocationType.Value.ToString());
             }
             writer.WriteEndObject();
         }

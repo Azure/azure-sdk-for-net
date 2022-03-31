@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("groupId");
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(ShareablePrivateLinkPropertiesType))
+            if (Optional.IsDefined(PropertiesType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ShareablePrivateLinkPropertiesType);
+                writer.WriteStringValue(PropertiesType);
             }
             writer.WriteEndObject();
         }

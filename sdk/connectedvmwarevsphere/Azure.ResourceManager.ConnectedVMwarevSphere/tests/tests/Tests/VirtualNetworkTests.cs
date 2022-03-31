@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var vnetBody = new VirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o61";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var vnetBody = new VirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o25797";
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var vnetBody = new VirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o114814";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var vnetBody = new VirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o2286";
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var vnetBody = new VirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o85628";
