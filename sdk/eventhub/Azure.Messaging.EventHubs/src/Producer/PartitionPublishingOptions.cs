@@ -15,7 +15,8 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   routing or when using a partition key.
     /// </remarks>
     ///
-    internal class PartitionPublishingOptionsInternal
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public class PartitionPublishingOptions
     {
         /// <summary>
         ///   The identifier of the producer group that this producer is associated with when publishing to the associated partition.
@@ -115,13 +116,13 @@ namespace Azure.Messaging.EventHubs.Producer
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="PartitionPublishingOptionsInternal" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="PartitionPublishingOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="PartitionPublishingOptionsInternal" />.</returns>
+        /// <returns>A new copy of <see cref="PartitionPublishingOptions" />.</returns>
         ///
-        internal PartitionPublishingOptionsInternal Clone() =>
-            new PartitionPublishingOptionsInternal
+        internal PartitionPublishingOptions Clone() =>
+            new PartitionPublishingOptions
             {
                 ProducerGroupId = ProducerGroupId,
                 OwnerLevel = OwnerLevel,

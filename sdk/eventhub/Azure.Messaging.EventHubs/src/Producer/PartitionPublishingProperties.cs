@@ -9,17 +9,18 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   A set of information for an Event Hub.
     /// </summary>
     ///
-    internal class PartitionPublishingPropertiesInternal
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public class PartitionPublishingProperties
     {
         /// <summary>An empty set of properties.</summary>
-        private static PartitionPublishingPropertiesInternal s_emptyInstance;
+        private static PartitionPublishingProperties s_emptyInstance;
 
         /// <summary>
         ///   Returns a set of properties that represents an empty set of properties
         ///   suitable for use when partitions are not inherently stateful.
         /// </summary>
         ///
-        internal static PartitionPublishingPropertiesInternal Empty
+        internal static PartitionPublishingProperties Empty
         {
             get
             {
@@ -27,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 // are not mutable, there is not impact to having the reference updated after
                 // initial creation.
 
-                s_emptyInstance ??= new PartitionPublishingPropertiesInternal(false, null, null, null);
+                s_emptyInstance ??= new PartitionPublishingProperties(false, null, null, null);
                 return s_emptyInstance;
             }
         }
@@ -105,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="ownerLevel">The owner level associated with the partition.</param>
         /// <param name="lastPublishedSequenceNumber">The sequence number assigned to the event that was last successfully published to the partition.</param>
         ///
-        internal PartitionPublishingPropertiesInternal(bool isIdempotentPublishingEnabled,
+        internal PartitionPublishingProperties(bool isIdempotentPublishingEnabled,
                                                long? producerGroupId,
                                                short? ownerLevel,
                                                int? lastPublishedSequenceNumber) =>
