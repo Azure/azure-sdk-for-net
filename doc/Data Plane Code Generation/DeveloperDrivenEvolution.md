@@ -1,4 +1,6 @@
 # Developer driven evolution
+Convenience API is an additive layer on top of protocol mathod so it could produce improved user experience.
+
 To add a convenience API that takes and returns strongly-typed input and output models instead of raw JSON, steps are:
 1. [Create the convenience method with new signature](#create-the-convenience-method-with-new-signature)
 - [Replace input parameters](#replace-input-parameters)
@@ -11,7 +13,9 @@ To add a convenience API that takes and returns strongly-typed input and output 
 - [Implement GET paging method](#implement-get-paging-method)
 
 ## Create the convenience method with new signature
-You should first decide how the convenience method grows up from protocol method. Below is an example of your generated protocol method.
+To create a convenience method on top of the protocol method, you should not modify generated code. The convenience methods should be added in a saparate file as partial class of the class containing protocol methods. You could check out the full examples in [Implement the method](#implement-the-method).
+
+Below is how you could create the convenience signature from protocol method. Here is an example of your generated protocol method.
 ```C#
 public virtual async Task<Response> CreateMetricFeedbackAsync(RequestContent content, RequestContext context = null);
 ```
@@ -64,7 +68,7 @@ public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackValuesAsync
 
 If the suggested rename does not apply to your scenario, you could pick the best name fitting your API.
 ## Create the models
-Currently the models should be created manually. We will support generate it automatically.
+Currently the models should be created manually. We will support generate it automatically. So, to avoid the models overwritten, we suggest putting the models under folder {sdk folder}/Models which is the same layer as folder {sdk folder}/Generated.
 
 After you create the models, you also need to add the helper methods mapping between raw response and model. Examples for model `MetricFeedback` (Models/MetricFeedback/MetricFeedback.cs) are:
 ```C#
