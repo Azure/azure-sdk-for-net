@@ -18,7 +18,8 @@ This tutorial has following sections:
     - [Snippets](#snippets)
     - [README](#readme)
     - [Changelog](#changelog)
-    - [Customize](#customize)
+    - [Add Convenience APIs](#add-convenience-apis)
+    - [APIView](#apiview)
 
 <!-- /TOC -->
 
@@ -149,3 +150,11 @@ e.g. Running the script for a project in `sdk\deviceupdate` would look like this
 ```powershell
 eng\scripts\Export-API.ps1 deviceupdate
 ```
+
+### APIView
+
+Once you've done all above requirements, you will need to upload public API to [APIView Website](https://apiview.dev/) for review.
+
+Here are the steps:
+- Create the artifact: Run `dotnet pack` under `sdk\<service>\Azure.<group>.<service>` directory. The artifact will be generated to the directory `artifacts\packages\Debug\Azure.<group>.<service>`
+- Upload the artifact to [APIView Website](https://apiview.dev/) to create APIView of the service.
