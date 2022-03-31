@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentScriptsError DeserializeArmDeploymentScriptsError(JsonElement element)
         {
-            Optional<ErrorDetail> error = default;
+            Optional<ResourcesResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
+                    error = ResourcesResponseError.DeserializeResourcesResponseError(property.Value);
                     continue;
                 }
             }
-            return new ArmDeploymentScriptsError(error);
+            return new ArmDeploymentScriptsError(error.Value);
         }
     }
 }

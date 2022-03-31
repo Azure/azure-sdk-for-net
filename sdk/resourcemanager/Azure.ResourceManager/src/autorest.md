@@ -283,6 +283,12 @@ directive:
   - rename-operation:
       from: Resources_ValidateMoveResources
       to: ResourceGroups_ValidateMoveResources
+
+# TODO - remove when Azure.ErrorResponse is marked as PropertyReferenceType
+  - from: types.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "ResponseError"
+
   - rename-model:
       from: Location
       to: LocationExpanded

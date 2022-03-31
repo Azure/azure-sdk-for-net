@@ -7,20 +7,12 @@
 
 using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    [JsonConverter(typeof(ErrorAdditionalInfoConverter))]
-    public partial class ErrorAdditionalInfo : IUtf8JsonSerializable
+    internal partial class ErrorAdditionalInfo
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
             Optional<string> type = default;
@@ -44,19 +36,6 @@ namespace Azure.ResourceManager.Models
                 }
             }
             return new ErrorAdditionalInfo(type.Value, info.Value);
-        }
-
-        internal partial class ErrorAdditionalInfoConverter : JsonConverter<ErrorAdditionalInfo>
-        {
-            public override void Write(Utf8JsonWriter writer, ErrorAdditionalInfo model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override ErrorAdditionalInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeErrorAdditionalInfo(document.RootElement);
-            }
         }
     }
 }

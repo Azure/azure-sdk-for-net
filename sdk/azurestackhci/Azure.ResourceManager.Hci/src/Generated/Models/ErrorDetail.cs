@@ -7,16 +7,14 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The error detail. </summary>
-    public partial class ErrorDetail
+    internal partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        [InitializationConstructor]
-        public ErrorDetail()
+        internal ErrorDetail()
         {
             Details = new ChangeTrackingList<ErrorDetail>();
             AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
@@ -28,7 +26,6 @@ namespace Azure.ResourceManager.Models
         /// <param name="target"> The error target. </param>
         /// <param name="details"> The error details. </param>
         /// <param name="additionalInfo"> The error additional info. </param>
-        [SerializationConstructor]
         internal ErrorDetail(string code, string message, string target, IReadOnlyList<ErrorDetail> details, IReadOnlyList<ErrorAdditionalInfo> additionalInfo)
         {
             Code = code;
