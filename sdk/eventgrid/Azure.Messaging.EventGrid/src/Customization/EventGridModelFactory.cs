@@ -455,7 +455,7 @@ namespace Azure.Messaging.EventGrid
             var contentType = recordingContentType != null ? new AcsRecordingContentType(recordingContentType.ToString()) : null;
             var channelType = recordingChannelType != null ? new AcsRecordingChannelType(recordingChannelType.ToString()) : null;
             var formatType = recordingFormatType != null ? new AcsRecordingFormatType(recordingFormatType.ToString()) : null;
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, contentType, channelType, formatType, sessionEndReason);
+            return AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, contentType, channelType, formatType, sessionEndReason);
         }
 
         /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>

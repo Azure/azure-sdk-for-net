@@ -15,6 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             get
             {
+                // ContentType is read-only so we can safely cache the value
                 if (ContentType != null && _recordingContentType == null)
                 {
                     _recordingContentType = new RecordingContentType(ContentType.Value.ToString());
@@ -31,6 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             get
             {
+                // ChannelType is read-only so we can safely cache the value
                 if (ChannelType != null && _recordingChannelType == null)
                 {
                     _recordingChannelType = new RecordingChannelType(ChannelType.Value.ToString());
@@ -47,6 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             get
             {
+                // FormatType is read-only so we can safely cache the value
                 if (FormatType != null && _recordingFormatType == null)
                 {
                     _recordingFormatType = new RecordingFormatType(FormatType.Value.ToString());
