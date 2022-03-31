@@ -79,8 +79,7 @@ namespace Azure.Identity
                 tenantId,
                 sharedTokenCredentialOptions?.ClientId ?? Constants.DeveloperSignOnClientId,
                 null,
-                options ?? s_DefaultCacheOptions,
-                (options as SharedTokenCacheCredentialOptions)?.BeforeBuildClient);
+                options ?? s_DefaultCacheOptions);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
 
