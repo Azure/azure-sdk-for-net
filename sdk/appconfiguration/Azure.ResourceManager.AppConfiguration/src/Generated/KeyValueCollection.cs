@@ -15,13 +15,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppConfiguration.Models;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing collection of KeyValue and their operations over its parent. </summary>
-    public partial class KeyValueCollection : ArmCollection, IEnumerable<KeyValue>, IAsyncEnumerable<KeyValue>
+    /// <summary>
+    /// A class representing a collection of <see cref="KeyValueResource" /> and their operations.
+    /// Each <see cref="KeyValueResource" /> in the collection will belong to the same instance of <see cref="ConfigurationStoreResource" />.
+    /// To get a <see cref="KeyValueCollection" /> instance call the GetKeyValues method from an instance of <see cref="ConfigurationStoreResource" />.
+    /// </summary>
+    public partial class KeyValueCollection : ArmCollection, IEnumerable<KeyValueResource>, IAsyncEnumerable<KeyValueResource>
     {
         private readonly ClientDiagnostics _keyValueClientDiagnostics;
         private readonly KeyValuesRestOperations _keyValueRestClient;
@@ -32,12 +35,13 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Initializes a new instance of the <see cref="KeyValueCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal KeyValueCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal KeyValueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _keyValueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", KeyValue.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(KeyValue.ResourceType, out string keyValueApiVersion);
-            _keyValueRestClient = new KeyValuesRestOperations(_keyValueClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, keyValueApiVersion);
+            _keyValueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", KeyValueResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(KeyValueResource.ResourceType, out string keyValueApiVersion);
+            _keyValueRestClient = new KeyValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, keyValueApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -45,20 +49,22 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ConfigurationStore.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationStore.ResourceType), nameof(id));
+            if (id.ResourceType != ConfigurationStoreResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationStoreResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates a key-value. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates a key-value.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
+        /// Operation Id: KeyValues_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
-        /// <param name="keyValueParameters"> The parameters for creating a key-value. </param>
+        /// <param name="data"> The parameters for creating a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public virtual KeyValueCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string keyValueName, KeyValueData keyValueParameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<KeyValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyValueName, KeyValueData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
@@ -66,37 +72,9 @@ namespace Azure.ResourceManager.AppConfiguration
             scope.Start();
             try
             {
-                var response = _keyValueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, keyValueParameters, cancellationToken);
-                var operation = new KeyValueCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a key-value. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
-        /// <param name="keyValueParameters"> The parameters for creating a key-value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public async virtual Task<KeyValueCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string keyValueName, KeyValueData keyValueParameters = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
-
-            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _keyValueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, keyValueParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyValueCreateOrUpdateOperation(ArmClient, response);
-                if (waitForCompletion)
+                var response = await _keyValueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation<KeyValueResource>(Response.FromValue(new KeyValueResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -107,23 +85,30 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets the properties of the specified key-value. </summary>
+        /// <summary>
+        /// Creates a key-value.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
+        /// Operation Id: KeyValues_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="data"> The parameters for creating a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public virtual Response<KeyValue> Get(string keyValueName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<KeyValueResource> CreateOrUpdate(WaitUntil waitUntil, string keyValueName, KeyValueData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.Get");
+            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _keyValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken);
-                if (response.Value == null)
-                    throw _keyValueClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KeyValue(ArmClient, response.Value), response.GetRawResponse());
+                var response = _keyValueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data, cancellationToken);
+                var operation = new AppConfigurationArmOperation<KeyValueResource>(Response.FromValue(new KeyValueResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -132,12 +117,16 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets the properties of the specified key-value. </summary>
+        /// <summary>
+        /// Gets the properties of the specified key-value.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
+        /// Operation Id: KeyValues_Get
+        /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public async virtual Task<Response<KeyValue>> GetAsync(string keyValueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyValueResource>> GetAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
@@ -147,8 +136,8 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var response = await _keyValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _keyValueClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new KeyValue(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new KeyValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,23 +146,27 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the properties of the specified key-value.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
+        /// Operation Id: KeyValues_Get
+        /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public virtual Response<KeyValue> GetIfExists(string keyValueName, CancellationToken cancellationToken = default)
+        public virtual Response<KeyValueResource> Get(string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.GetIfExists");
+            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.Get");
             scope.Start();
             try
             {
-                var response = _keyValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken);
+                var response = _keyValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<KeyValue>(null, response.GetRawResponse());
-                return Response.FromValue(new KeyValue(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new KeyValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,130 +175,24 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public async virtual Task<Response<KeyValue>> GetIfExistsAsync(string keyValueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
-
-            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _keyValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<KeyValue>(null, response.GetRawResponse());
-                return Response.FromValue(new KeyValue(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public virtual Response<bool> Exists(string keyValueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
-
-            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(keyValueName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string keyValueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
-
-            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(keyValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the key-values for a given configuration store. </summary>
+        /// <summary>
+        /// Lists the key-values for a given configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues
+        /// Operation Id: KeyValues_ListByConfigurationStore
+        /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KeyValue" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KeyValue> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KeyValueResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KeyValueResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<KeyValue> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _keyValueRestClient.ListByConfigurationStore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KeyValue(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<KeyValue> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _keyValueRestClient.ListByConfigurationStoreNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KeyValue(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists the key-values for a given configuration store. </summary>
-        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KeyValue" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KeyValue> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<KeyValue>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<KeyValueResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _keyValueRestClient.ListByConfigurationStoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KeyValue(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new KeyValueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -313,14 +200,14 @@ namespace Azure.ResourceManager.AppConfiguration
                     throw;
                 }
             }
-            async Task<Page<KeyValue>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<KeyValueResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _keyValueRestClient.ListByConfigurationStoreNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KeyValue(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new KeyValueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -331,7 +218,104 @@ namespace Azure.ResourceManager.AppConfiguration
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<KeyValue> IEnumerable<KeyValue>.GetEnumerator()
+        /// <summary>
+        /// Lists the key-values for a given configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues
+        /// Operation Id: KeyValues_ListByConfigurationStore
+        /// </summary>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KeyValueResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KeyValueResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            Page<KeyValueResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _keyValueRestClient.ListByConfigurationStore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new KeyValueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<KeyValueResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _keyValueRestClient.ListByConfigurationStoreNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new KeyValueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
+        /// Operation Id: KeyValues_Get
+        /// </summary>
+        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string keyValueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+
+            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _keyValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
+        /// Operation Id: KeyValues_Get
+        /// </summary>
+        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        public virtual Response<bool> Exists(string keyValueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+
+            using var scope = _keyValueClientDiagnostics.CreateScope("KeyValueCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _keyValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<KeyValueResource> IEnumerable<KeyValueResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -341,7 +325,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<KeyValue> IAsyncEnumerable<KeyValue>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<KeyValueResource> IAsyncEnumerable<KeyValueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

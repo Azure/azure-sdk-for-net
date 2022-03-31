@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class DeletedConfigurationStoreCollectionTests : AppConfigurationClientBase
     {
-        private Subscription subscription { get; set; }
+        private SubscriptionResource subscription { get; set; }
         private string configurationStoreName { get; set; }
 
         public DeletedConfigurationStoreCollectionTests(bool isAsync)
@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 Initialize();
                 subscription = await ArmClient.GetDefaultSubscriptionAsync();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
-                ResourceGroup resGroup = (await subscription.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
+                ResourceGroupResource resGroup = (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, groupName, new ResourceGroupData(Location))).Value;
 
                 configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigurationStore configStore = (await resGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
-                await configStore.DeleteAsync(true);
+                ConfigurationStoreResource configStore = (await resGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
+                await configStore.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetTest()
         {
-            DeletedConfigurationStore deletedConfigurationStore = await subscription.GetDeletedConfigurationStores().GetAsync(Location, configurationStoreName);
+            DeletedConfigurationStoreResource deletedConfigurationStore = await subscription.GetDeletedConfigurationStores().GetAsync(Location, configurationStoreName);
             Assert.AreEqual(deletedConfigurationStore.Data.Name, configurationStoreName);
         }
     }

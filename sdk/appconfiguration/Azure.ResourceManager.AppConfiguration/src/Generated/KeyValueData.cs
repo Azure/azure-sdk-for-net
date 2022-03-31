@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary> A class representing the KeyValue data model. </summary>
-    public partial class KeyValueData : Resource
+    public partial class KeyValueData : ResourceData
     {
         /// <summary> Initializes a new instance of KeyValueData. </summary>
         public KeyValueData()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Initializes a new instance of KeyValueData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="key">
         /// The primary identifier of a key-value.
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// A locked key-value may not be modified until it is unlocked.
         /// </param>
         /// <param name="tags"> A dictionary of tags that can help identify what a key-value may be applicable for. </param>
-        internal KeyValueData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string key, string label, string value, string contentType, string eTag, DateTimeOffset? lastModified, bool? locked, IDictionary<string, string> tags) : base(id, name, type, systemData)
+        internal KeyValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string key, string label, string value, string contentType, string eTag, DateTimeOffset? lastModified, bool? locked, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Key = key;
             Label = label;

@@ -15,16 +15,22 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing collection of DeletedConfigurationStore and their operations over its parent. </summary>
-    public partial class DeletedConfigurationStoreCollection : ArmCollection, IEnumerable<DeletedConfigurationStore>, IAsyncEnumerable<DeletedConfigurationStore>
+    /// <summary>
+    /// A class representing a collection of <see cref="DeletedConfigurationStoreResource" /> and their operations.
+    /// Each <see cref="DeletedConfigurationStoreResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="DeletedConfigurationStoreCollection" /> instance call the GetDeletedConfigurationStores method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
+    public partial class DeletedConfigurationStoreCollection : ArmCollection, IEnumerable<DeletedConfigurationStoreResource>, IAsyncEnumerable<DeletedConfigurationStoreResource>
     {
         private readonly ClientDiagnostics _deletedConfigurationStoreConfigurationStoresClientDiagnostics;
         private readonly ConfigurationStoresRestOperations _deletedConfigurationStoreConfigurationStoresRestClient;
+        private readonly ClientDiagnostics _configurationStoresClientDiagnostics;
+        private readonly ConfigurationStoresRestOperations _configurationStoresRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeletedConfigurationStoreCollection"/> class for mocking. </summary>
         protected DeletedConfigurationStoreCollection()
@@ -32,12 +38,15 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeletedConfigurationStoreCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DeletedConfigurationStoreCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal DeletedConfigurationStoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deletedConfigurationStoreConfigurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", DeletedConfigurationStore.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(DeletedConfigurationStore.ResourceType, out string deletedConfigurationStoreConfigurationStoresApiVersion);
-            _deletedConfigurationStoreConfigurationStoresRestClient = new ConfigurationStoresRestOperations(_deletedConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedConfigurationStoreConfigurationStoresApiVersion);
+            _deletedConfigurationStoreConfigurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", DeletedConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeletedConfigurationStoreResource.ResourceType, out string deletedConfigurationStoreConfigurationStoresApiVersion);
+            _deletedConfigurationStoreConfigurationStoresRestClient = new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedConfigurationStoreConfigurationStoresApiVersion);
+            _configurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _configurationStoresRestClient = new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -45,46 +54,21 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Subscription.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Gets a deleted Azure app configuration store. </summary>
+        /// <summary>
+        /// Gets a deleted Azure app configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_GetDeleted
+        /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<DeletedConfigurationStore> Get(string location, string configStoreName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
-
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Get");
-            scope.Start();
-            try
-            {
-                var response = _deletedConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, location, configStoreName, cancellationToken);
-                if (response.Value == null)
-                    throw _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedConfigurationStore(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a deleted Azure app configuration store. </summary>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public async virtual Task<Response<DeletedConfigurationStore>> GetAsync(string location, string configStoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedConfigurationStoreResource>> GetAsync(string location, string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
@@ -95,8 +79,8 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var response = await _deletedConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, location, configStoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeletedConfigurationStore(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeletedConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,25 +89,29 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a deleted Azure app configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_GetDeleted
+        /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<DeletedConfigurationStore> GetIfExists(string location, string configStoreName, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedConfigurationStoreResource> Get(string location, string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetIfExists");
+            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Get");
             scope.Start();
             try
             {
-                var response = _deletedConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, location, configStoreName, cancellationToken: cancellationToken);
+                var response = _deletedConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, location, configStoreName, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DeletedConfigurationStore>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedConfigurationStore(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeletedConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,96 +120,23 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <summary>
+        /// Gets information about the deleted configuration stores in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores
+        /// Operation Id: ConfigurationStores_ListDeleted
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public async virtual Task<Response<DeletedConfigurationStore>> GetIfExistsAsync(string location, string configStoreName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeletedConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedConfigurationStoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
-
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<DeletedConfigurationStoreResource>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _deletedConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, location, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DeletedConfigurationStore>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedConfigurationStore(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<bool> Exists(string location, string configStoreName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
-
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(location, configStoreName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The location in which uniqueness will be verified. </param>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string location, string configStoreName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
-
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(location, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedConfigurationStore> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<DeletedConfigurationStore> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
+                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _deletedConfigurationStoreConfigurationStoresRestClient.ListDeleted(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _configurationStoresRestClient.ListDeletedAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,52 +144,14 @@ namespace Azure.ResourceManager.AppConfiguration
                     throw;
                 }
             }
-            Page<DeletedConfigurationStore> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DeletedConfigurationStoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
+                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _deletedConfigurationStoreConfigurationStoresRestClient.ListDeletedNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets information about the deleted configuration stores in a subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedConfigurationStore> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DeletedConfigurationStore>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deletedConfigurationStoreConfigurationStoresRestClient.ListDeletedAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeletedConfigurationStore>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deletedConfigurationStoreConfigurationStoresRestClient.ListDeletedNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStore(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _configurationStoresRestClient.ListDeletedNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -285,7 +162,107 @@ namespace Azure.ResourceManager.AppConfiguration
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<DeletedConfigurationStore> IEnumerable<DeletedConfigurationStore>.GetEnumerator()
+        /// <summary>
+        /// Gets information about the deleted configuration stores in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores
+        /// Operation Id: ConfigurationStores_ListDeleted
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedConfigurationStoreResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<DeletedConfigurationStoreResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _configurationStoresRestClient.ListDeleted(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<DeletedConfigurationStoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _configurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _configurationStoresRestClient.ListDeletedNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_GetDeleted
+        /// </summary>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string location, string configStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
+            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _deletedConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, location, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_GetDeleted
+        /// </summary>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
+        public virtual Response<bool> Exists(string location, string configStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
+            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _deletedConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, location, configStoreName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<DeletedConfigurationStoreResource> IEnumerable<DeletedConfigurationStoreResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -295,7 +272,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DeletedConfigurationStore> IAsyncEnumerable<DeletedConfigurationStore>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DeletedConfigurationStoreResource> IAsyncEnumerable<DeletedConfigurationStoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary> A class representing the DeletedConfigurationStore data model. </summary>
-    public partial class DeletedConfigurationStoreData : Resource
+    public partial class DeletedConfigurationStoreData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedConfigurationStoreData. </summary>
         internal DeletedConfigurationStoreData()
@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Initializes a new instance of DeletedConfigurationStoreData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="configurationStoreId"> The resource id of the original configuration store. </param>
         /// <param name="location"> The location of the original configuration store. </param>
-        /// <param name="deletionDate"> The deleted date. </param>
-        /// <param name="scheduledPurgeDate"> The scheduled purged date. </param>
+        /// <param name="deletionOn"> The deleted date. </param>
+        /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original configuration store. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
-        internal DeletedConfigurationStoreData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string configurationStoreId, string location, DateTimeOffset? deletionDate, DateTimeOffset? scheduledPurgeDate, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled) : base(id, name, type, systemData)
+        internal DeletedConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string configurationStoreId, string location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled) : base(id, name, resourceType, systemData)
         {
             ConfigurationStoreId = configurationStoreId;
             Location = location;
-            DeletionDate = deletionDate;
-            ScheduledPurgeDate = scheduledPurgeDate;
+            DeletionOn = deletionOn;
+            ScheduledPurgeOn = scheduledPurgeOn;
             Tags = tags;
             PurgeProtectionEnabled = purgeProtectionEnabled;
         }
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The location of the original configuration store. </summary>
         public string Location { get; }
         /// <summary> The deleted date. </summary>
-        public DateTimeOffset? DeletionDate { get; }
+        public DateTimeOffset? DeletionOn { get; }
         /// <summary> The scheduled purged date. </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; }
+        public DateTimeOffset? ScheduledPurgeOn { get; }
         /// <summary> Tags of the original configuration store. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Purge protection status of the original configuration store. </summary>
