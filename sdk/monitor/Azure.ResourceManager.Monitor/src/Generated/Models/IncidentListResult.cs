@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of IncidentListResult. </summary>
         internal IncidentListResult()
         {
-            Value = new ChangeTrackingList<Incident>();
+            Value = new ChangeTrackingList<MonitorIncident>();
         }
 
         /// <summary> Initializes a new instance of IncidentListResult. </summary>
         /// <param name="value"> the incident collection. </param>
-        internal IncidentListResult(IReadOnlyList<Incident> value)
+        internal IncidentListResult(IReadOnlyList<MonitorIncident> value)
         {
             Value = value;
         }
 
         /// <summary> the incident collection. </summary>
-        public IReadOnlyList<Incident> Value { get; }
+        public IReadOnlyList<MonitorIncident> Value { get; }
     }
 }

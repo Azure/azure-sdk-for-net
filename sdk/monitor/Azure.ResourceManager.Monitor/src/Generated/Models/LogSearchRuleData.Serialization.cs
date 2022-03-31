@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Monitor
             Optional<Enabled> enabled = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<ProvisioningState> provisioningState = default;
-            Source source = default;
-            Optional<Schedule> schedule = default;
-            Models.Action action = default;
+            MonitorSource source = default;
+            Optional<MonitorSchedule> schedule = default;
+            MonitorAction action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("source"))
                         {
-                            source = Source.DeserializeSource(property0.Value);
+                            source = MonitorSource.DeserializeMonitorSource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("schedule"))
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            schedule = Schedule.DeserializeSchedule(property0.Value);
+                            schedule = MonitorSchedule.DeserializeMonitorSchedule(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("action"))
                         {
-                            action = Models.Action.DeserializeAction(property0.Value);
+                            action = MonitorAction.DeserializeMonitorAction(property0.Value);
                             continue;
                         }
                     }

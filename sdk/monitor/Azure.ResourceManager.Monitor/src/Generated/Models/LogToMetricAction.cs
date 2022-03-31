@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specify action need to be taken when rule type is converting log to metric. </summary>
-    public partial class LogToMetricAction : Action
+    public partial class LogToMetricAction : MonitorAction
     {
         /// <summary> Initializes a new instance of LogToMetricAction. </summary>
         /// <param name="criteria"> Criteria of Metric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="criteria"/> is null. </exception>
-        public LogToMetricAction(IEnumerable<Criteria> criteria)
+        public LogToMetricAction(IEnumerable<MonitorCriteria> criteria)
         {
             if (criteria == null)
             {
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of LogToMetricAction. </summary>
         /// <param name="odataType"> Specifies the action. Supported values - AlertingAction, LogToMetricAction. </param>
         /// <param name="criteria"> Criteria of Metric. </param>
-        internal LogToMetricAction(string odataType, IList<Criteria> criteria) : base(odataType)
+        internal LogToMetricAction(string odataType, IList<MonitorCriteria> criteria) : base(odataType)
         {
             Criteria = criteria;
             OdataType = odataType ?? "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.LogToMetricAction";
         }
 
         /// <summary> Criteria of Metric. </summary>
-        public IList<Criteria> Criteria { get; }
+        public IList<MonitorCriteria> Criteria { get; }
     }
 }

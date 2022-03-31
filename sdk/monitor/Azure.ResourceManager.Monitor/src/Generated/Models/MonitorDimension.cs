@@ -12,14 +12,14 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the criteria for converting log to metric. </summary>
-    public partial class Dimension
+    public partial class MonitorDimension
     {
-        /// <summary> Initializes a new instance of Dimension. </summary>
+        /// <summary> Initializes a new instance of MonitorDimension. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
-        public Dimension(string name, Operator @operator, IEnumerable<string> values)
+        public MonitorDimension(string name, Operator @operator, IEnumerable<string> values)
         {
             if (name == null)
             {
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of Dimension. </summary>
+        /// <summary> Initializes a new instance of MonitorDimension. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
-        internal Dimension(string name, Operator @operator, IList<string> values)
+        internal MonitorDimension(string name, Operator @operator, IList<string> values)
         {
             Name = name;
             Operator = @operator;

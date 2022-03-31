@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ScaleCapacity capacity = default;
             IList<ScaleRule> rules = default;
             Optional<TimeWindow> fixedDate = default;
-            Optional<Recurrence> recurrence = default;
+            Optional<MonitorRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recurrence = Recurrence.DeserializeRecurrence(property.Value);
+                    recurrence = MonitorRecurrence.DeserializeMonitorRecurrence(property.Value);
                     continue;
                 }
             }

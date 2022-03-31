@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Incident
+    public partial class MonitorIncident
     {
-        internal static Incident DeserializeIncident(JsonElement element)
+        internal static MonitorIncident DeserializeMonitorIncident(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> ruleName = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new Incident(name.Value, ruleName.Value, Optional.ToNullable(isActive), Optional.ToNullable(activatedTime), Optional.ToNullable(resolvedTime));
+            return new MonitorIncident(name.Value, ruleName.Value, Optional.ToNullable(isActive), Optional.ToNullable(activatedTime), Optional.ToNullable(resolvedTime));
         }
     }
 }

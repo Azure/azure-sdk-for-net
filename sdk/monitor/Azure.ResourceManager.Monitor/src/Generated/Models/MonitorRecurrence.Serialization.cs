@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Recurrence : IUtf8JsonSerializable
+    public partial class MonitorRecurrence : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static Recurrence DeserializeRecurrence(JsonElement element)
+        internal static MonitorRecurrence DeserializeMonitorRecurrence(JsonElement element)
         {
             RecurrenceFrequency frequency = default;
             RecurrentSchedule schedule = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new Recurrence(frequency, schedule);
+            return new MonitorRecurrence(frequency, schedule);
         }
     }
 }

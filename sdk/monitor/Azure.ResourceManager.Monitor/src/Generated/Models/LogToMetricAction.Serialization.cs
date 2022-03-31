@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogToMetricAction DeserializeLogToMetricAction(JsonElement element)
         {
-            IList<Criteria> criteria = default;
+            IList<MonitorCriteria> criteria = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("criteria"))
                 {
-                    List<Criteria> array = new List<Criteria>();
+                    List<MonitorCriteria> array = new List<MonitorCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.Criteria.DeserializeCriteria(item));
+                        array.Add(MonitorCriteria.DeserializeMonitorCriteria(item));
                     }
                     criteria = array;
                     continue;

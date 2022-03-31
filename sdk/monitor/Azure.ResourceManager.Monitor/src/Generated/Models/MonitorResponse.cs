@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The response to a metrics query. </summary>
-    public partial class Response
+    public partial class MonitorResponse
     {
-        /// <summary> Initializes a new instance of Response. </summary>
+        /// <summary> Initializes a new instance of MonitorResponse. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="value"> the value of the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="value"/> is null. </exception>
-        internal Response(string timespan, IEnumerable<Metric> value)
+        internal MonitorResponse(string timespan, IEnumerable<MonitorMetric> value)
         {
             if (timespan == null)
             {
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of Response. </summary>
+        /// <summary> Initializes a new instance of MonitorResponse. </summary>
         /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceregion"> The region of the resource being queried for metrics. </param>
         /// <param name="value"> the value of the collection. </param>
-        internal Response(int? cost, string timespan, TimeSpan? interval, string @namespace, string resourceregion, IReadOnlyList<Metric> value)
+        internal MonitorResponse(int? cost, string timespan, TimeSpan? interval, string @namespace, string resourceregion, IReadOnlyList<MonitorMetric> value)
         {
             Cost = cost;
             Timespan = timespan;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The region of the resource being queried for metrics. </summary>
         public string Resourceregion { get; }
         /// <summary> the value of the collection. </summary>
-        public IReadOnlyList<Metric> Value { get; }
+        public IReadOnlyList<MonitorMetric> Value { get; }
     }
 }

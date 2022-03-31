@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Response
+    public partial class MonitorResponse
     {
-        internal static Response DeserializeResponse(JsonElement element)
+        internal static MonitorResponse DeserializeMonitorResponse(JsonElement element)
         {
             Optional<int> cost = default;
             string timespan = default;
             Optional<TimeSpan> interval = default;
             Optional<string> @namespace = default;
             Optional<string> resourceregion = default;
-            IReadOnlyList<Metric> value = default;
+            IReadOnlyList<MonitorMetric> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cost"))
@@ -61,16 +61,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<Metric> array = new List<Metric>();
+                    List<MonitorMetric> array = new List<MonitorMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Metric.DeserializeMetric(item));
+                        array.Add(MonitorMetric.DeserializeMonitorMetric(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new Response(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new MonitorResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
         }
     }
 }

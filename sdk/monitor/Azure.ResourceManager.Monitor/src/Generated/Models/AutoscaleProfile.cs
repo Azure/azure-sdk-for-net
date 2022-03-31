@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
         /// <param name="fixedDate"> the specific date-time for the profile. This element is not used if the Recurrence element is used. </param>
         /// <param name="recurrence"> the repeating times at which this profile begins. This element is not used if the FixedDate element is used. </param>
-        internal AutoscaleProfile(string name, ScaleCapacity capacity, IList<ScaleRule> rules, TimeWindow fixedDate, Recurrence recurrence)
+        internal AutoscaleProfile(string name, ScaleCapacity capacity, IList<ScaleRule> rules, TimeWindow fixedDate, MonitorRecurrence recurrence)
         {
             Name = name;
             Capacity = capacity;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the specific date-time for the profile. This element is not used if the Recurrence element is used. </summary>
         public TimeWindow FixedDate { get; set; }
         /// <summary> the repeating times at which this profile begins. This element is not used if the FixedDate element is used. </summary>
-        public Recurrence Recurrence { get; set; }
+        public MonitorRecurrence Recurrence { get; set; }
     }
 }

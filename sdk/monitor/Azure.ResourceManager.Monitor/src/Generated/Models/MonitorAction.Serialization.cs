@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Action : IUtf8JsonSerializable
+    public partial class MonitorAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static Action DeserializeAction(JsonElement element)
+        internal static MonitorAction DeserializeMonitorAction(JsonElement element)
         {
             if (element.TryGetProperty("odata.type", out JsonElement discriminator))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new Action(odataType);
+            return new MonitorAction(odataType);
         }
     }
 }

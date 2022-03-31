@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static IncidentListResult DeserializeIncidentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Incident>> value = default;
+            Optional<IReadOnlyList<MonitorIncident>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Incident> array = new List<Incident>();
+                    List<MonitorIncident> array = new List<MonitorIncident>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Incident.DeserializeIncident(item));
+                        array.Add(MonitorIncident.DeserializeMonitorIncident(item));
                     }
                     value = array;
                     continue;

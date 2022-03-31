@@ -8,12 +8,12 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Defines how often to run the search and the time interval. </summary>
-    public partial class Schedule
+    public partial class MonitorSchedule
     {
-        /// <summary> Initializes a new instance of Schedule. </summary>
+        /// <summary> Initializes a new instance of MonitorSchedule. </summary>
         /// <param name="frequencyInMinutes"> frequency (in minutes) at which rule condition should be evaluated. </param>
         /// <param name="timeWindowInMinutes"> Time window for which data needs to be fetched for query (should be greater than or equal to frequencyInMinutes). </param>
-        public Schedule(int frequencyInMinutes, int timeWindowInMinutes)
+        public MonitorSchedule(int frequencyInMinutes, int timeWindowInMinutes)
         {
             FrequencyInMinutes = frequencyInMinutes;
             TimeWindowInMinutes = timeWindowInMinutes;

@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the log search query. </summary>
-    public partial class Source
+    public partial class MonitorSource
     {
-        /// <summary> Initializes a new instance of Source. </summary>
+        /// <summary> Initializes a new instance of MonitorSource. </summary>
         /// <param name="dataSourceId"> The resource uri over which log search query is to be run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceId"/> is null. </exception>
-        public Source(string dataSourceId)
+        public MonitorSource(string dataSourceId)
         {
             if (dataSourceId == null)
             {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Monitor.Models
             DataSourceId = dataSourceId;
         }
 
-        /// <summary> Initializes a new instance of Source. </summary>
+        /// <summary> Initializes a new instance of MonitorSource. </summary>
         /// <param name="query"> Log search query. Required for action type - AlertingAction. </param>
         /// <param name="authorizedResources"> List of  Resource referred into query. </param>
         /// <param name="dataSourceId"> The resource uri over which log search query is to be run. </param>
         /// <param name="queryType"> Set value to &apos;ResultCount&apos; . </param>
-        internal Source(string query, IList<string> authorizedResources, string dataSourceId, QueryType? queryType)
+        internal MonitorSource(string query, IList<string> authorizedResources, string dataSourceId, QueryType? queryType)
         {
             Query = query;
             AuthorizedResources = authorizedResources;

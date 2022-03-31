@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Action descriptor. </summary>
-    public partial class Action
+    public partial class MonitorAction
     {
-        /// <summary> Initializes a new instance of Action. </summary>
-        public Action()
+        /// <summary> Initializes a new instance of MonitorAction. </summary>
+        public MonitorAction()
         {
         }
 
-        /// <summary> Initializes a new instance of Action. </summary>
+        /// <summary> Initializes a new instance of MonitorAction. </summary>
         /// <param name="odataType"> Specifies the action. Supported values - AlertingAction, LogToMetricAction. </param>
-        internal Action(string odataType)
+        internal MonitorAction(string odataType)
         {
             OdataType = odataType;
         }

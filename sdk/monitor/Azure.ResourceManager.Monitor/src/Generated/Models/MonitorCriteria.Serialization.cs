@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Criteria : IUtf8JsonSerializable
+    public partial class MonitorCriteria : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static Criteria DeserializeCriteria(JsonElement element)
+        internal static MonitorCriteria DeserializeMonitorCriteria(JsonElement element)
         {
             string metricName = default;
-            Optional<IList<Dimension>> dimensions = default;
+            Optional<IList<MonitorDimension>> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricName"))
@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Dimension> array = new List<Dimension>();
+                    List<MonitorDimension> array = new List<MonitorDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Dimension.DeserializeDimension(item));
+                        array.Add(MonitorDimension.DeserializeMonitorDimension(item));
                     }
                     dimensions = array;
                     continue;
                 }
             }
-            return new Criteria(metricName, Optional.ToList(dimensions));
+            return new MonitorCriteria(metricName, Optional.ToList(dimensions));
         }
     }
 }

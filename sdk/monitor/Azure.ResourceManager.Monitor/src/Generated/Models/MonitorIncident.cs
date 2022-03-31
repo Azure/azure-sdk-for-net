@@ -10,20 +10,20 @@ using System;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An alert incident indicates the activation status of an alert rule. </summary>
-    public partial class Incident
+    public partial class MonitorIncident
     {
-        /// <summary> Initializes a new instance of Incident. </summary>
-        internal Incident()
+        /// <summary> Initializes a new instance of MonitorIncident. </summary>
+        internal MonitorIncident()
         {
         }
 
-        /// <summary> Initializes a new instance of Incident. </summary>
+        /// <summary> Initializes a new instance of MonitorIncident. </summary>
         /// <param name="name"> Incident name. </param>
         /// <param name="ruleName"> Rule name that is associated with the incident. </param>
         /// <param name="isActive"> A boolean to indicate whether the incident is active or resolved. </param>
         /// <param name="activatedTime"> The time at which the incident was activated in ISO8601 format. </param>
         /// <param name="resolvedTime"> The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active. </param>
-        internal Incident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedTime, DateTimeOffset? resolvedTime)
+        internal MonitorIncident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedTime, DateTimeOffset? resolvedTime)
         {
             Name = name;
             RuleName = ruleName;

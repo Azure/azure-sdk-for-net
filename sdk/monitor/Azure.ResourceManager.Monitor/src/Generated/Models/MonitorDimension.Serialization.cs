@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Dimension : IUtf8JsonSerializable
+    public partial class MonitorDimension : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static Dimension DeserializeDimension(JsonElement element)
+        internal static MonitorDimension DeserializeMonitorDimension(JsonElement element)
         {
             string name = default;
             Operator @operator = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new Dimension(name, @operator, values);
+            return new MonitorDimension(name, @operator, values);
         }
     }
 }

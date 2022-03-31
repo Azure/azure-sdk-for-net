@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specify action need to be taken when rule type is Alert. </summary>
-    public partial class AlertingAction : Action
+    public partial class AlertingAction : MonitorAction
     {
         /// <summary> Initializes a new instance of AlertingAction. </summary>
         /// <param name="severity"> Severity of the alert. </param>

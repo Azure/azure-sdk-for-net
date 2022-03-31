@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
-        public async Task<Response<Incident>> GetAsync(string subscriptionId, string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorIncident>> GetAsync(string subscriptionId, string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Incident value = default;
+                        MonitorIncident value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Incident.DeserializeIncident(document.RootElement);
+                        value = MonitorIncident.DeserializeMonitorIncident(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
-        public Response<Incident> Get(string subscriptionId, string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        public Response<MonitorIncident> Get(string subscriptionId, string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        Incident value = default;
+                        MonitorIncident value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Incident.DeserializeIncident(document.RootElement);
+                        value = MonitorIncident.DeserializeMonitorIncident(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

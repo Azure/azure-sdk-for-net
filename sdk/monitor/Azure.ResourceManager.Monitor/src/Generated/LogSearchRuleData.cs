@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="source"> Data Source against which rule will Query Data. </param>
         /// <param name="action"> Action needs to be taken on rule execution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="action"/> is null. </exception>
-        public LogSearchRuleData(AzureLocation location, Source source, Models.Action action) : base(location)
+        public LogSearchRuleData(AzureLocation location, MonitorSource source, MonitorAction action) : base(location)
         {
             if (source == null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="source"> Data Source against which rule will Query Data. </param>
         /// <param name="schedule"> Schedule (Frequency, Time Window) for rule. Required for action type - AlertingAction. </param>
         /// <param name="action"> Action needs to be taken on rule execution. </param>
-        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedTime, ProvisioningState? provisioningState, Source source, Schedule schedule, Models.Action action) : base(id, name, type, systemData, tags, location, kind, etag)
+        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedTime, ProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action) : base(id, name, type, systemData, tags, location, kind, etag)
         {
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Provisioning state of the scheduled query rule. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Data Source against which rule will Query Data. </summary>
-        public Source Source { get; set; }
+        public MonitorSource Source { get; set; }
         /// <summary> Schedule (Frequency, Time Window) for rule. Required for action type - AlertingAction. </summary>
-        public Schedule Schedule { get; set; }
+        public MonitorSchedule Schedule { get; set; }
         /// <summary> Action needs to be taken on rule execution. </summary>
-        public Models.Action Action { get; set; }
+        public MonitorAction Action { get; set; }
     }
 }

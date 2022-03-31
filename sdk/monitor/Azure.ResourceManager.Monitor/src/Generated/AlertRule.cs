@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentName"/> is null. </exception>
-        public async virtual Task<Response<Incident>> GetAlertRuleIncidentAsync(string incidentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MonitorIncident>> GetAlertRuleIncidentAsync(string incidentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentName"/> is null. </exception>
-        public virtual Response<Incident> GetAlertRuleIncident(string incidentName, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorIncident> GetAlertRuleIncident(string incidentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
 
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: AlertRuleIncidents_ListByAlertRule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Incident" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Incident> GetAlertRuleIncidentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorIncident" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorIncident> GetAlertRuleIncidentsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Incident>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MonitorIncident>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _alertRuleIncidentsClientDiagnostics.CreateScope("AlertRule.GetAlertRuleIncidents");
                 scope.Start();
@@ -327,10 +327,10 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: AlertRuleIncidents_ListByAlertRule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Incident" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Incident> GetAlertRuleIncidents(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorIncident" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorIncident> GetAlertRuleIncidents(CancellationToken cancellationToken = default)
         {
-            Page<Incident> FirstPageFunc(int? pageSizeHint)
+            Page<MonitorIncident> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _alertRuleIncidentsClientDiagnostics.CreateScope("AlertRule.GetAlertRuleIncidents");
                 scope.Start();

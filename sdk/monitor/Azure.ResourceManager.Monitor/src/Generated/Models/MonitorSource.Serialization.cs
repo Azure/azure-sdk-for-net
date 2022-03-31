@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Source : IUtf8JsonSerializable
+    public partial class MonitorSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static Source DeserializeSource(JsonElement element)
+        internal static MonitorSource DeserializeMonitorSource(JsonElement element)
         {
             Optional<string> query = default;
             Optional<IList<string>> authorizedResources = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new Source(query.Value, Optional.ToList(authorizedResources), dataSourceId, Optional.ToNullable(queryType));
+            return new MonitorSource(query.Value, Optional.ToList(authorizedResources), dataSourceId, Optional.ToNullable(queryType));
         }
     }
 }

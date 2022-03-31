@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the criteria for converting log to metric. </summary>
-    public partial class Criteria
+    public partial class MonitorCriteria
     {
-        /// <summary> Initializes a new instance of Criteria. </summary>
+        /// <summary> Initializes a new instance of MonitorCriteria. </summary>
         /// <param name="metricName"> Name of the metric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> is null. </exception>
-        public Criteria(string metricName)
+        public MonitorCriteria(string metricName)
         {
             if (metricName == null)
             {
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             MetricName = metricName;
-            Dimensions = new ChangeTrackingList<Dimension>();
+            Dimensions = new ChangeTrackingList<MonitorDimension>();
         }
 
-        /// <summary> Initializes a new instance of Criteria. </summary>
+        /// <summary> Initializes a new instance of MonitorCriteria. </summary>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="dimensions"> List of Dimensions for creating metric. </param>
-        internal Criteria(string metricName, IList<Dimension> dimensions)
+        internal MonitorCriteria(string metricName, IList<MonitorDimension> dimensions)
         {
             MetricName = metricName;
             Dimensions = dimensions;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Name of the metric. </summary>
         public string MetricName { get; set; }
         /// <summary> List of Dimensions for creating metric. </summary>
-        public IList<Dimension> Dimensions { get; }
+        public IList<MonitorDimension> Dimensions { get; }
     }
 }

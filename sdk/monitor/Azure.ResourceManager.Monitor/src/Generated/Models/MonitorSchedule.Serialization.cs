@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Schedule : IUtf8JsonSerializable
+    public partial class MonitorSchedule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static Schedule DeserializeSchedule(JsonElement element)
+        internal static MonitorSchedule DeserializeMonitorSchedule(JsonElement element)
         {
             int frequencyInMinutes = default;
             int timeWindowInMinutes = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new Schedule(frequencyInMinutes, timeWindowInMinutes);
+            return new MonitorSchedule(frequencyInMinutes, timeWindowInMinutes);
         }
     }
 }
