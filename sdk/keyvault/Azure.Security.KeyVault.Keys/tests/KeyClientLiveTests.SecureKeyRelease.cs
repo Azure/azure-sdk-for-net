@@ -14,6 +14,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     public partial class KeyClientLiveTests
     {
         [Test]
+        [AttestationMayFail] // TODO: Remove once the attestation issue is resolved.
         [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
@@ -41,6 +42,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [AttestationMayFail] // TODO: Remove once the attestation issue is resolved.
         [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
@@ -78,6 +80,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [AttestationMayFail] // TODO: Remove once the attestation issue is resolved.
         [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
