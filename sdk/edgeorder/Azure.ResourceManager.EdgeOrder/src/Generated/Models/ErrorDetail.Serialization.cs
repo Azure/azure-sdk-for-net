@@ -5,23 +5,14 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    [JsonConverter(typeof(ErrorDetailConverter))]
-    public partial class ErrorDetail : IUtf8JsonSerializable
+    public partial class ErrorDetail
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
             Optional<string> code = default;
@@ -78,19 +69,6 @@ namespace Azure.ResourceManager.Models
                 }
             }
             return new ErrorDetail(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
-        }
-
-        internal partial class ErrorDetailConverter : JsonConverter<ErrorDetail>
-        {
-            public override void Write(Utf8JsonWriter writer, ErrorDetail model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override ErrorDetail Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeErrorDetail(document.RootElement);
-            }
         }
     }
 }

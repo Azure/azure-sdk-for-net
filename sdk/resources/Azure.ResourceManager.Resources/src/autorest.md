@@ -76,6 +76,15 @@ rename-rules:
   Urls: Uris
 
 directive:
+# TODO - remove when Azure.ErrorResponse is marked as PropertyReferenceType
+  - from: types.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "ResourcesResponseError" # we have to change the name of this type because resourcemanager has a class with the same name in the same namespace
+# TODO - remove when ErrorAdditionalInfo is introduced to Azure.Core and marked as PropertyReferenceType
+  - from: types.json
+    where: $.definitions.ErrorAdditionalInfo
+    transform: $["x-ms-client-name"] = "ResourcesErrorAdditionalInfo" # we have to change the name of this type because resourcemanager has a class with the same name in the same namespace
+
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
   # Keep the get method at each scope so that generator can know the possible values of container's parent
@@ -210,7 +219,6 @@ directive:
       $.ApplicationLockLevel['x-ms-enum'].name = 'ArmApplicationLockLevel';
       $.ApplicationManagementMode['x-ms-enum'].name = 'ArmApplicationManagementMode';
       $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
-      $.JitSchedulingPolicy.properties.duration["x-ms-client-name"] = "Interval";
       $.JitSchedulingPolicy.properties.duration["format"] = "duration";
       $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
