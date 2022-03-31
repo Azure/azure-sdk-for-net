@@ -3,6 +3,7 @@
 ## 1.0.0-beta.2 (2022-03-31)
 
 ### Breaking Changes
+
 - Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
 - Renamed some models to more comprehensive names.
 - `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
