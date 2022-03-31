@@ -13,28 +13,32 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppConfiguration.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     internal partial class AppConfigurationManagementRestOperations
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-        private readonly string _apiVersion;
+        private Uri endpoint;
+        private string apiVersion;
+        private ClientDiagnostics _clientDiagnostics;
+        private HttpPipeline _pipeline;
+        private readonly string _userAgent;
 
         /// <summary> Initializes a new instance of AppConfigurationManagementRestOperations. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AppConfigurationManagementRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public AppConfigurationManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-06-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
+            this.apiVersion = apiVersion ?? "2021-10-01-preview";
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
         internal HttpMessage CreateCheckAppConfigurationNameAvailabilityRequest(string subscriptionId, CheckNameAvailabilityParameters checkNameAvailabilityParameters)
@@ -43,18 +47,18 @@ namespace Azure.ResourceManager.AppConfiguration
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.AppConfiguration/checkNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(checkNameAvailabilityParameters);
             request.Content = content;
-            _userAgent.Apply(message);
+            message.SetProperty("SDKUserAgent", _userAgent);
             return message;
         }
 
@@ -63,11 +67,16 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(string subscriptionId, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (checkNameAvailabilityParameters == null)
+            {
+                throw new ArgumentNullException(nameof(checkNameAvailabilityParameters));
+            }
 
             using var message = CreateCheckAppConfigurationNameAvailabilityRequest(subscriptionId, checkNameAvailabilityParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -81,7 +90,7 @@ namespace Azure.ResourceManager.AppConfiguration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -90,11 +99,16 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(string subscriptionId, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (checkNameAvailabilityParameters == null)
+            {
+                throw new ArgumentNullException(nameof(checkNameAvailabilityParameters));
+            }
 
             using var message = CreateCheckAppConfigurationNameAvailabilityRequest(subscriptionId, checkNameAvailabilityParameters);
             _pipeline.Send(message, cancellationToken);
@@ -108,7 +122,7 @@ namespace Azure.ResourceManager.AppConfiguration
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }
