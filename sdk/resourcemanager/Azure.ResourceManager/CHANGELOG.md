@@ -1,14 +1,22 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.9 (2022-03-31)
 
 ### Features Added
 
+- New struct `ArmEnvironment`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Now all the resource classes will have a `Resource` suffix (if it previously does not have one).
+- Rename some model to a more comprehensive name.
+- Class `ManagementGroupResource` (previously `ManagementGroup`), `ManagementGroupCollection` and `ManagementGroupData` move from `Azure.ResourceManager.Management` namespace to `Azure.ResourceManager.ManagementGroups`.
+- Class `ArmResource` and `ArmCollection` move from `Azure.ResourceManager.Core` to `Azure.ResourceManager`.
+- Namespace `Azure.ResourceManager.Core` and `Azure.ResourceManager.Management` are removed.
+- Class `ErrorDetail` and `ErrorAdditionalInfo` are removed.
+- `GetIfExists` methods are removed from all the resource classes.
+- `Scope` in `ArmClientOptions` changed to `ArmEnvironment`.
+- The constructor of `ArmClient` no longer accepts a `Uri` parameter, please use the `ArmEnvironment` in `ArmClientOptions` instead.
 
 ## 1.0.0-beta.8 (2022-01-29)
 
