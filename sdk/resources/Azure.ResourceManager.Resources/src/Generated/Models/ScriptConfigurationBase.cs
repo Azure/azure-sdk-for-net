@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         internal ScriptConfigurationBase(TimeSpan retentionInterval)
         {
-            SupportingScriptUris = new ChangeTrackingList<string>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            SupportingScriptUris = new ChangeTrackingList<Uri>();
+            EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
         }
 
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
-        public string PrimaryScriptUri { get; }
+        public Uri PrimaryScriptUri { get; }
         /// <summary> Supporting files for the external script. </summary>
-        public IReadOnlyList<string> SupportingScriptUris { get; }
+        public IReadOnlyList<Uri> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
         public string ScriptContent { get; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
         public string Arguments { get; }
         /// <summary> The environment variables to pass over to the script. </summary>
-        public IReadOnlyList<EnvironmentVariable> EnvironmentVariables { get; }
+        public IReadOnlyList<ScriptEnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
         public string ForceUpdateTag { get; }
         /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </summary>

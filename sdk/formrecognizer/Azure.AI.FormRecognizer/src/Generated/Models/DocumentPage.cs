@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
         /// <param name="words"> Extracted words from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="spans"/>, <paramref name="words"/>, or <paramref name="lines"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="spans"/>, <paramref name="words"/> or <paramref name="lines"/> is null. </exception>
         internal DocumentPage(int pageNumber, float angle, float width, float height, V3LengthUnit unitPrivate, IEnumerable<DocumentSpan> spans, IEnumerable<DocumentWord> words, IEnumerable<DocumentLine> lines)
         {
             if (spans == null)

@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerAnalyzePrebuiltDocumentFromFileAsync
 #if SNIPPET
-            string filePath = "filePath";
+            string filePath = "<filePath>";
 #else
             string filePath = DocumentAnalysisTestEnvironment.CreatePath("Form_1.jpg");
 #endif
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
             {
-                if (kvp.Value.Content == null)
+                if (kvp.Value == null)
                 {
                     Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
                 }

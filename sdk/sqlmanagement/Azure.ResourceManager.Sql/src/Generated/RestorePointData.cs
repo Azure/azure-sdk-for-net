@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RestorePoint data model. </summary>
-    public partial class RestorePointData : Resource
+    public partial class RestorePointData : ResourceData
     {
         /// <summary> Initializes a new instance of RestorePointData. </summary>
         public RestorePointData()
@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RestorePointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="restorePointType"> The type of restore point. </param>
-        /// <param name="earliestRestoreDate"> The earliest time to which this database can be restored. </param>
-        /// <param name="restorePointCreationDate"> The time the backup was taken. </param>
+        /// <param name="earliestRestoreOn"> The earliest time to which this database can be restored. </param>
+        /// <param name="restorePointCreationOn"> The time the backup was taken. </param>
         /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreDate, DateTimeOffset? restorePointCreationDate, string restorePointLabel) : base(id, name, type, systemData)
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreationOn, string restorePointLabel) : base(id, name, resourceType, systemData)
         {
             Location = location;
             RestorePointType = restorePointType;
-            EarliestRestoreDate = earliestRestoreDate;
-            RestorePointCreationDate = restorePointCreationDate;
+            EarliestRestoreOn = earliestRestoreOn;
+            RestorePointCreationOn = restorePointCreationOn;
             RestorePointLabel = restorePointLabel;
         }
 
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The type of restore point. </summary>
         public RestorePointType? RestorePointType { get; }
         /// <summary> The earliest time to which this database can be restored. </summary>
-        public DateTimeOffset? EarliestRestoreDate { get; }
+        public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The time the backup was taken. </summary>
-        public DateTimeOffset? RestorePointCreationDate { get; }
+        public DateTimeOffset? RestorePointCreationOn { get; }
         /// <summary> The label of restore point for backup request by user. </summary>
         public string RestorePointLabel { get; }
     }

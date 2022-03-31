@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -40,10 +41,21 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(AllowedCopyScope))
+            {
+                writer.WritePropertyName("allowedCopyScope");
+                writer.WriteStringValue(AllowedCopyScope.Value.ToString());
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(SasPolicy))
             {
                 writer.WritePropertyName("sasPolicy");
@@ -84,6 +96,16 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("supportsHttpsTrafficOnly");
                 writer.WriteBooleanValue(EnableHttpsTrafficOnly.Value);
             }
+            if (Optional.IsDefined(IsSftpEnabled))
+            {
+                writer.WritePropertyName("isSftpEnabled");
+                writer.WriteBooleanValue(IsSftpEnabled.Value);
+            }
+            if (Optional.IsDefined(IsLocalUserEnabled))
+            {
+                writer.WritePropertyName("isLocalUserEnabled");
+                writer.WriteBooleanValue(IsLocalUserEnabled.Value);
+            }
             if (Optional.IsDefined(IsHnsEnabled))
             {
                 writer.WritePropertyName("isHnsEnabled");
@@ -123,6 +145,16 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("allowCrossTenantReplication");
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
+            }
+            if (Optional.IsDefined(DefaultToOAuthAuthentication))
+            {
+                writer.WritePropertyName("defaultToOAuthAuthentication");
+                writer.WriteBooleanValue(DefaultToOAuthAuthentication.Value);
+            }
+            if (Optional.IsDefined(ImmutableStorageWithVersioning))
+            {
+                writer.WritePropertyName("immutableStorageWithVersioning");
+                writer.WriteObjectValue(ImmutableStorageWithVersioning);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

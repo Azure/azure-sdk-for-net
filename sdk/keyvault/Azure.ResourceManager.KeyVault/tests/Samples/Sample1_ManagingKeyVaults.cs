@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
 {
     public class Sample1_ManagingKeyVaults
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             };
             AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
 
-            VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new Models.Sku(SkuFamily.A, SkuName.Standard));
+            VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
-            VaultProperties.VaultUri = "";
+            VaultProperties.VaultUri = new Uri("http://vaulturi.com");
             VaultProperties.NetworkAcls = new NetworkRuleSet()
             {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
-                IpRules =
+                IPRules =
                 {
                     new IPRule("1.2.3.4/32"),
                     new IPRule("1.0.0.0/25")
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
 
             VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS, VaultProperties);
 
-            var rawVault = await vaultCollection.CreateOrUpdateAsync(false, vaultName, parameters).ConfigureAwait(false);
-            Vault vault = await rawVault.WaitForCompletionAsync();
+            var rawVault = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Started, vaultName, parameters).ConfigureAwait(false);
+            VaultResource vault = await rawVault.WaitForCompletionAsync();
             #endregion
         }
 
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             #region Snippet:Managing_KeyVaults_ListAllVaults
             VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-            AsyncPageable<Vault> response = vaultCollection.GetAllAsync();
-            await foreach (Vault vault in response)
+            AsyncPageable<VaultResource> response = vaultCollection.GetAllAsync();
+            await foreach (VaultResource vault in response)
             {
                 Console.WriteLine(vault.Data.Name);
             }
@@ -83,28 +83,8 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             #region Snippet:Managing_KeyVaults_GetAVault
             VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-            Vault vault = await vaultCollection.GetAsync("myVault");
+            VaultResource vault = await vaultCollection.GetAsync("myVault");
             Console.WriteLine(vault.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_KeyVaults_GetAVaultIfExists
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
-
-            Vault vault = await vaultCollection.GetIfExistsAsync("foo");
-            if (vault != null)
-            {
-                Console.WriteLine(vault.Data.Name);
-            }
-
-            if (await vaultCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("KeyVault 'bar' exists.");
-            }
             #endregion
         }
 
@@ -115,8 +95,8 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             #region Snippet:Managing_KeyVaults_DeleteAVault
             VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-            Vault vault = await vaultCollection.GetAsync("myVault");
-            await vault.DeleteAsync(true);
+            VaultResource vault = await vaultCollection.GetAsync("myVault");
+            await vault.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
 
@@ -125,7 +105,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
             #region Snippet:Readme_GetResourceGroupCollection
@@ -133,7 +113,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;

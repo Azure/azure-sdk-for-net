@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal static class SdkVersionUtils
     {
-        internal static string SdkVersion = GetSdkVersion();
+        internal static string s_sdkVersion = GetSdkVersion();
 
         private static string GetSdkVersion()
         {

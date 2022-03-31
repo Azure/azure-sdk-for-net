@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpProtocols))
+            if (Optional.IsCollectionDefined(IPProtocols))
             {
                 writer.WritePropertyName("ipProtocols");
                 writer.WriteStartArray();
-                foreach (var item in IpProtocols)
+                foreach (var item in IPProtocols)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("translatedPort");
                 writer.WriteStringValue(TranslatedPort);
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups");
                 writer.WriteStartArray();
-                foreach (var item in SourceIpGroups)
+                foreach (var item in SourceIPGroups)
                 {
                     writer.WriteStringValue(item);
                 }

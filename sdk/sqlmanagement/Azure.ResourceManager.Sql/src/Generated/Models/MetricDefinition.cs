@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceUri"> The resource uri of the database. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="metricAvailabilities"> The list of database metric availabilities for the metric. </param>
-        internal MetricDefinition(MetricName name, PrimaryAggregationType? primaryAggregationType, string resourceUri, UnitDefinitionType? unit, IReadOnlyList<MetricAvailability> metricAvailabilities)
+        internal MetricDefinition(MetricName name, PrimaryAggregationType? primaryAggregationType, Uri resourceUri, UnitDefinitionType? unit, IReadOnlyList<MetricAvailability> metricAvailabilities)
         {
             Name = name;
             PrimaryAggregationType = primaryAggregationType;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The primary aggregation type defining how metric values are displayed. </summary>
         public PrimaryAggregationType? PrimaryAggregationType { get; }
         /// <summary> The resource uri of the database. </summary>
-        public string ResourceUri { get; }
+        public Uri ResourceUri { get; }
         /// <summary> The unit of the metric. </summary>
         public UnitDefinitionType? Unit { get; }
         /// <summary> The list of database metric availabilities for the metric. </summary>

@@ -49,7 +49,8 @@ Before upgrade:
 ```csharp
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
-
+```
+```csharp
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
 var eventHubManagementClient = new EventHubManagementClient(tokenCredentials);
 eventHubManagementClient.SubscriptionId = subscriptionId;
@@ -100,31 +101,31 @@ var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpd
 ```
 
 After upgrade:
-```C# Snippet:ChangeLog_Sample
+```C# Snippet:ChangeLog_Sample_Usings
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.Core;
-
+```
+```C# Snippet:ChangeLog_Sample
 string namespaceName = "myNamespace";
 string eventhubName = "myEventhub";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await client.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
 //create namespace
 EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
 {
-    Sku = new Models.Sku(SkuName.Standard)
+    Sku = new EventHubsSku(EventHubsSkuName.Standard)
     {
-        Tier = SkuTier.Standard,
+        Tier = EventHubsSkuTier.Standard,
     }
 };
 parameters.Tags.Add("tag1", "value1");
 parameters.Tags.Add("tag2", "value2");
 EventHubNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(true, namespaceName, parameters).Value;
+EventHubNamespaceResource eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(WaitUntil.Completed, namespaceName, parameters).Value;
 
 //create eventhub
 EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
@@ -149,7 +150,7 @@ EventHubData eventHubData = new EventHubData()
         SkipEmptyArchives = true
     }
 };
-EventHub eventHub = eventHubCollection.CreateOrUpdate(true, eventhubName, eventHubData).Value;
+EventHubResource eventHub = eventHubCollection.CreateOrUpdate(WaitUntil.Completed, eventhubName, eventHubData).Value;
 ```
 
 #### Object Model Changes

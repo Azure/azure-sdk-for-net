@@ -41,5 +41,8 @@ namespace Azure.Identity
         public static readonly KeyValuePair<string, string> DefaultMsaltokenCacheKeyringAttribute2 = new KeyValuePair<string, string>("Microsoft.Developer.IdentityService", "1.0.0.0");
 
         public const string DefaultMsalTokenCacheName = "msal.cache";
+
+        public const string ManagedIdentityClientId = "client_id";
+        public const string ManagedIdentityResourceId = "mi_res_id";
     }
 }

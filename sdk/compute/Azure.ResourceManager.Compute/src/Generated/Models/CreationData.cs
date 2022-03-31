@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Data used when creating a disk. </summary>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uploadSizeBytes"> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </param>
         /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
-        internal CreationData(DiskCreateOption createOption, string storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, string sourceUri, string sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, string securityDataUri)
+        internal CreationData(DiskCreateOption createOption, string storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, string sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri)
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Required if creating from a Gallery Image. The id of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </summary>
         public ImageDiskReference GalleryImageReference { get; set; }
         /// <summary> If createOption is Import, this is the URI of a blob to be imported into a managed disk. </summary>
-        public string SourceUri { get; set; }
+        public Uri SourceUri { get; set; }
         /// <summary> If createOption is Copy, this is the ARM id of the source snapshot or disk. </summary>
         public string SourceResourceId { get; set; }
         /// <summary> If this field is set, this is the unique id identifying the source of this resource. </summary>
@@ -61,6 +63,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </summary>
         public int? LogicalSectorSize { get; set; }
         /// <summary> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </summary>
-        public string SecurityDataUri { get; set; }
+        public Uri SecurityDataUri { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ReplicationLink data model. </summary>
-    public partial class ReplicationLinkData : Resource
+    public partial class ReplicationLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of ReplicationLinkData. </summary>
         public ReplicationLinkData()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ReplicationLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="partnerServer"> Resource partner server. </param>
         /// <param name="partnerDatabase"> Resource partner database. </param>
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="role"> Local replication role. </param>
         /// <param name="partnerRole"> Partner replication role. </param>
         /// <param name="replicationMode"> Replication mode. </param>
-        /// <param name="startTime"> Time at which the link was created. </param>
+        /// <param name="startOn"> Time at which the link was created. </param>
         /// <param name="percentComplete"> Seeding completion percentage for the link. </param>
         /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
         /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
         /// <param name="linkType"> Link type (GEO, NAMED). </param>
-        internal ReplicationLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string partnerServer, string partnerDatabase, string partnerLocation, ReplicationRole? role, ReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startTime, int? percentComplete, ReplicationState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType) : base(id, name, type, systemData)
+        internal ReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string partnerServer, string partnerDatabase, string partnerLocation, ReplicationRole? role, ReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startOn, int? percentComplete, ReplicationState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType) : base(id, name, resourceType, systemData)
         {
             PartnerServer = partnerServer;
             PartnerDatabase = partnerDatabase;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
             Role = role;
             PartnerRole = partnerRole;
             ReplicationMode = replicationMode;
-            StartTime = startTime;
+            StartOn = startOn;
             PercentComplete = percentComplete;
             ReplicationState = replicationState;
             IsTerminationAllowed = isTerminationAllowed;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Replication mode. </summary>
         public string ReplicationMode { get; }
         /// <summary> Time at which the link was created. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> Seeding completion percentage for the link. </summary>
         public int? PercentComplete { get; }
         /// <summary> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </summary>

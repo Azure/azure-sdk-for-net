@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The parameters of a capacity reservation Profile. </summary>
-    public partial class CapacityReservationProfile
+    internal partial class CapacityReservationProfile
     {
         /// <summary> Initializes a new instance of CapacityReservationProfile. </summary>
         public CapacityReservationProfile()
@@ -25,6 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine or scaleset vm instances provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
-        public WritableSubResource CapacityReservationGroup { get; set; }
+        internal WritableSubResource CapacityReservationGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier CapacityReservationGroupId
+        {
+            get => CapacityReservationGroup is null ? default : CapacityReservationGroup.Id;
+            set
+            {
+                if (CapacityReservationGroup is null)
+                    CapacityReservationGroup = new WritableSubResource();
+                CapacityReservationGroup.Id = value;
+            }
+        }
     }
 }

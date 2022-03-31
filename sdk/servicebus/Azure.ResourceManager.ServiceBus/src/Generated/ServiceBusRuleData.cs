@@ -12,7 +12,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusRule data model. </summary>
-    public partial class ServiceBusRuleData : Resource
+    public partial class ServiceBusRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusRuleData. </summary>
         public ServiceBusRuleData()
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="action"> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </param>
         /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
         /// <param name="sqlFilter"> Properties of sqlFilter. </param>
         /// <param name="correlationFilter"> Properties of correlationFilter. </param>
-        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, FilterAction action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, type, systemData)
+        internal ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FilterAction action, FilterType? filterType, SqlFilter sqlFilter, CorrelationFilter correlationFilter) : base(id, name, resourceType, systemData)
         {
             Action = action;
             FilterType = filterType;

@@ -70,7 +70,8 @@ function DeployStressTests(
     [string]$deployId = 'local',
     [switch]$login,
     [string]$subscription = '',
-    [switch]$CI
+    [switch]$CI,
+    [string]$Namespace
 ) {
     if ($environment -eq 'test') {
         if ($clusterGroup -or $subscription) {
@@ -97,7 +98,7 @@ function DeployStressTests(
     Run helm repo update
     if ($LASTEXITCODE) { return $LASTEXITCODE }
 
-    $pkgs = FindStressPackages -directory $searchDirectory -filters $filters -CI:$CI
+    $pkgs = FindStressPackages -directory $searchDirectory -filters $filters -CI:$CI -namespaceOverride $Namespace
     Write-Host "" "Found $($pkgs.Length) stress test packages:"
     Write-Host $pkgs.Directory ""
     foreach ($pkg in $pkgs) {
@@ -169,6 +170,15 @@ function DeployStressPackage(
 
         Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
         if ($LASTEXITCODE) { return }
+
+        Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
+        Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
+        Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
+        Write-Host "To show installed container images:" -ForegroundColor Blue
+        Write-Host "  docker image ls" -ForegroundColor DarkBlue
+        Write-Host "To show running containers:" -ForegroundColor Blue
+        Write-Host "  docker ps" -ForegroundColor DarkBlue
+
         Run docker push $imageTag
         if ($LASTEXITCODE) {
             if ($login) {

@@ -23,13 +23,21 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Parameters = parameters;
+<<<<<<< HEAD
             Name = DeliveryRuleActionName.UrlRedirect;
+=======
+            Name = DeliveryRuleActionType.UrlRedirect;
+>>>>>>> origin/main
         }
 
         /// <summary> Initializes a new instance of UrlRedirectAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
+<<<<<<< HEAD
         internal UrlRedirectAction(DeliveryRuleActionName name, UrlRedirectActionParameters parameters) : base(name)
+=======
+        internal UrlRedirectAction(DeliveryRuleActionType name, UrlRedirectActionParameters parameters) : base(name)
+>>>>>>> origin/main
         {
             Parameters = parameters;
             Name = name;

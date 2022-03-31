@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// documents with models built on custom document types.
     /// </summary>
     /// <remarks>
-    /// Client is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2021_09_30_preview"/> and higher.
+    /// Client is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview"/> and higher.
     /// If you want to use a lower version, please use the <see cref="FormRecognizer.FormRecognizerClient"/>.
     /// </remarks>
     public class DocumentAnalysisClient
@@ -97,8 +97,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             options ??= new DocumentAnalysisClientOptions();
 
+            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? DocumentAnalysisAudience.AzurePublicCloud : options.Audience)}/.default";
+
             Diagnostics = new ClientDiagnostics(options);
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
             ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 

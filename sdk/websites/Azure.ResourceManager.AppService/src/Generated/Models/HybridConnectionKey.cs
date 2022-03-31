@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of HybridConnectionKey. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="sendKeyName"> The name of the send key. </param>
         /// <param name="sendKeyValue"> The value of the send key. </param>
-        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string sendKeyName, string sendKeyValue) : base(id, name, type, systemData, kind)
+        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string sendKeyName, string sendKeyValue) : base(id, name, resourceType, systemData, kind)
         {
             SendKeyName = sendKeyName;
             SendKeyValue = sendKeyValue;

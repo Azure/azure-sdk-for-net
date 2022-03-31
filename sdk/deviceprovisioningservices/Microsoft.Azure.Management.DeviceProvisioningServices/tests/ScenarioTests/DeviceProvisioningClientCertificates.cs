@@ -27,8 +27,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                     rg.Name,
                     testName,
                     Constants.Certificate.Name,
-                    null,
-                    Constants.Certificate.Content)
+                    new CertificateBodyDescription(Constants.Certificate.Content))
                 .ConfigureAwait(false);
 
             CertificateListDescription certificateList = await _provisioningClient.DpsCertificate

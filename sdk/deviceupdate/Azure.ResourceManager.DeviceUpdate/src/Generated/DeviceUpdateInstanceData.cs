@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing the DeviceUpdateInstance data model. </summary>
-    public partial class DeviceUpdateInstanceData : TrackedResource
+    public partial class DeviceUpdateInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="iotHubs"> List of IoT Hubs associated with the account. </param>
         /// <param name="enableDiagnostics"> Enables or Disables the diagnostic logs collection. </param>
         /// <param name="diagnosticStorageProperties"> Customer-initiated diagnostic log collection storage properties. </param>
-        internal DeviceUpdateInstanceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, string accountName, IList<IotHubSettings> iotHubs, bool? enableDiagnostics, DiagnosticStorageProperties diagnosticStorageProperties) : base(id, name, type, systemData, tags, location)
+        internal DeviceUpdateInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, string accountName, IList<IotHubSettings> iotHubs, bool? enableDiagnostics, DiagnosticStorageProperties diagnosticStorageProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AccountName = accountName;

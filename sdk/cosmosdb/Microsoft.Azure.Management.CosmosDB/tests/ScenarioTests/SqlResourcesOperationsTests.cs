@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Net;
 using Microsoft.Azure.Management.CosmosDB;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -251,7 +251,143 @@ namespace CosmosDB.Tests.ScenarioTests
                 }
             }
         }
-        
+
+        [Fact]
+        public void SqlClientEncryptionKeyTest()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                var client = this.fixture.CosmosDBManagementClient.SqlResources;
+
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Sql);
+
+                var databaseName = TestUtilities.GenerateName("database");
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
+                {
+                    Resource = new SqlDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                SqlDatabaseGetResults sqlDatabaseGetResults = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults);
+                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
+
+                var clientEncryptionKeyName = TestUtilities.GenerateName("clientEncryptionKey");
+                ClientEncryptionKeyResource clientEncryptionKeyResource = new ClientEncryptionKeyResource()
+                {
+                    Id = clientEncryptionKeyName,
+                    EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
+                    KeyWrapMetadata = new KeyWrapMetadata
+                    {
+                        Type = "akv",
+                        Value = "akvPath",
+                        Name = "cmk",
+                        Algorithm = "algo"
+                    },
+                    WrappedDataEncryptionKey = new byte[] { 0xab, 0x57, 0x05, 0xe9, 0x9f, 0xe2 }
+                };
+
+                ClientEncryptionKeyCreateUpdateParameters clientEncryptionKeyCreateUpdateParameters = new ClientEncryptionKeyCreateUpdateParameters
+                {
+                    Resource = clientEncryptionKeyResource
+                };
+
+                client.CreateUpdateClientEncryptionKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    clientEncryptionKeyName,
+                    clientEncryptionKeyCreateUpdateParameters);
+
+                Thread.Sleep(10000);
+
+                ClientEncryptionKeyGetResults clientEncryptionKeyRetrieved = client.GetClientEncryptionKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    clientEncryptionKeyName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(clientEncryptionKeyRetrieved);
+                Assert.Equal(clientEncryptionKeyResource.Id, clientEncryptionKeyRetrieved.Resource.Id);
+                Assert.Equal(clientEncryptionKeyResource.EncryptionAlgorithm, clientEncryptionKeyRetrieved.Resource.EncryptionAlgorithm);
+                Assert.Equal(clientEncryptionKeyResource.KeyWrapMetadata.Name, clientEncryptionKeyRetrieved.Resource.KeyWrapMetadata.Name);
+                Assert.Equal(clientEncryptionKeyResource.KeyWrapMetadata.Algorithm, clientEncryptionKeyRetrieved.Resource.KeyWrapMetadata.Algorithm);
+
+                clientEncryptionKeyResource.WrappedDataEncryptionKey = new byte[] { 0xac, 0x15 };
+                clientEncryptionKeyCreateUpdateParameters = new ClientEncryptionKeyCreateUpdateParameters
+                {
+                    Resource = clientEncryptionKeyResource
+                };
+
+                client.CreateUpdateClientEncryptionKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    clientEncryptionKeyName,
+                    clientEncryptionKeyCreateUpdateParameters);
+
+                Thread.Sleep(10000);
+                clientEncryptionKeyRetrieved = client.GetClientEncryptionKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    clientEncryptionKeyName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(clientEncryptionKeyRetrieved);
+                Assert.Equal(clientEncryptionKeyResource.Id, clientEncryptionKeyRetrieved.Resource.Id);
+                Assert.Equal(clientEncryptionKeyName, clientEncryptionKeyRetrieved.Name);
+                Assert.Equal(clientEncryptionKeyResource.WrappedDataEncryptionKey.Length, clientEncryptionKeyRetrieved.Resource.WrappedDataEncryptionKey.Length);
+
+                var clientEncryptionKeyName2 = TestUtilities.GenerateName("clientEncryptionKey");
+                ClientEncryptionKeyResource clientEncryptionKeyResource2 = new ClientEncryptionKeyResource()
+                {
+                    Id = clientEncryptionKeyName2,
+                    EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
+                    KeyWrapMetadata = new KeyWrapMetadata
+                    {
+                        Type = "akv",
+                        Value = "akvPath2",
+                        Name = "cmk",
+                        Algorithm = "algo"
+                    },
+                    WrappedDataEncryptionKey = new byte[] { 0x11, 0x54, 0x10, 0xa9, 0x1f, 0x24 }
+                };
+
+                clientEncryptionKeyCreateUpdateParameters = new ClientEncryptionKeyCreateUpdateParameters
+                {
+                    Resource = clientEncryptionKeyResource2
+                };
+
+                client.CreateUpdateClientEncryptionKeyWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    clientEncryptionKeyName2,
+                    clientEncryptionKeyCreateUpdateParameters);
+
+                Thread.Sleep(10000);
+
+                IEnumerable<ClientEncryptionKeyGetResults> clientEncryptionKeyList = client.ListClientEncryptionKeysWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(clientEncryptionKeyList);
+                int count = 0;
+                foreach (ClientEncryptionKeyGetResults clientEncryptionKeyListElement in clientEncryptionKeyList)
+                {
+                    count++;
+                    Assert.True(clientEncryptionKeyListElement.Name == clientEncryptionKeyName || clientEncryptionKeyListElement.Name == clientEncryptionKeyName2);
+                }
+
+                Assert.Equal(2, count);
+
+                client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, sqlDatabaseGetResults.Name);
+            }
+        }
 
         [Fact]
         public void SqlRoleTests()

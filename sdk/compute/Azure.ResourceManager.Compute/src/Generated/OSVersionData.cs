@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the OSVersion data model. </summary>
-    public partial class OSVersionData : Resource
+    public partial class OSVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of OSVersionData. </summary>
         internal OSVersionData()
@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of OSVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS version properties. </param>
-        internal OSVersionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, OSVersionProperties properties) : base(id, name, type, systemData)
+        internal OSVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, OSVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;

@@ -44,13 +44,16 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="properties">IotHub properties</param>
         /// <param name="identity">The managed identities for the
         /// IotHub.</param>
-        public IotHubDescription(string location, IotHubSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IotHubProperties properties = default(IotHubProperties), ArmIdentity identity = default(ArmIdentity))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public IotHubDescription(string location, IotHubSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IotHubProperties properties = default(IotHubProperties), ArmIdentity identity = default(ArmIdentity), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
             Properties = properties;
             Sku = sku;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public ArmIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

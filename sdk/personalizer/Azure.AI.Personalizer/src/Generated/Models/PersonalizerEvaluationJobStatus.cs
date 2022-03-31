@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PersonalizerEvaluationJobStatus"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersonalizerEvaluationJobStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersonalizerEvaluationJobStatus(string value)
         {

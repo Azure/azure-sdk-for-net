@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("bgpCommunities");
                 writer.WriteObjectValue(BgpCommunities);
             }
-            if (Optional.IsCollectionDefined(IpAllocations))
+            if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations");
                 writer.WriteStartArray();
-                foreach (var item in IpAllocations)
+                foreach (var item in IPAllocations)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }

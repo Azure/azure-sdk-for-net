@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of HybridConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serviceBusNamespace"> The name of the Service Bus namespace. </param>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// normally, use the POST /listKeys API instead.
         /// </param>
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
-        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string serviceBusNamespace, string relayName, string relayArmUri, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix) : base(id, name, type, systemData, kind)
+        internal HybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serviceBusNamespace, string relayName, Uri relayArmUri, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix) : base(id, name, resourceType, systemData, kind)
         {
             ServiceBusNamespace = serviceBusNamespace;
             RelayName = relayName;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The name of the Service Bus relay. </summary>
         public string RelayName { get; set; }
         /// <summary> The ARM URI to the Service Bus relay. </summary>
-        public string RelayArmUri { get; set; }
+        public Uri RelayArmUri { get; set; }
         /// <summary> The hostname of the endpoint. </summary>
         public string Hostname { get; set; }
         /// <summary> The port of the endpoint. </summary>

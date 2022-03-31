@@ -12,17 +12,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class RemoteDependencyData
     {
         // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
-        internal static readonly HashSet<string> SqlDbs = new HashSet<string>() { "mssql" };
+        internal static readonly HashSet<string> s_sqlDbs = new HashSet<string>() { "mssql" };
 
         public RemoteDependencyData(int version, Activity activity, ref TagEnumerationState monitorTags) : base(version)
         {
             string httpUrl = null;
             string dependencyName;
 
-            if (monitorTags.activityType == PartBType.Http)
+            if (monitorTags.activityType == OperationType.Http)
             {
-                httpUrl = monitorTags.PartBTags.GetDependencyUrl();
-                dependencyName = monitorTags.PartBTags.GetHttpDependencyName(httpUrl) ?? activity.DisplayName;
+                httpUrl = monitorTags.MappedTags.GetDependencyUrl();
+                dependencyName = monitorTags.MappedTags.GetHttpDependencyName(httpUrl) ?? activity.DisplayName;
             }
             else
             {
@@ -36,26 +36,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             switch (monitorTags.activityType)
             {
-                case PartBType.Http:
+                case OperationType.Http:
                     Data = httpUrl;
-                    Target = monitorTags.PartBTags.GetDependencyTarget(PartBType.Http);
+                    Target = monitorTags.MappedTags.GetDependencyTarget(OperationType.Http);
                     Type = "Http";
-                    ResultCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
+                    ResultCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
                     break;
-                case PartBType.Db:
-                    var depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
+                case OperationType.Db:
+                    var depDataAndType = AzMonList.GetTagValues(ref monitorTags.MappedTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     Data = depDataAndType[0]?.ToString();
-                    Target = monitorTags.PartBTags.GetDbDependencyTarget();
-                    Type = SqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString();
+                    Target = monitorTags.MappedTags.GetDbDependencyTarget();
+                    Type = s_sqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString();
                     break;
-                case PartBType.Rpc:
-                    var depInfo = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
+                case OperationType.Rpc:
+                    var depInfo = AzMonList.GetTagValues(ref monitorTags.MappedTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
                     Data = depInfo[0]?.ToString();
                     Type = depInfo[1]?.ToString();
                     ResultCode = depInfo[2]?.ToString();
                     break;
-                case PartBType.Messaging:
-                    depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
+                case OperationType.Messaging:
+                    depDataAndType = AzMonList.GetTagValues(ref monitorTags.MappedTags, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
                     Data = depDataAndType[0]?.ToString();
                     Type = depDataAndType[1]?.ToString();
                     break;
@@ -69,8 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
-            TraceHelper.AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
-            TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.PartCTags);
+            TraceHelper.AddActivityLinksToProperties(activity.Links, ref monitorTags.UnMappedTags);
+            TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.UnMappedTags);
         }
     }
 }

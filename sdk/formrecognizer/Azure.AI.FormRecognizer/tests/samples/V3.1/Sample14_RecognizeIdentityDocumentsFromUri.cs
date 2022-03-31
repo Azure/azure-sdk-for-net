@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeIdentityDocumentsUri
 #if SNIPPET
-            Uri sourceUri = "<sourceUri>";
+            Uri sourceUri = new Uri("<sourceUri>");
 #else
             Uri sourceUri = FormRecognizerTestEnvironment.CreateUri("license.jpg");
 #endif

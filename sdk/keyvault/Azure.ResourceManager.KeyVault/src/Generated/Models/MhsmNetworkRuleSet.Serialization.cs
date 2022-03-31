@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("defaultAction");
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
-                foreach (var item in IpRules)
+                foreach (var item in IPRules)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Optional<NetworkRuleBypassOptions> bypass = default;
             Optional<NetworkRuleAction> defaultAction = default;
-            Optional<IList<MhsmipRule>> ipRules = default;
+            Optional<IList<MhsmIPRule>> ipRules = default;
             Optional<IList<WritableSubResource>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MhsmipRule> array = new List<MhsmipRule>();
+                    List<MhsmIPRule> array = new List<MhsmIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MhsmipRule.DeserializeMhsmipRule(item));
+                        array.Add(MhsmIPRule.DeserializeMhsmIPRule(item));
                     }
                     ipRules = array;
                     continue;

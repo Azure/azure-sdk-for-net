@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
             ValidateVault(managedHsm.Value.Data,
                 VaultName,
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            ManagedHsm updateManagedHsm = null;
+            ManagedHsmResource updateManagedHsm = null;
 
             if (Mode == RecordedTestMode.Record)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 {
                     try
                     {
-                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false)).Value;
+                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false)).Value;
                         break;
                     }
                     catch (Exception)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 {
                     try
                     {
-                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false)).Value;
+                        updateManagedHsm = (await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false)).Value;
                         break;
                     }
                     catch (Exception)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            await retrievedVault.Value.DeleteAsync(true);
+            await retrievedVault.Value.DeleteAsync(WaitUntil.Completed);
             //Purge need to use loaction parameter. Update them later.
             //await retrievedVault.Value.PurgeDeletedAsync();
 
@@ -149,12 +149,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
             });
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26841")]
         [PlaybackOnly("One location only support one MHSM")]
         [RecordedTest]
         public async Task ManagedHsmListKeys()
         {
             List<string> resourceIds = new List<string>();
-            List<ManagedHsm> vaultList = new List<ManagedHsm>();
+            List<ManagedHsmResource> vaultList = new List<ManagedHsmResource>();
 
             string vaultName = Recording.GenerateAssetName("sdktest-vault-");
             var parameters = new ManagedHsmData(Location)
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(true, vaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
 
             Assert.NotNull(managedHsm.Value);
             Assert.NotNull(managedHsm.Value.Id);
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Delete
             foreach (var item in vaultList)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
                 // Purge need to use loaction parameter. Update them later.
                 //await item.PurgeDeletedAsync();
             }
@@ -201,10 +202,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
+            var managedHsm = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
             // Delete
-            await managedHsm.Value.DeleteAsync(true);
+            await managedHsm.Value.DeleteAsync(WaitUntil.Completed);
 
             // Get deleted vault
             Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             parameters.Properties.CreateMode = CreateMode.Recover;
 
             // Recover in recover mode
-            var recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(true, VaultName, parameters).ConfigureAwait(false);
+            var recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
             Assert.True(recoveredVault2.Value.Data.IsEqual(managedHsm.Value.Data));
 
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var getResult = await ManagedHsmCollection.GetAsync(VaultName);
 
             // Delete
-            await getResult.Value.DeleteAsync(true);
+            await getResult.Value.DeleteAsync(WaitUntil.Completed);
         }
 
         private void ValidateVault(
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             //Assert.AreEqual(expectedCreateMode, managedHsmData.Properties.CreateMode);
             Assert.AreEqual(expectedEnablePurgeProtection, managedHsmData.Properties.EnablePurgeProtection);
             Assert.AreEqual(expectedEnableSoftDelete, managedHsmData.Properties.EnableSoftDelete);
-            Assert.AreEqual(expectedHsmUri, managedHsmData.Properties.HsmUri);
+            Assert.AreEqual(expectedHsmUri, managedHsmData.Properties.HsmUri.ToString());
             Assert.AreEqual(expectedInitialAdminObjectIds, managedHsmData.Properties.InitialAdminObjectIds);
             Assert.AreEqual(expectedNetworkAcls.Bypass, managedHsmData.Properties.NetworkAcls.Bypass);
             Assert.AreEqual(expectedNetworkAcls.DefaultAction, managedHsmData.Properties.NetworkAcls.DefaultAction);

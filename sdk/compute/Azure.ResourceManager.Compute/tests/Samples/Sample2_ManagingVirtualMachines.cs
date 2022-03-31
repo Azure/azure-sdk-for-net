@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_CreateAVirtualMachine
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // Use the same location as the resource group
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(true, vmName, input);
-            VirtualMachine vm = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
+            VirtualMachineResource vm = lro.Value;
             #endregion Snippet:Managing_VirtualMachines_CreateAVirtualMachine
         }
 
@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_ListAllVirtualMachines
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // With ListAsync(), we can get a list of the virtual machines
-            AsyncPageable<VirtualMachine> response = vmCollection.GetAllAsync();
-            await foreach (VirtualMachine vm in response)
+            AsyncPageable<VirtualMachineResource> response = vmCollection.GetAllAsync();
+            await foreach (VirtualMachineResource vm in response)
             {
                 Console.WriteLine(vm.Data.Name);
             }
@@ -116,15 +116,15 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_DeleteVirtualMachine
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             string vmName = "myVM";
-            VirtualMachine vm = await vmCollection.GetAsync(vmName);
-            await vm.DeleteAsync(true);
+            VirtualMachineResource vm = await vmCollection.GetAsync(vmName);
+            await vm.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_VirtualMachines_DeleteVirtualMachine
         }
     }

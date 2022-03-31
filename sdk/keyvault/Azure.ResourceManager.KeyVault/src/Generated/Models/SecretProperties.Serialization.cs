@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> value = default;
             Optional<string> contentType = default;
             Optional<SecretAttributes> attributes = default;
-            Optional<string> secretUri = default;
+            Optional<Uri> secretUri = default;
             Optional<string> secretUriWithVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +65,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("secretUri"))
                 {
-                    secretUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        secretUri = null;
+                        continue;
+                    }
+                    secretUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secretUriWithVersion"))

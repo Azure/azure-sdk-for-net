@@ -7,9 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.OperationalInsights</PackageId>
 		<Description>Provides Microsoft Azure Operational Insights management operations</Description>
 		<AssemblyName>Microsoft.Azure.Management.OperationalInsights</AssemblyName>
-		<Version>0.24.0-preview</Version>
+		<Version>0.25.0-preview</Version>
 		<PackageTags>Microsoft Azure OperationalInsights;OperationalInsights;</PackageTags>  
-		<PackageReleaseNotes>Add cluster billingType and some minor fixes</PackageReleaseNotes>
+		<PackageReleaseNotes>Update Workspace, Tables, clusters and Operations resources</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

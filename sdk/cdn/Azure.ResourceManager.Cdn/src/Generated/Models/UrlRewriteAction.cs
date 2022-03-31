@@ -23,13 +23,21 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Parameters = parameters;
+<<<<<<< HEAD
             Name = DeliveryRuleActionName.UrlRewrite;
+=======
+            Name = DeliveryRuleActionType.UrlRewrite;
+>>>>>>> origin/main
         }
 
         /// <summary> Initializes a new instance of UrlRewriteAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
+<<<<<<< HEAD
         internal UrlRewriteAction(DeliveryRuleActionName name, UrlRewriteActionParameters parameters) : base(name)
+=======
+        internal UrlRewriteAction(DeliveryRuleActionType name, UrlRewriteActionParameters parameters) : base(name)
+>>>>>>> origin/main
         {
             Parameters = parameters;
             Name = name;

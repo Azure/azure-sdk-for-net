@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users. </summary>
-    public partial class EdgeNode : Resource
+    public partial class EdgeNode : ResourceData
     {
         /// <summary> Initializes a new instance of EdgeNode. </summary>
         public EdgeNode()
@@ -23,12 +23,19 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of EdgeNode. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+<<<<<<< HEAD
         /// <param name="iPAddressGroups"> List of ip address groups. </param>
         internal EdgeNode(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, IList<IPAddressGroup> iPAddressGroups) : base(id, name, type, systemData)
         {
             IPAddressGroups = iPAddressGroups;
+=======
+        /// <param name="ipAddressGroups"> List of ip address groups. </param>
+        internal EdgeNode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<IPAddressGroup> ipAddressGroups) : base(id, name, resourceType, systemData)
+        {
+            IPAddressGroups = ipAddressGroups;
+>>>>>>> origin/main
         }
 
         /// <summary> List of ip address groups. </summary>

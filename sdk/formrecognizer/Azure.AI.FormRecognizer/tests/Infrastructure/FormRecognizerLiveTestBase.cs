@@ -27,7 +27,11 @@ namespace Azure.AI.FormRecognizer.Tests
             : base(isAsync)
         {
             _serviceVersion = serviceVersion;
-            Sanitizer = new FormRecognizerRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..containerUrl");
+            SanitizedHeaders.Add(Constants.AuthorizationHeader);
+            // temporary until https://github.com/Azure/azure-sdk-for-net/issues/27688 is addressed
+            CompareBodies = false;
         }
 
         /// <summary>

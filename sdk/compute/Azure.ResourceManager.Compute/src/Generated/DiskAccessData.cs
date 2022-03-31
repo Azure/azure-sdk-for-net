@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the DiskAccess data model. </summary>
-    public partial class DiskAccessData : TrackedResource
+    public partial class DiskAccessData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskAccessData. </summary>
         /// <param name="location"> The location. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of DiskAccessData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="privateEndpointConnections"> A readonly collection of private endpoint connections created on the disk. Currently only one endpoint connection is supported. </param>
         /// <param name="provisioningState"> The disk access resource provisioning state. </param>
         /// <param name="timeCreated"> The time when the disk access was created. </param>
-        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated) : base(id, name, type, systemData, tags, location)
+        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             PrivateEndpointConnections = privateEndpointConnections;

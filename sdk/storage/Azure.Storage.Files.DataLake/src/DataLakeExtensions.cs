@@ -504,38 +504,43 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                // TODO #27253
+                //TransactionalHashingOptions = options.TransactionalHashingOptions
             };
         }
 
-        internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
-        {
-            if (options == null)
-            {
-                return null;
-            }
+        // TODO #27253
+        //internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
+        //{
+        //    if (options == null)
+        //    {
+        //        return null;
+        //    }
 
-            return new BlobDownloadOptions()
-            {
-                Range = options.Range,
-                Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransactionalHashingOptions = options.TransactionalHashingOptions
-            };
-        }
+        //    return new BlobDownloadOptions()
+        //    {
+        //        Range = options.Range,
+        //        Conditions = options.Conditions.ToBlobRequestConditions(),
+        //        // TODO #27253
+        //        //TransactionalHashingOptions = options.TransactionalHashingOptions
+        //    };
+        //}
 
-        internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
-        {
-            if (options == null)
-            {
-                return null;
-            }
-            return new BlobDownloadToOptions()
-            {
-                Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransferOptions = options.TransferOptions,
-                TransactionalHashingOptions = options.TransactionalHashingOptions
-            };
-        }
+        // TODO #27253
+        //internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
+        //{
+        //    if (options == null)
+        //    {
+        //        return null;
+        //    }
+        //    return new BlobDownloadToOptions()
+        //    {
+        //        Conditions = options.Conditions.ToBlobRequestConditions(),
+        //        TransferOptions = options.TransferOptions,
+        //        // TODO #27253
+        //        //TransactionalHashingOptions = options.TransactionalHashingOptions
+        //    };
+        //}
 
         internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
             => new PathSegment
@@ -570,8 +575,27 @@ namespace Azure.Storage.Files.DataLake
                 ContentLength = path.ContentLength == null ? 0 : long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
                 Owner = path.Owner,
                 Group = path.Group,
-                Permissions = path.Permissions
+                Permissions = path.Permissions,
+                CreatedOn = ParseFileTimeString(path.CreationTime),
+                ExpiresOn = ParseFileTimeString(path.ExpiryTime)
             };
+        }
+
+        internal static DateTimeOffset? ParseFileTimeString(string fileTimeString)
+        {
+            if (fileTimeString == null)
+            {
+                return null;
+            }
+
+            long fileTimeLong = long.Parse(fileTimeString, CultureInfo.InvariantCulture);
+
+            if (fileTimeLong == 0)
+            {
+                return null;
+            }
+
+            return DateTimeOffset.FromFileTime(fileTimeLong).ToUniversalTime();
         }
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
@@ -860,6 +884,16 @@ namespace Azure.Storage.Files.DataLake
                 ErrorDocument404Path = dataLakeStaticWebsite.ErrorDocument404Path,
                 DefaultIndexDocumentPath = dataLakeStaticWebsite.DefaultIndexDocumentPath
             };
+        }
+
+        internal static Blobs.Models.CustomerProvidedKey? ToBlobCustomerProvidedKey(this DataLake.Models.DataLakeCustomerProvidedKey? dataLakeCustomerProvidedKey)
+        {
+            if (dataLakeCustomerProvidedKey == null)
+            {
+                return null;
+            }
+
+            return new Blobs.Models.CustomerProvidedKey(dataLakeCustomerProvidedKey.Value.EncryptionKey);
         }
 
         #region ValidateConditionsNotPresent

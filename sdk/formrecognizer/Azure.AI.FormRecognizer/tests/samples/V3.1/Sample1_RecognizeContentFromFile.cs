@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerRecognizeFormContentFromFile
 #if SNIPPET
-            string filePath = "filePath";
+            string filePath = "<filePath>";
 #else
             string filePath = FormRecognizerTestEnvironment.CreatePath("Invoice_1.pdf");
 #endif

@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -57,11 +58,11 @@ namespace Azure.ResourceManager.Resources
         /// The operation to create or update a resource. Please note some properties can be set only during creation.
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="Response{ResourceGroup}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="ArmOperation{ResourceGroupResource}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public ResourceGroupCreateOrUpdateOperation CreateOrUpdate(string name, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public ArmOperation<ResourceGroupResource> CreateOrUpdate(string name, WaitUntil waitUntil = WaitUntil.Completed, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -69,21 +70,18 @@ namespace Azure.ResourceManager.Resources
             ResourceName = name;
             Resource = Build();
 
-            return Collection.CreateOrUpdate(waitForCompletion, name, Resource, cancellationToken);
+            return Collection.CreateOrUpdate(waitUntil, name, Resource, cancellationToken);
         }
 
         /// <summary>
         /// The operation to create or update a resource. Please note some properties can be set only during creation.
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{ResourceGroup}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmOperation{ResourceGroupResource}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<ResourceGroupCreateOrUpdateOperation> CreateOrUpdateAsync(
-            string name,
-            bool waitForCompletion = true,
-            CancellationToken cancellationToken = default)
+        public async Task<ArmOperation<ResourceGroupResource>> CreateOrUpdateAsync(string name, WaitUntil waitUntil = WaitUntil.Completed, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -91,7 +89,7 @@ namespace Azure.ResourceManager.Resources
             ResourceName = name;
             Resource = Build();
 
-            return await Collection.CreateOrUpdateAsync(waitForCompletion, name, Resource, cancellationToken).ConfigureAwait(false);
+            return await Collection.CreateOrUpdateAsync(waitUntil, name, Resource, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

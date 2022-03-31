@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> requestType = default;
             Optional<string> queuedTime = default;
             Optional<string> lastModifiedTime = default;
-            Optional<string> blobUri = default;
+            Optional<Uri> blobUri = default;
             Optional<string> serverName = default;
             Optional<string> databaseName = default;
             Optional<string> status = default;
@@ -98,7 +98,12 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("blobUri"))
                         {
-                            blobUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                blobUri = null;
+                                continue;
+                            }
+                            blobUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serverName"))

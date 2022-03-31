@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             return dest;
         }
 
-        public static void AssertTrackedResource(TrackedResource r1, TrackedResource r2)
+        public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
             Assert.AreEqual(r1.Name, r2.Name);
             Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Type, r2.Type);
+            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
             Assert.AreEqual(r1.Location, r2.Location);
             Assert.AreEqual(r1.Tags, r2.Tags);
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
 
         public static DedicatedHostData GetBasicDedicatedHost(AzureLocation location, string skuName, int platformFaultDomain)
         {
-            return new DedicatedHostData(location, new Models.Sku()
+            return new DedicatedHostData(location, new ComputeSku()
             {
                 Name = skuName
             })
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(disk1.DiskSizeGB, disk2.DiskSizeGB);
             Assert.AreEqual(disk1.ManagedBy, disk2.ManagedBy);
             Assert.AreEqual(disk1.Encryption?.DiskEncryptionSetId, disk2.Encryption?.DiskEncryptionSetId);
-            Assert.AreEqual(disk1.Encryption?.Type, disk2.Encryption?.Type);
+            Assert.AreEqual(disk1.Encryption?.EncryptionType, disk2.Encryption?.EncryptionType);
             Assert.AreEqual(disk1.CreationData?.CreateOption, disk2.CreationData?.CreateOption);
             Assert.AreEqual(disk1.CreationData?.ImageReference?.Id, disk2.CreationData?.ImageReference?.Id);
             Assert.AreEqual(disk1.CreationData?.ImageReference?.Lun, disk2.CreationData?.ImageReference?.Lun);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         {
             return new VirtualMachineScaleSetData(location)
             {
-                Sku = new Models.Sku()
+                Sku = new ComputeSku()
                 {
                     Name = "Standard_F2",
                     Capacity = capacity,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
-                    OsProfile = new VirtualMachineScaleSetOSProfile()
+                    OSProfile = new VirtualMachineScaleSetOSProfile()
                     {
                         ComputerNamePrefix = computerNamePrefix,
                         AdminUsername = adminUsername,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             new VirtualMachineScaleSetNetworkConfiguration("example")
                             {
                                 Primary = true,
-                                IpConfigurations =
+                                IPConfigurations =
                                 {
                                     new VirtualMachineScaleSetIPConfiguration("internal")
                                     {

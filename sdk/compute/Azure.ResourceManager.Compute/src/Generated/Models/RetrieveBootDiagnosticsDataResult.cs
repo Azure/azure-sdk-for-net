@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The SAS URIs of the console screenshot and serial log blobs. </summary>
@@ -18,15 +20,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RetrieveBootDiagnosticsDataResult. </summary>
         /// <param name="consoleScreenshotBlobUri"> The console screenshot blob URI. </param>
         /// <param name="serialConsoleLogBlobUri"> The serial console log blob URI. </param>
-        internal RetrieveBootDiagnosticsDataResult(string consoleScreenshotBlobUri, string serialConsoleLogBlobUri)
+        internal RetrieveBootDiagnosticsDataResult(Uri consoleScreenshotBlobUri, Uri serialConsoleLogBlobUri)
         {
             ConsoleScreenshotBlobUri = consoleScreenshotBlobUri;
             SerialConsoleLogBlobUri = serialConsoleLogBlobUri;
         }
 
         /// <summary> The console screenshot blob URI. </summary>
-        public string ConsoleScreenshotBlobUri { get; }
+        public Uri ConsoleScreenshotBlobUri { get; }
         /// <summary> The serial console log blob URI. </summary>
-        public string SerialConsoleLogBlobUri { get; }
+        public Uri SerialConsoleLogBlobUri { get; }
     }
 }

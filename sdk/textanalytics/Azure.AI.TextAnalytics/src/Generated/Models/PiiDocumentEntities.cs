@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="redactedText"/>, <paramref name="entities"/>, or <paramref name="warnings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="redactedText"/>, <paramref name="entities"/> or <paramref name="warnings"/> is null. </exception>
         internal PiiDocumentEntities(string id, string redactedText, IEnumerable<Entity> entities, IEnumerable<TextAnalyticsWarningInternal> warnings)
         {
             if (id == null)

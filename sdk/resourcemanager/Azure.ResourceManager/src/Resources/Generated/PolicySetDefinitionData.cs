@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,12 +14,12 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the PolicySetDefinition data model. </summary>
-    public partial class PolicySetDefinitionData : Resource
+    public partial class PolicySetDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
         public PolicySetDefinitionData()
         {
-            Parameters = new ChangeTrackingDictionary<string, ParameterDefinitionsValue>();
+            Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameter>();
             PolicyDefinitions = new ChangeTrackingList<PolicyDefinitionReference>();
             PolicyDefinitionGroups = new ChangeTrackingList<PolicyDefinitionGroup>();
         }
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
         /// <param name="displayName"> The display name of the policy set definition. </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
         /// <param name="policyDefinitions"> An array of policy definition references. </param>
         /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
-        internal PolicySetDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, PolicyType? policyType, string displayName, string description, object metadata, IDictionary<string, ParameterDefinitionsValue> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups) : base(id, name, type, systemData)
+        internal PolicySetDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string displayName, string description, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups) : base(id, name, resourceType, systemData)
         {
             PolicyType = policyType;
             DisplayName = displayName;
@@ -53,9 +54,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The policy set definition description. </summary>
         public string Description { get; set; }
         /// <summary> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </summary>
-        public object Metadata { get; set; }
+        public BinaryData Metadata { get; set; }
         /// <summary> The policy set definition parameters that can be used in policy definition references. </summary>
-        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; }
+        public IDictionary<string, ArmPolicyParameter> Parameters { get; }
         /// <summary> An array of policy definition references. </summary>
         public IList<PolicyDefinitionReference> PolicyDefinitions { get; }
         /// <summary> The metadata describing groups of policy definition references within the policy set definition. </summary>

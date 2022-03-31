@@ -14,13 +14,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the Profile data model. </summary>
-    public partial class ProfileData : TrackedResource
+    public partial class ProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProfileData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ProfileData(AzureLocation location, Models.Sku sku) : base(location)
+        public ProfileData(AzureLocation location, CdnSku sku) : base(location)
         {
             if (sku == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of ProfileData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -42,9 +42,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceState"> Resource status of the profile. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
+<<<<<<< HEAD
         /// <param name="frontDoorId"> The Id of the frontdoor. </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
         internal ProfileData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string kind, ProfileResourceState? resourceState, Models.ManagedServiceIdentity identity, string provisioningState, string frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, type, systemData, tags, location)
+=======
+        /// <param name="frontdoorId"> The Id of the frontdoor. </param>
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, ProfileResourceState? resourceState, string provisioningState, string frontdoorId) : base(id, name, resourceType, systemData, tags, location)
+>>>>>>> origin/main
         {
             Sku = sku;
             Kind = kind;
@@ -55,10 +60,27 @@ namespace Azure.ResourceManager.Cdn
             OriginResponseTimeoutSeconds = originResponseTimeoutSeconds;
         }
 
+<<<<<<< HEAD
         /// <summary> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </summary>
         public Models.Sku Sku { get; set; }
         /// <summary> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </summary>
         public string Kind { get; }
+=======
+        /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </summary>
+        internal CdnSku Sku { get; set; }
+        /// <summary> Name of the pricing tier. </summary>
+        public CdnSkuName? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new CdnSku();
+                Sku.Name = value;
+            }
+        }
+
+>>>>>>> origin/main
         /// <summary> Resource status of the profile. </summary>
         public ProfileResourceState? ResourceState { get; }
         /// <summary> Managed service identity. </summary>

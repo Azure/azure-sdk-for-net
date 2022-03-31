@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ScmUri))
             {
                 writer.WritePropertyName("scmUri");
-                writer.WriteStringValue(ScmUri);
+                writer.WriteStringValue(ScmUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> publishingPassword = default;
             Optional<string> publishingPasswordHash = default;
             Optional<string> publishingPasswordHashSalt = default;
-            Optional<string> scmUri = default;
+            Optional<Uri> scmUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -122,7 +123,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("scmUri"))
                         {
-                            scmUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                scmUri = null;
+                                continue;
+                            }
+                            scmUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }

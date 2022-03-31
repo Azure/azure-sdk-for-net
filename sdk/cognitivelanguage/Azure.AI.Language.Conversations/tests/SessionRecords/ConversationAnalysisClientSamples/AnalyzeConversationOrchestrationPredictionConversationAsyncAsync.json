@@ -8,9 +8,9 @@
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7169955f9de3c54e8940e113ff2d45f3-b232ad061a74cd42-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211028.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "96d10bb67835fa9b5e5304b4af0a84b2",
+        "traceparent": "00-957767c36c9fa142b60c36ad9e9ef058-94e97332c2cb1b4e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220314.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7b2c423a4c5d13417e957396fe936c78",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,22 +18,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2067dad2-b37c-4530-999e-8efb051a0c14",
-        "Cache-Control": [
-          "no-store",
-          "proxy-revalidate",
-          "no-cache",
-          "max-age=0",
-          "private"
-        ],
+        "apim-request-id": "1e57b09b-9740-47a6-a54b-fad366e81556",
+        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 28 Oct 2021 16:04:02 GMT",
-        "pragma": "no-cache",
-        "request-id": "2067dad2-b37c-4530-999e-8efb051a0c14",
+        "Date": "Mon, 14 Mar 2022 15:35:17 GMT",
+        "Pragma": "no-cache",
+        "request-id": "1e57b09b-9740-47a6-a54b-fad366e81556",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "171"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "118"
       },
       "ResponseBody": {
         "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
@@ -42,7 +36,7 @@
           "projectKind": "workflow",
           "intents": {
             "SushiOrder": {
-              "confidenceScore": 0.82421875,
+              "confidenceScore": 0.8758539,
               "targetKind": "conversation",
               "result": {
                 "query": "We\u0027ll have 2 plates of seared salmon nigiri.",
@@ -59,14 +53,16 @@
                       "text": "2 plates",
                       "offset": 11,
                       "length": 8,
-                      "confidenceScore": 1
+                      "confidenceScore": 1,
+                      "resolutions": []
                     },
                     {
                       "category": "OrderItem",
                       "text": "seared salmon nigiri",
                       "offset": 23,
                       "length": 20,
-                      "confidenceScore": 1
+                      "confidenceScore": 1,
+                      "resolutions": []
                     }
                   ],
                   "topIntent": "Order",
@@ -75,7 +71,7 @@
               }
             },
             "SushiMaking": {
-              "confidenceScore": 0.7317708,
+              "confidenceScore": 0.63080853,
               "targetKind": "question_answering"
             },
             "None": {
@@ -90,6 +86,6 @@
   "Variables": {
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "1983100982"
+    "RandomSeed": "1158304544"
   }
 }

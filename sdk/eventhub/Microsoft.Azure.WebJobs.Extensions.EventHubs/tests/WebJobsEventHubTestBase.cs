@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Tests;
-using Microsoft.Azure.WebJobs.EventHubs;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -18,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     public class WebJobsEventHubTestBase
     {
         protected const string TestHubName = "%webjobstesthub%";
-        protected const int Timeout = 30000;
+        protected static readonly int Timeout = (int)TimeSpan.FromSeconds(60).TotalMilliseconds;
 
         /// <summary>The active Event Hub resource scope for the test fixture.</summary>
         protected EventHubScope _eventHubScope;

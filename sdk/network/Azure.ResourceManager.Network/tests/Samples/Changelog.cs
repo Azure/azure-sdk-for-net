@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         {
 #endif
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
             VirtualNetworkCollection virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
             // Create VNet
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 AddressPrefix = "10.0.0.0/24",
             });
 
-            VirtualNetworkCreateOrUpdateOperation vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(true, "_vent", vnet);
-            VirtualNetwork virtualNetwork = vnetOperation.Value;
+            ArmOperation<VirtualNetworkResource> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(WaitUntil.Completed, "_vent", vnet);
+            VirtualNetworkResource virtualNetwork = vnetOperation.Value;
             #endregion
         }
 
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         public void CreateModel()
         {
             #region Snippet:Changelog_CreateModel
-            IpsecPolicy policy = new IpsecPolicy(
+            IPsecPolicy policy = new IPsecPolicy(
                300,
                1024,
-               IpsecEncryption.AES128,
-               IpsecIntegrity.SHA256,
+               IPsecEncryption.AES128,
+               IPsecIntegrity.SHA256,
                IkeEncryption.AES192,
                IkeIntegrity.SHA1,
                DhGroup.DHGroup2,

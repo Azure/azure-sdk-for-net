@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Azure.Core.Extensions;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
@@ -46,7 +47,18 @@ namespace Microsoft.Extensions.Azure
         ///   Registers a <see cref="ServiceBusAdministrationClient "/> instance with the provided <paramref name="connectionString"/>.
         /// </summary>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IAzureClientBuilder<ServiceBusAdministrationClient, ServiceBusAdministrationClientOptions> AddServiceAdministrationBusClient<TBuilder>(this TBuilder builder, string connectionString)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ServiceBusAdministrationClient, ServiceBusAdministrationClientOptions>(options => new ServiceBusAdministrationClient(connectionString, options));
+        }
+
+        /// <summary>
+        ///   Registers a <see cref="ServiceBusAdministrationClient "/> instance with the provided <paramref name="connectionString"/>.
+        /// </summary>
+        ///
+        public static IAzureClientBuilder<ServiceBusAdministrationClient, ServiceBusAdministrationClientOptions> AddServiceBusAdministrationClient<TBuilder>(this TBuilder builder, string connectionString)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<ServiceBusAdministrationClient, ServiceBusAdministrationClientOptions>(options => new ServiceBusAdministrationClient(connectionString, options));

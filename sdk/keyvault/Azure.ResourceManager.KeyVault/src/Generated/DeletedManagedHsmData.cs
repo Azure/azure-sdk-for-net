@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the DeletedManagedHsm data model. </summary>
-    public partial class DeletedManagedHsmData : Resource
+    public partial class DeletedManagedHsmData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedManagedHsmData. </summary>
         internal DeletedManagedHsmData()
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of DeletedManagedHsmData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the deleted managed HSM. </param>
-        internal DeletedManagedHsmData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DeletedManagedHsmProperties properties) : base(id, name, type, systemData)
+        internal DeletedManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeletedManagedHsmProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

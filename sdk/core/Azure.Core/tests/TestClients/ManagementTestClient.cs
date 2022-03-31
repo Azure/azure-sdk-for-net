@@ -5,7 +5,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Tests
 {
-    public class ManagementTestClient
+    internal class ManagementTestClient
     {
         private readonly ClientDiagnostics _diagnostics;
 

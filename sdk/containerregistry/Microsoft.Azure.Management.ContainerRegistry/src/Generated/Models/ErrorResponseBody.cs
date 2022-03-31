@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,7 +37,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="target">target of the particular error.</param>
         /// <param name="details">an array of additional nested error response
         /// info objects, as described by this contract.</param>
-        public ErrorResponseBody(string code, string message, string target = default(string), InnerErrorDescription details = default(InnerErrorDescription))
+        public ErrorResponseBody(string code, string message, string target = default(string), IList<InnerErrorDescription> details = default(IList<InnerErrorDescription>))
         {
             Code = code;
             Message = message;
@@ -72,7 +74,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// objects, as described by this contract.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public InnerErrorDescription Details { get; set; }
+        public IList<InnerErrorDescription> Details { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -92,7 +94,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             }
             if (Details != null)
             {
-                Details.Validate();
+                foreach (var element in Details)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

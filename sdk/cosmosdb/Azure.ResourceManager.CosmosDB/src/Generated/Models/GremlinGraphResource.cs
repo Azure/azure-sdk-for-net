@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -51,7 +52,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Default time to live. </summary>
         public int? DefaultTtl { get; set; }
         /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
-        public UniqueKeyPolicy UniqueKeyPolicy { get; set; }
+        internal UniqueKeyPolicy UniqueKeyPolicy { get; set; }
+        /// <summary> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
+        public IList<UniqueKey> UniqueKeys
+        {
+            get
+            {
+                if (UniqueKeyPolicy is null)
+                    UniqueKeyPolicy = new UniqueKeyPolicy();
+                return UniqueKeyPolicy.UniqueKeys;
+            }
+        }
+
         /// <summary> The conflict resolution policy for the graph. </summary>
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
     }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A LongTermRetentionBackup operation result resource. </summary>
-    public partial class LongTermRetentionBackupOperationResult : Resource
+    public partial class LongTermRetentionBackupOperationResult : ResourceData
     {
         /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
         public LongTermRetentionBackupOperationResult()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of LongTermRetentionBackupOperationResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="operationType"> Operation type. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="message"> Progress message. </param>
-        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Guid? requestId, string operationType, string fromBackupResourceId, string toBackupResourceId, BackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, type, systemData)
+        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string operationType, string fromBackupResourceId, string toBackupResourceId, BackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, resourceType, systemData)
         {
             RequestId = requestId;
             OperationType = operationType;

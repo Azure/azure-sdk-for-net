@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FlowLog data model. </summary>
-    public partial class FlowLogData : Resource
+    public partial class FlowLogData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of FlowLogData. </summary>
         public FlowLogData()
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of FlowLogData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="format"> Parameters that define the flow log format. </param>
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
-        internal FlowLogData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string targetResourceId, string targetResourceGuid, string storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal FlowLogData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string targetResourceId, string targetResourceGuid, string storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             TargetResourceId = targetResourceId;
@@ -61,7 +61,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> Parameters that define the flow log format. </summary>
         public FlowLogFormatParameters Format { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        public TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        {
+            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+            set
+            {
+                if (FlowAnalyticsConfiguration is null)
+                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
+                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+            }
+        }
+
         /// <summary> The provisioning state of the flow log. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault
             Optional<IList<JsonWebKeyOperation>> keyOps = default;
             Optional<int> keySize = default;
             Optional<JsonWebKeyCurveName> curveName = default;
-            Optional<string> keyUri = default;
+            Optional<Uri> keyUri = default;
             Optional<string> keyUriWithVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -177,7 +178,12 @@ namespace Azure.ResourceManager.KeyVault
                         }
                         if (property0.NameEquals("keyUri"))
                         {
-                            keyUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                keyUri = null;
+                                continue;
+                            }
+                            keyUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("keyUriWithVersion"))

@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Network.Models
         internal ApplicationGatewayBackendAddress(string fqdn, string ipAddress)
         {
             Fqdn = fqdn;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
         }
 
         /// <summary> Fully qualified domain name (FQDN). </summary>
         public string Fqdn { get; set; }
         /// <summary> IP address. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
     }
 }

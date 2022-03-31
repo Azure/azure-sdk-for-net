@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUri");
-                writer.WriteStringValue(StorageUri);
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<OperationMode> operationMode = default;
             Optional<StorageKeyType> storageKeyType = default;
             Optional<string> storageKey = default;
-            Optional<string> storageUri = default;
+            Optional<Uri> storageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -110,7 +111,12 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("storageUri"))
                         {
-                            storageUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageUri = null;
+                                continue;
+                            }
+                            storageUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }

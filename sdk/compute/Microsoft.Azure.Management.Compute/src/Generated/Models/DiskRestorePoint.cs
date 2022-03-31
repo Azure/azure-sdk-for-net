@@ -47,8 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="purchasePlan">Purchase plan information for the the
         /// image from which the OS disk was created.</param>
         /// <param name="supportedCapabilities">List of supported capabilities
-        /// (like accelerated networking) for the image from which the OS disk
-        /// was created.</param>
+        /// for the image from which the OS disk was created.</param>
         /// <param name="familyId">id of the backing snapshot's MIS
         /// family</param>
         /// <param name="sourceUniqueId">unique incarnation id of the source
@@ -133,8 +132,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
-        /// Gets or sets list of supported capabilities (like accelerated
-        /// networking) for the image from which the OS disk was created.
+        /// Gets or sets list of supported capabilities for the image from
+        /// which the OS disk was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportedCapabilities")]
         public SupportedCapabilities SupportedCapabilities { get; set; }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(VpnPackageUri))
             {
                 writer.WritePropertyName("vpnPackageUri");
-                writer.WriteStringValue(VpnPackageUri);
+                writer.WriteStringValue(VpnPackageUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> vnetName = default;
-            Optional<string> vpnPackageUri = default;
+            Optional<Uri> vpnPackageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -89,7 +90,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("vpnPackageUri"))
                         {
-                            vpnPackageUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                vpnPackageUri = null;
+                                continue;
+                            }
+                            vpnPackageUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }

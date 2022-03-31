@@ -1,3 +1,6 @@
+# cSpell:ignore LASTEXITCODE
+# cSpell:ignore errrrrorrrrr
+# cSpell:ignore sepleing
 <#
 .SYNOPSIS
 Uses cspell (from NPM) to check spelling of recently changed files
@@ -20,17 +23,6 @@ and then uses the mutated config file to call cspell. In the case of success
 the temporary file is deleted. In the case of failure the temporary file, whose
 location was logged to the console, remains on disk.
 
-.PARAMETER TargetBranch
-Git ref to compare changes. This is usually the "base" (GitHub) or "target" 
-(DevOps) branch for which a pull request would be opened.
-
-.PARAMETER SourceBranch
-Git ref to use instead of changes in current repo state. Use `HEAD` here to 
-check spelling of files that have been committed and exclude any new files or
-modified files that are not committed. This is most useful in CI scenarios where
-builds may have modified the state of the repo. Leaving this parameter blank  
-includes files for whom changes have not been committed.
-
 .PARAMETER SpellCheckRoot
 Root folder from which to generate relative paths for spell checking. Mostly
 used in testing.
@@ -46,7 +38,7 @@ Exit with error code 1 if spelling errors are detected.
 Run test functions against the script logic
 
 .EXAMPLE
-./eng/common/scripts/check-spelling-in-changed-files.ps1 -TargetBranch 'target_branch_name'
+./eng/common/scripts/check-spelling-in-changed-files.ps1 
 
 This will run spell check with changes in the current branch with respect to 
 `target_branch_name`
@@ -55,12 +47,6 @@ This will run spell check with changes in the current branch with respect to
 
 [CmdletBinding()]
 Param (
-    [Parameter()]
-    [string] $TargetBranch,
-
-    [Parameter()]
-    [string] $SourceBranch,
-
     [Parameter()]
     [string] $CspellConfigPath = (Resolve-Path "$PSScriptRoot/../../../.vscode/cspell.json"),
 
@@ -98,7 +84,6 @@ function Test-Exit0WhenAllFilesExcluded() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
         -CspellConfigPath "./.vscode/cspell.json" `
         -SpellCheckRoot "./" `
         -ExitWithError
@@ -117,7 +102,6 @@ function Test-Exit1WhenIncludedFileHasSpellingError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
         -CspellConfigPath "./.vscode/cspell.json" `
         -SpellCheckRoot "./" `
         -ExitWithError
@@ -136,7 +120,6 @@ function Test-Exit0WhenIncludedFileHasNoSpellingError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
         -CspellConfigPath "./.vscode/cspell.json" `
         -SpellCheckRoot "./" `
         -ExitWithError
@@ -159,7 +142,6 @@ function Test-Exit1WhenChangedFileAlreadyHasSpellingError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
         -CspellConfigPath "./.vscode/cspell.json" `
         -SpellCheckRoot "./" `
         -ExitWithError
@@ -182,7 +164,6 @@ function Test-Exit0WhenUnalteredFileHasSpellingError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
         -CspellConfigPath "./.vscode/cspell.json" `
         -SpellCheckRoot "./" `
         -ExitWithError
@@ -201,7 +182,6 @@ function Test-Exit0WhenSpellingErrorsAndNoExitWithError() {
 
     # Act
     &"$PSScriptRoot/check-spelling-in-changed-files.ps1" `
-        -TargetBranch HEAD~1 `
         -CspellConfigPath "./.vscode/cspell.json" `
         -SpellCheckRoot "./"
 
@@ -284,15 +264,9 @@ if (!(Test-Path $CspellConfigPath)) {
 }
 
 # Lists names of files that were in some way changed between the
-# current $SourceBranch and $TargetBranch. Excludes files that were deleted to
+# current branch and default target branch. Excludes files that were deleted to
 # prevent errors in Resolve-Path
-Write-Host "git diff --diff-filter=d --name-only --relative $TargetBranch $SourceBranch"
-$changedFilesList = git diff `
-  --diff-filter=d `
-  --name-only `
-  --relative `
-  $TargetBranch `
-  $SourceBranch
+$changedFilesList = Get-ChangedFiles
 
 $changedFiles = @()
 foreach ($file in $changedFilesList) {

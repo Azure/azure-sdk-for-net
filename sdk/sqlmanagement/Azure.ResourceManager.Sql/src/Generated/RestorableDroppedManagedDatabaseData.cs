@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RestorableDroppedManagedDatabase data model. </summary>
-    public partial class RestorableDroppedManagedDatabaseData : TrackedResource
+    public partial class RestorableDroppedManagedDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseData. </summary>
         /// <param name="location"> The location. </param>
@@ -24,29 +24,29 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="creationDate"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="deletionDate"> The deletion date of the database (ISO8601 format). </param>
-        /// <param name="earliestRestoreDate"> The earliest restore date of the database (ISO8601 format). </param>
-        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate) : base(id, name, type, systemData, tags, location)
+        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="deletionOn"> The deletion date of the database (ISO8601 format). </param>
+        /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
+        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, DateTimeOffset? earliestRestoreOn) : base(id, name, resourceType, systemData, tags, location)
         {
             DatabaseName = databaseName;
-            CreationDate = creationDate;
-            DeletionDate = deletionDate;
-            EarliestRestoreDate = earliestRestoreDate;
+            CreationOn = creationOn;
+            DeletionOn = deletionOn;
+            EarliestRestoreOn = earliestRestoreOn;
         }
 
         /// <summary> The name of the database. </summary>
         public string DatabaseName { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreationDate { get; }
+        public DateTimeOffset? CreationOn { get; }
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? DeletionDate { get; }
+        public DateTimeOffset? DeletionOn { get; }
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? EarliestRestoreDate { get; }
+        public DateTimeOffset? EarliestRestoreOn { get; }
     }
 }

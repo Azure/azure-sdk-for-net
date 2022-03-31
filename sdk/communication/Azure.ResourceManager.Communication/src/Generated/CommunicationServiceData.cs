@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary> A class representing the CommunicationService data model. </summary>
-    public partial class CommunicationServiceData : Resource
+    public partial class CommunicationServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
         public CommunicationServiceData()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Communication
         /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="location"> The Azure location where the CommunicationService is running. </param>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        internal CommunicationServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, type, systemData)
+        internal CommunicationServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;

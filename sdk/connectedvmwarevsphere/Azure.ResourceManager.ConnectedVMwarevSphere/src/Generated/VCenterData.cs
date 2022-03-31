@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the VCenter data model. </summary>
-    public partial class VCenterData : TrackedResource
+    public partial class VCenterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VCenterData. </summary>
         /// <param name="location"> The location. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Initializes a new instance of VCenterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="credentials"> Username / Password Credentials to connect to vcenter. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VCenterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string fqdn, int? port, string version, string instanceUuid, string connectionStatus, string customResourceName, VICredential credentials, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, systemData, tags, location)
+        internal VCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string fqdn, int? port, string version, string instanceUuid, string connectionStatus, string customResourceName, VICredential credentials, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;

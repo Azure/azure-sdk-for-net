@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -31,6 +32,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the type name. </summary>
         public OriginGroupOverrideActionParametersTypeName TypeName { get; set; }
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
-        public WritableSubResource OriginGroup { get; set; }
+        internal WritableSubResource OriginGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier OriginGroupId
+        {
+            get => OriginGroup is null ? default : OriginGroup.Id;
+            set
+            {
+                if (OriginGroup is null)
+                    OriginGroup = new WritableSubResource();
+                OriginGroup.Id = value;
+            }
+        }
     }
 }

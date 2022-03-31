@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> unit = default;
             Optional<string> primaryAggregationType = default;
             Optional<IReadOnlyList<ResourceMetricAvailability>> metricAvailabilities = default;
-            Optional<string> resourceUri = default;
+            Optional<Uri> resourceUri = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -103,7 +104,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("resourceUri"))
                         {
-                            resourceUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                resourceUri = null;
+                                continue;
+                            }
+                            resourceUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("properties"))

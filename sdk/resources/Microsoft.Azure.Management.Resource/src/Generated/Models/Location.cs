@@ -34,16 +34,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus.</param>
         /// <param name="subscriptionId">The subscription ID.</param>
         /// <param name="name">The location name.</param>
+        /// <param name="type">The location type. Possible values include:
+        /// 'Region', 'EdgeZone'</param>
         /// <param name="displayName">The display name of the location.</param>
         /// <param name="regionalDisplayName">The display name of the location
         /// and its region.</param>
         /// <param name="metadata">Metadata of the location, such as lat/long,
         /// paired region, and others.</param>
-        public Location(string id = default(string), string subscriptionId = default(string), string name = default(string), string displayName = default(string), string regionalDisplayName = default(string), LocationMetadata metadata = default(LocationMetadata))
+        public Location(string id = default(string), string subscriptionId = default(string), string name = default(string), LocationType? type = default(LocationType?), string displayName = default(string), string regionalDisplayName = default(string), LocationMetadata metadata = default(LocationMetadata))
         {
             Id = id;
             SubscriptionId = subscriptionId;
             Name = name;
+            Type = type;
             DisplayName = displayName;
             RegionalDisplayName = regionalDisplayName;
             Metadata = metadata;
@@ -73,6 +76,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the location type. Possible values include: 'Region',
+        /// 'EdgeZone'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public LocationType? Type { get; private set; }
 
         /// <summary>
         /// Gets the display name of the location.

@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="exitCode"> Exit code returned from script execution. </param>
         /// <param name="output"> Script output stream. </param>
         /// <param name="error"> Script error stream. </param>
-        /// <param name="startTime"> Script start time. </param>
-        /// <param name="endTime"> Script end time. </param>
+        /// <param name="startOn"> Script start time. </param>
+        /// <param name="endOn"> Script end time. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal VirtualMachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<InstanceViewStatus> statuses)
+        internal VirtualMachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<InstanceViewStatus> statuses)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
             ExitCode = exitCode;
             Output = output;
             Error = error;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Statuses = statuses;
         }
 
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Script error stream. </summary>
         public string Error { get; }
         /// <summary> Script start time. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> Script end time. </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }

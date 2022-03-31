@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="adminUsername"> Gets or sets administrator username. </param>
         /// <param name="adminPassword"> Gets or sets administrator password. </param>
-        /// <param name="oSType"> Gets or sets the type of the os. </param>
-        /// <param name="oSName"> Gets or sets os name. </param>
+        /// <param name="osType"> Gets or sets the type of the os. </param>
+        /// <param name="osName"> Gets or sets os name. </param>
         /// <param name="toolsRunningStatus"> Gets or sets the current running status of VMware Tools running in the guest operating system. </param>
         /// <param name="toolsVersionStatus"> Gets or sets the current version status of VMware Tools installed in the guest operating system. </param>
         /// <param name="toolsVersion"> Gets or sets the current version of VMware Tools. </param>
-        internal OSProfile(string computerName, string adminUsername, string adminPassword, OSType? oSType, string oSName, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion)
+        internal OSProfile(string computerName, string adminUsername, string adminPassword, OSType? osType, string osName, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
             AdminPassword = adminPassword;
-            OSType = oSType;
-            OSName = oSName;
+            OSType = osType;
+            OSName = osName;
             ToolsRunningStatus = toolsRunningStatus;
             ToolsVersionStatus = toolsVersionStatus;
             ToolsVersion = toolsVersion;

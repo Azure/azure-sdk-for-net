@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ValidateResourceType.ToString());
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isXenon");
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(ContainerRegistryBaseUrl))
+            if (Optional.IsDefined(ContainerRegistryBaseUri))
             {
                 writer.WritePropertyName("containerRegistryBaseUrl");
-                writer.WriteStringValue(ContainerRegistryBaseUrl);
+                writer.WriteStringValue(ContainerRegistryBaseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ContainerRegistryUsername))
             {

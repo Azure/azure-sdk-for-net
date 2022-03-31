@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the VirtualNetworkRule data model. </summary>
-    public partial class VirtualNetworkRuleData : Resource
+    public partial class VirtualNetworkRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkRuleData. </summary>
         public VirtualNetworkRuleData()
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of VirtualNetworkRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="virtualNetworkSubnetId"> The ARM resource id of the virtual network subnet. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
         /// <param name="state"> Virtual Network Rule State. </param>
-        internal VirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string virtualNetworkSubnetId, bool? ignoreMissingVnetServiceEndpoint, VirtualNetworkRuleState? state) : base(id, name, type, systemData)
+        internal VirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkSubnetId, bool? ignoreMissingVnetServiceEndpoint, VirtualNetworkRuleState? state) : base(id, name, resourceType, systemData)
         {
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;

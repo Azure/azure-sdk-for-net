@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static EventHubCaptureFileCreatedEventData DeserializeEventHubCaptureFileCreatedEventData(JsonElement element)
         {
-            Optional<string> fileurl = default;
+            Optional<string> fileUrl = default;
             Optional<string> fileType = default;
             Optional<string> partitionId = default;
             Optional<int> sizeInBytes = default;
@@ -28,9 +28,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> lastEnqueueTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileurl"))
+                if (property.NameEquals("fileUrl"))
                 {
-                    fileurl = property.Value.GetString();
+                    fileUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fileType"))
@@ -104,7 +104,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventHubCaptureFileCreatedEventData(fileurl.Value, fileType.Value, partitionId.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(eventCount), Optional.ToNullable(firstSequenceNumber), Optional.ToNullable(lastSequenceNumber), Optional.ToNullable(firstEnqueueTime), Optional.ToNullable(lastEnqueueTime));
+            return new EventHubCaptureFileCreatedEventData(fileUrl.Value, fileType.Value, partitionId.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(eventCount), Optional.ToNullable(firstSequenceNumber), Optional.ToNullable(lastSequenceNumber), Optional.ToNullable(firstEnqueueTime), Optional.ToNullable(lastEnqueueTime));
         }
 
         internal partial class EventHubCaptureFileCreatedEventDataConverter : JsonConverter<EventHubCaptureFileCreatedEventData>

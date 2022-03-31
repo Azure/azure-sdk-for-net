@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> subregion = default;
             Optional<string> serverKeyName = default;
             Optional<ServerKeyType> serverKeyType = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<string> thumbprint = default;
             Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("uri"))
                         {
-                            uri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                uri = null;
+                                continue;
+                            }
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("thumbprint"))

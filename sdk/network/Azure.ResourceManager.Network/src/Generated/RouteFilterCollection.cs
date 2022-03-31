@@ -15,14 +15,17 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of RouteFilter and their operations over its parent. </summary>
-    public partial class RouteFilterCollection : ArmCollection, IEnumerable<RouteFilter>, IAsyncEnumerable<RouteFilter>
+    /// <summary>
+    /// A class representing a collection of <see cref="RouteFilterResource" /> and their operations.
+    /// Each <see cref="RouteFilterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="RouteFilterCollection" /> instance call the GetRouteFilters method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class RouteFilterCollection : ArmCollection, IEnumerable<RouteFilterResource>, IAsyncEnumerable<RouteFilterResource>
     {
         private readonly ClientDiagnostics _routeFilterClientDiagnostics;
         private readonly RouteFiltersRestOperations _routeFilterRestClient;
@@ -33,12 +36,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref="RouteFilterCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RouteFilterCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal RouteFilterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routeFilterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilter.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(RouteFilter.ResourceType, out string routeFilterApiVersion);
-            _routeFilterRestClient = new RouteFiltersRestOperations(_routeFilterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterApiVersion);
+            _routeFilterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilterResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RouteFilterResource.ResourceType, out string routeFilterApiVersion);
+            _routeFilterRestClient = new RouteFiltersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routeFilterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,66 +50,33 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates a route filter in a specified resource group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a route filter in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
-        /// <param name="routeFilterParameters"> Parameters supplied to the create or update route filter operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update route filter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> or <paramref name="routeFilterParameters"/> is null. </exception>
-        public virtual RouteFilterCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeFilterName, RouteFilterData routeFilterParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<RouteFilterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeFilterName, RouteFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
-            if (routeFilterParameters == null)
-            {
-                throw new ArgumentNullException(nameof(routeFilterParameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _routeFilterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters, cancellationToken);
-                var operation = new RouteFilterCreateOrUpdateOperation(ArmClient, _routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a route filter in a specified resource group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="routeFilterName"> The name of the route filter. </param>
-        /// <param name="routeFilterParameters"> Parameters supplied to the create or update route filter operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> or <paramref name="routeFilterParameters"/> is null. </exception>
-        public async virtual Task<RouteFilterCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeFilterName, RouteFilterData routeFilterParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
-            if (routeFilterParameters == null)
-            {
-                throw new ArgumentNullException(nameof(routeFilterParameters));
-            }
-
-            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _routeFilterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new RouteFilterCreateOrUpdateOperation(ArmClient, _routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, routeFilterParameters).Request, response);
-                if (waitForCompletion)
+                var response = await _routeFilterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<RouteFilterResource>(new RouteFilterOperationSource(Client), _routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -116,24 +87,31 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified route filter. </summary>
+        /// <summary>
+        /// Creates or updates a route filter in a specified resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
-        /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
+        /// <param name="data"> Parameters supplied to the create or update route filter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public virtual Response<RouteFilter> Get(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<RouteFilterResource> CreateOrUpdate(WaitUntil waitUntil, string routeFilterName, RouteFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.Get");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _routeFilterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken);
-                if (response.Value == null)
-                    throw _routeFilterClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RouteFilter(ArmClient, response.Value), response.GetRawResponse());
+                var response = _routeFilterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, data, cancellationToken);
+                var operation = new NetworkArmOperation<RouteFilterResource>(new RouteFilterOperationSource(Client), _routeFilterClientDiagnostics, Pipeline, _routeFilterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -142,13 +120,17 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified route filter. </summary>
+        /// <summary>
+        /// Gets the specified route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_Get
+        /// </summary>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public async virtual Task<Response<RouteFilter>> GetAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteFilterResource>> GetAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
 
@@ -158,8 +140,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _routeFilterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _routeFilterClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RouteFilter(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RouteFilterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,24 +150,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets the specified route filter.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_Get
+        /// </summary>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public virtual Response<RouteFilter> GetIfExists(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RouteFilterResource> Get(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
 
-            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.GetIfExists");
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.Get");
             scope.Start();
             try
             {
-                var response = _routeFilterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken: cancellationToken);
+                var response = _routeFilterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<RouteFilter>(null, response.GetRawResponse());
-                return Response.FromValue(new RouteFilter(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RouteFilterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,131 +180,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="routeFilterName"> The name of the route filter. </param>
-        /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
+        /// <summary>
+        /// Gets all route filters in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters
+        /// Operation Id: RouteFilters_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public async virtual Task<Response<RouteFilter>> GetIfExistsAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RouteFilterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
-
-            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _routeFilterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<RouteFilter>(null, response.GetRawResponse());
-                return Response.FromValue(new RouteFilter(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="routeFilterName"> The name of the route filter. </param>
-        /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public virtual Response<bool> Exists(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
-
-            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(routeFilterName, expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="routeFilterName"> The name of the route filter. </param>
-        /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
-
-            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(routeFilterName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all route filters in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RouteFilter" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RouteFilter> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<RouteFilter> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _routeFilterRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RouteFilter> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _routeFilterRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets all route filters in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RouteFilter" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RouteFilter> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<RouteFilter>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RouteFilterResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _routeFilterRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,14 +204,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<RouteFilter>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RouteFilterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _routeFilterRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -344,7 +222,105 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<RouteFilter> IEnumerable<RouteFilter>.GetEnumerator()
+        /// <summary>
+        /// Gets all route filters in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters
+        /// Operation Id: RouteFilters_ListByResourceGroup
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RouteFilterResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<RouteFilterResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _routeFilterRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<RouteFilterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _routeFilterRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteFilterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_Get
+        /// </summary>
+        /// <param name="routeFilterName"> The name of the route filter. </param>
+        /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
+
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _routeFilterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
+        /// Operation Id: RouteFilters_Get
+        /// </summary>
+        /// <param name="routeFilterName"> The name of the route filter. </param>
+        /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
+        public virtual Response<bool> Exists(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
+
+            using var scope = _routeFilterClientDiagnostics.CreateScope("RouteFilterCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _routeFilterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeFilterName, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<RouteFilterResource> IEnumerable<RouteFilterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -354,7 +330,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RouteFilter> IAsyncEnumerable<RouteFilter>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RouteFilterResource> IAsyncEnumerable<RouteFilterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

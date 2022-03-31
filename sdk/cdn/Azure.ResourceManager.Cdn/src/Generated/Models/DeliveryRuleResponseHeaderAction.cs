@@ -23,13 +23,21 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Parameters = parameters;
+<<<<<<< HEAD
             Name = DeliveryRuleActionName.ModifyResponseHeader;
+=======
+            Name = DeliveryRuleActionType.ModifyResponseHeader;
+>>>>>>> origin/main
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleResponseHeaderAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
+<<<<<<< HEAD
         internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionName name, HeaderActionParameters parameters) : base(name)
+=======
+        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, HeaderActionParameters parameters) : base(name)
+>>>>>>> origin/main
         {
             Parameters = parameters;
             Name = name;

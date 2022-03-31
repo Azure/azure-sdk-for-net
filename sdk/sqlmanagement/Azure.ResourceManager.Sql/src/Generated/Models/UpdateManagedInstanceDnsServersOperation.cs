@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recoverable managed database resource. </summary>
-    public partial class UpdateManagedInstanceDnsServersOperation : Resource
+    public partial class UpdateManagedInstanceDnsServersOperation : ResourceData
     {
         /// <summary> Initializes a new instance of UpdateManagedInstanceDnsServersOperation. </summary>
         public UpdateManagedInstanceDnsServersOperation()
@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of UpdateManagedInstanceDnsServersOperation. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> The status of the DNS refresh operation. </param>
-        internal UpdateManagedInstanceDnsServersOperation(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DnsRefreshConfigurationPropertiesStatus? status) : base(id, name, type, systemData)
+        internal UpdateManagedInstanceDnsServersOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DnsRefreshConfigurationPropertiesStatus? status) : base(id, name, resourceType, systemData)
         {
             Status = status;
         }

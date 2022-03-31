@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToName(bool expected, string name1, string name2)
         {
-            Plan plan1 = new Plan(name1, null, null, null, null);
-            Plan plan2 = new Plan(name2, null, null, null, null);
+            ArmPlan plan1 = new ArmPlan(name1, null, null, null, null);
+            ArmPlan plan2 = new ArmPlan(name2, null, null, null, null);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToProduct(bool expected, string product1, string product2)
         {
-            Plan plan1 = new Plan(null, null, product1, null, null);
-            Plan plan2 = new Plan(null, null, product2, null, null);
+            ArmPlan plan1 = new ArmPlan(null, null, product1, null, null);
+            ArmPlan plan2 = new ArmPlan(null, null, product2, null, null);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToPromotionCode(bool expected, string promotionCode1, string promotionCode2)
         {
-            Plan plan1 = new Plan(null, null, null, promotionCode1, null);
-            Plan plan2 = new Plan(null, null, null, promotionCode2, null);
+            ArmPlan plan1 = new ArmPlan(null, null, null, promotionCode1, null);
+            ArmPlan plan2 = new ArmPlan(null, null, null, promotionCode2, null);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToPublisher(bool expected, string publisher1, string publisher2)
         {
-            Plan plan1 = new Plan(null, publisher1, null, null, null);
-            Plan plan2 = new Plan(null, publisher2, null, null, null);
+            ArmPlan plan1 = new ArmPlan(null, publisher1, null, null, null);
+            ArmPlan plan2 = new ArmPlan(null, publisher2, null, null, null);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToVersion(bool expected, string version1, string version2)
         {
-            Plan plan1 = new Plan(null, null, null, null, version1);
-            Plan plan2 = new Plan(null, null, null, null, version2);
+            ArmPlan plan1 = new ArmPlan(null, null, null, null, version1);
+            ArmPlan plan2 = new ArmPlan(null, null, null, null, version2);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void EqualsToNullPlan()
         {
-            Plan plan1 = new Plan(null, null, null, null, null);
-            Plan plan2 = null;
+            ArmPlan plan1 = new ArmPlan(null, null, null, null, null);
+            ArmPlan plan2 = null;
             Assert.IsFalse(plan1.Equals(plan2));
         }
 
         [Test]
         public void EqualsToObject()
         {
-            Plan plan1 = new Plan(null, null, null, null, null);
+            ArmPlan plan1 = new ArmPlan(null, null, null, null, null);
             object stringPlan = "random";
             Assert.IsFalse(plan1.Equals(stringPlan));
 
@@ -108,15 +108,15 @@ namespace Azure.ResourceManager.Tests
             object samePlan = plan1;
             Assert.IsTrue(plan1.Equals(samePlan));
 
-            object plan2 = new Plan("Plan2", null, null, null, null);
+            object plan2 = new ArmPlan("Plan2", null, null, null, null);
             Assert.IsFalse(plan1.Equals(plan2));
         }
 
         [Test]
         public void EqualsToSamePlans()
         {
-            Plan plan1 = new Plan(null, null, null, null, null);
-            Plan plan2 = plan1;
+            ArmPlan plan1 = new ArmPlan(null, null, null, null, null);
+            ArmPlan plan2 = plan1;
             Assert.IsTrue(plan1.Equals(plan2));
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Tests
         public void SerializationTest()
         {
             string expected = "{\"properties\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}}";
-            Plan plan = new("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
+            ArmPlan plan = new("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             var json = JsonHelper.SerializePropertiesToString(plan);
             Assert.IsTrue(expected.Equals(json));
         }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void InvalidSerializationTest()
         {
-            Plan plan = new(null, null, null, null, null);
+            ArmPlan plan = new(null, null, null, null, null);
             var json = JsonHelper.SerializePropertiesToString(plan);
             Assert.AreEqual("{\"properties\":{\"name\":null,\"publisher\":null,\"product\":null}}", json);
         }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Tests
         {
             string json = "{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
-            Plan plan = Plan.DeserializePlan(element);
+            ArmPlan plan = ArmPlan.DeserializeArmPlan(element);
             Assert.IsTrue(plan.Name.Equals("NameForPlan"));
             Assert.IsTrue(plan.PromotionCode.Equals("PromotionCodeForPlan"));
         }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Tests
         {
             string json = "{\"name\":\"NameForPlan\",\"notPublisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"version\":\"VersionForPlan\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
-            Plan plan = Plan.DeserializePlan(element);
+            ArmPlan plan = ArmPlan.DeserializeArmPlan(element);
             Assert.IsTrue(plan.Publisher == null);
             Assert.IsTrue(plan.PromotionCode == null);
         }
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "", "${?/>._`", "")]
         public void EqualsToOperator(bool expected, string name1, string name2, string promo1, string promo2)
         {
-            Plan plan1 = new Plan(name1, null, null, promo1, null);
-            Plan plan2 = new Plan(name2, null, null, promo2, null);
+            ArmPlan plan1 = new ArmPlan(name1, null, null, promo1, null);
+            ArmPlan plan2 = new ArmPlan(name2, null, null, promo2, null);
             Assert.AreEqual(expected, plan1 == plan2);
         }
 
@@ -184,15 +184,15 @@ namespace Azure.ResourceManager.Tests
         [TestCase(true, "${?/>._`", "", "${?/>._`", "")]
         public void NotEqualsToOperator(bool expected, string name1, string name2, string promo1, string promo2)
         {
-            Plan plan1 = new Plan(name1, null, null, promo1, null);
-            Plan plan2 = new Plan(name2, null, null, promo2, null);
+            ArmPlan plan1 = new ArmPlan(name1, null, null, promo1, null);
+            ArmPlan plan2 = new ArmPlan(name2, null, null, promo2, null);
             Assert.AreEqual(expected, plan1 != plan2);
         }
 
         [Test]
         public void EqualOperatorNull()
         {
-            Plan plan1 = new Plan("PlanName", null, null, "PlanPromo", null);
+            ArmPlan plan1 = new ArmPlan("PlanName", null, null, "PlanPromo", null);
             Assert.IsFalse(plan1 == null);
             Assert.IsFalse(null == plan1);
         }

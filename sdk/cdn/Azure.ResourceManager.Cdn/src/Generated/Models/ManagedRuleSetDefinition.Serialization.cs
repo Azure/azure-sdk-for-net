@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<CdnSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             Azure.Core.ResourceType type = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

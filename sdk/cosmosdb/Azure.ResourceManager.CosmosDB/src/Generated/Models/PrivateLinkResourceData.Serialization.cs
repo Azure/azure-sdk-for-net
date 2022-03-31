@@ -12,8 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class PrivateLinkResourceData
+    public partial class PrivateLinkResourceData : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
         internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;

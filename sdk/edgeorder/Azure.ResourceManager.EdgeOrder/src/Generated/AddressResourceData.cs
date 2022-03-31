@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary> A class representing the AddressResource data model. </summary>
-    public partial class AddressResourceData : TrackedResource
+    public partial class AddressResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AddressResourceData. </summary>
         /// <param name="location"> The location. </param>
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Initializes a new instance of AddressResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
-        internal AddressResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ShippingAddress shippingAddress, ContactDetails contactDetails, AddressValidationStatus? addressValidationStatus) : base(id, name, type, systemData, tags, location)
+        internal AddressResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ShippingAddress shippingAddress, ContactDetails contactDetails, AddressValidationStatus? addressValidationStatus) : base(id, name, resourceType, systemData, tags, location)
         {
             ShippingAddress = shippingAddress;
             ContactDetails = contactDetails;

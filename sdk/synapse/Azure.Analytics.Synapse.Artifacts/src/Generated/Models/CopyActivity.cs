@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="source"> Copy activity source. </param>
         /// <param name="sink"> Copy activity sink. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="source"/>, or <paramref name="sink"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="source"/> or <paramref name="sink"/> is null. </exception>
         public CopyActivity(string name, CopySource source, CopySink sink) : base(name)
         {
             if (name == null)

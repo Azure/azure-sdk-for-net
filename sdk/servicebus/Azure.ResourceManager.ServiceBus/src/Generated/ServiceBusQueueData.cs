@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusQueue data model. </summary>
-    public partial class ServiceBusQueueData : Resource
+    public partial class ServiceBusQueueData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusQueueData. </summary>
         public ServiceBusQueueData()
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusQueueData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="countDetails"> Message Count Details. </param>
-        /// <param name="createdAt"> The exact time the message was created. </param>
-        /// <param name="updatedAt"> The exact time the message was updated. </param>
-        /// <param name="accessedAt"> Last time a message was sent, or the last time there was a receive request to this queue. </param>
+        /// <param name="createdOn"> The exact time the message was created. </param>
+        /// <param name="updatedOn"> The exact time the message was updated. </param>
+        /// <param name="accessedOn"> Last time a message was sent, or the last time there was a receive request to this queue. </param>
         /// <param name="sizeInBytes"> The size of the queue, in bytes. </param>
         /// <param name="messageCount"> The number of messages in the queue. </param>
         /// <param name="lockDuration"> ISO 8601 timespan duration of a peek-lock; that is, the amount of time that the message is locked for other receivers. The maximum value for LockDuration is 5 minutes; the default value is 1 minute. </param>
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="enableExpress"> A value that indicates whether Express Entities are enabled. An express queue holds a message in memory temporarily before writing it to persistent storage. </param>
         /// <param name="forwardTo"> Queue/Topic name to forward the messages. </param>
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
-        internal ServiceBusQueueData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, MessageCountDetails countDetails, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, DateTimeOffset? accessedAt, long? sizeInBytes, long? messageCount, TimeSpan? lockDuration, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, string forwardTo, string forwardDeadLetteredMessagesTo) : base(id, name, type, systemData)
+        internal ServiceBusQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MessageCountDetails countDetails, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, long? sizeInBytes, long? messageCount, TimeSpan? lockDuration, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, string forwardTo, string forwardDeadLetteredMessagesTo) : base(id, name, resourceType, systemData)
         {
             CountDetails = countDetails;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
-            AccessedAt = accessedAt;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            AccessedOn = accessedOn;
             SizeInBytes = sizeInBytes;
             MessageCount = messageCount;
             LockDuration = lockDuration;
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Message Count Details. </summary>
         public MessageCountDetails CountDetails { get; }
         /// <summary> The exact time the message was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The exact time the message was updated. </summary>
-        public DateTimeOffset? UpdatedAt { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Last time a message was sent, or the last time there was a receive request to this queue. </summary>
-        public DateTimeOffset? AccessedAt { get; }
+        public DateTimeOffset? AccessedOn { get; }
         /// <summary> The size of the queue, in bytes. </summary>
         public long? SizeInBytes { get; }
         /// <summary> The number of messages in the queue. </summary>

@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Enumerates the possible values for the status of the Event Hub. </summary>
     public enum EntityStatus
     {
+        /// <summary> Unknown. </summary>
+        Unknown,
         /// <summary> Active. </summary>
         Active,
         /// <summary> Disabled. </summary>
@@ -25,8 +27,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Deleting. </summary>
         Deleting,
         /// <summary> Renaming. </summary>
-        Renaming,
-        /// <summary> Unknown. </summary>
-        Unknown
+        Renaming
     }
 }

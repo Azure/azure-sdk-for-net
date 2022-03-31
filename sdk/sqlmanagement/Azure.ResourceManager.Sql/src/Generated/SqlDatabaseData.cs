@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SqlDatabase data model. </summary>
-    public partial class SqlDatabaseData : TrackedResource
+    public partial class SqlDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlDatabaseData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
         /// <param name="status"> The status of the database. </param>
         /// <param name="databaseId"> The ID of the database. </param>
-        /// <param name="creationDate"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
         /// <param name="currentServiceObjectiveName"> The current service level objective name of the database. </param>
         /// <param name="requestedServiceObjectiveName"> The requested service level objective name of the database. </param>
         /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
         /// <param name="failoverGroupId"> Failover Group resource identifier that this database belongs to. </param>
-        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="sourceDatabaseDeletionDate"> Specifies the time that the database was deleted. </param>
+        /// <param name="restorePointInOn"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="sourceDatabaseDeletionOn"> Specifies the time that the database was deleted. </param>
         /// <param name="recoveryServicesRecoveryPointId"> The resource identifier of the recovery point associated with create operation of this database. </param>
         /// <param name="longTermRetentionBackupResourceId"> The resource identifier of the long term retention backup associated with create operation of this database. </param>
         /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="zoneRedundant"> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </param>
         /// <param name="maxLogSizeBytes"> The max log size for this database. </param>
-        /// <param name="earliestRestoreDate"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
+        /// <param name="earliestRestoreOn"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
         /// <param name="readScale"> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. </param>
         /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the database that are used to provide high availability. </param>
         /// <param name="secondaryType"> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </param>
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this database. </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this database. </param>
         /// <param name="minCapacity"> Minimal capacity that database will always have allocated, if not paused. </param>
-        /// <param name="pausedDate"> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </param>
-        /// <param name="resumedDate"> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </param>
+        /// <param name="pausedOn"> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </param>
+        /// <param name="resumedOn"> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </param>
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </param>
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
         /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
-        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string kind, string managedBy, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationDate, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletionDate, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreDate, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, Models.Sku currentSku, int? autoPauseDelay, CurrentBackupStorageRedundancy? currentBackupStorageRedundancy, RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedDate, DateTimeOffset? resumedDate, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled) : base(id, name, type, systemData, tags, location)
+        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInOn, DateTimeOffset? sourceDatabaseDeletionOn, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, CurrentBackupStorageRedundancy? currentBackupStorageRedundancy, RequestedBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.Sql
             SourceDatabaseId = sourceDatabaseId;
             Status = status;
             DatabaseId = databaseId;
-            CreationDate = creationDate;
+            CreationOn = creationOn;
             CurrentServiceObjectiveName = currentServiceObjectiveName;
             RequestedServiceObjectiveName = requestedServiceObjectiveName;
             DefaultSecondaryLocation = defaultSecondaryLocation;
             FailoverGroupId = failoverGroupId;
-            RestorePointInTime = restorePointInTime;
-            SourceDatabaseDeletionDate = sourceDatabaseDeletionDate;
+            RestorePointInOn = restorePointInOn;
+            SourceDatabaseDeletionOn = sourceDatabaseDeletionOn;
             RecoveryServicesRecoveryPointId = recoveryServicesRecoveryPointId;
             LongTermRetentionBackupResourceId = longTermRetentionBackupResourceId;
             RecoverableDatabaseId = recoverableDatabaseId;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             ZoneRedundant = zoneRedundant;
             LicenseType = licenseType;
             MaxLogSizeBytes = maxLogSizeBytes;
-            EarliestRestoreDate = earliestRestoreDate;
+            EarliestRestoreOn = earliestRestoreOn;
             ReadScale = readScale;
             HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
             SecondaryType = secondaryType;
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Sql
             CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
             RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
             MinCapacity = minCapacity;
-            PausedDate = pausedDate;
-            ResumedDate = resumedDate;
+            PausedOn = pausedOn;
+            ResumedOn = resumedOn;
             MaintenanceConfigurationId = maintenanceConfigurationId;
             IsLedgerOn = isLedgerOn;
             IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
         /// ````
         /// 
         /// </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Kind of database. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> Resource that manages the database. </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ID of the database. </summary>
         public Guid? DatabaseId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreationDate { get; }
+        public DateTimeOffset? CreationOn { get; }
         /// <summary> The current service level objective name of the database. </summary>
         public string CurrentServiceObjectiveName { get; }
         /// <summary> The requested service level objective name of the database. </summary>
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         public string FailoverGroupId { get; }
         /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInTime { get; set; }
+        public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
-        public DateTimeOffset? SourceDatabaseDeletionDate { get; set; }
+        public DateTimeOffset? SourceDatabaseDeletionOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
         public string RecoveryServicesRecoveryPointId { get; set; }
         /// <summary> The resource identifier of the long term retention backup associated with create operation of this database. </summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The max log size for this database. </summary>
         public long? MaxLogSizeBytes { get; }
         /// <summary> This records the earliest start date and time that restore is available for this database (ISO8601 format). </summary>
-        public DateTimeOffset? EarliestRestoreDate { get; }
+        public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. </summary>
         public DatabaseReadScale? ReadScale { get; set; }
         /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
         public SecondaryType? SecondaryType { get; set; }
         /// <summary> The name and tier of the SKU. </summary>
-        public Models.Sku CurrentSku { get; }
+        public SqlSku CurrentSku { get; }
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         public int? AutoPauseDelay { get; set; }
         /// <summary> The storage account type used to store backups for this database. </summary>
@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Minimal capacity that database will always have allocated, if not paused. </summary>
         public double? MinCapacity { get; set; }
         /// <summary> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </summary>
-        public DateTimeOffset? PausedDate { get; }
+        public DateTimeOffset? PausedOn { get; }
         /// <summary> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </summary>
-        public DateTimeOffset? ResumedDate { get; }
+        public DateTimeOffset? ResumedOn { get; }
         /// <summary> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </summary>
         public string MaintenanceConfigurationId { get; set; }
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>

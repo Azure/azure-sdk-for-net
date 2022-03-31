@@ -190,26 +190,26 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             _connection.ThrowIfClosed();
 
-            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            IReadOnlyCollection<ServiceBusMessage> readOnlyCollection = messages switch
             {
-                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
-                _ => messages.ToList()
+                IReadOnlyCollection<ServiceBusMessage> alreadyReadOnlyCollection => alreadyReadOnlyCollection,
+                _ => messages.ToArray()
             };
 
-            if (messageList.Count == 0)
+            if (readOnlyCollection.Count == 0)
             {
                 return;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.SendMessageStart(Identifier, messageCount: messageList.Count);
-            using DiagnosticScope scope = CreateDiagnosticScope(messages, DiagnosticProperty.SendActivityName);
+            Logger.SendMessageStart(Identifier, messageCount: readOnlyCollection.Count);
+            using DiagnosticScope scope = CreateDiagnosticScope(readOnlyCollection, DiagnosticProperty.SendActivityName);
             scope.Start();
 
             try
             {
                 await _innerSender.SendAsync(
-                    messageList,
+                    readOnlyCollection,
                     cancellationToken).ConfigureAwait(false);
             }
 
@@ -223,7 +223,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<ServiceBusMessage> messages, string activityName)
         {
             foreach (ServiceBusMessage message in messages)
             {
@@ -325,7 +325,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.AsEnumerable<ServiceBusMessage>(),
+                messageBatch.AsReadOnly<ServiceBusMessage>(),
                 DiagnosticProperty.SendActivityName);
             scope.Start();
 
@@ -405,35 +405,35 @@ namespace Azure.Messaging.ServiceBus
             _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            IReadOnlyCollection<ServiceBusMessage> readOnlyCollection = messages switch
             {
-                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
-                _ => messages.ToList()
+                IReadOnlyCollection<ServiceBusMessage> alreadyReadOnlyCollection => alreadyReadOnlyCollection,
+                _ => messages.ToArray()
             };
 
-            if (messageList.Count == 0)
+            if (readOnlyCollection.Count == 0)
             {
                 return Array.Empty<long>();
             }
 
             Logger.ScheduleMessagesStart(
                 Identifier,
-                messageList.Count,
+                readOnlyCollection.Count,
                 scheduledEnqueueTime.ToString(CultureInfo.InvariantCulture));
 
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messages,
+                readOnlyCollection,
                 DiagnosticProperty.ScheduleActivityName);
             scope.Start();
 
             IReadOnlyList<long> sequenceNumbers = null;
             try
             {
-                foreach (ServiceBusMessage message in messageList)
+                foreach (ServiceBusMessage message in readOnlyCollection)
                 {
                     message.ScheduledEnqueueTime = scheduledEnqueueTime.UtcDateTime;
                 }
-                sequenceNumbers = await _innerSender.ScheduleMessagesAsync(messageList, cancellationToken).ConfigureAwait(false);
+                sequenceNumbers = await _innerSender.ScheduleMessagesAsync(readOnlyCollection, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {

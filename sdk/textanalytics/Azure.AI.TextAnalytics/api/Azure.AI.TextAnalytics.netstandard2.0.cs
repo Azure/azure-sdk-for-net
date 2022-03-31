@@ -883,6 +883,25 @@ namespace Azure.AI.TextAnalytics
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.RecognizePiiEntitiesAction> RecognizePiiEntitiesActions { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.SingleCategoryClassifyAction> SingleCategoryClassifyActions { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TextAnalyticsAudience : System.IEquatable<Azure.AI.TextAnalytics.TextAnalyticsAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TextAnalyticsAudience(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzureChina { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.TextAnalytics.TextAnalyticsAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.TextAnalyticsAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.TextAnalyticsAudience left, Azure.AI.TextAnalytics.TextAnalyticsAudience right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.TextAnalyticsAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.TextAnalyticsAudience left, Azure.AI.TextAnalytics.TextAnalyticsAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class TextAnalyticsClient
     {
         protected TextAnalyticsClient() { }
@@ -956,6 +975,7 @@ namespace Azure.AI.TextAnalytics
     public partial class TextAnalyticsClientOptions : Azure.Core.ClientOptions
     {
         public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2) { }
+        public Azure.AI.TextAnalytics.TextAnalyticsAudience? Audience { get { throw null; } set { } }
         public string DefaultCountryHint { get { throw null; } set { } }
         public string DefaultLanguage { get { throw null; } set { } }
         public enum ServiceVersion

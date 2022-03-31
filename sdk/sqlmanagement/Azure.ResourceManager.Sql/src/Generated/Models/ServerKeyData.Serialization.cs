@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql
             SystemData systemData = default;
             Optional<string> subregion = default;
             Optional<ServerKeyType> serverKeyType = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<string> thumbprint = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<bool> autoRotationEnabled = default;
@@ -106,7 +106,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("uri"))
                         {
-                            uri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                uri = null;
+                                continue;
+                            }
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("thumbprint"))

@@ -61,15 +61,14 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract void Clear();
 
         /// <summary>
-        ///   Represents the batch as an enumerable set of transport-specific
-        ///   representations of an event.
+        ///   Represents the batch as a set of the transport-specific representations of an event.
         /// </summary>
         ///
         /// <typeparam name="T">The transport-specific event representation being requested.</typeparam>
         ///
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
-        public abstract IEnumerable<T> AsEnumerable<T>();
+        public abstract IReadOnlyCollection<T> AsReadOnlyCollection<T>();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="TransportEventBatch" />.

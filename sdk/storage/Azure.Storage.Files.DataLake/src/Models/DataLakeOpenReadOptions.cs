@@ -26,10 +26,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public DataLakeRequestConditions Conditions { get; set; }
 
-        /// <summary>
-        /// Optional transactional hashing options.
-        /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        // TODO #27253
+        ///// <summary>
+        ///// Optional transactional hashing options.
+        ///// </summary>
+        //public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
 
         internal bool AllowModifications { get; }
 

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ConnectionMonitor data model. </summary>
-    public partial class ConnectionMonitorData : ResourceManager.Models.Resource
+    public partial class ConnectionMonitorData : ResourceData
     {
         /// <summary> Initializes a new instance of ConnectionMonitorData. </summary>
         internal ConnectionMonitorData()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ConnectionMonitorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="location"> Connection monitor location. </param>
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="outputs"> List of connection monitor outputs. </param>
         /// <param name="notes"> Optional notes to be associated with the connection monitor. </param>
         /// <param name="provisioningState"> The provisioning state of the connection monitor. </param>
-        /// <param name="startTime"> The date and time when the connection monitor was started. </param>
+        /// <param name="startOn"> The date and time when the connection monitor was started. </param>
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string etag, string location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, ProvisioningState? provisioningState, DateTimeOffset? startTime, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, type, systemData)
+        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, ProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             Location = location;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
             Outputs = outputs;
             Notes = notes;
             ProvisioningState = provisioningState;
-            StartTime = startTime;
+            StartOn = startOn;
             MonitoringStatus = monitoringStatus;
             ConnectionMonitorType = connectionMonitorType;
         }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the connection monitor. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The date and time when the connection monitor was started. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The monitoring status of the connection monitor. </summary>
         public string MonitoringStatus { get; }
         /// <summary> Type of connection monitor. </summary>

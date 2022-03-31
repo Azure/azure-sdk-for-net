@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="resourceId"> The ARM resource ID of the Application Insights app. </param>
         /// <param name="name"> The name of the Application Insights app. </param>
         /// <param name="region"> The Azure region of the Application Insights app. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceId"/>, <paramref name="name"/>, or <paramref name="region"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceId"/>, <paramref name="name"/> or <paramref name="region"/> is null. </exception>
         internal MetadataApplication(string id, string resourceId, string name, string region)
         {
             if (id == null)

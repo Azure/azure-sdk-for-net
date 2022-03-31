@@ -18,7 +18,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -28,8 +28,8 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true,rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = lro.Value;
+ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = lro.Value;
 ```
 
 Now that we have the resource group created, we can manage the Communication Service inside this resource group.
@@ -44,8 +44,8 @@ CommunicationServiceData data = new CommunicationServiceData()
     Location = "global",
     DataLocation = "UnitedStates",
 };
-CommunicationServiceCreateOrUpdateOperation communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
-CommunicationService communicationService = communicationServiceLro.Value;
+ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+CommunicationServiceResource communicationService = communicationServiceLro.Value;
 ```
 
 ***List all Communication Service***
@@ -53,8 +53,8 @@ CommunicationService communicationService = communicationServiceLro.Value;
 ```C# Snippet:Managing_CommunicationService_ListAllCommunicationService
 CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
-AsyncPageable<CommunicationService> list = collection.GetAllAsync();
-await foreach (CommunicationService communicationService  in list)
+AsyncPageable<CommunicationServiceResource> list = collection.GetAllAsync();
+await foreach (CommunicationServiceResource communicationService  in list)
 {
     Console.WriteLine(communicationService.Data.Name);
 }
@@ -65,6 +65,6 @@ await foreach (CommunicationService communicationService  in list)
 ```C# Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
 CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
 
-CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
-await communicationService.DeleteAsync(true);
+CommunicationServiceResource communicationService = await collection.GetAsync("myCommunicationService");
+await communicationService.DeleteAsync(WaitUntil.Completed);
 ```

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri");
-                writer.WriteStringValue(SourceUri);
+                writer.WriteStringValue(SourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SourceResourceId))
             {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityDataUri))
             {
                 writer.WritePropertyName("securityDataUri");
-                writer.WriteStringValue(SecurityDataUri);
+                writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
@@ -66,12 +67,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> storageAccountId = default;
             Optional<ImageDiskReference> imageReference = default;
             Optional<ImageDiskReference> galleryImageReference = default;
-            Optional<string> sourceUri = default;
+            Optional<Uri> sourceUri = default;
             Optional<string> sourceResourceId = default;
             Optional<string> sourceUniqueId = default;
             Optional<long> uploadSizeBytes = default;
             Optional<int> logicalSectorSize = default;
-            Optional<string> securityDataUri = default;
+            Optional<Uri> securityDataUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"))
@@ -106,7 +107,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("sourceUri"))
                 {
-                    sourceUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sourceUri = null;
+                        continue;
+                    }
+                    sourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceResourceId"))
@@ -141,7 +147,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("securityDataUri"))
                 {
-                    securityDataUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        securityDataUri = null;
+                        continue;
+                    }
+                    securityDataUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }

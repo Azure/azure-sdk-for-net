@@ -73,7 +73,7 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(waitForCompletion: true, testProjectName, updateQnasRequestContent);
+Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
 // QnAs can be retrieved as follows
 Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
@@ -167,7 +167,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
 await updateSourcesOperation.WaitForCompletionAsync();
 
 // Wait for operation completion
@@ -204,7 +204,7 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(waitForCompletion: true, testProjectName, updateQnasRequestContent);
+Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 await updateQnasOperation.WaitForCompletionAsync();
 
 // QnAs can be retrieved as follows

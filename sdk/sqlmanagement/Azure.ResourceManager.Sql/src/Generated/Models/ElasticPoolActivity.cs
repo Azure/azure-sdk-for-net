@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the activity on an elastic pool. </summary>
-    public partial class ElasticPoolActivity : Resource
+    public partial class ElasticPoolActivity : ResourceData
     {
         /// <summary> Initializes a new instance of ElasticPoolActivity. </summary>
         public ElasticPoolActivity()
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ElasticPoolActivity. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="endTime"> The time the operation finished (ISO8601 format). </param>
+        /// <param name="endOn"> The time the operation finished (ISO8601 format). </param>
         /// <param name="errorCode"> The error code if available. </param>
         /// <param name="errorMessage"> The error message if available. </param>
         /// <param name="errorSeverity"> The error severity if available. </param>
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="requestedStorageLimitInGB"> The requested storage limit for the pool in GB if available. </param>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="serverName"> The name of the server the elastic pool is in. </param>
-        /// <param name="startTime"> The time the operation started (ISO8601 format). </param>
+        /// <param name="startOn"> The time the operation started (ISO8601 format). </param>
         /// <param name="state"> The current state of the operation. </param>
         /// <param name="requestedStorageLimitInMB"> The requested storage limit in MB. </param>
         /// <param name="requestedDatabaseDtuGuarantee"> The requested per database DTU guarantee. </param>
         /// <param name="requestedDatabaseDtuCap"> The requested per database DTU cap. </param>
         /// <param name="requestedDtuGuarantee"> The requested DTU guarantee. </param>
-        internal ElasticPoolActivity(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, DateTimeOffset? endTime, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, int? requestedDatabaseDtuMax, int? requestedDatabaseDtuMin, int? requestedDtu, string requestedElasticPoolName, long? requestedStorageLimitInGB, string elasticPoolName, string serverName, DateTimeOffset? startTime, string state, int? requestedStorageLimitInMB, int? requestedDatabaseDtuGuarantee, int? requestedDatabaseDtuCap, int? requestedDtuGuarantee) : base(id, name, type, systemData)
+        internal ElasticPoolActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DateTimeOffset? endOn, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, int? requestedDatabaseDtuMax, int? requestedDatabaseDtuMin, int? requestedDtu, string requestedElasticPoolName, long? requestedStorageLimitInGB, string elasticPoolName, string serverName, DateTimeOffset? startOn, string state, int? requestedStorageLimitInMB, int? requestedDatabaseDtuGuarantee, int? requestedDatabaseDtuCap, int? requestedDtuGuarantee) : base(id, name, resourceType, systemData)
         {
             Location = location;
-            EndTime = endTime;
+            EndOn = endOn;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             ErrorSeverity = errorSeverity;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
             RequestedStorageLimitInGB = requestedStorageLimitInGB;
             ElasticPoolName = elasticPoolName;
             ServerName = serverName;
-            StartTime = startTime;
+            StartOn = startOn;
             State = state;
             RequestedStorageLimitInMB = requestedStorageLimitInMB;
             RequestedDatabaseDtuGuarantee = requestedDatabaseDtuGuarantee;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
         /// <summary> The time the operation finished (ISO8601 format). </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The error code if available. </summary>
         public int? ErrorCode { get; }
         /// <summary> The error message if available. </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name of the server the elastic pool is in. </summary>
         public string ServerName { get; }
         /// <summary> The time the operation started (ISO8601 format). </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The current state of the operation. </summary>
         public string State { get; }
         /// <summary> The requested storage limit in MB. </summary>

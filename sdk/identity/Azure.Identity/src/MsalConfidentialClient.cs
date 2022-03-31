@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Azure.Identity
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
+        private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
 
         internal string RedirectUrl { get; }
 
@@ -24,26 +26,33 @@ namespace Azure.Identity
         protected MsalConfidentialClient()
         { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _clientSecret = clientSecret;
             RedirectUrl = redirectUrl;
             RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
             RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _assertionCallback = assertionCallback;
+            RegionalAuthority = regionalAuthority;
+        }
+
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
+        {
+            _asyncAssertionCallback = assertionCallback;
             RegionalAuthority = regionalAuthority;
         }
 
@@ -66,6 +75,11 @@ namespace Azure.Identity
                 confClientBuilder.WithClientAssertion(_assertionCallback);
             }
 
+            if (_asyncAssertionCallback != null)
+            {
+                confClientBuilder.WithClientAssertion(_asyncAssertionCallback);
+            }
+
             if (_certificateProvider != null)
             {
                 X509Certificate2 clientCertificate = await _certificateProvider.GetCertificateAsync(async, cancellationToken).ConfigureAwait(false);
@@ -86,6 +100,17 @@ namespace Azure.Identity
         }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientAsync(
+            string[] scopes,
+            string tenantId,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var result = await AcquireTokenForClientCoreAsync(scopes, tenantId, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientCoreAsync(
             string[] scopes,
             string tenantId,
             bool async,
@@ -114,6 +139,19 @@ namespace Azure.Identity
             bool async,
             CancellationToken cancellationToken)
         {
+            var result = await AcquireTokenSilentCoreAsync(scopes, account, tenantId, redirectUri, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(
+            string[] scopes,
+            AuthenticationAccount account,
+            string tenantId,
+            string redirectUri,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenSilent(scopes, account);
@@ -134,6 +172,19 @@ namespace Azure.Identity
             bool async,
             CancellationToken cancellationToken)
         {
+            var result = await AcquireTokenByAuthorizationCodeCoreAsync(scopes, code, tenantId, redirectUri, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenByAuthorizationCodeCoreAsync(
+            string[] scopes,
+            string code,
+            string tenantId,
+            string redirectUri,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenByAuthorizationCode(scopes, code);
@@ -147,7 +198,19 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
         }
 
-        public virtual async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOf(
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOfAsync(
+            string[] scopes,
+            string tenantId,
+            UserAssertion userAssertionValue,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var result = await AcquireTokenOnBehalfOfCoreAsync(scopes, tenantId, userAssertionValue, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOfCoreAsync(
             string[] scopes,
             string tenantId,
             UserAssertion userAssertionValue,
@@ -156,7 +219,9 @@ namespace Azure.Identity
         {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
-            var builder = client.AcquireTokenOnBehalfOf(scopes, userAssertionValue);
+            var builder = client
+                .AcquireTokenOnBehalfOf(scopes, userAssertionValue)
+                .WithSendX5C(_includeX5CClaimHeader);
 
             if (!string.IsNullOrEmpty(tenantId))
             {

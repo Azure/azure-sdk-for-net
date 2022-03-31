@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "148",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-ed5d12dcd772a34c9a25f78e4551ea54-5f632e3df53d114b-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "337cb476300580b05a8e7e29f245f4f3",
+        "traceparent": "00-22213d2d58542edd53b5cc5fa38aa99a-dee030d838145a2c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f0000801e1bb97d1ce7defc0c68bece3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,124 +18,124 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "516da25d-96f0-4a35-8b2b-a9e2c42cbbaf",
+        "apim-request-id": "cf3198f0-a0f6-4891-b08f-f1cb78507c09",
         "Content-Length": "0",
-        "Date": "Tue, 28 Sep 2021 14:23:07 GMT",
-        "Operation-Location": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/516da25d-96f0-4a35-8b2b-a9e2c42cbbaf?api-version=2021-09-30-preview",
+        "Date": "Tue, 25 Jan 2022 22:20:42 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/cf3198f0-a0f6-4891-b08f-f1cb78507c09?api-version=2022-01-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "486"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "217"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/516da25d-96f0-4a35-8b2b-a9e2c42cbbaf?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/cf3198f0-a0f6-4891-b08f-f1cb78507c09?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "27e922df5bf15b10076866b204ca9664",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ddb9e9088a0bafdaad2bc2d2ecf7a0d8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "92c0fa76-63c3-41f2-87ac-d5194a2b5f04",
+        "apim-request-id": "3a6fb72e-f5b5-4039-b8db-98274a8eb926",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:23:07 GMT",
+        "Date": "Tue, 25 Jan 2022 22:20:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "68"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:23:07Z",
-        "lastUpdatedDateTime": "2021-09-28T14:23:07Z"
+        "createdDateTime": "2022-01-25T22:20:42Z",
+        "lastUpdatedDateTime": "2022-01-25T22:20:42Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/516da25d-96f0-4a35-8b2b-a9e2c42cbbaf?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/cf3198f0-a0f6-4891-b08f-f1cb78507c09?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "144f6bb424165324942fcb6a3d813d16",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1fb8559dde7d473bc75c08005ab71177",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "71eae8c7-4b73-40fa-a88a-31bb4083c057",
+        "apim-request-id": "38e306ea-7e8f-4b57-bacc-26057d418aaa",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:23:09 GMT",
+        "Date": "Tue, 25 Jan 2022 22:20:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "64"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:23:07Z",
-        "lastUpdatedDateTime": "2021-09-28T14:23:07Z"
+        "createdDateTime": "2022-01-25T22:20:42Z",
+        "lastUpdatedDateTime": "2022-01-25T22:20:42Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/516da25d-96f0-4a35-8b2b-a9e2c42cbbaf?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/cf3198f0-a0f6-4891-b08f-f1cb78507c09?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "b1bd52e8b2f71bdaa3202c9dcafe7b8f",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a13007f40de976542d5143901ffeaad6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1b73b62f-14ce-4885-96ba-22886c15176d",
+        "apim-request-id": "6db7582c-cbfe-4620-ba13-8776a6dc66a6",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:23:10 GMT",
+        "Date": "Tue, 25 Jan 2022 22:20:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "70"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "31"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:23:07Z",
-        "lastUpdatedDateTime": "2021-09-28T14:23:07Z"
+        "createdDateTime": "2022-01-25T22:20:42Z",
+        "lastUpdatedDateTime": "2022-01-25T22:20:42Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/516da25d-96f0-4a35-8b2b-a9e2c42cbbaf?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/cf3198f0-a0f6-4891-b08f-f1cb78507c09?api-version=2022-01-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "86741af7e0f6badcfd9693c18fa61d86",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "712317ddcdd32a65ad7115af82da54f6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "69f98395-d923-4718-9e31-1eb580ad7788",
+        "apim-request-id": "febc4d8a-e324-4e30-a365-1ba14341d7f3",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:23:11 GMT",
+        "Date": "Tue, 25 Jan 2022 22:20:46 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "141"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "56"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2021-09-28T14:23:07Z",
-        "lastUpdatedDateTime": "2021-09-28T14:23:10Z",
+        "createdDateTime": "2022-01-25T22:20:42Z",
+        "lastUpdatedDateTime": "2022-01-25T22:20:45Z",
         "analyzeResult": {
-          "apiVersion": "2021-09-30-preview",
+          "apiVersion": "2022-01-30-preview",
           "modelId": "prebuilt-layout",
           "stringIndexType": "utf16CodeUnit",
           "content": "Contoso\nAddress:\n1 Redmond way Suite\n6000 Redmond, WA\n99243\nInvoice For: Microsoft\n1020 Enterprise Way\nSunnayvale, CA 87659\nInvoice Number\nInvoice Date\nInvoice Due Date\nCharges\nVAT ID\n34278587\n6/18/2017\n6/24/2017\n$56,651.49\nPT",
@@ -1129,14 +1129,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.497,
-                        2.7887,
-                        1.9036,
-                        2.7887,
-                        1.8965,
-                        3.3133,
-                        0.5041,
-                        3.3133
+                        0.5136,
+                        2.7928,
+                        1.8907,
+                        2.7928,
+                        1.8978,
+                        3.3181,
+                        0.5064,
+                        3.3181
                       ]
                     }
                   ],
@@ -1158,14 +1158,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        1.9036,
-                        2.7887,
-                        3.296,
-                        2.7887,
-                        3.3031,
-                        3.3205,
-                        1.8965,
-                        3.3133
+                        1.8907,
+                        2.7928,
+                        3.2893,
+                        2.7928,
+                        3.2964,
+                        3.3181,
+                        1.8978,
+                        3.3181
                       ]
                     }
                   ],
@@ -1187,14 +1187,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        3.296,
-                        2.7887,
-                        4.7026,
-                        2.7887,
-                        4.7026,
-                        3.3205,
-                        3.3031,
-                        3.3205
+                        3.2893,
+                        2.7928,
+                        4.6878,
+                        2.7928,
+                        4.695,
+                        3.3181,
+                        3.2964,
+                        3.3181
                       ]
                     }
                   ],
@@ -1216,14 +1216,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        4.7026,
-                        2.7887,
-                        6.1021,
-                        2.7887,
-                        6.1021,
-                        3.3133,
-                        4.7026,
-                        3.3205
+                        4.6878,
+                        2.7928,
+                        6.0864,
+                        2.7928,
+                        6.0936,
+                        3.3181,
+                        4.695,
+                        3.3181
                       ]
                     }
                   ],
@@ -1245,14 +1245,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        6.1021,
-                        2.7887,
-                        7.4945,
-                        2.7887,
-                        7.4945,
-                        3.3133,
-                        6.1021,
-                        3.3133
+                        6.0864,
+                        2.7928,
+                        7.485,
+                        2.7928,
+                        7.485,
+                        3.312,
+                        6.0936,
+                        3.3181
                       ]
                     }
                   ],
@@ -1273,14 +1273,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        0.5041,
-                        3.3133,
-                        1.8965,
-                        3.3133,
-                        1.8965,
-                        3.8523,
-                        0.5113,
-                        3.8523
+                        0.5064,
+                        3.3181,
+                        1.8978,
+                        3.3181,
+                        1.8978,
+                        3.8497,
+                        0.4992,
+                        3.8497
                       ]
                     }
                   ],
@@ -1301,14 +1301,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        1.8965,
-                        3.3133,
-                        3.3031,
-                        3.3205,
-                        3.3031,
-                        3.8523,
-                        1.8965,
-                        3.8523
+                        1.8978,
+                        3.3181,
+                        3.2964,
+                        3.3181,
+                        3.3036,
+                        3.8497,
+                        1.8978,
+                        3.8497
                       ]
                     }
                   ],
@@ -1329,14 +1329,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        3.3031,
-                        3.3205,
-                        4.7026,
-                        3.3205,
-                        4.7026,
-                        3.8523,
-                        3.3031,
-                        3.8523
+                        3.2964,
+                        3.3181,
+                        4.695,
+                        3.3181,
+                        4.7022,
+                        3.8497,
+                        3.3036,
+                        3.8497
                       ]
                     }
                   ],
@@ -1357,14 +1357,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        4.7026,
-                        3.3205,
-                        6.1021,
-                        3.3133,
-                        6.1021,
-                        3.8523,
-                        4.7026,
-                        3.8523
+                        4.695,
+                        3.3181,
+                        6.0936,
+                        3.3181,
+                        6.1008,
+                        3.8497,
+                        4.7022,
+                        3.8497
                       ]
                     }
                   ],
@@ -1385,14 +1385,14 @@
                     {
                       "pageNumber": 1,
                       "boundingBox": [
-                        6.1021,
-                        3.3133,
-                        7.4945,
-                        3.3133,
-                        7.4945,
-                        3.8523,
-                        6.1021,
-                        3.8523
+                        6.0936,
+                        3.3181,
+                        7.485,
+                        3.312,
+                        7.485,
+                        3.8497,
+                        6.1008,
+                        3.8497
                       ]
                     }
                   ],
@@ -1408,14 +1408,14 @@
                 {
                   "pageNumber": 1,
                   "boundingBox": [
-                    0.5052,
-                    2.7836,
-                    7.4995,
-                    2.7844,
-                    7.4985,
-                    3.8596,
-                    0.5038,
-                    3.859
+                    0.4955,
+                    2.7804,
+                    7.4929,
+                    2.7811,
+                    7.4936,
+                    3.858,
+                    0.4957,
+                    3.8571
                   ]
                 }
               ],
@@ -1426,14 +1426,15 @@
                 }
               ]
             }
-          ]
+          ],
+          "styles": []
         }
       }
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-canary.cognitiveservices.azure.com/",
-    "RandomSeed": "1279390868"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
+    "RandomSeed": "79285628"
   }
 }

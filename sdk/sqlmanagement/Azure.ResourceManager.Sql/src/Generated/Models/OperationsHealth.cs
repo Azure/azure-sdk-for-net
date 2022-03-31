@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Operations health status in a location. </summary>
-    public partial class OperationsHealth : Resource
+    public partial class OperationsHealth : ResourceData
     {
         /// <summary> Initializes a new instance of OperationsHealth. </summary>
         public OperationsHealth()
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of OperationsHealth. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="namePropertiesName"> Operation name for the service. </param>
         /// <param name="health"> Operation health status of the service. </param>
         /// <param name="description"> Health status description. </param>
-        internal OperationsHealth(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string namePropertiesName, string health, string description) : base(id, name, type, systemData)
+        internal OperationsHealth(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, string health, string description) : base(id, name, resourceType, systemData)
         {
             NamePropertiesName = namePropertiesName;
             Health = health;

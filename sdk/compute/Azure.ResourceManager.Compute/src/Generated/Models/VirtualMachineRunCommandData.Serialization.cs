@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -78,12 +79,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri");
-                writer.WriteStringValue(OutputBlobUri);
+                writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri");
-                writer.WriteStringValue(ErrorBlobUri);
+                writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -104,8 +105,8 @@ namespace Azure.ResourceManager.Compute
             Optional<string> runAsUser = default;
             Optional<string> runAsPassword = default;
             Optional<int> timeoutInSeconds = default;
-            Optional<string> outputBlobUri = default;
-            Optional<string> errorBlobUri = default;
+            Optional<Uri> outputBlobUri = default;
+            Optional<Uri> errorBlobUri = default;
             Optional<string> provisioningState = default;
             Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
@@ -226,12 +227,22 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("outputBlobUri"))
                         {
-                            outputBlobUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                outputBlobUri = null;
+                                continue;
+                            }
+                            outputBlobUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("errorBlobUri"))
                         {
-                            errorBlobUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                errorBlobUri = null;
+                                continue;
+                            }
+                            errorBlobUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

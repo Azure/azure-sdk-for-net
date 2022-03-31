@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedDatabase data model. </summary>
-    public partial class ManagedDatabaseData : TrackedResource
+    public partial class ManagedDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="collation"> Collation of the managed database. </param>
         /// <param name="status"> Status of the database. </param>
-        /// <param name="creationDate"> Creation date of the database. </param>
+        /// <param name="creationOn"> Creation date of the database. </param>
         /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
-        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="restorePointInOn"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
         /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
         /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
         /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
         /// <param name="autoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? creationDate, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, string defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, string storageContainerUri, string sourceDatabaseId, string restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, string recoverableDatabaseId, string longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, type, systemData, tags, location)
+        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? creationOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInOn, string defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, string sourceDatabaseId, string restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, string recoverableDatabaseId, string longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, resourceType, systemData, tags, location)
         {
             Collation = collation;
             Status = status;
-            CreationDate = creationDate;
+            CreationOn = creationOn;
             EarliestRestorePoint = earliestRestorePoint;
-            RestorePointInTime = restorePointInTime;
+            RestorePointInOn = restorePointInOn;
             DefaultSecondaryLocation = defaultSecondaryLocation;
             CatalogCollation = catalogCollation;
             CreateMode = createMode;
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Status of the database. </summary>
         public ManagedDatabaseStatus? Status { get; }
         /// <summary> Creation date of the database. </summary>
-        public DateTimeOffset? CreationDate { get; }
+        public DateTimeOffset? CreationOn { get; }
         /// <summary> Earliest restore point in time for point in time restore. </summary>
         public DateTimeOffset? EarliestRestorePoint { get; }
         /// <summary> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInTime { get; set; }
+        public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> Geo paired region. </summary>
         public string DefaultSecondaryLocation { get; }
         /// <summary> Collation of the metadata catalog. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </summary>
         public ManagedDatabaseCreateMode? CreateMode { get; set; }
         /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </summary>
-        public string StorageContainerUri { get; set; }
+        public Uri StorageContainerUri { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         public string SourceDatabaseId { get; set; }
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>

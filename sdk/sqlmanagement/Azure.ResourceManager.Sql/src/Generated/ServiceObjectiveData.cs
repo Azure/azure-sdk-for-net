@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ServiceObjective data model. </summary>
-    public partial class ServiceObjectiveData : Resource
+    public partial class ServiceObjectiveData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>
         public ServiceObjectiveData()
@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="serviceObjectiveName"> The name for the service objective. </param>
         /// <param name="isDefault"> Gets whether the service level objective is the default service objective. </param>
         /// <param name="isSystem"> Gets whether the service level objective is a system service objective. </param>
         /// <param name="description"> The description for the service level objective. </param>
         /// <param name="enabled"> Gets whether the service level objective is enabled. </param>
-        internal ServiceObjectiveData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string serviceObjectiveName, bool? isDefault, bool? isSystem, string description, bool? enabled) : base(id, name, type, systemData)
+        internal ServiceObjectiveData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceObjectiveName, bool? isDefault, bool? isSystem, string description, bool? enabled) : base(id, name, resourceType, systemData)
         {
             ServiceObjectiveName = serviceObjectiveName;
             IsDefault = isDefault;

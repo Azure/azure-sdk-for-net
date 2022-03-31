@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the TagResource data model. </summary>
-    public partial class TagResourceData : Resource
+    public partial class TagResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of TagResourceData. </summary>
         /// <param name="properties"> The set of tags. </param>
@@ -31,15 +32,25 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of TagResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The set of tags. </param>
-        internal TagResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Tag properties) : base(id, name, type, systemData)
+        internal TagResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Tag properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> The set of tags. </summary>
-        public Tag Properties { get; set; }
+        internal Tag Properties { get; set; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IDictionary<string, string> TagValues
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new Tag();
+                return Properties.TagValues;
+            }
+        }
     }
 }

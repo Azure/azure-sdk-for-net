@@ -19,7 +19,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="inputDataFormat"> The format of the input data. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>
         /// <param name="target"> The target identifier to run the job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/>, <paramref name="inputDataFormat"/>, <paramref name="providerId"/>, or <paramref name="target"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/>, <paramref name="inputDataFormat"/>, <paramref name="providerId"/> or <paramref name="target"/> is null. </exception>
         public JobDetails(string containerUri, string inputDataFormat, string providerId, string target)
         {
             if (containerUri == null)

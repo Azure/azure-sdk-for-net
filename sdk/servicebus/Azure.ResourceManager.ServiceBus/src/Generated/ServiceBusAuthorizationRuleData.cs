@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusAuthorizationRule data model. </summary>
-    public partial class ServiceBusAuthorizationRuleData : Resource
+    public partial class ServiceBusAuthorizationRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
         public ServiceBusAuthorizationRuleData()
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
-        internal ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<AccessRights> rights) : base(id, name, type, systemData)
+        internal ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<AccessRights> rights) : base(id, name, resourceType, systemData)
         {
             Rights = rights;
         }

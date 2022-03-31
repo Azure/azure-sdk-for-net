@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
         /// <param name="clientIp"> Client IP that opened the handle. </param>
         /// <param name="openedOn"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="handleId"/>, <paramref name="path"/>, <paramref name="fileId"/>, <paramref name="sessionId"/>, or <paramref name="clientIp"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="handleId"/>, <paramref name="path"/>, <paramref name="fileId"/>, <paramref name="sessionId"/> or <paramref name="clientIp"/> is null. </exception>
         internal ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, DateTimeOffset? openedOn)
         {
             if (handleId == null)

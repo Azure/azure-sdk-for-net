@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(RelayArmUri))
             {
                 writer.WritePropertyName("relayArmUri");
-                writer.WriteStringValue(RelayArmUri);
+                writer.WriteStringValue(RelayArmUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Hostname))
             {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.AppService
             SystemData systemData = default;
             Optional<string> serviceBusNamespace = default;
             Optional<string> relayName = default;
-            Optional<string> relayArmUri = default;
+            Optional<Uri> relayArmUri = default;
             Optional<string> hostname = default;
             Optional<int> port = default;
             Optional<string> sendKeyName = default;
@@ -130,7 +131,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("relayArmUri"))
                         {
-                            relayArmUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                relayArmUri = null;
+                                continue;
+                            }
+                            relayArmUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostname"))

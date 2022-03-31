@@ -394,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventBatch.AsEnumerable{T}" />
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.AsReadOnlyCollection{T}" />
         ///   method.
         /// </summary>
         ///
@@ -413,11 +413,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(0);
 
             var batch = new AmqpEventBatch(mockConverter, options, default);
-            Assert.That(() => batch.AsEnumerable<AmqpMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsReadOnlyCollection<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventBatch.AsEnumerable{T}" />
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.AsReadOnlyCollection{T}" />
         ///   method.
         /// </summary>
         ///
@@ -455,7 +455,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 batch.TryAdd(batchEvents[index]);
             }
 
-            IEnumerable<EventData> batchEnumerable = batch.AsEnumerable<EventData>();
+            IEnumerable<EventData> batchEnumerable = batch.AsReadOnlyCollection<EventData>();
             Assert.That(batchEnumerable, Is.Not.Null, "The batch enumerable should have been populated.");
 
             var batchEnumerableList = batchEnumerable.ToList();
@@ -669,8 +669,8 @@ namespace Azure.Messaging.EventHubs.Tests
             public Func<IEnumerable<EventData>, string, AmqpMessage> CreateBatchFromEventsHandler = (_e, _p) => null;
             public Func<IEnumerable<AmqpMessage>, string, AmqpMessage> CreateBatchFromMessagesHandler = (_m, _p) => null;
             public override AmqpMessage CreateMessageFromEvent(EventData source, string partitionKey = null) => CreateMessageFromEventHandler(source, partitionKey);
-            public override AmqpMessage CreateBatchFromEvents(IEnumerable<EventData> source, string partitionKey = null) => CreateBatchFromEventsHandler(source, partitionKey);
-            public override AmqpMessage CreateBatchFromMessages(IEnumerable<AmqpMessage> source, string partitionKey = null) => CreateBatchFromMessagesHandler(source, partitionKey);
+            public override AmqpMessage CreateBatchFromEvents(IReadOnlyCollection<EventData> source, string partitionKey = null) => CreateBatchFromEventsHandler(source, partitionKey);
+            public override AmqpMessage CreateBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, string partitionKey = null) => CreateBatchFromMessagesHandler(source, partitionKey);
         }
     }
 }
