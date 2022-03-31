@@ -9,12 +9,12 @@
 ### Breaking Changes
 
 - Now all the resource classes will have a `Resource` suffix (if it previously does not have one).
-- Rename some model to a more comprehensive name.
-- Class `ManagementGroupResource` (previously `ManagementGroup`), `ManagementGroupCollection` and `ManagementGroupData` move from `Azure.ResourceManager.Management` namespace to `Azure.ResourceManager.ManagementGroups`.
-- Class `ArmResource` and `ArmCollection` move from `Azure.ResourceManager.Core` to `Azure.ResourceManager`.
-- Namespace `Azure.ResourceManager.Core` and `Azure.ResourceManager.Management` are removed.
-- Class `ErrorDetail` and `ErrorAdditionalInfo` are removed.
-- `GetIfExists` methods are removed from all the resource classes.
+- Rename some models to more comprehensive names.
+- Move class `ManagementGroupResource` (previously `ManagementGroup`), `ManagementGroupCollection` and `ManagementGroupData` from `Azure.ResourceManager.Management` namespace to `Azure.ResourceManager.ManagementGroups`.
+- Move class `ArmResource` and `ArmCollection` from `Azure.ResourceManager.Core` to `Azure.ResourceManager`.
+- Remove namespace `Azure.ResourceManager.Core` and `Azure.ResourceManager.Management`.
+- Remove class `ErrorDetail` and `ErrorAdditionalInfo`.
+- Remove `GetIfExists` methods from all the resource classes.
 - `Scope` in `ArmClientOptions` changed to `ArmEnvironment`.
 - The constructor of `ArmClient` no longer accepts a `Uri` parameter, please use the `ArmEnvironment` in `ArmClientOptions` instead.
 
