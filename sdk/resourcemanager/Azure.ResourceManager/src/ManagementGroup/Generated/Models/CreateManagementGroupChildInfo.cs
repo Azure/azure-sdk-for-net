@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The child information of a management group used during creation. </summary>
-    public partial class ManagementGroupChildOptions
+    public partial class CreateManagementGroupChildInfo
     {
-        /// <summary> Initializes a new instance of ManagementGroupChildOptions. </summary>
-        internal ManagementGroupChildOptions()
+        /// <summary> Initializes a new instance of CreateManagementGroupChildInfo. </summary>
+        internal CreateManagementGroupChildInfo()
         {
-            Children = new ChangeTrackingList<ManagementGroupChildOptions>();
+            Children = new ChangeTrackingList<CreateManagementGroupChildInfo>();
         }
 
         /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>
@@ -28,6 +28,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> The friendly name of the child resource. </summary>
         public string DisplayName { get; }
         /// <summary> The list of children. </summary>
-        public IReadOnlyList<ManagementGroupChildOptions> Children { get; }
+        public IReadOnlyList<CreateManagementGroupChildInfo> Children { get; }
     }
 }

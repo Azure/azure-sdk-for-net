@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class ManagementGroupChildOptions
+    public partial class CreateManagementGroupChildInfo
     {
     }
 }
