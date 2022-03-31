@@ -8,15 +8,16 @@
 
 ### Breaking Changes
 
-- Now all the resource classes will have a `Resource` suffix (if it previously does not have one).
-- Rename some models to more comprehensive names.
-- Move class `ManagementGroupResource` (previously `ManagementGroup`), `ManagementGroupCollection` and `ManagementGroupData` from `Azure.ResourceManager.Management` namespace to `Azure.ResourceManager.ManagementGroups`.
-- Move class `ArmResource` and `ArmCollection` from `Azure.ResourceManager.Core` to `Azure.ResourceManager`.
-- Remove namespace `Azure.ResourceManager.Core` and `Azure.ResourceManager.Management`.
-- Remove class `ErrorDetail` and `ErrorAdditionalInfo`.
-- Remove `GetIfExists` methods from all the resource classes.
-- `Scope` in `ArmClientOptions` changed to `ArmEnvironment`.
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- Moved class `ManagementGroupResource` (previously `ManagementGroup`), `ManagementGroupCollection` and `ManagementGroupData` from `Azure.ResourceManager.Management` namespace to `Azure.ResourceManager.ManagementGroups`.
+- Moved class `ArmResource` and `ArmCollection` from `Azure.ResourceManager.Core` to `Azure.ResourceManager`.
+- Removed namespace `Azure.ResourceManager.Core` and `Azure.ResourceManager.Management`.
+- Removed class `ErrorDetail` and `ErrorAdditionalInfo`.
+- Removed `GetIfExists` methods from all the resource classes.
+- Changed `Scope` in `ArmClientOptions` to `ArmEnvironment`.
 - The constructor of `ArmClient` no longer accepts a `Uri` parameter, please use the `ArmEnvironment` in `ArmClientOptions` instead.
+- All properties of the type `object` were changed to `BinaryData`.
 
 ## 1.0.0-beta.8 (2022-01-29)
 
