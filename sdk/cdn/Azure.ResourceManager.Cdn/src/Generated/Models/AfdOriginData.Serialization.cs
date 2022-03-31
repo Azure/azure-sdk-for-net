@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            Azure.Core.ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<string> originGroupName = default;
             Optional<WritableSubResource> azureOrigin = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> originHostHeader = default;
             Optional<int?> priority = default;
             Optional<int?> weight = default;
-            Optional<object> sharedPrivateLinkResource = default;
+            Optional<SharedPrivateLinkResourceProperties> sharedPrivateLinkResource = default;
             Optional<EnabledState> enabledState = default;
             Optional<bool> enforceCertificateNameCheck = default;
             Optional<AfdProvisioningState> provisioningState = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Cdn
                                 sharedPrivateLinkResource = null;
                                 continue;
                             }
-                            sharedPrivateLinkResource = property0.Value.GetObject();
+                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"))

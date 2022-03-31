@@ -19,13 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="vaultName"> The name of the user&apos;s Key Vault containing the secret. </param>
         /// <param name="secretName"> The name of secret in Key Vault. </param>
         /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
-<<<<<<< HEAD
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/>, or <paramref name="secretVersion"/> is null. </exception>
-        public KeyVaultSigningKeyParameters(KeyVaultSigningKeyParametersTypeName typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
-=======
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
-        public KeyVaultSigningKeyParameters(KeyVaultSigningKeyParametersOdataType odataType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
->>>>>>> origin/main
+        public KeyVaultSigningKeyParameters(KeyVaultSigningKeyParametersTypeName typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
         {
             if (subscriptionId == null)
             {

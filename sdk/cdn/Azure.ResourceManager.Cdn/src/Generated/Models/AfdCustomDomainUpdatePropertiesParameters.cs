@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -22,8 +23,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
         public AfdCustomDomainHttpsParameters TlsSettings { get; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
-        public WritableSubResource AzureDnsZone { get; }
+        internal WritableSubResource AzureDnsZone { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AzureDnsZoneId
+        {
+            get => AzureDnsZone.Id;
+            set => AzureDnsZone.Id = value;
+        }
+
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        public AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResourceId { get; }
+        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResourceId { get; }
+        /// <summary> Resource ID. </summary>
+        public string PreValidatedCustomDomainResourceIdId
+        {
+            get => PreValidatedCustomDomainResourceId.Id;
+            set => PreValidatedCustomDomainResourceId.Id = value;
+        }
     }
 }

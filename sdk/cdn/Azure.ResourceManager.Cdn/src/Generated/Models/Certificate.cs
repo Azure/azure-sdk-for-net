@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The type of the secret resource. </summary>
-        public SecretType? Type { get; }
+        public SecretType? SecretType { get; }
         /// <summary> Subject name in the certificate. </summary>
         public string Subject { get; }
         /// <summary> Certificate expiration date. </summary>

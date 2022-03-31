@@ -23,21 +23,13 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Parameters = parameters;
-<<<<<<< HEAD
-            Name = DeliveryRuleActionName.CacheKeyQueryString;
-=======
             Name = DeliveryRuleActionType.CacheKeyQueryString;
->>>>>>> origin/main
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleCacheKeyQueryStringAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-<<<<<<< HEAD
-        internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionName name, CacheKeyQueryStringActionParameters parameters) : base(name)
-=======
         internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionType name, CacheKeyQueryStringActionParameters parameters) : base(name)
->>>>>>> origin/main
         {
             Parameters = parameters;
             Name = name;

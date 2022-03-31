@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="queryStringCachingBehavior"> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
         /// <param name="compressionSettings"> compression settings. </param>
-        internal AfdRouteCacheConfiguration(AfdQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, object compressionSettings)
+        internal AfdRouteCacheConfiguration(AfdQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, CompressionSettings compressionSettings)
         {
             QueryStringCachingBehavior = queryStringCachingBehavior;
             QueryParameters = queryParameters;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> query parameters to include or exclude (comma separated). </summary>
         public string QueryParameters { get; set; }
         /// <summary> compression settings. </summary>
-        public object CompressionSettings { get; set; }
+        public CompressionSettings CompressionSettings { get; set; }
     }
 }

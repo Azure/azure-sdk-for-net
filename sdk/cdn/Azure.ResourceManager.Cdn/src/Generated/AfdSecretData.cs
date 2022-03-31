@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdSecret data model. </summary>
-    public partial class AfdSecretData : Resource
+    public partial class AfdSecretData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdSecretData. </summary>
         public AfdSecretData()
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdSecretData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
         /// <param name="parameters"> object which contains secret parameters. </param>
-        internal AfdSecretData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string profileName, SecretParameters parameters) : base(id, name, type, systemData)
+        internal AfdSecretData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string profileName, SecretParameters parameters) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
@@ -43,6 +43,17 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the profile which holds the secret. </summary>
         public string ProfileName { get; }
         /// <summary> object which contains secret parameters. </summary>
-        public SecretParameters Parameters { get; set; }
+        internal SecretParameters Parameters { get; set; }
+        /// <summary> The type of the secret resource. </summary>
+        internal SecretType ParametersSecretType
+        {
+            get => Parameters is null ? default : Parameters.SecretType;
+            set
+            {
+                if (Parameters is null)
+                    Parameters = new SecretParameters();
+                Parameters.SecretType = value;
+            }
+        }
     }
 }

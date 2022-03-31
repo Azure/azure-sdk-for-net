@@ -32,11 +32,6 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
-            }
             if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
                 if (OriginResponseTimeoutSeconds != null)
@@ -55,20 +50,15 @@ namespace Azure.ResourceManager.Cdn
 
         internal static ProfileData DeserializeProfileData(JsonElement element)
         {
-<<<<<<< HEAD
-            Models.Sku sku = default;
-            Optional<string> kind = default;
-=======
             CdnSku sku = default;
->>>>>>> origin/main
+            Optional<string> kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Azure.Core.ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<ProfileResourceState> resourceState = default;
-            Optional<Models.ManagedServiceIdentity> identity = default;
             Optional<string> provisioningState = default;
             Optional<string> frontDoorId = default;
             Optional<int?> originResponseTimeoutSeconds = default;
@@ -138,16 +128,6 @@ namespace Azure.ResourceManager.Cdn
                             resourceState = new ProfileResourceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("identity"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property0.Value);
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             provisioningState = property0.Value.GetString();
@@ -172,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), identity.Value, provisioningState.Value, frontDoorId.Value, Optional.ToNullable(originResponseTimeoutSeconds));
+            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), provisioningState.Value, frontDoorId.Value, Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }

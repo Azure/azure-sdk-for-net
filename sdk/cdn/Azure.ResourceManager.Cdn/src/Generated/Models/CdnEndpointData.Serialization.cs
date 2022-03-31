@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Azure.Core.ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<string> originPath = default;
             Optional<IList<string>> contentTypesToCompress = default;

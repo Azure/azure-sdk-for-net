@@ -31,11 +31,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customHttpsParameters"> Certificate parameters for securing custom HTTPS. </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
         /// <param name="provisioningState"> Provisioning status of the custom domain. </param>
-<<<<<<< HEAD
-        internal CdnCustomDomainData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomDomainHttpsOptions customHttpsParameters, string validationData, string provisioningState) : base(id, name, type, systemData)
-=======
-        internal CdnCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, string validationData, string provisioningState) : base(id, name, resourceType, systemData)
->>>>>>> origin/main
+        internal CdnCustomDomainData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomDomainHttpsOptions customHttpsParameters, string validationData, string provisioningState) : base(id, name, resourceType, systemData)
         {
             HostName = hostName;
             ResourceState = resourceState;

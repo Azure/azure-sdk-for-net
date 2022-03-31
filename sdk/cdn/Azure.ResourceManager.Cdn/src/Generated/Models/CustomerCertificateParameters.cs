@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Customer Certificate used for https. </summary>
-    public partial class CustomerCertificateParameters : SecretParameters
+    internal partial class CustomerCertificateParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of CustomerCertificateParameters. </summary>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
             SecretSource = secretSource;
             SubjectAlternativeNames = new ChangeTrackingList<string>();
-            Type = SecretType.CustomerCertificate;
+            SecretType = SecretType.CustomerCertificate;
         }
 
         /// <summary> Initializes a new instance of CustomerCertificateParameters. </summary>
-        /// <param name="type"> The type of the secret resource. </param>
+        /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
         /// <param name="useLatestVersion"> Whether to use the latest version for the certificate. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        internal CustomerCertificateParameters(SecretType type, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(type)
+        internal CustomerCertificateParameters(SecretType secretType, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
@@ -50,11 +50,23 @@ namespace Azure.ResourceManager.Cdn.Models
             CertificateAuthority = certificateAuthority;
             SubjectAlternativeNames = subjectAlternativeNames;
             Thumbprint = thumbprint;
-            Type = type;
+            SecretType = secretType;
         }
 
         /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
-        public WritableSubResource SecretSource { get; set; }
+        internal WritableSubResource SecretSource { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SecretSourceId
+        {
+            get => SecretSource is null ? default : SecretSource.Id;
+            set
+            {
+                if (SecretSource is null)
+                    SecretSource = new WritableSubResource();
+                SecretSource.Id = value;
+            }
+        }
+
         /// <summary> Version of the secret to be used. </summary>
         public string SecretVersion { get; set; }
         /// <summary> Whether to use the latest version for the certificate. </summary>

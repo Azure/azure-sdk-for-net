@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdOrigin data model. </summary>
-    public partial class AfdOriginData : Resource
+    public partial class AfdOriginData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdOriginData. </summary>
         public AfdOriginData()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdOriginData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
         /// <param name="azureOrigin"> Resource reference to the Azure origin resource. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdOriginData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, string originGroupName, WritableSubResource azureOrigin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, object sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdOriginData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string originGroupName, WritableSubResource azureOrigin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             OriginGroupName = originGroupName;
             AzureOrigin = azureOrigin;
@@ -58,7 +58,19 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the origin group which contains this origin. </summary>
         public string OriginGroupName { get; }
         /// <summary> Resource reference to the Azure origin resource. </summary>
-        public WritableSubResource AzureOrigin { get; set; }
+        internal WritableSubResource AzureOrigin { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AzureOriginId
+        {
+            get => AzureOrigin is null ? default : AzureOrigin.Id;
+            set
+            {
+                if (AzureOrigin is null)
+                    AzureOrigin = new WritableSubResource();
+                AzureOrigin.Id = value;
+            }
+        }
+
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
         public string HostName { get; set; }
         /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
@@ -72,7 +84,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
         public int? Weight { get; set; }
         /// <summary> The properties of the private link resource for private origin. </summary>
-        public object SharedPrivateLinkResource { get; set; }
+        public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; set; }
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         public EnabledState? EnabledState { get; set; }
         /// <summary> Whether to enable certificate name check at origin level. </summary>

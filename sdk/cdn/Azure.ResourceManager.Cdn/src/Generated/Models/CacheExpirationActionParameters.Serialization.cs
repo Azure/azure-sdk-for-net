@@ -71,11 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-<<<<<<< HEAD
-            return new CacheExpirationActionParameters(typeName, cacheBehavior, cacheType, cacheDuration.Value);
-=======
-            return new CacheExpirationActionParameters(odataType, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration));
->>>>>>> origin/main
+            return new CacheExpirationActionParameters(typeName, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration));
         }
     }
 }

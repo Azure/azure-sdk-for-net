@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             Optional<AfdQueryStringCachingBehavior> queryStringCachingBehavior = default;
             Optional<string> queryParameters = default;
-            Optional<object> compressionSettings = default;
+            Optional<CompressionSettings> compressionSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryStringCachingBehavior"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    compressionSettings = property.Value.GetObject();
+                    compressionSettings = CompressionSettings.DeserializeCompressionSettings(property.Value);
                     continue;
                 }
             }

@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityInput. </summary>
         /// <param name="name"> The resource name to validate. </param>
-        /// <param name="type"> The type of the resource whose name is to be validated. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityInput(string name, ResourceType type)
+        public CheckNameAvailabilityInput(string name, ResourceType resourceType)
         {
             if (name == null)
             {
@@ -24,20 +24,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Name = name;
-<<<<<<< HEAD
-            Type = type;
-=======
-            ResourceType = "Microsoft.Cdn/Profiles/Endpoints";
->>>>>>> origin/main
+            ResourceType = resourceType;
         }
 
         /// <summary> The resource name to validate. </summary>
         public string Name { get; }
         /// <summary> The type of the resource whose name is to be validated. </summary>
-<<<<<<< HEAD
-        public ResourceType Type { get; }
-=======
-        public string ResourceType { get; }
->>>>>>> origin/main
+        public ResourceType ResourceType { get; }
     }
 }

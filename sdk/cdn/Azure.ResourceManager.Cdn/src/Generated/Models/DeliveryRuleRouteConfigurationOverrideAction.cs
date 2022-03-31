@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Parameters = parameters;
-            Name = DeliveryRuleActionName.RouteConfigurationOverride;
+            Name = DeliveryRuleActionType.RouteConfigurationOverride;
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleRouteConfigurationOverrideAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionName name, RouteConfigurationOverrideActionParameters parameters) : base(name)
+        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionType name, RouteConfigurationOverrideActionParameters parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;

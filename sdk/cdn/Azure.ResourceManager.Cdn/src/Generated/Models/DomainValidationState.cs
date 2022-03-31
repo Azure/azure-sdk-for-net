@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string TimedOutValue = "TimedOut";
         private const string PendingRevalidationValue = "PendingRevalidation";
         private const string ApprovedValue = "Approved";
+        private const string RefreshingValidationTokenValue = "RefreshingValidationToken";
+        private const string InternalErrorValue = "InternalError";
 
         /// <summary> Unknown. </summary>
         public static DomainValidationState Unknown { get; } = new DomainValidationState(UnknownValue);
@@ -44,6 +46,10 @@ namespace Azure.ResourceManager.Cdn.Models
         public static DomainValidationState PendingRevalidation { get; } = new DomainValidationState(PendingRevalidationValue);
         /// <summary> Approved. </summary>
         public static DomainValidationState Approved { get; } = new DomainValidationState(ApprovedValue);
+        /// <summary> RefreshingValidationToken. </summary>
+        public static DomainValidationState RefreshingValidationToken { get; } = new DomainValidationState(RefreshingValidationTokenValue);
+        /// <summary> InternalError. </summary>
+        public static DomainValidationState InternalError { get; } = new DomainValidationState(InternalErrorValue);
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are the same. </summary>
         public static bool operator ==(DomainValidationState left, DomainValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are not the same. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Caching settings for a caching-type route. To disable caching, do not provide a cacheConfiguration object. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won&apos;t be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheConfiguration(RuleQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RuleIsCompressionEnabled? isCompressionEnabled, RuleCacheBehavior? cacheBehavior, string cacheDuration)
+        internal CacheConfiguration(RuleQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RuleIsCompressionEnabled? isCompressionEnabled, RuleCacheBehavior? cacheBehavior, TimeSpan? cacheDuration)
         {
             QueryStringCachingBehavior = queryStringCachingBehavior;
             QueryParameters = queryParameters;
@@ -39,6 +41,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Caching behavior for the requests. </summary>
         public RuleCacheBehavior? CacheBehavior { get; set; }
         /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
-        public string CacheDuration { get; set; }
+        public TimeSpan? CacheDuration { get; set; }
     }
 }

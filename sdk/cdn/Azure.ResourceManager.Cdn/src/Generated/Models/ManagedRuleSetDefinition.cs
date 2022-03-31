@@ -30,11 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ruleSetType"> Type of the managed rule set. </param>
         /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
         /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
-<<<<<<< HEAD
-        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, Sku sku, string provisioningState, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups) : base(id, name, type, systemData)
-=======
-        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CdnSku sku, string provisioningState, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups) : base(id, name, resourceType, systemData)
->>>>>>> origin/main
+        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, CdnSku sku, string provisioningState, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             ProvisioningState = provisioningState;

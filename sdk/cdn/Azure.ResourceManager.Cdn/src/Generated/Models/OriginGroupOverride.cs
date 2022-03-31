@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -27,7 +28,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup on route. </summary>
-        public WritableSubResource OriginGroup { get; set; }
+        internal WritableSubResource OriginGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier OriginGroupId
+        {
+            get => OriginGroup is null ? default : OriginGroup.Id;
+            set
+            {
+                if (OriginGroup is null)
+                    OriginGroup = new WritableSubResource();
+                OriginGroup.Id = value;
+            }
+        }
+
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
         public ForwardingProtocol? ForwardingProtocol { get; set; }
     }

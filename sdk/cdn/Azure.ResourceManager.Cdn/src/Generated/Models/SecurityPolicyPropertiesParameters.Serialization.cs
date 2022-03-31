@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyPropertiesParameters : IUtf8JsonSerializable
+    internal partial class SecurityPolicyPropertiesParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(SecurityPolicyType.ToString());
             writer.WriteEndObject();
         }
 

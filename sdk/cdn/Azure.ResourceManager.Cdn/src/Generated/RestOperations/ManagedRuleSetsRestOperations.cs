@@ -31,18 +31,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ManagedRuleSetsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-<<<<<<< HEAD
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2021-06-01";
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
-=======
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-09-01";
+            _apiVersion = apiVersion ?? "2021-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
->>>>>>> origin/main
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -54,13 +46,8 @@ namespace Azure.ResourceManager.Cdn
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-<<<<<<< HEAD
             uri.AppendPath("/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-=======
-            uri.AppendPath("/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
->>>>>>> origin/main
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

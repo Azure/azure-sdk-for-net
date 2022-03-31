@@ -23,21 +23,13 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Parameters = parameters;
-<<<<<<< HEAD
-            Name = DeliveryRuleActionName.UrlSigning;
-=======
             Name = DeliveryRuleActionType.UrlSigning;
->>>>>>> origin/main
         }
 
         /// <summary> Initializes a new instance of UrlSigningAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-<<<<<<< HEAD
-        internal UrlSigningAction(DeliveryRuleActionName name, UrlSigningActionParameters parameters) : base(name)
-=======
         internal UrlSigningAction(DeliveryRuleActionType name, UrlSigningActionParameters parameters) : base(name)
->>>>>>> origin/main
         {
             Parameters = parameters;
             Name = name;

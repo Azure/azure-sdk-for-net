@@ -10,13 +10,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-<<<<<<< HEAD:sdk/cdn/Azure.ResourceManager.Cdn/src/Generated/Models/CdnCertificateSourceParametersTypeName.cs
     /// <summary> The CdnCertificateSourceParametersTypeName. </summary>
     public readonly partial struct CdnCertificateSourceParametersTypeName : IEquatable<CdnCertificateSourceParametersTypeName>
-=======
-    /// <summary> The CdnCertificateSourceParametersOdataType. </summary>
-    internal readonly partial struct CdnCertificateSourceParametersOdataType : IEquatable<CdnCertificateSourceParametersOdataType>
->>>>>>> origin/main:sdk/cdn/Azure.ResourceManager.Cdn/src/Generated/Models/CdnCertificateSourceParametersOdataType.cs
     {
         private readonly string _value;
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The name of the condition for the delivery rule. </summary>
-    public readonly partial struct MatchVariable : IEquatable<MatchVariable>
+    internal readonly partial struct MatchVariable : IEquatable<MatchVariable>
     {
         private readonly string _value;
 

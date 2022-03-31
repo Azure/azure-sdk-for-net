@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdRoute data model. </summary>
-    public partial class AfdRouteData : Resource
+    public partial class AfdRouteData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdRouteData. </summary>
         public AfdRouteData()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdRouteData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
         /// <param name="customDomains"> Domains referenced by this endpoint. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdRouteData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, string endpointName, IList<ActivatedResourceReference> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, AfdRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, type, systemData)
+        internal AfdRouteData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string endpointName, IList<ActivatedResourceReference> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, AfdRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             EndpointName = endpointName;
             CustomDomains = customDomains;
@@ -67,7 +67,19 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Domains referenced by this endpoint. </summary>
         public IList<ActivatedResourceReference> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
-        public WritableSubResource OriginGroup { get; set; }
+        internal WritableSubResource OriginGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier OriginGroupId
+        {
+            get => OriginGroup is null ? default : OriginGroup.Id;
+            set
+            {
+                if (OriginGroup is null)
+                    OriginGroup = new WritableSubResource();
+                OriginGroup.Id = value;
+            }
+        }
+
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
         public string OriginPath { get; set; }
         /// <summary> rule sets referenced by this endpoint. </summary>

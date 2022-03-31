@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Azure FirstParty Managed Certificate provided by other first party resource providers to enable HTTPS. </summary>
-    public partial class AzureFirstPartyManagedCertificateParameters : SecretParameters
+    internal partial class AzureFirstPartyManagedCertificateParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of AzureFirstPartyManagedCertificateParameters. </summary>
         public AzureFirstPartyManagedCertificateParameters()
         {
-            Type = SecretType.AzureFirstPartyManagedCertificate;
+            SecretType = SecretType.AzureFirstPartyManagedCertificate;
         }
 
         /// <summary> Initializes a new instance of AzureFirstPartyManagedCertificateParameters. </summary>
-        /// <param name="type"> The type of the secret resource. </param>
-        internal AzureFirstPartyManagedCertificateParameters(SecretType type) : base(type)
+        /// <param name="secretType"> The type of the secret resource. </param>
+        internal AzureFirstPartyManagedCertificateParameters(SecretType secretType) : base(secretType)
         {
-            Type = type;
+            SecretType = secretType;
         }
     }
 }

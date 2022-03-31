@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CacheDuration))
             {
                 writer.WritePropertyName("cacheDuration");
-                writer.WriteStringValue(CacheDuration);
+                writer.WriteStringValue(CacheDuration.Value, "c");
             }
             writer.WriteEndObject();
         }
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> queryParameters = default;
             Optional<RuleIsCompressionEnabled> isCompressionEnabled = default;
             Optional<RuleCacheBehavior> cacheBehavior = default;
-            Optional<string> cacheDuration = default;
+            Optional<TimeSpan> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryStringCachingBehavior"))
@@ -89,11 +90,16 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("cacheDuration"))
                 {
-                    cacheDuration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    cacheDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
             }
-            return new CacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(cacheBehavior), cacheDuration.Value);
+            return new CacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(cacheBehavior), Optional.ToNullable(cacheDuration));
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the AfdRuleSet data model. </summary>
-    public partial class AfdRuleSetData : Resource
+    public partial class AfdRuleSetData : ResourceData
     {
         /// <summary> Initializes a new instance of AfdRuleSetData. </summary>
         public AfdRuleSetData()
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdRuleSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the rule set. </param>
-        internal AfdRuleSetData(ResourceIdentifier id, string name, Azure.Core.ResourceType type, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string profileName) : base(id, name, type, systemData)
+        internal AfdRuleSetData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string profileName) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;

@@ -13,22 +13,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ValidateProbeInput
     {
         /// <summary> Initializes a new instance of ValidateProbeInput. </summary>
-<<<<<<< HEAD
-        /// <param name="probeUrl"> The probe URL to validate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="probeUrl"/> is null. </exception>
-        public ValidateProbeInput(string probeUrl)
-        {
-            if (probeUrl == null)
-            {
-                throw new ArgumentNullException(nameof(probeUrl));
-            }
-
-            ProbeUrl = probeUrl;
-        }
-
-        /// <summary> The probe URL to validate. </summary>
-        public string ProbeUrl { get; }
-=======
         /// <param name="probeUri"> The probe URL to validate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeUri"/> is null. </exception>
         public ValidateProbeInput(Uri probeUri)
@@ -43,6 +27,5 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The probe URL to validate. </summary>
         public Uri ProbeUri { get; }
->>>>>>> origin/main
     }
 }

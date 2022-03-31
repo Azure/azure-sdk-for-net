@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes the parameters for using a user&apos;s KeyVault certificate for securing custom domain. </summary>
-    internal partial class KeyVaultCertificateSourceParameters
+    public partial class KeyVaultCertificateSourceParameters
     {
         /// <summary> Initializes a new instance of KeyVaultCertificateSourceParameters. </summary>
         /// <param name="typeName"></param>
@@ -20,13 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretName"> The name of Key Vault Secret (representing the full certificate PFX) in Key Vault. </param>
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
         /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
-<<<<<<< HEAD
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="secretName"/> is null. </exception>
-        public KeyVaultCertificateSourceParameters(KeyVaultCertificateSourceParametersTypeName typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, UpdateRule updateRule, DeleteRule deleteRule)
-=======
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
-        public KeyVaultCertificateSourceParameters(KeyVaultCertificateSourceParametersOdataType odataType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, UpdateRule updateRule, DeleteRule deleteRule)
->>>>>>> origin/main
+        public KeyVaultCertificateSourceParameters(KeyVaultCertificateSourceParametersTypeName typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, UpdateRule updateRule, DeleteRule deleteRule)
         {
             if (subscriptionId == null)
             {

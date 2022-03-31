@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "UrlSigning": return UrlSigningAction.DeserializeUrlSigningAction(element);
                 }
             }
-            DeliveryRuleActionName name = default;
+            DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = new DeliveryRuleActionName(property.Value.GetString());
+                    name = new DeliveryRuleActionType(property.Value.GetString());
                     continue;
                 }
             }

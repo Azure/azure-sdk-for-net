@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -20,7 +21,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The name of the origin group which contains this origin. </summary>
         public string OriginGroupName { get; }
         /// <summary> Resource reference to the Azure origin resource. </summary>
-        public WritableSubResource AzureOrigin { get; }
+        internal WritableSubResource AzureOrigin { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AzureOriginId
+        {
+            get => AzureOrigin.Id;
+            set => AzureOrigin.Id = value;
+        }
+
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
         public string HostName { get; }
         /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
@@ -34,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
         public int? Weight { get; }
         /// <summary> The properties of the private link resource for private origin. </summary>
-        public object SharedPrivateLinkResource { get; }
+        public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; }
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         public EnabledState? EnabledState { get; }
         /// <summary> Whether to enable certificate name check at origin level. </summary>

@@ -28,11 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-<<<<<<< HEAD
-        internal CacheExpirationActionParameters(CacheExpirationActionParametersTypeName typeName, CacheBehavior cacheBehavior, CacheType cacheType, string cacheDuration)
-=======
-        internal CacheExpirationActionParameters(CacheExpirationActionParametersOdataType odataType, CacheBehavior cacheBehavior, CacheType cacheType, TimeSpan? cacheDuration)
->>>>>>> origin/main
+        internal CacheExpirationActionParameters(CacheExpirationActionParametersTypeName typeName, CacheBehavior cacheBehavior, CacheType cacheType, TimeSpan? cacheDuration)
         {
             TypeName = typeName;
             CacheBehavior = cacheBehavior;
