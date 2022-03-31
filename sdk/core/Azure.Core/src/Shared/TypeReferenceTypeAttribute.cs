@@ -11,6 +11,11 @@ namespace Azure.Core
     [AttributeUsage(AttributeTargets.Class)]
     internal class TypeReferenceTypeAttribute : Attribute
     {
+        public TypeReferenceTypeAttribute()
+           : this(false, Array.Empty<string>())
+        {
+        }
+
         public TypeReferenceTypeAttribute(bool ignoreExtraProperties, string[] internalPropertiesToInclude)
         {
             IgnoreExtraProperties = ignoreExtraProperties;
