@@ -56,9 +56,7 @@ namespace Azure.Identity.Tests
             Assert.True(beforeBuildClientInvoked);
         }
 
-        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
-        {
-            throw new NotImplementedException();
-        }
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new InteractiveBrowserCredential(TenantId, ClientId, options, null, mockPublicMsalClient));
     }
 }
