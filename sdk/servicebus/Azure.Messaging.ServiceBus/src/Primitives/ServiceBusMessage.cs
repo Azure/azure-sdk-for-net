@@ -243,11 +243,13 @@ namespace Azure.Messaging.ServiceBus
             set
             {
                 Argument.AssertNotTooLong(value, Constants.MaxSessionIdLength, nameof(value));
+                AmqpMessage.Properties.GroupId = value;
+
+                // If the PartitionKey was already set to a different value, override it with the SessionId, as the SessionId takes precedence.
                 if (PartitionKey != null && PartitionKey != value)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), $"SessionId:{value} cannot be set to a different value than PartitionKey:{PartitionKey}.");
+                    PartitionKey = value;
                 }
-                AmqpMessage.Properties.GroupId = value;
             }
         }
 
