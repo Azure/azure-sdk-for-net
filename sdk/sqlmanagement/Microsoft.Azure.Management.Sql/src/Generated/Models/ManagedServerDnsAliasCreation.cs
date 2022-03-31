@@ -14,26 +14,28 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the parameters for Unlink Replication Link request.
+    /// A managed server dns alias creation request.
     /// </summary>
-    public partial class UnlinkParameters
+    public partial class ManagedServerDnsAliasCreation
     {
         /// <summary>
-        /// Initializes a new instance of the UnlinkParameters class.
+        /// Initializes a new instance of the ManagedServerDnsAliasCreation
+        /// class.
         /// </summary>
-        public UnlinkParameters()
+        public ManagedServerDnsAliasCreation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UnlinkParameters class.
+        /// Initializes a new instance of the ManagedServerDnsAliasCreation
+        /// class.
         /// </summary>
-        /// <param name="forcedTermination">Determines whether link will be
-        /// terminated in a forced or a friendly way.</param>
-        public UnlinkParameters(bool? forcedTermination = default(bool?))
+        /// <param name="createDnsRecord">Whether or not DNS record should be
+        /// created for this alias.</param>
+        public ManagedServerDnsAliasCreation(bool? createDnsRecord = default(bool?))
         {
-            ForcedTermination = forcedTermination;
+            CreateDnsRecord = createDnsRecord;
             CustomInit();
         }
 
@@ -43,11 +45,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets determines whether link will be terminated in a forced
-        /// or a friendly way.
+        /// Gets or sets whether or not DNS record should be created for this
+        /// alias.
         /// </summary>
-        [JsonProperty(PropertyName = "forcedTermination")]
-        public bool? ForcedTermination { get; set; }
+        [JsonProperty(PropertyName = "createDnsRecord")]
+        public bool? CreateDnsRecord { get; set; }
 
     }
 }

@@ -19,13 +19,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServerTrustCertificatesOperations operations.
+    /// ManagedServerDnsAliasesOperations operations.
     /// </summary>
-    public partial interface IServerTrustCertificatesOperations
+    public partial interface IManagedServerDnsAliasesOperations
     {
         /// <summary>
-        /// Gets a list of server trust certificates that were uploaded from
-        /// box to the given Sql Managed Instance.
+        /// Gets a list of managed server DNS aliases for a managed server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -50,10 +49,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ServerTrustCertificate>>> ListByInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ManagedServerDnsAlias>>> ListByManagedInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a server trust certificate that was uploaded from box to Sql
-        /// Managed Instance.
+        /// Gets a server DNS alias.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -63,8 +61,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='certificateName'>
-        /// Name of of the certificate to get.
+        /// <param name='dnsAliasName'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,10 +78,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerTrustCertificate>> GetWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedServerDnsAlias>> GetWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string dnsAliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Uploads a server trust certificate from box to Sql Managed
-        /// Instance.
+        /// Creates a managed server DNS alias.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -94,11 +90,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='certificateName'>
-        /// Name of of the certificate to upload.
+        /// <param name='dnsAliasName'>
         /// </param>
         /// <param name='parameters'>
-        /// The server trust certificate info.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -115,10 +109,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerTrustCertificate>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string certificateName, ServerTrustCertificate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedServerDnsAlias>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string dnsAliasName, ManagedServerDnsAliasCreation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a server trust certificate that was uploaded from box to
-        /// Sql Managed Instance.
+        /// Deletes the managed server DNS alias with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -128,8 +121,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='certificateName'>
-        /// Name of of the certificate to delete.
+        /// <param name='dnsAliasName'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -143,10 +135,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string dnsAliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Uploads a server trust certificate from box to Sql Managed
-        /// Instance.
+        /// Acquires managed server DNS alias from another managed server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -156,11 +147,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='certificateName'>
-        /// Name of of the certificate to upload.
+        /// <param name='dnsAliasName'>
         /// </param>
         /// <param name='parameters'>
-        /// The server trust certificate info.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -177,10 +166,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerTrustCertificate>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string certificateName, ServerTrustCertificate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedServerDnsAlias>> AcquireWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string dnsAliasName, ManagedServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a server trust certificate that was uploaded from box to
-        /// Sql Managed Instance.
+        /// Creates a managed server DNS alias.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -190,8 +178,38 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='certificateName'>
-        /// Name of of the certificate to delete.
+        /// <param name='dnsAliasName'>
+        /// </param>
+        /// <param name='parameters'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ManagedServerDnsAlias>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string dnsAliasName, ManagedServerDnsAliasCreation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes the managed server DNS alias with the given name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
+        /// </param>
+        /// <param name='dnsAliasName'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -205,10 +223,40 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string dnsAliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of server trust certificates that were uploaded from
-        /// box to the given Sql Managed Instance.
+        /// Acquires managed server DNS alias from another managed server.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
+        /// </param>
+        /// <param name='dnsAliasName'>
+        /// </param>
+        /// <param name='parameters'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ManagedServerDnsAlias>> BeginAcquireWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string dnsAliasName, ManagedServerDnsAliasAcquisition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of managed server DNS aliases for a managed server.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -228,6 +276,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ServerTrustCertificate>>> ListByInstanceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ManagedServerDnsAlias>>> ListByManagedInstanceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
