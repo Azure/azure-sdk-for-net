@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class VirtualNetworkLinkTests : DnsResolverTestBase
     {
-        private DnsResolver dnsResolver;
+        private DnsResolverResource dnsResolver;
         private DnsForwardingRulesetCollection dnsForwardingRulesetCollection;
-        private DnsForwardingRuleset dnsForwardingRuleset;
+        private DnsForwardingRulesetResource dnsForwardingRuleset;
         private ResourceIdentifier outboundEndpointId;
         private string vnetId;
         private string subnetId;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             dnsForwardingRuleset = await CreateDnsForwardingRuleset(dnsForwardingRulesetName);
         }
 
-        private async Task<DnsForwardingRuleset> CreateDnsForwardingRuleset(string dnsForwardingRulesetName)
+        private async Task<DnsForwardingRulesetResource> CreateDnsForwardingRuleset(string dnsForwardingRulesetName)
         {
             var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation);
 

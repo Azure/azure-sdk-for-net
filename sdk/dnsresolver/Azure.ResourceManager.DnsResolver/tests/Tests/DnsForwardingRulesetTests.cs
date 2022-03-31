@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class DnsForwardingRulesetTests : DnsResolverTestBase
     {
-        private DnsResolver dnsResolver;
+        private DnsResolverResource dnsResolver;
         private DnsForwardingRulesetCollection dnsForwardingRulesetCollection;
         private ResourceIdentifier outboundEndpointId;
         private string vnetId;

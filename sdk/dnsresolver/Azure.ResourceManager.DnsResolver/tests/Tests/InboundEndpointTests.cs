@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class InboundEndpointTests : DnsResolverTestBase
     {
-        private DnsResolver dnsResolver;
+        private DnsResolverResource dnsResolver;
         private string vnetId;
         private string subnetId;
 
