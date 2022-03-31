@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("queryStringBehavior");
             writer.WriteStringValue(QueryStringBehavior.ToString());
             if (Optional.IsDefined(QueryParameters))
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheKeyQueryStringActionParameters DeserializeCacheKeyQueryStringActionParameters(JsonElement element)
         {
-            CacheKeyQueryStringActionParametersOdataType odataType = default;
+            CacheKeyQueryStringActionParametersTypeName typeName = default;
             QueryStringBehavior queryStringBehavior = default;
             Optional<string> queryParameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new CacheKeyQueryStringActionParametersOdataType(property.Value.GetString());
+                    typeName = new CacheKeyQueryStringActionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("queryStringBehavior"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CacheKeyQueryStringActionParameters(odataType, queryStringBehavior, queryParameters.Value);
+            return new CacheKeyQueryStringActionParameters(typeName, queryStringBehavior, queryParameters.Value);
         }
     }
 }

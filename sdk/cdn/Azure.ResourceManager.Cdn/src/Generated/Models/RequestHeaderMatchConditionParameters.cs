@@ -14,26 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestHeaderMatchConditionParameters
     {
         /// <summary> Initializes a new instance of RequestHeaderMatchConditionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestHeaderMatchConditionParameters(RequestHeaderMatchConditionParametersOdataType odataType, RequestHeaderOperator @operator)
+        public RequestHeaderMatchConditionParameters(RequestHeaderMatchConditionParametersTypeName typeName, RequestHeaderOperator @operator)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of RequestHeaderMatchConditionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="selector"> Name of Header to be matched. </param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestHeaderMatchConditionParameters(RequestHeaderMatchConditionParametersOdataType odataType, string selector, RequestHeaderOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal RequestHeaderMatchConditionParameters(RequestHeaderMatchConditionParametersTypeName typeName, string selector, RequestHeaderOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             Selector = selector;
             Operator = @operator;
             NegateCondition = negateCondition;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the odata type. </summary>
-        public RequestHeaderMatchConditionParametersOdataType OdataType { get; set; }
+        /// <summary> Gets or sets the type name. </summary>
+        public RequestHeaderMatchConditionParametersTypeName TypeName { get; set; }
         /// <summary> Name of Header to be matched. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>

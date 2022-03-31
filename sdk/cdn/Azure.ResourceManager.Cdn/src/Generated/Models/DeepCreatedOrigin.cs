@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </param>
         /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </param>
         /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
-        internal DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, string privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage)
+        /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
+        internal DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, string privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, PrivateEndpointStatus? privateEndpointStatus)
         {
             Name = name;
             HostName = hostName;
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
             PrivateLinkResourceId = privateLinkResourceId;
             PrivateLinkLocation = privateLinkLocation;
             PrivateLinkApprovalMessage = privateLinkApprovalMessage;
+            PrivateEndpointStatus = privateEndpointStatus;
         }
 
         /// <summary> Origin name which must be unique within the endpoint. </summary>
@@ -78,5 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public string PrivateLinkLocation { get; set; }
         /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
         public string PrivateLinkApprovalMessage { get; set; }
+        /// <summary> The approval status for the connection to the Private Link. </summary>
+        public PrivateEndpointStatus? PrivateEndpointStatus { get; }
     }
 }

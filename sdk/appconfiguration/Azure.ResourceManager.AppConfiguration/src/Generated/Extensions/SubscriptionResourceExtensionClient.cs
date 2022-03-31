@@ -48,6 +48,13 @@ namespace Azure.ResourceManager.AppConfiguration
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of DeletedConfigurationStoreResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of DeletedConfigurationStoreResources and their operations over a DeletedConfigurationStoreResource. </returns>
+        public virtual DeletedConfigurationStoreCollection GetDeletedConfigurationStores()
+        {
+            return GetCachedClient(Client => new DeletedConfigurationStoreCollection(Client, Id));
+        }
+
         /// <summary>
         /// Lists the configuration stores for a given subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores

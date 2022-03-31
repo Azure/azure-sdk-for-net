@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties required to update a profile. </summary>
-    internal partial class PatchableProfileData
+    public partial class PatchableProfileData
     {
         /// <summary> Initializes a new instance of PatchableProfileData. </summary>
         public PatchableProfileData()
@@ -21,5 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Profile tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
+        public int? OriginResponseTimeoutSeconds { get; set; }
     }
 }

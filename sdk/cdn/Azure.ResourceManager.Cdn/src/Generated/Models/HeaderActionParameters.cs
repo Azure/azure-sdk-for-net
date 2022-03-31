@@ -13,37 +13,37 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class HeaderActionParameters
     {
         /// <summary> Initializes a new instance of HeaderActionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
-        public HeaderActionParameters(HeaderActionParametersOdataType odataType, HeaderAction headerAction, string headerName)
+        public HeaderActionParameters(HeaderActionParametersTypeName typeName, HeaderAction headerAction, string headerName)
         {
             if (headerName == null)
             {
                 throw new ArgumentNullException(nameof(headerName));
             }
 
-            OdataType = odataType;
+            TypeName = typeName;
             HeaderAction = headerAction;
             HeaderName = headerName;
         }
 
         /// <summary> Initializes a new instance of HeaderActionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>
         /// <param name="value"> Value for the specified action. </param>
-        internal HeaderActionParameters(HeaderActionParametersOdataType odataType, HeaderAction headerAction, string headerName, string value)
+        internal HeaderActionParameters(HeaderActionParametersTypeName typeName, HeaderAction headerAction, string headerName, string value)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             HeaderAction = headerAction;
             HeaderName = headerName;
             Value = value;
         }
 
-        /// <summary> Gets or sets the odata type. </summary>
-        public HeaderActionParametersOdataType OdataType { get; set; }
+        /// <summary> Gets or sets the type name. </summary>
+        public HeaderActionParametersTypeName TypeName { get; set; }
         /// <summary> Action to perform. </summary>
         public HeaderAction HeaderAction { get; set; }
         /// <summary> Name of the header to modify. </summary>

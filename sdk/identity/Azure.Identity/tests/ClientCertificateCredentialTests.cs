@@ -18,6 +18,17 @@ namespace Azure.Identity.Tests
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var context = new TokenRequestContext(new[] { Scope });
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            return InstrumentClient(
+                new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
+            );
+        }
+
         [Test]
         public void VerifyCtorParametersValidation()
         {

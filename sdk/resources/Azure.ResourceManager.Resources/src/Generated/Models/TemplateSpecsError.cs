@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Models;
-
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Template Specs error response. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of TemplateSpecsError. </summary>
         /// <param name="error"> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </param>
-        internal TemplateSpecsError(ErrorDetail error)
+        internal TemplateSpecsError(ResourcesResponseError error)
         {
             Error = error;
         }
 
         /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
-        public ErrorDetail Error { get; }
+        public ResourcesResponseError Error { get; }
     }
 }

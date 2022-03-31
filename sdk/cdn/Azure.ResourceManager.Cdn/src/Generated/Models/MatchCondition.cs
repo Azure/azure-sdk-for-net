@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matchValue"/> is null. </exception>
-        public MatchCondition(MatchVariable matchVariable, MatchOperator @operator, IEnumerable<string> matchValue)
+        public MatchCondition(WafMatchVariable matchVariable, MatchOperator @operator, IEnumerable<string> matchValue)
         {
             if (matchValue == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if the result of this condition should be negated. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal MatchCondition(MatchVariable matchVariable, string selector, MatchOperator @operator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms)
+        internal MatchCondition(WafMatchVariable matchVariable, string selector, MatchOperator @operator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms)
         {
             MatchVariable = matchVariable;
             Selector = selector;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Match variable to compare against. </summary>
-        public MatchVariable MatchVariable { get; set; }
+        public WafMatchVariable MatchVariable { get; set; }
         /// <summary> Selector can used to match a specific key for QueryString, Cookies, RequestHeader or PostArgs. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>

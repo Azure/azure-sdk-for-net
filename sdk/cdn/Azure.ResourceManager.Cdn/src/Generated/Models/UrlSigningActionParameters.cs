@@ -14,26 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlSigningActionParameters
     {
         /// <summary> Initializes a new instance of UrlSigningActionParameters. </summary>
-        /// <param name="odataType"></param>
-        public UrlSigningActionParameters(UrlSigningActionParametersOdataType odataType)
+        /// <param name="typeName"></param>
+        public UrlSigningActionParameters(UrlSigningActionParametersTypeName typeName)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             ParameterNameOverride = new ChangeTrackingList<UrlSigningParamIdentifier>();
         }
 
         /// <summary> Initializes a new instance of UrlSigningActionParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="algorithm"> Algorithm to use for URL signing. </param>
         /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
-        internal UrlSigningActionParameters(UrlSigningActionParametersOdataType odataType, UrlSigningAlgorithm? algorithm, IList<UrlSigningParamIdentifier> parameterNameOverride)
+        internal UrlSigningActionParameters(UrlSigningActionParametersTypeName typeName, UrlSigningAlgorithm? algorithm, IList<UrlSigningParamIdentifier> parameterNameOverride)
         {
-            OdataType = odataType;
+            TypeName = typeName;
             Algorithm = algorithm;
             ParameterNameOverride = parameterNameOverride;
         }
 
-        /// <summary> Gets or sets the odata type. </summary>
-        public UrlSigningActionParametersOdataType OdataType { get; set; }
+        /// <summary> Gets or sets the type name. </summary>
+        public UrlSigningActionParametersTypeName TypeName { get; set; }
         /// <summary> Algorithm to use for URL signing. </summary>
         public UrlSigningAlgorithm? Algorithm { get; set; }
         /// <summary> Defines which query string parameters in the url to be considered for expires, key id etc. </summary>
