@@ -3,6 +3,11 @@
 ## 1.6.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added a new property under the `Diagnostics` options available on `TokenCredentialOptions` and all sub-types. If set to `true`, we try to log the account identifiers by parsing the received access token. The account identifiers we try to log are the:
+  - Application or Client Identifier
+  - User Principal Name
+  - Tenant Identifier
+  - Object Identifier of the authenticated user or app
 - `ManagedIdentityCredential` now attempts to use the newest "2019-08-01" api version for App Service Managed Identity sources. The newer API version will be used if the `IDENTITY_ENDPOINT` and `IDENTITY_HEADER` environment variables are set.
 
 ### Breaking Changes

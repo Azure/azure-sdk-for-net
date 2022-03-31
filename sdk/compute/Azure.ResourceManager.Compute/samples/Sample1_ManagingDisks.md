@@ -3,7 +3,6 @@
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
 Namespaces for this example:
-
 ```C# Snippet:Manage_Disks_Namespaces
 using System;
 using System.Threading.Tasks;
