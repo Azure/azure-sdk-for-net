@@ -80,8 +80,8 @@
 #/<NotInRepo>/            @antcp @AzureAppServiceCLI
 
 # ServiceLabel: %Attestation %Service Attention
-/sdk/attestation/            @anilba06 @larryosterman
-/sdk/attestation/azure-security-attestation                          @larryosterman @Azure/azure-sdk-write-attestation @anilba06
+/sdk/attestation/            @anilba06 @gkostal
+/sdk/attestation/azure-security-attestation                          @gkostal @Azure/azure-sdk-write-attestation @anilba06
 
 # ServiceLabel: %Authorization %Service Attention
 /sdk/authorization/Microsoft.Azure.Management.Authorization/            @darshanhs90 @AshishGargMicrosoft
