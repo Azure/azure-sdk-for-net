@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
+                LocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";

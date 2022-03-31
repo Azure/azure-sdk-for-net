@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("value");
             writer.WriteStringValue(Value);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ConnectionStringType.ToSerialString());
+            writer.WriteStringValue(StringType.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _tableName = Recording.GenerateAssetName("cassandra-table-");
             return new CassandraTableCreateUpdateData(AzureLocation.WestUS,
                 new Models.CassandraTableResource(_tableName, default, new CassandraSchema {
-                    Columns = { new CassandraColumn { Name = "columnA", CassandraColumnType = "int" }, new CassandraColumn { Name = "columnB", CassandraColumnType = "ascii" } },
+                    Columns = { new CassandraColumn { Name = "columnA", ColumnType = "int" }, new CassandraColumn { Name = "columnB", ColumnType = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
                     ClusterKeys = { new ClusterKey { Name = "columnB", OrderBy = "Asc" } },
                 }, default))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.Columns.Count; i++)
             {
                 Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Name);
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].CassandraColumnType, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].CassandraColumnType);
+                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].ColumnType, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].ColumnType);
             }
 
             Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys.Count, cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys.Count);

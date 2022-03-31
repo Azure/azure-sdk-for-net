@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         }
 
         /// <summary> Initializes a new instance of CustomLocationPropertiesAuthentication. </summary>
-        /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
+        /// <param name="authenticationType"> The type of the Custom Locations authentication. </param>
         /// <param name="value"> The kubeconfig value. </param>
-        internal CustomLocationPropertiesAuthentication(string customLocationPropertiesAuthenticationType, string value)
+        internal CustomLocationPropertiesAuthentication(string authenticationType, string value)
         {
-            CustomLocationPropertiesAuthenticationType = customLocationPropertiesAuthenticationType;
+            AuthenticationType = authenticationType;
             Value = value;
         }
 
         /// <summary> The type of the Custom Locations authentication. </summary>
-        public string CustomLocationPropertiesAuthenticationType { get; set; }
+        public string AuthenticationType { get; set; }
         /// <summary> The kubeconfig value. </summary>
         public string Value { get; set; }
     }

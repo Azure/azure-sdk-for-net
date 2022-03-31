@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(VirtualMachineExtensionInstanceViewType))
+            if (Optional.IsDefined(ViewType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(VirtualMachineExtensionInstanceViewType);
+                writer.WriteStringValue(ViewType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {

@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.AppService.Models
     {
         /// <summary> Initializes a new instance of ConnStringValueTypePair. </summary>
         /// <param name="value"> Value of pair. </param>
-        /// <param name="connectionStringType"> Type of database. </param>
+        /// <param name="stringType"> Type of database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnStringValueTypePair(string value, ConnectionStringType connectionStringType)
+        public ConnStringValueTypePair(string value, ConnectionStringType stringType)
         {
             if (value == null)
             {
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             Value = value;
-            ConnectionStringType = connectionStringType;
+            StringType = stringType;
         }
 
         /// <summary> Value of pair. </summary>
         public string Value { get; set; }
         /// <summary> Type of database. </summary>
-        public ConnectionStringType ConnectionStringType { get; set; }
+        public ConnectionStringType StringType { get; set; }
     }
 }
