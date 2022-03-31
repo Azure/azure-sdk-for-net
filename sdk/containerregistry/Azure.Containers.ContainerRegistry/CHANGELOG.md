@@ -1,21 +1,21 @@
 # Release History
 
-## 1.1.0-beta.1 (2022-03-08)
+## 1.1.0-beta.4 (2022-04-12)
 
 ### Features Added
 
-- Added `ContainerRegistryBlobClient` with methods to upload and download OCI Manifests and artifact blobs, to enable implementation of push/pull for OCI artifacts.
+- Unifies features from the earlier preview releases with the latest stable release.
 
 ## 1.0.0 (2022-01-11)
 
 ### Features Added
 
 - Adds stable features and bug fixes from the earlier preview releases.
+
 ### Breaking Changes
 
 - Renamed `ArtifactManifestOrderBy` to `ArtifactManifestOrder`.
 - Renamed `ArtifactTagOrderBy` to `ArtifactTagOrder`.
-
 
 ## 1.0.0-beta.5 (2021-11-18)
 
@@ -41,6 +41,12 @@
 ### Breaking Changes
 
 - Changed `DownloadManifest(Async)` method to take `DownloadManifestOptions` as an input parameter. This allows callers to pass-in either a tag or a digest as the manifest identifier.
+
+## 1.1.0-beta.1 (2021-09-07)
+
+### Features Added
+
+- Added `ContainerRegistryBlobClient` with methods to upload and download OCI Manifests and artifact blobs, to enable implementation of push/pull for OCI artifacts.
 
 ## 1.0.0-beta.4 (2021-08-10)
 
