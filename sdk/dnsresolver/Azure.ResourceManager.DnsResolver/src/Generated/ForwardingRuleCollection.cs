@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class representing collection of ForwardingRule and their operations over its parent. </summary>
-    public partial class ForwardingRuleCollection : ArmCollection, IEnumerable<ForwardingRule>, IAsyncEnumerable<ForwardingRule>
+    /// <summary>
+    /// A class representing a collection of <see cref="ForwardingRuleResource" /> and their operations.
+    /// Each <see cref="ForwardingRuleResource" /> in the collection will belong to the same instance of <see cref="DnsForwardingRulesetResource" />.
+    /// To get a <see cref="ForwardingRuleCollection" /> instance call the GetForwardingRules method from an instance of <see cref="DnsForwardingRulesetResource" />.
+    /// </summary>
+    public partial class ForwardingRuleCollection : ArmCollection, IEnumerable<ForwardingRuleResource>, IAsyncEnumerable<ForwardingRuleResource>
     {
         private readonly ClientDiagnostics _forwardingRuleClientDiagnostics;
         private readonly ForwardingRulesRestOperations _forwardingRuleRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ForwardingRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _forwardingRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ForwardingRule.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ForwardingRule.ResourceType, out string forwardingRuleApiVersion);
-            _forwardingRuleRestClient = new ForwardingRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, forwardingRuleApiVersion);
+            _forwardingRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ForwardingRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ForwardingRuleResource.ResourceType, out string forwardingRuleApiVersion);
+            _forwardingRuleRestClient = new ForwardingRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, forwardingRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DnsForwardingRuleset.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DnsForwardingRuleset.ResourceType), nameof(id));
+            if (id.ResourceType != DnsForwardingRulesetResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DnsForwardingRulesetResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -57,23 +60,23 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
-        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ForwardingRule>> CreateOrUpdateAsync(WaitUntil waitUntil, string forwardingRuleName, ForwardingRuleData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ForwardingRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string forwardingRuleName, ForwardingRuleData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _forwardingRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, parameters, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<ForwardingRule>(Response.FromValue(new ForwardingRule(Client, response), response.GetRawResponse()));
+                var response = await _forwardingRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<ForwardingRuleResource>(Response.FromValue(new ForwardingRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,23 +95,23 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
-        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ForwardingRule> CreateOrUpdate(WaitUntil waitUntil, string forwardingRuleName, ForwardingRuleData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ForwardingRuleResource> CreateOrUpdate(WaitUntil waitUntil, string forwardingRuleName, ForwardingRuleData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _forwardingRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, parameters, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<ForwardingRule>(Response.FromValue(new ForwardingRule(Client, response), response.GetRawResponse()));
+                var response = _forwardingRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<ForwardingRuleResource>(Response.FromValue(new ForwardingRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,7 +132,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
-        public virtual async Task<Response<ForwardingRule>> GetAsync(string forwardingRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ForwardingRuleResource>> GetAsync(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
@@ -140,7 +143,7 @@ namespace Azure.ResourceManager.DnsResolver
                 var response = await _forwardingRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ForwardingRule(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ForwardingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,7 +161,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
-        public virtual Response<ForwardingRule> Get(string forwardingRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<ForwardingRuleResource> Get(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
@@ -169,7 +172,7 @@ namespace Azure.ResourceManager.DnsResolver
                 var response = _forwardingRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ForwardingRule(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ForwardingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,17 +188,17 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ForwardingRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ForwardingRule> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ForwardingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ForwardingRuleResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ForwardingRule>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ForwardingRuleResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _forwardingRuleRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ForwardingRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ForwardingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,14 +206,14 @@ namespace Azure.ResourceManager.DnsResolver
                     throw;
                 }
             }
-            async Task<Page<ForwardingRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ForwardingRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _forwardingRuleRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ForwardingRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ForwardingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,17 +231,17 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ForwardingRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ForwardingRule> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ForwardingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ForwardingRuleResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ForwardingRule> FirstPageFunc(int? pageSizeHint)
+            Page<ForwardingRuleResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _forwardingRuleRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ForwardingRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ForwardingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,14 +249,14 @@ namespace Azure.ResourceManager.DnsResolver
                     throw;
                 }
             }
-            Page<ForwardingRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ForwardingRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _forwardingRuleRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ForwardingRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ForwardingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -281,7 +284,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(forwardingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _forwardingRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -308,7 +311,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = GetIfExists(forwardingRuleName, cancellationToken: cancellationToken);
+                var response = _forwardingRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -318,65 +321,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/forwardingRules/{forwardingRuleName}
-        /// Operation Id: ForwardingRules_Get
-        /// </summary>
-        /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
-        public virtual async Task<Response<ForwardingRule>> GetIfExistsAsync(string forwardingRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-
-            using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _forwardingRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ForwardingRule>(null, response.GetRawResponse());
-                return Response.FromValue(new ForwardingRule(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/forwardingRules/{forwardingRuleName}
-        /// Operation Id: ForwardingRules_Get
-        /// </summary>
-        /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
-        public virtual Response<ForwardingRule> GetIfExists(string forwardingRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-
-            using var scope = _forwardingRuleClientDiagnostics.CreateScope("ForwardingRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _forwardingRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ForwardingRule>(null, response.GetRawResponse());
-                return Response.FromValue(new ForwardingRule(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<ForwardingRule> IEnumerable<ForwardingRule>.GetEnumerator()
+        IEnumerator<ForwardingRuleResource> IEnumerable<ForwardingRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -386,7 +331,7 @@ namespace Azure.ResourceManager.DnsResolver
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ForwardingRule> IAsyncEnumerable<ForwardingRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ForwardingRuleResource> IAsyncEnumerable<ForwardingRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

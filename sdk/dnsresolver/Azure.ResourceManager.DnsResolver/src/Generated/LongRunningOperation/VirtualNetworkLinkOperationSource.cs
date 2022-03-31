@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal class VirtualNetworkLinkOperationSource : IOperationSource<VirtualNetworkLink>
+    internal class VirtualNetworkLinkOperationSource : IOperationSource<VirtualNetworkLinkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.DnsResolver
             _client = client;
         }
 
-        VirtualNetworkLink IOperationSource<VirtualNetworkLink>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualNetworkLinkResource IOperationSource<VirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
-            return new VirtualNetworkLink(_client, data);
+            return new VirtualNetworkLinkResource(_client, data);
         }
 
-        async ValueTask<VirtualNetworkLink> IOperationSource<VirtualNetworkLink>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualNetworkLinkResource> IOperationSource<VirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
-            return new VirtualNetworkLink(_client, data);
+            return new VirtualNetworkLinkResource(_client, data);
         }
     }
 }

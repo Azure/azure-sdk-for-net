@@ -14,14 +14,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A Class representing a InboundEndpoint along with the instance operations that can be performed on it. </summary>
-    public partial class InboundEndpoint : ArmResource
+    /// <summary>
+    /// A Class representing an InboundEndpoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="InboundEndpointResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetInboundEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsResolverResource" /> using the GetInboundEndpoint method.
+    /// </summary>
+    public partial class InboundEndpointResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="InboundEndpoint"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="InboundEndpointResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dnsResolverName, string inboundEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}";
@@ -32,28 +36,28 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly InboundEndpointsRestOperations _inboundEndpointRestClient;
         private readonly InboundEndpointData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="InboundEndpoint"/> class for mocking. </summary>
-        protected InboundEndpoint()
+        /// <summary> Initializes a new instance of the <see cref="InboundEndpointResource"/> class for mocking. </summary>
+        protected InboundEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "InboundEndpoint"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "InboundEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal InboundEndpoint(ArmClient client, InboundEndpointData data) : this(client, data.Id)
+        internal InboundEndpointResource(ArmClient client, InboundEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InboundEndpoint"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InboundEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal InboundEndpoint(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal InboundEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _inboundEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, DiagnosticOptions);
+            _inboundEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string inboundEndpointApiVersion);
-            _inboundEndpointRestClient = new InboundEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inboundEndpointApiVersion);
+            _inboundEndpointRestClient = new InboundEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, inboundEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,16 +93,16 @@ namespace Azure.ResourceManager.DnsResolver
         /// Operation Id: InboundEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<InboundEndpoint>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InboundEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.Get");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.Get");
             scope.Start();
             try
             {
                 var response = await _inboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InboundEndpoint(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InboundEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,16 +117,16 @@ namespace Azure.ResourceManager.DnsResolver
         /// Operation Id: InboundEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<InboundEndpoint> Get(CancellationToken cancellationToken = default)
+        public virtual Response<InboundEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.Get");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.Get");
             scope.Start();
             try
             {
                 var response = _inboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InboundEndpoint(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InboundEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.Delete");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.Delete");
             scope.Start();
             try
             {
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.Delete");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.Delete");
             scope.Start();
             try
             {
@@ -194,20 +198,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<InboundEndpoint>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InboundEndpointResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.AddTag");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.AddTag");
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _inboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new InboundEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new InboundEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,20 +229,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<InboundEndpoint> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<InboundEndpointResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.AddTag");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.AddTag");
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _inboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new InboundEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new InboundEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -255,20 +259,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<InboundEndpoint>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InboundEndpointResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.SetTags");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.SetTags");
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _inboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new InboundEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new InboundEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -285,20 +289,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<InboundEndpoint> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<InboundEndpointResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.SetTags");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.SetTags");
             scope.Start();
             try
             {
-                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _inboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new InboundEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new InboundEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -315,19 +319,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<InboundEndpoint>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InboundEndpointResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.RemoveTag");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.RemoveTag");
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _inboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new InboundEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new InboundEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -344,19 +348,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<InboundEndpoint> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<InboundEndpointResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpoint.RemoveTag");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointResource.RemoveTag");
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _inboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new InboundEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new InboundEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

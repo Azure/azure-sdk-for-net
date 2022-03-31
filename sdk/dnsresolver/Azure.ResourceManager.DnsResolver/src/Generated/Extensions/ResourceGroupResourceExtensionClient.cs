@@ -12,36 +12,35 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class to add extension methods to ResourceGroup. </summary>
-    internal partial class ResourceGroupExtensionClient : ArmResource
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _dnsResolverClientDiagnostics;
         private DnsResolversRestOperations _dnsResolverRestClient;
         private ClientDiagnostics _dnsForwardingRulesetClientDiagnostics;
         private DnsForwardingRulesetsRestOperations _dnsForwardingRulesetRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class for mocking. </summary>
-        protected ResourceGroupExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
+        protected ResourceGroupResourceExtensionClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DnsResolverClientDiagnostics => _dnsResolverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolver.ResourceType.Namespace, DiagnosticOptions);
-        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsResolver.ResourceType));
-        private ClientDiagnostics DnsForwardingRulesetClientDiagnostics => _dnsForwardingRulesetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRuleset.ResourceType.Namespace, DiagnosticOptions);
-        private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsForwardingRuleset.ResourceType));
+        private ClientDiagnostics DnsResolverClientDiagnostics => _dnsResolverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverResource.ResourceType.Namespace, Diagnostics);
+        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverResource.ResourceType));
+        private ClientDiagnostics DnsForwardingRulesetClientDiagnostics => _dnsForwardingRulesetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetResource.ResourceType.Namespace, Diagnostics);
+        private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsForwardingRulesetResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,15 +48,15 @@ namespace Azure.ResourceManager.DnsResolver
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DnsResolvers in the DnsResolver. </summary>
-        /// <returns> An object representing collection of DnsResolvers and their operations over a DnsResolver. </returns>
+        /// <summary> Gets a collection of DnsResolverResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DnsResolverResources and their operations over a DnsResolverResource. </returns>
         public virtual DnsResolverCollection GetDnsResolvers()
         {
             return GetCachedClient(Client => new DnsResolverCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DnsForwardingRulesets in the DnsForwardingRuleset. </summary>
-        /// <returns> An object representing collection of DnsForwardingRulesets and their operations over a DnsForwardingRuleset. </returns>
+        /// <summary> Gets a collection of DnsForwardingRulesetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DnsForwardingRulesetResources and their operations over a DnsForwardingRulesetResource. </returns>
         public virtual DnsForwardingRulesetCollection GetDnsForwardingRulesets()
         {
             return GetCachedClient(Client => new DnsForwardingRulesetCollection(Client, Id));
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             async Task<Page<WritableSubResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsResolversByVirtualNetwork");
+                using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDnsResolversByVirtualNetwork");
                 scope.Start();
                 try
                 {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
             async Task<Page<WritableSubResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsResolversByVirtualNetwork");
+                using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDnsResolversByVirtualNetwork");
                 scope.Start();
                 try
                 {
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             Page<WritableSubResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsResolversByVirtualNetwork");
+                using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDnsResolversByVirtualNetwork");
                 scope.Start();
                 try
                 {
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
             Page<WritableSubResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsResolversByVirtualNetwork");
+                using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDnsResolversByVirtualNetwork");
                 scope.Start();
                 try
                 {
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             async Task<Page<VirtualNetworkDnsForwardingRuleset>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
+                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
                 scope.Start();
                 try
                 {
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
             async Task<Page<VirtualNetworkDnsForwardingRuleset>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
+                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
                 scope.Start();
                 try
                 {
@@ -208,7 +207,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             Page<VirtualNetworkDnsForwardingRuleset> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
+                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
                 scope.Start();
                 try
                 {
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
             Page<VirtualNetworkDnsForwardingRuleset> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
+                using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
                 scope.Start();
                 try
                 {
