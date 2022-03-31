@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             //In this test, the CName mapping from custom domain "customdomaintest4.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
             //The CName mapping needs to be deleted before deleting the custom domain.
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
-            CdnEndpoint cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
+            CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string cdnCustomDomainName = "customdomaintest4-azuretest-net";
             var lro = await cdnEndpoint.GetCdnCustomDomains().GetAsync(cdnCustomDomainName);
-            CdnCustomDomain cdnCustomDomain = lro.Value;
-            await cdnCustomDomain.DeleteAsync(true);
+            CdnCustomDomainResource cdnCustomDomain = lro.Value;
+            await cdnCustomDomain.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await cdnCustomDomain.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task EnableAndDisable()
         {
             //In this test, the CName mapping from custom domain "customdomaintest5.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
-            CdnEndpoint cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
+            CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string cdnCustomDomainName = "customdomaintest5-azuretest-net";
             var lro = await cdnEndpoint.GetCdnCustomDomains().GetAsync(cdnCustomDomainName);
-            CdnCustomDomain cdnCustomDomain = lro.Value;
+            CdnCustomDomainResource cdnCustomDomain = lro.Value;
             Assert.ThrowsAsync<RequestFailedException>(async () => await cdnCustomDomain.DisableCustomHttpsAsync());
             CdnManagedHttpsOptions customDomainHttpsOptions = new CdnManagedHttpsOptions(ProtocolType.ServerNameIndication, new CdnCertificateSourceParameters(CdnCertificateSourceParametersTypeName.CdnCertificateSourceParameters, CertificateType.Dedicated));
-            CdnCustomDomain enabledCdnCustomDomain = await cdnCustomDomain.EnableCustomHttpsAsync(customDomainHttpsOptions);
+            CdnCustomDomainResource enabledCdnCustomDomain = await cdnCustomDomain.EnableCustomHttpsAsync(customDomainHttpsOptions);
             Assert.AreEqual(enabledCdnCustomDomain.Data.CustomHttpsProvisioningState, CustomHttpsProvisioningState.Enabling);
         }
     }

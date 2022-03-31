@@ -38,8 +38,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(CacheDuration))
             {
-                writer.WritePropertyName("cacheDuration");
-                writer.WriteStringValue(CacheDuration.Value, "c");
+                if (CacheDuration != null)
+                {
+                    writer.WritePropertyName("cacheDuration");
+                    writer.WriteStringValue(CacheDuration.Value, "c");
+                }
+                else
+                {
+                    writer.WriteNull("cacheDuration");
+                }
             }
             writer.WriteEndObject();
         }
@@ -50,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> queryParameters = default;
             Optional<RuleIsCompressionEnabled> isCompressionEnabled = default;
             Optional<RuleCacheBehavior> cacheBehavior = default;
-            Optional<TimeSpan> cacheDuration = default;
+            Optional<TimeSpan?> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryStringCachingBehavior"))
@@ -92,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        cacheDuration = null;
                         continue;
                     }
                     cacheDuration = property.Value.GetTimeSpan("c");

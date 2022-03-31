@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
-            AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
-            await afdSecurityPolicy.DeleteAsync(true);
+            AfdSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
+            await afdSecurityPolicy.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdSecurityPolicy.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Update()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName1 = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance1 = await CreateAfdEndpoint(afdProfile, afdEndpointName1);
+            AfdEndpointResource afdEndpointInstance1 = await CreateAfdEndpoint(afdProfile, afdEndpointName1);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
-            AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance1, afdSecurityPolicyName);
+            AfdSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance1, afdSecurityPolicyName);
             string afdEndpointName2 = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
-            SecurityPolicyUpdateOptions updateOptions = new SecurityPolicyUpdateOptions
+            AfdEndpointResource afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
+            PatchableAfdSecurityPolicyData updateOptions = new PatchableAfdSecurityPolicyData
             {
                 Parameters = new SecurityPolicyWebApplicationFirewallParameters
                 {
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
             ((SecurityPolicyWebApplicationFirewallParameters)updateOptions.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
-            var lro = await afdSecurityPolicy.UpdateAsync(true, updateOptions);
-            AfdSecurityPolicy updatedSecurityPolicy = lro.Value;
+            var lro = await afdSecurityPolicy.UpdateAsync(WaitUntil.Completed, updateOptions);
+            AfdSecurityPolicyResource updatedSecurityPolicy = lro.Value;
             ResourceDataHelper.AssertAfdSecurityPolicyUpdate(updatedSecurityPolicy, updateOptions);
         }
     }

@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             ProfileResource AfdProfileResource = lro1.Value;
             // Get the rule set collection from the specific azure front door ProfileResource and create a rule set
             string ruleSetName = "myAfdRuleSet";
-            ArmOperation<AfdRuleSet> lro2 = await AfdProfile.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
-            AfdRuleSet ruleSet = lro2.Value;
+            ArmOperation<AfdRuleSetResource> lro2 = await AfdProfileResource.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
+            AfdRuleSetResource ruleSet = lro2.Value;
             // Get the rule collection from the specific rule set and create a rule
             string ruleName = "myAfdRule";
             AfdRuleData input3 = new AfdRuleData
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 CacheDuration = new TimeSpan(0, 0, 20)
             }));
-            ArmOperation<AfdRule> lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input3);
-            AfdRule rule = lro3.Value;
+            ArmOperation<AfdRuleResource> lro3 = await ruleSet.GetAfdRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input3);
+            AfdRuleResource rule = lro3.Value;
             #endregion Snippet:Managing_AfdRules_CreateAnAzureFrontDoorRule
         }
 
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             #region Snippet:Managing_AfdRules_ListAllAzureFrontDoorRules
             // First we need to get the azure front door rule collection from the specific rule set
             ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
-            AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
+            AfdRuleSetResource ruleSet = await AfdProfileResource.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // With GetAllAsync(), we can get a list of the rule in the collection
-            AsyncPageable<AfdRule> response = ruleCollection.GetAllAsync();
-            await foreach (AfdRule rule in response)
+            AsyncPageable<AfdRuleResource> response = ruleCollection.GetAllAsync();
+            await foreach (AfdRuleResource rule in response)
             {
                 Console.WriteLine(rule.Data.Name);
             }
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             #region Snippet:Managing_AfdRules_UpdateAnAzureFrontDoorRule
             // First we need to get the azure front door rule collection from the specific rule set
             ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
-            AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
+            AfdRuleSetResource ruleSet = await AfdProfileResource.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // Now we can get the rule with GetAsync()
-            AfdRule rule = await ruleCollection.GetAsync("myAfdRule");
+            AfdRuleResource rule = await ruleCollection.GetAsync("myAfdRule");
             // With UpdateAsync(), we can update the rule
             PatchableAfdRuleData input = new PatchableAfdRuleData
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 CacheDuration = new TimeSpan(0, 0, 30)
             }));
-            ArmOperation<AfdRule> lro = await rule.UpdateAsync(WaitUntil.Completed, input);
+            ArmOperation<AfdRuleResource> lro = await rule.UpdateAsync(WaitUntil.Completed, input);
             rule = lro.Value;
             #endregion Snippet:Managing_AfdRules_UpdateAnAzureFrontDoorRule
         }
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             #region Snippet:Managing_AfdRules_DeleteAnAzureFrontDoorRule
             // First we need to get the azure front door rule collection from the specific rule set
             ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
-            AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
+            AfdRuleSetResource ruleSet = await AfdProfileResource.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // Now we can get the rule with GetAsync()
-            AfdRule rule = await ruleCollection.GetAsync("myAfdRule");
+            AfdRuleResource rule = await ruleCollection.GetAsync("myAfdRule");
             // With DeleteAsync(), we can delete the rule
             await rule.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_AfdRules_DeleteAnAzureFrontDoorRule
