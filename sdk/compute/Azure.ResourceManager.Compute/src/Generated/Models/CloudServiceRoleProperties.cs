@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The CloudServiceRoleProperties. </summary>
-    public partial class CloudServiceRoleProperties
+    internal partial class CloudServiceRoleProperties
     {
         /// <summary> Initializes a new instance of CloudServiceRoleProperties. </summary>
         internal CloudServiceRoleProperties()

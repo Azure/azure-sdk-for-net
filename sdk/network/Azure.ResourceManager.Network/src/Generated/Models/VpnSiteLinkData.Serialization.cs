@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("linkProperties");
                 writer.WriteObjectValue(LinkProperties);
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress");
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(Fqdn))
             {

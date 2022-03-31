@@ -305,7 +305,7 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        private StorageManager StorageManager { get; }
+        private CheckpointStore CheckpointStore { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
@@ -422,7 +422,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
 
             _containerClient = checkpointStore;
-            StorageManager = CreateStorageManager(checkpointStore);
+            CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
 
             _containerClient = checkpointStore;
-            StorageManager = CreateStorageManager(checkpointStore);
+            CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
 
             _containerClient = checkpointStore;
-            StorageManager = CreateStorageManager(checkpointStore);
+            CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
         }
 
         /// <summary>
@@ -509,14 +509,14 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
 
             _containerClient = checkpointStore;
-            StorageManager = CreateStorageManager(checkpointStore);
+            CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
@@ -528,7 +528,7 @@ namespace Azure.Messaging.EventHubs
         ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
         /// </remarks>
         ///
-        internal EventProcessorClient(StorageManager storageManager,
+        internal EventProcessorClient(CheckpointStore checkpointStore,
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
@@ -536,17 +536,17 @@ namespace Azure.Messaging.EventHubs
                                       TokenCredential credential,
                                       EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
-            Argument.AssertNotNull(storageManager, nameof(storageManager));
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
-            StorageManager = storageManager;
+            CheckpointStore = checkpointStore;
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
@@ -558,7 +558,7 @@ namespace Azure.Messaging.EventHubs
         ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
         /// </remarks>
         ///
-        internal EventProcessorClient(StorageManager storageManager,
+        internal EventProcessorClient(CheckpointStore checkpointStore,
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
@@ -566,17 +566,17 @@ namespace Azure.Messaging.EventHubs
                                       AzureNamedKeyCredential credential,
                                       EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
-            Argument.AssertNotNull(storageManager, nameof(storageManager));
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
-            StorageManager = storageManager;
+            CheckpointStore = checkpointStore;
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
-        /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">Responsible for creation of checkpoints and for ownership claim.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
@@ -588,7 +588,7 @@ namespace Azure.Messaging.EventHubs
         ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
         /// </remarks>
         ///
-        internal EventProcessorClient(StorageManager storageManager,
+        internal EventProcessorClient(CheckpointStore checkpointStore,
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
@@ -596,10 +596,10 @@ namespace Azure.Messaging.EventHubs
                                       AzureSasCredential credential,
                                       EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
-            Argument.AssertNotNull(storageManager, nameof(storageManager));
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
-            StorageManager = storageManager;
+            CheckpointStore = checkpointStore;
         }
 
         /// <summary>
@@ -712,43 +712,33 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
         /// </summary>
         ///
-        /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
-        /// <param name="context">The context of the partition the checkpoint is associated with.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
+        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        internal Task UpdateCheckpointAsync(EventData eventData,
-                                            PartitionContext context,
-                                            CancellationToken cancellationToken)
+        protected override Task UpdateCheckpointAsync(string partitionId,
+                                                      long offset,
+                                                      long? sequenceNumber,
+                                                      CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            Argument.AssertNotNull(eventData, nameof(eventData));
-            Argument.AssertInRange(eventData.Offset, long.MinValue + 1, long.MaxValue, nameof(eventData.Offset));
-            Argument.AssertInRange(eventData.SequenceNumber, long.MinValue + 1, long.MaxValue, nameof(eventData.SequenceNumber));
-            Argument.AssertNotNull(context, nameof(context));
+            Argument.AssertNotNull(partitionId, nameof(partitionId));
+            Argument.AssertInRange(offset, long.MinValue + 1, long.MaxValue, nameof(offset));
 
-            Logger.UpdateCheckpointStart(context.PartitionId, Identifier, EventHubName, ConsumerGroup);
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
 
             using var scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
             scope.Start();
 
             try
             {
-                // Parameter validation is done by Checkpoint constructor.
-
-                var checkpoint = new EventProcessorCheckpoint
-                {
-                    FullyQualifiedNamespace = FullyQualifiedNamespace,
-                    EventHubName = EventHubName,
-                    ConsumerGroup = ConsumerGroup,
-                    PartitionId = context.PartitionId,
-                    StartingPosition = EventPosition.FromOffset(eventData.Offset)
-                };
-
-                return StorageManager.UpdateCheckpointAsync(checkpoint, eventData, cancellationToken);
+               return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -756,13 +746,13 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(context.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(context.PartitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
             }
         }
 
@@ -775,27 +765,6 @@ namespace Azure.Messaging.EventHubs
         protected override EventHubConnection CreateConnection() => base.CreateConnection();
 
         /// <summary>
-        ///   Produces a list of the available checkpoints for the Event Hub and consumer group associated with the
-        ///   event processor instance, so that processing for a given set of partitions can be properly initialized.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
-        ///
-        /// <returns>The set of checkpoints for the processor to take into account when initializing partitions.</returns>
-        ///
-        /// <remarks>
-        ///   Should a partition not have a corresponding checkpoint, the <see cref="EventProcessorOptions.DefaultStartingPosition" /> will
-        ///   be used to initialize the partition for processing.
-        ///
-        ///   In the event that a custom starting point is desired for a single partition, or each partition should start at a unique place,
-        ///   it is recommended that this method express that intent by returning checkpoints for those partitions with the desired custom
-        ///   starting location set.
-        /// </remarks>
-        ///
-        protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) =>
-            throw new InvalidOperationException(Resources.ListCheckpointsAsyncObsolete);
-
-        /// <summary>
         ///   Returns a checkpoint for the Event Hub, consumer group, and partition ID associated with the
         ///   event processor instance, so that processing for a given partition can be properly initialized.
         /// </summary>
@@ -806,17 +775,14 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The checkpoint for the processor to take into account when initializing partition.</returns>
         ///
         /// <remarks>
-        ///   Should a partition not have a corresponding checkpoint, the <see cref="EventProcessorOptions.DefaultStartingPosition" /> will
+        ///   Should a partition not have a corresponding checkpoint, the default starting position set by the <see cref="PartitionInitializingAsync" /> handler
+        ///   will be applied.  If no partition-specific starting point was specified, the <see cref="EventProcessorOptions.DefaultStartingPosition" /> will
         ///   be used to initialize the partition for processing.
-        ///
-        ///   In the event that a custom starting point is desired for a single partition, or each partition should start at a unique place,
-        ///   it is recommended that this method express that intent by returning checkpoints for those partitions with the desired custom
-        ///   starting location set.
         /// </remarks>
         ///
         protected override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken)
         {
-            var checkpoint = await StorageManager.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken).ConfigureAwait(false);
+            var checkpoint = await CheckpointStore.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken).ConfigureAwait(false);
 
             // If there was no initialization handler, no custom starting positions
             // could have been specified.  Return the checkpoint without further processing.
@@ -844,7 +810,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of ownership records to take into account when making load balancing decisions.</returns>
         ///
         protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
-            StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken);
+            CheckpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken);
 
         /// <summary>
         ///   Attempts to claim ownership of the specified partitions for processing.  This method is used by
@@ -859,7 +825,7 @@ namespace Azure.Messaging.EventHubs
         ///
         protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership,
                                                                                                    CancellationToken cancellationToken) =>
-            StorageManager.ClaimOwnershipAsync(desiredOwnership, cancellationToken);
+            CheckpointStore.ClaimOwnershipAsync(desiredOwnership, cancellationToken);
 
         /// <summary>
         ///   Performs the tasks needed to process a batch of events for a given partition as they are read from the Event Hubs service.
@@ -924,7 +890,7 @@ namespace Azure.Messaging.EventHubs
                     try
                     {
                         context ??= new ProcessorPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId, () => ReadLastEnqueuedEventProperties(partition.PartitionId));
-                        eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(eventData, context, updateToken), cancellationToken);
+                        eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(partition.PartitionId, eventData.Offset, eventData.SequenceNumber, updateToken), cancellationToken);
 
                         await _processEventAsync(eventArgs).ConfigureAwait(false);
                     }
@@ -1192,16 +1158,6 @@ namespace Azure.Messaging.EventHubs
                 ExceptionDispatchInfo.Capture(capturedValidationException).Throw();
             }
         }
-
-        /// <summary>
-        ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
-        /// </summary>
-        ///
-        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
-        ///
-        /// <returns>A <see cref="StorageManager" /> with the requested configuration.</returns>
-        ///
-        private StorageManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore, RetryPolicy);
 
         /// <summary>
         ///   Creates a checkpoint with a default starting position set.

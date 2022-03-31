@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the path rule that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="paths"> Path rules of URL path map. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of URL path map path rule. </param>
         /// <param name="backendHttpSettings"> Backend http settings resource of URL path map path rule. </param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(string id, string name, string etag, string type, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
+        internal ApplicationGatewayPathRule(string id, string name, string etag, string resourceType, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Paths = paths;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
@@ -51,20 +51,79 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Path rules of URL path map. </summary>
         public IList<string> Paths { get; }
         /// <summary> Backend address pool resource of URL path map path rule. </summary>
-        public WritableSubResource BackendAddressPool { get; set; }
+        internal WritableSubResource BackendAddressPool { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            set
+            {
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
+            }
+        }
+
         /// <summary> Backend http settings resource of URL path map path rule. </summary>
-        public WritableSubResource BackendHttpSettings { get; set; }
+        internal WritableSubResource BackendHttpSettings { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BackendHttpSettingsId
+        {
+            get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
+            set
+            {
+                if (BackendHttpSettings is null)
+                    BackendHttpSettings = new WritableSubResource();
+                BackendHttpSettings.Id = value;
+            }
+        }
+
         /// <summary> Redirect configuration resource of URL path map path rule. </summary>
-        public WritableSubResource RedirectConfiguration { get; set; }
+        internal WritableSubResource RedirectConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RedirectConfigurationId
+        {
+            get => RedirectConfiguration is null ? default : RedirectConfiguration.Id;
+            set
+            {
+                if (RedirectConfiguration is null)
+                    RedirectConfiguration = new WritableSubResource();
+                RedirectConfiguration.Id = value;
+            }
+        }
+
         /// <summary> Rewrite rule set resource of URL path map path rule. </summary>
-        public WritableSubResource RewriteRuleSet { get; set; }
+        internal WritableSubResource RewriteRuleSet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RewriteRuleSetId
+        {
+            get => RewriteRuleSet is null ? default : RewriteRuleSet.Id;
+            set
+            {
+                if (RewriteRuleSet is null)
+                    RewriteRuleSet = new WritableSubResource();
+                RewriteRuleSet.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the path rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
-        public WritableSubResource FirewallPolicy { get; set; }
+        internal WritableSubResource FirewallPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FirewallPolicyId
+        {
+            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            set
+            {
+                if (FirewallPolicy is null)
+                    FirewallPolicy = new WritableSubResource();
+                FirewallPolicy.Id = value;
+            }
+        }
     }
 }

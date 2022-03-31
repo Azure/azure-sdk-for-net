@@ -160,5 +160,11 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public virtual void ReleaseSession() =>
             _receiverManager.CancelSession();
+
+        ///<inheritdoc cref="ServiceBusSessionReceiver.RenewSessionLockAsync(CancellationToken)"/>
+        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+        }
     }
 }

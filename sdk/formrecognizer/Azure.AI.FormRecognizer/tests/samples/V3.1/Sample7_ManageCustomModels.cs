@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // Create a new model to store in the account
 
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
 #endif

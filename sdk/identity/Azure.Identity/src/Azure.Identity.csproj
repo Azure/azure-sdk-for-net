@@ -11,7 +11,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!--TODO: Switch back to package reference once Core is released prior to Azure.Identity release
+   <PackageReference Include="Azure.Core" />
+   -->
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />

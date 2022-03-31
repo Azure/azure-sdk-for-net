@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a cloud service extension profile. </summary>
-    public partial class CloudServiceExtensionProfile
+    internal partial class CloudServiceExtensionProfile
     {
         /// <summary> Initializes a new instance of CloudServiceExtensionProfile. </summary>
         public CloudServiceExtensionProfile()

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ResourceNavigationLinks_List operation. </summary>
-    public partial class ResourceNavigationLinksListResult
+    internal partial class ResourceNavigationLinksListResult
     {
         /// <summary> Initializes a new instance of ResourceNavigationLinksListResult. </summary>
         internal ResourceNavigationLinksListResult()

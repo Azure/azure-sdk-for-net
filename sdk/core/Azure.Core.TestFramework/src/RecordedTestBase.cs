@@ -3,31 +3,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework.Models;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
     public abstract class RecordedTestBase : ClientTestBase
     {
-        static RecordedTestBase()
-        {
-            // remove once https://github.com/Azure/azure-sdk-for-net/pull/25328 is shipped
-            ServicePointManager.Expect100Continue = false;
-        }
-
-        protected RecordedTestSanitizer Sanitizer { get; set; }
-
-        protected internal RecordMatcher Matcher { get; set; }
-
         public TestRecording Recording { get; private set; }
 
         public RecordedTestMode Mode { get; set; }
@@ -43,52 +33,135 @@ namespace Azure.Core.TestFramework
             (char)31, ':', '*', '?', '\\', '/'
         });
 
-        /// <summary>
-        /// Flag you can (temporarily) enable to save failed test recordings
-        /// and debug/re-run at the point of failure without re-running
-        /// potentially lengthy live tests.  This should never be checked in
-        /// and will throw an exception from CI builds to help make that easier
-        /// to spot.
-        /// </summary>
-        public bool SaveDebugRecordingsOnFailure
-        {
-            get => _saveDebugRecordingsOnFailure;
-            set
-            {
-                if (value && TestEnvironment.GlobalIsRunningInCI)
-                {
-                    throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
-                }
-
-                _saveDebugRecordingsOnFailure = value;
-            }
-        }
-        private bool _saveDebugRecordingsOnFailure;
-
         private TestProxy _proxy;
 
-        private readonly bool _useLegacyTransport;
         private DateTime _testStartTime;
 
         protected bool ValidateClientInstrumentation { get; set; }
 
         protected override DateTime TestStartTime => _testStartTime;
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, bool useLegacyTransport = false) : base(isAsync)
+        public const string SanitizeValue = "Sanitized";
+
+        /// <summary>
+        /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
+        /// </summary>
+        public List<string> JsonPathSanitizers { get; } =
+            new() { "$..primaryKey", "$..secondaryKey", "$..primaryConnectionString", "$..secondaryConnectionString", "$..connectionString" };
+
+        /// <summary>
+        /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
+        /// <see cref="JsonPathSanitizers"/>, but provides additional features such as regex matching, and customizing the sanitization replacement.
+        /// </summary>
+        public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new();
+
+        /// <summary>
+        /// The list of <see cref="BodyRegexSanitizer"/> to use while sanitizing request and response bodies. This allows you to specify a
+        /// regex for matching on specific content in the body.
+        /// </summary>
+        public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
+
+        /// <summary>
+        /// The list of <see cref="UriRegexSanitizer"/> to use while sanitizing request and response URIs. This allows you to specify
+        /// a regex for matching on the URI. <seealso cref="SanitizedQueryParameters"/> is a convenience property that allows you to sanitize
+        /// query parameters without constructing the <see cref="UriRegexSanitizer"/> yourself.
+        /// </summary>
+        public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new();
+
+        /// <summary>
+        /// The list of <see cref="HeaderTransform"/> to apply in Playback mode to the response headers.
+        /// </summary>
+        public List<HeaderTransform> HeaderTransforms = new();
+
+        /// <summary>
+        /// The list of <see cref="HeaderRegexSanitizer"/> to apply to the request and response headers. This allows you to specify
+        /// a regex for matching on the header values. For simple use cases where you need to sanitize based solely on header key, use
+        /// <see cref="SanitizedHeaders"/> instead. <seealso cref="SanitizedQueryParametersInHeaders"/> is a convenience property that allows
+        /// you to sanitize query parameters out of specific headers without constructing the <see cref="HeaderRegexSanitizer"/> yourself.
+        /// </summary>
+        public List<HeaderRegexSanitizer> HeaderRegexSanitizers { get; } = new();
+
+        /// <summary>
+        /// The list of headers that will be sanitized on the request and response. By default, the "Authorization" header is included.
+        /// </summary>
+        public List<string> SanitizedHeaders { get; } = new() { "Authorization" };
+
+        /// <summary>
+        /// The list of query parameters that will be sanitized on the request and response URIs.
+        /// </summary>
+        public List<string> SanitizedQueryParameters { get; } = new();
+
+        /// <summary>
+        /// The list of header keys and query parameter tuples where the associated query parameter that should be sanitized from the corresponding
+        /// request and response headers.
+        /// </summary>
+        public List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get; } = new();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string ReplacementHost
         {
-            Sanitizer = new RecordedTestSanitizer();
-            Matcher = new RecordMatcher();
-            Mode = mode ?? TestEnvironment.GlobalTestMode;
-            _useLegacyTransport = useLegacyTransport;
+            get => _replacementHost;
+            set
+            {
+                _replacementHost = value;
+                UriRegexSanitizers.Add(
+                    new UriRegexSanitizer(@"https://(?<host>[^/]+)/", _replacementHost)
+                    {
+                        GroupForReplace = "host"
+                    });
+            }
         }
 
-        protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile,
-            RecordedTestSanitizer sanitizer, RecordMatcher matcher)
+        private string _replacementHost;
+
+        /// <summary>
+        /// Whether or not to compare bodies from the request and the recorded request during playback.
+        /// The default value is <value>true</value>.
+        /// </summary>
+        public bool CompareBodies { get; set; } = true;
+
+        /// <summary>
+        /// Request headers whose values can change between recording and playback without causing request matching
+        /// to fail. The presence or absence of the header itself is still respected in matching.
+        /// </summary>
+        public HashSet<string> IgnoredHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            var recording = new TestRecording(mode, sessionFile, sanitizer, matcher, _proxy, _useLegacyTransport);
-            await recording.InitializeProxySettingsAsync();
-            return recording;
+            "Date",
+            "x-ms-date",
+            "x-ms-client-request-id",
+            "User-Agent",
+            "Request-Id",
+            "traceparent"
+        };
+
+        /// <summary>
+        /// Legacy header exclusion set that will disregard any headers listed here when matching. Headers listed here are not matched for value,
+        /// or for presence or absence of the header key. For that reason, IgnoredHeaders should be used instead as this will ensure that the header's
+        /// presence or absence from the request is considered when matching.
+        /// This property is only included only for backwards compat.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public HashSet<string> LegacyExcludedHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Request-Id",
+            "traceparent"
+        };
+
+        /// <summary>
+        /// Query parameters whose values can change between recording and playback without causing URI matching
+        /// to fail. The presence or absence of the query parameter itself is still respected in matching.
+        /// </summary>
+        public HashSet<string> IgnoredQueryParameters = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+        };
+
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
+        {
+            Mode = mode ?? TestEnvironment.GlobalTestMode;
         }
+
+        protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile) =>
+            await TestRecording.CreateAsync(mode, sessionFile, _proxy, this);
 
         public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
@@ -163,7 +236,7 @@ namespace Azure.Core.TestFramework
                 Logger = new TestLogger();
             }
 
-            if (!_useLegacyTransport && Mode != RecordedTestMode.Live)
+            if (Mode != RecordedTestMode.Live)
             {
                 _proxy = TestProxy.Start();
             }
@@ -242,7 +315,7 @@ namespace Azure.Core.TestFramework
                 throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
             }
 
-            Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+            Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath());
             ValidateClientInstrumentation = Recording.HasRequests;
 
             // don't include test proxy overhead as part of test time
@@ -258,13 +331,9 @@ namespace Azure.Core.TestFramework
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
             }
 
-            bool save = testPassed;
-#if DEBUG
-            save |= SaveDebugRecordingsOnFailure;
-#endif
             if (Recording != null)
             {
-                await Recording.DisposeAsync(save);
+                await Recording.DisposeAsync();
             }
 
             _proxy?.CheckForErrors();
@@ -276,17 +345,10 @@ namespace Azure.Core.TestFramework
             return base.InstrumentClient(clientType, client, preInterceptors);
         }
 
-        protected internal T InstrumentOperation<T>(T operation) where T: Operation
-        {
-            return (T) InstrumentOperation(typeof(T), operation);
-        }
-
         protected internal override object InstrumentOperation(Type operationType, object operation)
-            => InstrumentOperationInternal(operationType, operation, Mode == RecordedTestMode.Playback);
-
-        protected object InstrumentOperationInternal(Type operationType, object operation, bool noWait, params IInterceptor[] interceptors)
         {
-            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(noWait) }).ToArray();
+            var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode) }).ToArray();
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
                 new[] { typeof(IInstrumented) },

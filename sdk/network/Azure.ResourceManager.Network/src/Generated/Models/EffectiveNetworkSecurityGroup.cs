@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of network security group that is applied. </summary>
-        public WritableSubResource NetworkSecurityGroup { get; }
+        internal WritableSubResource NetworkSecurityGroup { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkSecurityGroupId
+        {
+            get => NetworkSecurityGroup.Id;
+            set => NetworkSecurityGroup.Id = value;
+        }
+
         /// <summary> Associated resources. </summary>
         public EffectiveNetworkSecurityGroupAssociation Association { get; }
         /// <summary> A collection of effective security rules. </summary>

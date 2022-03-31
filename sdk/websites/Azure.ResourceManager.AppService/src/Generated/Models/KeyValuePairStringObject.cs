@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The KeyValuePairStringObject. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of KeyValuePairStringObject. </summary>
         /// <param name="key"></param>
         /// <param name="value"> Any object. </param>
-        internal KeyValuePairStringObject(string key, object value)
+        internal KeyValuePairStringObject(string key, BinaryData value)
         {
             Key = key;
             Value = value;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the key. </summary>
         public string Key { get; }
         /// <summary> Any object. </summary>
-        public object Value { get; }
+        public BinaryData Value { get; }
     }
 }

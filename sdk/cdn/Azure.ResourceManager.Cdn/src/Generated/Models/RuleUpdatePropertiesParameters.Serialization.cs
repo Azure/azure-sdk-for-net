@@ -5,47 +5,9 @@
 
 #nullable disable
 
-using System.Text.Json;
-using Azure.Core;
-
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RuleUpdatePropertiesParameters : IUtf8JsonSerializable
+    internal partial class RuleUpdatePropertiesParameters
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Order))
-            {
-                writer.WritePropertyName("order");
-                writer.WriteNumberValue(Order.Value);
-            }
-            if (Optional.IsCollectionDefined(Conditions))
-            {
-                writer.WritePropertyName("conditions");
-                writer.WriteStartArray();
-                foreach (var item in Conditions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Actions))
-            {
-                writer.WritePropertyName("actions");
-                writer.WriteStartArray();
-                foreach (var item in Actions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MatchProcessingBehavior))
-            {
-                writer.WritePropertyName("matchProcessingBehavior");
-                writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
     }
 }

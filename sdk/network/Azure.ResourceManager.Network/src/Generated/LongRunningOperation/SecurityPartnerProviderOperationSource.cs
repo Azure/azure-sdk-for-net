@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class SecurityPartnerProviderOperationSource : IOperationSource<SecurityPartnerProvider>
+    internal class SecurityPartnerProviderOperationSource : IOperationSource<SecurityPartnerProviderResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        SecurityPartnerProvider IOperationSource<SecurityPartnerProvider>.CreateResult(Response response, CancellationToken cancellationToken)
+        SecurityPartnerProviderResource IOperationSource<SecurityPartnerProviderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement);
-            return new SecurityPartnerProvider(_client, data);
+            return new SecurityPartnerProviderResource(_client, data);
         }
 
-        async ValueTask<SecurityPartnerProvider> IOperationSource<SecurityPartnerProvider>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SecurityPartnerProviderResource> IOperationSource<SecurityPartnerProviderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement);
-            return new SecurityPartnerProvider(_client, data);
+            return new SecurityPartnerProviderResource(_client, data);
         }
     }
 }

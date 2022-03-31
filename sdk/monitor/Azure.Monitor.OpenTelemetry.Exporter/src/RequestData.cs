@@ -16,26 +16,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             switch (monitorTags.activityType)
             {
-                case PartBType.Http:
-                    url = monitorTags.PartBTags.GetRequestUrl();
+                case OperationType.Http:
+                    url = monitorTags.MappedTags.GetRequestUrl();
                     break;
-                case PartBType.Messaging:
-                    url = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeMessagingUrl)?.ToString();
+                case OperationType.Messaging:
+                    url = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeMessagingUrl)?.ToString();
                     break;
             }
 
             Id = activity.Context.SpanId.ToHexString();
-            Name = TelemetryItem.GetOperationName(activity, ref monitorTags.PartBTags);
+            Name = TraceHelper.GetOperationName(activity, ref monitorTags.MappedTags);
             Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
             Success = activity.GetStatus().StatusCode != StatusCode.Error;
-            ResponseCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
+            ResponseCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
             Url = url;
 
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
-            TraceHelper.AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
-            TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.PartCTags);
+            TraceHelper.AddActivityLinksToProperties(activity.Links, ref monitorTags.UnMappedTags);
+            TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.UnMappedTags);
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> LogAnalytics output properties. </summary>
-    public partial class LogAnalyticsOutput
+    internal partial class LogAnalyticsOutput
     {
         /// <summary> Initializes a new instance of LogAnalyticsOutput. </summary>
         internal LogAnalyticsOutput()

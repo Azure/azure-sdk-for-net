@@ -12,35 +12,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     internal partial class PrivateDnsZoneGroupsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupsRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public PrivateDnsZoneGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public PrivateDnsZoneGroupsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-02-01";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName)
@@ -61,7 +55,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -72,24 +66,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateEndpointName, privateDnsZoneGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -100,7 +83,7 @@ namespace Azure.ResourceManager.Network
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -111,24 +94,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateEndpointName, privateDnsZoneGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -139,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -161,7 +133,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -172,24 +144,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsZoneGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateEndpointName, privateDnsZoneGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -205,7 +166,7 @@ namespace Azure.ResourceManager.Network
                 case 404:
                     return Response.FromValue((PrivateDnsZoneGroupData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -216,24 +177,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsZoneGroupData> Get(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateEndpointName, privateDnsZoneGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -249,11 +199,11 @@ namespace Azure.ResourceManager.Network
                 case 404:
                     return Response.FromValue((PrivateDnsZoneGroupData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -273,9 +223,9 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -284,33 +234,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, <paramref name="privateDnsZoneGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, <paramref name="privateDnsZoneGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateEndpointName, privateDnsZoneGroupName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateEndpointName, privateDnsZoneGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -318,7 +254,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -327,33 +263,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update private dns zone group operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, <paramref name="privateDnsZoneGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/>, <paramref name="privateDnsZoneGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateEndpointName"/> or <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, PrivateDnsZoneGroupData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateEndpointName, privateDnsZoneGroupName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateEndpointName, privateDnsZoneGroupName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -361,7 +283,7 @@ namespace Azure.ResourceManager.Network
                 case 201:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -382,7 +304,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -392,20 +314,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsZoneGroupListResult>> ListAsync(string subscriptionId, string resourceGroupName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -419,7 +333,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -429,20 +343,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsZoneGroupListResult> List(string subscriptionId, string resourceGroupName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -456,7 +362,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -470,7 +376,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -481,24 +387,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsZoneGroupListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -512,7 +407,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -523,24 +418,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsZoneGroupListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -554,7 +438,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

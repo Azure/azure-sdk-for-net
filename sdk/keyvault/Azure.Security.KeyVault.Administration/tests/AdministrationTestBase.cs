@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
     /// </summary>
     [ClientTestFixture(
         KeyVaultAdministrationClientOptions.ServiceVersion.V7_2,
-        KeyVaultAdministrationClientOptions.ServiceVersion.V7_3_Preview)]
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_3)]
     public abstract class AdministrationTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         /// <summary>
-        /// Gets a polling interval based on whether we're playing back recorded tests (0s) or not (2s).
+        /// Gets a polling interval based on whether we're playing back recorded tests (0s) or not (<see cref="KeyVaultTestEnvironment.DefaultPollingInterval"/>).
         /// </summary>
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
             ? TimeSpan.Zero

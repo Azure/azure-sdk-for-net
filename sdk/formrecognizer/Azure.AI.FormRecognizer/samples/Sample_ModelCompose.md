@@ -29,28 +29,28 @@ In our case, we will be writing an application that collects the expenses a comp
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
 // https://aka.ms/azsdk/formrecognizer/buildtrainingset
 
-Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
+Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");
 var officeSupplieOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Office supplies" };
 
 BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: officeSupplieOptions);
 Response<DocumentModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
 DocumentModel officeSuppliesModel = suppliesOperationResponse.Value;
 
-Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
+Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
 var equipmentOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Office Equipment" };
 
 BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
 Response<DocumentModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
 DocumentModel officeEquipmentModel = equipmentOperationResponse.Value;
 
-Uri furnitureUri = <purchaseOrderFurnitureUri>;
+Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
 var furnitureOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Furniture" };
 
 BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
 Response<DocumentModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
 DocumentModel furnitureModel = furnitureOperationResponse.Value;
 
-Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
+Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
 var cleaningOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Cleaning Supplies" };
 
 BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);

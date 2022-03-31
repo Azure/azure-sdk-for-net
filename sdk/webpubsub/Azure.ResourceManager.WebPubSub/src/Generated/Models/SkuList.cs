@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> The list skus operation response. </summary>
-    public partial class SkuList
+    internal partial class SkuList
     {
         /// <summary> Initializes a new instance of SkuList. </summary>
         internal SkuList()
         {
-            Value = new ChangeTrackingList<Sku>();
+            Value = new ChangeTrackingList<WebPubSubResourceSku>();
         }
 
         /// <summary> Initializes a new instance of SkuList. </summary>
@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal SkuList(IReadOnlyList<Sku> value, string nextLink)
+        internal SkuList(IReadOnlyList<WebPubSubResourceSku> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of skus available for the resource. </summary>
-        public IReadOnlyList<Sku> Value { get; }
+        public IReadOnlyList<WebPubSubResourceSku> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

@@ -17,17 +17,24 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
+using System.Text.RegularExpressions;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Storage.Blobs.Test
 {
     public class BlobBatchClientTests : BlobTestBase
     {
+        private static Regex pattern = new Regex(@"sig=\S+\s", RegexOptions.Compiled);
+
         public BlobBatchClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             // Batch delimiters are random so disable body comparison
-            Matcher = new RecordMatcher(compareBodies: false);
-            Sanitizer = new BatchStorageRecordedTestSanitizer();
+            CompareBodies = false;
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
         }
 
         [SetUp]

@@ -61,7 +61,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The parameters used to perform test evaluation over TCP. </summary>
         public ConnectionMonitorTcpConfiguration TcpConfiguration { get; set; }
         /// <summary> The parameters used to perform test evaluation over ICMP. </summary>
-        public ConnectionMonitorIcmpConfiguration IcmpConfiguration { get; set; }
+        internal ConnectionMonitorIcmpConfiguration IcmpConfiguration { get; set; }
+        /// <summary> Value indicating whether path evaluation with trace route should be disabled. </summary>
+        public bool? DisableTraceRoute
+        {
+            get => IcmpConfiguration is null ? default : IcmpConfiguration.DisableTraceRoute;
+            set
+            {
+                if (IcmpConfiguration is null)
+                    IcmpConfiguration = new ConnectionMonitorIcmpConfiguration();
+                IcmpConfiguration.DisableTraceRoute = value;
+            }
+        }
+
         /// <summary> The threshold for declaring a test successful. </summary>
         public ConnectionMonitorSuccessThreshold SuccessThreshold { get; set; }
     }

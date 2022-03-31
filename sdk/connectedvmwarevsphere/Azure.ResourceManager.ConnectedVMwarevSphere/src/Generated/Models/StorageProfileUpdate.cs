@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the resource update properties. </summary>
-    public partial class StorageProfileUpdate
+    internal partial class StorageProfileUpdate
     {
         /// <summary> Initializes a new instance of StorageProfileUpdate. </summary>
         public StorageProfileUpdate()

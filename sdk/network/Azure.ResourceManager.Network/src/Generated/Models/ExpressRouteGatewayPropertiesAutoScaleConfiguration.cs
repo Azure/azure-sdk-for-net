@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration for auto scaling. </summary>
-    public partial class ExpressRouteGatewayPropertiesAutoScaleConfiguration
+    internal partial class ExpressRouteGatewayPropertiesAutoScaleConfiguration
     {
         /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfiguration. </summary>
         public ExpressRouteGatewayPropertiesAutoScaleConfiguration()

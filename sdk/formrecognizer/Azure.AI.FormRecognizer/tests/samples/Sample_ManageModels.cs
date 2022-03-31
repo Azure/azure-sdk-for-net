@@ -24,8 +24,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             // Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
             AccountProperties accountProperties = client.GetAccountProperties();
-            Console.WriteLine($"Account has {accountProperties.Count} models.");
-            Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
+            Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
+            Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
             // List the first ten or fewer models currently stored in the account.
             Pageable<DocumentModelInfo> models = client.GetModels();
@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // Create a new model to store in the account
 
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif

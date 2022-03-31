@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
-using System.Runtime.InteropServices;
-using System;
 using System.Resources;
+using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
@@ -22,4 +21,4 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure SQL Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure SQL.")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.1.1.0")]

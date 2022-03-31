@@ -14,7 +14,30 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a47
 tag: package-2021-08-01
 clear-output-folder: true
 skip-csproj: true
-  
+output-folder: ./Generated
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 #TODO: remove after we resolve why RestorePoint has no list
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
@@ -59,119 +82,16 @@ directive:
   - rename-model:
       from: RestorePointCollection
       to: RestorePointGroup
-  - rename-model:
-      from: VirtualMachineScaleSetVM
-      to: VirtualMachineScaleSetVm
-  - rename-model:
-      from: VirtualMachineScaleSetVMExtension
-      to: VirtualMachineScaleSetVmExtension
   - from: disk.json
     where: $.definitions.PurchasePlan
     transform: $["x-ms-client-name"] = "DiskPurchasePlan"
-# problematic word OS
   - from: swagger-document
-    where: $.definitions.DiskProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
+    where: $.definitions.VirtualMachineReimageParameters
+    transform: $["x-ms-client-name"] = "VirtualMachineReimageOptions"
   - from: swagger-document
-    where: $.definitions.DiskRestorePointProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.GalleryImageProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.GalleryImageProperties.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
-  - from: swagger-document
-    where: $.definitions.SharedGalleryImageProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.SharedGalleryImageProperties.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
-  - from: swagger-document
-    where: $.definitions.SnapshotProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineProperties.properties.osProfile
-    transform: $["x-ms-client-name"] = "OSProfile"
-  - from: swagger-document
-    where: $.definitions.CloudServiceProperties.properties.osProfile
-    transform: $["x-ms-client-name"] = "OSProfile"
-  - from: swagger-document
-    where: $.definitions.CloudServiceOsProfile
-    transform: $["x-ms-client-name"] = "CloudServiceOSProfile"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMProperties.properties.osProfile
-    transform: $["x-ms-client-name"] = "OSProfile"
-  - from: swagger-document
-    where: $.definitions.CommunityGalleryImageProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.CommunityGalleryImageProperties.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
-  - from: swagger-document
-    where: $.definitions.DiskUpdateProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.EncryptionImages.properties.osDiskImage
-    transform: $["x-ms-client-name"] = "OSDiskImage"
-  - from: swagger-document
-    where: $.definitions.GalleryImageVersionStorageProfile.properties.osDiskImage
-    transform: $["x-ms-client-name"] = "OSDiskImage"
-  - from: swagger-document
-    where: $.definitions.ImageOSDisk.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.ImageOSDisk.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
-  - from: swagger-document
-    where: $.definitions.ImageStorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.OSDisk.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceMetadata.properties.osProfile
-    transform: $["x-ms-client-name"] = "OSProfile"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMOSDisk
-    transform: $["x-ms-client-name"] = "RestorePointSourceVmOSDisk"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMOSDisk.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMStorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.RunCommandDocumentBase.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.SnapshotUpdateProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.StorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineImageProperties.properties.osDiskImage
-    transform: $["x-ms-client-name"] = "OSDiskImage"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineInstanceView.properties.osName
-    transform: $["x-ms-client-name"] = "OSName"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineInstanceView.properties.osVersion
-    transform: $["x-ms-client-name"] = "OSVersion"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetOSDisk.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetStorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetUpdateStorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineSize.properties.osDiskSizeInMB
-    transform: $["x-ms-client-name"] = "OSDiskSizeInMB"
-# problematic word Vm
+    where: $.definitions.VirtualMachineScaleSetVMReimageParameters
+    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmReimageOptions"
+# transform enum values
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]
     transform: $["name"] = "ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey"
@@ -181,121 +101,16 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMProfile
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmProfile"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetProperties.properties.doNotRunExtensionsOnOverprovisionedVMs
-    transform: $["x-ms-client-name"] = "DoNotRunExtensionsOnOverprovisionedVms"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetUpdateProperties.properties.doNotRunExtensionsOnOverprovisionedVMs
-    transform: $["x-ms-client-name"] = "DoNotRunExtensionsOnOverprovisionedVms"
-  - from: swagger-document
-    where: $.definitions.VMScaleSetConvertToSinglePlacementGroupInput
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetConvertToSinglePlacementGroupOptions"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMInstanceIDs
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmInstanceIds"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMInstanceRequiredIDs
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmInstanceRequiredIds"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]
-    transform: $["x-ms-enum"].name = "ExpandTypesForGetVirtualMachineScaleSets"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMInstanceView
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmInstanceView"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMReimageParameters
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmReimageOptions"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMNetworkProfileConfiguration
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmNetworkProfileConfiguration"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMProtectionPolicy
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmProtectionPolicy"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMExtensionUpdate
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmExtensionUpdateOptions"
-  - from: swagger-document
-    where: $.definitions.VMGalleryApplication
-    transform: $["x-ms-client-name"] = "VmGalleryApplication"
-  - from: swagger-document
-    where: $.definitions.DedicatedHostAllocatableVM
-    transform: $["x-ms-client-name"] = "DedicatedHostAllocatableVm"
-  - from: swagger-document
-    where: $.definitions.DiskSecurityProfile.properties.secureVMDiskEncryptionSetId
-    transform: $["x-ms-client-name"] = "SecureVmDiskEncryptionSetId"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[3]
-    transform: >
-        $["x-ms-enum"].values = [
-            { "name": "VirtualMachineScaleSetVmsRef", "value": "virtualMachineScaleSetVMs/$ref" },
-            { "name": "VirtualMachinesRef", "value": "virtualMachines/$ref" }
-        ];
-  - from: swagger-document
-    where: $.definitions.DedicatedHostAvailableCapacity.properties.allocatableVMs
-    transform: $["x-ms-client-name"] = "AllocatableVms"
-  - from: swagger-document
-    where: $.definitions.GrantAccessData.properties.getSecureVMGuestStateSAS
-    transform: $["x-ms-client-name"] = "GetSecureVmGuestStateSAS"
-  - from: swagger-document
-    where: $.definitions.VMSizeProperties
-    transform: $["x-ms-client-name"] = "VmSizeProperties"
-  - from: swagger-document
-    where: $.definitions.LinuxConfiguration.properties.provisionVMAgent
-    transform: $["x-ms-client-name"] = "ProvisionVmAgent"
-  - from: swagger-document
-    where: $.definitions.VMGuestPatchClassificationLinux
-    transform: $["x-ms-client-name"] = "VmGuestPatchClassificationLinux"
-  - from: swagger-document
-    where: $.definitions.LinuxPatchSettings.properties.patchMode["x-ms-enum"].name
-    transform: return "LinuxVmGuestPatchMode"
-  - from: swagger-document
-    where: $.definitions.LinuxParameters.properties.classificationsToInclude.items["x-ms-enum"].name
-    transform: return "VmGuestPatchClassification_Linux"
-  - from: swagger-document
-    where: $.definitions.PatchSettings.properties.patchMode["x-ms-enum"].name
-    transform: return "WindowsVmGuestPatchMode"
-  - from: swagger-document
-    where: $.definitions.WindowsParameters.properties.classificationsToInclude.items["x-ms-enum"].name
-    transform: return "VmGuestPatchClassification_Windows"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMStorageProfile
-    transform: $["x-ms-client-name"] = "RestorePointSourceVmStorageProfile"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMDataDisk
-    transform: $["x-ms-client-name"] = "RestorePointSourceVmDataDisk"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineInstallPatchesParameters.properties.rebootSetting["x-ms-enum"].name
-    transform: return "VmGuestPatchRebootSetting"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineInstallPatchesResult.properties.rebootStatus["x-ms-enum"].name
-    transform: return "VmGuestPatchRebootStatus"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMExtensionsSummary
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmExtensionsSummary"
-  - from: swagger-document
-    where: $.definitions.ScaleInPolicy.properties.rules.items["x-ms-enum"]
-    transform: >
-        $.values = [
-            { "name": "Default", "value": "Default" },
-            { "name": "OldestVm", "value": "OldestVM" },
-            { "name": "NewestVm", "value": "NewestVM" }
-        ]
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetUpdateVMProfile
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetUpdateVmProfile"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMExtensionsListResult
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmExtensionsListResult"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMExtensionsSummary
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmExtensionsSummary"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineSoftwarePatchProperties.properties.rebootBehavior["x-ms-enum"].name
-    transform: return "VmGuestPatchRebootBehavior"
-  - from: swagger-document
-    where: $.definitions.WindowsConfiguration.properties.provisionVMAgent
-    transform: $["x-ms-client-name"] = "ProvisionVmAgent"
+  - from: compute.json
+    where: $.definitions.VirtualMachineInstallPatchesParameters.properties.maximumDuration
+    transform: $["format"] = "duration"
+  - from: compute.json
+    where: $.definitions.VirtualMachineExtensionUpdateProperties.properties.type
+    transform: $["x-ms-client-name"] = "VirtualMachineExtensionType"
+  - from: communityGallery.json
+    where: $.definitions.PirCommunityGalleryResource.properties.type
+    transform: $["x-ms-client-name"] = "ResourceType"
+  - from: cloudService.json
+    where: $.definitions.UpdateDomain
+    transform: $["x-ms-client-name"] = "UpdateDomainIdentifier"
 ```

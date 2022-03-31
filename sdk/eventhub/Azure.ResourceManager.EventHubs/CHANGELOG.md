@@ -1,14 +1,14 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.3 (2022-03-31)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models and methods to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.2 (2021-12-28)
 
@@ -49,7 +49,8 @@ Before upgrade:
 ```csharp
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
-
+```
+```csharp
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
 var eventHubManagementClient = new EventHubManagementClient(tokenCredentials);
 eventHubManagementClient.SubscriptionId = subscriptionId;
@@ -100,31 +101,31 @@ var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpd
 ```
 
 After upgrade:
-```C# Snippet:ChangeLog_Sample
+```C# Snippet:ChangeLog_Sample_Usings
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.Core;
-
+```
+```C# Snippet:ChangeLog_Sample
 string namespaceName = "myNamespace";
 string eventhubName = "myEventhub";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await client.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
 //create namespace
 EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
 {
-    Sku = new Models.Sku(SkuName.Standard)
+    Sku = new EventHubsSku(EventHubsSkuName.Standard)
     {
-        Tier = SkuTier.Standard,
+        Tier = EventHubsSkuTier.Standard,
     }
 };
 parameters.Tags.Add("tag1", "value1");
 parameters.Tags.Add("tag2", "value2");
 EventHubNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespace eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(true, namespaceName, parameters).Value;
+EventHubNamespaceResource eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(WaitUntil.Completed, namespaceName, parameters).Value;
 
 //create eventhub
 EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
@@ -149,7 +150,7 @@ EventHubData eventHubData = new EventHubData()
         SkipEmptyArchives = true
     }
 };
-EventHub eventHub = eventHubCollection.CreateOrUpdate(true, eventhubName, eventHubData).Value;
+EventHubResource eventHub = eventHubCollection.CreateOrUpdate(WaitUntil.Completed, eventhubName, eventHubData).Value;
 ```
 
 #### Object Model Changes

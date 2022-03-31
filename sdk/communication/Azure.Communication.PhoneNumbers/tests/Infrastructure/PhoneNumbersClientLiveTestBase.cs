@@ -6,15 +6,24 @@ using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 
 namespace Azure.Communication.PhoneNumbers.Tests
 {
     public class PhoneNumbersClientLiveTestBase : RecordedTestBase<PhoneNumbersClientTestEnvironment>
     {
+        private const string PhoneNumberRegEx = @"[\\+]?[0-9]{11,15}";
+        private const string UrlEncodedPhoneNumberRegEx = @"[\\%2B]{0,3}[0-9]{11,15}";
         protected const string UnauthorizedNumber = "+14255550123";
+
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new PhoneNumbersClientRecordedTestSanitizer();
+        {
+            SanitizedHeaders.Add("location");
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(UrlEncodedPhoneNumberRegEx, SanitizeValue));
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         public bool SkipPhoneNumberLiveTests
             => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_PHONENUMBER_LIVE_TESTS") == "TRUE";
@@ -87,7 +96,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected string GetTestPhoneNumber()
         {
             if (TestEnvironment.Mode == RecordedTestMode.Playback)
-                return RecordedTestSanitizer.SanitizeValue;
+                return SanitizeValue;
 
             if (!SkipUpdateCapabilitiesLiveTest)
                 return TestEnvironment.TestAgentPhoneNumber;

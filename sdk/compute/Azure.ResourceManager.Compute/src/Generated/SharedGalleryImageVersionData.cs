@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        /// <param name="publishedDate"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="endOfLifeDate"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        internal SharedGalleryImageVersionData(string name, string location, string uniqueId, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate) : base(name, location, uniqueId)
+        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        internal SharedGalleryImageVersionData(string name, string location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn) : base(name, location, uniqueId)
         {
-            PublishedDate = publishedDate;
-            EndOfLifeDate = endOfLifeDate;
+            PublishedOn = publishedOn;
+            EndOfLifeOn = endOfLifeOn;
         }
 
         /// <summary> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? PublishedDate { get; }
+        public DateTimeOffset? PublishedOn { get; }
         /// <summary> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeDate { get; }
+        public DateTimeOffset? EndOfLifeOn { get; }
         /// <summary> The resource identifier. </summary>
         public ResourceIdentifier Id { get; internal set; }
     }

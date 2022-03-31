@@ -53,6 +53,12 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
+        public override Response<SparkConfigurationResource> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<SparkConfigurationResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+
+        /// <inheritdoc />
         public override ValueTask<Response<SparkConfigurationResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />

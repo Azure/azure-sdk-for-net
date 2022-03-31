@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Specialized
     ///
     /// An append blob is comprised of blocks and is optimized for append
     /// operations.  When you modify an append blob, blocks are added to the
-    /// end of the blob only, via the <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
+    /// end of the blob only, via the <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/>
     /// operation.  Updating or deleting of existing blocks is not supported.
     /// Unlike a block blob, an append blob does not expose its block IDs.
     ///
@@ -356,7 +356,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Create(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  The content of any existing
         /// blob is overwritten with the newly initialized append blob.  To add content
-        /// to the append blob, call the <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// to the append blob, call the <see cref="AppendBlock(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         /// </summary>
         /// <param name="options">
         /// Optional parameters.
@@ -391,7 +391,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateAsync(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  The content of any existing
         /// blob is overwritten with the newly initialized append blob.  To add content
-        /// to the append blob, call the <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// to the append blob, call the <see cref="AppendBlock(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         /// </summary>
         /// <param name="options">
         /// Optional parameters.
@@ -426,7 +426,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Create(BlobHttpHeaders, Metadata, AppendBlobRequestConditions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  The content of any existing blob is overwritten with
         /// the newly initialized append blob.  To add content to the append
-        /// blob, call the <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// blob, call the <see cref="AppendBlock(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
@@ -476,7 +476,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateAsync(BlobHttpHeaders, Metadata, AppendBlobRequestConditions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  The content of any existing blob is overwritten with
         /// the newly initialized append blob.  To add content to the append
-        /// blob, call the <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// blob, call the <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
@@ -526,7 +526,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateIfNotExists(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  If the append blob already exists,
         /// the content of the existing append blob will remain unchanged.  To add content to
-        /// the append blob, call the <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// the append blob, call the <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
@@ -564,7 +564,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateIfNotExistsAsync(AppendBlobCreateOptions, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  If the append blob already exists,
         /// the content of the existing append blob will remain unchanged.  To add content to
-        /// the append blob, call the <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// the append blob, call the <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
@@ -602,7 +602,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateIfNotExists(BlobHttpHeaders, Metadata, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  If the append blob already exists,
         /// the content of the existing append blob will remain unchanged.  To add content to
-        /// the append blob, call the <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// the append blob, call the <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
@@ -646,7 +646,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateIfNotExistsAsync(BlobHttpHeaders, Metadata, CancellationToken)"/>
         /// operation creates a new 0-length append blob.  If the append blob already exists,
         /// the content of the existing append blob will remain unchanged.  To add content to the append
-        /// blob, call the <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// blob, call the <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
@@ -690,7 +690,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new 0-length
         /// append blob.  If the append blob already exists, the content of
         /// the existing append blob will remain unchanged.  To add content to the append
-        /// blob, call the <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// blob, call the <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
@@ -794,7 +794,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="CreateInternal"/> operation creates a new 0-length
         /// append blob.  The content of any existing blob is overwritten with
         /// the newly initialized append blob.  To add content to the append
-        /// blob, call the <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation.
+        /// blob, call the <see cref="AppendBlockAsync(Stream, byte[], AppendBlobRequestConditions, IProgress{long}, CancellationToken)"/> operation.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
@@ -997,33 +997,39 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO #27253
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<BlobAppendInfo> AppendBlock(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            AppendBlobAppendBlockOptions options = default;
-            if (transactionalContentHash != default || conditions != default || progressHandler != default)
-            {
-                options = new AppendBlobAppendBlockOptions()
-                {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
-                    Conditions = conditions,
-                    ProgressHandler = progressHandler
-                };
-            }
+            // TODO #27253
+            //AppendBlobAppendBlockOptions options = default;
+            //if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            //{
+            //    options = new AppendBlobAppendBlockOptions()
+            //    {
+            //        TransactionalHashingOptions = transactionalContentHash != default
+            //            ? new UploadTransactionalHashingOptions()
+            //            {
+            //                Algorithm = TransactionalHashAlgorithm.MD5,
+            //                PrecalculatedHash = transactionalContentHash
+            //            }
+            //            : default,
+            //        Conditions = conditions,
+            //        ProgressHandler = progressHandler
+            //    };
+            //}
             return AppendBlockInternal(
                 content,
-                options,
+                transactionalContentHash,
+                conditions,
+                progressHandler,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1072,119 +1078,129 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO #27253
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             byte[] transactionalContentHash = default,
             AppendBlobRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            AppendBlobAppendBlockOptions options = default;
-            if (transactionalContentHash != default || conditions != default || progressHandler != default)
-            {
-                options = new AppendBlobAppendBlockOptions()
-                {
-                    TransactionalHashingOptions = transactionalContentHash != default
-                        ? new UploadTransactionalHashingOptions()
-                        {
-                            Algorithm = TransactionalHashAlgorithm.MD5,
-                            PrecalculatedHash = transactionalContentHash
-                        }
-                        : default,
-                    Conditions = conditions,
-                    ProgressHandler = progressHandler
-                };
-            }
+            // TODO #27253
+            //AppendBlobAppendBlockOptions options = default;
+            //if (transactionalContentHash != default || conditions != default || progressHandler != default)
+            //{
+            //    options = new AppendBlobAppendBlockOptions()
+            //    {
+            //        TransactionalHashingOptions = transactionalContentHash != default
+            //            ? new UploadTransactionalHashingOptions()
+            //            {
+            //                Algorithm = TransactionalHashAlgorithm.MD5,
+            //                PrecalculatedHash = transactionalContentHash
+            //            }
+            //            : default,
+            //        Conditions = conditions,
+            //        ProgressHandler = progressHandler
+            //    };
+            //}
             return await AppendBlockInternal(
                 content,
-                options,
+                transactionalContentHash,
+                conditions,
+                progressHandler,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block
-        /// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
-        /// to the end of the existing append blob.  The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
-        /// operation is only permitted if the blob was created as an append
-        /// blob.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
-        /// Append Block</see>.
-        /// </summary>
-        /// <param name="content">
-        /// A <see cref="Stream"/> containing the content of the block to
-        /// append.
-        /// </param>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobAppendInfo}"/> describing the
-        /// state of the updated append blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<BlobAppendInfo> AppendBlock(
-            Stream content,
-            AppendBlobAppendBlockOptions options,
-            CancellationToken cancellationToken = default) =>
-            AppendBlockInternal(
-                content,
-                options,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+        // TODO #27253
+        ///// <summary>
+        ///// The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block
+        ///// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
+        ///// to the end of the existing append blob.  The <see cref="AppendBlock(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
+        ///// operation is only permitted if the blob was created as an append
+        ///// blob.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
+        ///// Append Block</see>.
+        ///// </summary>
+        ///// <param name="content">
+        ///// A <see cref="Stream"/> containing the content of the block to
+        ///// append.
+        ///// </param>
+        ///// <param name="options">
+        ///// Optional parameters.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{BlobAppendInfo}"/> describing the
+        ///// state of the updated append blob.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //public virtual Response<BlobAppendInfo> AppendBlock(
+        //    Stream content,
+        //    AppendBlobAppendBlockOptions options = default,
+        //    CancellationToken cancellationToken = default) =>
+        //    AppendBlockInternal(
+        //        content,
+        //        options,
+        //        transactionalContentMD5: default,
+        //        false, // async
+        //        cancellationToken)
+        //        .EnsureCompleted();
 
-        /// <summary>
-        /// The <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block
-        /// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
-        /// to the end of the existing append blob.  The <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
-        /// operation is only permitted if the blob was created as an append
-        /// blob.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
-        /// Append Block</see>.
-        /// </summary>
-        /// <param name="content">
-        /// A <see cref="Stream"/> containing the content of the block to
-        /// append.
-        /// </param>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobAppendInfo}"/> describing the
-        /// state of the updated append blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
-            Stream content,
-            AppendBlobAppendBlockOptions options,
-            CancellationToken cancellationToken = default) =>
-            await AppendBlockInternal(
-                content,
-                options,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+        // TODO #27253
+        ///// <summary>
+        ///// The <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/> operation commits a new block
+        ///// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
+        ///// to the end of the existing append blob.  The <see cref="AppendBlockAsync(Stream, AppendBlobAppendBlockOptions, CancellationToken)"/>
+        ///// operation is only permitted if the blob was created as an append
+        ///// blob.
+        /////
+        ///// For more information, see
+        ///// <see href="https://docs.microsoft.com/rest/api/storageservices/append-block">
+        ///// Append Block</see>.
+        ///// </summary>
+        ///// <param name="content">
+        ///// A <see cref="Stream"/> containing the content of the block to
+        ///// append.
+        ///// </param>
+        ///// <param name="options">
+        ///// Optional parameters.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{BlobAppendInfo}"/> describing the
+        ///// state of the updated append blob.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
+        //    Stream content,
+        //    AppendBlobAppendBlockOptions options = default,
+        //    CancellationToken cancellationToken = default) =>
+        //    await AppendBlockInternal(
+        //        content,
+        //        options,
+        //        transactionalContentMD5: default,
+        //        true, // async
+        //        cancellationToken)
+        //        .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="AppendBlockInternal"/> operation commits a new block
@@ -1201,8 +1217,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Stream"/> containing the content of the block to
         /// append.
         /// </param>
-        /// <param name="options">
-        /// Optional parameters.
+        /// <param name="conditions">
+        /// Request conditions for append operation.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Progress handler for append progress.
+        /// </param>
+        /// <param name="transactionalContentMD5">
+        /// Transactional MD5 for content verification.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1221,7 +1243,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
-            AppendBlobAppendBlockOptions options,
+            byte[] transactionalContentMD5,
+            AppendBlobRequestConditions conditions,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1233,15 +1257,15 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(options.Conditions)}: {options?.Conditions}");
+                    $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
 
                 // All AppendBlobRequestConditions are valid.
-                options?.Conditions.ValidateConditionsNotPresent(
+                conditions.ValidateConditionsNotPresent(
                     invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(AppendBlobClient.AppendBlock),
-                    parameterName: nameof(options.Conditions));
+                    parameterName: nameof(conditions));
 
                 try
                 {
@@ -1250,9 +1274,10 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
+                    // TODO #27253
+                    //ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, options?.TransactionalHashingOptions);
 
-                    content = content.WithNoDispose().WithProgress(options?.ProgressHandler);
+                    content = content.WithNoDispose().WithProgress(progressHandler);
 
                     ResponseWithHeaders<AppendBlobAppendBlockHeaders> response;
 
@@ -1261,20 +1286,21 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await AppendBlobRestClient.AppendBlockAsync(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
-                            leaseId: options?.Conditions?.LeaseId,
-                            maxSize: options?.Conditions?.IfMaxSizeLessThanOrEqual,
-                            appendPosition: options?.Conditions?.IfAppendPositionEqual,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: transactionalContentMD5, //hashResult?.MD5,
+                            leaseId: conditions?.LeaseId,
+                            maxSize: conditions?.IfMaxSizeLessThanOrEqual,
+                            appendPosition: conditions?.IfAppendPositionEqual,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
-                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
-                            ifTags: options?.Conditions?.TagConditions,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1283,20 +1309,21 @@ namespace Azure.Storage.Blobs.Specialized
                         response = AppendBlobRestClient.AppendBlock(
                             contentLength: (content.Length - content.Position),
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
-                            leaseId: options?.Conditions?.LeaseId,
-                            maxSize: options?.Conditions?.IfMaxSizeLessThanOrEqual,
-                            appendPosition: options?.Conditions?.IfAppendPositionEqual,
+                            // TODO #27253
+                            //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: transactionalContentMD5, //hashResult?.MD5,
+                            leaseId: conditions?.LeaseId,
+                            maxSize: conditions?.IfMaxSizeLessThanOrEqual,
+                            appendPosition: conditions?.IfAppendPositionEqual,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
-                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
-                            ifTags: options?.Conditions?.TagConditions,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2050,8 +2077,10 @@ namespace Azure.Storage.Blobs.Specialized
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler,
-                    hashingOptions: options?.TransactionalHashingOptions);
+                    progressHandler: options?.ProgressHandler
+                    // TODO #27253
+                    //options?.TransactionalHashingOptions
+                    );
             }
             catch (Exception ex)
             {

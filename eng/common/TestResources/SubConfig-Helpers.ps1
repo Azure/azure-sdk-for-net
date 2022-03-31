@@ -1,4 +1,8 @@
-function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, [string]$value, [array]$allowedValues = @())
+function BuildServiceDirectoryPrefix([string]$serviceName) {
+    return $serviceName.ToUpperInvariant() + "_"
+}
+
+function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())
 {
     $logOutputNonSecret = @(
         # Environment Variables
@@ -14,6 +18,7 @@ function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, 
         "RESOURCE_MANAGER_URL",
         "SERVICE_MANAGEMENT_URL",
         "ENDPOINT_SUFFIX",
+        "SERVICE_DIRECTORY",
         # This is used in many places and is harder to extract from the base subscription config, so hardcode it for now.
         "STORAGE_ENDPOINT_SUFFIX",
         # Parameters
@@ -24,6 +29,8 @@ function ShouldMarkValueAsSecret([string]$serviceDirectoryPrefix, [string]$key, 
         "TestApplicationOid",
         "ProvisionerApplicationId"
     )
+
+    $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
 
     $suffix1 = $key -replace $serviceDirectoryPrefix, ""
     $suffix2 = $key -replace "AZURE_", ""

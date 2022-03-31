@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration needed to perform TLS termination &amp; initiation. </summary>
-    public partial class FirewallPolicyTransportSecurity
+    internal partial class FirewallPolicyTransportSecurity
     {
         /// <summary> Initializes a new instance of FirewallPolicyTransportSecurity. </summary>
         public FirewallPolicyTransportSecurity()

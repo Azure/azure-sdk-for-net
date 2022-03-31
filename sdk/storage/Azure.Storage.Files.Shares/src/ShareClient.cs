@@ -3482,7 +3482,7 @@ namespace Azure.Storage.Files.Shares
         /// <see cref="ShareClient"/>.
         /// </summary>
         /// <returns>A new <see cref="ShareServiceClient"/> instance.</returns>
-        protected internal virtual ShareServiceClient GetParentShareServiceClientCore()
+        protected internal virtual ShareServiceClient GetParentServiceClientCore()
         {
             if (_parentShareServiceClient == null)
             {
@@ -3519,9 +3519,9 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="client">The <see cref="ShareClient"/>.</param>
             /// <returns>A new <see cref="ShareServiceClient"/> instance.</returns>
-            public static ShareServiceClient GetParentShareServiceClient(this ShareClient client)
+            public static ShareServiceClient GetParentServiceClient(this ShareClient client)
             {
-                return client.GetParentShareServiceClientCore();
+                return client.GetParentServiceClientCore();
             }
         }
     }

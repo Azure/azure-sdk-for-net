@@ -1,14 +1,14 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.4 (2022-03-31)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.3 (2022-02-08)
 

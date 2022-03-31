@@ -15,11 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal void UpdateRoleNameAndInstance(Resource resource)
         {
-            if (RoleName != null || RoleInstance != null)
-            {
-                return;
-            }
-
             if (resource == null)
             {
                 return;

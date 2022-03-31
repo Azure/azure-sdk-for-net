@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -23,16 +24,15 @@ namespace Azure.Data.Tables.Tests
         additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
-            Sanitizer = new TablesRecordedTestSanitizer();
-        }
-
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType) : base(isAsync)
-        {
-            _endpointType = endpointType;
-            Sanitizer = new TablesRecordedTestSanitizer();
+            SanitizedHeaders.Add("My-Custom-Auth-Header");
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                });
         }
 
         protected TableServiceClient service { get; private set; }

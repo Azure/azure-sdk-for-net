@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The base resource set for visibility and auto-approval. </summary>
-    public partial class ResourceSet
+    internal partial class ResourceSet
     {
         /// <summary> Initializes a new instance of ResourceSet. </summary>
         public ResourceSet()

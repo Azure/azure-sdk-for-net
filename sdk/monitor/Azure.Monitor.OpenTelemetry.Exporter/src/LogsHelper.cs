@@ -24,9 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = new TelemetryItem(logRecord);
-                telemetryItem.InstrumentationKey = instrumentationKey;
-                telemetryItem.SetResource(roleName, roleInstance);
+                telemetryItem = new TelemetryItem(logRecord, roleName, roleInstance, instrumentationKey);
                 if (logRecord.Exception != null)
                 {
                     telemetryItem.Data = new MonitorBase
@@ -52,13 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static string GetMessageAndSetProperties(LogRecord logRecord, IDictionary<string, string> properties)
         {
-            string message = null;
-            var isFormattedMessage = logRecord.FormattedMessage != null;
-
-            if (isFormattedMessage)
-            {
-                message = logRecord.FormattedMessage;
-            }
+            string message = logRecord.FormattedMessage;
 
             // Both logRecord.State and logRecord.StateValues will not be set at the same time for LogRecord.
             // Either logRecord.State != null or logRecord.StateValues will be called.
@@ -66,13 +58,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (logRecord.State is IReadOnlyCollection<KeyValuePair<string, object>> stateDictionary)
                 {
-                    ExtractProperties(ref message, properties, stateDictionary, isFormattedMessage);
+                    ExtractProperties(ref message, properties, stateDictionary);
                 }
             }
 
             if (logRecord.StateValues != null)
             {
-                ExtractProperties(ref message, properties, logRecord.StateValues, isFormattedMessage);
+                ExtractProperties(ref message, properties, logRecord.StateValues);
             }
 
             if (logRecord.EventId.Id != 0)
@@ -95,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var exceptionType = exception.GetType().FullName;
             var strackTrace = new StackTrace(exception);
-            var exceptionStackFrame = strackTrace.GetFrame(1);
+            var exceptionStackFrame = strackTrace.GetFrame(0);
 
             if (exceptionStackFrame != null)
             {
@@ -143,13 +135,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        private static void ExtractProperties(ref string message, IDictionary<string, string> properties, IReadOnlyCollection<KeyValuePair<string, object>> stateDictionary, bool isFormattedMessage)
+        private static void ExtractProperties(ref string message, IDictionary<string, string> properties, IReadOnlyCollection<KeyValuePair<string, object>> stateDictionary)
         {
             foreach (KeyValuePair<string, object> item in stateDictionary)
             {
                 if (item.Key == "{OriginalFormat}")
                 {
-                    if (!isFormattedMessage)
+                    if (message == null)
                     {
                         message = item.Value.ToString();
                     }

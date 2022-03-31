@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> A reference to the origin group. </summary>
-    public partial class EndpointPropertiesUpdateParametersDefaultOriginGroup
+    internal partial class EndpointPropertiesUpdateParametersDefaultOriginGroup
     {
         /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDefaultOriginGroup. </summary>
         public EndpointPropertiesUpdateParametersDefaultOriginGroup()

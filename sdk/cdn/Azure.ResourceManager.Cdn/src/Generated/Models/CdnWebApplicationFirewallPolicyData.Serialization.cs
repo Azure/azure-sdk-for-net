@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("policySettings");
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsDefined(RateLimitRules))
+            if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules");
-                writer.WriteObjectValue(RateLimitRules);
+                writer.WriteObjectValue(RateLimitSettings);
             }
-            if (Optional.IsDefined(CustomRules))
+            if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules");
-                writer.WriteObjectValue(CustomRules);
+                writer.WriteObjectValue(CustomSettings);
             }
             if (Optional.IsDefined(ManagedRules))
             {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Cdn
         internal static CdnWebApplicationFirewallPolicyData DeserializeCdnWebApplicationFirewallPolicyData(JsonElement element)
         {
             Optional<string> etag = default;
-            Models.Sku sku = default;
+            CdnSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<PolicySettings> policySettings = default;
             Optional<RateLimitRuleList> rateLimitRules = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

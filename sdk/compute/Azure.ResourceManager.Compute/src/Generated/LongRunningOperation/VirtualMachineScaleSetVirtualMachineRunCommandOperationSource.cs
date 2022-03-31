@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VirtualMachineScaleSetVirtualMachineRunCommandOperationSource : IOperationSource<VirtualMachineScaleSetVirtualMachineRunCommand>
+    internal class VirtualMachineScaleSetVirtualMachineRunCommandOperationSource : IOperationSource<VirtualMachineScaleSetVirtualMachineRunCommandResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        VirtualMachineScaleSetVirtualMachineRunCommand IOperationSource<VirtualMachineScaleSetVirtualMachineRunCommand>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineScaleSetVirtualMachineRunCommandResource IOperationSource<VirtualMachineScaleSetVirtualMachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
-            return new VirtualMachineScaleSetVirtualMachineRunCommand(_client, data);
+            return new VirtualMachineScaleSetVirtualMachineRunCommandResource(_client, data);
         }
 
-        async ValueTask<VirtualMachineScaleSetVirtualMachineRunCommand> IOperationSource<VirtualMachineScaleSetVirtualMachineRunCommand>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineScaleSetVirtualMachineRunCommandResource> IOperationSource<VirtualMachineScaleSetVirtualMachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
-            return new VirtualMachineScaleSetVirtualMachineRunCommand(_client, data);
+            return new VirtualMachineScaleSetVirtualMachineRunCommandResource(_client, data);
         }
     }
 }

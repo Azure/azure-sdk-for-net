@@ -3,6 +3,7 @@
     <AssemblyTitle>Azure IoT Hub Service Client SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <!-- Nuget properties -->
@@ -19,44 +20,10 @@
 
   <!-- Common source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
   </ItemGroup>

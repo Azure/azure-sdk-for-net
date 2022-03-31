@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             TargetFqdns = new ChangeTrackingList<string>();
             TargetUrls = new ChangeTrackingList<string>();
             FqdnTags = new ChangeTrackingList<string>();
-            SourceIpGroups = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
             WebCategories = new ChangeTrackingList<string>();
             RuleType = FirewallPolicyRuleType.ApplicationRule;
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
         /// <param name="targetUrls"> List of Urls for this rule condition. </param>
         /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
-        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="terminateTLS"> Terminate TLS connections for this rule. </param>
         /// <param name="webCategories"> List of destination azure web categories. </param>
-        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIpGroups, bool? terminateTLS, IList<string> webCategories) : base(name, description, ruleType)
+        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIPGroups, bool? terminateTLS, IList<string> webCategories) : base(name, description, ruleType)
         {
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
             TargetFqdns = targetFqdns;
             TargetUrls = targetUrls;
             FqdnTags = fqdnTags;
-            SourceIpGroups = sourceIpGroups;
+            SourceIPGroups = sourceIPGroups;
             TerminateTLS = terminateTLS;
             WebCategories = webCategories;
             RuleType = ruleType;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of FQDN Tags for this rule. </summary>
         public IList<string> FqdnTags { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
-        public IList<string> SourceIpGroups { get; }
+        public IList<string> SourceIPGroups { get; }
         /// <summary> Terminate TLS connections for this rule. </summary>
         public bool? TerminateTLS { get; set; }
         /// <summary> List of destination azure web categories. </summary>

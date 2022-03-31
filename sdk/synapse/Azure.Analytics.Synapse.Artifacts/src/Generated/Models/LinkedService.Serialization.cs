@@ -141,6 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element);
                     case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element);
                     case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element);
+                    case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element);
                     case "Responsys": return ResponsysLinkedService.DeserializeResponsysLinkedService(element);
                     case "RestService": return RestServiceLinkedService.DeserializeRestServiceLinkedService(element);
                     case "Salesforce": return SalesforceLinkedService.DeserializeSalesforceLinkedService(element);
@@ -156,15 +157,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element);
                     case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element);
+                    case "Smartsheet": return SmartsheetLinkedService.DeserializeSmartsheetLinkedService(element);
                     case "Snowflake": return SnowflakeLinkedService.DeserializeSnowflakeLinkedService(element);
                     case "Spark": return SparkLinkedService.DeserializeSparkLinkedService(element);
                     case "SqlServer": return SqlServerLinkedService.DeserializeSqlServerLinkedService(element);
                     case "Square": return SquareLinkedService.DeserializeSquareLinkedService(element);
                     case "Sybase": return SybaseLinkedService.DeserializeSybaseLinkedService(element);
+                    case "TeamDesk": return TeamDeskLinkedService.DeserializeTeamDeskLinkedService(element);
                     case "Teradata": return TeradataLinkedService.DeserializeTeradataLinkedService(element);
                     case "Vertica": return VerticaLinkedService.DeserializeVerticaLinkedService(element);
                     case "Web": return WebLinkedService.DeserializeWebLinkedService(element);
                     case "Xero": return XeroLinkedService.DeserializeXeroLinkedService(element);
+                    case "Zendesk": return ZendeskLinkedService.DeserializeZendeskLinkedService(element);
                     case "Zoho": return ZohoLinkedService.DeserializeZohoLinkedService(element);
                 }
             }

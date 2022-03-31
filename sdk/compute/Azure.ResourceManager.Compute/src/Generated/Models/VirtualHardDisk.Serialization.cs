@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualHardDisk : IUtf8JsonSerializable
+    internal partial class VirtualHardDisk : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());

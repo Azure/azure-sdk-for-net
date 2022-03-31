@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static MetricAvailability DeserializeMetricAvailability(JsonElement element)
         {
             Optional<string> timeGrain = default;
-            Optional<string> blobDuration = default;
+            Optional<TimeSpan> blobDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrain"))
@@ -25,11 +26,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("blobDuration"))
                 {
-                    blobDuration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    blobDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new MetricAvailability(timeGrain.Value, blobDuration.Value);
+            return new MetricAvailability(timeGrain.Value, Optional.ToNullable(blobDuration));
         }
     }
 }

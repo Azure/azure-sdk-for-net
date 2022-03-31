@@ -18,34 +18,40 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
         public RemotePrivateEndpointConnection()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"></param>
         /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
-        internal RemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses) : base(id, name, type, systemData, kind)
+        internal RemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses) : base(id, name, resourceType, systemData, kind)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
         }
 
         /// <summary> Gets the provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
-        public SubResource PrivateEndpoint { get; set; }
+        internal SubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+        }
+
         /// <summary> The state of a private link connection. </summary>
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
-        public IList<string> IpAddresses { get; }
+        public IList<string> IPAddresses { get; }
     }
 }

@@ -27,7 +27,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Application logs to file system configuration. </summary>
-        public FileSystemApplicationLogsConfig FileSystem { get; set; }
+        internal FileSystemApplicationLogsConfig FileSystem { get; set; }
+        /// <summary> Log level. </summary>
+        public LogLevel? FileSystemLevel
+        {
+            get => FileSystem is null ? default : FileSystem.Level;
+            set
+            {
+                if (FileSystem is null)
+                    FileSystem = new FileSystemApplicationLogsConfig();
+                FileSystem.Level = value;
+            }
+        }
+
         /// <summary> Application logs to azure table storage configuration. </summary>
         public AzureTableStorageApplicationLogsConfig AzureTableStorage { get; set; }
         /// <summary> Application logs to blob storage configuration. </summary>

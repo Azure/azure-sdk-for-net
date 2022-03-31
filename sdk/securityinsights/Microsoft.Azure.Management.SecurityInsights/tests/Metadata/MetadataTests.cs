@@ -2,10 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading;
-using Microsoft.Azure.Management.SecurityInsights;
 using Microsoft.Azure.Management.SecurityInsights.Models;
 using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -30,8 +26,20 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
+
+                var MetadataId = Guid.NewGuid().ToString();
+                var MetadataProperties = new MetadataModel()
+                {
+                    Kind = "AnalyticsRule",
+                    ParentId = "/subscriptions/" + TestHelper.TestEnvironment.SubscriptionId.ToString() + "/resourceGroups/" + TestHelper.ResourceGroup + "/providers/" + TestHelper.OperationalInsightsResourceProvider + "/workspaces/" + TestHelper.WorkspaceName + "/providers/Microsoft.SecurityInsights/alertRules/" + Guid.NewGuid().ToString(),
+                    ContentId = Guid.NewGuid().ToString()
+                };
+
+                SecurityInsightsClient.Metadata.Create(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId, MetadataProperties);
+
                 var Metadatas = SecurityInsightsClient.Metadata.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateMetadatas(Metadatas);
+                SecurityInsightsClient.Metadata.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, MetadataId);
             }
         }
 

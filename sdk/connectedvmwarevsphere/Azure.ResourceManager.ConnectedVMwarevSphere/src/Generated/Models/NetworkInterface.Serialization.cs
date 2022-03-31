@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("deviceKey");
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (Optional.IsDefined(IpSettings))
+            if (Optional.IsDefined(IPSettings))
             {
                 writer.WritePropertyName("ipSettings");
-                writer.WriteObjectValue(IpSettings);
+                writer.WriteObjectValue(IPSettings);
             }
             writer.WriteEndObject();
         }

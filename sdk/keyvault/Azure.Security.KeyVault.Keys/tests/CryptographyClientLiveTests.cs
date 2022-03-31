@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
 
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
-            Matcher = new RecordMatcher(compareBodies: false);
+            CompareBodies = false;
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(key.Id, verifyDataResult.KeyId);
 
             Assert.True(verifyResult.IsValid);
-            Assert.True(verifyResult.IsValid);
+            Assert.True(verifyDataResult.IsValid);
         }
 
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.

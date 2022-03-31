@@ -5,32 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ApiDefinitionInfo : IUtf8JsonSerializable
+    internal partial class ApiDefinitionInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
 
         internal static ApiDefinitionInfo DeserializeApiDefinitionInfo(JsonElement element)
         {
-            Optional<string> url = default;
+            Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
             }

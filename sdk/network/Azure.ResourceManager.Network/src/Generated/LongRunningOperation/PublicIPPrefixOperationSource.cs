@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PublicIPPrefixOperationSource : IOperationSource<PublicIPPrefix>
+    internal class PublicIPPrefixOperationSource : IOperationSource<PublicIPPrefixResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        PublicIPPrefix IOperationSource<PublicIPPrefix>.CreateResult(Response response, CancellationToken cancellationToken)
+        PublicIPPrefixResource IOperationSource<PublicIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
-            return new PublicIPPrefix(_client, data);
+            return new PublicIPPrefixResource(_client, data);
         }
 
-        async ValueTask<PublicIPPrefix> IOperationSource<PublicIPPrefix>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PublicIPPrefixResource> IOperationSource<PublicIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
-            return new PublicIPPrefix(_client, data);
+            return new PublicIPPrefixResource(_client, data);
         }
     }
 }
