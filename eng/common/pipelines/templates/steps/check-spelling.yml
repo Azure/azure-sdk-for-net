@@ -8,8 +8,6 @@
 
 parameters:
   ContinueOnError: true
-  TargetBranch: $(System.PullRequest.TargetBranch)
-  SourceBranch: HEAD
   CspellConfigPath: ./.vscode/cspell.json
 
 steps:
@@ -26,8 +24,6 @@ steps:
         targetType: filePath
         filePath: eng/common/scripts/check-spelling-in-changed-files.ps1
         arguments: >-
-          -TargetBranch "origin/$("${{ parameters.TargetBranch }}" -replace "refs/heads/")"
-          -SourceBranch ${{ parameters.SourceBranch }}
           -CspellConfigPath ${{ parameters.CspellConfigPath }}
           -ExitWithError:(!$${{ parameters.ContinueOnError }})
         pwsh: true

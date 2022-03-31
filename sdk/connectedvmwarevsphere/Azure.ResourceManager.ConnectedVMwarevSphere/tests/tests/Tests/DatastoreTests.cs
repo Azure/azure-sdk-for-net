@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.IsNotNull(datastore1);
             Assert.AreEqual(datastore1.Id.Name, datastoreName);
             // check for exists datastore
-            datastore1 = await _datastoreCollection.GetIfExistsAsync(datastoreName);
-            Assert.AreEqual(datastore1.Id.Name, datastoreName);
+            bool exists = await _datastoreCollection.ExistsAsync(datastoreName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]

@@ -83,22 +83,6 @@ EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync
 Console.WriteLine(eventHubNamespace.Id.Name);
 ```
 
-### Try to get a namespace if it exists
-
-
-```C# Snippet:Managing_Namespaces_GetNamespaceIfExists
-EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetIfExistsAsync("foo");
-if (eventHubNamespace != null)
-{
-    Console.WriteLine("namespace 'foo' exists");
-}
-if (await namespaceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("namespace 'bar' exists");
-}
-```
-
 ### Delete a namespace
 ```C# Snippet:Managing_Namespaces_DeleteNamespace
 EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();

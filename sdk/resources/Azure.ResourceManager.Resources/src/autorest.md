@@ -73,8 +73,18 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Urls: Uris
 
 directive:
+# TODO - remove when Azure.ErrorResponse is marked as PropertyReferenceType
+  - from: types.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "ResourcesResponseError" # we have to change the name of this type because resourcemanager has a class with the same name in the same namespace
+# TODO - remove when ErrorAdditionalInfo is introduced to Azure.Core and marked as PropertyReferenceType
+  - from: types.json
+    where: $.definitions.ErrorAdditionalInfo
+    transform: $["x-ms-client-name"] = "ResourcesErrorAdditionalInfo" # we have to change the name of this type because resourcemanager has a class with the same name in the same namespace
+
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
   # Keep the get method at each scope so that generator can know the possible values of container's parent
@@ -149,11 +159,12 @@ directive:
       $["DeploymentScriptPropertiesBase"]["x-ms-client-name"] = "ArmDeploymentScriptPropertiesBase";
       $["DeploymentScriptsError"]["x-ms-client-name"] = "ArmDeploymentScriptsError";
       $.DeploymentScript['x-ms-client-name'] = 'ArmDeploymentScript';
+      $.DeploymentScript.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentScriptListResult['x-ms-client-name'] = 'ArmDeploymentScriptListResult';
-  - from: managedapplications.json
-    where: $.definitions
-    transform: >
-      
+      $.DeploymentScriptPropertiesBase.properties.cleanupPreference["x-ms-enum"].name = "scriptCleanupOptions";
+      $.EnvironmentVariable['x-ms-client-name'] = 'ScriptEnvironmentVariable';
+      $.StorageAccountConfiguration['x-ms-client-name'] = 'ScriptStorageConfiguration';
+
   - from: managedapplications.json
     where: $.definitions
     transform: >
@@ -161,7 +172,7 @@ directive:
       $["Identity"]["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
       $["Identity"]["properties"]["principalId"]["format"] = "uuid";
       $["Identity"]["properties"]["tenantId"]["format"] = "uuid";
-      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResource";
+      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResourceData";
       $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
       $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
       $["Sku"]["x-ms-client-name"] = "ArmApplicationSku";
@@ -198,8 +209,8 @@ directive:
       $.ApplicationNotificationPolicy['x-ms-client-name'] = 'ArmApplicationNotificationPolicy';
       $.ApplicationPackageContact['x-ms-client-name'] = 'ArmApplicationPackageContact';
       $.ApplicationPackageSupportUrls['x-ms-client-name'] = 'ArmApplicationPackageSupportUrls';
-      $.ApplicationPackageSupportUrls.properties.governmentCloud['x-ms-client-name'] = 'AzureGovernment';
-      $.ApplicationPackageSupportUrls.properties.publicAzure['x-ms-client-name'] = 'AzurePublicCloud';
+      $.ApplicationPackageSupportUrls.properties.governmentCloud['x-ms-client-name'] = 'AzureGovernmentUri';
+      $.ApplicationPackageSupportUrls.properties.publicAzure['x-ms-client-name'] = 'AzurePublicCloudUri';
       $.ApplicationPolicy['x-ms-client-name'] = 'ArmApplicationPolicy';
       $.ApplicationPropertiesPatchable['x-ms-client-name'] = 'ArmApplicationPropertiesPatchable';
       $.ApplicationArtifactName['x-ms-enum'].name = 'ArmApplicationArtifactName';
@@ -224,23 +235,38 @@ directive:
       $.DeploymentProperties.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentPropertiesExtended.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentExtended['x-ms-client-name'] = 'ArmDeployment';
+      $.DeploymentExtended.properties.location["x-ms-format"] = "azure-location";
       $.Deployment['x-ms-client-name'] = 'ArmDeploymentInput';
+      $.Deployment.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentExportResult['x-ms-client-name'] = 'ArmDeploymentExportResult';
       $.DeploymentExtendedFilter['x-ms-client-name'] = 'ArmDeploymentExtendedFilter';
       $.DeploymentListResult['x-ms-client-name'] = 'ArmDeploymentListResult';
       $.DeploymentOperation['x-ms-client-name'] = 'ArmDeploymentOperation';
       $.DeploymentOperationProperties['x-ms-client-name'] = 'ArmDeploymentOperationProperties';
+      $.DeploymentOperationProperties.properties.provisioningOperation['x-ms-enum'].name = 'ProvisioningOperationKind';
       $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
       $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
       $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIf';
+      $.DeploymentWhatIf.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentWhatIfSettings['x-ms-client-name'] = 'ArmDeploymentWhatIfSettings';
       $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';
       $.DeploymentProperties['x-ms-client-name'] = 'ArmDeploymentProperties';
       $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
       $.Dependency["x-ms-client-name"] = "ArmDependency";
+      $.BasicDependency["x-ms-client-name"] = "BasicArmDependency";
       $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
+      $.DeploymentPropertiesExtended.properties.onErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
       $.DeploymentOperationProperties.properties.duration["format"] = "duration";
+      $.ExpressionEvaluationOptions.properties.scope['x-ms-enum']['name'] = 'ExpressionEvaluationScope';
+      $.OnErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
+      $.OnErrorDeployment.properties.type['x-ms-enum'].name = 'ErrorDeploymentType';
+      $.OnErrorDeploymentExtended['x-ms-client-name'] = 'ErrorDeploymentExtended';
+      $.OnErrorDeploymentExtended.properties.type['x-ms-enum'].name = 'ErrorDeploymentType';
+      $.ParametersLink['x-ms-client-name'] = 'ArmDeploymentParametersLink';
+      $.TemplateLink['x-ms-client-name'] = 'ArmDeploymentTemplateLink';
+      $.WhatIfChange.properties.changeType["x-ms-enum"].name = "WhatIfChangeType";
+      $.WhatIfPropertyChange.properties.propertyChangeType["x-ms-enum"].name = "WhatIfPropertyChangeType";
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
@@ -282,6 +308,19 @@ directive:
     where: $.definitions.Alias.properties.type["x-ms-enum"]
     transform:
       $["name"] = "ResourceTypeAliasType";
+  - from: templateSpecs.json
+    where: $.definitions
+    transform: >
+      $.TemplateSpec.properties.location["x-ms-format"] = "azure-location";
+      $.TemplateSpecVersion.properties.location["x-ms-format"] = "azure-location";
+  - from: resources.json
+    where: $.definitions.DeploymentProperties.properties.expressionEvaluationOptions
+    transform: >
+      $["x-ms-client-name"] = "ExpressionEvaluation"
+  - from: resources.json
+    where: $.definitions.DeploymentProperties.properties.onErrorDeployment
+    transform: >
+      $["x-ms-client-name"] = "ErrorDeployment"
 ```
 
 ### Tag: package-track2-preview

@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
         /// <returns> A new <see cref="Administration.KeyVaultRoleDefinition"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KeyVaultRoleDefinition KeyVaultRoleDefinition(string id = default, string name = default, KeyVaultRoleDefinitionType? type = default, string roleName = default, string description = default, KeyVaultRoleType? roleType = default, IList<KeyVaultPermission> permissions = default, IList<KeyVaultRoleScope> assignableScopes = default)
+        public static KeyVaultRoleDefinition KeyVaultRoleDefinition(string id, string name, KeyVaultRoleDefinitionType? type, string roleName, string description, KeyVaultRoleType? roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes)
         {
             return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
         }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about managed application. </summary>
-    public partial class PatchableArmApplicationData : ArmApplicationResource
+    public partial class PatchableArmApplicationData : ArmApplicationResourceData
     {
         /// <summary> Initializes a new instance of PatchableArmApplicationData. </summary>
         /// <param name="location"> The location. </param>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="authorizations"> The  read-only authorizations property that is retrieved from the application package. </param>
         /// <param name="managementMode"> The managed application management mode. </param>
         /// <param name="customerSupport"> The read-only customer support property that is retrieved from the application package. </param>
-        /// <param name="supportUrls"> The read-only support URLs property that is retrieved from the application package. </param>
+        /// <param name="supportUris"> The read-only support URLs property that is retrieved from the application package. </param>
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal PatchableArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUrls supportUrls, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal PatchableArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUris supportUris, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
             Authorizations = authorizations;
             ManagementMode = managementMode;
             CustomerSupport = customerSupport;
-            SupportUrls = supportUrls;
+            SupportUris = supportUris;
             Artifacts = artifacts;
             CreatedBy = createdBy;
             UpdatedBy = updatedBy;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The read-only customer support property that is retrieved from the application package. </summary>
         public ArmApplicationPackageContact CustomerSupport { get; }
         /// <summary> The read-only support URLs property that is retrieved from the application package. </summary>
-        public ArmApplicationPackageSupportUrls SupportUrls { get; }
+        public ArmApplicationPackageSupportUris SupportUris { get; }
         /// <summary> The collection of managed application artifacts. </summary>
         public IReadOnlyList<ArmApplicationArtifact> Artifacts { get; }
         /// <summary> The client entity that created the JIT request. </summary>

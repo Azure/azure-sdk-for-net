@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task DeleteTest()
         {
             await Connection.DeleteAsync(WaitUntil.Completed);
-            PrivateEndpointConnectionResource connection = await ConfigStore.GetPrivateEndpointConnections().GetIfExistsAsync(Connection.Data.Name);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { PrivateEndpointConnectionResource connection = await ConfigStore.GetPrivateEndpointConnections().GetAsync(Connection.Data.Name); });
 
-            Assert.IsNull(connection);
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]

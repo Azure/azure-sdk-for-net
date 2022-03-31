@@ -14,8 +14,6 @@ skip-csproj: true
 output-folder: Generated/
 clear-output-folder: true
 
-modelerfour:
-  lenient-model-deduplication: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false

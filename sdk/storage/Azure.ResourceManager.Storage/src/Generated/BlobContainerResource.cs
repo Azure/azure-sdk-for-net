@@ -199,18 +199,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}
         /// Operation Id: BlobContainers_Update
         /// </summary>
-        /// <param name="blobContainer"> Properties to update for the blob container. </param>
+        /// <param name="data"> Properties to update for the blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobContainer"/> is null. </exception>
-        public virtual async Task<Response<BlobContainerResource>> UpdateAsync(BlobContainerData blobContainer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<BlobContainerResource>> UpdateAsync(BlobContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(blobContainer, nameof(blobContainer));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.Update");
             scope.Start();
             try
             {
-                var response = await _blobContainerRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, blobContainer, cancellationToken).ConfigureAwait(false);
+                var response = await _blobContainerRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}
         /// Operation Id: BlobContainers_Update
         /// </summary>
-        /// <param name="blobContainer"> Properties to update for the blob container. </param>
+        /// <param name="data"> Properties to update for the blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobContainer"/> is null. </exception>
-        public virtual Response<BlobContainerResource> Update(BlobContainerData blobContainer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<BlobContainerResource> Update(BlobContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(blobContainer, nameof(blobContainer));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.Update");
             scope.Start();
             try
             {
-                var response = _blobContainerRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, blobContainer, cancellationToken);
+                var response = _blobContainerRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

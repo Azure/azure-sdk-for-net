@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="provisioningState"></param>
         /// <param name="createdBy"> The identity that created the resource. </param>
         /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdAt"> The timestamp of resource creation (UTC). </param>
+        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        internal EndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointType? endpointType, string resourceId, string provisioningState, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt) : base(id, name, resourceType, systemData)
+        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
+        internal EndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointType? endpointType, string resourceId, string provisioningState, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
         {
             EndpointType = endpointType;
             ResourceId = resourceId;
             ProvisioningState = provisioningState;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
         }
 
         /// <summary> The type of endpoint. </summary>
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> The type of identity that created the resource. </summary>
         public Models.CreatedByType? CreatedByType { get; set; }
         /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> The identity that last modified the resource. </summary>
         public string LastModifiedBy { get; set; }
         /// <summary> The type of identity that last modified the resource. </summary>
         public Models.CreatedByType? LastModifiedByType { get; set; }
         /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedAt { get; set; }
+        public DateTimeOffset? LastModifiedOn { get; set; }
     }
 }

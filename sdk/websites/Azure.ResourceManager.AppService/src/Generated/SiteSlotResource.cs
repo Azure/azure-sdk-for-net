@@ -3573,18 +3573,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publishxml
         /// Operation Id: WebApps_ListPublishingProfileXmlWithSecretsSlot
         /// </summary>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="options"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
-        public virtual async Task<Response<Stream>> GetPublishingProfileXmlWithSecretsSlotAsync(CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<Stream>> GetPublishingProfileXmlWithSecretsSlotAsync(CsmPublishingProfileOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.GetPublishingProfileXmlWithSecretsSlot");
             scope.Start();
             try
             {
-                var response = await _siteSlotWebAppsRestClient.ListPublishingProfileXmlWithSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publishingProfileOptions, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotWebAppsRestClient.ListPublishingProfileXmlWithSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -3599,18 +3599,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publishxml
         /// Operation Id: WebApps_ListPublishingProfileXmlWithSecretsSlot
         /// </summary>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="options"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
-        public virtual Response<Stream> GetPublishingProfileXmlWithSecretsSlot(CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<Stream> GetPublishingProfileXmlWithSecretsSlot(CsmPublishingProfileOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.GetPublishingProfileXmlWithSecretsSlot");
             scope.Start();
             try
             {
-                var response = _siteSlotWebAppsRestClient.ListPublishingProfileXmlWithSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publishingProfileOptions, cancellationToken);
+                var response = _siteSlotWebAppsRestClient.ListPublishingProfileXmlWithSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
                 return response;
             }
             catch (Exception e)

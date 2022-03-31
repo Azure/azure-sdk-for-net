@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             Assert.NotNull(account.Id.Name);
             Assert.NotNull(account.Data.Location);
             Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.CreationTime);
+            Assert.NotNull(account.Data.CreationOn);
             Assert.NotNull(account.Data.Sku);
             Assert.NotNull(account.Data.Sku.Name);
             Assert.NotNull(account.Data.Sku.Tier);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             {
                 IPAddressOrRange = ipAddressOrRangeParameters,
                 Protocols = protocolsParameters,
-                SharedAccessStartTime = sharedAccessStartTimeParameters
+                SharedAccessStartOn = sharedAccessStartTimeParameters
             };
 
             return parameters;
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                         parameters.Permissions = keyValue[1];
                         break;
                     case "st":
-                        parameters.SharedAccessStartTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        parameters.SharedAccessStartOn = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
                         break;
                     case "se":
-                        parameters.SharedAccessExpiryTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        parameters.SharedAccessExpiryOn = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
                         break;
                     case "sip":
                         parameters.IPAddressOrRange = keyValue[1];

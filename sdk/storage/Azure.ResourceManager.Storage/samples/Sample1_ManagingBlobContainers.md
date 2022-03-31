@@ -84,21 +84,6 @@ BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("my
 Console.WriteLine(blobContainer.Id.Name);
 ```
 
-***Try to get a blob container if it exists***
-
-```C# Snippet:Managing_BlobContainers_GetBlobContainerIfExists
-BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-BlobContainerResource blobContainer = await blobContainerCollection.GetIfExistsAsync("foo");
-if (blobContainer != null)
-{
-    Console.WriteLine(blobContainer.Id.Name);
-}
-if (await blobContainerCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("blob container 'bar' exists");
-}
-```
-
 ***Delete a blob container***
 
 ```C# Snippet:Managing_BlobContainers_DeleteBlobContainer

@@ -95,22 +95,6 @@ ServiceBusNamespaceResource serviceBusNamespace = await namespaceCollection.GetA
 Console.WriteLine(serviceBusNamespace.Id.Name);
 ```
 
-### Try to get a namespace if it exists
-
-
-```C# Snippet:Managing_ServiceBusNamespaces_GetNamespaceIfExists
-ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespaceResource serviceBusNamespace = await namespaceCollection.GetIfExistsAsync("foo");
-if (serviceBusNamespace != null)
-{
-    Console.WriteLine("namespace 'foo' exists");
-}
-if (await namespaceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("namespace 'bar' exists");
-}
-```
-
 ### Delete a namespace
 ```C# Snippet:Managing_ServiceBusNamespaces_DeleteNamespace
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();

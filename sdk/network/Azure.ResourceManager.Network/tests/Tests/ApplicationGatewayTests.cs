@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = redirectConfiguration2Name,
                         RedirectType = ApplicationGatewayRedirectType.Permanent,
-                        TargetUrl = "http://www.bing.com"
+                        TargetUri = new Uri("http://www.bing.com")
                     }
                 },
                 //SslCertificates = CreateSslCertificate(sslCertName, "abc")

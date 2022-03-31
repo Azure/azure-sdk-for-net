@@ -45,18 +45,18 @@ ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployment
 string deploymentName = "myDeployment";
 var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
-    TemplateLink = new TemplateLink()
+    TemplateLink = new ArmDeploymentTemplateLink()
     {
         Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },
-    Parameters = new JsonObject()
+    Parameters = BinaryData.FromObjectAsJson(new JsonObject()
     {
         {"storageAccountType", new JsonObject()
             {
                 {"value", "Standard_GRS" }
             }
         }
-    }
+    })
 });
 ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 ArmDeploymentResource deployment = lro.Value;
@@ -72,8 +72,8 @@ string deploymentName = "myDeployment";
 // Passing string to template and parameters
 var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
-    Template = File.ReadAllText("storage-template.json"),
-    Parameters = File.ReadAllText("storage-parameters.json")
+    Template = BinaryData.FromString(File.ReadAllText("storage-template.json")),
+    Parameters = BinaryData.FromString(File.ReadAllText("storage-parameters.json"))
 });
 ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 ArmDeploymentResource deployment = lro.Value;
@@ -93,11 +93,11 @@ var parametersString = JsonSerializer.Serialize(parametersObject);
 var parameters = JsonDocument.Parse(parametersString).RootElement;
 var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
-    TemplateLink = new TemplateLink()
+    TemplateLink = new ArmDeploymentTemplateLink()
     {
         Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json")
     },
-    Parameters = parameters
+    Parameters = BinaryData.FromString(parameters.GetRawText())
 });
 ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 ArmDeploymentResource deployment = lro.Value;

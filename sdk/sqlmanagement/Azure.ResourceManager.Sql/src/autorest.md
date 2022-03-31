@@ -11,8 +11,6 @@ model-namespace: false
 public-clients: false
 head-as-boolean: false
 clear-output-folder: true
-modelerfour:
-  seal-single-value-enum-by-default: true # this needs to be removed.
 skip-csproj: true
 
 rename-rules:

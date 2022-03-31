@@ -49,9 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            SqlDatabaseResource database = await SqlDatabaseContainer.GetIfExistsAsync(_databaseName);
-            if (database != null)
+            if (await SqlDatabaseContainer.ExistsAsync(_databaseName))
             {
+                var id = SqlDatabaseContainer.Id;
+                id = SqlDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                SqlDatabaseResource database = this.ArmClient.GetSqlDatabaseResource(id);
                 await database.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -151,8 +153,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateSqlDatabase(null);
             await database.DeleteAsync(WaitUntil.Completed);
 
-            database = await SqlDatabaseContainer.GetIfExistsAsync(_databaseName);
-            Assert.Null(database);
+            bool exists = await SqlDatabaseContainer.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<SqlDatabaseResource> CreateSqlDatabase(AutoscaleSettings autoscale)

@@ -71,8 +71,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.IsNotEmpty(list);
 
             // 5.GetIfExist
-            var getIfExistADOAuth = await collection.GetIfExistsAsync(adoAuthName);
-            Assert.IsNotNull(getIfExistADOAuth.Value.Data);
+            Assert.IsTrue(await collection.ExistsAsync(adoAuthName));
         }
     }
 }

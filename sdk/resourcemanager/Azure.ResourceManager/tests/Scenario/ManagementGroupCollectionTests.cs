@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.ManagementGroups.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -53,15 +53,6 @@ namespace Azure.ResourceManager.Tests
             ManagementGroupResource mgmtGroup = await Client.GetManagementGroups().GetAsync(_mgmtGroupName, cacheControl: "no-cache");
             CompareMgmtGroups(_mgmtGroup, mgmtGroup);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
-            Assert.AreEqual(403, ex.Status);
-        }
-
-        [RecordedTest]
-        public async Task TryGet()
-        {
-            ManagementGroupResource mgmtGroup = await Client.GetManagementGroups().GetIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
-            CompareMgmtGroups(_mgmtGroup, mgmtGroup);
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
             Assert.AreEqual(403, ex.Status);
         }
 
