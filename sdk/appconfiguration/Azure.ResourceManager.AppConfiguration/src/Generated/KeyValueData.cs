@@ -8,19 +8,24 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppConfiguration.Models
+namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> The result of a request to retrieve a key-value from the specified configuration store. </summary>
-    public partial class KeyValue
+    /// <summary> A class representing the KeyValue data model. </summary>
+    public partial class KeyValueData : ResourceData
     {
-        /// <summary> Initializes a new instance of KeyValue. </summary>
-        internal KeyValue()
+        /// <summary> Initializes a new instance of KeyValueData. </summary>
+        public KeyValueData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KeyValue. </summary>
+        /// <summary> Initializes a new instance of KeyValueData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="key">
         /// The primary identifier of a key-value.
         /// The key is used in unison with the label to uniquely identify a key-value.
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// A locked key-value may not be modified until it is unlocked.
         /// </param>
         /// <param name="tags"> A dictionary of tags that can help identify what a key-value may be applicable for. </param>
-        internal KeyValue(string key, string label, string value, string contentType, string eTag, DateTimeOffset? lastModified, bool? locked, IReadOnlyDictionary<string, string> tags)
+        internal KeyValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string key, string label, string value, string contentType, string eTag, DateTimeOffset? lastModified, bool? locked, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Key = key;
             Label = label;
@@ -64,12 +69,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </summary>
         public string Label { get; }
         /// <summary> The value of the key-value. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
         /// <summary>
         /// The content type of the key-value&apos;s value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </summary>
-        public string ContentType { get; }
+        public string ContentType { get; set; }
         /// <summary> An ETag indicating the state of a key-value within a configuration store. </summary>
         public string ETag { get; }
         /// <summary> The last time a modifying operation was performed on the given key-value. </summary>
@@ -80,6 +85,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </summary>
         public bool? Locked { get; }
         /// <summary> A dictionary of tags that can help identify what a key-value may be applicable for. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

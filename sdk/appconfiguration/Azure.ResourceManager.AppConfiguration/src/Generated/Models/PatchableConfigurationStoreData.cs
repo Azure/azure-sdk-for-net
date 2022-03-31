@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
         }
 
+        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        public bool? DisableLocalAuth { get; set; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        public bool? EnablePurgeProtection { get; set; }
     }
 }
