@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var name = Recording.GenerateAssetName("testActivityLogAlert");
             var subID = DefaultSubscription.Id;
             var input = ResourceDataHelper.GetBasicActivityLogAlertData("global", subID);
-            var lro = await container.CreateOrUpdateAsync(true, name, input);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var alert = lro.Value;
             Assert.AreEqual(name, alert.Data.Name);
         }
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Monitor.Tests
             var actionGroupName = Recording.GenerateAssetName("testActivityLogAlert");
             var subID = DefaultSubscription.Id;
             var input = ResourceDataHelper.GetBasicActivityLogAlertData("global", subID);
-            var lro = await collection.CreateOrUpdateAsync(true, actionGroupName, input);
-            ActivityLogAlert alert1 = lro.Value;
-            ActivityLogAlert alert2 = await collection.GetAsync(actionGroupName);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, input);
+            ActivityLogAlertResource alert1 = lro.Value;
+            ActivityLogAlertResource alert2 = await collection.GetAsync(actionGroupName);
             ResourceDataHelper.AssertActivityLogAlert(alert1.Data, alert2.Data);
         }
 
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Monitor.Tests
             var collection = await GetActivityLogAlertCollectionAsync();
             var subID = DefaultSubscription.Id;
             var input = ResourceDataHelper.GetBasicActivityLogAlertData("global", subID);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testActivityLogAlert"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testActivityLogAlert"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testActivityLogAlert"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testActivityLogAlert"), input);
             int count = 0;
             await foreach (var activityLogAlert in collection.GetAllAsync())
             {

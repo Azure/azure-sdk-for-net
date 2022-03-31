@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         private async Task<LogProfileCollection> GetLogProfileCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return SubscriptionExtensions.GetLogProfiles(DefaultSubscription);
+            return DefaultSubscription.GetLogProfiles();
         }
 
         [TearDown]
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         private async Task CleanUpAsync()
         {
-            var collection = SubscriptionExtensions.GetLogProfiles(DefaultSubscription);
+            var collection = DefaultSubscription.GetLogProfiles();
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var container = await GetLogProfileCollectionAsync();
             var name = Recording.GenerateAssetName("testLogProfile");
             var input = ResourceDataHelper.GetBasicLogProfileData("westus");
-            var lro = await container.CreateOrUpdateAsync(true, name, input);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var logProfile = lro.Value;
             Assert.AreEqual(name, logProfile.Data.Name);
         }
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Monitor.Tests
             var collection = await GetLogProfileCollectionAsync();
             var logProfileName = Recording.GenerateAssetName("testLogProfile-");
             var input = ResourceDataHelper.GetBasicLogProfileData("westus");
-            var lro = await collection.CreateOrUpdateAsync(true, logProfileName, input);
-            LogProfile lgoProfile1 = lro.Value;
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, logProfileName, input);
+            LogProfileResource lgoProfile1 = lro.Value;
             Thread.Sleep(1000);
-            LogProfile logProfile2 = await collection.GetAsync(logProfileName);
+            LogProfileResource logProfile2 = await collection.GetAsync(logProfileName);
             Assert.AreEqual(lgoProfile1.Data.Name, logProfile2.Data.Name);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var collection = await GetLogProfileCollectionAsync();
             var input = ResourceDataHelper.GetBasicLogProfileData("westus");
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testLogProfile-"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testLogProfile-"), input);
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(list.Count, 1);
         }

@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         private async Task CleanUpAsync()
         {
-            var collection = SubscriptionExtensions.GetLogProfiles(DefaultSubscription);
+            var collection = DefaultSubscription.GetLogProfiles();
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
-        private async Task<LogProfile> CreateLogProfileAsync(string logProfileName)
+        private async Task<LogProfileResource> CreateLogProfileAsync(string logProfileName)
         {
-            var collection = SubscriptionExtensions.GetLogProfiles(DefaultSubscription);
+            var collection = DefaultSubscription.GetLogProfiles();
             var input = ResourceDataHelper.GetBasicLogProfileData("Global");
-            var lro = await collection.CreateOrUpdateAsync(true, logProfileName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, logProfileName, input);
             return lro.Value;
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var logProfileName = Recording.GenerateAssetName("test LogProfile-");
             var logProfile = await CreateLogProfileAsync(logProfileName);
-            await logProfile.DeleteAsync(true);
+            await logProfile.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var logProfileName = Recording.GenerateAssetName("testLogProfile-");
             var logProfile = await CreateLogProfileAsync(logProfileName);
             Thread.Sleep(1000);
-            LogProfile logProfile2 = await logProfile.GetAsync();
+            LogProfileResource logProfile2 = await logProfile.GetAsync();
 
             Assert.AreEqual(logProfile.Data.Name, logProfile2.Data.Name);
         }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             Assert.AreEqual(r1.Name, r2.Name);
             Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Type, r2.Type);
+            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
             Assert.AreEqual(r1.Location, r2.Location);
             Assert.AreEqual(r1.Tags, r2.Tags);
         }
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var fixDate = new TimeWindow("UTC", DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"));
             var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
-            var recurrence = new Recurrence(RecurrenceFrequency.Week, Schedule);
+            var recurrence = new MonitorRecurrence(RecurrenceFrequency.Week, Schedule);
             ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
-            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", new Uri("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), "Eest US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
+            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", "Eest US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
             IList<ScaleRule> rules = new List<ScaleRule>()
             {
                 new ScaleRule(metricTtigger, new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 Enabled = true,
                 TargetResourceLocation = location,
-                TargetResourceUri = new Uri("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"),
+                TargetResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
                 /*Notifications =
                 {
                     new AutoscaleNotification()
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             Assert.AreEqual(data1.Description, data2.Description);
         }
 
-        public static MetricAlertData GetBasicMetricAlertData(AzureLocation location, ActionGroup actionGroup)
+        public static MetricAlertData GetBasicMetricAlertData(AzureLocation location, ActionGroupResource actionGroup)
         {
             IEnumerable<string> scopes = new List<string>()
             {

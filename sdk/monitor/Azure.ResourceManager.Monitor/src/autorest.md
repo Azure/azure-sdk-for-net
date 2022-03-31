@@ -13,9 +13,10 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
-#   naming:
-#     override:
-#       DataCollectionEndpoint: DataCollectionEndpointProperties
+  naming:
+    override:
+      metricResourceUri: metricResourceId
+      targetResourceUri: targetResourceId
 
 mgmt-debug:
   show-request-path: true

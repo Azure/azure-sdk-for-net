@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
         }
 
-        private async Task<AutoscaleSetting> CreateAutoscaleSettingAsync(string setting)
+        private async Task<AutoscaleSettingResource> CreateAutoscaleSettingAsync(string setting)
         {
             var collection = (await CreateResourceGroupAsync()).GetAutoscaleSettings();
             var input = ResourceDataHelper.GetBasicAutoscaleSettingData("eastus");
-            var lro = await collection.CreateOrUpdateAsync(true, setting, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setting, input);
             return lro.Value;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var settingName = Recording.GenerateAssetName("testAutoscaleSetting-");
             var ssetting = await CreateAutoscaleSettingAsync(settingName);
-            await ssetting.DeleteAsync(true);
+            await ssetting.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var settingName = Recording.GenerateAssetName("testAutoscaleSetting-");
             var setting = await CreateAutoscaleSettingAsync(settingName);
-            AutoscaleSetting setting2 = await setting.GetAsync();
+            AutoscaleSettingResource setting2 = await setting.GetAsync();
 
             ResourceDataHelper.AssertAutoscaleSetting(setting.Data, setting2.Data);
         }

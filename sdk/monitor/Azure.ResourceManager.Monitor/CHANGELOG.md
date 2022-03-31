@@ -1,12 +1,14 @@
 # Release History
 
-## 1.0.0-beta.2(2022.03.31)
+## 1.0.0-beta.1 (2022.03.31)
 
-### Add Some Tests
+- Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
+- Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
+- HTTP pipeline with custom policies
+- Better error-handling
+- Support uniform telemetry across all languages
 
-- Relevant tests of the following classes have been added: ActionGroup,ActivityLogAlert,AlertRule,AutoscaleSetting,DiagnosticSetting,Logprofile,MetricAlert.
-
-## 1.0.0-beta.1 (Unreleased)
+> NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
 This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 

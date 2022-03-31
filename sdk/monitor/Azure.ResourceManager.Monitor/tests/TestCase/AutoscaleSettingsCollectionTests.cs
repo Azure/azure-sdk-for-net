@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var container = await GetAutoscaleSettingsCollectionAsync();
             var name = Recording.GenerateAssetName("testAutoscaleSettings");
             var input = ResourceDataHelper.GetBasicAutoscaleSettingData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(true, name, input);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var autoscaleSetting = lro.Value;
             Assert.AreEqual(name, autoscaleSetting.Data.Name);
         }
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Monitor.Tests
             var collection = await GetAutoscaleSettingsCollectionAsync();
             var actionGroupName = Recording.GenerateAssetName("testAutoscaleSettings-");
             var input = ResourceDataHelper.GetBasicAutoscaleSettingData("eastus");
-            var lro = await collection.CreateOrUpdateAsync(true, actionGroupName, input);
-            AutoscaleSetting autoscaleSetting1 = lro.Value;
-            AutoscaleSetting autoscaleSetting2 = await collection.GetAsync(actionGroupName);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, input);
+            AutoscaleSettingResource autoscaleSetting1 = lro.Value;
+            AutoscaleSettingResource autoscaleSetting2 = await collection.GetAsync(actionGroupName);
             ResourceDataHelper.AssertAutoscaleSetting(autoscaleSetting1.Data, autoscaleSetting2.Data);
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var collection = await GetAutoscaleSettingsCollectionAsync();
             var input = ResourceDataHelper.GetBasicAutoscaleSettingData("eastus");
             // = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAutoscaleSettings-"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAutoscaleSettings-"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAutoscaleSettings-"), input);
             int count = 1;
             await foreach (var autoscaleSetting in collection.GetAllAsync())
             {

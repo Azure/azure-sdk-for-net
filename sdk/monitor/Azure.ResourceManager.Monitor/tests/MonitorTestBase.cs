@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Monitor.Tests
     {
         protected AzureLocation DefaultLocation => AzureLocation.EastUS2;
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         public MonitorTestBase(bool isAsync) : base(isAsync)
         {
         }
 
-        public MonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, true)
+        public MonitorTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
 
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Monitor.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroupAsync()
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                true, resourceGroupName,
+                WaitUntil.Completed, resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {
                     Tags =

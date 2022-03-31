@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
         }
 
-        private async Task<MetricAlert> CreateMetricAlertAsync(string alertName)
+        private async Task<MetricAlertResource> CreateMetricAlertAsync(string alertName)
         {
             var resourceGroup = await CreateResourceGroupAsync().ConfigureAwait(false);
             var metricAlertCollection = resourceGroup.GetMetricAlerts();
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Monitor.Tests
 
             var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
-            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(true, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
+            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
             var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
-            var metricAlert = await metricAlertCollection.CreateOrUpdateAsync(true, alertName, metricAlertData);
+            var metricAlert = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, alertName, metricAlertData);
             return metricAlert.Value;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var alertName = Recording.GenerateAssetName("testMetricAlert-");
             var alert = await CreateMetricAlertAsync(alertName);
-            await alert.DeleteAsync(true);
+            await alert.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var alertName = Recording.GenerateAssetName("testMetricAlert-");
             var alert = await CreateMetricAlertAsync(alertName);
-            MetricAlert actionGroup2 = await alert.GetAsync();
+            MetricAlertResource actionGroup2 = await alert.GetAsync();
 
             ResourceDataHelper.AssertMetricAlert(alert.Data, actionGroup2.Data);
         }

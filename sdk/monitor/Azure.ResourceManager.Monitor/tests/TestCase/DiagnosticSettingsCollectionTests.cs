@@ -25,39 +25,39 @@ namespace Azure.ResourceManager.Monitor.Tests
             return DefaultSubscription.GetDiagnosticSettings();
         }
 
+        [Ignore("Need to Update cleanup")]
         [TestCase]
-        [RecordedTest]
         public async Task CreateOrUpdate()
         {
             var container = await GetDiagnosticSettingsCollectionAsync();
             var name = Recording.GenerateAssetName("testDiagnosticSettings-");
             var input = ResourceDataHelper.GetBasicDiagnosticSettingsData();
-            var lro = await container.CreateOrUpdateAsync(true, name, input);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             var setting = lro.Value;
             Assert.AreEqual(name, setting.Data.Name);
         }
 
+        [Ignore("Need to Update cleanup")]
         [TestCase]
-        [RecordedTest]
         public async Task Get()
         {
             var collection = await GetDiagnosticSettingsCollectionAsync();
             var actionGroupName = Recording.GenerateAssetName("testDiagnosticSettings-");
             var input = ResourceDataHelper.GetBasicDiagnosticSettingsData();
-            var lro = await collection.CreateOrUpdateAsync(true, actionGroupName, input);
-            DiagnosticSettings setting1 = lro.Value;
-            DiagnosticSettings setting2 = await collection.GetAsync(actionGroupName);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, input);
+            DiagnosticSettingsResource setting1 = lro.Value;
+            DiagnosticSettingsResource setting2 = await collection.GetAsync(actionGroupName);
             ResourceDataHelper.AssertDiagnosticSetting(setting1.Data, setting2.Data);
         }
 
+        [Ignore("Need to Update cleanup")]
         [TestCase]
-        [RecordedTest]
         public async Task GetAll()
         {
             var collection = await GetDiagnosticSettingsCollectionAsync();
             var input = ResourceDataHelper.GetBasicDiagnosticSettingsData();
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testDiagnosticSettings-"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testDiagnosticSettings-"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testDiagnosticSettings-"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testDiagnosticSettings-"), input);
             int count = 0;
             await foreach (var setting in collection.GetAllAsync())
             {

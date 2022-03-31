@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
         }
 
-        private async Task<AlertRule> CreateAlertRuleAsync(string alertRuleName)
+        private async Task<AlertRuleResource> CreateAlertRuleAsync(string alertRuleName)
         {
             var collection = (await CreateResourceGroupAsync()).GetAlertRules();
             var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
-            var lro = await collection.CreateOrUpdateAsync(true, alertRuleName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, alertRuleName, input);
             return lro.Value;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var alertName = Recording.GenerateAssetName("testAlertRule-");
             var alert = await CreateAlertRuleAsync(alertName);
-            await alert.DeleteAsync(true);
+            await alert.DeleteAsync(WaitUntil.Completed);
         }
 
         [Ignore("Creating or editing classic alert rules based on this metric is no longer supported")]
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var alertName = Recording.GenerateAssetName("testAlertRule-");
             var alert = await CreateAlertRuleAsync(alertName);
-            AlertRule actionGroup2 = await alert.GetAsync();
+            AlertRuleResource actionGroup2 = await alert.GetAsync();
 
             ResourceDataHelper.AssertAlertRule(alert.Data, actionGroup2.Data);
         }

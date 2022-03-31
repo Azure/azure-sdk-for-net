@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Monitor.Tests
 
             var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
-            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(true, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
+            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
 
             var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
             var metricAlertName = Recording.GenerateAssetName("testMetricAlert");
-            var metricAlert = (await metricAlertCollection.CreateOrUpdateAsync(true, metricAlertName, metricAlertData)).Value;
+            var metricAlert = (await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName, metricAlertData)).Value;
             Assert.AreEqual(metricAlertName, metricAlert.Data.Name);
         }
 
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Monitor.Tests
 
             var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
-            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(true, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
+            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
 
             var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
             var metricAlertName = Recording.GenerateAssetName("testMetricAlert");
-            var alert1 = (await metricAlertCollection.CreateOrUpdateAsync(true, metricAlertName, metricAlertData)).Value;
-            MetricAlert alert2 = await metricAlertCollection.GetAsync(metricAlertName);
+            var alert1 = (await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, metricAlertName, metricAlertData)).Value;
+            MetricAlertResource alert2 = await metricAlertCollection.GetAsync(metricAlertName);
             ResourceDataHelper.AssertMetricAlert(alert1.Data, alert2.Data);
         }
 
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.Monitor.Tests
 
             var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
             var actionGroupData = ResourceDataHelper.GetBasicActionGroupData("Global");
-            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(true, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
+            var actionGroup = (await actionGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, actionGroupData).ConfigureAwait(false)).Value;
 
             var metricAlertData = ResourceDataHelper.GetBasicMetricAlertData("global", actionGroup);
-            _ = await metricAlertCollection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testMetricAlert-"), metricAlertData);
-            _ = await metricAlertCollection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testMetricAlert-"), metricAlertData);
+            _ = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testMetricAlert-"), metricAlertData);
+            _ = await metricAlertCollection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testMetricAlert-"), metricAlertData);
 
             Assert.GreaterOrEqual(metricAlertCollection.GetAllAsync().ToEnumerableAsync().Result.Count, 2);
         }

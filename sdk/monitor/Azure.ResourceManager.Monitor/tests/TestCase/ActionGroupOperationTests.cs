@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
         }
 
-        private async Task<ActionGroup> CreateActionGroupAsync(string actionGroupName)
+        private async Task<ActionGroupResource> CreateActionGroupAsync(string actionGroupName)
         {
             var collection = (await CreateResourceGroupAsync()).GetActionGroups();
             var input = ResourceDataHelper.GetBasicActionGroupData("Global");
-            var lro = await collection.CreateOrUpdateAsync(true, actionGroupName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, input);
             return lro.Value;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
             var actionGroup = await CreateActionGroupAsync(actionGroupName);
-            await actionGroup.DeleteAsync(true);
+            await actionGroup.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var actionGroupName = Recording.GenerateAssetName("testActionGroup-");
             var actionGroup = await CreateActionGroupAsync(actionGroupName);
-            ActionGroup actionGroup2 = await actionGroup.GetAsync();
+            ActionGroupResource actionGroup2 = await actionGroup.GetAsync();
 
             ResourceDataHelper.AssertActionGroup(actionGroup.Data, actionGroup2.Data);
         }

@@ -24,39 +24,34 @@ namespace Azure.ResourceManager.Monitor.Tests
             return resourceGroup.GetAlertRules();
         }
 
-        [RecordedTest]
+        [TestCase]
         public async Task CreateOrUpdate()
         {
             var container = await GetAlertRuleCollectionAsync();
             var name = Recording.GenerateAssetName("testAlertRule");
             var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await container.CreateOrUpdateAsync(true, name, input));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input));
             Assert.That(ex.Message, Is.SupersetOf("Creating or editing classic alert rules based on this metric is no longer supported"));
-            //var lro = await container.CreateOrUpdateAsync(true, name, input);
-            //var alert = lro.Value;
-            //Assert.AreEqual(name, alert.Data.Name);
         }
 
         [Ignore("Creating or editing classic alert rules based on this metric is no longer supported")]
-        [RecordedTest]
+        [TestCase]
         public async Task Get()
         {
             var collection = await GetAlertRuleCollectionAsync();
             var actionGroupName = Recording.GenerateAssetName("testAlertRule", DefaultSubscription.Id);
             var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
-            var lro = await collection.CreateOrUpdateAsync(true, actionGroupName, input);
-            AlertRule alert1 = lro.Value;
-            AlertRule alert2 = await collection.GetAsync(actionGroupName);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, input);
+            AlertRuleResource alert1 = lro.Value;
+            AlertRuleResource alert2 = await collection.GetAsync(actionGroupName);
             ResourceDataHelper.AssertAlertRule(alert1.Data, alert2.Data);
         }
 
-        [RecordedTest]
+        [Ignore("Creating or editing classic alert rules based on this metric is no longer supported")]
+        [TestCase]
         public async Task GetAll()
         {
             var collection = await GetAlertRuleCollectionAsync();
-            //var input = ResourceDataHelper.GetBasicAlertRuleData(DefaultLocation);
-            //_ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
-            //_ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAlertRule"), input);
             var alertRules = collection.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(alertRules.Result.Count, 0);
         }
