@@ -11,8 +11,16 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Identity" VersionOverride="1.6.0-beta.1" />
+    <!--TODO: Switch back to package reference once Core is released prior to Azure.Identity release
+   <PackageReference Include="Azure.Core" />
+   -->
+    <ProjectReference Include="../../../core/Azure.Core/src/Azure.Core.csproj" />
+    <!-- 
+      Update this project reference back to package refefence after next Azure.Identity
+      release, before relasing Azure.Identity.BrokeredAuthentication 1.0.0-beta.2.
+    -->
+    <!--<PackageReference Include="Azure.Identity" VersionOverride="1.6.0-beta.1" />-->
+    <ProjectReference Include="../../Azure.Identity/src/Azure.Identity.csproj"/>
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
