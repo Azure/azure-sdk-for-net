@@ -1,18 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.3 (2022-03-31)
-
-### Features Added
 
 ### Breaking Changes
 
@@ -22,10 +10,6 @@
 - Move optional body parameters right after required parameters
 - Location class from `Location` to `AzureLocation`
 - Removed `GetIfExists` methods from all the resource classes.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.2 (2021-12-28)
 
