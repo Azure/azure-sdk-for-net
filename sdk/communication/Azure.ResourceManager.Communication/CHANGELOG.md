@@ -17,6 +17,7 @@
 - waitForCompletion is now a required parameter and moved to the first parameter in LRO operations
 - Move optional body parameters right after required parameters
 - Location class from `Location` to `AzureLocation`
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.1.0-beta.1 (2022-01-06)
 
