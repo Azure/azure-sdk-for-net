@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Tests
         private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
 
         public SubscriptionOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Tests
             //Assert.IsNotNull(testFeature.Data.Type);
         }
 
-        [Ignore("Need to resolve before GA")]
+        //[Ignore("Need to resolve before GA")]
         [RecordedTest]
         public async Task AddTag()
         {

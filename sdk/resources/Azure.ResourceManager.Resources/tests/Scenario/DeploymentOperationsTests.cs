@@ -6,13 +6,19 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
     public class DeploymentOperationsTests : ResourcesTestBase
     {
+        private string _tagKey;
+        private string TagKey => _tagKey ??= Recording.GenerateAssetName("TagKey-");
+        private string _tagValue;
+        private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
+
         public DeploymentOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -53,6 +59,63 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.AreEqual(whatIfOperationResult.Status, "Succeeded");
             Assert.AreEqual(whatIfOperationResult.Changes.Count, 1);
             Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, WhatIfChangeType.Create);
+        }
+
+        [RecordedTest]
+        public async Task AddTag()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-4-");
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
+            ResourceGroupResource rg = lro.Value;
+            string deployName = Recording.GenerateAssetName("deployEx-D-");
+            var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            var deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            var deployment2 = await deployment.AddTagAsync(TagKey, TagValue);
+            Assert.IsTrue(deployment2.Value.Data.Tags.ContainsKey(TagKey));
+            Assert.AreEqual(deployment2.Value.Data.Tags[TagKey], TagValue);
+        }
+
+        [RecordedTest]
+        public async Task RemoveTag()
+        {
+            await AddTag();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-4-");
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
+            ResourceGroupResource rg = lro.Value;
+            string deployName = Recording.GenerateAssetName("deployEx-D-");
+            var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            var deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            var deployment2 = await deployment.AddTagAsync(TagKey, TagValue);
+            deployment2 = await deployment.RemoveTagAsync(TagKey);
+            Assert.IsFalse(deployment2.Value.Data.Tags.ContainsKey(TagKey));
+        }
+
+        [RecordedTest]
+        public async Task SetTags()
+        {
+            await AddTag();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-4-");
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
+            ResourceGroupResource rg = lro.Value;
+            string deployName = Recording.GenerateAssetName("deployEx-D-");
+            var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            var deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            var key = Recording.GenerateAssetName("TagKey-");
+            var value = Recording.GenerateAssetName("TagValue-");
+            var tags = new Dictionary<string, string>()
+            {
+                {key, value}
+            };
+            var deployment2 = await deployment.SetTagsAsync(tags);
+            Assert.IsFalse(deployment2.Value.Data.Tags.ContainsKey(key));
+            Assert.IsTrue(deployment2.Value.Data.Tags.ContainsKey(key));
+            Assert.AreEqual(deployment2.Value.Data.Tags[key], value);
         }
     }
 }

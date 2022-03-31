@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Tests
 {
     public class ResourceGroupOperationsTests : ResourceManagerTestBase
     {
+        private string _tagKey;
+        private string TagKey => _tagKey ??= Recording.GenerateAssetName("TagKey-");
+        private string _tagValue;
+        private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
         public ResourceGroupOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
