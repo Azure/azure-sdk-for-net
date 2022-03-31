@@ -874,6 +874,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
+            //HERE
             Argument.AssertNotNullOrEmpty(document, nameof(document));
             options ??= new RecognizePiiEntitiesOptions();
 
@@ -884,26 +885,26 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                var input = new MultiLanguageAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzePiiEntites = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = _cognitiveRestClient.AnalyzeText(analyzePiiEntites, cancellationToken: cancellationToken);
 
-                Response<PiiEntitiesResult> result = await _serviceRestClient.EntitiesRecognitionPiiAsync(
-                    new MultiLanguageBatchInput(documents),
-                    options.ModelVersion,
-                    options.IncludeStatistics,
-                    options.DisableServiceLogs,
-                    options.DomainFilter.GetString(),
-                    Constants.DefaultStringIndexType,
-                    options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                var piiEntities = (PiiTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                if (result.Value.Errors.Count > 0)
+                if (piiEntities.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault());
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
-                return Response.FromValue(Transforms.ConvertToPiiEntityCollection(result.Value.Documents[0]), response);
+                return Response.FromValue(Transforms.ConvertToPiiEntityCollection(piiEntities.Results.Documents.FirstOrDefault()), response);
             }
             catch (Exception e)
             {
