@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TestHelperProjects>Rbac1.6;</TestHelperProjects>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.Monitor.csproj" />
-    <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-</Project>
