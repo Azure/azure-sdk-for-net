@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of PrivateEndpointConnection and their operations over its parent. </summary>
-    public partial class PrivateEndpointConnectionCollection : ArmCollection, IEnumerable<PrivateEndpointConnection>, IAsyncEnumerable<PrivateEndpointConnection>
+    /// <summary>
+    /// A class representing a collection of <see cref="PrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="PrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="DatabaseAccountResource" />.
+    /// To get a <see cref="PrivateEndpointConnectionCollection" /> instance call the GetPrivateEndpointConnections method from an instance of <see cref="DatabaseAccountResource" />.
+    /// </summary>
+    public partial class PrivateEndpointConnectionCollection : ArmCollection, IEnumerable<PrivateEndpointConnectionResource>, IAsyncEnumerable<PrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _privateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _privateEndpointConnectionClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _privateEndpointConnectionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnectionCollection"/> class for mocking. </summary>
         protected PrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PrivateEndpointConnectionCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnectionCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal PrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", PrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PrivateEndpointConnectionResource.ResourceType, out string privateEndpointConnectionApiVersion);
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateEndpointConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,70 +49,33 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DatabaseAccount.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccount.ResourceType), nameof(id));
+            if (id.ResourceType != DatabaseAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccountResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
+        /// <summary>
+        /// Approve or reject a private endpoint connection with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="parameters"> The PrivateEndpointConnection to use. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> The PrivateEndpointConnection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PrivateEndpointConnectionCreateOrUpdateOperation CreateOrUpdate(string privateEndpointConnectionName, PrivateEndpointConnectionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _privateEndpointConnectionClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters, cancellationToken);
-                var operation = new PrivateEndpointConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Approve or reject a private endpoint connection with a given name. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="parameters"> The PrivateEndpointConnection to use. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PrivateEndpointConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(string privateEndpointConnectionName, PrivateEndpointConnectionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _privateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateEndpointConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _privateEndpointConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<PrivateEndpointConnectionResource>(new PrivateEndpointConnectionOperationSource(Client), _privateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -118,25 +86,60 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets a private endpoint connection. </summary>
+        /// <summary>
+        /// Approve or reject a private endpoint connection with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="data"> The PrivateEndpointConnection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<PrivateEndpointConnection> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<PrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
+            using var scope = _privateEndpointConnectionClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
+                var response = _privateEndpointConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new CosmosDBArmOperation<PrivateEndpointConnectionResource>(new PrivateEndpointConnectionOperationSource(Client), _privateEndpointConnectionClientDiagnostics, Pipeline, _privateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a private endpoint connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using var scope = _privateEndpointConnectionClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _privateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,25 +148,27 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets a private endpoint connection. </summary>
+        /// <summary>
+        /// Gets a private endpoint connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public async virtual Task<Response<PrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
+            using var scope = _privateEndpointConnectionClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _privateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = _privateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,146 +177,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <summary>
+        /// List all private endpoint connections on a Cosmos DB account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections
+        /// Operation Id: PrivateEndpointConnections_ListByDatabaseAccount
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<PrivateEndpointConnection> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
+            async Task<Page<PrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _privateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<PrivateEndpointConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateEndpointConnection(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public async virtual Task<Response<PrivateEndpointConnection>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _privateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<PrivateEndpointConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new PrivateEndpointConnection(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(privateEndpointConnectionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List all private endpoint connections on a Cosmos DB account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateEndpointConnection> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<PrivateEndpointConnection> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+                using var scope = _privateEndpointConnectionClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateEndpointConnectionsRestClient.ListByDatabaseAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(Parent, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> List all private endpoint connections on a Cosmos DB account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateEndpointConnection> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<PrivateEndpointConnection>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _privateEndpointConnectionsRestClient.ListByDatabaseAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(Parent, value)), null, response.GetRawResponse());
+                    var response = await _privateEndpointConnectionRestClient.ListByDatabaseAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +204,88 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        IEnumerator<PrivateEndpointConnection> IEnumerable<PrivateEndpointConnection>.GetEnumerator()
+        /// <summary>
+        /// List all private endpoint connections on a Cosmos DB account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections
+        /// Operation Id: PrivateEndpointConnections_ListByDatabaseAccount
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<PrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _privateEndpointConnectionClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _privateEndpointConnectionRestClient.ListByDatabaseAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using var scope = _privateEndpointConnectionClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _privateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using var scope = _privateEndpointConnectionClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _privateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<PrivateEndpointConnectionResource> IEnumerable<PrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -332,12 +295,9 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<PrivateEndpointConnection> IAsyncEnumerable<PrivateEndpointConnection>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PrivateEndpointConnectionResource> IAsyncEnumerable<PrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, PrivateEndpointConnection, PrivateEndpointConnectionData> Construct() { }
     }
 }

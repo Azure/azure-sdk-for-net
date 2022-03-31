@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
                 // Obtain the images ordered from newest to oldest
                 Pageable<ArtifactManifestProperties> imageManifests =
-                    repository.GetManifestPropertiesCollection(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
+                    repository.GetAllManifestProperties(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
                 // Delete images older than the first three.
                 foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
@@ -93,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
                 // Obtain the images ordered from newest to oldest
                 AsyncPageable<ArtifactManifestProperties> imageManifests =
-                    repository.GetManifestPropertiesCollectionAsync(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
+                    repository.GetAllManifestPropertiesAsync(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
                 // Delete images older than the first three.
                 await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))

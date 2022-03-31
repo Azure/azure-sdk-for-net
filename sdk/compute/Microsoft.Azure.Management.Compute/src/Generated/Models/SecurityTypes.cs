@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     public static class SecurityTypes
     {
         public const string TrustedLaunch = "TrustedLaunch";
+        public const string ConfidentialVM = "ConfidentialVM";
     }
 }

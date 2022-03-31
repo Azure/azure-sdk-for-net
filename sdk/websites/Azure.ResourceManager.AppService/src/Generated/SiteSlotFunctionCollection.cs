@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of FunctionEnvelope and their operations over its parent. </summary>
-    public partial class SiteSlotFunctionCollection : ArmCollection, IEnumerable<SiteSlotFunction>, IAsyncEnumerable<SiteSlotFunction>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotFunctionResource" /> and their operations.
+    /// Each <see cref="SiteSlotFunctionResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotFunctionCollection" /> instance call the GetSiteSlotFunctions method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
+    public partial class SiteSlotFunctionCollection : ArmCollection, IEnumerable<SiteSlotFunctionResource>, IAsyncEnumerable<SiteSlotFunctionResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteSlotFunctionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotFunctionWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotFunctionCollection"/> class for mocking. </summary>
         protected SiteSlotFunctionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSlotFunctionCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteSlotFunctionCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotFunctionCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteSlotFunctionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _siteSlotFunctionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotFunctionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotFunctionResource.ResourceType, out string siteSlotFunctionWebAppsApiVersion);
+            _siteSlotFunctionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotFunctionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,76 +49,33 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlot.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_CreateInstanceFunctionSlot
-        /// <summary> Description for Create function for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Create function for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_CreateInstanceFunctionSlot
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="functionName"> Function name. </param>
-        /// <param name="functionEnvelope"> Function details. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
-        public virtual WebAppCreateInstanceFunctionSlotOperation CreateOrUpdate(string functionName, FunctionEnvelopeData functionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SiteSlotFunctionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionName, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(functionEnvelope));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.CreateOrUpdate");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.CreateInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, functionEnvelope, cancellationToken);
-                var operation = new WebAppCreateInstanceFunctionSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateInstanceFunctionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, functionEnvelope).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_CreateInstanceFunctionSlot
-        /// <summary> Description for Create function for web site, or a deployment slot. </summary>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="functionEnvelope"> Function details. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="functionEnvelope"/> is null. </exception>
-        public async virtual Task<WebAppCreateInstanceFunctionSlotOperation> CreateOrUpdateAsync(string functionName, FunctionEnvelopeData functionEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(functionEnvelope));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _webAppsRestClient.CreateInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, functionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppCreateInstanceFunctionSlotOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateCreateInstanceFunctionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, functionEnvelope).Request, response);
-                if (waitForCompletion)
+                var response = await _siteSlotFunctionWebAppsRestClient.CreateInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteSlotFunctionResource>(new SiteSlotFunctionOperationSource(Client), _siteSlotFunctionWebAppsClientDiagnostics, Pipeline, _siteSlotFunctionWebAppsRestClient.CreateCreateInstanceFunctionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -124,28 +86,60 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetInstanceFunctionSlot
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Create function for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_CreateInstanceFunctionSlot
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="functionName"> Function name. </param>
+        /// <param name="data"> Function details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public virtual Response<SiteSlotFunction> Get(string functionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SiteSlotFunctionResource> CreateOrUpdate(WaitUntil waitUntil, string functionName, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.Get");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, cancellationToken);
+                var response = _siteSlotFunctionWebAppsRestClient.CreateInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteSlotFunctionResource>(new SiteSlotFunctionOperationSource(Client), _siteSlotFunctionWebAppsClientDiagnostics, Pipeline, _siteSlotFunctionWebAppsRestClient.CreateCreateInstanceFunctionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_GetInstanceFunctionSlot
+        /// </summary>
+        /// <param name="functionName"> Function name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotFunctionResource>> GetAsync(string functionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotFunctionWebAppsRestClient.GetInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotFunction(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotFunctionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,28 +148,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetInstanceFunctionSlot
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_GetInstanceFunctionSlot
+        /// </summary>
         /// <param name="functionName"> Function name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotFunction>> GetAsync(string functionName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotFunctionResource> Get(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.Get");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, cancellationToken).ConfigureAwait(false);
+                var response = _siteSlotFunctionWebAppsRestClient.GetInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotFunction(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotFunctionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,126 +177,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="functionName"> Function name. </param>
+        /// <summary>
+        /// Description for List the functions for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions
+        /// Operation Id: WebApps_ListInstanceFunctionsSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public virtual Response<SiteSlotFunction> GetIfExists(string functionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotFunctionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
+            async Task<Page<SiteSlotFunctionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _webAppsRestClient.GetInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotFunction>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotFunction(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotFunction>> GetIfExistsAsync(string functionName, CancellationToken cancellationToken = default)
-        {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _webAppsRestClient.GetInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SiteSlotFunction>(null, response.GetRawResponse())
-                    : Response.FromValue(new SiteSlotFunction(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string functionName, CancellationToken cancellationToken = default)
-        {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(functionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string functionName, CancellationToken cancellationToken = default)
-        {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_ListInstanceFunctionsSlot
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotFunction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotFunction> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<SiteSlotFunction> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetAll");
+                using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListInstanceFunctionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotFunction(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSlotFunctionWebAppsRestClient.ListInstanceFunctionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotFunctionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,55 +201,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSlotFunction> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSlotFunctionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetAll");
+                using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListInstanceFunctionsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotFunction(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_ListInstanceFunctionsSlot
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotFunction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotFunction> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SiteSlotFunction>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webAppsRestClient.ListInstanceFunctionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotFunction(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteSlotFunction>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webAppsRestClient.ListInstanceFunctionsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotFunction(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSlotFunctionWebAppsRestClient.ListInstanceFunctionsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotFunctionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -370,7 +219,103 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<SiteSlotFunction> IEnumerable<SiteSlotFunction>.GetEnumerator()
+        /// <summary>
+        /// Description for List the functions for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions
+        /// Operation Id: WebApps_ListInstanceFunctionsSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteSlotFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotFunctionResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<SiteSlotFunctionResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSlotFunctionWebAppsRestClient.ListInstanceFunctionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotFunctionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SiteSlotFunctionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSlotFunctionWebAppsRestClient.ListInstanceFunctionsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotFunctionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_GetInstanceFunctionSlot
+        /// </summary>
+        /// <param name="functionName"> Function name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string functionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotFunctionWebAppsRestClient.GetInstanceFunctionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
+        /// Operation Id: WebApps_GetInstanceFunctionSlot
+        /// </summary>
+        /// <param name="functionName"> Function name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string functionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotFunctionWebAppsRestClient.GetInstanceFunctionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<SiteSlotFunctionResource> IEnumerable<SiteSlotFunctionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,12 +325,9 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSlotFunction> IAsyncEnumerable<SiteSlotFunction>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSlotFunctionResource> IAsyncEnumerable<SiteSlotFunctionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSlotFunction, FunctionEnvelopeData> Construct() { }
     }
 }

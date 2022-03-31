@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -34,10 +35,11 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> displayText = default;
             Optional<string> value = default;
             Optional<IReadOnlyList<FunctionAppMajorVersion>> majorVersions = default;
-            Optional<StackPreferredOs> preferredOs = default;
+            Optional<StackPreferredOS> preferredOs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -63,6 +65,11 @@ namespace Azure.ResourceManager.AppService.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -106,14 +113,14 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            preferredOs = property0.Value.GetString().ToStackPreferredOs();
+                            preferredOs = property0.Value.GetString().ToStackPreferredOS();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new FunctionAppStack(id, name, type, kind.Value, location.Value, displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOs));
+            return new FunctionAppStack(id, name, type, systemData, kind.Value, location.Value, displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOs));
         }
     }
 }

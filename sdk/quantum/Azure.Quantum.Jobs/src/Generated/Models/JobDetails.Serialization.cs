@@ -73,6 +73,23 @@ namespace Azure.Quantum.Jobs.Models
                 writer.WritePropertyName("outputDataFormat");
                 writer.WriteStringValue(OutputDataFormat);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags != null)
+                {
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartArray();
+                    foreach (var item in Tags)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("tags");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -94,7 +111,9 @@ namespace Azure.Quantum.Jobs.Models
             Optional<DateTimeOffset?> beginExecutionTime = default;
             Optional<DateTimeOffset?> endExecutionTime = default;
             Optional<DateTimeOffset?> cancellationTime = default;
+            Optional<CostEstimate> costEstimate = default;
             Optional<ErrorData> errorData = default;
+            Optional<IList<string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -217,6 +236,16 @@ namespace Azure.Quantum.Jobs.Models
                     cancellationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("costEstimate"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        costEstimate = null;
+                        continue;
+                    }
+                    costEstimate = CostEstimate.DeserializeCostEstimate(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("errorData"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -227,8 +256,23 @@ namespace Azure.Quantum.Jobs.Models
                     errorData = ErrorData.DeserializeErrorData(property.Value);
                     continue;
                 }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        tags = null;
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    tags = array;
+                    continue;
+                }
             }
-            return new JobDetails(id.Value, name.Value, containerUri, inputDataUri.Value, inputDataFormat, inputParams.Value, providerId, target, Optional.ToDictionary(metadata), outputDataUri.Value, outputDataFormat.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(beginExecutionTime), Optional.ToNullable(endExecutionTime), Optional.ToNullable(cancellationTime), errorData.Value);
+            return new JobDetails(id.Value, name.Value, containerUri, inputDataUri.Value, inputDataFormat, inputParams.Value, providerId, target, Optional.ToDictionary(metadata), outputDataUri.Value, outputDataFormat.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(beginExecutionTime), Optional.ToNullable(endExecutionTime), Optional.ToNullable(cancellationTime), costEstimate.Value, errorData.Value, Optional.ToList(tags));
         }
     }
 }

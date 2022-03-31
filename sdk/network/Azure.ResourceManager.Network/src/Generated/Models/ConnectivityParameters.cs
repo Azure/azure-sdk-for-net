@@ -38,7 +38,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Network protocol. </summary>
         public Protocol? Protocol { get; set; }
         /// <summary> Configuration of the protocol. </summary>
-        public ProtocolConfiguration ProtocolConfiguration { get; set; }
+        internal ProtocolConfiguration ProtocolConfiguration { get; set; }
+        /// <summary> HTTP configuration of the connectivity check. </summary>
+        public HttpConfiguration HttpProtocolConfiguration
+        {
+            get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpProtocolConfiguration;
+            set
+            {
+                if (ProtocolConfiguration is null)
+                    ProtocolConfiguration = new ProtocolConfiguration();
+                ProtocolConfiguration.HttpProtocolConfiguration = value;
+            }
+        }
+
         /// <summary> Preferred IP version of the connection. </summary>
         public IPVersion? PreferredIPVersion { get; set; }
     }

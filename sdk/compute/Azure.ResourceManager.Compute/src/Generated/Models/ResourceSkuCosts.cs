@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of ResourceSkuCosts. </summary>
-        /// <param name="meterID"> Used for querying price from commerce. </param>
+        /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
-        internal ResourceSkuCosts(string meterID, long? quantity, string extendedUnit)
+        internal ResourceSkuCosts(string meterId, long? quantity, string extendedUnit)
         {
-            MeterID = meterID;
+            MeterId = meterId;
             Quantity = quantity;
             ExtendedUnit = extendedUnit;
         }
 
         /// <summary> Used for querying price from commerce. </summary>
-        public string MeterID { get; }
+        public string MeterId { get; }
         /// <summary> The multiplier is needed to extend the base metered cost. </summary>
         public long? Quantity { get; }
         /// <summary> An invariant to show the extended unit. </summary>

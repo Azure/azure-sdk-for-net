@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="privateEndpoint">The resource of private
         /// endpoint.</param>
         /// <param name="privateLinkServiceConnectionState">A collection of
@@ -44,8 +46,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="provisioningState">The provisioning state of private
         /// endpoint connection resource. Possible values include: 'Creating',
         /// 'Updating', 'Deleting', 'Succeeded', 'Failed', 'Canceled'</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string))
-            : base(id, name, type)
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string))
+            : base(id, name, type, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;

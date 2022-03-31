@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = "cm";
             var cm = new ConnectionMonitorInput
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Network.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm);
+            Response<ConnectionMonitorResource> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
             Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
             Assert.AreEqual("centraluseuap", putConnectionMonitor.Value.Data.Location);
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
             var cm = new ConnectionMonitorInput
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Network.Tests
                 AutoStart = false
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm);
+            Response<ConnectionMonitorResource> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual("NotStarted", putConnectionMonitor.Value.Data.MonitoringStatus);
 
-            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartAsync();
+            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartAsync(WaitUntil.Completed);
             await connectionMonitorsStartOperation.WaitForCompletionResponseAsync();;
 
-            Response<ConnectionMonitor> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
+            Response<ConnectionMonitorResource> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
             Assert.AreEqual("Running", getConnectionMonitor.Value.Data.MonitoringStatus);
         }
 
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
             var cm = new ConnectionMonitorInput
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.Network.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm);
+            Response<ConnectionMonitorResource> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
 
-            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StopAsync();
+            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StopAsync(WaitUntil.Completed);
             await connectionMonitorsStopOperation.WaitForCompletionResponseAsync();;
 
-            Response<ConnectionMonitor> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
+            Response<ConnectionMonitorResource> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
             Assert.AreEqual("Stopped", getConnectionMonitor.Value.Data.MonitoringStatus);
         }
 
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
             var cm = new ConnectionMonitorInput
@@ -219,16 +219,16 @@ namespace Azure.ResourceManager.Network.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm);
             await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
-            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartAsync();
+            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartAsync(WaitUntil.Completed);
             await connectionMonitorsStartOperation.WaitForCompletionResponseAsync();;
 
-            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StopAsync();
+            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StopAsync(WaitUntil.Completed);
             await connectionMonitorsStopOperation.WaitForCompletionResponseAsync();;
 
-            Operation<ConnectionMonitorQueryResult> queryResultOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.QueryAsync();
+            Operation<ConnectionMonitorQueryResult> queryResultOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.QueryAsync(WaitUntil.Completed);
             Response<ConnectionMonitorQueryResult> queryResult = await queryResultOperation.WaitForCompletionAsync();;
             //Has.One.EqualTo(queryResult.States);
             Assert.AreEqual("Reachable", queryResult.Value.States[0].ConnectionState);
@@ -257,8 +257,8 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
             var cm = new ConnectionMonitorInput
@@ -273,13 +273,13 @@ namespace Azure.ResourceManager.Network.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm);
+            Response<ConnectionMonitorResource> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual(30, putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
 
             cm.MonitoringIntervalInSeconds = 60;
-            var updateConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> updateConnectionMonitor = await updateConnectionMonitorOperation.WaitForCompletionAsync();;
+            var updateConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName, cm);
+            Response<ConnectionMonitorResource> updateConnectionMonitor = await updateConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual(60, updateConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
         }
 
@@ -304,8 +304,8 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherCollection.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
+            //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName1 = Recording.GenerateAssetName("azsmnet");
             string connectionMonitorName2 = Recording.GenerateAssetName("azsmnet");
@@ -322,21 +322,21 @@ namespace Azure.ResourceManager.Network.Tests
                 AutoStart = false
             };
 
-            var connectionMonitor1Operation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName1, cm);
+            var connectionMonitor1Operation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName1, cm);
             await connectionMonitor1Operation.WaitForCompletionAsync();;
-            var connectionMonitor2Operation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName2, cm);
+            var connectionMonitor2Operation = await ConnectionMonitors.CreateOrUpdateAsync(WaitUntil.Completed, connectionMonitorName2, cm);
             var connectionMonitor2 = (await connectionMonitor2Operation.WaitForCompletionAsync()).Value;
 
-            AsyncPageable<ConnectionMonitor> getConnectionMonitors1AP = ConnectionMonitors.GetAllAsync();
-            Task<List<ConnectionMonitor>> getConnectionMonitors1 = getConnectionMonitors1AP.ToEnumerableAsync();
+            AsyncPageable<ConnectionMonitorResource> getConnectionMonitors1AP = ConnectionMonitors.GetAllAsync();
+            Task<List<ConnectionMonitorResource>> getConnectionMonitors1 = getConnectionMonitors1AP.ToEnumerableAsync();
             Assert.AreEqual(2, getConnectionMonitors1.Result.Count);
 
-            var operation = await connectionMonitor2.DeleteAsync();
+            var operation = await connectionMonitor2.DeleteAsync(WaitUntil.Completed);
             await operation.WaitForCompletionResponseAsync();
             // TODO: restore to use Delete of the specific resource collection: ADO 5998
-            //Operation connectionMonitorsDeleteOperation = await ConnectionMonitors.Get(connectionMonitorName2).Value.DeleteAsync();
+            //Operation connectionMonitorsDeleteOperation = await ConnectionMonitors.Get(connectionMonitorName2).Value.DeleteAsync(true);
             //await connectionMonitorsDeleteOperation.WaitForCompletionAsync();;
-            AsyncPageable<ConnectionMonitor> getConnectionMonitors2 = ConnectionMonitors.GetAllAsync();
+            AsyncPageable<ConnectionMonitorResource> getConnectionMonitors2 = ConnectionMonitors.GetAllAsync();
             Has.One.EqualTo(getConnectionMonitors2);
         }
     }

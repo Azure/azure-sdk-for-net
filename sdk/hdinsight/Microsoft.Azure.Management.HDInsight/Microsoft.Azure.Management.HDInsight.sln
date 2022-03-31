@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.HDInsight.Tests", "tests\Microsoft.Azure.Management.HDInsight.Tests.csproj", "{18309FE3-6E0D-4F4A-A4D7-371E16E76125}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{309E7A43-8D2A-4937-B8F1-70A4C0886D0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{55E7EE32-179A-421B-AE70-91BF93A68278}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{18309FE3-6E0D-4F4A-A4D7-371E16E76125}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18309FE3-6E0D-4F4A-A4D7-371E16E76125}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18309FE3-6E0D-4F4A-A4D7-371E16E76125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{309E7A43-8D2A-4937-B8F1-70A4C0886D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{309E7A43-8D2A-4937-B8F1-70A4C0886D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{309E7A43-8D2A-4937-B8F1-70A4C0886D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{309E7A43-8D2A-4937-B8F1-70A4C0886D0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E7EE32-179A-421B-AE70-91BF93A68278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E7EE32-179A-421B-AE70-91BF93A68278}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E7EE32-179A-421B-AE70-91BF93A68278}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E7EE32-179A-421B-AE70-91BF93A68278}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

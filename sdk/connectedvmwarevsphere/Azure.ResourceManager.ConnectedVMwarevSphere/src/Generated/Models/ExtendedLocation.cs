@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of ExtendedLocation. </summary>
-        /// <param name="type"> The extended location type. </param>
+        /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
-        internal ExtendedLocation(string type, string name)
+        internal ExtendedLocation(string extendedLocationType, string name)
         {
-            Type = type;
+            ExtendedLocationType = extendedLocationType;
             Name = name;
         }
 
         /// <summary> The extended location type. </summary>
-        public string Type { get; set; }
+        public string ExtendedLocationType { get; set; }
         /// <summary> The extended location name. </summary>
         public string Name { get; set; }
     }

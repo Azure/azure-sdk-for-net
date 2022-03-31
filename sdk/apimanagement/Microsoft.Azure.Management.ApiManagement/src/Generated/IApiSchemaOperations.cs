@@ -82,8 +82,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// suffix where n is the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management
+        /// service instance.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -113,8 +113,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// suffix where n is the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management
+        /// service instance.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -147,8 +147,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// suffix where n is the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management
+        /// service instance.
         /// </param>
         /// <param name='parameters'>
         /// The schema contents to apply.
@@ -188,8 +188,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// suffix where n is the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management
+        /// service instance.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from
@@ -227,8 +227,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// suffix where n is the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management
+        /// service instance.
         /// </param>
         /// <param name='parameters'>
         /// The schema contents to apply.

@@ -16,16 +16,14 @@ namespace Azure.Core.Pipeline
         {
         }
 
-        protected override void ExtractFailureContent(
+        protected override ResponseError? ExtractFailureContent(
             string? content,
             ResponseHeaders responseHeaders,
-            ref string? message,
-            ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
-                return;
+                return null;
             }
 
             try
@@ -33,18 +31,22 @@ namespace Azure.Core.Pipeline
                 var errorContentXml = XElement.Parse(content);
                 XElement detail = errorContentXml.Element("Detail");
 
-                message = detail?.Value ?? content;
+                var message = detail?.Value ?? content;
                 Match? match = Regex.Match(
                     detail?.Value,
                     "SubCode=(\\d+)\\.");
+
+                string? errorCode = null;
                 if (match.Success)
                 {
                     errorCode = match.Groups[1].Value;
                 }
+
+                return new ResponseError(errorCode, message);
             }
             catch (Exception)
             {
-                message = content;
+                return new ResponseError(null, content);
             }
         }
     }

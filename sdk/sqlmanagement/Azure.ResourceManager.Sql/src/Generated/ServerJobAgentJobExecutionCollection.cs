@@ -15,30 +15,38 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobExecution and their operations over its parent. </summary>
-    public partial class ServerJobAgentJobExecutionCollection : ArmCollection, IEnumerable<ServerJobAgentJobExecution>, IAsyncEnumerable<ServerJobAgentJobExecution>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerJobAgentJobExecutionResource" /> and their operations.
+    /// Each <see cref="ServerJobAgentJobExecutionResource" /> in the collection will belong to the same instance of <see cref="SqlJobResource" />.
+    /// To get a <see cref="ServerJobAgentJobExecutionCollection" /> instance call the GetServerJobAgentJobExecutions method from an instance of <see cref="SqlJobResource" />.
+    /// </summary>
+    public partial class ServerJobAgentJobExecutionCollection : ArmCollection, IEnumerable<ServerJobAgentJobExecutionResource>, IAsyncEnumerable<ServerJobAgentJobExecutionResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly JobExecutionsRestOperations _jobExecutionsRestClient;
-        private readonly JobTargetExecutionsRestOperations _jobTargetExecutionsRestClient;
+        private readonly ClientDiagnostics _serverJobAgentJobExecutionJobExecutionsClientDiagnostics;
+        private readonly JobExecutionsRestOperations _serverJobAgentJobExecutionJobExecutionsRestClient;
+        private readonly ClientDiagnostics _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics;
+        private readonly JobTargetExecutionsRestOperations _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionCollection"/> class for mocking. </summary>
         protected ServerJobAgentJobExecutionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerJobAgentJobExecutionCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ServerJobAgentJobExecutionCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="ServerJobAgentJobExecutionCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ServerJobAgentJobExecutionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _jobExecutionsRestClient = new JobExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _jobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _serverJobAgentJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecutionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerJobAgentJobExecutionResource.ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
+            _serverJobAgentJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverJobAgentJobExecutionJobExecutionsApiVersion);
+            _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecutionStepTargetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerJobAgentJobExecutionStepTargetResource.ResourceType, out string serverJobAgentJobExecutionStepTargetJobTargetExecutionsApiVersion);
+            _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverJobAgentJobExecutionStepTargetJobTargetExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,54 +54,27 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlJob.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlJob.ResourceType), nameof(id));
+            if (id.ResourceType != SqlJobResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlJobResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_CreateOrUpdate
-        /// <summary> Creates or updates a job execution. </summary>
+        /// <summary>
+        /// Creates or updates a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual JobExecutionCreateOrUpdateOperation CreateOrUpdate(Guid jobExecutionId, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServerJobAgentJobExecutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CreateOrUpdate");
+            using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jobExecutionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken);
-                var operation = new JobExecutionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _jobExecutionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_CreateOrUpdate
-        /// <summary> Creates or updates a job execution. </summary>
-        /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<JobExecutionCreateOrUpdateOperation> CreateOrUpdateAsync(Guid jobExecutionId, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _jobExecutionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken).ConfigureAwait(false);
-                var operation = new JobExecutionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _jobExecutionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId).Request, response);
-                if (waitForCompletion)
+                var response = await _serverJobAgentJobExecutionJobExecutionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ServerJobAgentJobExecutionResource>(new ServerJobAgentJobExecutionOperationSource(Client), _serverJobAgentJobExecutionJobExecutionsClientDiagnostics, Pipeline, _serverJobAgentJobExecutionJobExecutionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -104,22 +85,50 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_Get
-        /// <summary> Gets a job execution. </summary>
-        /// <param name="jobExecutionId"> The id of the job execution. </param>
+        /// <summary>
+        /// Creates or updates a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobExecutionId"> The job execution id to create the job execution under. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerJobAgentJobExecution> Get(Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServerJobAgentJobExecutionResource> CreateOrUpdate(WaitUntil waitUntil, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Get");
+            using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jobExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken);
+                var response = _serverJobAgentJobExecutionJobExecutionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken);
+                var operation = new SqlArmOperation<ServerJobAgentJobExecutionResource>(new ServerJobAgentJobExecutionOperationSource(Client), _serverJobAgentJobExecutionJobExecutionsClientDiagnostics, Pipeline, _serverJobAgentJobExecutionJobExecutionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
+        /// <param name="jobExecutionId"> The id of the job execution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerJobAgentJobExecutionResource>> GetAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _serverJobAgentJobExecutionJobExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerJobAgentJobExecution(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,22 +137,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_Get
-        /// <summary> Gets a job execution. </summary>
+        /// <summary>
+        /// Gets a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerJobAgentJobExecution>> GetAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public virtual Response<ServerJobAgentJobExecutionResource> Get(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Get");
+            using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _jobExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken).ConfigureAwait(false);
+                var response = _serverJobAgentJobExecutionJobExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerJobAgentJobExecution(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerJobAgentJobExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,19 +162,219 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Lists a job&apos;s executions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
+        /// Operation Id: JobExecutions_ListByJob
+        /// </summary>
+        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
+        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
+        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
+        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
+        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServerJobAgentJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerJobAgentJobExecutionResource> GetAllAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ServerJobAgentJobExecutionResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serverJobAgentJobExecutionJobExecutionsRestClient.ListByJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ServerJobAgentJobExecutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _serverJobAgentJobExecutionJobExecutionsRestClient.ListByJobNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists a job&apos;s executions.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
+        /// Operation Id: JobExecutions_ListByJob
+        /// </summary>
+        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
+        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
+        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
+        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
+        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServerJobAgentJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerJobAgentJobExecutionResource> GetAll(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<ServerJobAgentJobExecutionResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serverJobAgentJobExecutionJobExecutionsRestClient.ListByJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ServerJobAgentJobExecutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serverJobAgentJobExecutionJobExecutionsRestClient.ListByJobNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists target executions for all steps of a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets
+        /// Operation Id: JobTargetExecutions_ListByJobExecution
+        /// </summary>
+        /// <param name="jobExecutionId"> The id of the job execution. </param>
+        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
+        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
+        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
+        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
+        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServerJobAgentJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ServerJobAgentJobExecutionStepTargetResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
+                scope.Start();
+                try
+                {
+                    var response = await _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient.ListByJobExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStepTargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ServerJobAgentJobExecutionStepTargetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
+                scope.Start();
+                try
+                {
+                    var response = await _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient.ListByJobExecutionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStepTargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists target executions for all steps of a job execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets
+        /// Operation Id: JobTargetExecutions_ListByJobExecution
+        /// </summary>
+        /// <param name="jobExecutionId"> The id of the job execution. </param>
+        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
+        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
+        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
+        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
+        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServerJobAgentJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutions(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<ServerJobAgentJobExecutionStepTargetResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
+                scope.Start();
+                try
+                {
+                    var response = _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient.ListByJobExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStepTargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ServerJobAgentJobExecutionStepTargetResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
+                scope.Start();
+                try
+                {
+                    var response = _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient.ListByJobExecutionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecutionStepTargetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServerJobAgentJobExecution> GetIfExists(Guid jobExecutionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetIfExists");
+            using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _jobExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
+                var response = await _serverJobAgentJobExecutionJobExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -173,37 +383,20 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="jobExecutionId"> The id of the job execution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerJobAgentJobExecution>> GetIfExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _jobExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServerJobAgentJobExecution>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServerJobAgentJobExecution(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}
+        /// Operation Id: JobExecutions_Get
+        /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Exists");
+            using var scope = _serverJobAgentJobExecutionJobExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = GetIfExists(jobExecutionId, cancellationToken: cancellationToken);
+                var response = _serverJobAgentJobExecutionJobExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -213,220 +406,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="jobExecutionId"> The id of the job execution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(Guid jobExecutionId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(jobExecutionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_ListByJob
-        /// <summary> Lists a job&apos;s executions. </summary>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerJobAgentJobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobExecution> GetAll(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Page<ServerJobAgentJobExecution> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jobExecutionsRestClient.ListByJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecution(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServerJobAgentJobExecution> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jobExecutionsRestClient.ListByJobNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecution(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobExecutions_ListByJob
-        /// <summary> Lists a job&apos;s executions. </summary>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerJobAgentJobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobExecution> GetAllAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServerJobAgentJobExecution>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jobExecutionsRestClient.ListByJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecution(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServerJobAgentJobExecution>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jobExecutionsRestClient.ListByJobNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecution(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobTargetExecutions_ListByJobExecution
-        /// <summary> Lists target executions for all steps of a job execution. </summary>
-        /// <param name="jobExecutionId"> The id of the job execution. </param>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerJobAgentJobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobExecution> GetJobTargetExecutions(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Page<ServerJobAgentJobExecution> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
-                scope.Start();
-                try
-                {
-                    var response = _jobTargetExecutionsRestClient.ListByJobExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecution(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServerJobAgentJobExecution> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
-                scope.Start();
-                try
-                {
-                    var response = _jobTargetExecutionsRestClient.ListByJobExecutionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecution(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}
-        /// OperationId: JobTargetExecutions_ListByJobExecution
-        /// <summary> Lists target executions for all steps of a job execution. </summary>
-        /// <param name="jobExecutionId"> The id of the job execution. </param>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerJobAgentJobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobExecution> GetJobTargetExecutionsAsync(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServerJobAgentJobExecution>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
-                scope.Start();
-                try
-                {
-                    var response = await _jobTargetExecutionsRestClient.ListByJobExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecution(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServerJobAgentJobExecution>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServerJobAgentJobExecutionCollection.GetJobTargetExecutions");
-                scope.Start();
-                try
-                {
-                    var response = await _jobTargetExecutionsRestClient.ListByJobExecutionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerJobAgentJobExecution(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        IEnumerator<ServerJobAgentJobExecution> IEnumerable<ServerJobAgentJobExecution>.GetEnumerator()
+        IEnumerator<ServerJobAgentJobExecutionResource> IEnumerable<ServerJobAgentJobExecutionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -436,12 +416,9 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerJobAgentJobExecution> IAsyncEnumerable<ServerJobAgentJobExecution>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServerJobAgentJobExecutionResource> IAsyncEnumerable<ServerJobAgentJobExecutionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServerJobAgentJobExecution, JobExecutionData> Construct() { }
     }
 }

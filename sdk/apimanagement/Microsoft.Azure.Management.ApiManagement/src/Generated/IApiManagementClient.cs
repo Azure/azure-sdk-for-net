@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.ApiManagement
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// ApiManagement Client
@@ -287,6 +291,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         IOpenIdConnectProviderOperations OpenIdConnectProvider { get; }
 
         /// <summary>
+        /// Gets the IOutboundNetworkDependenciesEndpointsOperations.
+        /// </summary>
+        IOutboundNetworkDependenciesEndpointsOperations OutboundNetworkDependenciesEndpoints { get; }
+
+        /// <summary>
         /// Gets the IPolicyOperations.
         /// </summary>
         IPolicyOperations Policy { get; }
@@ -320,6 +329,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IDelegationSettingsOperations.
         /// </summary>
         IDelegationSettingsOperations DelegationSettings { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; }
 
         /// <summary>
         /// Gets the IProductOperations.
@@ -365,6 +379,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IReportsOperations.
         /// </summary>
         IReportsOperations Reports { get; }
+
+        /// <summary>
+        /// Gets the IGlobalSchemaOperations.
+        /// </summary>
+        IGlobalSchemaOperations GlobalSchema { get; }
 
         /// <summary>
         /// Gets the ITenantSettingsOperations.
@@ -430,6 +449,50 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IApiExportOperations.
         /// </summary>
         IApiExportOperations ApiExport { get; }
+
+        /// <summary>
+        /// Performs a connectivity check between the API Management service
+        /// and a given destination, and returns metrics for the connection, as
+        /// well as errors encountered while trying to establish it.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='connectivityCheckRequestParams'>
+        /// Connectivity Check request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ConnectivityCheckResponse>> PerformConnectivityCheckAsyncWithHttpMessagesAsync(string resourceGroupName, string serviceName, ConnectivityCheckRequest connectivityCheckRequestParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Performs a connectivity check between the API Management service
+        /// and a given destination, and returns metrics for the connection, as
+        /// well as errors encountered while trying to establish it.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='connectivityCheckRequestParams'>
+        /// Connectivity Check request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ConnectivityCheckResponse>> BeginPerformConnectivityCheckAsyncWithHttpMessagesAsync(string resourceGroupName, string serviceName, ConnectivityCheckRequest connectivityCheckRequestParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

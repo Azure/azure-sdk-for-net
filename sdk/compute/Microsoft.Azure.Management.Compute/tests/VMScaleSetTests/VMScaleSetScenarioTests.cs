@@ -265,7 +265,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
 
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
@@ -442,8 +442,8 @@ namespace Compute.Tests
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
                         {
                             Enabled = true,
-
-                            GracePeriod = "PT35M"
+                            GracePeriod = "PT35M",
+                            RepairAction = "replace"
                         };
                         UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
@@ -459,8 +459,38 @@ namespace Compute.Tests
                         ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
                         Assert.NotNull(getResponse.AutomaticRepairsPolicy);
                         Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
-
                         Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
+                        Assert.Equal("replace", getResponse.AutomaticRepairsPolicy.RepairAction, ignoreCase: true);
+
+                        // Test other repair actions. Must disable before changing repair action
+                        foreach (string repairAction in new List<string> { "restart", "reimage" })
+                        {
+                            // Disable auto repairs so we can update repair Action
+                            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+                            {
+                                Enabled = false,
+                            };
+                            UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+                            getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+                            Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == false);
+
+                            // Now we can update repairAction
+                            inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+                            {
+                                Enabled = true,
+                                GracePeriod = "PT35M",
+                                RepairAction = repairAction
+                            };
+                            UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+
+                            getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                            ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                            Assert.NotNull(getResponse.AutomaticRepairsPolicy);
+                            Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
+                            Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
+                            Assert.Equal(repairAction, getResponse.AutomaticRepairsPolicy.RepairAction, ignoreCase: true);
+                        }
 
                         // Disable Automatic Repairs
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
@@ -575,6 +605,41 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_DisablingHyperthreadingAndConstrainedvCPUsScenario")]
+        public void TestVMScaleSetScenarioOperations_DisablingHyperthreadingAndConstrainedvCPUsScenario()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    EnsureClientsInitialized(context);
+
+                    TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardD4V3,
+                        hardwareProfile: new VirtualMachineScaleSetHardwareProfile(),
+                        vmScaleSetCustomizer:
+                        vmScaleSet =>
+                        {
+                            vmScaleSet.VirtualMachineProfile.HardwareProfile.VmSizeProperties = new VMSizeProperties
+                            {
+                                VCPUsAvailable = 1,
+                                VCPUsPerCore = 1
+                            };
+                        },
+                        vmScaleSetValidator: vmScaleSet =>
+                        {
+                            Assert.True(1 == vmScaleSet.VirtualMachineProfile.HardwareProfile?.VmSizeProperties?.VCPUsAvailable);
+                            Assert.True(1 == vmScaleSet.VirtualMachineProfile.HardwareProfile?.VmSizeProperties?.VCPUsPerCore);
+                        });
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
 
         private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
@@ -582,7 +647,7 @@ namespace Compute.Tests
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
             int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
             ImageReference imageReference = null, bool validateListSku = true, bool deleteAsPartOfTest = true,
-            bool associateWithCapacityReservationGroup = false)
+            bool associateWithCapacityReservationGroup = false, VirtualMachineScaleSetHardwareProfile hardwareProfile = null)
         {
             EnsureClientsInitialized(context);
 
@@ -665,7 +730,8 @@ namespace Compute.Tests
                     dedicatedHostGroupName: dedicatedHostGroupName,
                     dedicatedHostName: dedicatedHostName,
                     capacityReservationGroupReferenceId: capacityReservationGroupReferenceId,
-                    singlePlacementGroup: singlePlacementGroup);
+                    singlePlacementGroup: singlePlacementGroup,
+                    hardwareProfile: hardwareProfile);
 
                 if (diskEncryptionSetId != null)
                 {

@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of HybridIdentityMetadata and their operations over its parent. </summary>
-    public partial class HybridIdentityMetadataCollection : ArmCollection, IEnumerable<HybridIdentityMetadata>, IAsyncEnumerable<HybridIdentityMetadata>
+    /// <summary>
+    /// A class representing a collection of <see cref="HybridIdentityMetadataResource" /> and their operations.
+    /// Each <see cref="HybridIdentityMetadataResource" /> in the collection will belong to the same instance of <see cref="VirtualMachineResource" />.
+    /// To get a <see cref="HybridIdentityMetadataCollection" /> instance call the GetHybridIdentityMetadata method from an instance of <see cref="VirtualMachineResource" />.
+    /// </summary>
+    public partial class HybridIdentityMetadataCollection : ArmCollection, IEnumerable<HybridIdentityMetadataResource>, IAsyncEnumerable<HybridIdentityMetadataResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HybridIdentityMetadataRestOperations _hybridIdentityMetadataRestClient;
+        private readonly ClientDiagnostics _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics;
+        private readonly HybridIdentityMetadataRestOperations _hybridIdentityMetadataHybridIdentityMetadataRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="HybridIdentityMetadataCollection"/> class for mocking. </summary>
         protected HybridIdentityMetadataCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal HybridIdentityMetadataCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="HybridIdentityMetadataCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal HybridIdentityMetadataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _hybridIdentityMetadataRestClient = new HybridIdentityMetadataRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", HybridIdentityMetadataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HybridIdentityMetadataResource.ResourceType, out string hybridIdentityMetadataHybridIdentityMetadataApiVersion);
+            _hybridIdentityMetadataHybridIdentityMetadataRestClient = new HybridIdentityMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridIdentityMetadataHybridIdentityMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,68 +49,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VirtualMachine.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachine.ResourceType), nameof(id));
+            if (id.ResourceType != VirtualMachineResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: HybridIdentityMetadata_Create
-        /// <summary> Create Or Update HybridIdentityMetadata. </summary>
+        /// <summary>
+        /// Create Or Update HybridIdentityMetadata.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
+        /// Operation Id: HybridIdentityMetadata_Create
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual HybridIdentityMetadataCreateOperation CreateOrUpdate(string metadataName, HybridIdentityMetadataData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridIdentityMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metadataName, HybridIdentityMetadataData data = null, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CreateOrUpdate");
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridIdentityMetadataRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, body, cancellationToken);
-                var operation = new HybridIdentityMetadataCreateOperation(Parent, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: HybridIdentityMetadata_Create
-        /// <summary> Create Or Update HybridIdentityMetadata. </summary>
-        /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<HybridIdentityMetadataCreateOperation> CreateOrUpdateAsync(string metadataName, HybridIdentityMetadataData body = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _hybridIdentityMetadataRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridIdentityMetadataCreateOperation(Parent, response);
-                if (waitForCompletion)
+                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedVMwarevSphereArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -116,28 +85,59 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: HybridIdentityMetadata_Get
-        /// <summary> Implements HybridIdentityMetadata GET method. </summary>
-        /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
+        /// <summary>
+        /// Create Or Update HybridIdentityMetadata.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
+        /// Operation Id: HybridIdentityMetadata_Create
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="metadataName"> Name of the hybridIdentityMetadata. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual Response<HybridIdentityMetadata> Get(string metadataName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridIdentityMetadataResource> CreateOrUpdate(WaitUntil waitUntil, string metadataName, HybridIdentityMetadataData data = null, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Get");
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken);
+                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, data, cancellationToken);
+                var operation = new ConnectedVMwarevSphereArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Implements HybridIdentityMetadata GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
+        /// Operation Id: HybridIdentityMetadata_Get
+        /// </summary>
+        /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        public virtual async Task<Response<HybridIdentityMetadataResource>> GetAsync(string metadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridIdentityMetadata(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,28 +146,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: HybridIdentityMetadata_Get
-        /// <summary> Implements HybridIdentityMetadata GET method. </summary>
+        /// <summary>
+        /// Implements HybridIdentityMetadata GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
+        /// Operation Id: HybridIdentityMetadata_Get
+        /// </summary>
         /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<Response<HybridIdentityMetadata>> GetAsync(string metadataName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridIdentityMetadataResource> Get(string metadataName, CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
 
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Get");
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken).ConfigureAwait(false);
+                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HybridIdentityMetadata(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,126 +175,23 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
+        /// <summary>
+        /// Returns the list of HybridIdentityMetadata of the given vm.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata
+        /// Operation Id: HybridIdentityMetadata_ListByVm
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual Response<HybridIdentityMetadata> GetIfExists(string metadataName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridIdentityMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridIdentityMetadataResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (metadataName == null)
+            async Task<Page<HybridIdentityMetadataResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _hybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<HybridIdentityMetadata>(null, response.GetRawResponse())
-                    : Response.FromValue(new HybridIdentityMetadata(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<Response<HybridIdentityMetadata>> GetIfExistsAsync(string metadataName, CancellationToken cancellationToken = default)
-        {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _hybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<HybridIdentityMetadata>(null, response.GetRawResponse())
-                    : Response.FromValue(new HybridIdentityMetadata(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual Response<bool> Exists(string metadataName, CancellationToken cancellationToken = default)
-        {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(metadataName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string metadataName, CancellationToken cancellationToken = default)
-        {
-            if (metadataName == null)
-            {
-                throw new ArgumentNullException(nameof(metadataName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(metadataName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: HybridIdentityMetadata_ListByVm
-        /// <summary> Returns the list of HybridIdentityMetadata of the given vm. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridIdentityMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridIdentityMetadata> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<HybridIdentityMetadata> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetAll");
+                using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _hybridIdentityMetadataRestClient.ListByVm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridIdentityMetadata(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.ListByVmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridIdentityMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,55 +199,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            Page<HybridIdentityMetadata> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HybridIdentityMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetAll");
+                using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _hybridIdentityMetadataRestClient.ListByVmNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridIdentityMetadata(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// OperationId: HybridIdentityMetadata_ListByVm
-        /// <summary> Returns the list of HybridIdentityMetadata of the given vm. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridIdentityMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridIdentityMetadata> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<HybridIdentityMetadata>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridIdentityMetadataRestClient.ListByVmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridIdentityMetadata(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridIdentityMetadata>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridIdentityMetadataRestClient.ListByVmNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridIdentityMetadata(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.ListByVmNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridIdentityMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -362,7 +217,103 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<HybridIdentityMetadata> IEnumerable<HybridIdentityMetadata>.GetEnumerator()
+        /// <summary>
+        /// Returns the list of HybridIdentityMetadata of the given vm.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata
+        /// Operation Id: HybridIdentityMetadata_ListByVm
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridIdentityMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridIdentityMetadataResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<HybridIdentityMetadataResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.ListByVm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridIdentityMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<HybridIdentityMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.ListByVmNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridIdentityMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
+        /// Operation Id: HybridIdentityMetadata_Get
+        /// </summary>
+        /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string metadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}/hybridIdentityMetadata/{metadataName}
+        /// Operation Id: HybridIdentityMetadata_Get
+        /// </summary>
+        /// <param name="metadataName"> Name of the HybridIdentityMetadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        public virtual Response<bool> Exists(string metadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<HybridIdentityMetadataResource> IEnumerable<HybridIdentityMetadataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -372,12 +323,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<HybridIdentityMetadata> IAsyncEnumerable<HybridIdentityMetadata>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HybridIdentityMetadataResource> IAsyncEnumerable<HybridIdentityMetadataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, HybridIdentityMetadata, HybridIdentityMetadataData> Construct() { }
     }
 }

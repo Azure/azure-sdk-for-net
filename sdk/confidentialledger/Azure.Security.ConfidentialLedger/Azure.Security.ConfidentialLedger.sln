@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.ConfidentialLedger.Tests", "tests\Azure.Security.ConfidentialLedger.Tests.csproj", "{953B33C8-42F0-45BF-B6A4-46D80D39A9E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{EF8F81A5-B1E7-41B3-BBAD-819F10F3C501}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

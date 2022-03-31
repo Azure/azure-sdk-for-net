@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,11 +14,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a StaticSiteCustomDomainOverviewARMResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a StaticSiteCustomDomainOverviewARMResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteCustomDomainOverviewARMResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteCustomDomainOverviewARMResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteARMResource" /> using the GetStaticSiteCustomDomainOverviewARMResource method.
+    /// </summary>
     public partial class StaticSiteCustomDomainOverviewARMResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StaticSiteCustomDomainOverviewARMResource"/> instance. </summary>
@@ -28,8 +31,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly StaticSitesRestOperations _staticSitesRestClient;
+
+        private readonly ClientDiagnostics _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics;
+        private readonly StaticSitesRestOperations _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient;
         private readonly StaticSiteCustomDomainOverviewARMResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="StaticSiteCustomDomainOverviewARMResource"/> class for mocking. </summary>
@@ -38,41 +42,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "StaticSiteCustomDomainOverviewARMResource"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal StaticSiteCustomDomainOverviewARMResource(ArmResource options, StaticSiteCustomDomainOverviewARMResourceData resource) : base(options, resource.Id)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal StaticSiteCustomDomainOverviewARMResource(ArmClient client, StaticSiteCustomDomainOverviewARMResourceData data) : this(client, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="StaticSiteCustomDomainOverviewARMResource"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StaticSiteCustomDomainOverviewARMResource(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal StaticSiteCustomDomainOverviewARMResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteCustomDomainOverviewARMResource"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StaticSiteCustomDomainOverviewARMResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _staticSitesRestClient = new StaticSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string staticSiteCustomDomainOverviewARMResourceStaticSitesApiVersion);
+            _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteCustomDomainOverviewARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,21 +87,22 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// OperationId: StaticSites_GetStaticSiteCustomDomain
-        /// <summary> Description for Gets an existing custom domain for a particular static site. </summary>
+        /// <summary>
+        /// Description for Gets an existing custom domain for a particular static site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
+        /// Operation Id: StaticSites_GetStaticSiteCustomDomain
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.Get");
+            using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.Get");
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.GetStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -125,21 +111,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// OperationId: StaticSites_GetStaticSiteCustomDomain
-        /// <summary> Description for Gets an existing custom domain for a particular static site. </summary>
+        /// <summary>
+        /// Description for Gets an existing custom domain for a particular static site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
+        /// Operation Id: StaticSites_GetStaticSiteCustomDomain
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StaticSiteCustomDomainOverviewARMResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.Get");
+            using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.Get");
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.GetStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.GetStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,37 +135,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// OperationId: StaticSites_DeleteStaticSiteCustomDomain
-        /// <summary> Description for Deletes a custom domain. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Deletes a custom domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
+        /// Operation Id: StaticSites_DeleteStaticSiteCustomDomain
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<StaticSiteDeleteStaticSiteCustomDomainOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.Delete");
+            using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.Delete");
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.DeleteStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteDeleteStaticSiteCustomDomainOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
+                var response = await _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.DeleteStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation(_staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.CreateDeleteStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -189,22 +161,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// OperationId: StaticSites_DeleteStaticSiteCustomDomain
-        /// <summary> Description for Deletes a custom domain. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Deletes a custom domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
+        /// Operation Id: StaticSites_DeleteStaticSiteCustomDomain
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual StaticSiteDeleteStaticSiteCustomDomainOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.Delete");
+            using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.Delete");
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.DeleteStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StaticSiteDeleteStaticSiteCustomDomainOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateDeleteStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                var response = _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.DeleteStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppServiceArmOperation(_staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.CreateDeleteStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -214,28 +187,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}/validate
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// OperationId: StaticSites_ValidateCustomDomainCanBeAddedToStaticSite
-        /// <summary> Description for Validates a particular custom domain can be added to a static site. </summary>
+        /// <summary>
+        /// Description for Validates a particular custom domain can be added to a static site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}/validate
+        /// Operation Id: StaticSites_ValidateCustomDomainCanBeAddedToStaticSite
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="staticSiteCustomDomainRequestPropertiesEnvelope"> A JSON representation of the static site custom domain request properties. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteCustomDomainRequestPropertiesEnvelope"/> is null. </exception>
-        public async virtual Task<StaticSiteValidateCustomDomainCanBeAddedToStaticSiteOperation> ValidateCustomDomainCanBeAddedToStaticSiteAsync(StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ValidateCustomDomainCanBeAddedToStaticSiteAsync(WaitUntil waitUntil, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
-            if (staticSiteCustomDomainRequestPropertiesEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteCustomDomainRequestPropertiesEnvelope, nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.ValidateCustomDomainCanBeAddedToStaticSite");
+            using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.ValidateCustomDomainCanBeAddedToStaticSite");
             scope.Start();
             try
             {
-                var response = await _staticSitesRestClient.ValidateCustomDomainCanBeAddedToStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteCustomDomainRequestPropertiesEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new StaticSiteValidateCustomDomainCanBeAddedToStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteCustomDomainRequestPropertiesEnvelope).Request, response);
-                if (waitForCompletion)
+                var response = await _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.ValidateCustomDomainCanBeAddedToStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteCustomDomainRequestPropertiesEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation(_staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteCustomDomainRequestPropertiesEnvelope).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -246,29 +217,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}/validate
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
-        /// OperationId: StaticSites_ValidateCustomDomainCanBeAddedToStaticSite
-        /// <summary> Description for Validates a particular custom domain can be added to a static site. </summary>
+        /// <summary>
+        /// Description for Validates a particular custom domain can be added to a static site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}/validate
+        /// Operation Id: StaticSites_ValidateCustomDomainCanBeAddedToStaticSite
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="staticSiteCustomDomainRequestPropertiesEnvelope"> A JSON representation of the static site custom domain request properties. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteCustomDomainRequestPropertiesEnvelope"/> is null. </exception>
-        public virtual StaticSiteValidateCustomDomainCanBeAddedToStaticSiteOperation ValidateCustomDomainCanBeAddedToStaticSite(StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ValidateCustomDomainCanBeAddedToStaticSite(WaitUntil waitUntil, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
-            if (staticSiteCustomDomainRequestPropertiesEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteCustomDomainRequestPropertiesEnvelope, nameof(staticSiteCustomDomainRequestPropertiesEnvelope));
 
-            using var scope = _clientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.ValidateCustomDomainCanBeAddedToStaticSite");
+            using var scope = _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteCustomDomainOverviewARMResource.ValidateCustomDomainCanBeAddedToStaticSite");
             scope.Start();
             try
             {
-                var response = _staticSitesRestClient.ValidateCustomDomainCanBeAddedToStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteCustomDomainRequestPropertiesEnvelope, cancellationToken);
-                var operation = new StaticSiteValidateCustomDomainCanBeAddedToStaticSiteOperation(_clientDiagnostics, Pipeline, _staticSitesRestClient.CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteCustomDomainRequestPropertiesEnvelope).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                var response = _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.ValidateCustomDomainCanBeAddedToStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteCustomDomainRequestPropertiesEnvelope, cancellationToken);
+                var operation = new AppServiceArmOperation(_staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient.CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticSiteCustomDomainRequestPropertiesEnvelope).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

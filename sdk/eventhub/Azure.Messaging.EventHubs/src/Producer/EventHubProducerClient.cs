@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString) : this(connectionString, null, null)
         {
@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       EventHubProducerClientOptions clientOptions) : this(connectionString, null, clientOptions)
@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName) : this(connectionString, eventHubName, null)
@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName,
@@ -615,8 +615,8 @@ namespace Azure.Messaging.EventHubs.Producer
 
             var events = eventBatch switch
             {
-                IReadOnlyList<EventData> eventList => eventList,
-                _ => eventBatch.ToList()
+                IReadOnlyCollection<EventData> eventCollection => eventCollection,
+                _ => eventBatch.ToArray()
             };
 
             if (events.Count == 0)
@@ -833,7 +833,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="options">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        private async Task SendInternalAsync(IReadOnlyList<EventData> events,
+        private async Task SendInternalAsync(IReadOnlyCollection<EventData> events,
                                              SendEventOptions options,
                                              CancellationToken cancellationToken = default)
         {
@@ -947,7 +947,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="options">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        private async Task SendIdempotentAsync(IReadOnlyList<EventData> eventSet,
+        private async Task SendIdempotentAsync(IReadOnlyCollection<EventData> eventSet,
                                                SendEventOptions options,
                                                CancellationToken cancellationToken = default)
         {
@@ -1089,12 +1089,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 var resetStateOnError = false;
                 var releaseGuard = false;
                 var partitionState = PartitionState.GetOrAdd(options.PartitionId, new PartitionPublishingState(options.PartitionId));
-
-                var eventSet = eventBatch.AsEnumerable<EventData>() switch
-                {
-                    IReadOnlyList<EventData> eventList => eventList,
-                    IEnumerable<EventData> eventEnumerable => eventEnumerable.ToList()
-                };
+                var eventSet = eventBatch.AsReadOnlyCollection<EventData>() ;
 
                 try
                 {
@@ -1361,7 +1356,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private static void AssertIdempotentBatchNotPublished(EventDataBatch batch)
         {
             if ((batch.StartingPublishedSequenceNumber.HasValue)
-                || (batch.AsEnumerable<EventData>().Any(eventData => eventData.PublishedSequenceNumber.HasValue)))
+                || (batch.AsReadOnlyCollection<EventData>().Any(eventData => eventData.PublishedSequenceNumber.HasValue)))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.IdempotentAlreadyPublished));
             }

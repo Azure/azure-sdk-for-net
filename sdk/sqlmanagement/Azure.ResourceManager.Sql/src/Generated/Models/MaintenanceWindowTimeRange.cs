@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Maintenance window time range. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="dayOfWeek"> Day of maintenance window. </param>
         /// <param name="startTime"> Start time minutes offset from 12am. </param>
         /// <param name="duration"> Duration of maintenance window in minutes. </param>
-        internal MaintenanceWindowTimeRange(SqlDayOfWeek? dayOfWeek, string startTime, string duration)
+        internal MaintenanceWindowTimeRange(SqlDayOfWeek? dayOfWeek, string startTime, TimeSpan? duration)
         {
             DayOfWeek = dayOfWeek;
             StartTime = startTime;
@@ -31,6 +33,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Start time minutes offset from 12am. </summary>
         public string StartTime { get; set; }
         /// <summary> Duration of maintenance window in minutes. </summary>
-        public string Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
     }
 }

@@ -160,7 +160,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: sharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _uri = conn.BlobEndpoint;
             _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
@@ -171,6 +172,8 @@ namespace Azure.Storage.Files.DataLake
                 authPolicy,
                 _clientConfiguration.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -316,6 +319,37 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileSystemUri">
+        /// A <see cref="Uri"/> referencing the file system that includes the
+        /// name of the account and the name of the file system.
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="DataLakeClientConfiguration"/>.
+        /// </param>
+        internal DataLakeServiceClient(
+            Uri fileSystemUri,
+            DataLakeClientConfiguration clientConfiguration)
+        {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
+            _uri = fileSystemUri;
+            _blobUri = uriBuilder.ToBlobUri();
+
+            _clientConfiguration = clientConfiguration;
+
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _clientConfiguration.Pipeline,
+                // auth is included in pipeline in client configuration.
+                // blobs keeps it separate for niche use cases that are inaccessible from datalake clients
+                authentication: default,
+                _clientConfiguration.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientDiagnostics);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
         /// class.
         /// </summary>
@@ -351,7 +385,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: clientDiagnostics ?? new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
@@ -359,6 +394,8 @@ namespace Azure.Storage.Files.DataLake
                 authentication,
                 _clientConfiguration.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -819,7 +856,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteFileSystem"/> operation marks the
         /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -837,7 +875,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -873,7 +911,8 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteFileSystemAsync"/> operation marks the
         /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -891,7 +930,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

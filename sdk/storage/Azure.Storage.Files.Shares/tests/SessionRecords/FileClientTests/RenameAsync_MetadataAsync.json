@@ -11,7 +11,7 @@
         "x-ms-client-request-id": "6aa368b5-9984-c758-d474-68e2e9bff46f",
         "x-ms-date": "Tue, 14 Dec 2021 18:48:54 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -22,7 +22,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "6aa368b5-9984-c758-d474-68e2e9bff46f",
         "x-ms-request-id": "888da3e0-a01a-0005-3d1b-f1f0c9000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -41,7 +41,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -60,7 +60,7 @@
         "x-ms-file-permission-key": "11335661366610323900*1292734777967284221",
         "x-ms-request-id": "888da3e2-a01a-0005-3e1b-f1f0c9000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -81,7 +81,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -100,7 +100,7 @@
         "x-ms-file-permission-key": "17566099191294621851*1292734777967284221",
         "x-ms-request-id": "888da3e3-a01a-0005-3f1b-f1f0c9000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -114,13 +114,13 @@
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20211214.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19044 )",
         "x-ms-client-request-id": "b30816ee-1d64-b48b-a612-50376fe22e7b",
         "x-ms-date": "Tue, 14 Dec 2021 18:48:54 GMT",
-        "x-ms-file-rename-source": "https%3A%2F%2Fhtoxscnapby3pev24a.file.preprod.core.windows.net%2Ftest-share-df319734-90e3-052c-46b3-4fb192e44089%2Ftest-directory-307a5e71-afd0-f606-9aeb-abf1dd161345%2Ftest-file-99f3368f-7f71-2fc0-b3f5-c794056cd5ff=",
+        "x-ms-file-rename-source": "https://htoxscnapby3pev24a.file.preprod.core.windows.net/test-share-df319734-90e3-052c-46b3-4fb192e44089/test-directory-307a5e71-afd0-f606-9aeb-abf1dd161345/test-file-99f3368f-7f71-2fc0-b3f5-c794056cd5ff",
         "x-ms-meta-Capital": "letter",
         "x-ms-meta-foo": "bar",
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -139,7 +139,7 @@
         "x-ms-file-permission-key": "17566099191294621851*1292734777967284221",
         "x-ms-request-id": "888da3e4-a01a-0005-401b-f1f0c9000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -153,7 +153,7 @@
         "x-ms-client-request-id": "ece0ee8b-e191-c487-3e25-66ad1c3513a3",
         "x-ms-date": "Tue, 14 Dec 2021 18:48:55 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -180,7 +180,7 @@
         "x-ms-request-id": "888da3e5-a01a-0005-411b-f1f0c9000000",
         "x-ms-server-encrypted": "true",
         "x-ms-type": "File",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -196,7 +196,7 @@
         "x-ms-date": "Tue, 14 Dec 2021 18:48:55 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -205,7 +205,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "81abe176-4201-92ea-c626-d806934401ad",
         "x-ms-request-id": "888da3e6-a01a-0005-421b-f1f0c9000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

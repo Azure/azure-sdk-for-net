@@ -78,6 +78,34 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="extendedLocation">The extended location of the Virtual
         /// Machine Scale Set.</param>
         /// 
+
+        public VirtualMachineScaleSet(string location, string id, string name, string type, IDictionary<string, string> tags, Sku sku, Plan plan, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, string orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetIdentity identity, IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
+            : base(location, id, name, type, tags)
+        {
+            Sku = sku;
+            Plan = plan;
+            UpgradePolicy = upgradePolicy;
+            AutomaticRepairsPolicy = automaticRepairsPolicy;
+            VirtualMachineProfile = virtualMachineProfile;
+            ProvisioningState = provisioningState;
+            Overprovision = overprovision;
+            DoNotRunExtensionsOnOverprovisionedVMs = doNotRunExtensionsOnOverprovisionedVMs;
+            UniqueId = uniqueId;
+            SinglePlacementGroup = singlePlacementGroup;
+            ZoneBalance = zoneBalance;
+            PlatformFaultDomainCount = platformFaultDomainCount;
+            ProximityPlacementGroup = proximityPlacementGroup;
+            HostGroup = hostGroup;
+            AdditionalCapabilities = additionalCapabilities;
+            ScaleInPolicy = scaleInPolicy;
+            OrchestrationMode = orchestrationMode;
+            SpotRestorePolicy = spotRestorePolicy;
+            Identity = identity;
+            Zones = zones;
+            ExtendedLocation = extendedLocation;
+            CustomInit();
+        }
+
         public VirtualMachineScaleSet(string location, string id, string name, string type, IDictionary<string, string> tags, Sku sku, Plan plan, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, string orchestrationMode, VirtualMachineScaleSetIdentity identity, IList<string> zones, ExtendedLocation extendedLocation)
             : base(location, id, name, type, tags)
         {

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 {
     public class SharedPrivateLinkTests : WebPubHubServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private WebPubSub _webPubSub;
+        private ResourceGroupResource _resourceGroup;
+        private WebPubSubResource _webPubSub;
         private string _webPubSubName;
         private string _linkName;
         private string _vnetName;
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
             _linkName = SessionRecording.GenerateAssetName("link-");
@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeTearDown]
         public async Task GlobleTearDown()
         {
-            await _resourceGroup.DeleteAsync();
+            await _resourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
         [SetUp]
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
         public async Task TestTearDown()
         {
-            if (_resourceGroup.GetWebPubSubs().Exists(_webPubSubName))
+            if (await _resourceGroup.GetWebPubSubs().ExistsAsync(_webPubSubName))
             {
                 var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(_webPubSubName);
-                await webPubSub.Value.DeleteAsync();
+                await webPubSub.Value.DeleteAsync(WaitUntil.Completed);
             }
         }
 
-        public async Task<WebPubSub> CreateWebPubSub()
+        public async Task<WebPubSubResource> CreateWebPubSub()
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
@@ -96,29 +96,26 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(_webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(WaitUntil.Completed, _webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
 
-        public async Task<SharedPrivateLink> CreateSharedPrivateLink(string LinkName)
+        public async Task<SharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
         {
             //1. create vnet
             var vnetData = new VirtualNetworkData()
             {
                 Location = "westus2",
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
                     new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
                 },
             };
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
             var vnetContainer = _resourceGroup.GetVirtualNetworks();
-            var vnet = await vnetContainer.CreateOrUpdateAsync(_vnetName, vnetData);
+            var vnet = await vnetContainer.CreateOrUpdateAsync(WaitUntil.Completed, _vnetName, vnetData);
 
             //2.1 Create AppServicePlan
             //string appServicePlanName = "appServicePlan5952";
@@ -175,7 +172,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 GroupId = "webPubSub",
                 RequestMessage = "please approve",
             };
-            var link = await container.CreateOrUpdateAsync(LinkName, data);
+            var link = await container.CreateOrUpdateAsync(WaitUntil.Completed, LinkName, data);
             return link.Value;
         }
 

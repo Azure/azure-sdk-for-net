@@ -328,8 +328,15 @@ namespace Azure.Data.Tables
             {
                 // This is most likely Azurite, which looks like this: https://127.0.0.1:10002/contoso/
                 var segments = uri.Segments;
-
-                accountName = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ? segments[1].Substring(0, segments[1].Length - 1) : segments[1];
+                if (segments.Length == 1)
+                {
+                    // This is most likely the Cosmos emulator.
+                    accountName = "localhost";
+                }
+                else
+                {
+                    accountName = segments[1].EndsWith("/", StringComparison.OrdinalIgnoreCase) ? segments[1].Substring(0, segments[1].Length - 1) : segments[1];
+                }
             }
 
             return accountName;

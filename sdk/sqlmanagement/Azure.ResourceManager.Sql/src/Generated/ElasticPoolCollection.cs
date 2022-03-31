@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ElasticPool and their operations over its parent. </summary>
-    public partial class ElasticPoolCollection : ArmCollection, IEnumerable<ElasticPool>, IAsyncEnumerable<ElasticPool>
+    /// <summary>
+    /// A class representing a collection of <see cref="ElasticPoolResource" /> and their operations.
+    /// Each <see cref="ElasticPoolResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get an <see cref="ElasticPoolCollection" /> instance call the GetElasticPools method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
+    public partial class ElasticPoolCollection : ArmCollection, IEnumerable<ElasticPoolResource>, IAsyncEnumerable<ElasticPoolResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ElasticPoolsRestOperations _elasticPoolsRestClient;
+        private readonly ClientDiagnostics _elasticPoolClientDiagnostics;
+        private readonly ElasticPoolsRestOperations _elasticPoolRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ElasticPoolCollection"/> class for mocking. </summary>
         protected ElasticPoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ElasticPoolCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="ElasticPoolCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ElasticPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _elasticPoolsRestClient = new ElasticPoolsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ElasticPoolResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ElasticPoolResource.ResourceType, out string elasticPoolApiVersion);
+            _elasticPoolRestClient = new ElasticPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,76 +49,33 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlServer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+            if (id.ResourceType != SqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ElasticPools_CreateOrUpdate
-        /// <summary> Creates or updates an elastic pool. </summary>
+        /// <summary>
+        /// Creates or updates an elastic pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
+        /// Operation Id: ElasticPools_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="parameters"> The elastic pool parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> The elastic pool parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ElasticPoolCreateOrUpdateOperation CreateOrUpdate(string elasticPoolName, ElasticPoolData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ElasticPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string elasticPoolName, ElasticPoolData data, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.CreateOrUpdate");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _elasticPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, parameters, cancellationToken);
-                var operation = new ElasticPoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _elasticPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ElasticPools_CreateOrUpdate
-        /// <summary> Creates or updates an elastic pool. </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="parameters"> The elastic pool parameters. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ElasticPoolCreateOrUpdateOperation> CreateOrUpdateAsync(string elasticPoolName, ElasticPoolData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _elasticPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticPoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _elasticPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _elasticPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ElasticPoolResource>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -124,28 +86,60 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ElasticPools_Get
-        /// <summary> Gets an elastic pool. </summary>
+        /// <summary>
+        /// Creates or updates an elastic pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
+        /// Operation Id: ElasticPools_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="data"> The elastic pool parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public virtual Response<ElasticPool> Get(string elasticPoolName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ElasticPoolResource> CreateOrUpdate(WaitUntil waitUntil, string elasticPoolName, ElasticPoolData data, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Get");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _elasticPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken);
+                var response = _elasticPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data, cancellationToken);
+                var operation = new SqlArmOperation<ElasticPoolResource>(new ElasticPoolOperationSource(Client), _elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an elastic pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
+        /// Operation Id: ElasticPools_Get
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        public virtual async Task<Response<ElasticPoolResource>> GetAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ElasticPool(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ElasticPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,28 +148,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ElasticPools_Get
-        /// <summary> Gets an elastic pool. </summary>
+        /// <summary>
+        /// Gets an elastic pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
+        /// Operation Id: ElasticPools_Get
+        /// </summary>
         /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public async virtual Task<Response<ElasticPool>> GetAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticPoolResource> Get(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Get");
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = await _elasticPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken).ConfigureAwait(false);
+                var response = _elasticPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ElasticPool(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ElasticPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,127 +177,24 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public virtual Response<ElasticPool> GetIfExists(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _elasticPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ElasticPool>(null, response.GetRawResponse())
-                    : Response.FromValue(new ElasticPool(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public async virtual Task<Response<ElasticPool>> GetIfExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _elasticPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ElasticPool>(null, response.GetRawResponse())
-                    : Response.FromValue(new ElasticPool(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public virtual Response<bool> Exists(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(elasticPoolName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
-        {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(elasticPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ElasticPools_ListByServer
-        /// <summary> Gets all elastic pools in a server. </summary>
+        /// <summary>
+        /// Gets all elastic pools in a server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools
+        /// Operation Id: ElasticPools_ListByServer
+        /// </summary>
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticPool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPool> GetAll(int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ElasticPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticPoolResource> GetAllAsync(int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<ElasticPool> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ElasticPoolResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetAll");
+                using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _elasticPoolsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticPool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _elasticPoolRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ElasticPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -312,56 +202,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ElasticPool> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ElasticPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetAll");
+                using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _elasticPoolsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticPool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ElasticPools_ListByServer
-        /// <summary> Gets all elastic pools in a server. </summary>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticPool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPool> GetAllAsync(int? skip = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ElasticPool>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _elasticPoolsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticPool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ElasticPool>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ElasticPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _elasticPoolsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticPool(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _elasticPoolRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ElasticPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -372,7 +220,104 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<ElasticPool> IEnumerable<ElasticPool>.GetEnumerator()
+        /// <summary>
+        /// Gets all elastic pools in a server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools
+        /// Operation Id: ElasticPools_ListByServer
+        /// </summary>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ElasticPoolResource> GetAll(int? skip = null, CancellationToken cancellationToken = default)
+        {
+            Page<ElasticPoolResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _elasticPoolRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ElasticPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ElasticPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _elasticPoolRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ElasticPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
+        /// Operation Id: ElasticPools_Get
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _elasticPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
+        /// Operation Id: ElasticPools_Get
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        public virtual Response<bool> Exists(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _elasticPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, elasticPoolName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<ElasticPoolResource> IEnumerable<ElasticPoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -382,12 +327,9 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ElasticPool> IAsyncEnumerable<ElasticPool>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ElasticPoolResource> IAsyncEnumerable<ElasticPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ElasticPool, ElasticPoolData> Construct() { }
     }
 }

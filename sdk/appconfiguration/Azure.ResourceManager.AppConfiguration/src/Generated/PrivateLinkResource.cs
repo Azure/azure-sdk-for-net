@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,11 +13,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A Class representing a PrivateLinkResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a PrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateLinkResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ConfigurationStoreResource" /> using the GetPrivateLinkResource method.
+    /// </summary>
     public partial class PrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateLinkResource"/> instance. </summary>
@@ -27,8 +30,9 @@ namespace Azure.ResourceManager.AppConfiguration
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
+
+        private readonly ClientDiagnostics _privateLinkResourceClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _privateLinkResourceRestClient;
         private readonly PrivateLinkResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkResource"/> class for mocking. </summary>
@@ -37,41 +41,22 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Initializes a new instance of the <see cref = "PrivateLinkResource"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmResource options, PrivateLinkResourceData resource) : base(options, resource.Id)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal PrivateLinkResource(ArmClient client, PrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
-            _data = resource;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkResource"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal PrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResource"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string privateLinkResourceApiVersion);
+            _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,18 +86,22 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a private link resource that need to be created for a configuration store. </summary>
+        /// <summary>
+        /// Gets a private link resource that need to be created for a configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateLinkResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,40 +110,28 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Gets a private link resource that need to be created for a configuration store. </summary>
+        /// <summary>
+        /// Gets a private link resource that need to be created for a configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _privateLinkResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
         }
     }
 }

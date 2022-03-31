@@ -13,7 +13,6 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24552")]
         public async Task ManageCustomModelsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -44,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             // Create a new model to store in the account
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
 #endif

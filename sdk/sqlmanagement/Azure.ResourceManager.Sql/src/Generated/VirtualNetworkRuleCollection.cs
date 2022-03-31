@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of VirtualNetworkRule and their operations over its parent. </summary>
-    public partial class VirtualNetworkRuleCollection : ArmCollection, IEnumerable<VirtualNetworkRule>, IAsyncEnumerable<VirtualNetworkRule>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualNetworkRuleResource" /> and their operations.
+    /// Each <see cref="VirtualNetworkRuleResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="VirtualNetworkRuleCollection" /> instance call the GetVirtualNetworkRules method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
+    public partial class VirtualNetworkRuleCollection : ArmCollection, IEnumerable<VirtualNetworkRuleResource>, IAsyncEnumerable<VirtualNetworkRuleResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly VirtualNetworkRulesRestOperations _virtualNetworkRulesRestClient;
+        private readonly ClientDiagnostics _virtualNetworkRuleClientDiagnostics;
+        private readonly VirtualNetworkRulesRestOperations _virtualNetworkRuleRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkRuleCollection"/> class for mocking. </summary>
         protected VirtualNetworkRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRuleCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal VirtualNetworkRuleCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkRuleCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal VirtualNetworkRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _virtualNetworkRulesRestClient = new VirtualNetworkRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _virtualNetworkRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualNetworkRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualNetworkRuleResource.ResourceType, out string virtualNetworkRuleApiVersion);
+            _virtualNetworkRuleRestClient = new VirtualNetworkRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,76 +49,33 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlServer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+            if (id.ResourceType != SqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: VirtualNetworkRules_CreateOrUpdate
-        /// <summary> Creates or updates an existing virtual network rule. </summary>
+        /// <summary>
+        /// Creates or updates an existing virtual network rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
-        /// <param name="parameters"> The requested virtual Network Rule Resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> The requested virtual Network Rule Resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkRuleCreateOrUpdateOperation CreateOrUpdate(string virtualNetworkRuleName, VirtualNetworkRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualNetworkRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkRuleName, VirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.CreateOrUpdate");
+            using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualNetworkRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, parameters, cancellationToken);
-                var operation = new VirtualNetworkRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: VirtualNetworkRules_CreateOrUpdate
-        /// <summary> Creates or updates an existing virtual network rule. </summary>
-        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
-        /// <param name="parameters"> The requested virtual Network Rule Resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualNetworkRuleName, VirtualNetworkRuleData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _virtualNetworkRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _virtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _virtualNetworkRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<VirtualNetworkRuleResource>(new VirtualNetworkRuleOperationSource(Client), _virtualNetworkRuleClientDiagnostics, Pipeline, _virtualNetworkRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -124,28 +86,60 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: VirtualNetworkRules_Get
-        /// <summary> Gets a virtual network rule. </summary>
+        /// <summary>
+        /// Creates or updates an existing virtual network rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
+        /// <param name="data"> The requested virtual Network Rule Resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        public virtual Response<VirtualNetworkRule> Get(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VirtualNetworkRuleResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkRuleName, VirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Get");
+            using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualNetworkRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken);
+                var response = _virtualNetworkRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data, cancellationToken);
+                var operation = new SqlArmOperation<VirtualNetworkRuleResource>(new VirtualNetworkRuleOperationSource(Client), _virtualNetworkRuleClientDiagnostics, Pipeline, _virtualNetworkRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a virtual network rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_Get
+        /// </summary>
+        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkRuleResource>> GetAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+
+            using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _virtualNetworkRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkRule(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,28 +148,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: VirtualNetworkRules_Get
-        /// <summary> Gets a virtual network rule. </summary>
+        /// <summary>
+        /// Gets a virtual network rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_Get
+        /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetworkRule>> GetAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualNetworkRuleResource> Get(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Get");
+            using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
+                var response = _virtualNetworkRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetworkRule(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,126 +177,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
+        /// <summary>
+        /// Gets a list of virtual network rules in a server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules
+        /// Operation Id: VirtualNetworkRules_ListByServer
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        public virtual Response<VirtualNetworkRule> GetIfExists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualNetworkRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
+            async Task<Page<VirtualNetworkRuleResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _virtualNetworkRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<VirtualNetworkRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkRule(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetworkRule>> GetIfExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
-        {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _virtualNetworkRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<VirtualNetworkRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new VirtualNetworkRule(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        public virtual Response<bool> Exists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
-        {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(virtualNetworkRuleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
-        {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(virtualNetworkRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: VirtualNetworkRules_ListByServer
-        /// <summary> Gets a list of virtual network rules in a server. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualNetworkRule> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<VirtualNetworkRule> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetAll");
+                using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualNetworkRulesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualNetworkRuleRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,55 +201,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<VirtualNetworkRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualNetworkRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetAll");
+                using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _virtualNetworkRulesRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: VirtualNetworkRules_ListByServer
-        /// <summary> Gets a list of virtual network rules in a server. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualNetworkRule> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<VirtualNetworkRule>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualNetworkRulesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualNetworkRule>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualNetworkRulesRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _virtualNetworkRuleRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -370,7 +219,103 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<VirtualNetworkRule> IEnumerable<VirtualNetworkRule>.GetEnumerator()
+        /// <summary>
+        /// Gets a list of virtual network rules in a server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules
+        /// Operation Id: VirtualNetworkRules_ListByServer
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualNetworkRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkRuleResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<VirtualNetworkRuleResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualNetworkRuleRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VirtualNetworkRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualNetworkRuleRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_Get
+        /// </summary>
+        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+
+            using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _virtualNetworkRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_Get
+        /// </summary>
+        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public virtual Response<bool> Exists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+
+            using var scope = _virtualNetworkRuleClientDiagnostics.CreateScope("VirtualNetworkRuleCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _virtualNetworkRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<VirtualNetworkRuleResource> IEnumerable<VirtualNetworkRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,12 +325,9 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VirtualNetworkRule> IAsyncEnumerable<VirtualNetworkRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualNetworkRuleResource> IAsyncEnumerable<VirtualNetworkRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, VirtualNetworkRule, VirtualNetworkRuleData> Construct() { }
     }
 }

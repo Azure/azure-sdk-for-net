@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
@@ -25,19 +26,16 @@ namespace Azure.ResourceManager.Cdn
             }
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(PolicySettings))
@@ -45,15 +43,15 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("policySettings");
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsDefined(RateLimitRules))
+            if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules");
-                writer.WriteObjectValue(RateLimitRules);
+                writer.WriteObjectValue(RateLimitSettings);
             }
-            if (Optional.IsDefined(CustomRules))
+            if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules");
-                writer.WriteObjectValue(CustomRules);
+                writer.WriteObjectValue(CustomSettings);
             }
             if (Optional.IsDefined(ManagedRules))
             {
@@ -67,13 +65,13 @@ namespace Azure.ResourceManager.Cdn
         internal static CdnWebApplicationFirewallPolicyData DeserializeCdnWebApplicationFirewallPolicyData(JsonElement element)
         {
             Optional<string> etag = default;
-            Models.Sku sku = default;
-            string location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SystemData> systemData = default;
+            CdnSku sku = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
+            SystemData systemData = default;
             Optional<PolicySettings> policySettings = default;
             Optional<RateLimitRuleList> rateLimitRules = default;
             Optional<CustomRuleList> customRules = default;
@@ -90,21 +88,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
+                    sku = CdnSku.DeserializeCdnSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -113,14 +101,9 @@ namespace Azure.ResourceManager.Cdn
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -136,6 +119,11 @@ namespace Azure.ResourceManager.Cdn
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -226,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), etag.Value, sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
+            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData, tags, location, etag.Value, sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
         }
     }
 }

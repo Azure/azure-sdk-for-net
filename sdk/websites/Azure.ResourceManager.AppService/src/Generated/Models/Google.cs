@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Google provider. </summary>
@@ -33,8 +35,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The configuration settings of the app registration for the Google provider. </summary>
         public ClientRegistration Registration { get; set; }
         /// <summary> The configuration settings of the login flow. </summary>
-        public LoginScopes Login { get; set; }
+        internal LoginScopes Login { get; set; }
+        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        public IList<string> LoginScopes
+        {
+            get
+            {
+                if (Login is null)
+                    Login = new LoginScopes();
+                return Login.Scopes;
+            }
+        }
+
         /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
-        public AllowedAudiencesValidation Validation { get; set; }
+        internal AllowedAudiencesValidation Validation { get; set; }
+        /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
+        public IList<string> ValidationAllowedAudiences
+        {
+            get
+            {
+                if (Validation is null)
+                    Validation = new AllowedAudiencesValidation();
+                return Validation.AllowedAudiences;
+            }
+        }
     }
 }

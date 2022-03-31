@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The UserAssignedIdentityProperties. </summary>
-    public partial class UserAssignedIdentityProperties
+    internal partial class UserAssignedIdentityProperties
     {
         /// <summary> Initializes a new instance of UserAssignedIdentityProperties. </summary>
         public UserAssignedIdentityProperties()

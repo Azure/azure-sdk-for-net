@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.Azure", "..\..\extensions\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{E772769A-7CE1-4FBC-A084-C0936EB2C766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{FD65B96F-855A-495C-AA82-03402336E96C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

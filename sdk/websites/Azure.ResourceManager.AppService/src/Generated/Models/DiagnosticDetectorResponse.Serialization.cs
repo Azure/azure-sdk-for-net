@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -24,15 +25,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(IssueDetected))
             {
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<bool> issueDetected = default;
@@ -122,6 +124,11 @@ namespace Azure.ResourceManager.AppService.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -237,7 +244,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DiagnosticDetectorResponse(id, name, type, kind.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(abnormalTimePeriods), Optional.ToList(data), responseMetaData.Value);
+            return new DiagnosticDetectorResponse(id, name, type, systemData, kind.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(abnormalTimePeriods), Optional.ToList(data), responseMetaData.Value);
         }
     }
 }

@@ -22,18 +22,30 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential
 ## Build a custom model
 
 Build custom models to extract text, field values, selection marks, and table data from documents. Custom models are trained with your own data, so they're tailored to your documents.
+
+When building a custom model, you'll need to choose a build mode that's appropriate to the type of documents you have:
+- Template build mode: recommended when the custom documents all have the same layout. Fields are expected to be in the same place across documents. Build time tends to be considerably shorter than the neural build mode.
+- Neural build mode: recommended when custom documents have different layouts. Fields are expected to be the same but they can be placed in different positions across documents.
+
 A `DocumentModel` is returned indicating the document types the model will recognize, and the fields it will extract from each document type.
 
 ```C# Snippet:FormRecognizerSampleBuildModel
 // For this sample, you can use the training documents found in the `trainingFiles` folder.
-// Upload the forms to your storage container and then generate a container SAS URL.
-// For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-// https://aka.ms/azsdk/formrecognizer/buildtrainingset
+// Upload the documents to your storage container and then generate a container SAS URL. Note
+// that a container URI without SAS is accepted only when the container is public or has a
+// managed identity configured.
+//
+// For instructions to set up documents for training in an Azure Blob Storage Container, please see:
+// https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+// We are selecting the Template build mode in this sample. For more information about the available
+// build modes and their differences, please see:
+// https://aka.ms/azsdk/formrecognizer/buildmode
+
+BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;
 

@@ -50,7 +50,7 @@
         "x-ms-client-request-id": "3c5ad071aea8aef0b9e74331121c2aea",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "U2FuaXRpemVk",
+      "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "236",

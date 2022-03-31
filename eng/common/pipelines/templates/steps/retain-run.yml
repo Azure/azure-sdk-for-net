@@ -1,6 +1,6 @@
 parameters:
   - name: DaysValid
-    default: 365
+    default: 731
     type: number
 
 steps:
@@ -16,7 +16,6 @@ steps:
         -Project $(System.TeamProject)
         -DefinitionId $(System.DefinitionId)
         -RunId $(Build.BuildId)
-        -OwnerId Pipeline
-        -DaysValid ${{parameters.DaysValid}}
+        -DaysValid ${{ parameters.DaysValid }}
         -AccessToken $env:SYSTEM_ACCESSTOKEN
         -Debug

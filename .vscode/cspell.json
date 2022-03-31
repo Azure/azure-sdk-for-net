@@ -27,7 +27,6 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
-
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -52,12 +51,13 @@
     "azsdk",
     "blazor",
     "contoso",
+    "cref",
     "deduplication",
     "deserializable",
     "deserializes",
     "diagnoser",
-    "dotnetcli",
     "dont",
+    "dotnetcli",
     "dtmf",
     "epsg",
     "expando",
@@ -73,28 +73,37 @@
     "otel",
     "overridden",
     "parallelization",
+    "personalizer",
     "pkcs",
     "pstn",
     "pwsh",
     "referer",
     "renormalize",
     "retriable",
+    "signup",
     "skus",
     "structs",
     "uints",
+    "unencrypted",
     "unformattable",
     "unhold",
     "uninstrumented",
-    "westus",
-    "xunit",
     "vnet",
-    "unencrypted",
-    "personalizer"
+    "westus",
+    "xunit"
   ],
   "overrides": [
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
+    },
+    {
+      "filename": "**/sdk/azurestackhci/**/*.cs",
+      "words": [
+        "cref",
+        "imds",
+        "IMDS"
+      ]
     },
     {
       "filename": "**/sdk/cdn/**/*.cs",
@@ -116,7 +125,8 @@
         "vhds",
         "swappable",
         "ssdzrs",
-        "dscp"
+        "dscp",
+        "vmguest"
       ]
     },
     {
@@ -130,13 +140,27 @@
     {
       "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
+        "Cpus",
         "Ctlr",
         "Lsilogic",
         "Lsilogicsas",
         "Pcnet",
         "Pmem",
         "Pvscsi",
-        "Sesparse"
+        "Sesparse",
+        "VCenter",
+        "VMware",
+        "vSphere"
+      ]
+    },
+    {
+      "filename": "**/sdk/desktopvirtualization/**/*.cs",
+      "words": [
+        "adfs",
+        "fslogix",
+        "msix",
+        "sso",
+        "unhide"
       ]
     },
     {
@@ -184,9 +208,11 @@
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",
+        "echsm",
         "getsas",
         "listsas",
         "oaep",
+        "rsahsm",
         "setsas",
         "mhsm",
         "mhsmip"
@@ -199,14 +225,14 @@
     {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
-        "Droppeded",
         "CIAS",
-        "Vcores",
-        "Unrestorable",
-        "Stdev",
+        "Droppeded",
+        "Nchar",
         "Ntext",
         "Nvarchar",
-        "Stdev"
+        "Stdev",
+        "Unrestorable",
+        "Vcores"
       ]
     },
     {
@@ -278,6 +304,7 @@
         "sybase",
         "sybase",
         "teradata",
+        "updation",
         "usql",
         "vertica",
         "xero"

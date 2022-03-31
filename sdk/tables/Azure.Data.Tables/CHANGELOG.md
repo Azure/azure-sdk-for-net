@@ -1,11 +1,27 @@
 # Release History
 
+## 12.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.5.0 (2022-03-10)
+
+### Bugs Fixed
+- Fixed an issue that caused authenticate failures when using a SAS token with a table name that contains upper-case characters. ([#26791](https://github.com/Azure/azure-sdk-for-net/issues/26791))
+
 ## 12.4.0 (2022-01-12)
 
 ### Bugs Fixed
 - Fixed a an issue when using `TableEntity.GetDateTime` that resulted in an `InvalidOperationException` exception. ([#25323](https://github.com/Azure/azure-sdk-for-net/issues/25323)) 
 - `TableClient.GenerateSasUri(...)` does not throw if the client was constructed via `TableServiceClient.GetTableClient(string tableName)` ([#25881](https://github.com/Azure/azure-sdk-for-net/issues/25881))
 - `TableClient.GenerateSasUri(...)` now generates a Uri with the table name in the path. ([#26155](https://github.com/Azure/azure-sdk-for-net/issues/26155))
+- `TableClient` and `TableServiceClient` constructors taking a connection string now properly parse Cosmos emulator connection strings. ([#26326](https://github.com/Azure/azure-sdk-for-net/issues/26326))
 ## 12.3.0 (2021-11-09)
 
 ### Bugs Fixed

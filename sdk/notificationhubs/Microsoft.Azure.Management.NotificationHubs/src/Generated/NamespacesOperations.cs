@@ -2120,7 +2120,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SharedAccessAuthorizationRuleListResult>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ResourceListKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2260,7 +2260,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SharedAccessAuthorizationRuleListResult>();
+            var _result = new AzureOperationResponse<ResourceListKeys>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2273,7 +2273,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SharedAccessAuthorizationRuleListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ResourceListKeys>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

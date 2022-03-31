@@ -5,21 +5,39 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the domain to create. </summary>
-    public partial class AfdCustomDomainUpdatePropertiesParameters
+    internal partial class AfdCustomDomainUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdCustomDomainUpdatePropertiesParameters. </summary>
-        public AfdCustomDomainUpdatePropertiesParameters()
+        internal AfdCustomDomainUpdatePropertiesParameters()
         {
         }
 
+        /// <summary> The name of the profile which holds the domain. </summary>
+        public string ProfileName { get; }
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
-        public AfdCustomDomainHttpsParameters TlsSettings { get; set; }
+        public AfdCustomDomainHttpsParameters TlsSettings { get; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
-        public WritableSubResource AzureDnsZone { get; set; }
+        internal WritableSubResource AzureDnsZone { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier AzureDnsZoneId
+        {
+            get => AzureDnsZone.Id;
+            set => AzureDnsZone.Id = value;
+        }
+
+        /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
+        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResourceId { get; }
+        /// <summary> Resource ID. </summary>
+        public string PreValidatedCustomDomainResourceIdId
+        {
+            get => PreValidatedCustomDomainResourceId.Id;
+            set => PreValidatedCustomDomainResourceId.Id = value;
+        }
     }
 }

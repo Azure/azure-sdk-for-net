@@ -27,21 +27,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             if (!_executors.ContainsKey(key))
             {
-                if (string.Equals(key.Category, Category.Connections, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(key.Category, SignalRTriggerCategories.Connections, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (string.Equals(key.@Event, Event.Connected, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(key.@Event, SignalRTriggerEvents.Connected, StringComparison.OrdinalIgnoreCase))
                     {
                         _executors.Add(key, new SignalRConnectMethodExecutor(_resolver, executor));
                         return;
                     }
-                    if (string.Equals(key.@Event, Event.Disconnected, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(key.@Event, SignalRTriggerEvents.Disconnected, StringComparison.OrdinalIgnoreCase))
                     {
                         _executors.Add(key, new SignalRDisconnectMethodExecutor(_resolver, executor));
                         return;
                     }
                     throw new SignalRTriggerException($"Event {key.@Event} is not supported in connections");
                 }
-                if (string.Equals(key.Category, Category.Messages, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(key.Category, SignalRTriggerCategories.Messages, StringComparison.OrdinalIgnoreCase))
                 {
                     _executors.Add(key, new SignalRInvocationMethodExecutor(_resolver, executor));
                     return;

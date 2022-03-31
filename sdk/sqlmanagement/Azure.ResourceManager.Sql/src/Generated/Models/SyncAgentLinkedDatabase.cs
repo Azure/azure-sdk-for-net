@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Azure SQL Database sync agent linked database. </summary>
-    public partial class SyncAgentLinkedDatabase : Resource
+    public partial class SyncAgentLinkedDatabase : ResourceData
     {
         /// <summary> Initializes a new instance of SyncAgentLinkedDatabase. </summary>
         public SyncAgentLinkedDatabase()
@@ -21,14 +21,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncAgentLinkedDatabase. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="databaseType"> Type of the sync agent linked database. </param>
         /// <param name="databaseId"> Id of the sync agent linked database. </param>
         /// <param name="description"> Description of the sync agent linked database. </param>
         /// <param name="serverName"> Server name of the sync agent linked database. </param>
         /// <param name="databaseName"> Database name of the sync agent linked database. </param>
         /// <param name="userName"> User name of the sync agent linked database. </param>
-        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType type, SyncMemberDbType? databaseType, string databaseId, string description, string serverName, string databaseName, string userName) : base(id, name, type)
+        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, string databaseId, string description, string serverName, string databaseName, string userName) : base(id, name, resourceType, systemData)
         {
             DatabaseType = databaseType;
             DatabaseId = databaseId;

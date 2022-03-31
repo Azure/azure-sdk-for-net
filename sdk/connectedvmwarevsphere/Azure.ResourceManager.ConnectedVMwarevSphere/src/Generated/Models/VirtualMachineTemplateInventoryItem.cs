@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Gets or sets memory size in MBs for the template. </summary>
         public int? MemorySizeMB { get; }
         /// <summary> Gets or sets the number of vCPUs for the template. </summary>
-        public int? NumCPUs { get; }
+        public int? NumCpus { get; }
         /// <summary>
         /// Gets or sets the number of cores per socket for the template.
         /// Defaults to 1 if unspecified.
         /// </summary>
         public int? NumCoresPerSocket { get; }
         /// <summary> Gets or sets the type of the os. </summary>
-        public OsType? OsType { get; }
+        public OSType? OSType { get; }
         /// <summary> Gets or sets os name. </summary>
-        public string OsName { get; }
+        public string OSName { get; }
         /// <summary> Gets or sets the folder path of the template. </summary>
         public string FolderPath { get; }
     }

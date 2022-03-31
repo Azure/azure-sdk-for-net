@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("imageReference");
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Optional.IsDefined(OsDisk))
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk");
-                writer.WriteObjectValue(OsDisk);
+                writer.WriteObjectValue(OSDisk);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -26,23 +27,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the redirect configuration that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="redirectType"> HTTP redirection type. </param>
         /// <param name="targetListener"> Reference to a listener to redirect the request to. </param>
-        /// <param name="targetUrl"> Url to redirect the request to. </param>
+        /// <param name="targetUri"> Url to redirect the request to. </param>
         /// <param name="includePath"> Include path in the redirected url. </param>
         /// <param name="includeQueryString"> Include query string in the redirected url. </param>
         /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
         /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        internal ApplicationGatewayRedirectConfiguration(string id, string name, string etag, string type, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, string targetUrl, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id)
+        internal ApplicationGatewayRedirectConfiguration(string id, string name, string etag, string resourceType, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             RedirectType = redirectType;
             TargetListener = targetListener;
-            TargetUrl = targetUrl;
+            TargetUri = targetUri;
             IncludePath = includePath;
             IncludeQueryString = includeQueryString;
             RequestRoutingRules = requestRoutingRules;
@@ -55,13 +56,25 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> HTTP redirection type. </summary>
         public ApplicationGatewayRedirectType? RedirectType { get; set; }
         /// <summary> Reference to a listener to redirect the request to. </summary>
-        public WritableSubResource TargetListener { get; set; }
+        internal WritableSubResource TargetListener { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier TargetListenerId
+        {
+            get => TargetListener is null ? default : TargetListener.Id;
+            set
+            {
+                if (TargetListener is null)
+                    TargetListener = new WritableSubResource();
+                TargetListener.Id = value;
+            }
+        }
+
         /// <summary> Url to redirect the request to. </summary>
-        public string TargetUrl { get; set; }
+        public Uri TargetUri { get; set; }
         /// <summary> Include path in the redirected url. </summary>
         public bool? IncludePath { get; set; }
         /// <summary> Include query string in the redirected url. </summary>

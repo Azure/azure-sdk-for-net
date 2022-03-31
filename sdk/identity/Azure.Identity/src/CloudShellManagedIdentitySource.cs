@@ -64,7 +64,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(_clientId))
             {
-                bodyStr += $"&client_id={Uri.EscapeDataString(_clientId)}";
+                bodyStr += $"&{Constants.ManagedIdentityClientId}={Uri.EscapeDataString(_clientId)}";
             }
 
             ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();

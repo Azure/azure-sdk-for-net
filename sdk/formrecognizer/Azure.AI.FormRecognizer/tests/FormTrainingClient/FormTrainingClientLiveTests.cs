@@ -317,7 +317,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false, true)]
         [TestCase(true, false)]
         [TestCase(false, false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24552")]
         public async Task TrainingOps(bool labeled, bool useTokenCredential)
         {
             var client = CreateFormTrainingClient(useTokenCredential);

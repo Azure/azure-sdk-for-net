@@ -61,13 +61,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
         [Test]
         [TestCase(CloudEventSubscription, "TestJObject")]
-        [TestCase(CloudEventSubscription, "TestCloudEvent")]
         [TestCase(EventGridEventSubscription, "TestJObject")]
         [TestCase(EventGridEventSubscription, "TestEventGrid")]
-        public async Task TestSubscribe(string evt, string functionName)
+        public async Task TestSubscribeRequestResponse(string evt, string functionName)
         {
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             var request = CreateEventSubscribeRequest(functionName, evt);
@@ -78,12 +77,52 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual("validation-code", JObject.Parse(content)["validationResponse"].ToString());
         }
 
+        [Test]
+        public async Task TestSubscribeRequestResponseCloudEvent()
+        {
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
+            await host.StartAsync(); // add listener
+
+            var request = CreateEventSubscribeRequest("TestCloudEvent", CloudEventSubscription);
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+            Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
+        }
+
+        [Test]
+        [TestCase("TestJObject")]
+        [TestCase("TestCloudEvent")]
+        public async Task TestSubscribeOptions(string functionName)
+        {
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
+            await host.StartAsync(); // add listener
+
+            var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName={functionName}");
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("eventgrid.azure.net", response.Headers.GetValues("Webhook-Allowed-Origin").First());
+        }
+
+        [Test]
+        public async Task TestSubscribeOptionsEventGridEvent()
+        {
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
+            await host.StartAsync(); // add listener
+
+            var request = new HttpRequestMessage(HttpMethod.Options, "http://localhost/?functionName=TestEventGrid");
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+            Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
+            Assert.False(response.Headers.Contains("Webhook-Allowed-Origin"));
+        }
+
         // Unsubscribe gives a 202.
         [Test]
         public async Task TestUnsubscribe()
         {
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             var request = CreateUnsubscribeRequest("TestEventGrid");
@@ -101,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public async Task TestDispatch(string functionName)
         {
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             var request = CreateDispatchRequest(functionName,
@@ -126,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             // individual elements
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             var request = CreateSingleRequest("TestCloudEvent",
@@ -147,7 +186,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             // individual elements
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
@@ -177,7 +216,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             // individual elements
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
@@ -202,7 +241,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             // individual elements
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
@@ -228,7 +267,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             // individual elements
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
@@ -280,7 +319,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             // individual elements
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg1>(ext);
+            using var host = TestHelpers.NewHost<MyProg1>(ext);
             await host.StartAsync(); // add listener
 
             using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
@@ -314,7 +353,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             // individual elements
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg3>(ext);
+            using var host = TestHelpers.NewHost<MyProg3>(ext);
             await host.StartAsync(); // add listener
 
             using var testListener = new ClientDiagnosticListener("Azure.Messaging.EventGrid");
@@ -345,7 +384,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public async Task WrongFunctionNameTest()
         {
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg2>(ext);
+            using var host = TestHelpers.NewHost<MyProg2>(ext);
             await host.StartAsync(); // add listener
 
             JObject dummyPayload = JObject.Parse("{}");
@@ -361,7 +400,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public async Task ExecutionFailureTest()
         {
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg2>(ext);
+            using var host = TestHelpers.NewHost<MyProg2>(ext);
             await host.StartAsync(); // add listener
 
             JObject dummyPayload = JObject.Parse("{}");
@@ -377,7 +416,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public async Task ExecutionFailureMultipleEventsTest()
         {
             var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
-            var host = TestHelpers.NewHost<MyProg3>(ext);
+            using var host = TestHelpers.NewHost<MyProg3>(ext);
             await host.StartAsync(); // add listener
 
             JObject dummyPayload = JObject.Parse("{}");

@@ -15,27 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServiceDetector and their operations over its parent. </summary>
-    public partial class CertificateOrderDetectorCollection : ArmCollection, IEnumerable<CertificateOrderDetector>, IAsyncEnumerable<CertificateOrderDetector>
+    /// <summary>
+    /// A class representing a collection of <see cref="CertificateOrderDetectorResource" /> and their operations.
+    /// Each <see cref="CertificateOrderDetectorResource" /> in the collection will belong to the same instance of <see cref="AppServiceCertificateOrderResource" />.
+    /// To get a <see cref="CertificateOrderDetectorCollection" /> instance call the GetCertificateOrderDetectors method from an instance of <see cref="AppServiceCertificateOrderResource" />.
+    /// </summary>
+    public partial class CertificateOrderDetectorCollection : ArmCollection, IEnumerable<CertificateOrderDetectorResource>, IAsyncEnumerable<CertificateOrderDetectorResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CertificateOrdersDiagnosticsRestOperations _certificateOrdersDiagnosticsRestClient;
+        private readonly ClientDiagnostics _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics;
+        private readonly CertificateOrdersDiagnosticsRestOperations _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorCollection"/> class for mocking. </summary>
         protected CertificateOrderDetectorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateOrderDetectorCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal CertificateOrderDetectorCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal CertificateOrderDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _certificateOrdersDiagnosticsRestClient = new CertificateOrdersDiagnosticsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateOrderDetectorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CertificateOrderDetectorResource.ResourceType, out string certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
+            _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient = new CertificateOrdersDiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,37 +49,34 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AppServiceCertificateOrder.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrder.ResourceType), nameof(id));
+            if (id.ResourceType != AppServiceCertificateOrderResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
-        /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
+        /// <summary>
+        /// Description for Microsoft.CertificateRegistration call to get a detector response from App Lens.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
+        /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
+        /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
         /// <param name="startTime"> The start time for detector response. </param>
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<CertificateOrderDetector> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateOrderDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Get");
+            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Get");
             scope.Start();
             try
             {
-                var response = _certificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
+                var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetector(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -82,31 +85,30 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
-        /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
+        /// <summary>
+        /// Description for Microsoft.CertificateRegistration call to get a detector response from App Lens.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
+        /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
+        /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
         /// <param name="startTime"> The start time for detector response. </param>
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<CertificateOrderDetector>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateOrderDetectorResource> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Get");
+            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _certificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+                var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CertificateOrderDetector(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,138 +117,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
-        /// <param name="timeGrain"> The time grain for the detector response. </param>
+        /// <summary>
+        /// Description for Microsoft.CertificateRegistration to get the list of detectors for this RP.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors
+        /// Operation Id: CertificateOrdersDiagnostics_ListAppServiceCertificateOrderDetectorResponse
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<CertificateOrderDetector> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CertificateOrderDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CertificateOrderDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
+            async Task<Page<CertificateOrderDetectorResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _certificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<CertificateOrderDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new CertificateOrderDetector(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
-        /// <param name="timeGrain"> The time grain for the detector response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<CertificateOrderDetector>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
-        {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _certificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<CertificateOrderDetector>(null, response.GetRawResponse())
-                    : Response.FromValue(new CertificateOrderDetector(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
-        /// <param name="timeGrain"> The time grain for the detector response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
-        {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="startTime"> The start time for detector response. </param>
-        /// <param name="endTime"> The end time for the detector response. </param>
-        /// <param name="timeGrain"> The time grain for the detector response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
-        {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: CertificateOrdersDiagnostics_ListAppServiceCertificateOrderDetectorResponse
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateOrderDetector" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CertificateOrderDetector> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<CertificateOrderDetector> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetAll");
+                using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _certificateOrdersDiagnosticsRestClient.ListAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateOrderDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.ListAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateOrderDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,55 +141,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<CertificateOrderDetector> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CertificateOrderDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetAll");
+                using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _certificateOrdersDiagnosticsRestClient.ListAppServiceCertificateOrderDetectorResponseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateOrderDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// OperationId: CertificateOrdersDiagnostics_ListAppServiceCertificateOrderDetectorResponse
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateOrderDetector" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CertificateOrderDetector> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<CertificateOrderDetector>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _certificateOrdersDiagnosticsRestClient.ListAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateOrderDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CertificateOrderDetector>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _certificateOrdersDiagnosticsRestClient.ListAppServiceCertificateOrderDetectorResponseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateOrderDetector(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.ListAppServiceCertificateOrderDetectorResponseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateOrderDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -313,7 +159,109 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<CertificateOrderDetector> IEnumerable<CertificateOrderDetector>.GetEnumerator()
+        /// <summary>
+        /// Description for Microsoft.CertificateRegistration to get the list of detectors for this RP.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors
+        /// Operation Id: CertificateOrdersDiagnostics_ListAppServiceCertificateOrderDetectorResponse
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CertificateOrderDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CertificateOrderDetectorResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<CertificateOrderDetectorResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.ListAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateOrderDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<CertificateOrderDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.ListAppServiceCertificateOrderDetectorResponseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateOrderDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
+        /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
+        /// </summary>
+        /// <param name="detectorName"> The detector name which needs to be run. </param>
+        /// <param name="startTime"> The start time for detector response. </param>
+        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="timeGrain"> The time grain for the detector response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
+        /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
+        /// </summary>
+        /// <param name="detectorName"> The detector name which needs to be run. </param>
+        /// <param name="startTime"> The start time for detector response. </param>
+        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="timeGrain"> The time grain for the detector response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<CertificateOrderDetectorResource> IEnumerable<CertificateOrderDetectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -323,12 +271,9 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CertificateOrderDetector> IAsyncEnumerable<CertificateOrderDetector>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CertificateOrderDetectorResource> IAsyncEnumerable<CertificateOrderDetectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, CertificateOrderDetector, AppServiceDetectorData> Construct() { }
     }
 }

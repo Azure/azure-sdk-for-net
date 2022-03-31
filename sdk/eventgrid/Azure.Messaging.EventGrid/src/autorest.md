@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/409af02e5ca217c7e7ec2acf50f4976c053496f8/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6b29b8552671eded065f51ee1b291582ab8cc149/specification/eventgrid/data-plane/readme.md
 ```
 
 ## Swagger workarounds
@@ -112,6 +112,18 @@ directive:
           $[path]["properties"]["properties"]["x-csharp-formats"] = "json";
           $[path]["properties"]["x509Thumbprint"]["x-namespace"] = namespace;
           $[path]["properties"]["x509Thumbprint"]["x-csharp-formats"] = "json";
+      }
+      if (path.includes("AcsRecordingFileStatusUpdatedEventData"))
+      {
+          $[path]["properties"]["recordingContentType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingContentType"]["x-ms-client-name"] = "ContentType";
+          $[path]["properties"]["recordingContentType"]["x-ms-enum"]["name"] = "AcsRecordingContentType";
+          $[path]["properties"]["recordingChannelType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingChannelType"]["x-ms-client-name"] = "ChannelType";
+          $[path]["properties"]["recordingChannelType"]["x-ms-enum"]["name"] = "AcsRecordingChannelType";
+          $[path]["properties"]["recordingFormatType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingFormatType"]["x-ms-client-name"] = "FormatType";
+          $[path]["properties"]["recordingFormatType"]["x-ms-enum"]["name"] = "AcsRecordingFormatType";
       }
     }
 ```

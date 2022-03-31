@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="properties">Properties of the Binding resource</param>
-        public BindingResource(string id = default(string), string name = default(string), string type = default(string), BindingResourceProperties properties = default(BindingResourceProperties))
-            : base(id, name, type)
+        public BindingResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), BindingResourceProperties properties = default(BindingResourceProperties))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             CustomInit();

@@ -31,7 +31,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        internal SftpReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, bool? enablePartitionDiscovery, object partitionRootPath, object fileListPath, object deleteFilesAfterCompletion, object modifiedDatetimeStart, object modifiedDatetimeEnd) : base(type, maxConcurrentConnections, additionalProperties)
+        /// <param name="disableChunking"> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        internal SftpReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, object wildcardFolderPath, object wildcardFileName, bool? enablePartitionDiscovery, object partitionRootPath, object fileListPath, object deleteFilesAfterCompletion, object modifiedDatetimeStart, object modifiedDatetimeEnd, object disableChunking) : base(type, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -42,6 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DeleteFilesAfterCompletion = deleteFilesAfterCompletion;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
+            DisableChunking = disableChunking;
             Type = type ?? "SftpReadSettings";
         }
 
@@ -63,5 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ModifiedDatetimeStart { get; set; }
         /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeEnd { get; set; }
+        /// <summary> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public object DisableChunking { get; set; }
     }
 }

@@ -1,12 +1,38 @@
 # Release History
 
-## 5.7.0-beta.2 (Unreleased)
+## 5.7.0-beta.5 (Unreleased)
 
 ### Features Added
+
+- The `BlobCheckpointStore` implementation used internally by the processor has been made public and now conforms to the `CheckpointStore` contract, allowing it to be used with custom processor implementations.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 5.7.0-beta.4 (2022-03-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Removed allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Enhanced README documentation to call attention to the need for the Azure Storage container used with the processor to exist, and highlight that it will not be implicitly created.
+
+## 5.7.0-beta.3 (2022-02-09)
+
+### Features Added
+
+- Added `FullyQualifiedNamespace`, `EventHubName`, and `ConsumerGroup` to the partition context associated with events dispatched for processing.
+
+## 5.7.0-beta.2 (2022-01-13)
 
 ### Other Changes
 

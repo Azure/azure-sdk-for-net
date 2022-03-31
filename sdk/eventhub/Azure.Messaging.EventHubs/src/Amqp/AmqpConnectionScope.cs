@@ -301,7 +301,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 EventHubsEventSource.Log.AmqpManagementLinkCreateStart(EventHubName);
 
                 var stopWatch = ValueStopwatch.StartNew();
-                var connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+
+                if (!ActiveConnection.TryGetOpenedObject(out var connection))
+                {
+                    connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+                }
+
                 var link = await CreateManagementLinkAsync(connection, operationTimeout, linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
 
                 await OpenAmqpObjectAsync(link, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -363,7 +368,11 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 var stopWatch = ValueStopwatch.StartNew();
                 var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(CultureInfo.InvariantCulture, ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
-                var connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+
+                if (!ActiveConnection.TryGetOpenedObject(out var connection))
+                {
+                    connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+                }
 
                 if (string.IsNullOrEmpty(linkIdentifier))
                 {
@@ -432,7 +441,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var stopWatch = ValueStopwatch.StartNew();
                 var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(CultureInfo.InvariantCulture, PartitionProducerPathSuffixMask, EventHubName, partitionId);
                 var producerEndpoint = new Uri(ServiceEndpoint, path);
-                var connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+
+                if (!ActiveConnection.TryGetOpenedObject(out var connection))
+                {
+                    connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+                }
 
                 if (string.IsNullOrEmpty(linkIdentifier))
                 {

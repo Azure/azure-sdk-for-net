@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,24 +13,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class GoogleAdWordsLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of GoogleAdWordsLinkedService. </summary>
-        /// <param name="clientCustomerID"> The Client customer ID of the AdWords account that you want to fetch report data for. </param>
-        /// <param name="developerToken"> The developer token associated with the manager account that you use to grant access to the AdWords API. </param>
-        /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientCustomerID"/> or <paramref name="developerToken"/> is null. </exception>
-        public GoogleAdWordsLinkedService(object clientCustomerID, SecretBase developerToken, GoogleAdWordsAuthenticationType authenticationType)
+        public GoogleAdWordsLinkedService()
         {
-            if (clientCustomerID == null)
-            {
-                throw new ArgumentNullException(nameof(clientCustomerID));
-            }
-            if (developerToken == null)
-            {
-                throw new ArgumentNullException(nameof(developerToken));
-            }
-
-            ClientCustomerID = clientCustomerID;
-            DeveloperToken = developerToken;
-            AuthenticationType = authenticationType;
             Type = "GoogleAdWords";
         }
 
@@ -42,6 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="connectionProperties"> Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientCustomerID"> The Client customer ID of the AdWords account that you want to fetch report data for. </param>
         /// <param name="developerToken"> The developer token associated with the manager account that you use to grant access to the AdWords API. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
@@ -53,8 +37,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal GoogleAdWordsLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clientCustomerID, SecretBase developerToken, GoogleAdWordsAuthenticationType authenticationType, SecretBase refreshToken, object clientId, SecretBase clientSecret, object email, object keyFilePath, object trustedCertPath, object useSystemTrustStore, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleAdWordsLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object clientCustomerID, SecretBase developerToken, GoogleAdWordsAuthenticationType? authenticationType, SecretBase refreshToken, object clientId, SecretBase clientSecret, object email, object keyFilePath, object trustedCertPath, object useSystemTrustStore, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
+            ConnectionProperties = connectionProperties;
             ClientCustomerID = clientCustomerID;
             DeveloperToken = developerToken;
             AuthenticationType = authenticationType;
@@ -69,12 +54,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "GoogleAdWords";
         }
 
+        /// <summary> Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public object ConnectionProperties { get; set; }
         /// <summary> The Client customer ID of the AdWords account that you want to fetch report data for. </summary>
         public object ClientCustomerID { get; set; }
         /// <summary> The developer token associated with the manager account that you use to grant access to the AdWords API. </summary>
         public SecretBase DeveloperToken { get; set; }
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
-        public GoogleAdWordsAuthenticationType AuthenticationType { get; set; }
+        public GoogleAdWordsAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </summary>
         public SecretBase RefreshToken { get; set; }
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>

@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -17,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:RecognizeEntitiesAsync
             string document = @"We love this trail and make the trip every year. The views are breathtaking and well

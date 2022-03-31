@@ -208,6 +208,39 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </exception>
         Task<AzureOperationResponse<ResourceUploadDefinition>> GetResourceUploadUrlWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Set existing Deployment under the app as active
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='appName'>
+        /// The name of the App resource.
+        /// </param>
+        /// <param name='activeDeploymentCollection'>
+        /// A list of Deployment name to be active.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AppResource>> SetActiveDeploymentsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Check the resource name is valid as well as not in use.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -333,6 +366,39 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<AppResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, AppResource appResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Set existing Deployment under the app as active
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='appName'>
+        /// The name of the App resource.
+        /// </param>
+        /// <param name='activeDeploymentCollection'>
+        /// A list of Deployment name to be active.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AppResource>> BeginSetActiveDeploymentsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Handles requests to list all resources in a Service.
         /// </summary>

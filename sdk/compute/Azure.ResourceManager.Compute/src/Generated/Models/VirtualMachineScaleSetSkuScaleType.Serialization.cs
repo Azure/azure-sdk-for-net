@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public static string ToSerialString(this VirtualMachineScaleSetSkuScaleType value) => value switch
         {
-            VirtualMachineScaleSetSkuScaleType.Automatic => "Automatic",
             VirtualMachineScaleSetSkuScaleType.None => "None",
+            VirtualMachineScaleSetSkuScaleType.Automatic => "Automatic",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown VirtualMachineScaleSetSkuScaleType value.")
         };
 
         public static VirtualMachineScaleSetSkuScaleType ToVirtualMachineScaleSetSkuScaleType(this string value)
         {
-            if (string.Equals(value, "Automatic", StringComparison.InvariantCultureIgnoreCase)) return VirtualMachineScaleSetSkuScaleType.Automatic;
             if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return VirtualMachineScaleSetSkuScaleType.None;
+            if (string.Equals(value, "Automatic", StringComparison.InvariantCultureIgnoreCase)) return VirtualMachineScaleSetSkuScaleType.Automatic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown VirtualMachineScaleSetSkuScaleType value.");
         }
     }

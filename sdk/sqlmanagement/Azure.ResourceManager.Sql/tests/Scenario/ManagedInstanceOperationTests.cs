@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class ManagedInstanceOperationTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         public ManagedInstanceOperationTests(bool isAsync)
             : base(isAsync)
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [Test]
@@ -57,15 +57,14 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Guid operationName = new Guid(list.FirstOrDefault().Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(collection.Exists(operationName));
+            Assert.IsTrue(await collection.ExistsAsync(operationName));
 
             // 3.Get
             var getOperation = await collection.GetAsync(operationName);
             Assert.AreEqual(operationName.ToString(), getOperation.Value.Data.Name);
 
             // 4.GetIfExist
-            var GetIfExistoperation = await collection.GetIfExistsAsync(operationName);
-            Assert.AreEqual(operationName.ToString(), GetIfExistoperation.Value.Data.Name);
+            Assert.IsTrue(await collection.ExistsAsync(operationName));
         }
     }
 }

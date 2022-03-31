@@ -254,6 +254,103 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists the ClientEncryptionKeys under an existing Azure Cosmos DB
+        /// SQL database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<ClientEncryptionKeyGetResults>>> ListClientEncryptionKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the ClientEncryptionKey under an existing Azure Cosmos DB SQL
+        /// database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='clientEncryptionKeyName'>
+        /// Cosmos DB ClientEncryptionKey name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ClientEncryptionKeyGetResults>> GetClientEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create or update a ClientEncryptionKey. This API is meant to be
+        /// invoked via tools such as the Azure Powershell (instead of
+        /// directly).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='clientEncryptionKeyName'>
+        /// Cosmos DB ClientEncryptionKey name.
+        /// </param>
+        /// <param name='createUpdateClientEncryptionKeyParameters'>
+        /// The parameters to provide for the client encryption key.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ClientEncryptionKeyGetResults>> CreateUpdateClientEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the SQL container under an existing Azure Cosmos DB database
         /// account.
         /// </summary>
@@ -1312,6 +1409,42 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateSqlDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create or update a ClientEncryptionKey. This API is meant to be
+        /// invoked via tools such as the Azure Powershell (instead of
+        /// directly).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='clientEncryptionKeyName'>
+        /// Cosmos DB ClientEncryptionKey name.
+        /// </param>
+        /// <param name='createUpdateClientEncryptionKeyParameters'>
+        /// The parameters to provide for the client encryption key.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ClientEncryptionKeyGetResults>> BeginCreateUpdateClientEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, ClientEncryptionKeyCreateUpdateParameters createUpdateClientEncryptionKeyParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update an Azure Cosmos DB SQL container
         /// </summary>

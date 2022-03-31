@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> partnerServer = default;
             Optional<string> partnerDatabase = default;
             Optional<string> partnerLocation = default;
@@ -54,6 +56,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ReplicationLinkData(id, name, type, partnerServer.Value, partnerDatabase.Value, partnerLocation.Value, Optional.ToNullable(role), Optional.ToNullable(partnerRole), replicationMode.Value, Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), Optional.ToNullable(isTerminationAllowed), Optional.ToNullable(linkType));
+            return new ReplicationLinkData(id, name, type, systemData, partnerServer.Value, partnerDatabase.Value, partnerLocation.Value, Optional.ToNullable(role), Optional.ToNullable(partnerRole), replicationMode.Value, Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), Optional.ToNullable(isTerminationAllowed), Optional.ToNullable(linkType));
         }
     }
 }

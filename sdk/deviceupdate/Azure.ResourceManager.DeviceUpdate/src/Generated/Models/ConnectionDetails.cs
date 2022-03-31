@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         /// <summary> Initializes a new instance of ConnectionDetails. </summary>
         /// <param name="id"> Connection details ID. </param>
-        /// <param name="privateIpAddress"> Private IP address. </param>
+        /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="linkIdentifier"> Link ID. </param>
         /// <param name="groupId"> Group ID. </param>
         /// <param name="memberName"> Member name. </param>
-        internal ConnectionDetails(string id, string privateIpAddress, string linkIdentifier, string groupId, string memberName)
+        internal ConnectionDetails(string id, string privateIPAddress, string linkIdentifier, string groupId, string memberName)
         {
             Id = id;
-            PrivateIpAddress = privateIpAddress;
+            PrivateIPAddress = privateIPAddress;
             LinkIdentifier = linkIdentifier;
             GroupId = groupId;
             MemberName = memberName;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Connection details ID. </summary>
         public string Id { get; }
         /// <summary> Private IP address. </summary>
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
         /// <summary> Link ID. </summary>
         public string LinkIdentifier { get; }
         /// <summary> Group ID. </summary>

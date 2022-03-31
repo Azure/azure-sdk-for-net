@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the TagResourceContract class.
         /// </summary>
         /// <param name="tag">Tag associated with the resource.</param>
-        /// <param name="api">Api associated with the tag.</param>
+        /// <param name="api">API associated with the tag.</param>
         /// <param name="operation">Operation associated with the tag.</param>
         /// <param name="product">Product associated with the tag.</param>
         public TagResourceContract(TagTagResourceContractProperties tag, ApiTagResourceContractProperties api = default(ApiTagResourceContractProperties), OperationTagResourceContractProperties operation = default(OperationTagResourceContractProperties), ProductTagResourceContractProperties product = default(ProductTagResourceContractProperties))
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public TagTagResourceContractProperties Tag { get; set; }
 
         /// <summary>
-        /// Gets or sets api associated with the tag.
+        /// Gets or sets API associated with the tag.
         /// </summary>
         [JsonProperty(PropertyName = "api")]
         public ApiTagResourceContractProperties Api { get; set; }

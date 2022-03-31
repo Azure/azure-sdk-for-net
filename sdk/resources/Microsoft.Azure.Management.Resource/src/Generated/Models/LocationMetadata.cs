@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="regionType">The type of the region. Possible values
         /// include: 'Physical', 'Logical'</param>
         /// <param name="regionCategory">The category of the region. Possible
-        /// values include: 'Recommended', 'Other'</param>
+        /// values include: 'Recommended', 'Extended', 'Other'</param>
         /// <param name="geographyGroup">The geography group of the
         /// location.</param>
         /// <param name="longitude">The longitude of the location.</param>
@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// location.</param>
         /// <param name="pairedRegion">The regions paired to this
         /// region.</param>
-        public LocationMetadata(string regionType = default(string), string regionCategory = default(string), string geographyGroup = default(string), string longitude = default(string), string latitude = default(string), string physicalLocation = default(string), IList<PairedRegion> pairedRegion = default(IList<PairedRegion>))
+        /// <param name="homeLocation">The home location of an edge
+        /// zone.</param>
+        public LocationMetadata(string regionType = default(string), string regionCategory = default(string), string geographyGroup = default(string), string longitude = default(string), string latitude = default(string), string physicalLocation = default(string), IList<PairedRegion> pairedRegion = default(IList<PairedRegion>), string homeLocation = default(string))
         {
             RegionType = regionType;
             RegionCategory = regionCategory;
@@ -52,6 +54,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Latitude = latitude;
             PhysicalLocation = physicalLocation;
             PairedRegion = pairedRegion;
+            HomeLocation = homeLocation;
             CustomInit();
         }
 
@@ -69,7 +72,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         /// <summary>
         /// Gets the category of the region. Possible values include:
-        /// 'Recommended', 'Other'
+        /// 'Recommended', 'Extended', 'Other'
         /// </summary>
         [JsonProperty(PropertyName = "regionCategory")]
         public string RegionCategory { get; private set; }
@@ -103,6 +106,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "pairedRegion")]
         public IList<PairedRegion> PairedRegion { get; set; }
+
+        /// <summary>
+        /// Gets the home location of an edge zone.
+        /// </summary>
+        [JsonProperty(PropertyName = "homeLocation")]
+        public string HomeLocation { get; private set; }
 
     }
 }

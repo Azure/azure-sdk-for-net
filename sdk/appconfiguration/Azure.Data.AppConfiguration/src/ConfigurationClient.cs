@@ -147,7 +147,7 @@ namespace Azure.Data.AppConfiguration
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     case 412:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, "Setting was already present.").ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "Setting was already present.")).ConfigureAwait(false);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -182,7 +182,7 @@ namespace Azure.Data.AppConfiguration
                     case 201:
                         return CreateResponse(response);
                     case 412:
-                        throw _clientDiagnostics.CreateRequestFailedException(response, "Setting was already present.");
+                        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "Setting was already present."));
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -270,7 +270,7 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, "The setting is read only").ConfigureAwait(false),
+                    409 => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
 
                     // Throws on 412 if resource was modified.
                     _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
@@ -308,7 +308,7 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only"),
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
 
                     // Throws on 412 if resource was modified.
                     _ => throw _clientDiagnostics.CreateRequestFailedException(response),
@@ -418,7 +418,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only"),
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
 
                     // Throws on 412 if resource was modified.
                     _ => throw _clientDiagnostics.CreateRequestFailedException(response)
@@ -446,7 +446,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only."),
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
 
                     // Throws on 412 if resource was modified.
                     _ => throw _clientDiagnostics.CreateRequestFailedException(response)

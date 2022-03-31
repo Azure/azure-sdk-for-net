@@ -13,26 +13,26 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class NameAvailabilityParameters
     {
         /// <summary> Initializes a new instance of NameAvailabilityParameters. </summary>
-        /// <param name="type"> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </param>
+        /// <param name="resourceType"> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </param>
         /// <param name="name"> The resource name to validate. e.g.&quot;my-resource-name&quot;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="name"/> is null. </exception>
-        public NameAvailabilityParameters(string type, string name)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
+        public NameAvailabilityParameters(string resourceType, string name)
         {
-            if (type == null)
+            if (resourceType == null)
             {
-                throw new ArgumentNullException(nameof(type));
+                throw new ArgumentNullException(nameof(resourceType));
             }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Type = type;
+            ResourceType = resourceType;
             Name = name;
         }
 
         /// <summary> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The resource name to validate. e.g.&quot;my-resource-name&quot;. </summary>
         public string Name { get; }
     }

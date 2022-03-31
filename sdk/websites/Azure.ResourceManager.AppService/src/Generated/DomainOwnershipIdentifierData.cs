@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -21,10 +22,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of DomainOwnershipIdentifierData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="ownershipId"> Ownership Id. </param>
-        internal DomainOwnershipIdentifierData(ResourceIdentifier id, string name, ResourceType type, string kind, string ownershipId) : base(id, name, type, kind)
+        internal DomainOwnershipIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string ownershipId) : base(id, name, resourceType, systemData, kind)
         {
             OwnershipId = ownershipId;
         }

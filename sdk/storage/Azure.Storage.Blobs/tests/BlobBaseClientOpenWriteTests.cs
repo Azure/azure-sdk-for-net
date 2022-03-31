@@ -68,9 +68,6 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task<Response> GetPropertiesAsync(TBlobClient client)
             => (await client.GetPropertiesAsync()).GetRawResponse();
 
-        protected override async Task<IDictionary<string, string>> GetTagsAsync(TBlobClient client)
-            => (await client.GetTagsAsync()).Value.Tags;
-
         protected override BlobRequestConditions BuildRequestConditions(AccessConditionParameters parameters, bool lease = true)
             => BlobConditions.BuildAccessConditions(parameters, lease);
 
@@ -98,6 +95,24 @@ namespace Azure.Storage.Blobs.Tests
         }
         #endregion
 
+        protected async Task<IDictionary<string, string>> GetTagsAsync(TBlobClient client)
+            => (await client.GetTagsAsync()).Value.Tags;
+
+        /// <summary>
+        /// Calls this client's open-write method.
+        /// </summary>
+        /// <param name="client">Client to call the download on.</param>
+        protected abstract Task<Stream> OpenWriteAsync(
+            TBlobClient client,
+            bool overwrite,
+            long? maxDataSize,
+            Dictionary<string, string> tags,
+            int? bufferSize = default,
+            BlobRequestConditions conditions = default,
+            Dictionary<string, string> metadata = default,
+            HttpHeaderParameters httpHeaders = default,
+            IProgress<long> progressHandler = default);
+
         #region Blob-Specific Tests
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
@@ -108,13 +123,13 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TBlobClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             Dictionary<string, string> tags = new Dictionary<string, string>() { { "testkey", "testvalue" } };
 
             Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 tags: tags);
 
@@ -134,7 +149,6 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
             TBlobClient client = GetResourceClient(disposingContainer.Container);
-            await InitializeResourceAsync(client);
 
             Dictionary<string, string> tags = new Dictionary<string, string>() { { "testkey", "testvalue" } };
 
@@ -142,6 +156,7 @@ namespace Azure.Storage.Blobs.Tests
             Stream stream = await OpenWriteAsync(
                 client,
                 overwrite: true,
+                maxDataSize: Constants.KB,
                 bufferSize: bufferSize,
                 tags: tags);
 

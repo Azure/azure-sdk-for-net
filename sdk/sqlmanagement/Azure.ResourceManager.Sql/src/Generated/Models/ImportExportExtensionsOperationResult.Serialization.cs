@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<Guid> requestId = default;
             Optional<string> requestType = default;
             Optional<string> lastModifiedTime = default;
@@ -49,6 +51,11 @@ namespace Azure.ResourceManager.Sql.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -104,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ImportExportExtensionsOperationResult(id, name, type, Optional.ToNullable(requestId), requestType.Value, lastModifiedTime.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value);
+            return new ImportExportExtensionsOperationResult(id, name, type, systemData, Optional.ToNullable(requestId), requestType.Value, lastModifiedTime.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value);
         }
     }
 }

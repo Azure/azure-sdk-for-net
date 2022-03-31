@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WritePropertyName("duration");
             writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("startTime");
-            writer.WriteStringValue(StartTime, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WriteEndObject();
         }
 

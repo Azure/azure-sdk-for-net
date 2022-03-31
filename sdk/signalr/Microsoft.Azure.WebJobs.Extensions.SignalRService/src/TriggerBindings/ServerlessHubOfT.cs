@@ -8,7 +8,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.SignalR.Management;
 
@@ -17,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "https://github.com/Azure/azure-sdk-for-net/issues/17164")]
     public abstract class ServerlessHub<T> where T : class
     {
-        private static readonly Lazy<JwtSecurityTokenHandler> JwtSecurityTokenHandler = new(() => new JwtSecurityTokenHandler());
+        private static readonly Lazy<JwtSecurityTokenHandler> JwtSecurityTokenHandler = new(() => new());
         private readonly ServiceHubContext<T> _hubContext;
 
         /// <summary>
@@ -40,13 +39,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// </summary>
         public ClientManager ClientManager => _hubContext.ClientManager;
 
-        protected ServerlessHub(ServiceHubContext<T> serviceHubContext = null)
+        /// <summary>
+        /// Get the name of the hub.
+        /// </summary>
+        public string HubName => GetType().Name;
+
+        /// <summary>
+        /// Initializes an instance of serverless hub. This constructor is ususally used in test codes.
+        /// </summary>
+        /// <param name="serviceHubContext">Injects a service hub context.</param>
+        protected ServerlessHub(ServiceHubContext<T> serviceHubContext)
         {
-            if (serviceHubContext is null)
-            {
-                serviceHubContext = ((IInternalServiceHubContextStore)StaticServiceHubContextStore.Get()).GetAsync<T>(GetType().Name).Result;
-            }
-            _hubContext = serviceHubContext;
+            _hubContext = serviceHubContext ?? throw new ArgumentNullException(nameof(serviceHubContext));
+        }
+
+        /// <summary>
+        /// Initializes an instance of serverless hub and let the SignalR extension to handle the intialization job. Please use this constructor in your functions production codes.
+        /// </summary>
+        protected ServerlessHub()
+        {
+            _hubContext = GetHubContext(StaticServiceHubContextStore.ServiceManagerStore);
+        }
+
+        // test only
+        internal ServerlessHub(IServiceManagerStore serviceManagerStore)
+        {
+            _hubContext = GetHubContext(serviceManagerStore);
         }
 
         /// <summary>
@@ -65,13 +83,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Get claim list from a JWT.
         /// </summary>
-        protected static IList<Claim> GetClaims(string jwt)
+        protected IList<Claim> GetClaims(string jwt)
         {
             if (jwt.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
                 jwt = jwt.Substring("Bearer ".Length).Trim();
             }
             return JwtSecurityTokenHandler.Value.ReadJwtToken(jwt).Claims.ToList();
+        }
+
+        private ServiceHubContext<T> GetHubContext(IServiceManagerStore serviceManagerStore)
+        {
+            var connectionName = SignalRTriggerUtils.GetConnectionNameFromAttribute(GetType()) ?? Constants.AzureSignalRConnectionStringName;
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            return serviceManagerStore.GetOrAddByConnectionStringKey(connectionName).GetAsync<T>(HubName).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }

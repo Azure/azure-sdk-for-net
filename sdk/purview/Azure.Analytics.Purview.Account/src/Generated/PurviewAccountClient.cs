@@ -22,9 +22,11 @@ namespace Azure.Analytics.Purview.Account
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -41,17 +43,11 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewAccountClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -146,16 +142,14 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetAccountPropertiesAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetAccountPropertiesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -252,16 +246,14 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetAccountProperties(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetAccountPropertiesRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -365,16 +357,16 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> UpdateAccountPropertiesAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -478,16 +470,16 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response UpdateAccountProperties(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -524,16 +516,14 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetAccessKeysAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetAccessKeysRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -570,16 +560,14 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetAccessKeys(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetAccessKeysRequest(context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -623,16 +611,16 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> RegenerateAccessKeyAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRegenerateAccessKeyRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -676,16 +664,16 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response RegenerateAccessKey(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRegenerateAccessKeyRequest(content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -743,11 +731,9 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetCollectionsAsync(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewAccountClient.GetCollections");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewAccountClient.GetCollections");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -755,7 +741,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetCollectionsRequest(skipToken, context)
                         : CreateGetCollectionsNextPageRequest(nextLink, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -811,11 +797,9 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetCollections(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewAccountClient.GetCollections");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewAccountClient.GetCollections");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -823,7 +807,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetCollectionsRequest(skipToken, context)
                         : CreateGetCollectionsNextPageRequest(nextLink, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -953,11 +937,9 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetResourceSetRulesAsync(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -965,7 +947,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetResourceSetRulesRequest(skipToken, context)
                         : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1095,11 +1077,9 @@ namespace Azure.Analytics.Purview.Account
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetResourceSetRules(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1107,7 +1087,7 @@ namespace Azure.Analytics.Purview.Account
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetResourceSetRulesRequest(skipToken, context)
                         : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -1119,25 +1099,23 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Initializes a new instance of PurviewCollection. </summary>
         /// <param name="collectionName"> The String to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)
         {
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
-            return new PurviewCollection(_clientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName, _apiVersion);
+            return new PurviewCollection(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName, _apiVersion);
         }
 
         /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
         public virtual PurviewResourceSetRule GetPurviewResourceSetRuleClient()
         {
-            return Volatile.Read(ref _cachedPurviewResourceSetRule) ?? Interlocked.CompareExchange(ref _cachedPurviewResourceSetRule, new PurviewResourceSetRule(_clientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewResourceSetRule;
+            return Volatile.Read(ref _cachedPurviewResourceSetRule) ?? Interlocked.CompareExchange(ref _cachedPurviewResourceSetRule, new PurviewResourceSetRule(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewResourceSetRule;
         }
 
         internal HttpMessage CreateGetAccountPropertiesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1146,13 +1124,12 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1163,13 +1140,12 @@ namespace Azure.Analytics.Purview.Account
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetAccessKeysRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1178,13 +1154,12 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1195,13 +1170,12 @@ namespace Azure.Analytics.Purview.Account
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetCollectionsRequest(string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1214,13 +1188,12 @@ namespace Azure.Analytics.Purview.Account
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetResourceSetRulesRequest(string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1233,13 +1206,12 @@ namespace Azure.Analytics.Purview.Account
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetCollectionsNextPageRequest(string nextLink, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1247,13 +1219,12 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetResourceSetRulesNextPageRequest(string nextLink, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1261,22 +1232,10 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

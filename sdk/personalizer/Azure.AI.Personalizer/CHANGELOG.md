@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.2 (2022-03-08)
+
+### Features Added
+- Provide customers with much lower latency and more transactions per second than the current service limits.
+- Provide subsampling for customers so that only subsampled data are processed.
+- Provide a model import API to allow customers to warm start the Personalizer service.
+
+### Breaking Changes
+- In `PersonalizerAdministrationClient`, `GetPersonalizerModel` and `GetPersonalizerModelAsync` are replaced with `ExportPersonalizerModel` and `ExportPersonalizerModelAsync`.
+- In `PersonalizerClientOptions`, `ServiceVersion` is changed from V1_1_preview_1 to V1_1_preview_3.
 
 ## 2.0.0-beta.1 (2021-10-05)
 

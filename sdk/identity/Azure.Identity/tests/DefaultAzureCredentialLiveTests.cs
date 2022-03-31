@@ -17,8 +17,7 @@ namespace Azure.Identity.Tests
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
-        // need to use legacy transport until https://github.com/Azure/azure-sdk-tools/issues/2369 is addressed
-        public DefaultAzureCredentialLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public DefaultAzureCredentialLiveTests(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
         }
@@ -175,6 +174,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27020")]
         public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions

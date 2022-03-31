@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of DiskSecurityProfile. </summary>
         /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
-        internal DiskSecurityProfile(DiskSecurityTypes? securityType)
+        /// <param name="secureVmDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
+        internal DiskSecurityProfile(DiskSecurityTypes? securityType, string secureVmDiskEncryptionSetId)
         {
             SecurityType = securityType;
+            SecureVmDiskEncryptionSetId = secureVmDiskEncryptionSetId;
         }
 
         /// <summary> Specifies the SecurityType of the VM. Applicable for OS disks only. </summary>
         public DiskSecurityTypes? SecurityType { get; set; }
+        /// <summary> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </summary>
+        public string SecureVmDiskEncryptionSetId { get; set; }
     }
 }

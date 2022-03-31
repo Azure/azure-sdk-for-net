@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, systemData)
         {
             CustomInit();
         }

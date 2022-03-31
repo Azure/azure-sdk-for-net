@@ -1012,6 +1012,60 @@
           "pathFilter": [
             "/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/"
           ]
+        },
+        {
+          "label": "Communication - Calling Server",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.CallingServer/"
+          ]
+        },
+        {
+          "label": "Communication - Chat",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Chat/"
+          ]
+        },
+        {
+          "label": "Communication - Common",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Common/"
+          ]
+        },
+        {
+          "label": "Communication - Identity",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Identity/"
+          ]
+        },
+        {
+          "label": "Communication - Network Traversal",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.NetworkTraversal/"
+          ]
+        },
+        {
+          "label": "Communication - Phone Numbers",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.PhoneNumbers/"
+          ]
+        },
+        {
+          "label": "Communication - Short Codes",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.ShortCodes/"
+          ]
+        },
+        {
+          "label": "Communication - SMS",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Sms/"
+          ]
+        },
+        {
+          "label": "Communication - Resource Manager",
+          "pathFilter": [
+            "/sdk/communication/Azure.ResourceManager.Communication/"
+          ]
         }
       ],
       "taskName": "Auto PR based on folder paths "
@@ -1755,8 +1809,8 @@
             "Data Factory"
           ],
           "mentionees": [
-            "shawnxzq",
-            "lmy269",
+            "zhangyd2015",
+            "Frey-Wang",
             "Jingshu923"
           ]
         },
@@ -1871,13 +1925,12 @@
             "Digital Twins"
           ],
           "mentionees": [
-            "drwill-ms",
-            "timtay-microsoft",
-            "abhipsaMisra",
-            "vinagesh",
-            "azabbasi",
-            "barustum",
-            "jamdavi"
+            "johngallardo",
+            "efriesner",
+            "abhinav-gha",
+            "Aashish93-stack",
+            "sjiherzig",
+            "Satya-Kolluri"
           ]
         },
         {
@@ -1895,7 +1948,8 @@
             "Event Hubs"
           ],
           "mentionees": [
-            "kasun04"
+            "kasun04",
+            "saglodha"
           ]
         },
         {
@@ -1956,6 +2010,49 @@
           ],
           "mentionees": [
             "madhurinms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoTHub"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT Models Repository"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "digimaun",
+            "brycewang-microsoft",
+            "aandykwong-ms"
           ]
         },
         {
@@ -2478,7 +2575,9 @@
           ],
           "mentionees": [
             "shankarsama",
-            "DorothySun216"
+            "DorothySun216",
+            "EldertGrootenboer",
+            "saglodha"
           ]
         },
         {
@@ -2509,7 +2608,8 @@
           ],
           "mentionees": [
             "sffamily",
-            "chenkennt"
+            "chenkennt",
+            "Y-Sindo"
           ]
         },
         {
@@ -3465,7 +3565,7 @@
         {
           "name": "addReply",
           "parameters": {
-            "comment": "Hi @${issueAuthor}.  Thank you, for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
+            "comment": "Hi @${issueAuthor}.  Thank you for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
           }
         }
       ]

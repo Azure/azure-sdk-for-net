@@ -15,11 +15,31 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("certificateType");
             writer.WriteStringValue(CertificateType.ToString());
             writer.WriteEndObject();
+        }
+
+        internal static CdnCertificateSourceParameters DeserializeCdnCertificateSourceParameters(JsonElement element)
+        {
+            CdnCertificateSourceParametersTypeName typeName = default;
+            CertificateType certificateType = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("typeName"))
+                {
+                    typeName = new CdnCertificateSourceParametersTypeName(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("certificateType"))
+                {
+                    certificateType = new CertificateType(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new CdnCertificateSourceParameters(typeName, certificateType);
         }
     }
 }

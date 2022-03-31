@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -74,11 +75,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserWhitelistedIpRanges))
+            if (Optional.IsCollectionDefined(UserWhitelistedIPRanges))
             {
                 writer.WritePropertyName("userWhitelistedIpRanges");
                 writer.WriteStartArray();
-                foreach (var item in UserWhitelistedIpRanges)
+                foreach (var item in UserWhitelistedIPRanges)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -106,6 +107,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<HostingEnvironmentStatus> status = default;
             Optional<VirtualNetworkProfile> virtualNetwork = default;
@@ -157,6 +159,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -332,7 +339,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceEnvironmentData(id, name, type, tags, location, kind.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipsslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIpRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant));
+            return new AppServiceEnvironmentData(id, name, type, systemData, tags, location, kind.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipsslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIpRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant));
         }
     }
 }

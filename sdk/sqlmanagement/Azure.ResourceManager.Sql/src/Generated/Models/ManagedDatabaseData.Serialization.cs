@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("collation");
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (Optional.IsDefined(RestorePointInOn))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInTime.Value, "O");
+                writer.WriteStringValue(RestorePointInOn.Value, "O");
             }
             if (Optional.IsDefined(CatalogCollation))
             {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUri");
-                writer.WriteStringValue(StorageContainerUri);
+                writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
@@ -101,6 +102,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> collation = default;
             Optional<ManagedDatabaseStatus> status = default;
             Optional<DateTimeOffset> creationDate = default;
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> defaultSecondaryLocation = default;
             Optional<CatalogCollationType> catalogCollation = default;
             Optional<ManagedDatabaseCreateMode> createMode = default;
-            Optional<string> storageContainerUri = default;
+            Optional<Uri> storageContainerUri = default;
             Optional<string> sourceDatabaseId = default;
             Optional<string> restorableDroppedDatabaseId = default;
             Optional<string> storageContainerSasToken = default;
@@ -148,6 +150,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -231,7 +238,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("storageContainerUri"))
                         {
-                            storageContainerUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageContainerUri = null;
+                                continue;
+                            }
+                            storageContainerUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceDatabaseId"))
@@ -283,7 +295,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedDatabaseData(id, name, type, tags, location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), defaultSecondaryLocation.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, restorableDroppedDatabaseId.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value);
+            return new ManagedDatabaseData(id, name, type, systemData, tags, location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), defaultSecondaryLocation.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, restorableDroppedDatabaseId.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value);
         }
     }
 }

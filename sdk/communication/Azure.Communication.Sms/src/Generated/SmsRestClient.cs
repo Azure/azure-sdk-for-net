@@ -20,23 +20,25 @@ namespace Azure.Communication.Sms
 {
     internal partial class SmsRestClient
     {
-        private string endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of SmsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SmsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-03-07")
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateSendRequest(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions)
@@ -45,9 +47,9 @@ namespace Azure.Communication.Sms
             var request = message0.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/sms", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -67,7 +69,7 @@ namespace Azure.Communication.Sms
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/>, or <paramref name="message"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
         public async Task<Response<SmsSendResponse>> SendAsync(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
@@ -95,7 +97,7 @@ namespace Azure.Communication.Sms
                         return Response.FromValue(value, message0.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message0.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message0.Response).ConfigureAwait(false);
             }
         }
 
@@ -105,7 +107,7 @@ namespace Azure.Communication.Sms
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
         /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/>, or <paramref name="message"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
         public Response<SmsSendResponse> Send(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
@@ -133,7 +135,7 @@ namespace Azure.Communication.Sms
                         return Response.FromValue(value, message0.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message0.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message0.Response);
             }
         }
     }

@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IpConfigurationId))
+            if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipConfigurationId");
-                writer.WriteStringValue(IpConfigurationId);
+                writer.WriteStringValue(IPConfigurationId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.Test.HttpRecorder
 {
     using Newtonsoft.Json;
@@ -18,7 +20,18 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
     public static class RecorderUtilities
     {
+        private const string SanitizeValue = "Sanitized";
+        public static List<string> JsonPathSanitizers { get; } = new List<string>();
+
         static Regex binaryMimeRegex = new Regex("(image/*|audio/*|video/*|application/octet-stream|multipart/form-data)");
+        static RecorderUtilities()
+        {
+            JsonPathSanitizers.Add("$..primaryKey");
+            JsonPathSanitizers.Add("$..secondaryKey");
+            JsonPathSanitizers.Add("$..primaryConnectionString");
+            JsonPathSanitizers.Add("$..secondaryConnectionString");
+            JsonPathSanitizers.Add("$..connectionString");
+        }
 
         public static bool IsHttpContentBinary(HttpContent content)
         {
@@ -223,7 +236,14 @@ namespace Microsoft.Azure.Test.HttpRecorder
         {
             try
             {
-                object parsedJson = JsonConvert.DeserializeObject(str);
+                JToken parsedJson = JsonConvert.DeserializeObject<JToken>(str);
+                foreach (var jsonPath in JsonPathSanitizers)
+                {
+                    foreach (JToken token in parsedJson.SelectTokens(jsonPath))
+                    {
+                        token.Replace(SanitizeValue);
+                    }
+                }
                 return JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
             }
             catch

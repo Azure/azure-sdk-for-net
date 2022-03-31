@@ -23,7 +23,7 @@ namespace Azure.AI.AnomalyDetector.Models
             if (Optional.IsDefined(FillNAMethod))
             {
                 writer.WritePropertyName("fillNAMethod");
-                writer.WriteStringValue(FillNAMethod.Value.ToSerialString());
+                writer.WriteStringValue(FillNAMethod.Value.ToString());
             }
             if (Optional.IsDefined(PaddingValue))
             {
@@ -37,7 +37,7 @@ namespace Azure.AI.AnomalyDetector.Models
         {
             Optional<AlignMode> alignMode = default;
             Optional<FillNAMethod> fillNAMethod = default;
-            Optional<int> paddingValue = default;
+            Optional<float> paddingValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alignMode"))
@@ -57,7 +57,7 @@ namespace Azure.AI.AnomalyDetector.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fillNAMethod = property.Value.GetString().ToFillNAMethod();
+                    fillNAMethod = new FillNAMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("paddingValue"))
@@ -67,7 +67,7 @@ namespace Azure.AI.AnomalyDetector.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    paddingValue = property.Value.GetInt32();
+                    paddingValue = property.Value.GetSingle();
                     continue;
                 }
             }

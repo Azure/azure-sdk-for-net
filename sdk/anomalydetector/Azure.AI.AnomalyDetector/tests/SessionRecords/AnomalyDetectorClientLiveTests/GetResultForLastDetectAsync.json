@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://nibhatianomalydetector-anomalydetector.cognitiveservices.azure.com/anomalydetector/v1.1-preview/timeseries/last/detect",
+      "RequestUri": "https://test-maga-ppe-we.ppe.cognitiveservices.azure.com/anomalydetector/v1.1-preview.1/timeseries/last/detect",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "2813",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-bce4121a46270f4f90c7d940fab2b45d-338ae6959c94ae46-00",
-        "User-Agent": [
-          "azsdk-net-AI.AnomalyDetector/3.0.0-alpha.20210818.1",
-          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "11aa7729beae9426c738ec40d877ff35",
+        "traceparent": "00-a7854a16cd87754c9ae6f29795ddb5a6-a94fa24f30410544-00",
+        "User-Agent": "azsdk-net-AI.AnomalyDetector/3.0.0-alpha.20220113.1 (.NET Framework 4.8.4430.0; Microsoft Windows 10.0.14393 )",
+        "x-ms-client-request-id": "4fb561b295760a339a9c14dd5a46d2a3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -217,24 +214,32 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bbd3714b-f2e7-40f0-af3a-d3e29042d17a",
-        "Content-Length": "203",
+        "apim-request-id": "b46ce5cb-3b6a-4045-9b37-1b7f28565cdf",
+        "Content-Length": "218",
         "Content-Type": "application/json",
         "csp-billing-usage": "CognitiveServices.AnomalyDetector.DataPoints=1",
-        "Date": "Wed, 18 Aug 2021 17:53:55 GMT",
+        "Date": "Thu, 13 Jan 2022 09:22:45 GMT",
         "model-id": "10",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "33"
+        "x-envoy-upstream-service-time": "39"
       },
-      "ResponseBody": [
-        "{\u0022expectedValue\u0022:809.5658016931228,\u0022isAnomaly\u0022:false,\u0022isNegativeAnomaly\u0022:false,\u0022isPositiveAnomaly\u0022:false,\u0022lowerMargin\u0022:40.47829008465612,\u0022period\u0022:12,\u0022suggestedWindow\u0022:49,\u0022upperMargin\u0022:40.47829008465612}\n"
-      ]
+      "ResponseBody": {
+        "expectedValue": 809.5658016931228,
+        "isAnomaly": false,
+        "isNegativeAnomaly": false,
+        "isPositiveAnomaly": false,
+        "lowerMargin": 40.47829008465612,
+        "period": 12,
+        "severity": 0.0,
+        "suggestedWindow": 49,
+        "upperMargin": 40.47829008465612
+      }
     }
   ],
   "Variables": {
     "ANOMALY_DETECTOR_API_KEY": "Sanitized",
-    "ANOMALY_DETECTOR_ENDPOINT": "https://nibhatianomalydetector-anomalydetector.cognitiveservices.azure.com",
-    "RandomSeed": "829907733"
+    "ANOMALY_DETECTOR_ENDPOINT": "https://test-maga-ppe-we.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "1090013729"
   }
 }

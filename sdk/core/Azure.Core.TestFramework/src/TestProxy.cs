@@ -24,8 +24,7 @@ namespace Azure.Core.TestFramework
     {
         private static readonly string s_dotNetExe;
 
-        public const string DevCertIssuer = "CN=localhost";
-
+        // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
         public const string IpAddress = "127.0.0.1";
 
         public int? ProxyPortHttp => _proxyPortHttp;
@@ -73,13 +72,8 @@ namespace Azure.Core.TestFramework
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
                     ["Logging__LogLevel__Default"] = "Error",
                     ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
-                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = Path.Combine(
-                        TestEnvironment.RepositoryRoot,
-                        "eng",
-                        "common",
-                        "testproxy",
-                        "dotnet-devcert.pfx"),
-                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = "password"
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
                 }
             };
 
@@ -125,21 +119,8 @@ namespace Azure.Core.TestFramework
                                                     $"https: {_proxyPortHttps}");
             }
 
-            // we need to use https when talking to test proxy admin endpoint so that we can establish the connection before any
-            // test related traffic happens which would send a Connection header for the first request. This can be switched to HTTP
-            // once https://github.com/Azure/azure-sdk-tools/issues/2303 is fixed
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate.Issuer == DevCertIssuer
-            };
-            var options = new TestProxyClientOptions
-            {
-                Transport = new HttpClientTransport(handler)
-            };
-            Client = new TestProxyRestClient(
-                new ClientDiagnostics(options),
-                HttpPipelineBuilder.Build(options),
-                new Uri($"https://{IpAddress}:{_proxyPortHttps}"));
+            var options = new TestProxyClientOptions();
+            Client = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
 
             // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy. Otherwise requests
             // start timing out. This only seems to happen when not specifying a port.

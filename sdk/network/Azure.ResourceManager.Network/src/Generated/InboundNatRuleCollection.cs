@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of InboundNatRule and their operations over its parent. </summary>
-    public partial class InboundNatRuleCollection : ArmCollection, IEnumerable<InboundNatRule>, IAsyncEnumerable<InboundNatRule>
+    /// <summary>
+    /// A class representing a collection of <see cref="InboundNatRuleResource" /> and their operations.
+    /// Each <see cref="InboundNatRuleResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
+    /// To get an <see cref="InboundNatRuleCollection" /> instance call the GetInboundNatRules method from an instance of <see cref="LoadBalancerResource" />.
+    /// </summary>
+    public partial class InboundNatRuleCollection : ArmCollection, IEnumerable<InboundNatRuleResource>, IAsyncEnumerable<InboundNatRuleResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly InboundNatRulesRestOperations _inboundNatRulesRestClient;
+        private readonly ClientDiagnostics _inboundNatRuleClientDiagnostics;
+        private readonly InboundNatRulesRestOperations _inboundNatRuleRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="InboundNatRuleCollection"/> class for mocking. </summary>
         protected InboundNatRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of InboundNatRuleCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal InboundNatRuleCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="InboundNatRuleCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal InboundNatRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _inboundNatRulesRestClient = new InboundNatRulesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _inboundNatRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InboundNatRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(InboundNatRuleResource.ResourceType, out string inboundNatRuleApiVersion);
+            _inboundNatRuleRestClient = new InboundNatRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, inboundNatRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,70 +49,33 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != LoadBalancer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancer.ResourceType), nameof(id));
+            if (id.ResourceType != LoadBalancerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancerResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Creates or updates a load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Parameters supplied to the create or update inbound nat rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="inboundNatRuleParameters"/> is null. </exception>
-        public virtual InboundNatRuleCreateOrUpdateOperation CreateOrUpdate(string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<InboundNatRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inboundNatRuleName, InboundNatRuleData data, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleParameters == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleParameters));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.CreateOrUpdate");
+            using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _inboundNatRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters, cancellationToken);
-                var operation = new InboundNatRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _inboundNatRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="inboundNatRuleParameters"> Parameters supplied to the create or update inbound nat rule operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="inboundNatRuleParameters"/> is null. </exception>
-        public async virtual Task<InboundNatRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string inboundNatRuleName, InboundNatRuleData inboundNatRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleParameters == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _inboundNatRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new InboundNatRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _inboundNatRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, inboundNatRuleParameters).Request, response);
-                if (waitForCompletion)
+                var response = await _inboundNatRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<InboundNatRuleResource>(new InboundNatRuleOperationSource(Client), _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -118,26 +86,61 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Creates or updates a load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="data"> Parameters supplied to the create or update inbound nat rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
-        public virtual Response<InboundNatRule> Get(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<InboundNatRuleResource> CreateOrUpdate(WaitUntil waitUntil, string inboundNatRuleName, InboundNatRuleData data, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.Get");
+            using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _inboundNatRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken);
+                var response = _inboundNatRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, data, cancellationToken);
+                var operation = new NetworkArmOperation<InboundNatRuleResource>(new InboundNatRuleOperationSource(Client), _inboundNatRuleClientDiagnostics, Pipeline, _inboundNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
+        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        public virtual async Task<Response<InboundNatRuleResource>> GetAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
+
+            using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _inboundNatRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InboundNatRule(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new InboundNatRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,26 +149,28 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer inbound nat rule. </summary>
+        /// <summary>
+        /// Gets the specified load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
-        public async virtual Task<Response<InboundNatRule>> GetAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<InboundNatRuleResource> Get(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
 
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.Get");
+            using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _inboundNatRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken).ConfigureAwait(false);
+                var response = _inboundNatRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new InboundNatRule(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new InboundNatRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,127 +179,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
+        /// <summary>
+        /// Gets all the inbound nat rules in a load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules
+        /// Operation Id: InboundNatRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
-        public virtual Response<InboundNatRule> GetIfExists(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="InboundNatRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InboundNatRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
+            async Task<Page<InboundNatRuleResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _inboundNatRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<InboundNatRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new InboundNatRule(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
-        public async virtual Task<Response<InboundNatRule>> GetIfExistsAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _inboundNatRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<InboundNatRule>(null, response.GetRawResponse())
-                    : Response.FromValue(new InboundNatRule(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
-        public virtual Response<bool> Exists(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(inboundNatRuleName, expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(inboundNatRuleName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InboundNatRule> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<InboundNatRule> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.GetAll");
+                using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _inboundNatRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _inboundNatRuleRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -302,52 +203,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<InboundNatRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<InboundNatRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.GetAll");
+                using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _inboundNatRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InboundNatRule> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<InboundNatRule>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _inboundNatRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<InboundNatRule>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _inboundNatRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _inboundNatRuleRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -358,7 +221,105 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<InboundNatRule> IEnumerable<InboundNatRule>.GetEnumerator()
+        /// <summary>
+        /// Gets all the inbound nat rules in a load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules
+        /// Operation Id: InboundNatRules_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InboundNatRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InboundNatRuleResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<InboundNatRuleResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _inboundNatRuleRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<InboundNatRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _inboundNatRuleRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundNatRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
+        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
+
+            using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _inboundNatRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
+        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        public virtual Response<bool> Exists(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
+
+            using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _inboundNatRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundNatRuleName, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<InboundNatRuleResource> IEnumerable<InboundNatRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -368,12 +329,9 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<InboundNatRule> IAsyncEnumerable<InboundNatRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<InboundNatRuleResource> IAsyncEnumerable<InboundNatRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, InboundNatRule, InboundNatRuleData> Construct() { }
     }
 }

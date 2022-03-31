@@ -20,18 +20,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerSampleBuildModel
             // For this sample, you can use the training documents found in the `trainingFiles` folder.
-            // Upload the forms to your storage container and then generate a container SAS URL.
-            // For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-            // https://aka.ms/azsdk/formrecognizer/buildtrainingset
+            // Upload the documents to your storage container and then generate a container SAS URL. Note
+            // that a container URI without SAS is accepted only when the container is public or has a
+            // managed identity configured.
+            //
+            // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
+            // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
+            // We are selecting the Template build mode in this sample. For more information about the available
+            // build modes and their differences, please see:
+            // https://aka.ms/azsdk/formrecognizer/buildmode
+
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
             Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
             DocumentModel model = operationResponse.Value;
 

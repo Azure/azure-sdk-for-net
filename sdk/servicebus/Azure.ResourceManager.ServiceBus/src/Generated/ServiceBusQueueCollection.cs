@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ServiceBus.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of ServiceBusQueue and their operations over its parent. </summary>
-    public partial class ServiceBusQueueCollection : ArmCollection, IEnumerable<ServiceBusQueue>, IAsyncEnumerable<ServiceBusQueue>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServiceBusQueueResource" /> and their operations.
+    /// Each <see cref="ServiceBusQueueResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
+    /// To get a <see cref="ServiceBusQueueCollection" /> instance call the GetServiceBusQueues method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// </summary>
+    public partial class ServiceBusQueueCollection : ArmCollection, IEnumerable<ServiceBusQueueResource>, IAsyncEnumerable<ServiceBusQueueResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly QueuesRestOperations _queuesRestClient;
+        private readonly ClientDiagnostics _serviceBusQueueQueuesClientDiagnostics;
+        private readonly QueuesRestOperations _serviceBusQueueQueuesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueCollection"/> class for mocking. </summary>
         protected ServiceBusQueueCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusQueueCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ServiceBusQueueCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ServiceBusQueueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _queuesRestClient = new QueuesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _serviceBusQueueQueuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusQueueResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceBusQueueResource.ResourceType, out string serviceBusQueueQueuesApiVersion);
+            _serviceBusQueueQueuesRestClient = new QueuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusQueueQueuesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,70 +49,33 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceBusNamespace.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespace.ResourceType), nameof(id));
+            if (id.ResourceType != ServiceBusNamespaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespaceResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates a Service Bus queue. This operation is idempotent. </summary>
+        /// <summary>
+        /// Creates or updates a Service Bus queue. This operation is idempotent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="queueName"> The queue name. </param>
-        /// <param name="parameters"> Parameters supplied to create or update a queue resource. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Parameters supplied to create or update a queue resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual QueueCreateOrUpdateOperation CreateOrUpdate(string queueName, ServiceBusQueueData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceBusQueueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string queueName, ServiceBusQueueData data, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.CreateOrUpdate");
+            using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _queuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, parameters, cancellationToken);
-                var operation = new QueueCreateOrUpdateOperation(Parent, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a Service Bus queue. This operation is idempotent. </summary>
-        /// <param name="queueName"> The queue name. </param>
-        /// <param name="parameters"> Parameters supplied to create or update a queue resource. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<QueueCreateOrUpdateOperation> CreateOrUpdateAsync(string queueName, ServiceBusQueueData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _queuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new QueueCreateOrUpdateOperation(Parent, response);
-                if (waitForCompletion)
+                var response = await _serviceBusQueueQueuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -118,25 +86,60 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Returns a description for the specified queue. </summary>
+        /// <summary>
+        /// Creates or updates a Service Bus queue. This operation is idempotent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="queueName"> The queue name. </param>
+        /// <param name="data"> Parameters supplied to create or update a queue resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public virtual Response<ServiceBusQueue> Get(string queueName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ServiceBusQueueResource> CreateOrUpdate(WaitUntil waitUntil, string queueName, ServiceBusQueueData data, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.Get");
+            using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _queuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken);
+                var response = _serviceBusQueueQueuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, data, cancellationToken);
+                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a description for the specified queue.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
+        /// <param name="queueName"> The queue name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public virtual async Task<Response<ServiceBusQueueResource>> GetAsync(string queueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+
+            using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _serviceBusQueueQueuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusQueue(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusQueueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,25 +148,27 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Returns a description for the specified queue. </summary>
+        /// <summary>
+        /// Returns a description for the specified queue.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusQueue>> GetAsync(string queueName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusQueueResource> Get(string queueName, CancellationToken cancellationToken = default)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.Get");
+            using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.Get");
             scope.Start();
             try
             {
-                var response = await _queuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken).ConfigureAwait(false);
+                var response = _serviceBusQueueQueuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceBusQueue(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusQueueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,125 +177,25 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="queueName"> The queue name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public virtual Response<ServiceBusQueue> GetIfExists(string queueName, CancellationToken cancellationToken = default)
-        {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _queuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusQueue>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusQueue(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="queueName"> The queue name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusQueue>> GetIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
-        {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _queuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServiceBusQueue>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceBusQueue(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="queueName"> The queue name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public virtual Response<bool> Exists(string queueName, CancellationToken cancellationToken = default)
-        {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(queueName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="queueName"> The queue name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
-        {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the queues within a namespace. </summary>
+        /// <summary>
+        /// Gets the queues within a namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues
+        /// Operation Id: Queues_ListByNamespace
+        /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusQueue" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceBusQueue> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceBusQueueResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceBusQueueResource> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ServiceBusQueue> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServiceBusQueueResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetAll");
+                using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _queuesRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusQueue(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceBusQueueQueuesRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusQueueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -298,54 +203,14 @@ namespace Azure.ResourceManager.ServiceBus
                     throw;
                 }
             }
-            Page<ServiceBusQueue> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServiceBusQueueResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetAll");
+                using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _queuesRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusQueue(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets the queues within a namespace. </summary>
-        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusQueue" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceBusQueue> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServiceBusQueue>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _queuesRestClient.ListByNamespaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusQueue(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceBusQueue>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServiceBusQueueCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _queuesRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusQueue(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _serviceBusQueueQueuesRestClient.ListByNamespaceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusQueueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -356,7 +221,105 @@ namespace Azure.ResourceManager.ServiceBus
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<ServiceBusQueue> IEnumerable<ServiceBusQueue>.GetEnumerator()
+        /// <summary>
+        /// Gets the queues within a namespace.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues
+        /// Operation Id: Queues_ListByNamespace
+        /// </summary>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceBusQueueResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceBusQueueResource> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<ServiceBusQueueResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serviceBusQueueQueuesRestClient.ListByNamespace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusQueueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ServiceBusQueueResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serviceBusQueueQueuesRestClient.ListByNamespaceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceBusQueueResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
+        /// <param name="queueName"> The queue name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+
+            using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceBusQueueQueuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
+        /// <param name="queueName"> The queue name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public virtual Response<bool> Exists(string queueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+
+            using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _serviceBusQueueQueuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<ServiceBusQueueResource> IEnumerable<ServiceBusQueueResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -366,12 +329,9 @@ namespace Azure.ResourceManager.ServiceBus
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServiceBusQueue> IAsyncEnumerable<ServiceBusQueue>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceBusQueueResource> IAsyncEnumerable<ServiceBusQueueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServiceBusQueue, ServiceBusQueueData> Construct() { }
     }
 }

@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "302da174c40d1186fea7646864f0f751",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "U2FuaXRpemVk",
+      "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",

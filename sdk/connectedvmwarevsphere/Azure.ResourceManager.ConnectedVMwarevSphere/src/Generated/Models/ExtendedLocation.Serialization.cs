@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ExtendedLocationType);
             }
             if (Optional.IsDefined(Name))
             {

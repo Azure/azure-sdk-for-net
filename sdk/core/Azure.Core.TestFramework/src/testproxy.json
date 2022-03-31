@@ -19,11 +19,13 @@
         ],
         "parameters": [
           {
-            "name": "x-recording-file",
-            "in": "header",
+            "name": "body",
+            "in": "body",
             "description": "File location of the recording.",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/StartInformation"
+            }
           }
         ],
         "responses": {
@@ -96,11 +98,13 @@
         ],
         "parameters": [
           {
-            "name": "x-recording-file",
-            "in": "header",
+            "name": "body",
+            "in": "body",
             "description": "File location of the recording.",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/StartInformation"
+            }
           }
         ],
         "responses": {
@@ -488,6 +492,58 @@
           }
         }
       }
+    },
+    "/admin/addtransform?overload=HeaderTransform": {
+      "post": {
+        "summary": "Add a header transform.",
+        "description": "Add a header transform.",
+        "operationId": "TestProxy_AddHeaderTransform",
+        "parameters": [
+          {
+            "name": "x-abstraction-identifier",
+            "in": "header",
+            "description": "The type of transform.",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "HeaderTransform"
+            ],
+            "x-ms-enum": {
+              "name": "MatcherType",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "x-recording-id",
+            "in": "header",
+            "description": "The recording ID to apply the transform to.",
+            "type": "string"
+          },
+          {
+            "name": "transform",
+            "in": "body",
+            "description": "The body for a header transform.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HeaderTransform"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "An error response received from the Test Proxy.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -514,19 +570,49 @@
         "modelAsString": false
       }
     },
+    "TransformType": {
+      "type": "string",
+      "enum": [
+        "HeaderTransform"
+      ],
+      "x-ms-enum": {
+        "name": "TransformType",
+        "modelAsString": false
+      }
+    },
     "CustomDefaultMatcher": {
       "type": "object",
       "properties": {
-        "excludedHeaders" : {
+        "excludedHeaders": {
           "type": "string"
         },
-        "compareBodies" : {
+        "compareBodies": {
           "type": "boolean"
+        },
+        "ignoredHeaders": {
+          "type": "string"
+        },
+        "ignoredQueryParameters": {
+          "type": "string"
+        }
+      }
+    },
+    "HeaderTransform": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "condition": {
+          "$ref": "#/definitions/Condition"
         }
       },
       "required": [
-        "excludedHeaders",
-        "compareBodies"
+        "key",
+        "value"
       ]
     },
     "BodyKeySanitizer": {
@@ -562,6 +648,9 @@
         },
         "groupForReplace": {
           "type": "string"
+        },
+        "condition": {
+          "$ref": "#/definitions/Condition"
         }
       },
       "required": [
@@ -608,6 +697,43 @@
       "required": [
         "regex",
         "value"
+      ]
+    },
+    "Condition": {
+      "type": "object",
+      "description": "Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed.",
+      "properties": {
+        "uriRegex": {
+          "type": "string"
+        },
+        "responseHeader": {
+          "$ref": "#/definitions/HeaderCondition"
+        }
+      },
+      "required": []
+    },
+    "HeaderCondition": {
+      "type": "object",
+      "description": "Header condition to apply",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "valueRegex": {
+          "type": "string"
+        }
+      }
+    },
+    "StartInformation": {
+      "type": "object",
+      "description": "Start object to be specified when starting playback or record",
+      "properties": {
+        "x-recording-file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "x-recording-file"
       ]
     }
   }

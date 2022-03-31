@@ -32,6 +32,12 @@ namespace Compute.Tests.DiskRPTests
             Migrating = 6
         }
 
+        private enum Architecture
+        {
+            x64 = 1,
+            Arm64 = 2
+        }
+
         #region Execution
         protected void Disk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
         {
@@ -1520,9 +1526,96 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
+        protected void Disk_CRUD_WithArchitecture_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                IList<string> zones = null;
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
+                disk.SupportedCapabilities = new SupportedCapabilities { Architecture = Architecture.Arm64.ToString()};
+
+                try
+                {
+                    // **********
+                    // SETUP
+                    // **********
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which case the resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
+
+                    // **********
+                    // TEST
+                    // **********
+                    // Put
+                    Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.NotNull(diskOut.SupportedCapabilities);
+                    Assert.Equal(Architecture.Arm64.ToString(), diskOut.SupportedCapabilities.Architecture);
+
+                    // Get disk access
+                    AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
+                    Assert.NotNull(accessUri.AccessSAS);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Patch
+                    const string tagKey = "tagKey";
+                    var updatedisk = new DiskUpdate
+                    {
+                        Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } },
+                        SupportedCapabilities = new SupportedCapabilities { Architecture = Architecture.x64.ToString() }
+                    };
+                    diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.NotNull(diskOut.SupportedCapabilities);
+                    Assert.Equal(Architecture.x64.ToString(), diskOut.SupportedCapabilities.Architecture);
+
+                    // End disk access
+                    m_CrpClient.Disks.RevokeAccess(rgName, diskName);
+
+                    // Delete
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.Disks.Get(rgName, diskName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
         #endregion
 
-            #region Generation
+        #region Generation
         public static readonly GrantAccessData AccessDataDefault = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
 
         protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null, string location = null)

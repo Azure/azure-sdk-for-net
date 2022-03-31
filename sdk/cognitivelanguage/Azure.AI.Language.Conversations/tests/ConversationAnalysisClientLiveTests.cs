@@ -33,6 +33,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26379")]
         public async Task AnalyzeConversationWithLanguage()
         {
             AnalyzeConversationOptions options = new AnalyzeConversationOptions()

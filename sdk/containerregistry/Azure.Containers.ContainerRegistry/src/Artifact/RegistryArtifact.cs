@@ -227,11 +227,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tagOrder"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual AsyncPageable<ArtifactTagProperties> GetTagPropertiesCollectionAsync(ArtifactTagOrder tagOrder = ArtifactTagOrder.None, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArtifactTagProperties> GetAllTagPropertiesAsync(ArtifactTagOrder tagOrder = ArtifactTagOrder.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ArtifactTagProperties>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetAllTagProperties)}");
                 scope.Start();
                 try
                 {
@@ -249,7 +249,7 @@ namespace Azure.Containers.ContainerRegistry
 
             async Task<Page<ArtifactTagProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetAllTagProperties)}");
                 scope.Start();
                 try
                 {
@@ -273,11 +273,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tagOrder"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Pageable<ArtifactTagProperties> GetTagPropertiesCollection(ArtifactTagOrder tagOrder = ArtifactTagOrder.None, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArtifactTagProperties> GetAllTagProperties(ArtifactTagOrder tagOrder = ArtifactTagOrder.None, CancellationToken cancellationToken = default)
         {
             Page<ArtifactTagProperties> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetAllTagProperties)}");
                 scope.Start();
                 try
                 {
@@ -295,7 +295,7 @@ namespace Azure.Containers.ContainerRegistry
 
             Page<ArtifactTagProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagPropertiesCollection)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetAllTagProperties)}");
                 scope.Start();
                 try
                 {

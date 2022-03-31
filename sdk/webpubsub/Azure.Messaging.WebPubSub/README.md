@@ -73,7 +73,7 @@ When a client is connected, it can send messages to the upstream application, or
 ### Broadcast a text message to all clients
 
 ```C# Snippet:WebPubSubHelloWorld
-var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
 
 serviceClient.SendToAll("Hello World!");
 ```
@@ -81,7 +81,7 @@ serviceClient.SendToAll("Hello World!");
 ### Broadcast a JSON message to all clients
 
 ```C# Snippet:WebPubSubSendJson
-var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
 
 serviceClient.SendToAll(RequestContent.Create(
         new
@@ -95,7 +95,7 @@ serviceClient.SendToAll(RequestContent.Create(
 ### Broadcast a binary message to all clients
 
 ```C# Snippet:WebPubSubSendBinary
-var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
 
 Stream stream = BinaryData.FromString("Hello World!").ToStream();
 serviceClient.SendToAll(RequestContent.Create(stream), ContentType.ApplicationOctetStream);

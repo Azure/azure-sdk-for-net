@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Compute.Models
         internal StorageProfile(ImageReference imageReference, OSDisk osDisk, IList<DataDisk> dataDisks)
         {
             ImageReference = imageReference;
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
         }
 
         /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. </summary>
         public ImageReference ImageReference { get; set; }
         /// <summary> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-        public OSDisk OsDisk { get; set; }
+        public OSDisk OSDisk { get; set; }
         /// <summary> Specifies the parameters that are used to add a data disk to a virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
         public IList<DataDisk> DataDisks { get; }
     }

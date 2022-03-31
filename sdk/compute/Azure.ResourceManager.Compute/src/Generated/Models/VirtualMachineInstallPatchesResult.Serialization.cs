@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<PatchOperationStatus> status = default;
             Optional<string> installationActivityId = default;
-            Optional<VMGuestPatchRebootStatus> rebootStatus = default;
+            Optional<VmGuestPatchRebootStatus> rebootStatus = default;
             Optional<bool> maintenanceWindowExceeded = default;
             Optional<int> excludedPatchCount = default;
             Optional<int> notSelectedPatchCount = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rebootStatus = new VMGuestPatchRebootStatus(property.Value.GetString());
+                    rebootStatus = new VmGuestPatchRebootStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maintenanceWindowExceeded"))

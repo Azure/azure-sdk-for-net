@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -20,7 +21,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SnapshotRestoreRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="snapshotTime"> Point in time in which the app restore should be done, formatted as a DateTime string. </param>
         /// <param name="recoverySource">
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// This setting is only necessary when RecoverConfiguration is enabled.
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
-        internal SnapshotRestoreRequest(ResourceIdentifier id, string name, ResourceType type, string kind, string snapshotTime, SnapshotRecoverySource recoverySource, bool? overwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary) : base(id, name, type, kind)
+        internal SnapshotRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string snapshotTime, SnapshotRecoverySource recoverySource, bool? overwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary) : base(id, name, resourceType, systemData, kind)
         {
             SnapshotTime = snapshotTime;
             RecoverySource = recoverySource;

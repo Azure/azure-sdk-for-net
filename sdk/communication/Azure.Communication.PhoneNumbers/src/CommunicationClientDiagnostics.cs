@@ -22,26 +22,24 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="content">The error content.</param>
         /// <param name="responseHeaders">The response headers.</param>
-        /// <param name="message">The error message.</param>
-        /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-        protected override void ExtractFailureContent(
+        protected override ResponseError ExtractFailureContent(
             string content,
             ResponseHeaders responseHeaders,
-            ref string message,
-            ref string errorCode,
             ref IDictionary<string, string> additionalInfo
             )
         {
             if (string.IsNullOrEmpty(content))
             {
-                return;
+                return null;
             }
 
             try
             {
                 using var document = JsonDocument.Parse(content);
 
+                string errorCode = null;
+                string message = null;
                 foreach (var property in document.RootElement.EnumerateObject())
                 {
                     if (property.NameEquals("error"))
@@ -53,9 +51,13 @@ namespace Azure.Core.Pipeline
                         break;
                     }
                 }
+
+                return new ResponseError(errorCode, message);
             }
             catch
             { }
+
+            return null;
         }
     }
 }

@@ -158,7 +158,7 @@ namespace Azure.Messaging.WebPubSub
             Endpoint = endpoint;
 
             options ??= new WebPubSubServiceClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _apiVersion = options.Version;
         }
 
@@ -433,12 +433,12 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddUserToGroupRequest(userId, group, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -470,12 +470,12 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response AddUserToGroup(string group, string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAddUserToGroupRequest(userId, group, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -507,12 +507,12 @@ namespace Azure.Messaging.WebPubSub
         public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRemoveUserFromGroupRequest(userId, group, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -544,12 +544,12 @@ namespace Azure.Messaging.WebPubSub
         public virtual Response RemoveUserFromGroup(string group, string userId, RequestContext context = null)
 #pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRemoveUserFromGroupRequest(userId, group, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

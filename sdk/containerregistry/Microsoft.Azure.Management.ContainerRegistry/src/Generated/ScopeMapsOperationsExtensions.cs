@@ -23,6 +23,46 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     public static partial class ScopeMapsOperationsExtensions
     {
             /// <summary>
+            /// Lists all the scope maps for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            public static IPage<ScopeMap> List(this IScopeMapsOperations operations, string resourceGroupName, string registryName)
+            {
+                return operations.ListAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all the scope maps for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<IPage<ScopeMap>> ListAsync(this IScopeMapsOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the properties of the specified scope map.
             /// </summary>
             /// <param name='operations'>
@@ -230,46 +270,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             public static async System.Threading.Tasks.Task<ScopeMap> UpdateAsync(this IScopeMapsOperations operations, string resourceGroupName, string registryName, string scopeMapName, string description = default(string), IList<string> actions = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, registryName, scopeMapName, description, actions, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists all the scope maps for the specified container registry.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the container registry belongs.
-            /// </param>
-            /// <param name='registryName'>
-            /// The name of the container registry.
-            /// </param>
-            public static IPage<ScopeMap> List(this IScopeMapsOperations operations, string resourceGroupName, string registryName)
-            {
-                return operations.ListAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the scope maps for the specified container registry.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the container registry belongs.
-            /// </param>
-            /// <param name='registryName'>
-            /// The name of the container registry.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<IPage<ScopeMap>> ListAsync(this IScopeMapsOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

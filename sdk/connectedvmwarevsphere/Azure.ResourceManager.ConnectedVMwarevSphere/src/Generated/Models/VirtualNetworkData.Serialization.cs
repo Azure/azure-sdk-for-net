@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal static VirtualNetworkData DeserializeVirtualNetworkData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<SystemData> systemData = default;
             Optional<string> kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> uuid = default;
             Optional<string> vCenterId = default;
             Optional<string> moRefId = default;
@@ -87,16 +87,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         continue;
                     }
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -132,6 +122,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -197,7 +192,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new VirtualNetworkData(id, name, type, tags, location, extendedLocation.Value, systemData, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, customResourceName.Value, Optional.ToList(statuses), provisioningState.Value);
+            return new VirtualNetworkData(id, name, type, systemData, tags, location, extendedLocation.Value, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, customResourceName.Value, Optional.ToList(statuses), provisioningState.Value);
         }
     }
 }

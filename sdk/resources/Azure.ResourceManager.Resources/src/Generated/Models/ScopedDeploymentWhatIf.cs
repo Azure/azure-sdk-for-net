@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The location to store the deployment data. </param>
         /// <param name="properties"> The deployment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public ScopedDeploymentWhatIf(string location, DeploymentWhatIfProperties properties)
+        internal ScopedDeploymentWhatIf(string location, ArmDeploymentWhatIfProperties properties)
         {
             if (location == null)
             {
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The location to store the deployment data. </summary>
         public string Location { get; }
         /// <summary> The deployment properties. </summary>
-        public DeploymentWhatIfProperties Properties { get; }
+        public ArmDeploymentWhatIfProperties Properties { get; }
     }
 }

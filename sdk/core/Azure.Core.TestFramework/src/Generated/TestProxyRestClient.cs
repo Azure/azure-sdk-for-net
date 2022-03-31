@@ -19,47 +19,53 @@ namespace Azure.Core.TestFramework
 {
     internal partial class TestProxyRestClient
     {
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of TestProxyRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
         public TestProxyRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            this.endpoint = endpoint ?? new Uri("");
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("");
         }
 
-        internal HttpMessage CreateStartPlaybackRequest(string xRecordingFile)
+        internal HttpMessage CreateStartPlaybackRequest(StartInformation body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/playback/start", false);
             request.Uri = uri;
-            request.Headers.Add("x-recording-file", xRecordingFile);
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Start playback for a test. </summary>
-        /// <param name="xRecordingFile"> File location of the recording. </param>
+        /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders>> StartPlaybackAsync(string xRecordingFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders>> StartPlaybackAsync(StartInformation body, CancellationToken cancellationToken = default)
         {
-            if (xRecordingFile == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(xRecordingFile));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStartPlaybackRequest(xRecordingFile);
+            using var message = CreateStartPlaybackRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TestProxyStartPlaybackHeaders(message.Response);
             switch (message.Response.Status)
@@ -77,22 +83,22 @@ namespace Azure.Core.TestFramework
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Start playback for a test. </summary>
-        /// <param name="xRecordingFile"> File location of the recording. </param>
+        /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> StartPlayback(string xRecordingFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> StartPlayback(StartInformation body, CancellationToken cancellationToken = default)
         {
-            if (xRecordingFile == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(xRecordingFile));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStartPlaybackRequest(xRecordingFile);
+            using var message = CreateStartPlaybackRequest(body);
             _pipeline.Send(message, cancellationToken);
             var headers = new TestProxyStartPlaybackHeaders(message.Response);
             switch (message.Response.Status)
@@ -110,7 +116,7 @@ namespace Azure.Core.TestFramework
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -120,7 +126,7 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/playback/stop", false);
             request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
@@ -145,7 +151,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -167,35 +173,38 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateStartRecordRequest(string xRecordingFile)
+        internal HttpMessage CreateStartRecordRequest(StartInformation body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/record/start", false);
             request.Uri = uri;
-            request.Headers.Add("x-recording-file", xRecordingFile);
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Start recording for a test. </summary>
-        /// <param name="xRecordingFile"> File location of the recording. </param>
+        /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TestProxyStartRecordHeaders>> StartRecordAsync(string xRecordingFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<TestProxyStartRecordHeaders>> StartRecordAsync(StartInformation body, CancellationToken cancellationToken = default)
         {
-            if (xRecordingFile == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(xRecordingFile));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStartRecordRequest(xRecordingFile);
+            using var message = CreateStartRecordRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new TestProxyStartRecordHeaders(message.Response);
             switch (message.Response.Status)
@@ -203,22 +212,22 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Start recording for a test. </summary>
-        /// <param name="xRecordingFile"> File location of the recording. </param>
+        /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
-        public ResponseWithHeaders<TestProxyStartRecordHeaders> StartRecord(string xRecordingFile, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<TestProxyStartRecordHeaders> StartRecord(StartInformation body, CancellationToken cancellationToken = default)
         {
-            if (xRecordingFile == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(xRecordingFile));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateStartRecordRequest(xRecordingFile);
+            using var message = CreateStartRecordRequest(body);
             _pipeline.Send(message, cancellationToken);
             var headers = new TestProxyStartRecordHeaders(message.Response);
             switch (message.Response.Status)
@@ -226,7 +235,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -236,7 +245,7 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/record/stop", false);
             request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
@@ -276,7 +285,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -303,7 +312,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -313,7 +322,7 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "BodyKeySanitizer");
@@ -347,7 +356,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -370,7 +379,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -380,7 +389,7 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "HeaderRegexSanitizer");
@@ -414,7 +423,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -437,7 +446,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -447,7 +456,7 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "UriRegexSanitizer");
@@ -481,7 +490,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -504,7 +513,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -514,7 +523,7 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "BodyRegexSanitizer");
@@ -548,7 +557,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -571,7 +580,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -581,7 +590,7 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/admin/setmatcher", false);
             request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "BodilessMatcher");
@@ -604,7 +613,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -620,7 +629,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -630,7 +639,7 @@ namespace Azure.Core.TestFramework
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/admin/setmatcher", false);
             request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "CustomDefaultMatcher");
@@ -664,7 +673,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -687,7 +696,74 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAddHeaderTransformRequest(HeaderTransform transform, string xRecordingId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/addtransform", false);
+            request.Uri = uri;
+            request.Headers.Add("x-abstraction-identifier", "HeaderTransform");
+            if (xRecordingId != null)
+            {
+                request.Headers.Add("x-recording-id", xRecordingId);
+            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(transform);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Add a header transform. </summary>
+        /// <param name="transform"> The body for a header transform. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the transform to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transform"/> is null. </exception>
+        public async Task<Response> AddHeaderTransformAsync(HeaderTransform transform, string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            if (transform == null)
+            {
+                throw new ArgumentNullException(nameof(transform));
+            }
+
+            using var message = CreateAddHeaderTransformRequest(transform, xRecordingId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Add a header transform. </summary>
+        /// <param name="transform"> The body for a header transform. </param>
+        /// <param name="xRecordingId"> The recording ID to apply the transform to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transform"/> is null. </exception>
+        public Response AddHeaderTransform(HeaderTransform transform, string xRecordingId = null, CancellationToken cancellationToken = default)
+        {
+            if (transform == null)
+            {
+                throw new ArgumentNullException(nameof(transform));
+            }
+
+            using var message = CreateAddHeaderTransformRequest(transform, xRecordingId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

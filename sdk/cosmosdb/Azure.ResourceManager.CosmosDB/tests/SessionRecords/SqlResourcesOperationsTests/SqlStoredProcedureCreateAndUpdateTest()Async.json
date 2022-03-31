@@ -20,7 +20,7 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName5556",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}"
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('First Hello World');}"
           },
           "options": {}
         }
@@ -248,10 +248,10 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName5556",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('First Hello World');}",
             "_rid": "GmYtAOqoK1gBAAAAAAAAgA==",
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/sprocs/GmYtAOqoK1gBAAAAAAAAgA==/",
-            "_etag": "\u00223303018c-0000-0100-0000-612dfc3c0000\u0022",
+            "_etag": "\"3303018c-0000-0100-0000-612dfc3c0000\"",
             "_ts": 1630403644
           }
         }
@@ -295,10 +295,10 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName5556",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('First Hello World');}",
             "_rid": "GmYtAOqoK1gBAAAAAAAAgA==",
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/sprocs/GmYtAOqoK1gBAAAAAAAAgA==/",
-            "_etag": "\u00223303018c-0000-0100-0000-612dfc3c0000\u0022",
+            "_etag": "\"3303018c-0000-0100-0000-612dfc3c0000\"",
             "_ts": 1630403644
           }
         }
@@ -324,7 +324,7 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName5556",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}"
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}"
           },
           "options": {}
         }
@@ -552,10 +552,10 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName5556",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
             "_rid": "GmYtAOqoK1gBAAAAAAAAgA==",
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/sprocs/GmYtAOqoK1gBAAAAAAAAgA==/",
-            "_etag": "\u00223303178c-0000-0100-0000-612dfc430000\u0022",
+            "_etag": "\"3303178c-0000-0100-0000-612dfc430000\"",
             "_ts": 1630403651
           }
         }
@@ -599,10 +599,10 @@
         "properties": {
           "resource": {
             "id": "storedProcedureName5556",
-            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+            "body": "function () { var updatetext = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
             "_rid": "GmYtAOqoK1gBAAAAAAAAgA==",
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/sprocs/GmYtAOqoK1gBAAAAAAAAgA==/",
-            "_etag": "\u00223303178c-0000-0100-0000-612dfc430000\u0022",
+            "_etag": "\"3303178c-0000-0100-0000-612dfc430000\"",
             "_ts": 1630403651
           }
         }

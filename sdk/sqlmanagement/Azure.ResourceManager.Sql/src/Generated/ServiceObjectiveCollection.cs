@@ -15,27 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServiceObjective and their operations over its parent. </summary>
-    public partial class ServiceObjectiveCollection : ArmCollection, IEnumerable<ServiceObjective>, IAsyncEnumerable<ServiceObjective>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServiceObjectiveResource" /> and their operations.
+    /// Each <see cref="ServiceObjectiveResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServiceObjectiveCollection" /> instance call the GetServiceObjectives method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
+    public partial class ServiceObjectiveCollection : ArmCollection, IEnumerable<ServiceObjectiveResource>, IAsyncEnumerable<ServiceObjectiveResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ServiceObjectivesRestOperations _serviceObjectivesRestClient;
+        private readonly ClientDiagnostics _serviceObjectiveClientDiagnostics;
+        private readonly ServiceObjectivesRestOperations _serviceObjectiveRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceObjectiveCollection"/> class for mocking. </summary>
         protected ServiceObjectiveCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ServiceObjectiveCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="ServiceObjectiveCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ServiceObjectiveCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _serviceObjectivesRestClient = new ServiceObjectivesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _serviceObjectiveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServiceObjectiveResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceObjectiveResource.ResourceType, out string serviceObjectiveApiVersion);
+            _serviceObjectiveRestClient = new ServiceObjectivesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceObjectiveApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,34 +49,31 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlServer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+            if (id.ResourceType != SqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServiceObjectives_Get
-        /// <summary> Gets a database service objective. </summary>
+        /// <summary>
+        /// Gets a database service objective.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
+        /// Operation Id: ServiceObjectives_Get
+        /// </summary>
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public virtual Response<ServiceObjective> Get(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceObjectiveResource>> GetAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceObjectivesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken);
+                var response = await _serviceObjectiveRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceObjective(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceObjectiveResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -79,28 +82,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServiceObjectives_Get
-        /// <summary> Gets a database service objective. </summary>
+        /// <summary>
+        /// Gets a database service objective.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
+        /// Operation Id: ServiceObjectives_Get
+        /// </summary>
         /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public async virtual Task<Response<ServiceObjective>> GetAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceObjectiveResource> Get(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceObjectivesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken).ConfigureAwait(false);
+                var response = _serviceObjectiveRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServiceObjective(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServiceObjectiveResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,152 +111,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
+        /// <summary>
+        /// Returns database service objectives.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives
+        /// Operation Id: ServiceObjectives_ListByServer
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public virtual Response<ServiceObjective> GetIfExists(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceObjectiveResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceObjectiveResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
+            async Task<Page<ServiceObjectiveResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _serviceObjectivesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ServiceObjective>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceObjective(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public async virtual Task<Response<ServiceObjective>> GetIfExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
-        {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _serviceObjectivesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ServiceObjective>(null, response.GetRawResponse())
-                    : Response.FromValue(new ServiceObjective(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public virtual Response<bool> Exists(string serviceObjectiveName, CancellationToken cancellationToken = default)
-        {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(serviceObjectiveName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
-        {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(serviceObjectiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServiceObjectives_ListByServer
-        /// <summary> Returns database service objectives. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceObjective" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceObjective> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<ServiceObjective> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
+                using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serviceObjectivesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjective(Parent, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
-        /// OperationId: ServiceObjectives_ListByServer
-        /// <summary> Returns database service objectives. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceObjective" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceObjective> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServiceObjective>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceObjectivesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjective(Parent, value)), null, response.GetRawResponse());
+                    var response = await _serviceObjectiveRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjectiveResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -265,7 +138,88 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        IEnumerator<ServiceObjective> IEnumerable<ServiceObjective>.GetEnumerator()
+        /// <summary>
+        /// Returns database service objectives.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives
+        /// Operation Id: ServiceObjectives_ListByServer
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceObjectiveResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceObjectiveResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<ServiceObjectiveResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _serviceObjectiveRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceObjectiveResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
+        /// Operation Id: ServiceObjectives_Get
+        /// </summary>
+        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
+
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceObjectiveRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
+        /// Operation Id: ServiceObjectives_Get
+        /// </summary>
+        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
+        public virtual Response<bool> Exists(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
+
+            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _serviceObjectiveRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<ServiceObjectiveResource> IEnumerable<ServiceObjectiveResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -275,12 +229,9 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServiceObjective> IAsyncEnumerable<ServiceObjective>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceObjectiveResource> IAsyncEnumerable<ServiceObjectiveResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ServiceObjective, ServiceObjectiveData> Construct() { }
     }
 }

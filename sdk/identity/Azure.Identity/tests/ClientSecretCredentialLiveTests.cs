@@ -12,8 +12,7 @@ namespace Azure.Identity.Tests
 {
     public class ClientSecretCredentialLiveTests : IdentityRecordedTestBase
     {
-        // need to use legacy transport until https://github.com/Azure/azure-sdk-tools/issues/2369 is addressed
-        public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync, useLegacyTransport: true)
+        public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync)
         {
         }
 

@@ -22,9 +22,11 @@ namespace Azure.Verticals.AgriFood.Farming
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -41,17 +43,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public FarmersClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FarmBeatsClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -62,6 +58,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -92,16 +89,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetFarmerAsync(string farmerId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetFarmer");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.GetFarmer");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetFarmerRequest(farmerId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -114,6 +111,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -144,16 +142,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetFarmer(string farmerId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetFarmer");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.GetFarmer");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetFarmerRequest(farmerId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -167,6 +165,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -209,16 +208,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateOrUpdate");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -232,6 +231,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -274,16 +274,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateOrUpdate(string farmerId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateOrUpdate");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, content, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -296,6 +296,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of farmer to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -314,16 +315,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteAsync(string farmerId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.Delete");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(farmerId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -336,6 +337,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="farmerId"> ID of farmer to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -354,16 +356,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response Delete(string farmerId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.Delete");
+            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.Delete");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteRequest(farmerId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -376,6 +378,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -412,16 +415,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetCascadeDeleteJobDetails");
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -434,6 +437,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="jobId"> ID of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -470,16 +474,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.GetCascadeDeleteJobDetails");
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.GetCascadeDeleteJobDetails");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetCascadeDeleteJobDetailsRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -542,11 +546,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual AsyncPageable<BinaryData> GetFarmersAsync(IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "FarmersClient.GetFarmers");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "FarmersClient.GetFarmers");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -554,7 +556,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetFarmersRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
                         : CreateGetFarmersNextPageRequest(nextLink, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -615,11 +617,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Pageable<BinaryData> GetFarmers(IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "FarmersClient.GetFarmers");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "FarmersClient.GetFarmers");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -627,7 +627,7 @@ namespace Azure.Verticals.AgriFood.Farming
                     var message = string.IsNullOrEmpty(nextLink)
                         ? CreateGetFarmersRequest(ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
                         : CreateGetFarmersNextPageRequest(nextLink, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -635,11 +635,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified farmer. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the farmer to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -676,16 +677,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(bool waitForCompletion, string jobId, string farmerId, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateCascadeDeleteJob");
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, "FarmersClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "FarmersClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -695,11 +697,12 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Create a cascade delete job for specified farmer. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="farmerId"> ID of the farmer to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="farmerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -736,16 +739,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(bool waitForCompletion, string jobId, string farmerId, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, RequestContext context = null)
         {
-            using var scope = _clientDiagnostics.CreateScope("FarmersClient.CreateCascadeDeleteJob");
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(farmerId, nameof(farmerId));
+
+            using var scope = ClientDiagnostics.CreateScope("FarmersClient.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, "FarmersClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "FarmersClient.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -756,7 +760,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         internal HttpMessage CreateGetFarmersRequest(IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -817,13 +821,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetFarmerRequest(string farmerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -833,13 +836,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -851,13 +853,12 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200201.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteRequest(string farmerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -867,13 +868,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -883,13 +883,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -900,13 +899,12 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetFarmersNextPageRequest(string nextLink, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -914,62 +912,16 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200201 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    201 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier202 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    202 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

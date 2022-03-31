@@ -2,12 +2,13 @@
   <PropertyGroup>
     <Description>A library for querying Azure Monitor's Logs and Metrics data sources.</Description>
     <AssemblyTitle>Azure Monitor Query client library</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.1</ApiCompatVersion>
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure Monitor Query</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,19 +18,7 @@
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />

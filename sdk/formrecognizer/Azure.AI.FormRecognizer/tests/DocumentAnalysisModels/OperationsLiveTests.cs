@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            var operation = await client.StartBuildModelAsync(trainingFilesUri, modelId);
+            var operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
             Assert.IsNotNull(operation.GetRawResponse());
 
             var sameOperation = InstrumentOperation(new BuildModelOperation(operation.Id, nonInstrumentedClient));
@@ -64,11 +64,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         public async Task BuildModelOperationPercentageCompletedValue()
         {
-            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
+            var client = CreateDocumentModelAdministrationClient(out var _);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            var operation = await client.StartBuildModelAsync(trainingFilesUri, modelId);
+            var operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
             Assert.AreEqual(0, operation.PercentCompleted);
 
             await operation.WaitForCompletionAsync();
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
-            var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            var operation = await client.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
             Assert.IsNotNull(operation.GetRawResponse());
 
             var sameOperation = InstrumentOperation(new CopyModelOperation(operation.Id, nonInstrumentedClient));
@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
-            var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            var operation = await client.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
             Assert.AreEqual(0, operation.PercentCompleted);
 
             await operation.WaitForCompletionAsync();

@@ -57,7 +57,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     AssetFileType.Fbx,
                     AssetFileType.Glb,
-                    AssetFileType.Gltf,
                     AssetFileType.Obj,
                     AssetFileType.Ply
                 },

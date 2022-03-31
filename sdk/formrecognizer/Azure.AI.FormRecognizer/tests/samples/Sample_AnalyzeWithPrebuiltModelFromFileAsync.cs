@@ -88,11 +88,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                                 if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
                                 {
-                                    if (itemAmountField.ValueType == DocumentFieldType.Double)
+                                    if (itemAmountField.ValueType == DocumentFieldType.Currency)
                                     {
-                                        double itemAmount = itemAmountField.AsDouble();
+                                        CurrencyValue itemAmount = itemAmountField.AsCurrency();
 
-                                        Console.WriteLine($"  Amount: '{itemAmount}', with confidence {itemAmountField.Confidence}");
+                                        Console.WriteLine($"  Amount: '{itemAmount.Symbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
                                     }
                                 }
                             }
@@ -102,28 +102,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                 if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
                 {
-                    if (subTotalField.ValueType == DocumentFieldType.Double)
+                    if (subTotalField.ValueType == DocumentFieldType.Currency)
                     {
-                        double subTotal = subTotalField.AsDouble();
-                        Console.WriteLine($"Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
+                        CurrencyValue subTotal = subTotalField.AsCurrency();
+                        Console.WriteLine($"Sub Total: '{subTotal.Symbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
                     }
                 }
 
                 if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
                 {
-                    if (totalTaxField.ValueType == DocumentFieldType.Double)
+                    if (totalTaxField.ValueType == DocumentFieldType.Currency)
                     {
-                        double totalTax = totalTaxField.AsDouble();
-                        Console.WriteLine($"Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
+                        CurrencyValue totalTax = totalTaxField.AsCurrency();
+                        Console.WriteLine($"Total Tax: '{totalTax.Symbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
                     }
                 }
 
                 if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
                 {
-                    if (invoiceTotalField.ValueType == DocumentFieldType.Double)
+                    if (invoiceTotalField.ValueType == DocumentFieldType.Currency)
                     {
-                        double invoiceTotal = invoiceTotalField.AsDouble();
-                        Console.WriteLine($"Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
+                        CurrencyValue invoiceTotal = invoiceTotalField.AsCurrency();
+                        Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
                     }
                 }
             }

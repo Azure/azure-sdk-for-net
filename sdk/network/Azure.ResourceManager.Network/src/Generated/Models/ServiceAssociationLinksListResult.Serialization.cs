@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ServiceAssociationLinksListResult
+    internal partial class ServiceAssociationLinksListResult
     {
         internal static ServiceAssociationLinksListResult DeserializeServiceAssociationLinksListResult(JsonElement element)
         {

@@ -35,17 +35,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             HttpRequestMessage req,
             string functionName,
             Func<JArray, string, CancellationToken, Task<HttpResponseMessage>> eventsFunc,
+            BindingType bindingType,
             CancellationToken cancellationToken)
         {
+            // CloudEvent subscription validation handshake
+            if (req.Method == HttpMethod.Options)
+            {
+                if (bindingType == BindingType.EventGridEvent)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.Conflict)
+                    {
+                        Content = new StringContent("CloudEvent schema cannot be used for a function that binds to EventGridEvent.")
+                    };
+                }
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Headers.Add("Webhook-Allowed-Origin", "eventgrid.azure.net");
+                return response;
+            }
+
             string eventTypeHeader = null;
             if (req.Headers.TryGetValues(EventTypeKey, out IEnumerable<string> eventTypeHeaders))
             {
                 eventTypeHeader = eventTypeHeaders.First();
             }
 
-            // Subscription validation handshake
+            // EventGridEvent Subscription validation handshake
             if (string.Equals(eventTypeHeader, SubscriptionValidationEvent, StringComparison.OrdinalIgnoreCase))
             {
+                if (bindingType == BindingType.CloudEvent)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.Conflict)
+                    {
+                        Content = new StringContent("EventGridEvent schema cannot be used for a function that binds to CloudEvent.")
+                    };
+                }
                 string validationCode;
                 string json = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                 JToken events = JToken.Parse(json);

@@ -28,5 +28,42 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WriteEndObject();
         }
+
+        internal static CdnManagedHttpsOptions DeserializeCdnManagedHttpsOptions(JsonElement element)
+        {
+            CdnCertificateSourceParameters certificateSourceParameters = default;
+            CertificateSource certificateSource = default;
+            ProtocolType protocolType = default;
+            Optional<MinimumTlsVersion> minimumTlsVersion = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("certificateSourceParameters"))
+                {
+                    certificateSourceParameters = CdnCertificateSourceParameters.DeserializeCdnCertificateSourceParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("certificateSource"))
+                {
+                    certificateSource = new CertificateSource(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("protocolType"))
+                {
+                    protocolType = new ProtocolType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("minimumTlsVersion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    minimumTlsVersion = property.Value.GetString().ToMinimumTlsVersion();
+                    continue;
+                }
+            }
+            return new CdnManagedHttpsOptions(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), certificateSourceParameters);
+        }
     }
 }

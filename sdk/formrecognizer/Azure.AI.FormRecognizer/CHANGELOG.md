@@ -1,14 +1,39 @@
 # Release History
 
-## 4.0.0-beta.3 (Unreleased)
+## 4.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added `DocumentAnalysisClient` integration for ASP.NET Core ([#27123](https://github.com/azure/azure-sdk-for-net/issues/27123)).
 
 ### Breaking Changes
+- Renamed `StartCopyModel` methods to `StartCopyModelTo`.
+- Made `DocumentSpan` a `struct` instead of a `class`.
+- In `AccountProperties`, renamed `Count` and `Limit` to `DocumentModelCount` and `DocumentModelLimit`.
+- In `DocumentTableCell`, properties `Kind`, `RowSpan`, and `ColumnSpan` are not nullable anymore.
+- In the method `StartCreateComposedModel`, renamed parameter `modelIds` to `componentModelIds`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.0.0-beta.3 (2022-02-10)
+
+### Features Added
+- Added the `DocumentField.AsCurrency` method and the `DocumentFieldType.Currency` enum value to support analyzed currency fields.
+- Added the `Languages` property to the `AnalyzeResult` class. This property is populated when using the `prebuilt-read` model and holds information about the languages in which the document is written.
+- Added the `Tags` property to the `BuildModelOptions` class. This property can be used to specify custom key-value attributes associated with the model to be built.
+- Added the `Tags` property to the `DocumentModelInfo` and to the `ModelOperationInfo` classes.
+- Added the `BuildMode` property to `DocTypeInfo` to indicate the technique used when building the correspoding model.
+- Added the `DocumentAnalysisModelFactory` static class to the `Azure.AI.FormRecognizer.DocumentAnalysis` namespace. It contains methods for instantiating `DocumentAnalysis` models for mocking.
+
+### Breaking Changes
+- Added the required parameter `buildMode` to `StartBuildModel` methods. Users must now choose the technique (`Template` or `Neural`) used to build models. For more information about the available build modes and their differences, see [here](https://aka.ms/azsdk/formrecognizer/buildmode).
+- Added the `tags` parameter to the `GetCopyAuthorization` methods.
+- Added the `tags` parameter to the `StartCreateComposedModel` methods.
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-01-30-preview`, so they don't support `2021-09-30-preview` anymore.
+
+### Bugs Fixed
+- FormRecognizerAudience and DocumentAnalysisAudience have been added to allow the user to select the Azure cloud where the resource is located. Issue [17192](https://github.com/azure/azure-sdk-for-net/issues/17192).
 
 ## 4.0.0-beta.2 (2021-11-09)
 

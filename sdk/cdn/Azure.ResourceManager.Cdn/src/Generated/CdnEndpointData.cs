@@ -5,40 +5,35 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class representing the CdnEndpoint data model. </summary>
-    public partial class CdnEndpointData : TrackedResource
+    public partial class CdnEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CdnEndpointData. </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public CdnEndpointData(string location) : base(location)
+        /// <param name="location"> The location. </param>
+        public CdnEndpointData(AzureLocation location) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
             ContentTypesToCompress = new ChangeTrackingList<string>();
             GeoFilters = new ChangeTrackingList<GeoFilter>();
             UrlSigningKeys = new ChangeTrackingList<UrlSigningKey>();
             Origins = new ChangeTrackingList<DeepCreatedOrigin>();
             OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
+            CustomDomains = new ChangeTrackingList<CdnCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of CdnEndpointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Read only system data. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="originPath"> A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
         /// <param name="contentTypesToCompress"> List of content types on which compression applies. The value should be a valid MIME type. </param>
         /// <param name="originHostHeader"> The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </param>
@@ -56,9 +51,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
         /// <param name="origins"> The source of the content being delivered via CDN. </param>
         /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
+        /// <param name="customDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UrlSigningKey> urlSigningKeys, EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, EndpointResourceState? resourceState, string provisioningState) : base(id, name, type, systemData, location, tags)
+        internal CdnEndpointData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UrlSigningKey> urlSigningKeys, EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<CdnCustomDomainData> customDomains, EndpointResourceState? resourceState, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -77,6 +73,7 @@ namespace Azure.ResourceManager.Cdn
             HostName = hostName;
             Origins = origins;
             OriginGroups = originGroups;
+            CustomDomains = customDomains;
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
         }
@@ -102,19 +99,45 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> List of rules defining the user&apos;s geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </summary>
         public IList<GeoFilter> GeoFilters { get; }
         /// <summary> A reference to the origin group. </summary>
-        public EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; set; }
+        internal EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; set; }
+        /// <summary> Resource ID. </summary>
+        public string DefaultOriginGroupId
+        {
+            get => DefaultOriginGroup is null ? default : DefaultOriginGroup.Id;
+            set
+            {
+                if (DefaultOriginGroup is null)
+                    DefaultOriginGroup = new EndpointPropertiesUpdateParametersDefaultOriginGroup();
+                DefaultOriginGroup.Id = value;
+            }
+        }
+
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
         public IList<UrlSigningKey> UrlSigningKeys { get; set; }
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
         public EndpointPropertiesUpdateParametersDeliveryPolicy DeliveryPolicy { get; set; }
         /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>
-        public EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
+        internal EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
+        /// <summary> Resource ID. </summary>
+        public string WebApplicationFirewallPolicyLinkId
+        {
+            get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
+            set
+            {
+                if (WebApplicationFirewallPolicyLink is null)
+                    WebApplicationFirewallPolicyLink = new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink();
+                WebApplicationFirewallPolicyLink.Id = value;
+            }
+        }
+
         /// <summary> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </summary>
         public string HostName { get; }
         /// <summary> The source of the content being delivered via CDN. </summary>
         public IList<DeepCreatedOrigin> Origins { get; }
         /// <summary> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </summary>
         public IList<DeepCreatedOriginGroup> OriginGroups { get; }
+        /// <summary> The custom domains under the endpoint. </summary>
+        public IReadOnlyList<CdnCustomDomainData> CustomDomains { get; }
         /// <summary> Resource status of the endpoint. </summary>
         public EndpointResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the endpoint. </summary>

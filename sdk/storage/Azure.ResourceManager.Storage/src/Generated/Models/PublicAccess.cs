@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Specifies whether data in the container may be accessed publicly and the level of access. </summary>
     public enum PublicAccess
     {
+        /// <summary> None. </summary>
+        None,
         /// <summary> Container. </summary>
         Container,
         /// <summary> Blob. </summary>
-        Blob,
-        /// <summary> None. </summary>
-        None
+        Blob
     }
 }

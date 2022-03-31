@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> HTTP Proxy configuration for the VM. </summary>
-    public partial class HttpProxyConfiguration
+    internal partial class HttpProxyConfiguration
     {
         /// <summary> Initializes a new instance of HttpProxyConfiguration. </summary>
         public HttpProxyConfiguration()

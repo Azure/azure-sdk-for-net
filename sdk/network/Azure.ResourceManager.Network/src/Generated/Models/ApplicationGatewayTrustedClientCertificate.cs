@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the trusted client certificate that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="validatedCertData"> Validated certificate data. </param>
         /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
-        internal ApplicationGatewayTrustedClientCertificate(string id, string name, string etag, string type, string data, string validatedCertData, string clientCertIssuerDN, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayTrustedClientCertificate(string id, string name, string etag, string resourceType, string data, string validatedCertData, string clientCertIssuerDN, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Data = data;
             ValidatedCertData = validatedCertData;
             ClientCertIssuerDN = clientCertIssuerDN;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Certificate public data. </summary>
         public string Data { get; set; }
         /// <summary> Validated certificate data. </summary>

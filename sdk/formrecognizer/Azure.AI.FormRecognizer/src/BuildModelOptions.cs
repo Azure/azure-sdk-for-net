@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
@@ -18,6 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         public BuildModelOptions()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary>
@@ -30,5 +34,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For example, you may use the prefix to restrict subfolders.
         /// </summary>
         public string Prefix { get; set; }
+
+        /// <summary>
+        /// A list of user-defined key-value tag attributes associated with the model.
+        /// </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

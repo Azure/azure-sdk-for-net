@@ -40,8 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="servicePrincipalKey"> The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobFSLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object accountKey, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBlobFSLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object accountKey, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             AccountKey = accountKey;
@@ -49,6 +51,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
+            ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalCredential = servicePrincipalCredential;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "AzureBlobFS";
         }
@@ -65,6 +69,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
         public object AzureCloudType { get; set; }
+        /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
+        public object ServicePrincipalCredentialType { get; set; }
+        /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
+        public SecretBase ServicePrincipalCredential { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }

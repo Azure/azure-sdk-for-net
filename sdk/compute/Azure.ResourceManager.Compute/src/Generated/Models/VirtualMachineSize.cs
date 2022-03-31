@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Name = name;
             NumberOfCores = numberOfCores;
-            OsDiskSizeInMB = osDiskSizeInMB;
+            OSDiskSizeInMB = osDiskSizeInMB;
             ResourceDiskSizeInMB = resourceDiskSizeInMB;
             MemoryInMB = memoryInMB;
             MaxDataDiskCount = maxDataDiskCount;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The number of cores supported by the virtual machine size. For Constrained vCPU capable VM sizes, this number represents the total vCPUs of quota that the VM uses. For accurate vCPU count, please refer to https://docs.microsoft.com/azure/virtual-machines/constrained-vcpu or https://docs.microsoft.com/rest/api/compute/resourceskus/list. </summary>
         public int? NumberOfCores { get; }
         /// <summary> The OS disk size, in MB, allowed by the virtual machine size. </summary>
-        public int? OsDiskSizeInMB { get; }
+        public int? OSDiskSizeInMB { get; }
         /// <summary> The resource disk size, in MB, allowed by the virtual machine size. </summary>
         public int? ResourceDiskSizeInMB { get; }
         /// <summary> The amount of memory, in MB, supported by the virtual machine size. </summary>

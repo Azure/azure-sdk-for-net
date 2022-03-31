@@ -40,7 +40,7 @@ namespace Azure.DigitalTwins.Core
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.DigitalTwins.Core
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 

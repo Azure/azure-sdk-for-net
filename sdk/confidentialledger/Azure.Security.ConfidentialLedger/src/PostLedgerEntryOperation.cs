@@ -32,7 +32,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             _client = client;
             Id = transactionId;
-            _operationInternal = new(_client.clientDiagnostics, this, rawResponse: null, nameof(PostLedgerEntryOperation));
+            _operationInternal = new(_client.ClientDiagnostics, this, rawResponse: null, nameof(PostLedgerEntryOperation));
         }
 
         /// <summary>
@@ -65,9 +65,10 @@ namespace Azure.Security.ConfidentialLedger
 
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
+                var error = new ResponseError(null, exceptionMessage);
                 var ex = async
-                    ? await _client.clientDiagnostics.CreateRequestFailedExceptionAsync(statusResponse, exceptionMessage).ConfigureAwait(false)
-                    : _client.clientDiagnostics.CreateRequestFailedException(statusResponse, exceptionMessage);
+                    ? await _client.ClientDiagnostics.CreateRequestFailedExceptionAsync(statusResponse, error).ConfigureAwait(false)
+                    : _client.ClientDiagnostics.CreateRequestFailedException(statusResponse, error);
                 return OperationState.Failure(GetRawResponse(), new RequestFailedException(exceptionMessage, ex));
             }
 

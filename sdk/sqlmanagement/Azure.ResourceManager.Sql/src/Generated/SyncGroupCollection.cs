@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of SyncGroup and their operations over its parent. </summary>
-    public partial class SyncGroupCollection : ArmCollection, IEnumerable<SyncGroup>, IAsyncEnumerable<SyncGroup>
+    /// <summary>
+    /// A class representing a collection of <see cref="SyncGroupResource" /> and their operations.
+    /// Each <see cref="SyncGroupResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="SyncGroupCollection" /> instance call the GetSyncGroups method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
+    public partial class SyncGroupCollection : ArmCollection, IEnumerable<SyncGroupResource>, IAsyncEnumerable<SyncGroupResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly SyncGroupsRestOperations _syncGroupsRestClient;
+        private readonly ClientDiagnostics _syncGroupClientDiagnostics;
+        private readonly SyncGroupsRestOperations _syncGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SyncGroupCollection"/> class for mocking. </summary>
         protected SyncGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncGroupCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SyncGroupCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="SyncGroupCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SyncGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _syncGroupsRestClient = new SyncGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _syncGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SyncGroupResource.ResourceType, out string syncGroupApiVersion);
+            _syncGroupRestClient = new SyncGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, syncGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,76 +49,33 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != SqlDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SyncGroups_CreateOrUpdate
-        /// <summary> Creates or updates a sync group. </summary>
+        /// <summary>
+        /// Creates or updates a sync group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
+        /// Operation Id: SyncGroups_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="parameters"> The requested sync group resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual SyncGroupCreateOrUpdateOperation CreateOrUpdate(string syncGroupName, SyncGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SyncGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string syncGroupName, SyncGroupData data, CancellationToken cancellationToken = default)
         {
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.CreateOrUpdate");
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _syncGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters, cancellationToken);
-                var operation = new SyncGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _syncGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SyncGroups_CreateOrUpdate
-        /// <summary> Creates or updates a sync group. </summary>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="parameters"> The requested sync group resource state. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<SyncGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string syncGroupName, SyncGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _syncGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SyncGroupCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _syncGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _syncGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SyncGroupResource>(new SyncGroupOperationSource(Client), _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -124,28 +86,60 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SyncGroups_Get
-        /// <summary> Gets a sync group. </summary>
+        /// <summary>
+        /// Creates or updates a sync group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
+        /// Operation Id: SyncGroups_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="data"> The requested sync group resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        public virtual Response<SyncGroup> Get(string syncGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SyncGroupResource> CreateOrUpdate(WaitUntil waitUntil, string syncGroupName, SyncGroupData data, CancellationToken cancellationToken = default)
         {
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.Get");
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _syncGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken);
+                var response = _syncGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, data, cancellationToken);
+                var operation = new SqlArmOperation<SyncGroupResource>(new SyncGroupOperationSource(Client), _syncGroupClientDiagnostics, Pipeline, _syncGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a sync group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
+        /// Operation Id: SyncGroups_Get
+        /// </summary>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        public virtual async Task<Response<SyncGroupResource>> GetAsync(string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _syncGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SyncGroup(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SyncGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,28 +148,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SyncGroups_Get
-        /// <summary> Gets a sync group. </summary>
+        /// <summary>
+        /// Gets a sync group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
+        /// Operation Id: SyncGroups_Get
+        /// </summary>
         /// <param name="syncGroupName"> The name of the sync group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        public async virtual Task<Response<SyncGroup>> GetAsync(string syncGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<SyncGroupResource> Get(string syncGroupName, CancellationToken cancellationToken = default)
         {
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.Get");
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _syncGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken).ConfigureAwait(false);
+                var response = _syncGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SyncGroup(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SyncGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,126 +177,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <summary>
+        /// Lists sync groups under a hub database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups
+        /// Operation Id: SyncGroups_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        public virtual Response<SyncGroup> GetIfExists(string syncGroupName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SyncGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SyncGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (syncGroupName == null)
+            async Task<Page<SyncGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _syncGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<SyncGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SyncGroup(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        public async virtual Task<Response<SyncGroup>> GetIfExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _syncGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<SyncGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new SyncGroup(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        public virtual Response<bool> Exists(string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(syncGroupName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="syncGroupName"> The name of the sync group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(syncGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SyncGroups_ListByDatabase
-        /// <summary> Lists sync groups under a hub database. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SyncGroup> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<SyncGroup> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.GetAll");
+                using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _syncGroupsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _syncGroupRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,55 +201,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SyncGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SyncGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.GetAll");
+                using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _syncGroupsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// OperationId: SyncGroups_ListByDatabase
-        /// <summary> Lists sync groups under a hub database. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SyncGroup> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SyncGroup>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _syncGroupsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SyncGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SyncGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _syncGroupsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _syncGroupRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -370,7 +219,103 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<SyncGroup> IEnumerable<SyncGroup>.GetEnumerator()
+        /// <summary>
+        /// Lists sync groups under a hub database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups
+        /// Operation Id: SyncGroups_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SyncGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SyncGroupResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<SyncGroupResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _syncGroupRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SyncGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _syncGroupRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SyncGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
+        /// Operation Id: SyncGroups_Get
+        /// </summary>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _syncGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}
+        /// Operation Id: SyncGroups_Get
+        /// </summary>
+        /// <param name="syncGroupName"> The name of the sync group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        public virtual Response<bool> Exists(string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _syncGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncGroupName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<SyncGroupResource> IEnumerable<SyncGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,12 +325,9 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SyncGroup> IAsyncEnumerable<SyncGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SyncGroupResource> IAsyncEnumerable<SyncGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SyncGroup, SyncGroupData> Construct() { }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CsmOperationDescriptionProperties
+    internal partial class CsmOperationDescriptionProperties
     {
         internal static CsmOperationDescriptionProperties DeserializeCsmOperationDescriptionProperties(JsonElement element)
         {

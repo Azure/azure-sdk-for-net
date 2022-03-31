@@ -15,27 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of DatabaseColumn and their operations over its parent. </summary>
-    public partial class ManagedInstanceDatabaseSchemaTableColumnCollection : ArmCollection, IEnumerable<ManagedInstanceDatabaseSchemaTableColumn>, IAsyncEnumerable<ManagedInstanceDatabaseSchemaTableColumn>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceDatabaseSchemaTableResource" />.
+    /// To get a <see cref="ManagedInstanceDatabaseSchemaTableColumnCollection" /> instance call the GetManagedInstanceDatabaseSchemaTableColumns method from an instance of <see cref="ManagedInstanceDatabaseSchemaTableResource" />.
+    /// </summary>
+    public partial class ManagedInstanceDatabaseSchemaTableColumnCollection : ArmCollection, IEnumerable<ManagedInstanceDatabaseSchemaTableColumnResource>, IAsyncEnumerable<ManagedInstanceDatabaseSchemaTableColumnResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnsRestClient;
+        private readonly ClientDiagnostics _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics;
+        private readonly ManagedDatabaseColumnsRestOperations _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaTableColumnCollection"/> class for mocking. </summary>
         protected ManagedInstanceDatabaseSchemaTableColumnCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDatabaseSchemaTableColumnCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ManagedInstanceDatabaseSchemaTableColumnCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDatabaseSchemaTableColumnCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ManagedInstanceDatabaseSchemaTableColumnCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDatabaseSchemaTableColumnResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedInstanceDatabaseSchemaTableColumnResource.ResourceType, out string managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
+            _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,34 +49,31 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedInstanceDatabaseSchemaTable.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceDatabaseSchemaTable.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedInstanceDatabaseSchemaTableResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceDatabaseSchemaTableResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// OperationId: ManagedDatabaseColumns_Get
-        /// <summary> Get managed database column. </summary>
+        /// <summary>
+        /// Get managed database column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
+        /// Operation Id: ManagedDatabaseColumns_Get
+        /// </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public virtual Response<ManagedInstanceDatabaseSchemaTableColumn> Get(string columnName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceDatabaseSchemaTableColumnResource>> GetAsync(string columnName, CancellationToken cancellationToken = default)
         {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.Get");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken);
+                var response = await _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumn(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -79,28 +82,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// OperationId: ManagedDatabaseColumns_Get
-        /// <summary> Get managed database column. </summary>
+        /// <summary>
+        /// Get managed database column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
+        /// Operation Id: ManagedDatabaseColumns_Get
+        /// </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public async virtual Task<Response<ManagedInstanceDatabaseSchemaTableColumn>> GetAsync(string columnName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceDatabaseSchemaTableColumnResource> Get(string columnName, CancellationToken cancellationToken = default)
         {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.Get");
+            using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken).ConfigureAwait(false);
+                var response = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumn(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,127 +111,24 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public virtual Response<ManagedInstanceDatabaseSchemaTableColumn> GetIfExists(string columnName, CancellationToken cancellationToken = default)
-        {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _managedDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceDatabaseSchemaTableColumn>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumn(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public async virtual Task<Response<ManagedInstanceDatabaseSchemaTableColumn>> GetIfExistsAsync(string columnName, CancellationToken cancellationToken = default)
-        {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _managedDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ManagedInstanceDatabaseSchemaTableColumn>(null, response.GetRawResponse())
-                    : Response.FromValue(new ManagedInstanceDatabaseSchemaTableColumn(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public virtual Response<bool> Exists(string columnName, CancellationToken cancellationToken = default)
-        {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(columnName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="columnName"> The name of the column. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string columnName, CancellationToken cancellationToken = default)
-        {
-            if (columnName == null)
-            {
-                throw new ArgumentNullException(nameof(columnName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(columnName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// OperationId: ManagedDatabaseColumns_ListByTable
-        /// <summary> List managed database columns. </summary>
+        /// <summary>
+        /// List managed database columns
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns
+        /// Operation Id: ManagedDatabaseColumns_ListByTable
+        /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceDatabaseSchemaTableColumn> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceDatabaseSchemaTableColumnResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceDatabaseSchemaTableColumn> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstanceDatabaseSchemaTableColumnResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetAll");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseColumnsRestClient.ListByTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTableColumn(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.ListByTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -237,56 +136,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstanceDatabaseSchemaTableColumn> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstanceDatabaseSchemaTableColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetAll");
+                using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseColumnsRestClient.ListByTableNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTableColumn(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// OperationId: ManagedDatabaseColumns_ListByTable
-        /// <summary> List managed database columns. </summary>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceDatabaseSchemaTableColumn> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ManagedInstanceDatabaseSchemaTableColumn>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseColumnsRestClient.ListByTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTableColumn(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedInstanceDatabaseSchemaTableColumn>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseColumnsRestClient.ListByTableNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTableColumn(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.ListByTableNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -297,7 +154,104 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<ManagedInstanceDatabaseSchemaTableColumn> IEnumerable<ManagedInstanceDatabaseSchemaTableColumn>.GetEnumerator()
+        /// <summary>
+        /// List managed database columns
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns
+        /// Operation Id: ManagedDatabaseColumns_ListByTable
+        /// </summary>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceDatabaseSchemaTableColumnResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        {
+            Page<ManagedInstanceDatabaseSchemaTableColumnResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.ListByTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ManagedInstanceDatabaseSchemaTableColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.ListByTableNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
+        /// Operation Id: ManagedDatabaseColumns_Get
+        /// </summary>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
+        /// Operation Id: ManagedDatabaseColumns_Get
+        /// </summary>
+        /// <param name="columnName"> The name of the column. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        public virtual Response<bool> Exists(string columnName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
+            using var scope = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableColumnCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _managedInstanceDatabaseSchemaTableColumnManagedDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<ManagedInstanceDatabaseSchemaTableColumnResource> IEnumerable<ManagedInstanceDatabaseSchemaTableColumnResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -307,12 +261,9 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedInstanceDatabaseSchemaTableColumn> IAsyncEnumerable<ManagedInstanceDatabaseSchemaTableColumn>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedInstanceDatabaseSchemaTableColumnResource> IAsyncEnumerable<ManagedInstanceDatabaseSchemaTableColumnResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ManagedInstanceDatabaseSchemaTableColumn, DatabaseColumnData> Construct() { }
     }
 }

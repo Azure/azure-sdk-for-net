@@ -16,29 +16,33 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of KubeEnvironment and their operations over its parent. </summary>
-    public partial class KubeEnvironmentCollection : ArmCollection, IEnumerable<KubeEnvironment>, IAsyncEnumerable<KubeEnvironment>
+    /// <summary>
+    /// A class representing a collection of <see cref="KubeEnvironmentResource" /> and their operations.
+    /// Each <see cref="KubeEnvironmentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="KubeEnvironmentCollection" /> instance call the GetKubeEnvironments method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class KubeEnvironmentCollection : ArmCollection, IEnumerable<KubeEnvironmentResource>, IAsyncEnumerable<KubeEnvironmentResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly KubeEnvironmentsRestOperations _kubeEnvironmentsRestClient;
+        private readonly ClientDiagnostics _kubeEnvironmentClientDiagnostics;
+        private readonly KubeEnvironmentsRestOperations _kubeEnvironmentRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="KubeEnvironmentCollection"/> class for mocking. </summary>
         protected KubeEnvironmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal KubeEnvironmentCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="KubeEnvironmentCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal KubeEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _kubeEnvironmentsRestClient = new KubeEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _kubeEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(KubeEnvironmentResource.ResourceType, out string kubeEnvironmentApiVersion);
+            _kubeEnvironmentRestClient = new KubeEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kubeEnvironmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,76 +50,33 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_CreateOrUpdate
-        /// <summary> Description for Creates or updates a Kubernetes Environment. </summary>
+        /// <summary>
+        /// Description for Creates or updates a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="kubeEnvironmentEnvelope"> Configuration details of the Kubernetes Environment. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Configuration details of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public virtual KubeEnvironmentCreateOrUpdateOperation CreateOrUpdate(string name, KubeEnvironmentData kubeEnvironmentEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<KubeEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, KubeEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (kubeEnvironmentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(kubeEnvironmentEnvelope));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.CreateOrUpdate");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _kubeEnvironmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope, cancellationToken);
-                var operation = new KubeEnvironmentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _kubeEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_CreateOrUpdate
-        /// <summary> Description for Creates or updates a Kubernetes Environment. </summary>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="kubeEnvironmentEnvelope"> Configuration details of the Kubernetes Environment. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public async virtual Task<KubeEnvironmentCreateOrUpdateOperation> CreateOrUpdateAsync(string name, KubeEnvironmentData kubeEnvironmentEnvelope, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (kubeEnvironmentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(kubeEnvironmentEnvelope));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _kubeEnvironmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new KubeEnvironmentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _kubeEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope).Request, response);
-                if (waitForCompletion)
+                var response = await _kubeEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<KubeEnvironmentResource>(new KubeEnvironmentOperationSource(Client), _kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -126,28 +87,60 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_Get
-        /// <summary> Description for Get the properties of a Kubernetes Environment. </summary>
+        /// <summary>
+        /// Description for Creates or updates a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="data"> Configuration details of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<KubeEnvironment> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<KubeEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string name, KubeEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.Get");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _kubeEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var response = _kubeEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
+                var operation = new AppServiceArmOperation<KubeEnvironmentResource>(new KubeEnvironmentOperationSource(Client), _kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<KubeEnvironmentResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _kubeEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KubeEnvironment(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,28 +149,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_Get
-        /// <summary> Description for Get the properties of a Kubernetes Environment. </summary>
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<KubeEnvironment>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual Response<KubeEnvironmentResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.Get");
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _kubeEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var response = _kubeEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new KubeEnvironment(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,126 +178,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <summary>
+        /// Description for Get all the Kubernetes Environments in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
+        /// Operation Id: KubeEnvironments_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<KubeEnvironment> GetIfExists(string name, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KubeEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (name == null)
+            async Task<Page<KubeEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _kubeEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<KubeEnvironment>(null, response.GetRawResponse())
-                    : Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<KubeEnvironment>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _kubeEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<KubeEnvironment>(null, response.GetRawResponse())
-                    : Response.FromValue(new KubeEnvironment(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_ListByResourceGroup
-        /// <summary> Description for Get all the Kubernetes Environments in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubeEnvironment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KubeEnvironment> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<KubeEnvironment> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
+                using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _kubeEnvironmentsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _kubeEnvironmentRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -313,55 +202,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<KubeEnvironment> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<KubeEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
+                using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _kubeEnvironmentsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: KubeEnvironments_ListByResourceGroup
-        /// <summary> Description for Get all the Kubernetes Environments in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KubeEnvironment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KubeEnvironment> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<KubeEnvironment>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubeEnvironmentsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<KubeEnvironment>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _kubeEnvironmentsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironment(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _kubeEnvironmentRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -372,21 +220,67 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="KubeEnvironment" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Description for Get all the Kubernetes Environments in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
+        /// Operation Id: KubeEnvironments_ListByResourceGroup
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KubeEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAllAsGenericResources");
+            Page<KubeEnvironmentResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _kubeEnvironmentRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<KubeEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _kubeEnvironmentRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(KubeEnvironment.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _kubeEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -395,21 +289,25 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Filters the list of <see cref="KubeEnvironment" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
+        /// Operation Id: KubeEnvironments_Get
+        /// </summary>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(KubeEnvironment.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _kubeEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -418,7 +316,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<KubeEnvironment> IEnumerable<KubeEnvironment>.GetEnumerator()
+        IEnumerator<KubeEnvironmentResource> IEnumerable<KubeEnvironmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -428,12 +326,9 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<KubeEnvironment> IAsyncEnumerable<KubeEnvironment>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<KubeEnvironmentResource> IAsyncEnumerable<KubeEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, KubeEnvironment, KubeEnvironmentData> Construct() { }
     }
 }

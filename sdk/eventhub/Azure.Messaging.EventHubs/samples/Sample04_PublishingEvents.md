@@ -6,7 +6,6 @@ This sample demonstrates publishing events to an Event Hub.  To begin, please en
 
 Event publishing is the responsibility of an event producer.  The client library offers two producers, the `EventHubProducerClient` and `EventHubBufferedProducerClient`, each tailored to a unique pattern of use, but applicable to the same application scenarios.  This sample will include code snippets for both types, unless the concept is not applicable to one.  More information about the available event producers can be found in [Sample02_EventHubsClients](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_EventHubsClients.md).
 
-
 Each of the event producer client types are safe to cache and use for the lifetime of an application, which is best practice when the events are published regularly or semi-regularly. The event producers are responsible for efficient resource management, adapting to periods of inactivity and higher use automatically.  Calling either the `CloseAsync` or `DisposeAsync` method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
 
 ## Buffering versus explicit batching
@@ -402,9 +401,17 @@ finally
 }
 ```
 
+## Guidance for buffered producer handler implementation
+
+One important consideration for buffered publishing is to understand the impact of the code in the `SendEventBatchSucceededAsync` and `SendEventBatchFailedAsync` handlers.  Because the producer will await the execution of these handlers after a batch is published, the time that it takes the handler to complete its work will influence how quickly another batch can be prepared and published.  For maximum throughput, it is advised that handlers be kept as lightweight as possible and avoid long-running operations.
+
+It is also important that you guard against exceptions in your handler code; it is strongly recommended to wrap your entire handler in a try/catch block and ensure that you do not re-throw exceptions.  Any exceptions thrown from your handler will be caught by the buffered producer, logged, and then ignored.  This ensures that the producer is resilient to handler errors but makes it difficult for applications to detect unhandled exceptions in their handler code.
+
 ## Tuning throughput for buffered publishing
 
 To ensure consistent performance and throughput, it is common for applications to make decisions around the pattern of publishing that they use - adjusting the frequency that batches are sent and how many operations take place concurrently.  Because the `EventHubBufferedProducerClient` manages batches and publishing in the background, your application cannot directly control these aspects.  
+
+Because the handlers are awaited, it is strongly advised that you *not* invoke `CloseAsync` or `DisposeAsync` from the handlers; doing so is likely to result in a deadlock scenario.  It is safe to attempt to resend events by adding them to the back of the buffer by calling `EnqueueEventAsync` or `EnqueueEventsAsync`
 
 By default, the `EventHubBufferedProducerClient` uses a set of values that will perform well for general-case scenarios, balancing consistent performance with ensuring that the order of events is maintained.  In the case where your application has different needs, it can provide a set of options when constructing the producer that will influence publishing behavior and help ensure that it is optimal for your specific scenarios.  
 

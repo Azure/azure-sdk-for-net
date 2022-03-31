@@ -1113,7 +1113,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new AmqpProducer("aHub", null, null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>(), TransportProducerFeatures.IdempotentPublishing);
             await producer.CloseAsync(CancellationToken.None);
 
-            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+            Assert.That(async () => await producer.SendAsync(Array.Empty<EventData>(), new SendEventOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -1137,7 +1137,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             scope.Dispose();
 
-            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None),
+            Assert.That(async () => await producer.SendAsync(Array.Empty<EventData>(), new SendEventOptions(), CancellationToken.None),
                 Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
@@ -1183,7 +1183,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendEnumerableCreatesTheAmqpMessageFromTheEnumerable(string partitonKey)
         {
             var messageFactory = default(Func<AmqpMessage>);
-            var events = new[] { new EventData(new byte[] { 0x15 }) };
+            var events = new List<EventData> { new EventData(new byte[] { 0x15 }) };
 
             var producer = new Mock<AmqpProducer>("aHub", null, "fake-id", Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>(), TransportProducerFeatures.None, null)
             {
@@ -1593,7 +1593,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.Object.SendAsync(batch, CancellationToken.None);
             Assert.That(messageFactory, Is.Not.Null, "The batch message factory should have been set.");
 
-            using var batchMessage = new AmqpMessageConverter().CreateBatchFromEvents(batch.AsEnumerable<EventData>(), partitonKey);
+            using var batchMessage = new AmqpMessageConverter().CreateBatchFromEvents(batch.AsReadOnlyCollection<EventData>(), partitonKey);
             using var factoryMessage = messageFactory();
 
             Assert.That(factoryMessage.SerializedMessageSize, Is.EqualTo(batchMessage.SerializedMessageSize), "The serialized size of the messages should match.");
@@ -1695,7 +1695,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retriableException = new EventHubsException(true, "Test");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1739,7 +1739,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retriableException = new OperationCanceledException();
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1783,7 +1783,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1826,7 +1826,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var embeddedException = new OperationCanceledException("", new ArgumentNullException());
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1869,7 +1869,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {

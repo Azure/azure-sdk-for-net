@@ -42,9 +42,15 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='restorableMongodbDatabaseRid'>
             /// The resource ID of the MongoDB database.
             /// </param>
-            public static IEnumerable<RestorableMongodbCollectionGetResult> List(this IRestorableMongodbCollectionsOperations operations, string location, string instanceId, string restorableMongodbDatabaseRid = default(string))
+            /// <param name='startTime'>
+            /// Restorable MongoDB collections event feed start time.
+            /// </param>
+            /// <param name='endTime'>
+            /// Restorable MongoDB collections event feed end time.
+            /// </param>
+            public static IEnumerable<RestorableMongodbCollectionGetResult> List(this IRestorableMongodbCollectionsOperations operations, string location, string instanceId, string restorableMongodbDatabaseRid = default(string), string startTime = default(string), string endTime = default(string))
             {
-                return operations.ListAsync(location, instanceId, restorableMongodbDatabaseRid).GetAwaiter().GetResult();
+                return operations.ListAsync(location, instanceId, restorableMongodbDatabaseRid, startTime, endTime).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -66,12 +72,18 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='restorableMongodbDatabaseRid'>
             /// The resource ID of the MongoDB database.
             /// </param>
+            /// <param name='startTime'>
+            /// Restorable MongoDB collections event feed start time.
+            /// </param>
+            /// <param name='endTime'>
+            /// Restorable MongoDB collections event feed end time.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<RestorableMongodbCollectionGetResult>> ListAsync(this IRestorableMongodbCollectionsOperations operations, string location, string instanceId, string restorableMongodbDatabaseRid = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<RestorableMongodbCollectionGetResult>> ListAsync(this IRestorableMongodbCollectionsOperations operations, string location, string instanceId, string restorableMongodbDatabaseRid = default(string), string startTime = default(string), string endTime = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(location, instanceId, restorableMongodbDatabaseRid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, instanceId, restorableMongodbDatabaseRid, startTime, endTime, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

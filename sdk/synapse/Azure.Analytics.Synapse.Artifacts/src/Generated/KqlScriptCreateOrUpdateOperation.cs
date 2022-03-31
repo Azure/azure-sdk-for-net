@@ -53,6 +53,12 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
+        public override Response<KqlScriptResource> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<KqlScriptResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+
+        /// <inheritdoc />
         public override ValueTask<Response<KqlScriptResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />

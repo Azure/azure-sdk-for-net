@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Sql.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobTargetGroup and their operations over its parent. </summary>
-    public partial class JobTargetGroupCollection : ArmCollection, IEnumerable<JobTargetGroup>, IAsyncEnumerable<JobTargetGroup>
+    /// <summary>
+    /// A class representing a collection of <see cref="JobTargetGroupResource" /> and their operations.
+    /// Each <see cref="JobTargetGroupResource" /> in the collection will belong to the same instance of <see cref="JobAgentResource" />.
+    /// To get a <see cref="JobTargetGroupCollection" /> instance call the GetJobTargetGroups method from an instance of <see cref="JobAgentResource" />.
+    /// </summary>
+    public partial class JobTargetGroupCollection : ArmCollection, IEnumerable<JobTargetGroupResource>, IAsyncEnumerable<JobTargetGroupResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly JobTargetGroupsRestOperations _jobTargetGroupsRestClient;
+        private readonly ClientDiagnostics _jobTargetGroupClientDiagnostics;
+        private readonly JobTargetGroupsRestOperations _jobTargetGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="JobTargetGroupCollection"/> class for mocking. </summary>
         protected JobTargetGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of JobTargetGroupCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal JobTargetGroupCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="JobTargetGroupCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal JobTargetGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _jobTargetGroupsRestClient = new JobTargetGroupsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _jobTargetGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobTargetGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(JobTargetGroupResource.ResourceType, out string jobTargetGroupApiVersion);
+            _jobTargetGroupRestClient = new JobTargetGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobTargetGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,76 +49,33 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != JobAgent.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobAgent.ResourceType), nameof(id));
+            if (id.ResourceType != JobAgentResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobAgentResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobTargetGroups_CreateOrUpdate
-        /// <summary> Creates or updates a target group. </summary>
+        /// <summary>
+        /// Creates or updates a target group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
+        /// Operation Id: JobTargetGroups_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="targetGroupName"> The name of the target group. </param>
-        /// <param name="parameters"> The requested state of the target group. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> The requested state of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual JobTargetGroupCreateOrUpdateOperation CreateOrUpdate(string targetGroupName, JobTargetGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<JobTargetGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string targetGroupName, JobTargetGroupData data, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.CreateOrUpdate");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jobTargetGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, parameters, cancellationToken);
-                var operation = new JobTargetGroupCreateOrUpdateOperation(Parent, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobTargetGroups_CreateOrUpdate
-        /// <summary> Creates or updates a target group. </summary>
-        /// <param name="targetGroupName"> The name of the target group. </param>
-        /// <param name="parameters"> The requested state of the target group. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<JobTargetGroupCreateOrUpdateOperation> CreateOrUpdateAsync(string targetGroupName, JobTargetGroupData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _jobTargetGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new JobTargetGroupCreateOrUpdateOperation(Parent, response);
-                if (waitForCompletion)
+                var response = await _jobTargetGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<JobTargetGroupResource>(Response.FromValue(new JobTargetGroupResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -124,28 +86,60 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobTargetGroups_Get
-        /// <summary> Gets a target group. </summary>
+        /// <summary>
+        /// Creates or updates a target group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
+        /// Operation Id: JobTargetGroups_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="targetGroupName"> The name of the target group. </param>
+        /// <param name="data"> The requested state of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public virtual Response<JobTargetGroup> Get(string targetGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<JobTargetGroupResource> CreateOrUpdate(WaitUntil waitUntil, string targetGroupName, JobTargetGroupData data, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Get");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _jobTargetGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken);
+                var response = _jobTargetGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, data, cancellationToken);
+                var operation = new SqlArmOperation<JobTargetGroupResource>(Response.FromValue(new JobTargetGroupResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a target group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
+        /// Operation Id: JobTargetGroups_Get
+        /// </summary>
+        /// <param name="targetGroupName"> The name of the target group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
+        public virtual async Task<Response<JobTargetGroupResource>> GetAsync(string targetGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
+
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _jobTargetGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobTargetGroup(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JobTargetGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,28 +148,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobTargetGroups_Get
-        /// <summary> Gets a target group. </summary>
+        /// <summary>
+        /// Gets a target group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
+        /// Operation Id: JobTargetGroups_Get
+        /// </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public async virtual Task<Response<JobTargetGroup>> GetAsync(string targetGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<JobTargetGroupResource> Get(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Get");
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _jobTargetGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken).ConfigureAwait(false);
+                var response = _jobTargetGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new JobTargetGroup(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new JobTargetGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,126 +177,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="targetGroupName"> The name of the target group. </param>
+        /// <summary>
+        /// Gets all target groups in an agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups
+        /// Operation Id: JobTargetGroups_ListByAgent
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public virtual Response<JobTargetGroup> GetIfExists(string targetGroupName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="JobTargetGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JobTargetGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
+            async Task<Page<JobTargetGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _jobTargetGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<JobTargetGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobTargetGroup(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="targetGroupName"> The name of the target group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public async virtual Task<Response<JobTargetGroup>> GetIfExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
-        {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _jobTargetGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<JobTargetGroup>(null, response.GetRawResponse())
-                    : Response.FromValue(new JobTargetGroup(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="targetGroupName"> The name of the target group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public virtual Response<bool> Exists(string targetGroupName, CancellationToken cancellationToken = default)
-        {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(targetGroupName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="targetGroupName"> The name of the target group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
-        {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(targetGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobTargetGroups_ListByAgent
-        /// <summary> Gets all target groups in an agent. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobTargetGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobTargetGroup> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<JobTargetGroup> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetAll");
+                using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _jobTargetGroupsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobTargetGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _jobTargetGroupRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobTargetGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -311,55 +201,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<JobTargetGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<JobTargetGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetAll");
+                using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _jobTargetGroupsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobTargetGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
-        /// OperationId: JobTargetGroups_ListByAgent
-        /// <summary> Gets all target groups in an agent. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobTargetGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobTargetGroup> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<JobTargetGroup>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jobTargetGroupsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobTargetGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<JobTargetGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("JobTargetGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jobTargetGroupsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JobTargetGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _jobTargetGroupRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobTargetGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -370,7 +219,103 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<JobTargetGroup> IEnumerable<JobTargetGroup>.GetEnumerator()
+        /// <summary>
+        /// Gets all target groups in an agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups
+        /// Operation Id: JobTargetGroups_ListByAgent
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JobTargetGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JobTargetGroupResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<JobTargetGroupResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _jobTargetGroupRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobTargetGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<JobTargetGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _jobTargetGroupRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new JobTargetGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
+        /// Operation Id: JobTargetGroups_Get
+        /// </summary>
+        /// <param name="targetGroupName"> The name of the target group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
+
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _jobTargetGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/targetGroups/{targetGroupName}
+        /// Operation Id: JobTargetGroups_Get
+        /// </summary>
+        /// <param name="targetGroupName"> The name of the target group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
+        public virtual Response<bool> Exists(string targetGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
+
+            using var scope = _jobTargetGroupClientDiagnostics.CreateScope("JobTargetGroupCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _jobTargetGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<JobTargetGroupResource> IEnumerable<JobTargetGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,12 +325,9 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<JobTargetGroup> IAsyncEnumerable<JobTargetGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<JobTargetGroupResource> IAsyncEnumerable<JobTargetGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, JobTargetGroup, JobTargetGroupData> Construct() { }
     }
 }

@@ -18,17 +18,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
             {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
+            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -59,12 +56,12 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static DeviceUpdateInstanceData DeserializeDeviceUpdateInstanceData(JsonElement element)
         {
-            Optional<IDictionary<string, string>> tags = default;
-            string location = default;
-            Optional<SystemData> systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> accountName = default;
             Optional<IList<IotHubSettings>> iotHubs = default;
@@ -74,11 +71,6 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -90,16 +82,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -115,6 +97,11 @@ namespace Azure.ResourceManager.DeviceUpdate
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -180,7 +167,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new DeviceUpdateInstanceData(id, name, type, systemData, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value);
+            return new DeviceUpdateInstanceData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value);
         }
     }
 }

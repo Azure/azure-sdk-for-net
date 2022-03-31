@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,10 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepositoryUrl))
+            if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl");
-                writer.WriteStringValue(RepositoryUrl);
+                writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -47,7 +49,8 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> repositoryUrl = default;
+            SystemData systemData = default;
+            Optional<Uri> repositoryUrl = default;
             Optional<string> branch = default;
             Optional<StaticSiteBuildProperties> buildProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -72,6 +75,11 @@ namespace Azure.ResourceManager.AppService.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -83,7 +91,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("repositoryUrl"))
                         {
-                            repositoryUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                repositoryUrl = null;
+                                continue;
+                            }
+                            repositoryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("branch"))
@@ -105,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSitesWorkflowPreviewRequest(id, name, type, kind.Value, repositoryUrl.Value, branch.Value, buildProperties.Value);
+            return new StaticSitesWorkflowPreviewRequest(id, name, type, systemData, kind.Value, repositoryUrl.Value, branch.Value, buildProperties.Value);
         }
     }
 }

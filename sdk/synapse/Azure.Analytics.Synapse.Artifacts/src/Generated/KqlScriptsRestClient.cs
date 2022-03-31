@@ -18,20 +18,22 @@ namespace Azure.Analytics.Synapse.Artifacts
 {
     internal partial class KqlScriptsRestClient
     {
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of KqlScriptsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         public KqlScriptsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
         internal HttpMessage CreateGetAllRequest()
@@ -40,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/kqlScripts", false);
             uri.AppendQuery("api-version", "2021-11-01-preview", true);
             request.Uri = uri;
@@ -64,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -84,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -94,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -124,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -151,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

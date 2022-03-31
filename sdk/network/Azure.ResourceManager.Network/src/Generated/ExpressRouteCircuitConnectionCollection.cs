@@ -15,28 +15,33 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ExpressRouteCircuitConnection and their operations over its parent. </summary>
-    public partial class ExpressRouteCircuitConnectionCollection : ArmCollection, IEnumerable<ExpressRouteCircuitConnection>, IAsyncEnumerable<ExpressRouteCircuitConnection>
+    /// <summary>
+    /// A class representing a collection of <see cref="ExpressRouteCircuitConnectionResource" /> and their operations.
+    /// Each <see cref="ExpressRouteCircuitConnectionResource" /> in the collection will belong to the same instance of <see cref="ExpressRouteCircuitPeeringResource" />.
+    /// To get an <see cref="ExpressRouteCircuitConnectionCollection" /> instance call the GetExpressRouteCircuitConnections method from an instance of <see cref="ExpressRouteCircuitPeeringResource" />.
+    /// </summary>
+    public partial class ExpressRouteCircuitConnectionCollection : ArmCollection, IEnumerable<ExpressRouteCircuitConnectionResource>, IAsyncEnumerable<ExpressRouteCircuitConnectionResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ExpressRouteCircuitConnectionsRestOperations _expressRouteCircuitConnectionsRestClient;
+        private readonly ClientDiagnostics _expressRouteCircuitConnectionClientDiagnostics;
+        private readonly ExpressRouteCircuitConnectionsRestOperations _expressRouteCircuitConnectionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitConnectionCollection"/> class for mocking. </summary>
         protected ExpressRouteCircuitConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionCollection class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ExpressRouteCircuitConnectionCollection(ArmResource parent) : base(parent)
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitConnectionCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal ExpressRouteCircuitConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _expressRouteCircuitConnectionsRestClient = new ExpressRouteCircuitConnectionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _expressRouteCircuitConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuitConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ExpressRouteCircuitConnectionResource.ResourceType, out string expressRouteCircuitConnectionApiVersion);
+            _expressRouteCircuitConnectionRestClient = new ExpressRouteCircuitConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,70 +49,33 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ExpressRouteCircuitPeering.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ExpressRouteCircuitPeering.ResourceType), nameof(id));
+            if (id.ResourceType != ExpressRouteCircuitPeeringResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ExpressRouteCircuitPeeringResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates a Express Route Circuit Connection in the specified express route circuits. </summary>
+        /// <summary>
+        /// Creates or updates a Express Route Circuit Connection in the specified express route circuits.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// Operation Id: ExpressRouteCircuitConnections_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
-        /// <param name="expressRouteCircuitConnectionParameters"> Parameters supplied to the create or update express route circuit connection operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Parameters supplied to the create or update express route circuit connection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="expressRouteCircuitConnectionParameters"/> is null. </exception>
-        public virtual ExpressRouteCircuitConnectionCreateOrUpdateOperation CreateOrUpdate(string connectionName, ExpressRouteCircuitConnectionData expressRouteCircuitConnectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ExpressRouteCircuitConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, ExpressRouteCircuitConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-            if (expressRouteCircuitConnectionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteCircuitConnectionParameters));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.CreateOrUpdate");
+            using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _expressRouteCircuitConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters, cancellationToken);
-                var operation = new ExpressRouteCircuitConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteCircuitConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a Express Route Circuit Connection in the specified express route circuits. </summary>
-        /// <param name="connectionName"> The name of the express route circuit connection. </param>
-        /// <param name="expressRouteCircuitConnectionParameters"> Parameters supplied to the create or update express route circuit connection operation. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="expressRouteCircuitConnectionParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(string connectionName, ExpressRouteCircuitConnectionData expressRouteCircuitConnectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
-        {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-            if (expressRouteCircuitConnectionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteCircuitConnectionParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _expressRouteCircuitConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ExpressRouteCircuitConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _expressRouteCircuitConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
-                if (waitForCompletion)
+                var response = await _expressRouteCircuitConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<ExpressRouteCircuitConnectionResource>(new ExpressRouteCircuitConnectionOperationSource(Client), _expressRouteCircuitConnectionClientDiagnostics, Pipeline, _expressRouteCircuitConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -118,25 +86,60 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Express Route Circuit Connection from the specified express route circuit. </summary>
+        /// <summary>
+        /// Creates or updates a Express Route Circuit Connection in the specified express route circuits.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// Operation Id: ExpressRouteCircuitConnections_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
+        /// <param name="data"> Parameters supplied to the create or update express route circuit connection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public virtual Response<ExpressRouteCircuitConnection> Get(string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ExpressRouteCircuitConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, ExpressRouteCircuitConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.Get");
+            using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _expressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
+                var response = _expressRouteCircuitConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data, cancellationToken);
+                var operation = new NetworkArmOperation<ExpressRouteCircuitConnectionResource>(new ExpressRouteCircuitConnectionOperationSource(Client), _expressRouteCircuitConnectionClientDiagnostics, Pipeline, _expressRouteCircuitConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified Express Route Circuit Connection from the specified express route circuit.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// Operation Id: ExpressRouteCircuitConnections_Get
+        /// </summary>
+        /// <param name="connectionName"> The name of the express route circuit connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual async Task<Response<ExpressRouteCircuitConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCircuitConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitConnection(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,25 +148,27 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified Express Route Circuit Connection from the specified express route circuit. </summary>
+        /// <summary>
+        /// Gets the specified Express Route Circuit Connection from the specified express route circuit.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// Operation Id: ExpressRouteCircuitConnections_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCircuitConnection>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCircuitConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.Get");
+            using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _expressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                var response = _expressRouteCircuitConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ExpressRouteCircuitConnection(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,123 +177,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="connectionName"> The name of the express route circuit connection. </param>
+        /// <summary>
+        /// Gets all global reach connections associated with a private peering in an express route circuit.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections
+        /// Operation Id: ExpressRouteCircuitConnections_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public virtual Response<ExpressRouteCircuitConnection> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExpressRouteCircuitConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteCircuitConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (connectionName == null)
+            async Task<Page<ExpressRouteCircuitConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _expressRouteCircuitConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteCircuitConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="connectionName"> The name of the express route circuit connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCircuitConnection>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
-        {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetIfExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await _expressRouteCircuitConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<ExpressRouteCircuitConnection>(null, response.GetRawResponse())
-                    : Response.FromValue(new ExpressRouteCircuitConnection(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="connectionName"> The name of the express route circuit connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
-        {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(connectionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="connectionName"> The name of the express route circuit connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
-        {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.ExistsAsync");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets all global reach connections associated with a private peering in an express route circuit. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteCircuitConnection> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<ExpressRouteCircuitConnection> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetAll");
+                using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _expressRouteCircuitConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _expressRouteCircuitConnectionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -296,52 +201,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<ExpressRouteCircuitConnection> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ExpressRouteCircuitConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetAll");
+                using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _expressRouteCircuitConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets all global reach connections associated with a private peering in an express route circuit. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteCircuitConnection> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ExpressRouteCircuitConnection>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteCircuitConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ExpressRouteCircuitConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _expressRouteCircuitConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _expressRouteCircuitConnectionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -352,7 +219,103 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<ExpressRouteCircuitConnection> IEnumerable<ExpressRouteCircuitConnection>.GetEnumerator()
+        /// <summary>
+        /// Gets all global reach connections associated with a private peering in an express route circuit.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections
+        /// Operation Id: ExpressRouteCircuitConnections_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteCircuitConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteCircuitConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<ExpressRouteCircuitConnectionResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _expressRouteCircuitConnectionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ExpressRouteCircuitConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _expressRouteCircuitConnectionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// Operation Id: ExpressRouteCircuitConnections_Get
+        /// </summary>
+        /// <param name="connectionName"> The name of the express route circuit connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCircuitConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}
+        /// Operation Id: ExpressRouteCircuitConnections_Get
+        /// </summary>
+        /// <param name="connectionName"> The name of the express route circuit connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _expressRouteCircuitConnectionClientDiagnostics.CreateScope("ExpressRouteCircuitConnectionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCircuitConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<ExpressRouteCircuitConnectionResource> IEnumerable<ExpressRouteCircuitConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -362,12 +325,9 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ExpressRouteCircuitConnection> IAsyncEnumerable<ExpressRouteCircuitConnection>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ExpressRouteCircuitConnectionResource> IAsyncEnumerable<ExpressRouteCircuitConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, ExpressRouteCircuitConnection, ExpressRouteCircuitConnectionData> Construct() { }
     }
 }

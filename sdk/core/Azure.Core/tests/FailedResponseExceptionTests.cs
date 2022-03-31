@@ -172,7 +172,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
 
-            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, errorCode: "CUSTOM CODE");
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError("CUSTOM CODE", null));
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 

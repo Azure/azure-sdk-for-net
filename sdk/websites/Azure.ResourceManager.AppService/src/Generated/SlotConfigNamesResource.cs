@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,12 +13,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SlotConfigNamesResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SlotConfigNamesResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SlotConfigNamesResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSlotConfigNamesResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSlotConfigNamesResource method.
+    /// </summary>
     public partial class SlotConfigNamesResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SlotConfigNamesResource"/> instance. </summary>
@@ -28,8 +30,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+
+        private readonly ClientDiagnostics _slotConfigNamesResourceWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _slotConfigNamesResourceWebAppsRestClient;
         private readonly SlotConfigNamesResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SlotConfigNamesResource"/> class for mocking. </summary>
@@ -38,43 +41,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "SlotConfigNamesResource"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="resource"> The resource that is the target of operations. </param>
-        internal SlotConfigNamesResource(ArmResource options, SlotConfigNamesResourceData resource) : base(options, resource.Id)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SlotConfigNamesResource(ArmClient client, SlotConfigNamesResourceData data) : this(client, data.Id)
         {
             HasData = true;
-            _data = resource;
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="SlotConfigNamesResource"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SlotConfigNamesResource(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal SlotConfigNamesResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SlotConfigNamesResource"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SlotConfigNamesResource(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _slotConfigNamesResourceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string slotConfigNamesResourceWebAppsApiVersion);
+            _slotConfigNamesResourceWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, slotConfigNamesResourceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,24 +86,22 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// OperationId: WebApps_ListSlotConfigurationNames
-        /// <summary> Description for Gets the names of app settings and connection strings that stick to the slot (not swapped). </summary>
+        /// <summary>
+        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_ListSlotConfigurationNames
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SlotConfigNamesResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SlotConfigNamesResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SlotConfigNamesResource.Get");
+            using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.ListSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _slotConfigNamesResourceWebAppsRestClient.ListSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SlotConfigNamesResource(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,21 +110,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// OperationId: WebApps_ListSlotConfigurationNames
-        /// <summary> Description for Gets the names of app settings and connection strings that stick to the slot (not swapped). </summary>
+        /// <summary>
+        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_ListSlotConfigurationNames
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SlotConfigNamesResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SlotConfigNamesResource.Get");
+            using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.Get");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.ListSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _slotConfigNamesResourceWebAppsRestClient.ListSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SlotConfigNamesResource(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,44 +134,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            return ListAvailableLocations(ResourceType, cancellationToken);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// OperationId: WebApps_UpdateSlotConfigurationNames
-        /// <summary> Description for Updates the names of application settings and connection string that remain with the slot during swap operation. </summary>
-        /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_UpdateSlotConfigurationNames
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
-        public async virtual Task<WebAppUpdateSlotConfigurationNamesOperation> CreateOrUpdateAsync(SlotConfigNamesResourceData slotConfigNames, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SlotConfigNamesResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SlotConfigNamesResourceData data, CancellationToken cancellationToken = default)
         {
-            if (slotConfigNames == null)
-            {
-                throw new ArgumentNullException(nameof(slotConfigNames));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("SlotConfigNamesResource.CreateOrUpdate");
+            using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.UpdateSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, slotConfigNames, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppUpdateSlotConfigurationNamesOperation(this, response);
-                if (waitForCompletion)
+                var response = await _slotConfigNamesResourceWebAppsRestClient.UpdateSlotConfigurationNamesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -201,28 +164,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
-        /// OperationId: WebApps_UpdateSlotConfigurationNames
-        /// <summary> Description for Updates the names of application settings and connection string that remain with the slot during swap operation. </summary>
-        /// <param name="slotConfigNames"> Names of application settings and connection strings. See example. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
+        /// Operation Id: WebApps_UpdateSlotConfigurationNames
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Names of application settings and connection strings. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="slotConfigNames"/> is null. </exception>
-        public virtual WebAppUpdateSlotConfigurationNamesOperation CreateOrUpdate(SlotConfigNamesResourceData slotConfigNames, bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SlotConfigNamesResource> CreateOrUpdate(WaitUntil waitUntil, SlotConfigNamesResourceData data, CancellationToken cancellationToken = default)
         {
-            if (slotConfigNames == null)
-            {
-                throw new ArgumentNullException(nameof(slotConfigNames));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("SlotConfigNamesResource.CreateOrUpdate");
+            using var scope = _slotConfigNamesResourceWebAppsClientDiagnostics.CreateScope("SlotConfigNamesResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.UpdateSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, slotConfigNames, cancellationToken);
-                var operation = new WebAppUpdateSlotConfigurationNamesOperation(this, response);
-                if (waitForCompletion)
+                var response = _slotConfigNamesResourceWebAppsRestClient.UpdateSlotConfigurationNames(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

@@ -11,17 +11,26 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> settings for compression. </summary>
-    internal partial class CompressionSettings
+    public partial class CompressionSettings
     {
         /// <summary> Initializes a new instance of CompressionSettings. </summary>
-        internal CompressionSettings()
+        public CompressionSettings()
         {
             ContentTypesToCompress = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of CompressionSettings. </summary>
+        /// <param name="contentTypesToCompress"> List of content types on which compression applies. The value should be a valid MIME type. </param>
+        /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won&apos;t be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </param>
+        internal CompressionSettings(IList<string> contentTypesToCompress, bool? isCompressionEnabled)
+        {
+            ContentTypesToCompress = contentTypesToCompress;
+            IsCompressionEnabled = isCompressionEnabled;
+        }
+
         /// <summary> List of content types on which compression applies. The value should be a valid MIME type. </summary>
-        public IReadOnlyList<string> ContentTypesToCompress { get; }
+        public IList<string> ContentTypesToCompress { get; }
         /// <summary> Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won&apos;t be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
-        public bool? IsCompressionEnabled { get; }
+        public bool? IsCompressionEnabled { get; set; }
     }
 }

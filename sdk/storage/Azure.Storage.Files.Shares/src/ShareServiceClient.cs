@@ -197,6 +197,27 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="ShareClientConfiguration"/>
+        /// </param>
+        internal ShareServiceClient(
+            Uri directoryUri,
+            ShareClientConfiguration clientConfiguration)
+        {
+            _uri = directoryUri;
+            _clientConfiguration = clientConfiguration;
+            _serviceRestClient = BuildServiceRestClient();
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ShareServiceClient"/>
         /// class.
         /// </summary>
@@ -950,7 +971,8 @@ namespace Azure.Storage.Files.Shares
         #region DeleteShare
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.
         /// There's no way to specify a separate value for x-ms-delete-snapshots.
@@ -970,7 +992,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -991,7 +1013,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
@@ -1010,7 +1033,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1032,7 +1055,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.
         /// There's no way to specify a separate value for x-ms-delete-snapshots.
@@ -1053,7 +1077,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1075,7 +1099,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
@@ -1095,7 +1120,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

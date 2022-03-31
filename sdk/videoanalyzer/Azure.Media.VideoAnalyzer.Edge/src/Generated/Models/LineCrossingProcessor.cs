@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="lines"> An array of lines used to compute line crossing events. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, or <paramref name="lines"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/> or <paramref name="lines"/> is null. </exception>
         public LineCrossingProcessor(string name, IEnumerable<NodeInput> inputs, IEnumerable<NamedLineBase> lines) : base(name, inputs)
         {
             if (name == null)

@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Microsoft.Azure.Management.AppPlatform.Tests.Tests
@@ -78,18 +79,11 @@ namespace Microsoft.Azure.Management.AppPlatform.Tests.Tests
                 deploymentName,
                 new DeploymentResource(
                     properties: new DeploymentResourceProperties(
-                        source: new UserSourceInfo(
-                            relativePath: "<default>",
-                            type: "Jar"
+                        source: new JarUploadedUserSourceInfo(
+                            relativePath: "<default>"
             ))));
-            return client.Apps.Update(
-                rgName,
-                serviceName,
-                appName,
-                new AppResource(
-                    properties: new AppResourceProperties(
-                        activeDeploymentName: deployment.Name
-            )));
+            return client.Apps.SetActiveDeployments(rgName, serviceName, appName, 
+                new ActiveDeploymentCollection(new List<string> { deployment.Name }));
         }
 
         private void DeleteService(MockContext context, string rgName, string serviceName)

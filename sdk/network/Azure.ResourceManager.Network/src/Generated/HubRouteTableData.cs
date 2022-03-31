@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="routes"> List of all routes. </param>
         /// <param name="labels"> List of labels associated with this route table. </param>
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTableData(string id, string name, string etag, string type, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, ProvisioningState? provisioningState) : base(id)
+        internal HubRouteTableData(string id, string name, string etag, string resourceType, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Routes = routes;
             Labels = labels;
             AssociatedConnections = associatedConnections;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Resource type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> List of all routes. </summary>
         public IList<HubRoute> Routes { get; }
         /// <summary> List of labels associated with this route table. </summary>

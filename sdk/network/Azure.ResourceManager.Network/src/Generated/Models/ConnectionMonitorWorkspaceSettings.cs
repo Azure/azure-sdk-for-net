@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the settings for producing output into a log analytics workspace. </summary>
-    public partial class ConnectionMonitorWorkspaceSettings
+    internal partial class ConnectionMonitorWorkspaceSettings
     {
         /// <summary> Initializes a new instance of ConnectionMonitorWorkspaceSettings. </summary>
         public ConnectionMonitorWorkspaceSettings()

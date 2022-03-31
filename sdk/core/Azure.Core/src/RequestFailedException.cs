@@ -67,8 +67,8 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        internal RequestFailedException(int status, (string Message, string? ErrorCode) details):
-            this(status, details.Message, details.ErrorCode, null)
+        internal RequestFailedException(int status, (string Message, ResponseError? Error) details):
+            this(status, details.Message, details.Error?.Code, null)
         {
         }
 
@@ -88,22 +88,18 @@ namespace Azure
             ErrorCode = info.GetString(nameof(ErrorCode));
         }
 
-        private static (string Message, string? ErrorCode) GetErrorDetails(Response response)
+        private static (string Message, ResponseError? Error) GetErrorDetails(Response response)
         {
-            string? message = null;
-            string? errorCode = null;
-
             string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
-            ClientDiagnostics.ExtractAzureErrorContent(content, ref message, ref errorCode);
+            ResponseError? error = ClientDiagnostics.ExtractAzureErrorContent(content);
             string exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(
                 response,
-                message,
+                error,
                 content,
-                errorCode,
                 null,
-                response.Sanitizer!);
+                response.Sanitizer);
 
-            return (exceptionMessage, errorCode);
+            return (exceptionMessage, error);
         }
 
         /// <inheritdoc />

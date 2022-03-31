@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public static string ToSerialString(this CertificateOrderActionType value) => value switch
         {
+            CertificateOrderActionType.Unknown => "Unknown",
             CertificateOrderActionType.CertificateIssued => "CertificateIssued",
             CertificateOrderActionType.CertificateOrderCanceled => "CertificateOrderCanceled",
             CertificateOrderActionType.CertificateOrderCreated => "CertificateOrderCreated",
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             CertificateOrderActionType.CertificateExpired => "CertificateExpired",
             CertificateOrderActionType.CertificateExpirationWarning => "CertificateExpirationWarning",
             CertificateOrderActionType.FraudDocumentationRequired => "FraudDocumentationRequired",
-            CertificateOrderActionType.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CertificateOrderActionType value.")
         };
 
         public static CertificateOrderActionType ToCertificateOrderActionType(this string value)
         {
+            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.Unknown;
             if (string.Equals(value, "CertificateIssued", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateIssued;
             if (string.Equals(value, "CertificateOrderCanceled", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateOrderCanceled;
             if (string.Equals(value, "CertificateOrderCreated", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateOrderCreated;
@@ -45,7 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
             if (string.Equals(value, "CertificateExpired", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateExpired;
             if (string.Equals(value, "CertificateExpirationWarning", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.CertificateExpirationWarning;
             if (string.Equals(value, "FraudDocumentationRequired", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.FraudDocumentationRequired;
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return CertificateOrderActionType.Unknown;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CertificateOrderActionType value.");
         }
     }

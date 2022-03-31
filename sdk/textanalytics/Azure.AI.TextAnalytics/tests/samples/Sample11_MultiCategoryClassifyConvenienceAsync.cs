@@ -4,13 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public async Task MultiCategoryClassifyConvenienceAsync()
@@ -19,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:TextAnalyticsMultiCategoryClassifyAsync
             // Get input document.
@@ -34,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // Set project and deployment names of the target model
 #if SNIPPET
-            // To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities            
+            // To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
             string projectName = "<projectName>";
             string deploymentName = "<deploymentName>";
 #else

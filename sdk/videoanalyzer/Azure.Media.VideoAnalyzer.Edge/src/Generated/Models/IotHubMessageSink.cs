@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="hubOutputName"> Name of the Iot Edge Hub output to which the messages will be published. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, or <paramref name="hubOutputName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/> or <paramref name="hubOutputName"/> is null. </exception>
         public IotHubMessageSink(string name, IEnumerable<NodeInput> inputs, string hubOutputName) : base(name, inputs)
         {
             if (name == null)
