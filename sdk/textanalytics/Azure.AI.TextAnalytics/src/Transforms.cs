@@ -144,7 +144,6 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion
-        //HERE
         #region AnalyzeSentiment
 
         internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(SentimentResponse results, IDictionary<string, int> idToIndexMap)
@@ -275,6 +274,17 @@ namespace Azure.AI.TextAnalytics
         internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiDocumentEntities documentEntities)
         {
             return new PiiEntityCollection(ConvertToPiiEntityList(documentEntities.Entities.ToList()), documentEntities.RedactedText, ConvertToWarnings(documentEntities.Warnings));
+        }
+
+        // CHANGED: added overload for New Swagger
+        internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiResultDocumentsItem piiResult)
+        {
+            List<TextAnalyticsWarning> warnings = new List<TextAnalyticsWarning>();
+            foreach (var warning in documentLanguage.Warnings)
+            {
+                warnings.Add(new TextAnalyticsWarning(warning));
+            }
+            return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
         }
 
         internal static RecognizePiiEntitiesResultCollection ConvertToRecognizePiiEntitiesResultCollection(PiiEntitiesResult results, IDictionary<string, int> idToIndexMap)
