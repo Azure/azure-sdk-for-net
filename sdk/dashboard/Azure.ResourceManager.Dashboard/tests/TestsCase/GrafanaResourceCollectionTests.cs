@@ -45,5 +45,24 @@ namespace Azure.ResourceManager.Dashboard.Tests.TestsCase
             GrafanaResource resource2 = await container.GetAsync(grafanaName);
             ResourceDataHelper.AssertGrafana(resource1.Data, resource2.Data);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            var container = await GetCollectionAsync();
+            var grafanaName1 = Recording.GenerateAssetName("sdkTestGrafana1");
+            var grafanaName2 = Recording.GenerateAssetName("sdkTestGrafana2");
+            var input1 = ResourceDataHelper.GetGrafanaResourceData(DefaultLocation);
+            var input2 = ResourceDataHelper.GetGrafanaResourceData(DefaultLocation);
+            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, grafanaName1, input1);
+            _ = await container.CreateOrUpdateAsync(WaitUntil.Completed, grafanaName2, input2);
+            int count = 0;
+            await foreach (var appServicePlan in container.GetAllAsync())
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 2);
+        }
     }
 }
