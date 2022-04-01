@@ -83,11 +83,23 @@ function Get-TocMapping {
             }
             $serviceName = $packageInfo[0].ServiceName.Trim()
         }
+        
+        # Define the order of "New", "Type", if not match, return the length of the array.
+        $CustomOrder_New = "true", "false", ""
+        $CustomOrder_Type = "client", "mgmt", "compat", "spring", ""
         $orderServiceMapping[$artifact] = [PSCustomObject][ordered]@{
-          New = $packageInfo[0].New.ToLower()
-          Type = $packageInfo[0].Type.ToLower()
-          ServiceName = $serviceName
-          DisplayName = $packageInfo[0].DisplayName.Trim()
+            NewIndex = if ($CustomOrder_New.IndexOf($packageInfo[0].New.ToLower()) == -1) {
+                $CustomOrder_New.Count
+            } else {
+                $CustomOrder_New.IndexOf($packageInfo[0].New.ToLower())
+            }
+            TypeIndex = if ($CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower()) == -1) {
+                $CustomOrder_Type.Count
+            } else {
+                $CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower())
+            }
+            ServiceName = $serviceName
+            DisplayName = $packageInfo[0].DisplayName.Trim()
        }
     }
     return $orderServiceMapping
@@ -118,12 +130,9 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang, [String]
     $visitedService = @{}
     # Sort and display toc service name by alphabetical order, and then sort artifact by order.
     # Track 2 packages go first, then others.
-    # Define the order of "New", "Type"
-    $CustomNewOrder = "true", "false", ""
-    $CustomTypeOrder = "client", "mgmt", "compat", "spring", ""
     $sortedToc = $tocContent.GetEnumerator() | Sort-Object {
-        $CustomNewOrder.IndexOf($_.Value.New), 
-        $CustomTypeOrder.IndexOf($_.Value.Type), 
+        $_.Value.NewIndex, 
+        $_.Value.TypeIndex, 
         $_.Value.ServiceName, 
         $_.Value.DisplayName,
         $_.Key}
