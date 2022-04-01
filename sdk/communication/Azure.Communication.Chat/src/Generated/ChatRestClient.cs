@@ -151,7 +151,7 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Gets the list of chat threads of a user. </summary>
-        /// <param name="maxPageSize"> The maximum number of chat threads returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of chat threads returned per page. The range is [1, 200]. </param>
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ChatThreadsItemCollection>> ListChatThreadsAsync(int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
@@ -173,7 +173,7 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Gets the list of chat threads of a user. </summary>
-        /// <param name="maxPageSize"> The maximum number of chat threads returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of chat threads returned per page. The range is [1, 200]. </param>
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ChatThreadsItemCollection> ListChatThreads(int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
@@ -268,7 +268,7 @@ namespace Azure.Communication.Chat
 
         /// <summary> Gets the list of chat threads of a user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> The maximum number of chat threads returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of chat threads returned per page. The range is [1, 200].</param>
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -297,7 +297,7 @@ namespace Azure.Communication.Chat
 
         /// <summary> Gets the list of chat threads of a user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> The maximum number of chat threads returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of chat threads returned per page. The range is [1, 200].</param>
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
