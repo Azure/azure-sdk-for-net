@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UrlRewriteValue = "UrlRewrite";
         private const string UrlSigningValue = "UrlSigning";
         private const string OriginGroupOverrideValue = "OriginGroupOverride";
+        private const string RouteConfigurationOverrideValue = "RouteConfigurationOverride";
 
         /// <summary> CacheExpiration. </summary>
         public static DeliveryRuleActionType CacheExpiration { get; } = new DeliveryRuleActionType(CacheExpirationValue);
@@ -47,6 +48,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public static DeliveryRuleActionType UrlSigning { get; } = new DeliveryRuleActionType(UrlSigningValue);
         /// <summary> OriginGroupOverride. </summary>
         public static DeliveryRuleActionType OriginGroupOverride { get; } = new DeliveryRuleActionType(OriginGroupOverrideValue);
+        /// <summary> RouteConfigurationOverride. </summary>
+        public static DeliveryRuleActionType RouteConfigurationOverride { get; } = new DeliveryRuleActionType(RouteConfigurationOverrideValue);
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are the same. </summary>
         public static bool operator ==(DeliveryRuleActionType left, DeliveryRuleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are not the same. </summary>

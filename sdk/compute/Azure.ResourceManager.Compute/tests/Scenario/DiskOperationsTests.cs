@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var diskName = Recording.GenerateAssetName("testDisk-");
             var disk = await CreateDiskAsync(diskName);
-
             var newDiskSize = 20;
             var update = new PatchableDiskData()
             {
