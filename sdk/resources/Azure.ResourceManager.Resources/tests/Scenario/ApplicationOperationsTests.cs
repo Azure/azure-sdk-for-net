@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Tests
         private string _tagValue;
         private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
         public ApplicationOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
