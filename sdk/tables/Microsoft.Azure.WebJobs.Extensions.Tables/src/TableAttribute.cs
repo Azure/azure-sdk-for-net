@@ -90,10 +90,12 @@ namespace Microsoft.Azure.WebJobs
         public string RowKey => _rowKey;
 
         /// <summary>
-        /// Gets or sets an OData table filter. <see cref="RowKey"/> should be null when setting this property. To learn more about constructing
-        /// OData filter strings, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings"/>.
+        /// Gets or sets an OData table filter. <see cref="RowKey"/> should be null when setting this property.
         /// For example to filter on a LastName and FirstName property within the entity, you might set the Filter as follows:
         /// <code>Filter = "LastName%20eq%20'Smith'%20and%20FirstName%20eq%20'John'"</code>
+        ///
+        /// To learn more about constructing OData filter strings,
+        /// see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings"/>.
         /// </summary>
         [AutoResolve(ResolutionPolicyType = typeof(ODataFilterResolutionPolicy))]
         public string Filter { get; set; }
