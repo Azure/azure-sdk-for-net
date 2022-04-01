@@ -9,6 +9,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -248,6 +249,7 @@ namespace Azure.Messaging.ServiceBus
                 // If the PartitionKey was already set to a different value, override it with the SessionId, as the SessionId takes precedence.
                 if (PartitionKey != null && PartitionKey != value)
                 {
+                    ServiceBusEventSource.Log.TransactionDeclared();
                     PartitionKey = value;
                 }
             }
