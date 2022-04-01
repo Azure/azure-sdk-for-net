@@ -1860,15 +1860,15 @@ namespace Azure.Messaging.EventGrid
             return new ApiManagementApiReleaseDeletedEventData(resourceUri);
         }
 
-        /// <summary> Initializes a new instance of FhirResourceEventBaseProperties. </summary>
+        /// <summary> Initializes a new instance of HealthcareFhirResourceEventBaseProperties. </summary>
         /// <param name="resourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="resourceFhirAccount"> Domain name of FHIR account for this resource. </param>
         /// <param name="resourceFhirId"> Id of HL7 FHIR resource. </param>
         /// <param name="resourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
-        /// <returns> A new <see cref="SystemEvents.FhirResourceEventBaseProperties"/> instance for mocking. </returns>
-        public static FhirResourceEventBaseProperties FhirResourceEventBaseProperties(FhirResourceType? resourceType = null, string resourceFhirAccount = null, string resourceFhirId = null, long? resourceVersionId = null)
+        /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceEventBaseProperties"/> instance for mocking. </returns>
+        public static HealthcareFhirResourceEventBaseProperties HealthcareFhirResourceEventBaseProperties(HealthcareFhirResourceType? resourceType = null, string resourceFhirAccount = null, string resourceFhirId = null, long? resourceVersionId = null)
         {
-            return new FhirResourceEventBaseProperties(resourceType, resourceFhirAccount, resourceFhirId, resourceVersionId);
+            return new HealthcareFhirResourceEventBaseProperties(resourceType, resourceFhirAccount, resourceFhirId, resourceVersionId);
         }
     }
 }

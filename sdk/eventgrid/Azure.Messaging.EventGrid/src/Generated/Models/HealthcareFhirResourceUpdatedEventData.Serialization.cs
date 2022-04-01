@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(FhirResourceCreatedEventDataConverter))]
-    public partial class FhirResourceCreatedEventData
+    [JsonConverter(typeof(HealthcareFhirResourceUpdatedEventDataConverter))]
+    public partial class HealthcareFhirResourceUpdatedEventData
     {
-        internal static FhirResourceCreatedEventData DeserializeFhirResourceCreatedEventData(JsonElement element)
+        internal static HealthcareFhirResourceUpdatedEventData DeserializeHealthcareFhirResourceUpdatedEventData(JsonElement element)
         {
-            Optional<FhirResourceType> resourceType = default;
+            Optional<HealthcareFhirResourceType> resourceType = default;
             Optional<string> resourceFhirAccount = default;
             Optional<string> resourceFhirId = default;
             Optional<long> resourceVersionId = default;
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = new FhirResourceType(property.Value.GetString());
+                    resourceType = new HealthcareFhirResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceFhirAccount"))
@@ -54,19 +54,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new FhirResourceCreatedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
+            return new HealthcareFhirResourceUpdatedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
         }
 
-        internal partial class FhirResourceCreatedEventDataConverter : JsonConverter<FhirResourceCreatedEventData>
+        internal partial class HealthcareFhirResourceUpdatedEventDataConverter : JsonConverter<HealthcareFhirResourceUpdatedEventData>
         {
-            public override void Write(Utf8JsonWriter writer, FhirResourceCreatedEventData model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, HealthcareFhirResourceUpdatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
-            public override FhirResourceCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override HealthcareFhirResourceUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeFhirResourceCreatedEventData(document.RootElement);
+                return DeserializeHealthcareFhirResourceUpdatedEventData(document.RootElement);
             }
         }
     }

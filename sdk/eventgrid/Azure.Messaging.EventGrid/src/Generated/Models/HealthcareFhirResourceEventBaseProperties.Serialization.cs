@@ -5,19 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(FhirResourceUpdatedEventDataConverter))]
-    public partial class FhirResourceUpdatedEventData
+    public partial class HealthcareFhirResourceEventBaseProperties
     {
-        internal static FhirResourceUpdatedEventData DeserializeFhirResourceUpdatedEventData(JsonElement element)
+        internal static HealthcareFhirResourceEventBaseProperties DeserializeHealthcareFhirResourceEventBaseProperties(JsonElement element)
         {
-            Optional<FhirResourceType> resourceType = default;
+            Optional<HealthcareFhirResourceType> resourceType = default;
             Optional<string> resourceFhirAccount = default;
             Optional<string> resourceFhirId = default;
             Optional<long> resourceVersionId = default;
@@ -30,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = new FhirResourceType(property.Value.GetString());
+                    resourceType = new HealthcareFhirResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceFhirAccount"))
@@ -54,20 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new FhirResourceUpdatedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
-        }
-
-        internal partial class FhirResourceUpdatedEventDataConverter : JsonConverter<FhirResourceUpdatedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, FhirResourceUpdatedEventData model, JsonSerializerOptions options)
-            {
-                throw new NotImplementedException();
-            }
-            public override FhirResourceUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeFhirResourceUpdatedEventData(document.RootElement);
-            }
+            return new HealthcareFhirResourceEventBaseProperties(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
         }
     }
 }

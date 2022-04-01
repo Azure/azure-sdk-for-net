@@ -8,19 +8,19 @@
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all FhirResource events. </summary>
-    public partial class FhirResourceEventBaseProperties
+    public partial class HealthcareFhirResourceEventBaseProperties
     {
-        /// <summary> Initializes a new instance of FhirResourceEventBaseProperties. </summary>
-        internal FhirResourceEventBaseProperties()
+        /// <summary> Initializes a new instance of HealthcareFhirResourceEventBaseProperties. </summary>
+        internal HealthcareFhirResourceEventBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FhirResourceEventBaseProperties. </summary>
+        /// <summary> Initializes a new instance of HealthcareFhirResourceEventBaseProperties. </summary>
         /// <param name="resourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="resourceFhirAccount"> Domain name of FHIR account for this resource. </param>
         /// <param name="resourceFhirId"> Id of HL7 FHIR resource. </param>
         /// <param name="resourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
-        internal FhirResourceEventBaseProperties(FhirResourceType? resourceType, string resourceFhirAccount, string resourceFhirId, long? resourceVersionId)
+        internal HealthcareFhirResourceEventBaseProperties(HealthcareFhirResourceType? resourceType, string resourceFhirAccount, string resourceFhirId, long? resourceVersionId)
         {
             ResourceType = resourceType;
             ResourceFhirAccount = resourceFhirAccount;
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> Type of HL7 FHIR resource. </summary>
-        public FhirResourceType? ResourceType { get; }
+        public HealthcareFhirResourceType? ResourceType { get; }
         /// <summary> Domain name of FHIR account for this resource. </summary>
         public string ResourceFhirAccount { get; }
         /// <summary> Id of HL7 FHIR resource. </summary>

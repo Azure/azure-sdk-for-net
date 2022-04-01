@@ -5,16 +5,19 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class FhirResourceEventBaseProperties
+    [JsonConverter(typeof(HealthcareFhirResourceDeletedEventDataConverter))]
+    public partial class HealthcareFhirResourceDeletedEventData
     {
-        internal static FhirResourceEventBaseProperties DeserializeFhirResourceEventBaseProperties(JsonElement element)
+        internal static HealthcareFhirResourceDeletedEventData DeserializeHealthcareFhirResourceDeletedEventData(JsonElement element)
         {
-            Optional<FhirResourceType> resourceType = default;
+            Optional<HealthcareFhirResourceType> resourceType = default;
             Optional<string> resourceFhirAccount = default;
             Optional<string> resourceFhirId = default;
             Optional<long> resourceVersionId = default;
@@ -27,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = new FhirResourceType(property.Value.GetString());
+                    resourceType = new HealthcareFhirResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceFhirAccount"))
@@ -51,7 +54,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new FhirResourceEventBaseProperties(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
+            return new HealthcareFhirResourceDeletedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
+        }
+
+        internal partial class HealthcareFhirResourceDeletedEventDataConverter : JsonConverter<HealthcareFhirResourceDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, HealthcareFhirResourceDeletedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override HealthcareFhirResourceDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeHealthcareFhirResourceDeletedEventData(document.RootElement);
+            }
         }
     }
 }

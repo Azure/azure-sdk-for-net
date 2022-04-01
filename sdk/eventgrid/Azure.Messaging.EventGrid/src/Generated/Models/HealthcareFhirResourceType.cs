@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of FHIR resource type enumeration. </summary>
-    public readonly partial struct FhirResourceType : IEquatable<FhirResourceType>
+    public readonly partial struct HealthcareFhirResourceType : IEquatable<HealthcareFhirResourceType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="FhirResourceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FhirResourceType(string value)
+        public HealthcareFhirResourceType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -185,339 +185,339 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private const string VisionPrescriptionValue = "VisionPrescription";
 
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Account { get; } = new FhirResourceType(AccountValue);
+        public static HealthcareFhirResourceType Account { get; } = new HealthcareFhirResourceType(AccountValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ActivityDefinition { get; } = new FhirResourceType(ActivityDefinitionValue);
+        public static HealthcareFhirResourceType ActivityDefinition { get; } = new HealthcareFhirResourceType(ActivityDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType AdverseEvent { get; } = new FhirResourceType(AdverseEventValue);
+        public static HealthcareFhirResourceType AdverseEvent { get; } = new HealthcareFhirResourceType(AdverseEventValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType AllergyIntolerance { get; } = new FhirResourceType(AllergyIntoleranceValue);
+        public static HealthcareFhirResourceType AllergyIntolerance { get; } = new HealthcareFhirResourceType(AllergyIntoleranceValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Appointment { get; } = new FhirResourceType(AppointmentValue);
+        public static HealthcareFhirResourceType Appointment { get; } = new HealthcareFhirResourceType(AppointmentValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType AppointmentResponse { get; } = new FhirResourceType(AppointmentResponseValue);
+        public static HealthcareFhirResourceType AppointmentResponse { get; } = new HealthcareFhirResourceType(AppointmentResponseValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType AuditEvent { get; } = new FhirResourceType(AuditEventValue);
+        public static HealthcareFhirResourceType AuditEvent { get; } = new HealthcareFhirResourceType(AuditEventValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Basic { get; } = new FhirResourceType(BasicValue);
+        public static HealthcareFhirResourceType Basic { get; } = new HealthcareFhirResourceType(BasicValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Binary { get; } = new FhirResourceType(BinaryValue);
+        public static HealthcareFhirResourceType Binary { get; } = new HealthcareFhirResourceType(BinaryValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType BiologicallyDerivedProduct { get; } = new FhirResourceType(BiologicallyDerivedProductValue);
+        public static HealthcareFhirResourceType BiologicallyDerivedProduct { get; } = new HealthcareFhirResourceType(BiologicallyDerivedProductValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType BodySite { get; } = new FhirResourceType(BodySiteValue);
+        public static HealthcareFhirResourceType BodySite { get; } = new HealthcareFhirResourceType(BodySiteValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType BodyStructure { get; } = new FhirResourceType(BodyStructureValue);
+        public static HealthcareFhirResourceType BodyStructure { get; } = new HealthcareFhirResourceType(BodyStructureValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Bundle { get; } = new FhirResourceType(BundleValue);
+        public static HealthcareFhirResourceType Bundle { get; } = new HealthcareFhirResourceType(BundleValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType CapabilityStatement { get; } = new FhirResourceType(CapabilityStatementValue);
+        public static HealthcareFhirResourceType CapabilityStatement { get; } = new HealthcareFhirResourceType(CapabilityStatementValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType CarePlan { get; } = new FhirResourceType(CarePlanValue);
+        public static HealthcareFhirResourceType CarePlan { get; } = new HealthcareFhirResourceType(CarePlanValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType CareTeam { get; } = new FhirResourceType(CareTeamValue);
+        public static HealthcareFhirResourceType CareTeam { get; } = new HealthcareFhirResourceType(CareTeamValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType CatalogEntry { get; } = new FhirResourceType(CatalogEntryValue);
+        public static HealthcareFhirResourceType CatalogEntry { get; } = new HealthcareFhirResourceType(CatalogEntryValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ChargeItem { get; } = new FhirResourceType(ChargeItemValue);
+        public static HealthcareFhirResourceType ChargeItem { get; } = new HealthcareFhirResourceType(ChargeItemValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType ChargeItemDefinition { get; } = new FhirResourceType(ChargeItemDefinitionValue);
+        public static HealthcareFhirResourceType ChargeItemDefinition { get; } = new HealthcareFhirResourceType(ChargeItemDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Claim { get; } = new FhirResourceType(ClaimValue);
+        public static HealthcareFhirResourceType Claim { get; } = new HealthcareFhirResourceType(ClaimValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ClaimResponse { get; } = new FhirResourceType(ClaimResponseValue);
+        public static HealthcareFhirResourceType ClaimResponse { get; } = new HealthcareFhirResourceType(ClaimResponseValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ClinicalImpression { get; } = new FhirResourceType(ClinicalImpressionValue);
+        public static HealthcareFhirResourceType ClinicalImpression { get; } = new HealthcareFhirResourceType(ClinicalImpressionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType CodeSystem { get; } = new FhirResourceType(CodeSystemValue);
+        public static HealthcareFhirResourceType CodeSystem { get; } = new HealthcareFhirResourceType(CodeSystemValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Communication { get; } = new FhirResourceType(CommunicationValue);
+        public static HealthcareFhirResourceType Communication { get; } = new HealthcareFhirResourceType(CommunicationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType CommunicationRequest { get; } = new FhirResourceType(CommunicationRequestValue);
+        public static HealthcareFhirResourceType CommunicationRequest { get; } = new HealthcareFhirResourceType(CommunicationRequestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType CompartmentDefinition { get; } = new FhirResourceType(CompartmentDefinitionValue);
+        public static HealthcareFhirResourceType CompartmentDefinition { get; } = new HealthcareFhirResourceType(CompartmentDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Composition { get; } = new FhirResourceType(CompositionValue);
+        public static HealthcareFhirResourceType Composition { get; } = new HealthcareFhirResourceType(CompositionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ConceptMap { get; } = new FhirResourceType(ConceptMapValue);
+        public static HealthcareFhirResourceType ConceptMap { get; } = new HealthcareFhirResourceType(ConceptMapValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Condition { get; } = new FhirResourceType(ConditionValue);
+        public static HealthcareFhirResourceType Condition { get; } = new HealthcareFhirResourceType(ConditionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Consent { get; } = new FhirResourceType(ConsentValue);
+        public static HealthcareFhirResourceType Consent { get; } = new HealthcareFhirResourceType(ConsentValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Contract { get; } = new FhirResourceType(ContractValue);
+        public static HealthcareFhirResourceType Contract { get; } = new HealthcareFhirResourceType(ContractValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Coverage { get; } = new FhirResourceType(CoverageValue);
+        public static HealthcareFhirResourceType Coverage { get; } = new HealthcareFhirResourceType(CoverageValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType CoverageEligibilityRequest { get; } = new FhirResourceType(CoverageEligibilityRequestValue);
+        public static HealthcareFhirResourceType CoverageEligibilityRequest { get; } = new HealthcareFhirResourceType(CoverageEligibilityRequestValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType CoverageEligibilityResponse { get; } = new FhirResourceType(CoverageEligibilityResponseValue);
+        public static HealthcareFhirResourceType CoverageEligibilityResponse { get; } = new HealthcareFhirResourceType(CoverageEligibilityResponseValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType DataElement { get; } = new FhirResourceType(DataElementValue);
+        public static HealthcareFhirResourceType DataElement { get; } = new HealthcareFhirResourceType(DataElementValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType DetectedIssue { get; } = new FhirResourceType(DetectedIssueValue);
+        public static HealthcareFhirResourceType DetectedIssue { get; } = new HealthcareFhirResourceType(DetectedIssueValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Device { get; } = new FhirResourceType(DeviceValue);
+        public static HealthcareFhirResourceType Device { get; } = new HealthcareFhirResourceType(DeviceValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType DeviceComponent { get; } = new FhirResourceType(DeviceComponentValue);
+        public static HealthcareFhirResourceType DeviceComponent { get; } = new HealthcareFhirResourceType(DeviceComponentValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType DeviceDefinition { get; } = new FhirResourceType(DeviceDefinitionValue);
+        public static HealthcareFhirResourceType DeviceDefinition { get; } = new HealthcareFhirResourceType(DeviceDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType DeviceMetric { get; } = new FhirResourceType(DeviceMetricValue);
+        public static HealthcareFhirResourceType DeviceMetric { get; } = new HealthcareFhirResourceType(DeviceMetricValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType DeviceRequest { get; } = new FhirResourceType(DeviceRequestValue);
+        public static HealthcareFhirResourceType DeviceRequest { get; } = new HealthcareFhirResourceType(DeviceRequestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType DeviceUseStatement { get; } = new FhirResourceType(DeviceUseStatementValue);
+        public static HealthcareFhirResourceType DeviceUseStatement { get; } = new HealthcareFhirResourceType(DeviceUseStatementValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType DiagnosticReport { get; } = new FhirResourceType(DiagnosticReportValue);
+        public static HealthcareFhirResourceType DiagnosticReport { get; } = new HealthcareFhirResourceType(DiagnosticReportValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType DocumentManifest { get; } = new FhirResourceType(DocumentManifestValue);
+        public static HealthcareFhirResourceType DocumentManifest { get; } = new HealthcareFhirResourceType(DocumentManifestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType DocumentReference { get; } = new FhirResourceType(DocumentReferenceValue);
+        public static HealthcareFhirResourceType DocumentReference { get; } = new HealthcareFhirResourceType(DocumentReferenceValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType DomainResource { get; } = new FhirResourceType(DomainResourceValue);
+        public static HealthcareFhirResourceType DomainResource { get; } = new HealthcareFhirResourceType(DomainResourceValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType EffectEvidenceSynthesis { get; } = new FhirResourceType(EffectEvidenceSynthesisValue);
+        public static HealthcareFhirResourceType EffectEvidenceSynthesis { get; } = new HealthcareFhirResourceType(EffectEvidenceSynthesisValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType EligibilityRequest { get; } = new FhirResourceType(EligibilityRequestValue);
+        public static HealthcareFhirResourceType EligibilityRequest { get; } = new HealthcareFhirResourceType(EligibilityRequestValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType EligibilityResponse { get; } = new FhirResourceType(EligibilityResponseValue);
+        public static HealthcareFhirResourceType EligibilityResponse { get; } = new HealthcareFhirResourceType(EligibilityResponseValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Encounter { get; } = new FhirResourceType(EncounterValue);
+        public static HealthcareFhirResourceType Encounter { get; } = new HealthcareFhirResourceType(EncounterValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Endpoint { get; } = new FhirResourceType(EndpointValue);
+        public static HealthcareFhirResourceType Endpoint { get; } = new HealthcareFhirResourceType(EndpointValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType EnrollmentRequest { get; } = new FhirResourceType(EnrollmentRequestValue);
+        public static HealthcareFhirResourceType EnrollmentRequest { get; } = new HealthcareFhirResourceType(EnrollmentRequestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType EnrollmentResponse { get; } = new FhirResourceType(EnrollmentResponseValue);
+        public static HealthcareFhirResourceType EnrollmentResponse { get; } = new HealthcareFhirResourceType(EnrollmentResponseValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType EpisodeOfCare { get; } = new FhirResourceType(EpisodeOfCareValue);
+        public static HealthcareFhirResourceType EpisodeOfCare { get; } = new HealthcareFhirResourceType(EpisodeOfCareValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType EventDefinition { get; } = new FhirResourceType(EventDefinitionValue);
+        public static HealthcareFhirResourceType EventDefinition { get; } = new HealthcareFhirResourceType(EventDefinitionValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType Evidence { get; } = new FhirResourceType(EvidenceValue);
+        public static HealthcareFhirResourceType Evidence { get; } = new HealthcareFhirResourceType(EvidenceValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType EvidenceVariable { get; } = new FhirResourceType(EvidenceVariableValue);
+        public static HealthcareFhirResourceType EvidenceVariable { get; } = new HealthcareFhirResourceType(EvidenceVariableValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType ExampleScenario { get; } = new FhirResourceType(ExampleScenarioValue);
+        public static HealthcareFhirResourceType ExampleScenario { get; } = new HealthcareFhirResourceType(ExampleScenarioValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType ExpansionProfile { get; } = new FhirResourceType(ExpansionProfileValue);
+        public static HealthcareFhirResourceType ExpansionProfile { get; } = new HealthcareFhirResourceType(ExpansionProfileValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ExplanationOfBenefit { get; } = new FhirResourceType(ExplanationOfBenefitValue);
+        public static HealthcareFhirResourceType ExplanationOfBenefit { get; } = new HealthcareFhirResourceType(ExplanationOfBenefitValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType FamilyMemberHistory { get; } = new FhirResourceType(FamilyMemberHistoryValue);
+        public static HealthcareFhirResourceType FamilyMemberHistory { get; } = new HealthcareFhirResourceType(FamilyMemberHistoryValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Flag { get; } = new FhirResourceType(FlagValue);
+        public static HealthcareFhirResourceType Flag { get; } = new HealthcareFhirResourceType(FlagValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Goal { get; } = new FhirResourceType(GoalValue);
+        public static HealthcareFhirResourceType Goal { get; } = new HealthcareFhirResourceType(GoalValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType GraphDefinition { get; } = new FhirResourceType(GraphDefinitionValue);
+        public static HealthcareFhirResourceType GraphDefinition { get; } = new HealthcareFhirResourceType(GraphDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Group { get; } = new FhirResourceType(GroupValue);
+        public static HealthcareFhirResourceType Group { get; } = new HealthcareFhirResourceType(GroupValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType GuidanceResponse { get; } = new FhirResourceType(GuidanceResponseValue);
+        public static HealthcareFhirResourceType GuidanceResponse { get; } = new HealthcareFhirResourceType(GuidanceResponseValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType HealthcareService { get; } = new FhirResourceType(HealthcareServiceValue);
+        public static HealthcareFhirResourceType HealthcareService { get; } = new HealthcareFhirResourceType(HealthcareServiceValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType ImagingManifest { get; } = new FhirResourceType(ImagingManifestValue);
+        public static HealthcareFhirResourceType ImagingManifest { get; } = new HealthcareFhirResourceType(ImagingManifestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ImagingStudy { get; } = new FhirResourceType(ImagingStudyValue);
+        public static HealthcareFhirResourceType ImagingStudy { get; } = new HealthcareFhirResourceType(ImagingStudyValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Immunization { get; } = new FhirResourceType(ImmunizationValue);
+        public static HealthcareFhirResourceType Immunization { get; } = new HealthcareFhirResourceType(ImmunizationValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType ImmunizationEvaluation { get; } = new FhirResourceType(ImmunizationEvaluationValue);
+        public static HealthcareFhirResourceType ImmunizationEvaluation { get; } = new HealthcareFhirResourceType(ImmunizationEvaluationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ImmunizationRecommendation { get; } = new FhirResourceType(ImmunizationRecommendationValue);
+        public static HealthcareFhirResourceType ImmunizationRecommendation { get; } = new HealthcareFhirResourceType(ImmunizationRecommendationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ImplementationGuide { get; } = new FhirResourceType(ImplementationGuideValue);
+        public static HealthcareFhirResourceType ImplementationGuide { get; } = new HealthcareFhirResourceType(ImplementationGuideValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType InsurancePlan { get; } = new FhirResourceType(InsurancePlanValue);
+        public static HealthcareFhirResourceType InsurancePlan { get; } = new HealthcareFhirResourceType(InsurancePlanValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType Invoice { get; } = new FhirResourceType(InvoiceValue);
+        public static HealthcareFhirResourceType Invoice { get; } = new HealthcareFhirResourceType(InvoiceValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Library { get; } = new FhirResourceType(LibraryValue);
+        public static HealthcareFhirResourceType Library { get; } = new HealthcareFhirResourceType(LibraryValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Linkage { get; } = new FhirResourceType(LinkageValue);
+        public static HealthcareFhirResourceType Linkage { get; } = new HealthcareFhirResourceType(LinkageValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType List { get; } = new FhirResourceType(ListValue);
+        public static HealthcareFhirResourceType List { get; } = new HealthcareFhirResourceType(ListValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Location { get; } = new FhirResourceType(LocationValue);
+        public static HealthcareFhirResourceType Location { get; } = new HealthcareFhirResourceType(LocationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Measure { get; } = new FhirResourceType(MeasureValue);
+        public static HealthcareFhirResourceType Measure { get; } = new HealthcareFhirResourceType(MeasureValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType MeasureReport { get; } = new FhirResourceType(MeasureReportValue);
+        public static HealthcareFhirResourceType MeasureReport { get; } = new HealthcareFhirResourceType(MeasureReportValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Media { get; } = new FhirResourceType(MediaValue);
+        public static HealthcareFhirResourceType Media { get; } = new HealthcareFhirResourceType(MediaValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Medication { get; } = new FhirResourceType(MedicationValue);
+        public static HealthcareFhirResourceType Medication { get; } = new HealthcareFhirResourceType(MedicationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType MedicationAdministration { get; } = new FhirResourceType(MedicationAdministrationValue);
+        public static HealthcareFhirResourceType MedicationAdministration { get; } = new HealthcareFhirResourceType(MedicationAdministrationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType MedicationDispense { get; } = new FhirResourceType(MedicationDispenseValue);
+        public static HealthcareFhirResourceType MedicationDispense { get; } = new HealthcareFhirResourceType(MedicationDispenseValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicationKnowledge { get; } = new FhirResourceType(MedicationKnowledgeValue);
+        public static HealthcareFhirResourceType MedicationKnowledge { get; } = new HealthcareFhirResourceType(MedicationKnowledgeValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType MedicationRequest { get; } = new FhirResourceType(MedicationRequestValue);
+        public static HealthcareFhirResourceType MedicationRequest { get; } = new HealthcareFhirResourceType(MedicationRequestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType MedicationStatement { get; } = new FhirResourceType(MedicationStatementValue);
+        public static HealthcareFhirResourceType MedicationStatement { get; } = new HealthcareFhirResourceType(MedicationStatementValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProduct { get; } = new FhirResourceType(MedicinalProductValue);
+        public static HealthcareFhirResourceType MedicinalProduct { get; } = new HealthcareFhirResourceType(MedicinalProductValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductAuthorization { get; } = new FhirResourceType(MedicinalProductAuthorizationValue);
+        public static HealthcareFhirResourceType MedicinalProductAuthorization { get; } = new HealthcareFhirResourceType(MedicinalProductAuthorizationValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductContraindication { get; } = new FhirResourceType(MedicinalProductContraindicationValue);
+        public static HealthcareFhirResourceType MedicinalProductContraindication { get; } = new HealthcareFhirResourceType(MedicinalProductContraindicationValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductIndication { get; } = new FhirResourceType(MedicinalProductIndicationValue);
+        public static HealthcareFhirResourceType MedicinalProductIndication { get; } = new HealthcareFhirResourceType(MedicinalProductIndicationValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductIngredient { get; } = new FhirResourceType(MedicinalProductIngredientValue);
+        public static HealthcareFhirResourceType MedicinalProductIngredient { get; } = new HealthcareFhirResourceType(MedicinalProductIngredientValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductInteraction { get; } = new FhirResourceType(MedicinalProductInteractionValue);
+        public static HealthcareFhirResourceType MedicinalProductInteraction { get; } = new HealthcareFhirResourceType(MedicinalProductInteractionValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductManufactured { get; } = new FhirResourceType(MedicinalProductManufacturedValue);
+        public static HealthcareFhirResourceType MedicinalProductManufactured { get; } = new HealthcareFhirResourceType(MedicinalProductManufacturedValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductPackaged { get; } = new FhirResourceType(MedicinalProductPackagedValue);
+        public static HealthcareFhirResourceType MedicinalProductPackaged { get; } = new HealthcareFhirResourceType(MedicinalProductPackagedValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductPharmaceutical { get; } = new FhirResourceType(MedicinalProductPharmaceuticalValue);
+        public static HealthcareFhirResourceType MedicinalProductPharmaceutical { get; } = new HealthcareFhirResourceType(MedicinalProductPharmaceuticalValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MedicinalProductUndesirableEffect { get; } = new FhirResourceType(MedicinalProductUndesirableEffectValue);
+        public static HealthcareFhirResourceType MedicinalProductUndesirableEffect { get; } = new HealthcareFhirResourceType(MedicinalProductUndesirableEffectValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType MessageDefinition { get; } = new FhirResourceType(MessageDefinitionValue);
+        public static HealthcareFhirResourceType MessageDefinition { get; } = new HealthcareFhirResourceType(MessageDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType MessageHeader { get; } = new FhirResourceType(MessageHeaderValue);
+        public static HealthcareFhirResourceType MessageHeader { get; } = new HealthcareFhirResourceType(MessageHeaderValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType MolecularSequence { get; } = new FhirResourceType(MolecularSequenceValue);
+        public static HealthcareFhirResourceType MolecularSequence { get; } = new HealthcareFhirResourceType(MolecularSequenceValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType NamingSystem { get; } = new FhirResourceType(NamingSystemValue);
+        public static HealthcareFhirResourceType NamingSystem { get; } = new HealthcareFhirResourceType(NamingSystemValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType NutritionOrder { get; } = new FhirResourceType(NutritionOrderValue);
+        public static HealthcareFhirResourceType NutritionOrder { get; } = new HealthcareFhirResourceType(NutritionOrderValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Observation { get; } = new FhirResourceType(ObservationValue);
+        public static HealthcareFhirResourceType Observation { get; } = new HealthcareFhirResourceType(ObservationValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType ObservationDefinition { get; } = new FhirResourceType(ObservationDefinitionValue);
+        public static HealthcareFhirResourceType ObservationDefinition { get; } = new HealthcareFhirResourceType(ObservationDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType OperationDefinition { get; } = new FhirResourceType(OperationDefinitionValue);
+        public static HealthcareFhirResourceType OperationDefinition { get; } = new HealthcareFhirResourceType(OperationDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType OperationOutcome { get; } = new FhirResourceType(OperationOutcomeValue);
+        public static HealthcareFhirResourceType OperationOutcome { get; } = new HealthcareFhirResourceType(OperationOutcomeValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Organization { get; } = new FhirResourceType(OrganizationValue);
+        public static HealthcareFhirResourceType Organization { get; } = new HealthcareFhirResourceType(OrganizationValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType OrganizationAffiliation { get; } = new FhirResourceType(OrganizationAffiliationValue);
+        public static HealthcareFhirResourceType OrganizationAffiliation { get; } = new HealthcareFhirResourceType(OrganizationAffiliationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Parameters { get; } = new FhirResourceType(ParametersValue);
+        public static HealthcareFhirResourceType Parameters { get; } = new HealthcareFhirResourceType(ParametersValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Patient { get; } = new FhirResourceType(PatientValue);
+        public static HealthcareFhirResourceType Patient { get; } = new HealthcareFhirResourceType(PatientValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType PaymentNotice { get; } = new FhirResourceType(PaymentNoticeValue);
+        public static HealthcareFhirResourceType PaymentNotice { get; } = new HealthcareFhirResourceType(PaymentNoticeValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType PaymentReconciliation { get; } = new FhirResourceType(PaymentReconciliationValue);
+        public static HealthcareFhirResourceType PaymentReconciliation { get; } = new HealthcareFhirResourceType(PaymentReconciliationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Person { get; } = new FhirResourceType(PersonValue);
+        public static HealthcareFhirResourceType Person { get; } = new HealthcareFhirResourceType(PersonValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType PlanDefinition { get; } = new FhirResourceType(PlanDefinitionValue);
+        public static HealthcareFhirResourceType PlanDefinition { get; } = new HealthcareFhirResourceType(PlanDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Practitioner { get; } = new FhirResourceType(PractitionerValue);
+        public static HealthcareFhirResourceType Practitioner { get; } = new HealthcareFhirResourceType(PractitionerValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType PractitionerRole { get; } = new FhirResourceType(PractitionerRoleValue);
+        public static HealthcareFhirResourceType PractitionerRole { get; } = new HealthcareFhirResourceType(PractitionerRoleValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Procedure { get; } = new FhirResourceType(ProcedureValue);
+        public static HealthcareFhirResourceType Procedure { get; } = new HealthcareFhirResourceType(ProcedureValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType ProcedureRequest { get; } = new FhirResourceType(ProcedureRequestValue);
+        public static HealthcareFhirResourceType ProcedureRequest { get; } = new HealthcareFhirResourceType(ProcedureRequestValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType ProcessRequest { get; } = new FhirResourceType(ProcessRequestValue);
+        public static HealthcareFhirResourceType ProcessRequest { get; } = new HealthcareFhirResourceType(ProcessRequestValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType ProcessResponse { get; } = new FhirResourceType(ProcessResponseValue);
+        public static HealthcareFhirResourceType ProcessResponse { get; } = new HealthcareFhirResourceType(ProcessResponseValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Provenance { get; } = new FhirResourceType(ProvenanceValue);
+        public static HealthcareFhirResourceType Provenance { get; } = new HealthcareFhirResourceType(ProvenanceValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Questionnaire { get; } = new FhirResourceType(QuestionnaireValue);
+        public static HealthcareFhirResourceType Questionnaire { get; } = new HealthcareFhirResourceType(QuestionnaireValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType QuestionnaireResponse { get; } = new FhirResourceType(QuestionnaireResponseValue);
+        public static HealthcareFhirResourceType QuestionnaireResponse { get; } = new HealthcareFhirResourceType(QuestionnaireResponseValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType ReferralRequest { get; } = new FhirResourceType(ReferralRequestValue);
+        public static HealthcareFhirResourceType ReferralRequest { get; } = new HealthcareFhirResourceType(ReferralRequestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType RelatedPerson { get; } = new FhirResourceType(RelatedPersonValue);
+        public static HealthcareFhirResourceType RelatedPerson { get; } = new HealthcareFhirResourceType(RelatedPersonValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType RequestGroup { get; } = new FhirResourceType(RequestGroupValue);
+        public static HealthcareFhirResourceType RequestGroup { get; } = new HealthcareFhirResourceType(RequestGroupValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType ResearchDefinition { get; } = new FhirResourceType(ResearchDefinitionValue);
+        public static HealthcareFhirResourceType ResearchDefinition { get; } = new HealthcareFhirResourceType(ResearchDefinitionValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType ResearchElementDefinition { get; } = new FhirResourceType(ResearchElementDefinitionValue);
+        public static HealthcareFhirResourceType ResearchElementDefinition { get; } = new HealthcareFhirResourceType(ResearchElementDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ResearchStudy { get; } = new FhirResourceType(ResearchStudyValue);
+        public static HealthcareFhirResourceType ResearchStudy { get; } = new HealthcareFhirResourceType(ResearchStudyValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ResearchSubject { get; } = new FhirResourceType(ResearchSubjectValue);
+        public static HealthcareFhirResourceType ResearchSubject { get; } = new HealthcareFhirResourceType(ResearchSubjectValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Resource { get; } = new FhirResourceType(ResourceValue);
+        public static HealthcareFhirResourceType Resource { get; } = new HealthcareFhirResourceType(ResourceValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType RiskAssessment { get; } = new FhirResourceType(RiskAssessmentValue);
+        public static HealthcareFhirResourceType RiskAssessment { get; } = new HealthcareFhirResourceType(RiskAssessmentValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType RiskEvidenceSynthesis { get; } = new FhirResourceType(RiskEvidenceSynthesisValue);
+        public static HealthcareFhirResourceType RiskEvidenceSynthesis { get; } = new HealthcareFhirResourceType(RiskEvidenceSynthesisValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Schedule { get; } = new FhirResourceType(ScheduleValue);
+        public static HealthcareFhirResourceType Schedule { get; } = new HealthcareFhirResourceType(ScheduleValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType SearchParameter { get; } = new FhirResourceType(SearchParameterValue);
+        public static HealthcareFhirResourceType SearchParameter { get; } = new HealthcareFhirResourceType(SearchParameterValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType Sequence { get; } = new FhirResourceType(SequenceValue);
+        public static HealthcareFhirResourceType Sequence { get; } = new HealthcareFhirResourceType(SequenceValue);
         /// <summary> The FHIR resource type defined in STU3. </summary>
-        public static FhirResourceType ServiceDefinition { get; } = new FhirResourceType(ServiceDefinitionValue);
+        public static HealthcareFhirResourceType ServiceDefinition { get; } = new HealthcareFhirResourceType(ServiceDefinitionValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType ServiceRequest { get; } = new FhirResourceType(ServiceRequestValue);
+        public static HealthcareFhirResourceType ServiceRequest { get; } = new HealthcareFhirResourceType(ServiceRequestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Slot { get; } = new FhirResourceType(SlotValue);
+        public static HealthcareFhirResourceType Slot { get; } = new HealthcareFhirResourceType(SlotValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Specimen { get; } = new FhirResourceType(SpecimenValue);
+        public static HealthcareFhirResourceType Specimen { get; } = new HealthcareFhirResourceType(SpecimenValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType SpecimenDefinition { get; } = new FhirResourceType(SpecimenDefinitionValue);
+        public static HealthcareFhirResourceType SpecimenDefinition { get; } = new HealthcareFhirResourceType(SpecimenDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType StructureDefinition { get; } = new FhirResourceType(StructureDefinitionValue);
+        public static HealthcareFhirResourceType StructureDefinition { get; } = new HealthcareFhirResourceType(StructureDefinitionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType StructureMap { get; } = new FhirResourceType(StructureMapValue);
+        public static HealthcareFhirResourceType StructureMap { get; } = new HealthcareFhirResourceType(StructureMapValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Subscription { get; } = new FhirResourceType(SubscriptionValue);
+        public static HealthcareFhirResourceType Subscription { get; } = new HealthcareFhirResourceType(SubscriptionValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Substance { get; } = new FhirResourceType(SubstanceValue);
+        public static HealthcareFhirResourceType Substance { get; } = new HealthcareFhirResourceType(SubstanceValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType SubstanceNucleicAcid { get; } = new FhirResourceType(SubstanceNucleicAcidValue);
+        public static HealthcareFhirResourceType SubstanceNucleicAcid { get; } = new HealthcareFhirResourceType(SubstanceNucleicAcidValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType SubstancePolymer { get; } = new FhirResourceType(SubstancePolymerValue);
+        public static HealthcareFhirResourceType SubstancePolymer { get; } = new HealthcareFhirResourceType(SubstancePolymerValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType SubstanceProtein { get; } = new FhirResourceType(SubstanceProteinValue);
+        public static HealthcareFhirResourceType SubstanceProtein { get; } = new HealthcareFhirResourceType(SubstanceProteinValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType SubstanceReferenceInformation { get; } = new FhirResourceType(SubstanceReferenceInformationValue);
+        public static HealthcareFhirResourceType SubstanceReferenceInformation { get; } = new HealthcareFhirResourceType(SubstanceReferenceInformationValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType SubstanceSourceMaterial { get; } = new FhirResourceType(SubstanceSourceMaterialValue);
+        public static HealthcareFhirResourceType SubstanceSourceMaterial { get; } = new HealthcareFhirResourceType(SubstanceSourceMaterialValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType SubstanceSpecification { get; } = new FhirResourceType(SubstanceSpecificationValue);
+        public static HealthcareFhirResourceType SubstanceSpecification { get; } = new HealthcareFhirResourceType(SubstanceSpecificationValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType SupplyDelivery { get; } = new FhirResourceType(SupplyDeliveryValue);
+        public static HealthcareFhirResourceType SupplyDelivery { get; } = new HealthcareFhirResourceType(SupplyDeliveryValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType SupplyRequest { get; } = new FhirResourceType(SupplyRequestValue);
+        public static HealthcareFhirResourceType SupplyRequest { get; } = new HealthcareFhirResourceType(SupplyRequestValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType Task { get; } = new FhirResourceType(TaskValue);
+        public static HealthcareFhirResourceType Task { get; } = new HealthcareFhirResourceType(TaskValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType TerminologyCapabilities { get; } = new FhirResourceType(TerminologyCapabilitiesValue);
+        public static HealthcareFhirResourceType TerminologyCapabilities { get; } = new HealthcareFhirResourceType(TerminologyCapabilitiesValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType TestReport { get; } = new FhirResourceType(TestReportValue);
+        public static HealthcareFhirResourceType TestReport { get; } = new HealthcareFhirResourceType(TestReportValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType TestScript { get; } = new FhirResourceType(TestScriptValue);
+        public static HealthcareFhirResourceType TestScript { get; } = new HealthcareFhirResourceType(TestScriptValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType ValueSet { get; } = new FhirResourceType(ValueSetValue);
+        public static HealthcareFhirResourceType ValueSet { get; } = new HealthcareFhirResourceType(ValueSetValue);
         /// <summary> The FHIR resource type defined in R4. </summary>
-        public static FhirResourceType VerificationResult { get; } = new FhirResourceType(VerificationResultValue);
+        public static HealthcareFhirResourceType VerificationResult { get; } = new HealthcareFhirResourceType(VerificationResultValue);
         /// <summary> The FHIR resource type defined in STU3 and R4. </summary>
-        public static FhirResourceType VisionPrescription { get; } = new FhirResourceType(VisionPrescriptionValue);
-        /// <summary> Determines if two <see cref="FhirResourceType"/> values are the same. </summary>
-        public static bool operator ==(FhirResourceType left, FhirResourceType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="FhirResourceType"/> values are not the same. </summary>
-        public static bool operator !=(FhirResourceType left, FhirResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FhirResourceType"/>. </summary>
-        public static implicit operator FhirResourceType(string value) => new FhirResourceType(value);
+        public static HealthcareFhirResourceType VisionPrescription { get; } = new HealthcareFhirResourceType(VisionPrescriptionValue);
+        /// <summary> Determines if two <see cref="HealthcareFhirResourceType"/> values are the same. </summary>
+        public static bool operator ==(HealthcareFhirResourceType left, HealthcareFhirResourceType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="HealthcareFhirResourceType"/> values are not the same. </summary>
+        public static bool operator !=(HealthcareFhirResourceType left, HealthcareFhirResourceType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="HealthcareFhirResourceType"/>. </summary>
+        public static implicit operator HealthcareFhirResourceType(string value) => new HealthcareFhirResourceType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FhirResourceType other && Equals(other);
+        public override bool Equals(object obj) => obj is HealthcareFhirResourceType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(FhirResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HealthcareFhirResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
