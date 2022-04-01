@@ -15,87 +15,64 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing collection of RecordSet and their operations over its parent. </summary>
-    public partial class RecordSetTxtCollection : ArmCollection, IEnumerable<RecordSetTxt>, IAsyncEnumerable<RecordSetTxt>
+    /// <summary>
+    /// A class representing a collection of <see cref="RecordSetTxtResource" /> and their operations.
+    /// Each <see cref="RecordSetTxtResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="RecordSetTxtCollection" /> instance call the GetRecordSetTxts method from an instance of <see cref="DnsZoneResource" />.
+    /// </summary>
+    public partial class RecordSetTxtCollection : ArmCollection, IEnumerable<RecordSetTxtResource>, IAsyncEnumerable<RecordSetTxtResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetsRestClient;
+        private readonly ClientDiagnostics _recordSetTxtRecordSetsClientDiagnostics;
+        private readonly RecordSetsRestOperations _recordSetTxtRecordSetsRestClient;
+
+        /// <summary> Initializes a new instance of the <see cref="RecordSetTxtCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal RecordSetTxtCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            _recordSetTxtRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", RecordSetTxtResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RecordSetTxtResource.ResourceType, out string recordSetTxtRecordSetsApiVersion);
+            _recordSetTxtRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetTxtRecordSetsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
+        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DnsZone.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DnsZone.ResourceType), nameof(id));
+            if (id.ResourceType != DnsZoneResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Creates or updates a record set within a DNS zone. </summary>
+        /// <summary>
+        /// Creates or updates a record set within a DNS zone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Operation Id: RecordSets_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual RecordSetCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string relativeRecordSetName, RecordSetData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<RecordSetTxtResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, RecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (relativeRecordSetName == null)
-            {
-                throw new ArgumentNullException(nameof(relativeRecordSetName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("RecordSetTxtCollection.CreateOrUpdate");
+            using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _recordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), relativeRecordSetName, parameters, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new RecordSetCreateOrUpdateOperation(response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a record set within a DNS zone. </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RecordSetCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string relativeRecordSetName, RecordSetData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (relativeRecordSetName == null)
-            {
-                throw new ArgumentNullException(nameof(relativeRecordSetName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RecordSetTxtCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _recordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), relativeRecordSetName, parameters, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new RecordSetCreateOrUpdateOperation(response);
-                if (waitForCompletion)
+                var response = await _recordSetTxtRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsArmOperation<RecordSetTxtResource>(Response.FromValue(new RecordSetTxtResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -106,7 +83,41 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        IEnumerator<RecordSetTxt> IEnumerable<RecordSetTxt>.GetEnumerator()
+        /// <summary>
+        /// Creates or updates a record set within a DNS zone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
+        /// Operation Id: RecordSets_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<RecordSetTxtResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, RecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _recordSetTxtRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TXT".ToRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsArmOperation<RecordSetTxtResource>(Response.FromValue(new RecordSetTxtResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<RecordSetTxtResource> IEnumerable<RecordSetTxtResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -116,12 +127,9 @@ namespace Azure.ResourceManager.Dns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RecordSetTxt> IAsyncEnumerable<RecordSetTxt>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RecordSetTxtResource> IAsyncEnumerable<RecordSetTxtResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, RecordSetTxt, RecordSetData> Construct() { }
     }
 }

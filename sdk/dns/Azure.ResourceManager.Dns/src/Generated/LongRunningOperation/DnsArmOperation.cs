@@ -10,22 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Dns.Models
+namespace Azure.ResourceManager.Dns
 {
-    /// <summary> Deletes a record set from a DNS zone. This operation cannot be undone. </summary>
-    public partial class RecordSetDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class DnsArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of RecordSetDeleteOperation for mocking. </summary>
-        protected RecordSetDeleteOperation()
+        /// <summary> Initializes a new instance of DnsArmOperation for mocking. </summary>
+        protected DnsArmOperation()
         {
         }
 
-        internal RecordSetDeleteOperation(Response response)
+        internal DnsArmOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal DnsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "DnsArmOperation");
         }
 
         /// <inheritdoc />
@@ -42,6 +50,12 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);

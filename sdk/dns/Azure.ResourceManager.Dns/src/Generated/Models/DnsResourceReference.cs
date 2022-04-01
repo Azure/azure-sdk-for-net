@@ -32,6 +32,12 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> A list of dns Records. </summary>
         public IReadOnlyList<WritableSubResource> DnsResources { get; }
         /// <summary> A reference to an azure resource from where the dns resource value is taken. </summary>
-        public WritableSubResource TargetResource { get; }
+        internal WritableSubResource TargetResource { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier TargetResourceId
+        {
+            get => TargetResource.Id;
+            set => TargetResource.Id = value;
+        }
     }
 }
