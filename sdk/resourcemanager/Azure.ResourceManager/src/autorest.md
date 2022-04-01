@@ -642,8 +642,17 @@ override-operation-name:
   ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
   - rename-model:
+      from: PatchManagementGroupRequest
+      to: PatchManagementGroupOptions
+  - rename-model:
       from: CreateManagementGroupRequest
-      to: CreateManagementGroupData
+      to: CreateManagementGroupOptions
+  - rename-model:
+      from: CreateManagementGroupChildInfo
+      to: ManagementGroupChildOptions
+  - rename-model:
+      from: CreateParentGroupInfo
+      to: ManagementGroupParentCreateOptions
   - from: management.json
     where: $.definitions.CheckNameAvailabilityRequest.properties.type
     transform: >

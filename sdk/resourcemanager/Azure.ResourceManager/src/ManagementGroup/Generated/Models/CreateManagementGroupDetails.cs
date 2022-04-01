@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> The identity of the principal or process that updated the object. </summary>
         public string UpdatedBy { get; }
         /// <summary> (Optional) The ID of the parent management group used during creation. </summary>
-        public CreateParentGroupInfo Parent { get; set; }
+        public ManagementGroupParentCreateOptions Parent { get; set; }
     }
 }

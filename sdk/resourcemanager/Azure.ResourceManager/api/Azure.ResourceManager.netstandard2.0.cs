@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.ManagementGroups
         protected ManagementGroupCollection() { }
         public virtual Azure.Response<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult> CheckManagementGroupNameAvailability(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult>> CheckManagementGroupNameAvailabilityAsync(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string groupId, Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupData data, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagementGroups.ManagementGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string groupId, Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupData data, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string groupId, Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupOptions options, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagementGroups.ManagementGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string groupId, Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupOptions options, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string groupId, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string groupId, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> Get(string groupId, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -160,40 +160,24 @@ namespace Azure.ResourceManager.ManagementGroups
 }
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class CreateManagementGroupChildInfo
+    public partial class CreateManagementGroupDetails
     {
-        internal CreateManagementGroupChildInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupChildInfo> Children { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? ManagementGroupChildType { get { throw null; } }
-        public string Name { get { throw null; } }
+        public CreateManagementGroupDetails() { }
+        public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions Parent { get { throw null; } set { } }
+        public string UpdatedBy { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        public int? Version { get { throw null; } }
     }
-    public partial class CreateManagementGroupData
+    public partial class CreateManagementGroupOptions
     {
-        public CreateManagementGroupData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupChildInfo> Children { get { throw null; } }
+        public CreateManagementGroupOptions() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions> Children { get { throw null; } }
         public Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails Details { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
-    }
-    public partial class CreateManagementGroupDetails
-    {
-        public CreateManagementGroupDetails() { }
-        public Azure.ResourceManager.ManagementGroups.Models.CreateParentGroupInfo Parent { get { throw null; } set { } }
-        public string UpdatedBy { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-        public int? Version { get { throw null; } }
-    }
-    public partial class CreateParentGroupInfo
-    {
-        public CreateParentGroupInfo() { }
-        public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } }
     }
     public partial class DescendantData : Azure.ResourceManager.Models.ResourceData
     {
@@ -205,6 +189,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         internal ManagementGroupChildInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> Children { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? ManagementGroupChildType { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    public partial class ManagementGroupChildOptions
+    {
+        internal ManagementGroupChildOptions() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions> Children { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? ManagementGroupChildType { get { throw null; } }
@@ -275,6 +268,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         Invalid = 0,
         AlreadyExists = 1,
+    }
+    public partial class ManagementGroupParentCreateOptions
+    {
+        public ManagementGroupParentCreateOptions() { }
+        public string DisplayName { get { throw null; } }
+        public string Id { get { throw null; } set { } }
+        public string Name { get { throw null; } }
     }
     public partial class ManagementGroupPathElement
     {
