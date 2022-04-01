@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -143,6 +144,11 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The <see cref="EventDataBatch" /> instance that was created.</returns>
         ///
+        /// <remarks>
+        ///   It is important to note that the batch will keep an internal copy of events accepted by <see cref="EventDataBatch.TryAdd" />; changes made to
+        ///   <paramref name="batchEventStore" /> outside of the batch will not be reflected by the batch.
+        /// </remarks>
+        ///
         public static EventDataBatch EventDataBatch(long batchSizeBytes,
                                                     IList<EventData> batchEventStore,
                                                     CreateBatchOptions batchOptions = default,
@@ -152,7 +158,7 @@ namespace Azure.Messaging.EventHubs
             batchOptions ??= new CreateBatchOptions();
             batchOptions.MaximumSizeInBytes ??= long.MaxValue;
 
-            var transportBatch = new ListTransportBatch(batchOptions.MaximumSizeInBytes.Value, batchSizeBytes, batchEventStore, tryAddCallback);
+            var transportBatch = new ListTransportBatch(batchOptions.MaximumSizeInBytes.Value, batchSizeBytes, batchOptions, batchEventStore, tryAddCallback);
             return new EventDataBatch(transportBatch, "Mock", "Mock", batchOptions);
         }
 
@@ -207,11 +213,8 @@ namespace Azure.Messaging.EventHubs
         ///   Allows for the transport event batch created by the factory to be injected for testing purposes.
         /// </summary>
         ///
-        private sealed class ListTransportBatch : TransportEventBatch
+        private sealed class ListTransportBatch : IdempotentAmqpEventBatch
         {
-            /// <summary>The backing store for storing events in the batch.</summary>
-            private readonly IList<EventData> _backingStore;
-
             /// <summary>A callback to be invoked when an adding an event via <see cref="TryAdd"/></summary>
             private readonly Func<EventData, bool> _tryAddCallback;
 
@@ -236,25 +239,25 @@ namespace Azure.Messaging.EventHubs
             public override TransportProducerFeatures ActiveFeatures { get; } = TransportProducerFeatures.None;
 
             /// <summary>
-            ///   The count of events contained in the batch.
-            /// </summary>
-            ///
-            public override int Count => _backingStore.Count;
-
-            /// <summary>
             ///   Initializes a new instance of the <see cref="ListTransportBatch"/> class.
             /// </summary>
             ///
             /// <param name="maximumSizeInBytes"> The maximum size allowed for the batch, in bytes.</param>
             /// <param name="sizeInBytes">The size of the batch, in bytes; this will be treated as a static value for the property.</param>
+            /// <param name="options">The set of options to apply to the batch.</param>
             /// <param name="backingStore">The backing store for holding events in the batch.</param>
             /// <param name="tryAddCallback">A callback for deciding if a TryAdd attempt is successful.</param>
             ///
             internal ListTransportBatch(long maximumSizeInBytes,
                                         long sizeInBytes,
+                                        CreateBatchOptions options,
                                         IList<EventData> backingStore,
-                                        Func<EventData, bool> tryAddCallback) =>
-                (MaximumSizeInBytes, SizeInBytes, _backingStore, _tryAddCallback) = (maximumSizeInBytes, sizeInBytes, backingStore, tryAddCallback);
+                                        Func<EventData, bool> tryAddCallback) : base(new AmqpMessageConverter(), options, TransportProducerFeatures.None, backingStore)
+            {
+                MaximumSizeInBytes = maximumSizeInBytes;
+                SizeInBytes = sizeInBytes;
+                _tryAddCallback = tryAddCallback;
+            }
 
             /// <summary>
             ///   Attempts to add an event to the batch, ensuring that the size
@@ -269,41 +272,11 @@ namespace Azure.Messaging.EventHubs
             {
                 if (_tryAddCallback(eventData))
                 {
-                    _backingStore.Add(eventData);
+                    BatchEvents.Add(eventData);
                     return true;
                 }
 
                 return false;
-            }
-
-            /// <summary>
-            ///   Clears the batch, removing all events and resetting the
-            ///   available size.
-            /// </summary>
-            ///
-            public override void Clear() => _backingStore.Clear();
-
-            /// <summary>
-            ///   Represents the batch as an enumerable set of transport-specific
-            ///   representations of an event.
-            /// </summary>
-            ///
-            /// <typeparam name="T">The transport-specific event representation being requested.</typeparam>
-            ///
-            /// <returns>The set of events as an enumerable of the requested type.</returns>
-            ///
-            public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => _backingStore switch
-            {
-                IReadOnlyCollection<T> storeCollection => storeCollection,
-                _ => new List<T>((IEnumerable<T>)_backingStore)
-            };
-
-            /// <summary>
-            ///   Performs the task needed to clean up resources used by the <see cref="TransportEventBatch" />.
-            /// </summary>
-            ///
-            public override void Dispose()
-            {
             }
         }
     }

@@ -701,7 +701,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionKey = "sOmE-kEY";
             var firstEvent = new EventData(new BinaryData(new byte[] { 0x11, 0x22, 0x33 }));
             var secondEvent = new EventData(new byte[] { 0x44, 0x55, 0x66 });
-            EventData[] events = new[] { firstEvent, secondEvent };
+            var events = new[] { firstEvent, secondEvent };
             var converter = new AmqpMessageConverter();
 
             using AmqpMessage message = converter.CreateBatchFromEvents(events, partitionKey);
@@ -751,7 +751,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchFromMessagesAllowNoPartitionKey(string partitionKey)
         {
             var converter = new AmqpMessageConverter();
-            Assert.That(() => converter.CreateBatchFromMessages(new List<AmqpMessage> { AmqpMessage.Create() }, partitionKey), Throws.Nothing);
+
+            using var message = AmqpMessage.Create(new[] { new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x11, 0x22 }) }});
+            Assert.That(() => converter.CreateBatchFromMessages(new List<AmqpMessage> { message }, partitionKey), Throws.Nothing);
         }
 
         /// <summary>

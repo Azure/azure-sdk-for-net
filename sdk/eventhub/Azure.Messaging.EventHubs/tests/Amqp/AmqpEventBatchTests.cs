@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
+                CreateBatchFromMessagesHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
             var batch = new AmqpEventBatch(mockConverter, options, default);
@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockMessage = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockMessage.Object
+                CreateBatchFromMessagesHandler = (_e, _p) => mockMessage.Object
             };
 
             mockMessage
@@ -116,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
+                CreateBatchFromMessagesHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
             var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 }, default);
@@ -133,109 +133,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
+                CreateBatchFromMessagesHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
             var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 }, default);
             batch.Dispose();
 
             Assert.That(() => batch.TryAdd(new EventData(new byte[0])), Throws.InstanceOf<ObjectDisposedException>());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventBatch.TryAdd" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(TransportProducerFeatures.None)]
-        [TestCase(TransportProducerFeatures.IdempotentPublishing)]
-        public void TryAddHonorStatefulFeatures(byte activeFeatures)
-        {
-            var maximumSize = 50;
-            var batchEnvelopeSize = 0;
-            var capturedSequence = default(int?);
-            var capturedGroupId = default(long?);
-            var capturedOwnerLevel = default(short?);
-            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
-            var mockEnvelope = new Mock<AmqpMessage>();
-            var mockEvent = new Mock<AmqpMessage>();
-
-            var mockConverter = new InjectableMockConverter
-            {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
-
-                CreateMessageFromEventHandler = (_e, _p) =>
-                {
-                    capturedSequence = _e.PendingPublishSequenceNumber;
-                    capturedGroupId = _e.PendingProducerGroupId;
-                    capturedOwnerLevel = _e.PendingProducerOwnerLevel;
-                    return mockEvent.Object;
-                }
-            };
-
-            mockEnvelope
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(batchEnvelopeSize);
-
-            mockEvent
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(maximumSize);
-
-            var batch = new AmqpEventBatch(mockConverter, options, (TransportProducerFeatures)activeFeatures);
-            batch.TryAdd(EventGenerator.CreateEvents(1).Single());
-
-            NullConstraint generateConstraint() =>
-                ((TransportProducerFeatures)activeFeatures == TransportProducerFeatures.None)
-                    ? Is.Null
-                    : Is.Not.Null;
-
-            Assert.That(capturedSequence, generateConstraint(), "The sequence was not set as expected.");
-            Assert.That(capturedGroupId, generateConstraint(), "The group identifier was not set as expected.");
-            Assert.That(capturedOwnerLevel, generateConstraint(), "The owner level was not set as expected.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpEventBatch.TryAdd" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void TryAddResetsPublishingState()
-        {
-            var maximumSize = 50;
-            var batchEnvelopeSize = 0;
-            var capturedEvent = default(EventData);
-            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
-            var mockEnvelope = new Mock<AmqpMessage>();
-            var mockEvent = new Mock<AmqpMessage>();
-
-            var mockConverter = new InjectableMockConverter
-            {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
-
-                CreateMessageFromEventHandler = (_e, _p) =>
-                {
-                    capturedEvent = _e;
-                    return mockEvent.Object;
-                }
-            };
-
-            mockEnvelope
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(batchEnvelopeSize);
-
-            mockEvent
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(maximumSize);
-
-            var batch = new AmqpEventBatch(mockConverter, options, TransportProducerFeatures.IdempotentPublishing);
-            batch.TryAdd(EventGenerator.CreateEvents(1).Single());
-
-            Assert.That(capturedEvent.PublishedSequenceNumber, Is.Null, "The final sequence should not have been set.");
-            Assert.That(capturedEvent.PendingPublishSequenceNumber, Is.Null, "The pending sequence was not cleared.");
-            Assert.That(capturedEvent.PendingProducerGroupId, Is.Null, "The group identifier was not cleared.");
-            Assert.That(capturedEvent.PendingProducerOwnerLevel, Is.Null, "The owner level was not cleared.");
         }
 
         /// <summary>
@@ -253,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockEvent = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
                 CreateMessageFromEventHandler = (_e, _p) => mockEvent.Object
             };
 
@@ -285,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockEvent = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
                 CreateMessageFromEventHandler = (_e, _p) => mockEvent.Object
             };
 
@@ -317,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
                 CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
             };
 
@@ -368,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
                 CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
             };
 
@@ -399,13 +303,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableValidatesTheTypeParameter()
+        public void AsReadOnlyCollectionValidatesTheTypeParameter()
         {
             var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object
             };
 
             mockEnvelope
@@ -413,7 +317,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(0);
 
             var batch = new AmqpEventBatch(mockConverter, options, default);
-            Assert.That(() => batch.AsReadOnlyCollection<AmqpMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsReadOnlyCollection<EventData>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
@@ -422,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableReturnsTheEvents()
+        public void AsReadOnlyCollectionReturnsTheEventsInMessageForm()
         {
             var currentIndex = -1;
             var maximumSize = 5000;
@@ -432,7 +336,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
                 CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
             };
 
@@ -455,7 +359,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 batch.TryAdd(batchEvents[index]);
             }
 
-            IEnumerable<EventData> batchEnumerable = batch.AsReadOnlyCollection<EventData>();
+            var batchEnumerable = batch.AsReadOnlyCollection<AmqpMessage>();
             Assert.That(batchEnumerable, Is.Not.Null, "The batch enumerable should have been populated.");
 
             var batchEnumerableList = batchEnumerable.ToList();
@@ -463,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < batchEvents.Length; ++index)
             {
-                Assert.That(batchEnumerableList.Contains(batchEvents[index]), $"The event at index: { index } was not in the enumerable.");
+                Assert.That(batchEnumerableList.Contains(eventMessages[index]), $"The event at index: { index } was not in the enumerable.");
             }
         }
 
@@ -481,7 +385,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
                 CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
             };
 
@@ -503,7 +407,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
-            // Dispose the batch and verify that each message has also been disposed.
+            // Validate that the AMQP messages have not been disposed.
+
+            for (var index = 0; index < eventMessages.Length; ++index)
+            {
+                Assert.That(() => eventMessages[index].ThrowIfDisposed(), Throws.Nothing, $"The message at index: { index } should not have been disposed.");
+            }
+
+            // Dispose the batch and verify that the messages held by the batch have been disposed.
 
             batch.Dispose();
 
@@ -527,7 +438,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
                 CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
             };
 
@@ -566,7 +477,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockMessage = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockMessage.Object
+                CreateBatchFromMessagesHandler = (_e, _p) => mockMessage.Object
             };
 
             mockMessage
@@ -593,7 +504,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateBatchFromMessagesHandler = (_e, _p) => mockEnvelope.Object,
                 CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
             };
 
@@ -632,7 +543,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockMessage = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
-                CreateBatchFromEventsHandler = (_e, _p) => mockMessage.Object
+                CreateBatchFromMessagesHandler = (_e, _p) => mockMessage.Object
             };
 
             mockMessage
@@ -655,8 +566,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static long GetReservedSize(AmqpEventBatch instance) =>
             (long)
-                typeof(AmqpEventBatch)
-                    .GetField("ReservedSize", BindingFlags.Instance | BindingFlags.NonPublic)
+                typeof(AmqpTransportEventBatch)
+                    .GetProperty("ReservedOverheadBytes", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(instance);
 
         /// <summary>

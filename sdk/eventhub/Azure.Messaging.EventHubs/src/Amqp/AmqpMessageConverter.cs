@@ -295,16 +295,21 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             AmqpMessage batchEnvelope;
 
+            // If there is a single message, then it will be used as the
+            // envelope.  To avoid mutating the instance and polluting it with
+            // delivery state which prevents it from being sent during retries,
+            // clone it.
+
             if (source.Count == 1)
             {
                 switch (source)
                 {
                     case List<AmqpMessage> messageList:
-                        batchEnvelope = messageList[0];
+                        batchEnvelope = messageList[0].Clone();
                         break;
 
                     case AmqpMessage[] messageArray:
-                        batchEnvelope = messageArray[0];
+                        batchEnvelope = messageArray[0].Clone();
                         break;
 
                     default:
@@ -317,13 +322,17 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             else
             {
-                var messageData = new List<Data>(source.Count);
+                var messageData = new Data[source.Count];
+                var count = 0;
 
                 foreach (var message in source)
                 {
                     message.Batchable = true;
+
                     using var messageStream = message.ToStream();
-                    messageData.Add(new Data { Value = ReadStreamToArraySegment(messageStream) });
+                    messageData[count] = new Data { Value = ReadStreamToArraySegment(messageStream) };
+
+                    ++count;
                 }
 
                 batchEnvelope = AmqpMessage.Create(messageData);

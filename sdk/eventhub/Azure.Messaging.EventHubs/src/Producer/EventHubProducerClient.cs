@@ -841,11 +841,11 @@ namespace Azure.Messaging.EventHubs.Producer
             var attempts = 0;
             var diagnosticIdentifiers = new List<string>();
 
-            InstrumentMessages(events);
-
             foreach (var eventData in events)
             {
-                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out var identifier))
+                var (_, identifier) = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
+
+                if (identifier != null)
                 {
                     diagnosticIdentifiers.Add(identifier);
                 }
@@ -1285,20 +1285,6 @@ namespace Azure.Messaging.EventHubs.Producer
             scope.Start();
 
             return scope;
-        }
-
-        /// <summary>
-        ///   Performs the actions needed to instrument a set of events.
-        /// </summary>
-        ///
-        /// <param name="events">The events to instrument.</param>
-        ///
-        private void InstrumentMessages(IEnumerable<EventData> events)
-        {
-            foreach (EventData eventData in events)
-            {
-                EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
-            }
         }
 
         /// <summary>

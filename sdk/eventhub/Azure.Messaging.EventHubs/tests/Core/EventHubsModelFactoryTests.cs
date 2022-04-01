@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -207,12 +210,17 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EventDataBatchRespectsTheTryAddCallback()
         {
             var eventLimit = 3;
+            var converter = new AmqpMessageConverter();
             var store = new List<EventData>();
+            var messages = new List<AmqpMessage>();
             var batch = EventHubsModelFactory.EventDataBatch(5, store, tryAddCallback: _ => store.Count < eventLimit);
 
             while (store.Count < eventLimit)
             {
-                Assert.That(() => batch.TryAdd(new EventData(new BinaryData("Test"))), Is.True, $"The batch contains { store.Count } events; adding another should be permitted.");
+                var eventData = new EventData(new BinaryData("Test"));
+                Assert.That(() => batch.TryAdd(eventData), Is.True, $"The batch contains { store.Count } events; adding another should be permitted.");
+
+                messages.Add(converter.CreateMessageFromEvent(eventData));
             }
 
             Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit.");
@@ -221,6 +229,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(store.Count, Is.EqualTo(eventLimit), "The batch should be at its limit after the failed TryAdd attempts.");
             Assert.That(batch.AsReadOnlyCollection<EventData>(), Is.EquivalentTo(store), "The batch enumerable should reflect the events in the backing store.");
+            Assert.That(batch.AsReadOnlyCollection<AmqpMessage>().Count, Is.EqualTo(eventLimit), "The messages produced by the batch should match the limit.");
         }
 
         /// <summary>

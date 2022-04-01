@@ -163,17 +163,34 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 AssertNotLocked();
 
-                eventData = eventData.Clone();
-                EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
+                var messageScopeCreated = false;
+                var identifier = default(string);
 
-                var added = InnerBatch.TryAdd(eventData);
-
-                if ((added) && (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId)))
+                try
                 {
-                    EventDiagnosticIdentifiers.Add(diagnosticId);
-                }
+                    (messageScopeCreated, identifier) = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
 
-                return added;
+                    var added = InnerBatch.TryAdd(eventData);
+
+                    if ((added) && (identifier != null))
+                    {
+                        EventDiagnosticIdentifiers.Add(identifier);
+                    }
+
+                    return added;
+                }
+                finally
+                {
+                    // If a new message scope was added when instrumenting the instance, the identifier was
+                    // added during this call.  If so, remove it so that the source event is not modified; the
+                    // instrumentation will have been captured by the batch's copy of the event, if it was accepted
+                    // into the batch.
+
+                    if ((messageScopeCreated) && (identifier != null))
+                    {
+                        EventDataInstrumentation.ResetEvent(eventData);
+                    }
+                }
             }
         }
 
