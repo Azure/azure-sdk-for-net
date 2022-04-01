@@ -37,6 +37,38 @@ namespace Azure.ResourceManager.Dns
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string zoneName, RecordType recordType, string relativeRecordSetName, RecordSetData data, string ifMatch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsZones/", false);
+            uri.AppendPath(zoneName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(recordType.ToSerialString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(relativeRecordSetName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
         /// <summary> Updates a record set within a DNS zone. </summary>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -303,6 +335,30 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string zoneName, RecordType recordType, string relativeRecordSetName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsZones/", false);
+            uri.AppendPath(zoneName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(recordType.ToSerialString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(relativeRecordSetName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
         /// <summary> Gets a record set. </summary>
         /// <param name="subscriptionId"> Specifies the Azure subscription ID, which uniquely identifies the Microsoft Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -369,6 +425,36 @@ namespace Azure.ResourceManager.Dns
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal HttpMessage CreateListByTypeRequest(string subscriptionId, string resourceGroupName, string zoneName, RecordType recordType, int? top, string recordsetnamesuffix)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsZones/", false);
+            uri.AppendPath(zoneName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(recordType.ToSerialString(), true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (recordsetnamesuffix != null)
+            {
+                uri.AppendQuery("$recordsetnamesuffix", recordsetnamesuffix, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
         }
 
         /// <summary> Lists the record sets of a specified type in a DNS zone. </summary>
@@ -615,6 +701,20 @@ namespace Azure.ResourceManager.Dns
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal HttpMessage CreateListByTypeNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string zoneName, RecordType recordType, int? top, string recordsetnamesuffix)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
         }
 
         /// <summary> Lists the record sets of a specified type in a DNS zone. </summary>
