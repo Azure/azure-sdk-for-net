@@ -87,6 +87,6 @@ We have selected a set of APIs to add convenient methods as explained above. The
 | [DeleteDataFeed](https://github.com/ShivangiReja/azure-sdk-for-net/blob/MetricsAdvisor-Experiment/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs#L345-L375) | [DeleteDataFeed](https://github.com/ShivangiReja/azure-sdk-for-net/blob/MetricsAdvisor-Experiment/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/Generated/MetricsAdvisorAdministrationClient.cs#L2152-L2194)     | MetricsAdvisorAdministrationClient         | DELETE    | `Response`  |    `string` |
 
 
-### 8. Test
+### 9. Test
 
 Since we keep the public method signature same as released one, we can reuse the existing [tests](https://github.com/haolingdong-msft/metrics-advisor-poc/blob/master/src/test/java/com/azure/ai/metricsadvisor) to verify our grow-up methods. This allows us to run the existing tests in PLAYBACK as well as in LIVE mode.
