@@ -90,13 +90,17 @@ namespace Microsoft.Azure.WebJobs
         public string RowKey => _rowKey;
 
         /// <summary>
-        /// Allow arbitrary table filter. RowKey should be null.
+        /// Gets or sets an OData table filter. <see cref="RowKey"/> should be null when setting this property. To learn more about constructing
+        /// OData filter strings, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings"/>.
+        /// For example to filter on a LastName and FirstName property within the entity, you might set the Filter as follows:
+        /// <code>Filter = "LastName%20eq%20'Smith'%20and%20FirstName%20eq%20'John'"</code>
         /// </summary>
         [AutoResolve(ResolutionPolicyType = typeof(ODataFilterResolutionPolicy))]
         public string Filter { get; set; }
 
         /// <summary>
-        /// Used with filter. RowKey should be null.
+        /// Gets or sets the number of elements to include when using the <see cref="Filter"/> property. <see cref="RowKey"/> should be null
+        /// when setting this property.
         /// </summary>
         public int Take { get; set; }
 
@@ -118,7 +122,7 @@ namespace Microsoft.Azure.WebJobs
         }
 
         /// <summary>
-        /// Gets or sets the app setting name that contains the Azure Storage connection string.
+        /// Gets or sets the app setting name that contains the Azure Storage or Azure Cosmos connection string.
         /// </summary>
         public string Connection { get; set; }
     }
