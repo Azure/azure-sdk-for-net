@@ -933,6 +933,7 @@
   ],
   "Variables": {
     "RandomSeed": "1183684995",
-    "RESOURCE_MANAGER_URL": null
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "bf5f189d-68ba-49b1-849e-e1c5d97f1264"
   }
 }
