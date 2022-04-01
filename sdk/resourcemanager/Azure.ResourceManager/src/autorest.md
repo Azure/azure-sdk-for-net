@@ -659,7 +659,7 @@ directive:
       $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityOptions
+      to: ManagementGroupNameAvailabilityInfo
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -672,7 +672,7 @@ directive:
   - from: management.json
     where: $.parameters.CheckNameAvailabilityParameter
     transform: >
-      $['name'] = "checkNameAvailabilityOptions"
+      $['name'] = "info"
   - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
