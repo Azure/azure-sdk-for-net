@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupType))
+            if (Optional.IsDefined(ProfileGroupType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(GroupType.Value.ToString());
+                writer.WriteStringValue(ProfileGroupType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Ids))
             {

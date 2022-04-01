@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of ResourceSkuRestrictions. </summary>
-        /// <param name="restrictionsType"> The type of restrictions. </param>
+        /// <param name="skuRestrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
-        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode)
+        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? skuRestrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode)
         {
-            RestrictionsType = restrictionsType;
+            SkuRestrictionsType = skuRestrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
         }
 
         /// <summary> The type of restrictions. </summary>
-        public ResourceSkuRestrictionsType? RestrictionsType { get; }
+        public ResourceSkuRestrictionsType? SkuRestrictionsType { get; }
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>

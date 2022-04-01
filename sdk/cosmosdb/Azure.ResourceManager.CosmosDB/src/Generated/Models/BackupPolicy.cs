@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of BackupPolicy. </summary>
-        /// <param name="policyType"> Describes the mode of backups. </param>
+        /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        internal BackupPolicy(BackupPolicyType policyType, BackupPolicyMigrationState migrationState)
+        internal BackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState)
         {
-            PolicyType = policyType;
+            BackupPolicyType = backupPolicyType;
             MigrationState = migrationState;
         }
 
         /// <summary> Describes the mode of backups. </summary>
-        internal BackupPolicyType PolicyType { get; set; }
+        internal BackupPolicyType BackupPolicyType { get; set; }
         /// <summary> The object representing the state of the migration between the backup policies. </summary>
         public BackupPolicyMigrationState MigrationState { get; set; }
     }

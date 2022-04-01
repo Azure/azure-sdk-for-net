@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources.Tests
             GenericResource userAssignedIdentities = lro2.Value;
             var managedIdentity = new ArmDeploymentScriptManagedIdentity()
             {
-                IdentityType = "UserAssigned",
+                ManagedIdentityType = "UserAssigned",
                 UserAssignedIdentities =
                 {
                     {

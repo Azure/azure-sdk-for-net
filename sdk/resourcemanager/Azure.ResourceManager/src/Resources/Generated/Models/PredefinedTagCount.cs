@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of PredefinedTagCount. </summary>
-        /// <param name="countType"> Type of count. </param>
+        /// <param name="predefinedTagCountType"> Type of count. </param>
         /// <param name="value"> Value of count. </param>
-        internal PredefinedTagCount(string countType, int? value)
+        internal PredefinedTagCount(string predefinedTagCountType, int? value)
         {
-            CountType = countType;
+            PredefinedTagCountType = predefinedTagCountType;
             Value = value;
         }
 
         /// <summary> Type of count. </summary>
-        public string CountType { get; }
+        public string PredefinedTagCountType { get; }
         /// <summary> Value of count. </summary>
         public int? Value { get; }
     }

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionType))
+            if (Optional.IsDefined(StepActionType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ActionType.Value.ToString());
+                writer.WriteStringValue(StepActionType.Value.ToString());
             }
             if (Optional.IsDefined(Source))
             {

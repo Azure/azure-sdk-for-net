@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParameterType))
+            if (Optional.IsDefined(PolicyParameterType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ParameterType.Value.ToString());
+                writer.WriteStringValue(PolicyParameterType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AllowedValues))
             {

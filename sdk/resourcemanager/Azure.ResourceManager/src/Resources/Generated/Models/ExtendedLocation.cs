@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of ExtendedLocation. </summary>
-        /// <param name="locationType"> The extended location type. </param>
+        /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
-        internal ExtendedLocation(ExtendedLocationType? locationType, string name)
+        internal ExtendedLocation(ExtendedLocationType? extendedLocationType, string name)
         {
-            LocationType = locationType;
+            ExtendedLocationType = extendedLocationType;
             Name = name;
         }
 
         /// <summary> The extended location type. </summary>
-        public ExtendedLocationType? LocationType { get; set; }
+        public ExtendedLocationType? ExtendedLocationType { get; set; }
         /// <summary> The extended location name. </summary>
         public string Name { get; set; }
     }

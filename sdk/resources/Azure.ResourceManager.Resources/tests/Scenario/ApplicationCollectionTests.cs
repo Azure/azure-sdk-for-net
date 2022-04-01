@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 for (int i = 0; i < model.Data.JitAccessPolicy.JitApprovers.Count; ++i)
                 {
                     Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers[i].DisplayName, getResult.Data.JitAccessPolicy.JitApprovers[i].DisplayName);
-                    Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers[i].ApproverType, getResult.Data.JitAccessPolicy.JitApprovers[i].ApproverType);
+                    Assert.AreEqual(model.Data.JitAccessPolicy.JitApprovers[i].JitApproverType, getResult.Data.JitAccessPolicy.JitApprovers[i].JitApproverType);
                 }
                 Assert.AreEqual(model.Data.JitAccessPolicy.MaximumJitAccessDuration, getResult.Data.JitAccessPolicy.MaximumJitAccessDuration);
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 {
                     Assert.AreEqual(model.Data.Artifacts[i].Name, getResult.Data.Artifacts[i].Name);
                     Assert.AreEqual(model.Data.Artifacts[i].Uri, getResult.Data.Artifacts[i].Uri);
-                    Assert.AreEqual(model.Data.Artifacts[i].ArtifactType, getResult.Data.Artifacts[i].ArtifactType);
+                    Assert.AreEqual(model.Data.Artifacts[i].ApplicationArtifactType, getResult.Data.Artifacts[i].ApplicationArtifactType);
                 }
             }
             if (model.Data.CreatedBy != null || getResult.Data.CreatedBy != null)

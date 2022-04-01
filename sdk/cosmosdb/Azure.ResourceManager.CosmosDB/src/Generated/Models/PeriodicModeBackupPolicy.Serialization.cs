@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteObjectValue(PeriodicModeProperties);
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(BackupPolicyType.ToString());
             if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState");

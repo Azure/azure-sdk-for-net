@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionAction. </summary>
-        /// <param name="actionType"> The type of action. </param>
-        internal FirewallPolicyFilterRuleCollectionAction(FirewallPolicyFilterRuleCollectionActionType? actionType)
+        /// <param name="collectionActionType"> The type of action. </param>
+        internal FirewallPolicyFilterRuleCollectionAction(FirewallPolicyFilterRuleCollectionActionType? collectionActionType)
         {
-            ActionType = actionType;
+            CollectionActionType = collectionActionType;
         }
 
         /// <summary> The type of action. </summary>
-        public FirewallPolicyFilterRuleCollectionActionType? ActionType { get; set; }
+        public FirewallPolicyFilterRuleCollectionActionType? CollectionActionType { get; set; }
     }
 }
