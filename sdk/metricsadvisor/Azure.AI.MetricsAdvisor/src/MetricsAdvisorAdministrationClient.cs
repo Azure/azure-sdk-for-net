@@ -157,15 +157,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
-            try
-            {
-                AsyncPageable<BinaryData> pageableBindaryData = GetDataFeedsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            AsyncPageable<BinaryData> pageableBindaryData = GetDataFeedsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+            return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
         }
 
         /// <summary>
@@ -192,15 +185,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
-            try
-            {
-                Pageable<BinaryData> pageableBindaryData = GetDataFeeds(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            Pageable<BinaryData> pageableBindaryData = GetDataFeeds(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+            return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
         }
 
         /// <summary>
@@ -218,34 +204,27 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             ValidateDataFeedToCreate(dataFeed, nameof(dataFeed));
 
+            DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
+            RequestContent content = DataFeedDetail.ToRequestContent(dataFeedDetail);
+            RequestContext context = new RequestContext()
+            {
+                CancellationToken = cancellationToken,
+            };
+
+            Response response = await CreateDataFeedAsync(content, context).ConfigureAwait(false);
+
+            var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+            string dataFeedId = ClientCommon.GetDataFeedId(location);
+
             try
             {
-                DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
-                RequestContent content = DataFeedDetail.ToRequestContent(dataFeedDetail);
-                RequestContext context = new RequestContext()
-                {
-                    CancellationToken = cancellationToken,
-                };
+                var createdDataFeed = await GetDataFeedAsync(dataFeedId, cancellationToken).ConfigureAwait(false);
 
-                Response response = await CreateDataFeedAsync(content, context).ConfigureAwait(false);
-
-                var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
-                string dataFeedId = ClientCommon.GetDataFeedId(location);
-
-                try
-                {
-                    var createdDataFeed = await GetDataFeedAsync(dataFeedId, cancellationToken).ConfigureAwait(false);
-
-                    return Response.FromValue(createdDataFeed, response);
-                }
-                catch (Exception ex)
-                {
-                    throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
-                }
+                return Response.FromValue(createdDataFeed, response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
             }
         }
 
@@ -264,33 +243,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             ValidateDataFeedToCreate(dataFeed, nameof(dataFeed));
 
+            DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
+            RequestContent content = DataFeedDetail.ToRequestContent(dataFeedDetail);
+            RequestContext context = new RequestContext()
+            {
+                CancellationToken = cancellationToken,
+            };
+            Response response = CreateDataFeed(content, context);
+
+            var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+            string dataFeedId = ClientCommon.GetDataFeedId(location);
+
             try
             {
-                DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
-                RequestContent content = DataFeedDetail.ToRequestContent(dataFeedDetail);
-                RequestContext context = new RequestContext()
-                {
-                    CancellationToken = cancellationToken,
-                };
-                Response response = CreateDataFeed(content, context);
+                var createdDataFeed = GetDataFeed(dataFeedId, cancellationToken);
 
-                var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
-                string dataFeedId = ClientCommon.GetDataFeedId(location);
-
-                try
-                {
-                    var createdDataFeed = GetDataFeed(dataFeedId, cancellationToken);
-
-                    return Response.FromValue(createdDataFeed, response);
-                }
-                catch (Exception ex)
-                {
-                    throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
-                }
+                return Response.FromValue(createdDataFeed, response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
             }
         }
 
@@ -316,22 +288,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             Guid dataFeedGuid = new Guid(dataFeed.Id);
 
-            try
+            DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
+            RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
+            RequestContext context = new RequestContext()
             {
-                DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
-                RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
-                RequestContext context = new RequestContext()
-                {
-                    CancellationToken = cancellationToken,
-                };
-                Response response = await UpdateDataFeedAsync(dataFeedGuid, content, context).ConfigureAwait(false);
-                DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
-                return Response.FromValue(new DataFeed(dataFeedDetail), response);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                CancellationToken = cancellationToken,
+            };
+            Response response = await UpdateDataFeedAsync(dataFeedGuid, content, context).ConfigureAwait(false);
+            DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
+            return Response.FromValue(new DataFeed(dataFeedDetail), response);
         }
 
         /// <summary>
@@ -356,22 +321,15 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             Guid dataFeedGuid = new Guid(dataFeed.Id);
 
-            try
+            DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
+            RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
+            RequestContext context = new RequestContext()
             {
-                DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
-                RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
-                RequestContext context = new RequestContext()
-                {
-                    CancellationToken = cancellationToken,
-                };
-                Response response = UpdateDataFeed(dataFeedGuid, content, context);
-                DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
-                return Response.FromValue(new DataFeed(dataFeedDetail), response);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                CancellationToken = cancellationToken,
+            };
+            Response response = UpdateDataFeed(dataFeedGuid, content, context);
+            DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
+            return Response.FromValue(new DataFeed(dataFeedDetail), response);
         }
 
         /// <summary>
@@ -388,18 +346,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
-            try
+            RequestContext context = new RequestContext()
             {
-                RequestContext context = new RequestContext()
-                {
-                    CancellationToken = cancellationToken,
-                };
-                return await DeleteDataFeedAsync(dataFeedGuid, context).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                CancellationToken = cancellationToken,
+            };
+            return await DeleteDataFeedAsync(dataFeedGuid, context).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -416,18 +367,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
-            try
+            RequestContext context = new RequestContext()
             {
-                RequestContext context = new RequestContext()
-                {
-                    CancellationToken = cancellationToken,
-                };
-                return DeleteDataFeed(dataFeedGuid, context);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                CancellationToken = cancellationToken,
+            };
+            return DeleteDataFeed(dataFeedGuid, context);
         }
 
         private static IReadOnlyList<DataFeed> ConvertToDataFeeds(IReadOnlyList<DataFeedDetail> dataFeedDetails)
