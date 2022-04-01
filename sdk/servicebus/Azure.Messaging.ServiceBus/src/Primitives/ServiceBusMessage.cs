@@ -249,7 +249,7 @@ namespace Azure.Messaging.ServiceBus
                 // If the PartitionKey was already set to a different value, override it with the SessionId, as the SessionId takes precedence.
                 if (PartitionKey != null && PartitionKey != value)
                 {
-                    ServiceBusEventSource.Log.TransactionDeclared();
+                    ServiceBusEventSource.Log.PartitionKeyOverwritten(PartitionKey, value, MessageId);
                     PartitionKey = value;
                 }
             }

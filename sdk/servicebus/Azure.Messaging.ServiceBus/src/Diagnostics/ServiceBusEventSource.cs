@@ -189,7 +189,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorStoppingReceiveCanceledEvent = 110;
         internal const int ProcessorStoppingAcceptSessionCanceledEvent = 111;
 
-        internal const int PartitionKeyValueOverriden = 112;
+        internal const int PartitionKeyValueOverwritten = 112;
 
         #endregion
         // add new event numbers here incrementing from previous
@@ -1573,12 +1573,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(PartitionKeyValueOverriden, Level = EventLevel.Warning, Message = "The PartitionKey property was overriden by the SessionId value {0} is less than the max messages requested. When using prefetch, it isn't possible to receive more than the prefetch count in any single Receive call: PrefetchCount: {1}; MaxMessages: {2}")]
-        public virtual void MaxMessagesExceedsPrefetch(string identifier, int prefetchCount, int maxMessages)
+        [Event(PartitionKeyValueOverwritten, Level = EventLevel.Warning, Message = "The PartitionKey property with value '{0}' was overwritten with value '{1}' due to setting the SessionId on message with MessageId '{2}'")]
+        public virtual void PartitionKeyOverwritten(string partitionKey, string sessionId, string messageId)
         {
             if (IsEnabled())
             {
-                WriteEvent(MaxMessagesExceedsPrefetchEvent, identifier, prefetchCount, maxMessages);
+                WriteEvent(PartitionKeyValueOverwritten,partitionKey, sessionId, messageId);
             }
         }
         #endregion
