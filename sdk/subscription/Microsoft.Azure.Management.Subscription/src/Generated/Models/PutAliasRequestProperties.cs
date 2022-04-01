@@ -31,21 +31,21 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         /// <param name="displayName">The friendly name of the
         /// subscription.</param>
-        /// <param name="workload">The workload type of the subscription. It
-        /// can be either Production or DevTest. Possible values include:
-        /// 'Production', 'DevTest'</param>
-        /// <param name="billingScope">Determines whether subscription is
-        /// fieldLed, partnerLed or LegacyEA</param>
+        /// <param name="workload">Possible values include: 'Production',
+        /// 'DevTest'</param>
         /// <param name="subscriptionId">This parameter can be used to create
         /// alias for existing subscription Id</param>
-        /// <param name="resellerId">Reseller ID, basically MPN Id</param>
-        public PutAliasRequestProperties(string displayName = default(string), string workload = default(string), string billingScope = default(string), string subscriptionId = default(string), string resellerId = default(string))
+        /// <param name="resellerId">Reseller Id</param>
+        /// <param name="additionalProperties">Put alias request additional
+        /// properties.</param>
+        public PutAliasRequestProperties(string displayName = default(string), string workload = default(string), string billingScope = default(string), string subscriptionId = default(string), string resellerId = default(string), PutAliasRequestAdditionalProperties additionalProperties = default(PutAliasRequestAdditionalProperties))
         {
             DisplayName = displayName;
             Workload = workload;
             BillingScope = billingScope;
             SubscriptionId = subscriptionId;
             ResellerId = resellerId;
+            AdditionalProperties = additionalProperties;
             CustomInit();
         }
 
@@ -61,16 +61,12 @@ namespace Microsoft.Azure.Management.Subscription.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the workload type of the subscription. It can be
-        /// either Production or DevTest. Possible values include:
-        /// 'Production', 'DevTest'
+        /// Gets or sets possible values include: 'Production', 'DevTest'
         /// </summary>
         [JsonProperty(PropertyName = "workload")]
         public string Workload { get; set; }
 
         /// <summary>
-        /// Gets or sets determines whether subscription is fieldLed,
-        /// partnerLed or LegacyEA
         /// </summary>
         [JsonProperty(PropertyName = "billingScope")]
         public string BillingScope { get; set; }
@@ -83,10 +79,16 @@ namespace Microsoft.Azure.Management.Subscription.Models
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets reseller ID, basically MPN Id
+        /// Gets or sets reseller Id
         /// </summary>
         [JsonProperty(PropertyName = "resellerId")]
         public string ResellerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets put alias request additional properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalProperties")]
+        public PutAliasRequestAdditionalProperties AdditionalProperties { get; set; }
 
     }
 }

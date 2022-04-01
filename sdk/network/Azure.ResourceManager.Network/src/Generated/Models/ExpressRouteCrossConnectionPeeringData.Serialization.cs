@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("gatewayManagerEtag");
                 writer.WriteStringValue(GatewayManagerEtag);
             }
-            if (Optional.IsDefined(Ipv6PeeringConfig))
+            if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig");
-                writer.WriteObjectValue(Ipv6PeeringConfig);
+                writer.WriteObjectValue(IPv6PeeringConfig);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> gatewayManagerEtag = default;
             Optional<string> lastModifiedBy = default;
-            Optional<Ipv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
+            Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipv6PeeringConfig = Ipv6ExpressRouteCircuitPeeringConfig.DeserializeIpv6ExpressRouteCircuitPeeringConfig(property0.Value);
+                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value);
                             continue;
                         }
                     }

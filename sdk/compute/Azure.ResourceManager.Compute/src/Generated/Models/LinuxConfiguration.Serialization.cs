@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("ssh");
                 writer.WriteObjectValue(Ssh);
             }
-            if (Optional.IsDefined(ProvisionVMAgent))
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent");
-                writer.WriteBooleanValue(ProvisionVMAgent.Value);
+                writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
             if (Optional.IsDefined(PatchSettings))
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Tests
         {
             Assert.ThrowsAsync<ArgumentException>(async () =>
             {
-                var createOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(value, false);
+                var createOp = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(value, WaitUntil.Started);
                 _ = await createOp.WaitForCompletionAsync();
             });
         }

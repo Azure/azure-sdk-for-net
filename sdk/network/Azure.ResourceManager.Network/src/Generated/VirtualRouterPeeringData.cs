@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the virtual router peering that is unique within a virtual router. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Peering type. </param>
+        /// <param name="resourceType"> Peering type. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
-        /// <param name="peerIp"> Peer IP. </param>
+        /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterPeeringData(string id, string name, string etag, string type, long? peerAsn, string peerIp, ProvisioningState? provisioningState) : base(id)
+        internal VirtualRouterPeeringData(string id, string name, string etag, string resourceType, long? peerAsn, string peerIP, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             PeerAsn = peerAsn;
-            PeerIp = peerIp;
+            PeerIP = peerIP;
             ProvisioningState = provisioningState;
         }
 
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Peering type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Peer ASN. </summary>
         public long? PeerAsn { get; set; }
         /// <summary> Peer IP. </summary>
-        public string PeerIp { get; set; }
+        public string PeerIP { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ServerDevOpsAuditingSettingsData DeserializeServerDevOpsAuditingSettingsData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<bool> isAzureMonitorTargetEnabled = default;
             Optional<BlobAuditingPolicyState> state = default;
             Optional<string> storageEndpoint = default;
@@ -62,16 +62,6 @@ namespace Azure.ResourceManager.Sql
             Optional<Guid> storageAccountSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -85,6 +75,11 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -24,8 +24,7 @@ namespace Azure.Core.TestFramework
     {
         private static readonly string s_dotNetExe;
 
-        public const string DevCertIssuer = "CN=localhost";
-
+        // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
         public const string IpAddress = "127.0.0.1";
 
         public int? ProxyPortHttp => _proxyPortHttp;
@@ -73,13 +72,8 @@ namespace Azure.Core.TestFramework
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
                     ["Logging__LogLevel__Default"] = "Error",
                     ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
-                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = Path.Combine(
-                        TestEnvironment.RepositoryRoot,
-                        "eng",
-                        "common",
-                        "testproxy",
-                        "dotnet-devcert.pfx"),
-                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = "password"
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
                 }
             };
 
@@ -126,10 +120,7 @@ namespace Azure.Core.TestFramework
             }
 
             var options = new TestProxyClientOptions();
-            Client = new TestProxyRestClient(
-                new ClientDiagnostics(new TestProxyClientOptions()),
-                HttpPipelineBuilder.Build(options),
-                new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
+            Client = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
 
             // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy. Otherwise requests
             // start timing out. This only seems to happen when not specifying a port.

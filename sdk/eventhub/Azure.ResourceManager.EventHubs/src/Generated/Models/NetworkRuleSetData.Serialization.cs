@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
-                foreach (var item in IpRules)
+                foreach (var item in IPRules)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -61,28 +61,18 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static NetworkRuleSetData DeserializeNetworkRuleSetData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<bool> trustedServiceAccessEnabled = default;
             Optional<DefaultAction> defaultAction = default;
             Optional<IList<NetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Optional<IList<NetworkRuleSetIpRules>> ipRules = default;
+            Optional<IList<NetworkRuleSetIPRules>> ipRules = default;
             Optional<PublicNetworkAccessFlag> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
@@ -101,6 +91,11 @@ namespace Azure.ResourceManager.EventHubs
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -154,10 +149,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkRuleSetIpRules> array = new List<NetworkRuleSetIpRules>();
+                            List<NetworkRuleSetIPRules> array = new List<NetworkRuleSetIPRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkRuleSetIpRules.DeserializeNetworkRuleSetIpRules(item));
+                                array.Add(NetworkRuleSetIPRules.DeserializeNetworkRuleSetIPRules(item));
                             }
                             ipRules = array;
                             continue;
@@ -176,7 +171,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new NetworkRuleSetData(id, name, type, location.Value, systemData, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
+            return new NetworkRuleSetData(id, name, type, systemData, location.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

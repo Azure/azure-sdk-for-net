@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The protocol permitted for a request made with the account SAS. </summary>
         public HttpProtocol? Protocols { get; set; }
         /// <summary> The time at which the SAS becomes valid. </summary>
-        public DateTimeOffset? SharedAccessStartTime { get; set; }
+        public DateTimeOffset? SharedAccessStartOn { get; set; }
         /// <summary> The time at which the shared access signature becomes invalid. </summary>
-        public DateTimeOffset? SharedAccessExpiryTime { get; set; }
+        public DateTimeOffset? SharedAccessExpiryOn { get; set; }
         /// <summary> A unique value up to 64 characters in length that correlates to an access policy specified for the container, queue, or table. </summary>
         public string Identifier { get; set; }
         /// <summary> The start of partition key. </summary>

@@ -78,7 +78,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// 'DeviceManagement'</param>
         /// <param name="locations">Primary and secondary location for iot
         /// hub</param>
-        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), bool? disableLocalAuth = default(bool?), bool? disableDeviceSAS = default(bool?), bool? disableModuleSAS = default(bool?), bool? restrictOutboundNetworkAccess = default(bool?), IList<string> allowedFqdnList = default(IList<string>), string publicNetworkAccess = default(string), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), NetworkRuleSetProperties networkRuleSets = default(NetworkRuleSetProperties), string minTlsVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), string features = default(string), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>))
+        /// <param name="enableDataResidency">This property when set to true,
+        /// will enable data residency, thus, disabling disaster
+        /// recovery.</param>
+        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), bool? disableLocalAuth = default(bool?), bool? disableDeviceSAS = default(bool?), bool? disableModuleSAS = default(bool?), bool? restrictOutboundNetworkAccess = default(bool?), IList<string> allowedFqdnList = default(IList<string>), string publicNetworkAccess = default(string), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), NetworkRuleSetProperties networkRuleSets = default(NetworkRuleSetProperties), string minTlsVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), string features = default(string), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>), bool? enableDataResidency = default(bool?))
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -103,6 +106,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
             Comments = comments;
             Features = features;
             Locations = locations;
+            EnableDataResidency = enableDataResidency;
             CustomInit();
         }
 
@@ -266,6 +270,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
         public IList<IotHubLocationDescription> Locations { get; private set; }
+
+        /// <summary>
+        /// Gets or sets this property when set to true, will enable data
+        /// residency, thus, disabling disaster recovery.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableDataResidency")]
+        public bool? EnableDataResidency { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Threading;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class ExceptionExtensionsTests
     {

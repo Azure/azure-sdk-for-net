@@ -15,16 +15,19 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteExtensionInfo and their operations over its parent. </summary>
-    public partial class SiteSiteextensionCollection : ArmCollection, IEnumerable<SiteSiteextension>, IAsyncEnumerable<SiteSiteextension>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSiteextensionResource" /> and their operations.
+    /// Each <see cref="SiteSiteextensionResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteSiteextensionCollection" /> instance call the GetSiteSiteextensions method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
+    public partial class SiteSiteextensionCollection : ArmCollection, IEnumerable<SiteSiteextensionResource>, IAsyncEnumerable<SiteSiteextensionResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly WebAppsRestOperations _webAppsRestClient;
+        private readonly ClientDiagnostics _siteSiteextensionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSiteextensionWebAppsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSiteextensionCollection"/> class for mocking. </summary>
         protected SiteSiteextensionCollection()
@@ -32,11 +35,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSiteextensionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SiteSiteextensionCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal SiteSiteextensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _webAppsRestClient = new WebAppsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _siteSiteextensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSiteextensionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSiteextensionResource.ResourceType, out string siteSiteextensionWebAppsApiVersion);
+            _siteSiteextensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSiteextensionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,66 +49,31 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSite.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_InstallSiteExtension
-        /// <summary> Description for Install site extension on a web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_InstallSiteExtension
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public virtual WebAppInstallSiteExtensionOperation CreateOrUpdate(bool waitForCompletion, string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSiteextensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.CreateOrUpdate");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.InstallSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
-                var operation = new WebAppInstallSiteExtensionOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_InstallSiteExtension
-        /// <summary> Description for Install site extension on a web site, or a deployment slot. </summary>
-        /// <param name="siteExtensionId"> Site extension name. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public async virtual Task<WebAppInstallSiteExtensionOperation> CreateOrUpdateAsync(bool waitForCompletion, string siteExtensionId, CancellationToken cancellationToken = default)
-        {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _webAppsRestClient.InstallSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
-                var operation = new WebAppInstallSiteExtensionOperation(Parent, _clientDiagnostics, Pipeline, _webAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response);
-                if (waitForCompletion)
+                var response = await _siteSiteextensionWebAppsRestClient.InstallSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteSiteextensionResource>(new SiteSiteextensionOperationSource(Client), _siteSiteextensionWebAppsClientDiagnostics, Pipeline, _siteSiteextensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -114,28 +84,58 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteExtension
-        /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_InstallSiteExtension
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public virtual Response<SiteSiteextension> Get(string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSiteextensionResource> CreateOrUpdate(WaitUntil waitUntil, string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.Get");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
+                var response = _siteSiteextensionWebAppsRestClient.InstallSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteSiteextensionResource>(new SiteSiteextensionOperationSource(Client), _siteSiteextensionWebAppsClientDiagnostics, Pipeline, _siteSiteextensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_GetSiteExtension
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual async Task<Response<SiteSiteextensionResource>> GetAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
+
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _siteSiteextensionWebAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSiteextension(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSiteextensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,28 +144,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteExtension
-        /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_GetSiteExtension
+        /// </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public async virtual Task<Response<SiteSiteextension>> GetAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSiteextensionResource> Get(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.Get");
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
+                var response = _siteSiteextensionWebAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSiteextension(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSiteextensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,126 +173,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <summary>
+        /// Description for Get list of siteextensions for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions
+        /// Operation Id: WebApps_ListSiteExtensions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public virtual Response<SiteSiteextension> GetIfExists(string siteExtensionId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSiteextensionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSiteextensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
+            async Task<Page<SiteSiteextensionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _webAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSiteextension>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSiteextension(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="siteExtensionId"> Site extension name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public async virtual Task<Response<SiteSiteextension>> GetIfExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
-        {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _webAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSiteextension>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSiteextension(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="siteExtensionId"> Site extension name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public virtual Response<bool> Exists(string siteExtensionId, CancellationToken cancellationToken = default)
-        {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(siteExtensionId, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="siteExtensionId"> Site extension name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
-        {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(siteExtensionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListSiteExtensions
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSiteextension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSiteextension> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<SiteSiteextension> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
+                using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSiteExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSiteextensionWebAppsRestClient.ListSiteExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -301,55 +197,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSiteextension> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSiteextensionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
+                using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _webAppsRestClient.ListSiteExtensionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_ListSiteExtensions
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSiteextension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSiteextension> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SiteSiteextension>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webAppsRestClient.ListSiteExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteSiteextension>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _webAppsRestClient.ListSiteExtensionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextension(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _siteSiteextensionWebAppsRestClient.ListSiteExtensionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -360,7 +215,103 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        IEnumerator<SiteSiteextension> IEnumerable<SiteSiteextension>.GetEnumerator()
+        /// <summary>
+        /// Description for Get list of siteextensions for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions
+        /// Operation Id: WebApps_ListSiteExtensions
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SiteSiteextensionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSiteextensionResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<SiteSiteextensionResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSiteextensionWebAppsRestClient.ListSiteExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SiteSiteextensionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _siteSiteextensionWebAppsRestClient.ListSiteExtensionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSiteextensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_GetSiteExtension
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
+
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _siteSiteextensionWebAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_GetSiteExtension
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual Response<bool> Exists(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
+
+            using var scope = _siteSiteextensionWebAppsClientDiagnostics.CreateScope("SiteSiteextensionCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _siteSiteextensionWebAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<SiteSiteextensionResource> IEnumerable<SiteSiteextensionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -370,12 +321,9 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSiteextension> IAsyncEnumerable<SiteSiteextension>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSiteextensionResource> IAsyncEnumerable<SiteSiteextensionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, SiteSiteextension, SiteExtensionInfoData> Construct() { }
     }
 }

@@ -25,8 +25,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Get a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Get a specific private endpoint connection under a topic, domain, or
-            /// partner namespace.
+            /// Get a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,13 +34,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -55,8 +53,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Get a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Get a specific private endpoint connection under a topic, domain, or
-            /// partner namespace.
+            /// Get a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -65,13 +62,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -91,8 +87,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Update a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Update a specific private endpoint connection under a topic, domain or
-            /// partner namespace.
+            /// Update a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,13 +96,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -124,8 +118,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Update a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Update a specific private endpoint connection under a topic, domain or
-            /// partner namespace.
+            /// Update a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -134,13 +127,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -163,8 +155,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Delete a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Delete a specific private endpoint connection under a topic, domain, or
-            /// partner namespace.
+            /// Delete a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -173,13 +164,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -193,8 +183,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Delete a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Delete a specific private endpoint connection under a topic, domain, or
-            /// partner namespace.
+            /// Delete a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -203,13 +192,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -226,8 +214,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Lists all private endpoint connections under a resource.
             /// </summary>
             /// <remarks>
-            /// Get all private endpoint connections under a topic, domain, or partner
-            /// namespace.
+            /// Get all private endpoint connections under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -236,13 +223,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='filter'>
             /// The query used to filter the search results using OData syntax. Filtering
@@ -267,8 +253,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Lists all private endpoint connections under a resource.
             /// </summary>
             /// <remarks>
-            /// Get all private endpoint connections under a topic, domain, or partner
-            /// namespace.
+            /// Get all private endpoint connections under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -277,13 +262,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='filter'>
             /// The query used to filter the search results using OData syntax. Filtering
@@ -314,8 +298,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Update a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Update a specific private endpoint connection under a topic, domain or
-            /// partner namespace.
+            /// Update a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -324,13 +307,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -347,8 +329,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Update a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Update a specific private endpoint connection under a topic, domain or
-            /// partner namespace.
+            /// Update a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -357,13 +338,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -386,8 +366,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Delete a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Delete a specific private endpoint connection under a topic, domain, or
-            /// partner namespace.
+            /// Delete a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -396,13 +375,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -416,8 +394,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Delete a specific private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Delete a specific private endpoint connection under a topic, domain, or
-            /// partner namespace.
+            /// Delete a specific private endpoint connection under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -426,13 +403,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='parentType'>
-            /// The type of the parent resource. This can be either \'topics\',
-            /// \'domains\', or \'partnerNamespaces\'. Possible values include: 'topics',
-            /// 'domains', 'partnerNamespaces'
+            /// The type of the parent resource. This can be either \'topics\' or
+            /// \'domains\'. Possible values include: 'topics', 'domains'
             /// </param>
             /// <param name='parentName'>
-            /// The name of the parent resource (namely, either, the topic name, domain
-            /// name, or partner namespace name).
+            /// The name of the parent resource (namely, either, the topic name or domain
+            /// name).
             /// </param>
             /// <param name='privateEndpointConnectionName'>
             /// The name of the private endpoint connection connection.
@@ -449,8 +425,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Lists all private endpoint connections under a resource.
             /// </summary>
             /// <remarks>
-            /// Get all private endpoint connections under a topic, domain, or partner
-            /// namespace.
+            /// Get all private endpoint connections under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -467,8 +442,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Lists all private endpoint connections under a resource.
             /// </summary>
             /// <remarks>
-            /// Get all private endpoint connections under a topic, domain, or partner
-            /// namespace.
+            /// Get all private endpoint connections under a topic or domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

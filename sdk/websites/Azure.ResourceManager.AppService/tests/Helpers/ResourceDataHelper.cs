@@ -7,6 +7,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.Core;
+using System;
 
 namespace Azure.ResourceManager.AppService.Tests.Helpers
 {
@@ -26,11 +27,11 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             return dest;
         }
 
-        public static void AssertTrackedResource(TrackedResource r1, TrackedResource r2)
+        public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
             Assert.AreEqual(r1.Name, r2.Name);
             Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Type, r2.Type);
+            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
             Assert.AreEqual(r1.Location, r2.Location);
             Assert.AreEqual(r1.Tags, r2.Tags);
         }
@@ -160,22 +161,22 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                     "index.php",
                     "hostingstart.html"
                 },
-                IpSecurityRestrictions =
+                IPSecurityRestrictions =
                 {
-                    new IpSecurityRestriction
+                    new IPSecurityRestriction
                     {
-                        IpAddress = "Any",
+                        IPAddress = "Any",
                         Action = "Allow",
                         Priority = 1,
                         Name =  "Allow all",
                         Description = "Allow all access"
                     }
                 },
-                ScmIpSecurityRestrictions =
+                ScmIPSecurityRestrictions =
                 {
-                    new IpSecurityRestriction
+                    new IPSecurityRestriction
                     {
-                        IpAddress = "Any",
+                        IPAddress = "Any",
                         Action = "Allow",
                         Priority = 1,
                         Name =  "Allow all",
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             Assert.AreEqual(sscd1.Name, sscd2.Name);
             Assert.AreEqual(sscd1.Id, sscd2.Id);
-            Assert.AreEqual(sscd1.Type, sscd2.Type);
+            Assert.AreEqual(sscd1.ResourceType, sscd2.ResourceType);
             Assert.AreEqual(sscd1.Branch, sscd2.Branch);
         }
 
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new SiteSourceControlData()
             {
-                RepoUrl = "https://github.com/00Kai0/azure-site-test",
+                RepoUri = new Uri("https://github.com/00Kai0/azure-site-test"),
                 Branch = "staging",
                 IsManualIntegration = true,
                 IsMercurial = false,
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             AssertTrackedResource(ssrd1, ssrd2);
             Assert.AreEqual(ssrd1.Branch, ssrd2.Branch);
-            Assert.AreEqual(ssrd1.RepositoryUrl, ssrd2.RepositoryUrl);
+            Assert.AreEqual(ssrd1.RepositoryUri, ssrd2.RepositoryUri);
             Assert.AreEqual(ssrd1.Kind, ssrd2.Kind);
         }
 
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                     Name = "Free",
                     //Tier = "Basic"
                 },
-                RepositoryUrl = "https://github.com/00Kai0/html-docs-hello-world",
+                RepositoryUri = new Uri("https://github.com/00Kai0/html-docs-hello-world"),
                 Branch = "master",
                 RepositoryToken = "xxx",
                 BuildProperties = new StaticSiteBuildProperties()

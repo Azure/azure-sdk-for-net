@@ -16,17 +16,19 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of VMwareHost and their operations over its parent. </summary>
-    public partial class VMwareHostCollection : ArmCollection, IEnumerable<VMwareHost>, IAsyncEnumerable<VMwareHost>
+    /// <summary>
+    /// A class representing a collection of <see cref="VMwareHostResource" /> and their operations.
+    /// Each <see cref="VMwareHostResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VMwareHostCollection" /> instance call the GetVMwareHosts method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class VMwareHostCollection : ArmCollection, IEnumerable<VMwareHostResource>, IAsyncEnumerable<VMwareHostResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HostsRestOperations _hostsRestClient;
+        private readonly ClientDiagnostics _vMwareHostHostsClientDiagnostics;
+        private readonly HostsRestOperations _vMwareHostHostsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VMwareHostCollection"/> class for mocking. </summary>
         protected VMwareHostCollection()
@@ -34,11 +36,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Initializes a new instance of the <see cref="VMwareHostCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal VMwareHostCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal VMwareHostCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _hostsRestClient = new HostsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _vMwareHostHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareHostResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VMwareHostResource.ResourceType, out string vMwareHostHostsApiVersion);
+            _vMwareHostHostsRestClient = new HostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vMwareHostHostsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,68 +50,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Create
-        /// <summary> Create Or Update host. </summary>
+        /// <summary>
+        /// Create Or Update host.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Create
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hostName"> Name of the host. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual HostCreateOperation CreateOrUpdate(bool waitForCompletion, string hostName, VMwareHostData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VMwareHostResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostName, VMwareHostData data = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.CreateOrUpdate");
+            using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hostsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, hostName, body, cancellationToken);
-                var operation = new HostCreateOperation(Parent, _clientDiagnostics, Pipeline, _hostsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, hostName, body).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Create
-        /// <summary> Create Or Update host. </summary>
-        /// <param name="hostName"> Name of the host. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<HostCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string hostName, VMwareHostData body = null, CancellationToken cancellationToken = default)
-        {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _hostsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new HostCreateOperation(Parent, _clientDiagnostics, Pipeline, _hostsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, hostName, body).Request, response);
-                if (waitForCompletion)
+                var response = await _vMwareHostHostsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareHostResource>(new VMwareHostOperationSource(Client), _vMwareHostHostsClientDiagnostics, Pipeline, _vMwareHostHostsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, hostName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -118,28 +86,59 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Get
-        /// <summary> Implements host GET method. </summary>
+        /// <summary>
+        /// Create Or Update host.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Create
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hostName"> Name of the host. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual Response<VMwareHost> Get(string hostName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VMwareHostResource> CreateOrUpdate(WaitUntil waitUntil, string hostName, VMwareHostData data = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Get");
+            using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken);
+                var response = _vMwareHostHostsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, hostName, data, cancellationToken);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareHostResource>(new VMwareHostOperationSource(Client), _vMwareHostHostsClientDiagnostics, Pipeline, _vMwareHostHostsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, hostName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Implements host GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
+        /// <param name="hostName"> Name of the host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        public virtual async Task<Response<VMwareHostResource>> GetAsync(string hostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+
+            using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _vMwareHostHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VMwareHost(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VMwareHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,28 +147,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_Get
-        /// <summary> Implements host GET method. </summary>
+        /// <summary>
+        /// Implements host GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
         /// <param name="hostName"> Name of the host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<Response<VMwareHost>> GetAsync(string hostName, CancellationToken cancellationToken = default)
+        public virtual Response<VMwareHostResource> Get(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Get");
+            using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken).ConfigureAwait(false);
+                var response = _vMwareHostHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VMwareHost(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VMwareHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,126 +176,23 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="hostName"> Name of the host. </param>
+        /// <summary>
+        /// List of hosts in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts
+        /// Operation Id: Hosts_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual Response<VMwareHost> GetIfExists(string hostName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VMwareHostResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
+            async Task<Page<VMwareHostResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _hostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VMwareHost>(null, response.GetRawResponse());
-                return Response.FromValue(new VMwareHost(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="hostName"> Name of the host. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<Response<VMwareHost>> GetIfExistsAsync(string hostName, CancellationToken cancellationToken = default)
-        {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _hostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VMwareHost>(null, response.GetRawResponse());
-                return Response.FromValue(new VMwareHost(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="hostName"> Name of the host. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual Response<bool> Exists(string hostName, CancellationToken cancellationToken = default)
-        {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(hostName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="hostName"> Name of the host. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string hostName, CancellationToken cancellationToken = default)
-        {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_ListByResourceGroup
-        /// <summary> List of hosts in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VMwareHost> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<VMwareHost> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
+                using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _hostsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vMwareHostHostsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,55 +200,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            Page<VMwareHost> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VMwareHostResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
+                using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _hostsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Hosts_ListByResourceGroup
-        /// <summary> List of hosts in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VMwareHost> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<VMwareHost>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hostsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VMwareHost>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hostsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHost(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vMwareHostHostsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -364,21 +218,67 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="VMwareHost" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// List of hosts in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts
+        /// Operation Id: Hosts_ListByResourceGroup
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VMwareHostResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetAllAsGenericResources");
+            Page<VMwareHostResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _vMwareHostHostsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VMwareHostResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _vMwareHostHostsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
+        /// <param name="hostName"> Name of the host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string hostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+
+            using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(VMwareHost.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _vMwareHostHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -387,21 +287,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Filters the list of <see cref="VMwareHost" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
+        /// Operation Id: Hosts_Get
+        /// </summary>
+        /// <param name="hostName"> Name of the host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        public virtual Response<bool> Exists(string hostName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VMwareHostCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+
+            using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(VMwareHost.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _vMwareHostHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -410,7 +314,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        IEnumerator<VMwareHost> IEnumerable<VMwareHost>.GetEnumerator()
+        IEnumerator<VMwareHostResource> IEnumerable<VMwareHostResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -420,12 +324,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VMwareHost> IAsyncEnumerable<VMwareHost>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VMwareHostResource> IAsyncEnumerable<VMwareHostResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, VMwareHost, VMwareHostData> Construct() { }
     }
 }

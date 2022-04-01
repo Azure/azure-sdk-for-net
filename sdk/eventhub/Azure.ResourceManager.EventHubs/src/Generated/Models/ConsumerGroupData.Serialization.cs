@@ -30,26 +30,16 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static ConsumerGroupData DeserializeConsumerGroupData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> userMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
@@ -68,6 +58,11 @@ namespace Azure.ResourceManager.EventHubs
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -108,7 +103,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new ConsumerGroupData(id, name, type, location.Value, systemData, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value);
+            return new ConsumerGroupData(id, name, type, systemData, location.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value);
         }
     }
 }

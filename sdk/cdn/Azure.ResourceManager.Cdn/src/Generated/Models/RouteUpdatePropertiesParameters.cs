@@ -12,40 +12,47 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the domain to create. </summary>
-    public partial class RouteUpdatePropertiesParameters
+    internal partial class RouteUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RouteUpdatePropertiesParameters. </summary>
-        public RouteUpdatePropertiesParameters()
+        internal RouteUpdatePropertiesParameters()
         {
-            CustomDomains = new ChangeTrackingList<WritableSubResource>();
+            CustomDomains = new ChangeTrackingList<ActivatedResourceReference>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
             SupportedProtocols = new ChangeTrackingList<AfdEndpointProtocols>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
+        /// <summary> The name of the endpoint which holds the route. </summary>
+        public string EndpointName { get; }
         /// <summary> Domains referenced by this endpoint. </summary>
-        public IList<WritableSubResource> CustomDomains { get; }
+        public IReadOnlyList<ActivatedResourceReference> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
-        public WritableSubResource OriginGroup { get; set; }
+        internal WritableSubResource OriginGroup { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier OriginGroupId
+        {
+            get => OriginGroup.Id;
+            set => OriginGroup.Id = value;
+        }
+
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
-        public string OriginPath { get; set; }
+        public string OriginPath { get; }
         /// <summary> rule sets referenced by this endpoint. </summary>
-        public IList<WritableSubResource> RuleSets { get; }
+        public IReadOnlyList<WritableSubResource> RuleSets { get; }
         /// <summary> List of supported protocols for this route. </summary>
-        public IList<AfdEndpointProtocols> SupportedProtocols { get; }
+        public IReadOnlyList<AfdEndpointProtocols> SupportedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
-        public IList<string> PatternsToMatch { get; }
-        /// <summary> compression settings. </summary>
-        public object CompressionSettings { get; set; }
-        /// <summary> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </summary>
-        public AfdQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
+        public IReadOnlyList<string> PatternsToMatch { get; }
+        /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
+        public AfdRouteCacheConfiguration CacheConfiguration { get; }
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
-        public ForwardingProtocol? ForwardingProtocol { get; set; }
+        public ForwardingProtocol? ForwardingProtocol { get; }
         /// <summary> whether this route will be linked to the default endpoint domain. </summary>
-        public LinkToDefaultDomain? LinkToDefaultDomain { get; set; }
+        public LinkToDefaultDomain? LinkToDefaultDomain { get; }
         /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
-        public HttpsRedirect? HttpsRedirect { get; set; }
+        public HttpsRedirect? HttpsRedirect { get; }
         /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
-        public EnabledState? EnabledState { get; set; }
+        public EnabledState? EnabledState { get; }
     }
 }

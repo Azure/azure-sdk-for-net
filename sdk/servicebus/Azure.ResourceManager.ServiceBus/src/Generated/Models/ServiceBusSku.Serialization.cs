@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusSku DeserializeServiceBusSku(JsonElement element)
         {
-            SkuName name = default;
-            Optional<SkuTier> tier = default;
+            ServiceBusSkuName name = default;
+            Optional<ServiceBusSkuTier> tier = default;
             Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = property.Value.GetString().ToSkuName();
+                    name = property.Value.GetString().ToServiceBusSkuName();
                     continue;
                 }
                 if (property.NameEquals("tier"))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = property.Value.GetString().ToSkuTier();
+                    tier = property.Value.GetString().ToServiceBusSkuTier();
                     continue;
                 }
                 if (property.NameEquals("capacity"))

@@ -18,7 +18,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Annotations = new ChangeTrackingList<object>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "Trigger";
         }
 
         /// <summary> Initializes a new instance of Trigger. </summary>
@@ -29,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal Trigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "Trigger";
+            Type = type;
             Description = description;
             RuntimeState = runtimeState;
             Annotations = annotations;

@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the SSL profile that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="trustedClientCertificates"> Array of references to application gateway trusted client certificates. </param>
         /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
         /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        internal ApplicationGatewaySslProfile(string id, string name, string etag, string type, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewaySslProfile(string id, string name, string etag, string resourceType, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             TrustedClientCertificates = trustedClientCertificates;
             SslPolicy = sslPolicy;
             ClientAuthConfiguration = clientAuthConfiguration;
@@ -45,13 +45,25 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Array of references to application gateway trusted client certificates. </summary>
         public IList<WritableSubResource> TrustedClientCertificates { get; }
         /// <summary> SSL policy of the application gateway resource. </summary>
         public ApplicationGatewaySslPolicy SslPolicy { get; set; }
         /// <summary> Client authentication configuration of the application gateway resource. </summary>
-        public ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration { get; set; }
+        internal ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration { get; set; }
+        /// <summary> Verify client certificate issuer name on the application gateway. </summary>
+        public bool? VerifyClientCertIssuerDN
+        {
+            get => ClientAuthConfiguration is null ? default : ClientAuthConfiguration.VerifyClientCertIssuerDN;
+            set
+            {
+                if (ClientAuthConfiguration is null)
+                    ClientAuthConfiguration = new ApplicationGatewayClientAuthConfiguration();
+                ClientAuthConfiguration.VerifyClientCertIssuerDN = value;
+            }
+        }
+
         /// <summary> The provisioning state of the HTTP listener resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

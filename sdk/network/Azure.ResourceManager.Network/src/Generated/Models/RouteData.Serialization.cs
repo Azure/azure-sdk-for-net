@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType);
             }
             if (Optional.IsDefined(Id))
             {
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("nextHopType");
                 writer.WriteStringValue(NextHopType.Value.ToString());
             }
-            if (Optional.IsDefined(NextHopIpAddress))
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress");
-                writer.WriteStringValue(NextHopIpAddress);
+                writer.WriteStringValue(NextHopIPAddress);
             }
             if (Optional.IsDefined(HasBgpOverride))
             {

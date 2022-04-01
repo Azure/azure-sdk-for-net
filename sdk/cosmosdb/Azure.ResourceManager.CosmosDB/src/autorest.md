@@ -10,69 +10,82 @@ csharp: true
 library-name: CosmosDB
 skip-csproj: true
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/readme.md
-tag: package-2021-06-csharp
+require: https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/readme.md
+tag: package-2021-10-csharp
 output-folder: Generated/
 clear-output-folder: true
 flatten-payloads: false
 model-namespae: true
-modelerfour:
-  lenient-model-deduplication: true
-
+operation-id-mappings:
+  DatabaseAccountCassandraKeyspaceThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      keyspaceName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces
+  DatabaseAccountCassandraKeyspaceTableThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      keyspaceName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces
+      tableName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables
+  DatabaseAccountTableThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      tableName: Microsoft.DocumentDB/databaseAccounts/tables
+  DatabaseAccountGremlinDatabaseThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases
+  DatabaseAccountGremlinDatabaseGraphThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases
+      graphName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs
+  DatabaseAccountMongodbDatabaseCollectionThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases
+      collectionName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections
+  DatabaseAccountMongodbDatabaseThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases
+  DatabaseAccountSqlDatabaseContainerThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
+      containerName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers
+  DatabaseAccountSqlDatabaseThroughputSetting:
+      accountName: Microsoft.DocumentDB/databaseAccounts
+      databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
 no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
+- from: cosmos-db.json
+  where: $.definitions.MetricDefinition.properties.resourceUri
+  transform: $["x-ms-client-name"] = "ResourceId"
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys
 # rename bad model names
 - rename-model:
-    from: PrivateEndpointConnectionListResult
-    to: PrivateEndpointConnectionList
-- rename-model:
-    from: NotebookWorkspaceListResult
-    to: NotebookWorkspaceList
-- rename-model:
     from: NotebookWorkspaceConnectionInfoResult
     to: NotebookWorkspaceConnectionInfo
 - rename-model:
-    from: DatabaseAccountsListResult
-    to: DatabaseAccountsList
-- rename-model:
-    from: SqlDatabaseListResult
-    to: SqlDatabaseList
-- rename-model:
-    from: SqlContainerListResult
-    to: SqlContainerList
-- rename-model:
-    from: SqlStoredProcedureListResult
-    to: SqlStoredProcedureList
-- rename-model:
-    from: SqlUserDefinedFunctionListResult
-    to: SqlUserDefinedFunctionList
-- rename-model:
-    from: SqlTriggerListResult
-    to: SqlTriggerList
-- rename-model:
-    from: MongoDBDatabaseListResult
-    to: MongoDBDatabaseList
-- rename-model:
-    from: MongoDBCollectionListResult
-    to: MongoDBCollectionList
-- rename-model:
-    from: TableListResult
-    to: TableList
-- rename-model:
-    from: CassandraKeyspaceListResult
-    to: CassandraKeyspaceList
-- rename-model:
-    from: CassandraTableListResult
-    to: CassandraTableList
-- rename-model:
-    from: GremlinDatabaseListResult
-    to: GremlinDatabaseList
-- rename-model:
-    from: GremlinGraphListResult
-    to: GremlinGraphList
+    from: LocationGetResult
+    to: CosmosDBLocation
 - rename-model:
     from: DatabaseAccountGetResults
     to: DatabaseAccount
@@ -163,81 +176,35 @@ directive:
 - rename-model:
     from: DatabaseAccountListKeysResult
     to: DatabaseAccountKeyList
-- rename-model:
-    from: DatabaseAccountListConnectionStringsResult
-    to: DatabaseAccountConnectionStringList
-- rename-model:
-    from: OperationListResult
-    to: OperationList
-- rename-model:
-    from: UsagesResult
-    to: UsageList
-- rename-model:
-    from: PartitionUsagesResult
-    to: PartitionUsageList
-- rename-model:
-    from: MetricDefinitionsListResult
-    to: MetricDefinitionList
-- rename-model:
-    from: MetricListResult
-    to: MetricList
-- rename-model:
-    from: PercentileMetricListResult
-    to: PercentileMetricList
-- rename-model:
-    from: PartitionMetricListResult
-    to: PartitionMetricList
-- rename-model:
-    from: PrivateLinkResourceListResult
-    to: PrivateLinkResourceList
+# This API is returning a collection wrapping by the model 'DatabaseAccountListConnectionStringsResult', adding this directive so that the content could be automatically flattened
+- from: swagger-document
+  where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/listConnectionStrings"].post
+  transform: >
+    $["x-ms-pageable"] = {
+          "nextLinkName": null,
+          "itemName": "connectionStrings"
+        }
 - rename-model:
     from: SqlRoleDefinitionGetResults
     to: SqlRoleDefinition
 - rename-model:
-    from: SqlRoleDefinitionListResult
-    to: SqlRoleDefinitionList
-- rename-model:
     from: SqlRoleAssignmentGetResults
     to: SqlRoleAssignment
-- rename-model:
-    from: SqlRoleAssignmentListResult
-    to: SqlRoleAssignmentList
-- rename-model:
-    from: RestorableDatabaseAccountsListResult
-    to: RestorableDatabaseAccountsList
 - rename-model:
     from: RestorableDatabaseAccountGetResult
     to: RestorableDatabaseAccount
 - rename-model:
-    from: RestorableSqlDatabasesListResult
-    to: RestorableSqlDatabasesList
-- rename-model:
     from: RestorableSqlDatabaseGetResult
     to: RestorableSqlDatabase
-- rename-model:
-    from: RestorableSqlContainersListResult
-    to: RestorableSqlContainersList
 - rename-model:
     from: RestorableSqlContainerGetResult
     to: RestorableSqlContainer
 - rename-model:
-    from: RestorableSqlResourcesListResult
-    to: RestorableSqlResourcesList
-- rename-model:
-    from: RestorableMongodbDatabasesListResult
-    to: RestorableMongodbDatabasesList
-- rename-model:
     from: RestorableMongodbDatabaseGetResult
     to: RestorableMongodbDatabase
 - rename-model:
-    from: RestorableMongodbCollectionsListResult
-    to: RestorableMongodbCollectionsList
-- rename-model:
     from: RestorableMongodbCollectionGetResult
     to: RestorableMongodbCollection
-- rename-model:
-    from: RestorableMongodbResourcesListResult
-    to: RestorableMongodbResourcesList
 # rename for CSharp naming convention
 # `Usage` is used in a few places which are not specific to one type of resources, and it has a child definition `PartitionUsage`.
 - rename-model:
@@ -263,56 +230,56 @@ directive:
 - rename-model:
     from: Column
     to: CassandraColumn
-# Rename for input parameters s/Parameters/Options/, per C# convention
+# Rename for input parameters s/Parameters/Data/, per C# convention
 # rename parametes for cosmos-db.json
 - rename-model:
     from: DatabaseAccountCreateUpdateParameters
-    to: DatabaseAccountCreateUpdateOptions
+    to: DatabaseAccountCreateUpdateData
 - rename-model:
     from: DatabaseAccountUpdateParameters
-    to: DatabaseAccountUpdateOptions
+    to: DatabaseAccountUpdateData
 - rename-model:
     from: DatabaseAccountRegenerateKeyParameters
-    to: DatabaseAccountRegenerateKeyOptions
+    to: DatabaseAccountRegenerateKeyData
 - rename-model:
     from: ThroughputSettingsUpdateParameters
-    to: ThroughputSettingsUpdateOptions
+    to: ThroughputSettingsUpdateData
 - rename-model:
     from: SqlDatabaseCreateUpdateParameters
-    to: SqlDatabaseCreateUpdateOptions
+    to: SqlDatabaseCreateUpdateData
 - rename-model:
     from: SqlContainerCreateUpdateParameters
-    to: SqlContainerCreateUpdateOptions
+    to: SqlContainerCreateUpdateData
 - rename-model:
     from: SqlStoredProcedureCreateUpdateParameters
-    to: SqlStoredProcedureCreateUpdateOptions
+    to: SqlStoredProcedureCreateUpdateData
 - rename-model:
     from: SqlUserDefinedFunctionCreateUpdateParameters
-    to: SqlUserDefinedFunctionCreateUpdateOptions
+    to: SqlUserDefinedFunctionCreateUpdateData
 - rename-model:
     from: SqlTriggerCreateUpdateParameters
-    to: SqlTriggerCreateUpdateOptions
+    to: SqlTriggerCreateUpdateData
 - rename-model:
     from: MongoDBDatabaseCreateUpdateParameters
-    to: MongoDBDatabaseCreateUpdateOptions
+    to: MongoDBDatabaseCreateUpdateData
 - rename-model:
     from: MongoDBCollectionCreateUpdateParameters
-    to: MongoDBCollectionCreateUpdateOptions
+    to: MongoDBCollectionCreateUpdateData
 - rename-model:
     from: TableCreateUpdateParameters
-    to: TableCreateUpdateOptions
+    to: TableCreateUpdateData
 - rename-model:
     from: CassandraKeyspaceCreateUpdateParameters
-    to: CassandraKeyspaceCreateUpdateOptions
+    to: CassandraKeyspaceCreateUpdateData
 - rename-model:
     from: CassandraTableCreateUpdateParameters
-    to: CassandraTableCreateUpdateOptions
+    to: CassandraTableCreateUpdateData
 - rename-model:
     from: GremlinDatabaseCreateUpdateParameters
-    to: GremlinDatabaseCreateUpdateOptions
+    to: GremlinDatabaseCreateUpdateData
 - rename-model:
     from: GremlinGraphCreateUpdateParameters
-    to: GremlinGraphCreateUpdateOptions
+    to: GremlinGraphCreateUpdateData
 # TODO: rename for notebook.json and rback.json when adding them back
 
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
@@ -324,17 +291,18 @@ directive:
     };
 ```
 
-### Tag: package-2021-06-csharp
+### Tag: package-2021-10-csharp
 
-These settings apply only when `--tag=package-2021-06-csharp` is specified on the command line. We have to remove the following files:
+These settings apply only when `--tag=package-2021-10-csharp` is specified on the command line. We have to remove the following files:
 
 - `notebook.json`: that feature is offline due to security issues
 - `rbac.json`: a [bug](https://github.com/Azure/azure-rest-api-specs/issues/16560) is blocking SDK
 
-```yaml $(tag) == 'package-2021-06-csharp'
+```yaml $(tag) == 'package-2021-10-csharp'
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/cosmos-db.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/privateEndpointConnection.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/privateLinkResources.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/5405df1424664d1c6ef9cdcda426eb85e59a02cc/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-06-15/restorable.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/cosmos-db.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/privateEndpointConnection.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/privateLinkResources.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/restorable.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/managedCassandra.json
 ```

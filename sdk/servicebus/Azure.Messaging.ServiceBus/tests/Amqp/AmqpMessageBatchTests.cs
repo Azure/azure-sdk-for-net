@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var batch = new AmqpMessageBatch(new CreateMessageBatchOptions { MaxSizeInBytes = 25 });
             batch.Dispose();
 
-            Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Throws.InstanceOf<ObjectDisposedException>());
+            Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<ObjectDisposedException>());
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             var batch = new AmqpMessageBatch(options);
 
-            Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True);
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True);
         }
 
         /// <summary>
@@ -159,33 +159,33 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.Count, Is.EqualTo(messages.Length), "The count should have been set when the batch was updated.");
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsEnumerable{T}" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsList{T}" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableValidatesTheTypeParameter()
+        public void AsReadOnlyValidatesTheTypeParameter()
         {
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
 
             var batch = new AmqpMessageBatch(options);
-            Assert.That(() => batch.AsEnumerable<AmqpMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsReadOnly<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsEnumerable{T}" />
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.AsList{T}" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableReturnsTheMessages()
+        public void AsReadOnlyReturnsTheMessages()
         {
             var maximumSize = 5000;
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
@@ -195,19 +195,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < batchMessages.Length; ++index)
             {
-                batchMessages[index] = new ServiceBusMessage(new byte[0]);
+                batchMessages[index] = new ServiceBusMessage(Array.Empty<byte>());
                 batch.TryAddMessage(batchMessages[index]);
             }
 
-            IEnumerable<ServiceBusMessage> batchEnumerable = batch.AsEnumerable<ServiceBusMessage>();
-            Assert.That(batchEnumerable, Is.Not.Null, "The batch enumerable should have been populated.");
-
-            var batchEnumerableList = batchEnumerable.ToList();
-            Assert.That(batchEnumerableList.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
+            var batchReadOnly = batch.AsReadOnly<ServiceBusMessage>();
+            Assert.That(batchReadOnly, Is.Not.Null, "The batch enumerable should have been populated.");
+            Assert.That(batchReadOnly.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
 
             for (var index = 0; index < batchMessages.Length; ++index)
             {
-                Assert.That(batchEnumerableList.Contains(batchMessages[index]), $"The message at index: { index } was not in the enumerable.");
+                Assert.That(batchReadOnly.Contains(batchMessages[index]), $"The message at index: { index } was not in the enumerable.");
             }
         }
 
@@ -233,7 +231,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.Count, Is.EqualTo(messages.Length), "The count should have been set when the batch was updated.");
@@ -264,7 +262,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.SizeInBytes, Is.GreaterThan(0), "The size should have been set when the batch was updated.");
@@ -295,7 +293,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.Count, Is.EqualTo(messages.Length), "The count should have been set when the batch was updated.");
@@ -326,7 +324,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, $"The addition for index: { index } should fit and be accepted.");
             }
 
             Assert.That(batch.SizeInBytes, Is.GreaterThan(0), "The size should have been set when the batch was updated.");

@@ -19,32 +19,27 @@ namespace Microsoft.Azure.Management.EventGrid
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Domains", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventChannels", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "ExtensionTopics", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Operations", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerNamespaces", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerRegistrations", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerTopicEventSubscriptions", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerTopics", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PrivateEndpointConnections", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "PrivateLinkResources", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "SystemTopicEventSubscriptions", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "SystemTopics", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2021-06-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Topics", "2021-06-01-preview"),
+                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "Domains", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "ExtensionTopics", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "Operations", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "PrivateEndpointConnections", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "PrivateLinkResources", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "SystemTopicEventSubscriptions", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "SystemTopics", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2021-12-01"),
+                new Tuple<string, string, string>("EventGrid", "Topics", "2021-12-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\net1\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.4.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/eventgrid/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\repos\\public_sdk\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "c2e43f82e91ff7ad691381df56c535164b354cba";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "84c09261f588a7ad29cfb4b46ad7f038f7254275";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

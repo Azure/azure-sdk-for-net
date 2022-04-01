@@ -22,46 +22,6 @@ namespace Microsoft.Azure.Management.SecurityInsights
     public static partial class AutomationRulesOperationsExtensions
     {
             /// <summary>
-            /// Gets all automation rules.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            public static IPage<AutomationRule> List(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName)
-            {
-                return operations.ListAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all automation rules.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<AutomationRule>> ListAsync(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the automation rule.
             /// </summary>
             /// <param name='operations'>
@@ -122,12 +82,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='automationRuleId'>
             /// Automation rule ID
             /// </param>
-            /// <param name='automationRule'>
+            /// <param name='automationRuleToUpsert'>
             /// The automation rule
             /// </param>
-            public static AutomationRule CreateOrUpdate(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, string automationRuleId, AutomationRule automationRule)
+            public static AutomationRule CreateOrUpdate(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, string automationRuleId, AutomationRule automationRuleToUpsert = default(AutomationRule))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, automationRuleId, automationRule).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, automationRuleId, automationRuleToUpsert).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,15 +105,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='automationRuleId'>
             /// Automation rule ID
             /// </param>
-            /// <param name='automationRule'>
+            /// <param name='automationRuleToUpsert'>
             /// The automation rule
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AutomationRule> CreateOrUpdateAsync(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, string automationRuleId, AutomationRule automationRule, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AutomationRule> CreateOrUpdateAsync(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, string automationRuleId, AutomationRule automationRuleToUpsert = default(AutomationRule), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, automationRuleId, automationRule, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, automationRuleId, automationRuleToUpsert, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -174,9 +134,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='automationRuleId'>
             /// Automation rule ID
             /// </param>
-            public static void Delete(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, string automationRuleId)
+            public static object Delete(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, string automationRuleId)
             {
-                operations.DeleteAsync(resourceGroupName, workspaceName, automationRuleId).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, workspaceName, automationRuleId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -197,9 +157,52 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, string automationRuleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteAsync(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, string automationRuleId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, automationRuleId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, automationRuleId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all automation rules.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            public static IPage<AutomationRule> List(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName)
+            {
+                return operations.ListAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all automation rules.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AutomationRule>> ListAsync(this IAutomationRulesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

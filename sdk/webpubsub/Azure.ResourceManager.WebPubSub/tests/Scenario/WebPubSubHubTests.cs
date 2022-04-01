@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 {
     public class WebPubSubHubTests : WebPubHubServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
 
         private ResourceIdentifier _resourceGroupIdentifier;
 
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
-        private async Task<WebPubSubHub> CreateDefaultWebPubSubHub(WebPubSubHubCollection collection, string name)
+        private async Task<WebPubSubHubResource> CreateDefaultWebPubSubHub(WebPubSubHubCollection collection, string name)
         {
             IList<Models.EventHandler> eventHandlers = new List<Models.EventHandler>()
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             WebPubSubHubData data = new WebPubSubHubData(webPubSubHubProperties)
             {
             };
-            var hub = await collection.CreateOrUpdateAsync(true, name, data);
+            var hub = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             return hub.Value;
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();
-            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub-");
+            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             var hub = await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
             Assert.IsNotNull(hub.Data);
             Assert.AreEqual(webPubSubHubName, hub.Data.Name);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();
-            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub-");
+            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             var hub = await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
-            Assert.IsTrue(collection.Exists(webPubSubHubName));
+            Assert.IsTrue(await collection.ExistsAsync(webPubSubHubName));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();
-            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub-");
+            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
             var hub = await collection.GetAsync(webPubSubHubName);
             Assert.IsNotNull(hub.Value.Data);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var collection = webPubSub.GetWebPubSubHubs();
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
-            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub-");
+            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
             list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
@@ -142,13 +142,13 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             Assert.IsNotNull(webPubSub.Data);
 
             var collection = webPubSub.GetWebPubSubHubs();
-            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub-");
+            string webPubSubHubName = Recording.GenerateAssetName("webpubsubhub");
             await CreateDefaultWebPubSubHub(collection, webPubSubHubName);
 
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             var deleteWebPubSubHub = await collection.GetAsync(webPubSubHubName);
-            await deleteWebPubSubHub.Value.DeleteAsync(true);
+            await deleteWebPubSubHub.Value.DeleteAsync(WaitUntil.Completed);
             list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the VMwareCluster data model. </summary>
-    public partial class VMwareClusterData : TrackedResource
+    public partial class VMwareClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VMwareClusterData. </summary>
         /// <param name="location"> The location. </param>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Initializes a new instance of VMwareClusterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> Gets or sets the extended location. </param>
-        /// <param name="systemData"> The system data. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="uuid"> Gets or sets a unique identifier for this resource. </param>
         /// <param name="vCenterId"> Gets or sets the ARM Id of the vCenter resource in which this cluster resides. </param>
@@ -43,10 +43,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="datastoreIds"> Gets or sets the datastore ARM ids. </param>
         /// <param name="networkIds"> Gets or sets the network ARM ids. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VMwareClusterData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, SystemData systemData, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, string provisioningState) : base(id, name, type, tags, location)
+        internal VMwareClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
-            SystemData = systemData;
             Kind = kind;
             Uuid = uuid;
             VCenterId = vCenterId;
@@ -62,8 +61,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary> Gets or sets the extended location. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The system data. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         public string Kind { get; set; }
         /// <summary> Gets or sets a unique identifier for this resource. </summary>

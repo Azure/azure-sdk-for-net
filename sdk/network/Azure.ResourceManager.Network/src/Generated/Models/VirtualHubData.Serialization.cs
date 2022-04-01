@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("virtualRouterAsn");
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualRouterIps))
+            if (Optional.IsCollectionDefined(VirtualRouterIPs))
             {
                 writer.WritePropertyName("virtualRouterIps");
                 writer.WriteStartArray();
-                foreach (var item in VirtualRouterIps)
+                foreach (var item in VirtualRouterIPs)
                 {
                     writer.WriteStringValue(item);
                 }

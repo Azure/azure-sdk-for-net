@@ -1,15 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210508.1",
-          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19043 )"
-        ],
+        "traceparent": "00-feb221114540e44f923eee40250bce4f-30bfd6f60f2fd14d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "39a31d144c928d87b0b326451e6e37ad",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,25 +15,29 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "403",
+        "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 08 May 2021 02:33:32 GMT",
+        "Date": "Wed, 12 Jan 2022 04:44:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7a6a419f-6d4f-40e5-ac56-fbb49dc2b272",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "7a6a419f-6d4f-40e5-ac56-fbb49dc2b272",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210508T023333Z:7a6a419f-6d4f-40e5-ac56-fbb49dc2b272"
+        "x-ms-correlation-request-id": "2dda1cb3-0cf1-4266-8ac7-87793a0d6e8d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "2dda1cb3-0cf1-4266-8ac7-87793a0d6e8d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T044455Z:2dda1cb3-0cf1-4266-8ac7-87793a0d6e8d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "0accec26-d6de-4757-8e74-d080f38eaaab",
+        "tags": {
+          "tagKey1": "tagValue1",
+          "tagKey2": "tagValue2"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": "ACR - TEST - China Team",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -45,16 +47,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-16c51b167e33e144a88b9aff66e87b40-cca2d649da2d354b-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210508.1",
-          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19043 )"
-        ],
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "fbf93b0507793b3f1fee91b91b669c5d",
         "x-ms-return-client-request-id": "true"
       },
@@ -62,23 +60,24 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "28880",
+        "Content-Length": "29714",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 08 May 2021 02:33:33 GMT",
+        "Date": "Wed, 12 Jan 2022 04:44:55 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "54dbac0e-fc43-45f9-a211-338146e93d85",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "54dbac0e-fc43-45f9-a211-338146e93d85",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210508T023334Z:54dbac0e-fc43-45f9-a211-338146e93d85"
+        "x-ms-correlation-request-id": "7434b2e0-5801-4d61-aa77-8bc46495d809",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "7434b2e0-5801-4d61-aa77-8bc46495d809",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T044456Z:7434b2e0-5801-4d61-aa77-8bc46495d809"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastus",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus",
             "name": "eastus",
+            "type": "Region",
             "displayName": "East US",
             "regionalDisplayName": "(US) East US",
             "metadata": {
@@ -91,14 +90,15 @@
               "pairedRegion": [
                 {
                   "name": "westus",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westus"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastus2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2",
             "name": "eastus2",
+            "type": "Region",
             "displayName": "East US 2",
             "regionalDisplayName": "(US) East US 2",
             "metadata": {
@@ -111,34 +111,15 @@
               "pairedRegion": [
                 {
                   "name": "centralus",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/centralus"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centralus"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastusstg",
-            "name": "eastusstg",
-            "displayName": "East US STG",
-            "regionalDisplayName": "(US) East US STG",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Recommended",
-              "geographyGroup": "US",
-              "longitude": "-79.8164",
-              "latitude": "37.3719",
-              "physicalLocation": "Virginia",
-              "pairedRegion": [
-                {
-                  "name": "southcentralusstg",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southcentralusstg"
-                }
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southcentralus",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralus",
             "name": "southcentralus",
+            "type": "Region",
             "displayName": "South Central US",
             "regionalDisplayName": "(US) South Central US",
             "metadata": {
@@ -151,34 +132,15 @@
               "pairedRegion": [
                 {
                   "name": "northcentralus",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/northcentralus"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northcentralus"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southcentralusstg",
-            "name": "southcentralusstg",
-            "displayName": "South Central US STG",
-            "regionalDisplayName": "(US) South Central US STG",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Recommended",
-              "geographyGroup": "US",
-              "longitude": "-98.5",
-              "latitude": "29.4167",
-              "physicalLocation": "Texas",
-              "pairedRegion": [
-                {
-                  "name": "eastusstg",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastusstg"
-                }
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westus2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus2",
             "name": "westus2",
+            "type": "Region",
             "displayName": "West US 2",
             "regionalDisplayName": "(US) West US 2",
             "metadata": {
@@ -191,14 +153,15 @@
               "pairedRegion": [
                 {
                   "name": "westcentralus",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westcentralus"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westcentralus"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westus3",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus3",
             "name": "westus3",
+            "type": "Region",
             "displayName": "West US 3",
             "regionalDisplayName": "(US) West US 3",
             "metadata": {
@@ -211,14 +174,15 @@
               "pairedRegion": [
                 {
                   "name": "eastus",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastus"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australiaeast",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiaeast",
             "name": "australiaeast",
+            "type": "Region",
             "displayName": "Australia East",
             "regionalDisplayName": "(Asia Pacific) Australia East",
             "metadata": {
@@ -231,14 +195,15 @@
               "pairedRegion": [
                 {
                   "name": "australiasoutheast",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australiasoutheast"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiasoutheast"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southeastasia",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southeastasia",
             "name": "southeastasia",
+            "type": "Region",
             "displayName": "Southeast Asia",
             "regionalDisplayName": "(Asia Pacific) Southeast Asia",
             "metadata": {
@@ -251,14 +216,15 @@
               "pairedRegion": [
                 {
                   "name": "eastasia",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastasia"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastasia"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/northeurope",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northeurope",
             "name": "northeurope",
+            "type": "Region",
             "displayName": "North Europe",
             "regionalDisplayName": "(Europe) North Europe",
             "metadata": {
@@ -271,14 +237,15 @@
               "pairedRegion": [
                 {
                   "name": "westeurope",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westeurope"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westeurope"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/swedencentral",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/swedencentral",
             "name": "swedencentral",
+            "type": "Region",
             "displayName": "Sweden Central",
             "regionalDisplayName": "(Europe) Sweden Central",
             "metadata": {
@@ -291,14 +258,15 @@
               "pairedRegion": [
                 {
                   "name": "swedensouth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/swedensouth"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/swedensouth"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/uksouth",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uksouth",
             "name": "uksouth",
+            "type": "Region",
             "displayName": "UK South",
             "regionalDisplayName": "(Europe) UK South",
             "metadata": {
@@ -311,14 +279,15 @@
               "pairedRegion": [
                 {
                   "name": "ukwest",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/ukwest"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/ukwest"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westeurope",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westeurope",
             "name": "westeurope",
+            "type": "Region",
             "displayName": "West Europe",
             "regionalDisplayName": "(Europe) West Europe",
             "metadata": {
@@ -331,14 +300,15 @@
               "pairedRegion": [
                 {
                   "name": "northeurope",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/northeurope"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northeurope"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/centralus",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centralus",
             "name": "centralus",
+            "type": "Region",
             "displayName": "Central US",
             "regionalDisplayName": "(US) Central US",
             "metadata": {
@@ -351,14 +321,15 @@
               "pairedRegion": [
                 {
                   "name": "eastus2",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastus2"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/northcentralus",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northcentralus",
             "name": "northcentralus",
+            "type": "Region",
             "displayName": "North Central US",
             "regionalDisplayName": "(US) North Central US",
             "metadata": {
@@ -371,14 +342,15 @@
               "pairedRegion": [
                 {
                   "name": "southcentralus",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southcentralus"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralus"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westus",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus",
             "name": "westus",
+            "type": "Region",
             "displayName": "West US",
             "regionalDisplayName": "(US) West US",
             "metadata": {
@@ -391,14 +363,15 @@
               "pairedRegion": [
                 {
                   "name": "eastus",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastus"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southafricanorth",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafricanorth",
             "name": "southafricanorth",
+            "type": "Region",
             "displayName": "South Africa North",
             "regionalDisplayName": "(Africa) South Africa North",
             "metadata": {
@@ -411,14 +384,15 @@
               "pairedRegion": [
                 {
                   "name": "southafricawest",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southafricawest"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafricawest"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/centralindia",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centralindia",
             "name": "centralindia",
+            "type": "Region",
             "displayName": "Central India",
             "regionalDisplayName": "(Asia Pacific) Central India",
             "metadata": {
@@ -431,14 +405,15 @@
               "pairedRegion": [
                 {
                   "name": "southindia",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southindia"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southindia"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastasia",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastasia",
             "name": "eastasia",
+            "type": "Region",
             "displayName": "East Asia",
             "regionalDisplayName": "(Asia Pacific) East Asia",
             "metadata": {
@@ -451,14 +426,15 @@
               "pairedRegion": [
                 {
                   "name": "southeastasia",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southeastasia"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southeastasia"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/japaneast",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japaneast",
             "name": "japaneast",
+            "type": "Region",
             "displayName": "Japan East",
             "regionalDisplayName": "(Asia Pacific) Japan East",
             "metadata": {
@@ -471,14 +447,15 @@
               "pairedRegion": [
                 {
                   "name": "japanwest",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/japanwest"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japanwest"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/jioindiawest",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiawest",
             "name": "jioindiawest",
+            "type": "Region",
             "displayName": "Jio India West",
             "regionalDisplayName": "(Asia Pacific) Jio India West",
             "metadata": {
@@ -491,14 +468,15 @@
               "pairedRegion": [
                 {
                   "name": "jioindiacentral",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/jioindiacentral"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiacentral"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/koreacentral",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/koreacentral",
             "name": "koreacentral",
+            "type": "Region",
             "displayName": "Korea Central",
             "regionalDisplayName": "(Asia Pacific) Korea Central",
             "metadata": {
@@ -511,14 +489,15 @@
               "pairedRegion": [
                 {
                   "name": "koreasouth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/koreasouth"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/koreasouth"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/canadacentral",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/canadacentral",
             "name": "canadacentral",
+            "type": "Region",
             "displayName": "Canada Central",
             "regionalDisplayName": "(Canada) Canada Central",
             "metadata": {
@@ -531,14 +510,15 @@
               "pairedRegion": [
                 {
                   "name": "canadaeast",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/canadaeast"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/canadaeast"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/francecentral",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/francecentral",
             "name": "francecentral",
+            "type": "Region",
             "displayName": "France Central",
             "regionalDisplayName": "(Europe) France Central",
             "metadata": {
@@ -551,14 +531,15 @@
               "pairedRegion": [
                 {
                   "name": "francesouth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/francesouth"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/francesouth"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/germanywestcentral",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/germanywestcentral",
             "name": "germanywestcentral",
+            "type": "Region",
             "displayName": "Germany West Central",
             "regionalDisplayName": "(Europe) Germany West Central",
             "metadata": {
@@ -571,14 +552,15 @@
               "pairedRegion": [
                 {
                   "name": "germanynorth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/germanynorth"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/germanynorth"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/norwayeast",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/norwayeast",
             "name": "norwayeast",
+            "type": "Region",
             "displayName": "Norway East",
             "regionalDisplayName": "(Europe) Norway East",
             "metadata": {
@@ -591,14 +573,15 @@
               "pairedRegion": [
                 {
                   "name": "norwaywest",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/norwaywest"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/norwaywest"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/switzerlandnorth",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/switzerlandnorth",
             "name": "switzerlandnorth",
+            "type": "Region",
             "displayName": "Switzerland North",
             "regionalDisplayName": "(Europe) Switzerland North",
             "metadata": {
@@ -611,14 +594,15 @@
               "pairedRegion": [
                 {
                   "name": "switzerlandwest",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/switzerlandwest"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/switzerlandwest"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/uaenorth",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaenorth",
             "name": "uaenorth",
+            "type": "Region",
             "displayName": "UAE North",
             "regionalDisplayName": "(Middle East) UAE North",
             "metadata": {
@@ -631,14 +615,15 @@
               "pairedRegion": [
                 {
                   "name": "uaecentral",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/uaecentral"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaecentral"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/brazilsouth",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazilsouth",
             "name": "brazilsouth",
+            "type": "Region",
             "displayName": "Brazil South",
             "regionalDisplayName": "(South America) Brazil South",
             "metadata": {
@@ -651,14 +636,15 @@
               "pairedRegion": [
                 {
                   "name": "southcentralus",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southcentralus"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralus"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/centralusstage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centralusstage",
             "name": "centralusstage",
+            "type": "Region",
             "displayName": "Central US (Stage)",
             "regionalDisplayName": "(US) Central US (Stage)",
             "metadata": {
@@ -668,8 +654,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastusstage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastusstage",
             "name": "eastusstage",
+            "type": "Region",
             "displayName": "East US (Stage)",
             "regionalDisplayName": "(US) East US (Stage)",
             "metadata": {
@@ -679,8 +666,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastus2stage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2stage",
             "name": "eastus2stage",
+            "type": "Region",
             "displayName": "East US 2 (Stage)",
             "regionalDisplayName": "(US) East US 2 (Stage)",
             "metadata": {
@@ -690,8 +678,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/northcentralusstage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northcentralusstage",
             "name": "northcentralusstage",
+            "type": "Region",
             "displayName": "North Central US (Stage)",
             "regionalDisplayName": "(US) North Central US (Stage)",
             "metadata": {
@@ -701,8 +690,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southcentralusstage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralusstage",
             "name": "southcentralusstage",
+            "type": "Region",
             "displayName": "South Central US (Stage)",
             "regionalDisplayName": "(US) South Central US (Stage)",
             "metadata": {
@@ -712,8 +702,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westusstage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westusstage",
             "name": "westusstage",
+            "type": "Region",
             "displayName": "West US (Stage)",
             "regionalDisplayName": "(US) West US (Stage)",
             "metadata": {
@@ -723,8 +714,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westus2stage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus2stage",
             "name": "westus2stage",
+            "type": "Region",
             "displayName": "West US 2 (Stage)",
             "regionalDisplayName": "(US) West US 2 (Stage)",
             "metadata": {
@@ -734,8 +726,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/asia",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/asia",
             "name": "asia",
+            "type": "Region",
             "displayName": "Asia",
             "regionalDisplayName": "Asia",
             "metadata": {
@@ -744,8 +737,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/asiapacific",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/asiapacific",
             "name": "asiapacific",
+            "type": "Region",
             "displayName": "Asia Pacific",
             "regionalDisplayName": "Asia Pacific",
             "metadata": {
@@ -754,8 +748,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australia",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australia",
             "name": "australia",
+            "type": "Region",
             "displayName": "Australia",
             "regionalDisplayName": "Australia",
             "metadata": {
@@ -764,8 +759,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/brazil",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazil",
             "name": "brazil",
+            "type": "Region",
             "displayName": "Brazil",
             "regionalDisplayName": "Brazil",
             "metadata": {
@@ -774,8 +770,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/canada",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/canada",
             "name": "canada",
+            "type": "Region",
             "displayName": "Canada",
             "regionalDisplayName": "Canada",
             "metadata": {
@@ -784,8 +781,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/europe",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/europe",
             "name": "europe",
+            "type": "Region",
             "displayName": "Europe",
             "regionalDisplayName": "Europe",
             "metadata": {
@@ -794,8 +792,31 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/global",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/france",
+            "name": "france",
+            "type": "Region",
+            "displayName": "France",
+            "regionalDisplayName": "France",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/germany",
+            "name": "germany",
+            "type": "Region",
+            "displayName": "Germany",
+            "regionalDisplayName": "Germany",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/global",
             "name": "global",
+            "type": "Region",
             "displayName": "Global",
             "regionalDisplayName": "Global",
             "metadata": {
@@ -804,8 +825,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/india",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/india",
             "name": "india",
+            "type": "Region",
             "displayName": "India",
             "regionalDisplayName": "India",
             "metadata": {
@@ -814,8 +836,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/japan",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japan",
             "name": "japan",
+            "type": "Region",
             "displayName": "Japan",
             "regionalDisplayName": "Japan",
             "metadata": {
@@ -824,8 +847,64 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/uk",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/korea",
+            "name": "korea",
+            "type": "Region",
+            "displayName": "Korea",
+            "regionalDisplayName": "Korea",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/norway",
+            "name": "norway",
+            "type": "Region",
+            "displayName": "Norway",
+            "regionalDisplayName": "Norway",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafrica",
+            "name": "southafrica",
+            "type": "Region",
+            "displayName": "South Africa",
+            "regionalDisplayName": "South Africa",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/switzerland",
+            "name": "switzerland",
+            "type": "Region",
+            "displayName": "Switzerland",
+            "regionalDisplayName": "Switzerland",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uae",
+            "name": "uae",
+            "type": "Region",
+            "displayName": "United Arab Emirates",
+            "regionalDisplayName": "United Arab Emirates",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uk",
             "name": "uk",
+            "type": "Region",
             "displayName": "United Kingdom",
             "regionalDisplayName": "United Kingdom",
             "metadata": {
@@ -834,8 +913,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/unitedstates",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/unitedstates",
             "name": "unitedstates",
+            "type": "Region",
             "displayName": "United States",
             "regionalDisplayName": "United States",
             "metadata": {
@@ -844,8 +924,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastasiastage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastasiastage",
             "name": "eastasiastage",
+            "type": "Region",
             "displayName": "East Asia (Stage)",
             "regionalDisplayName": "(Asia Pacific) East Asia (Stage)",
             "metadata": {
@@ -855,8 +936,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southeastasiastage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southeastasiastage",
             "name": "southeastasiastage",
+            "type": "Region",
             "displayName": "Southeast Asia (Stage)",
             "regionalDisplayName": "(Asia Pacific) Southeast Asia (Stage)",
             "metadata": {
@@ -866,8 +948,9 @@
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/centraluseuap",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centraluseuap",
             "name": "centraluseuap",
+            "type": "Region",
             "displayName": "Central US EUAP",
             "regionalDisplayName": "(US) Central US EUAP",
             "metadata": {
@@ -879,14 +962,15 @@
               "pairedRegion": [
                 {
                   "name": "eastus2euap",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastus2euap"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2euap"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastus2euap",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2euap",
             "name": "eastus2euap",
+            "type": "Region",
             "displayName": "East US 2 EUAP",
             "regionalDisplayName": "(US) East US 2 EUAP",
             "metadata": {
@@ -898,14 +982,15 @@
               "pairedRegion": [
                 {
                   "name": "centraluseuap",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/centraluseuap"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centraluseuap"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westcentralus",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westcentralus",
             "name": "westcentralus",
+            "type": "Region",
             "displayName": "West Central US",
             "regionalDisplayName": "(US) West Central US",
             "metadata": {
@@ -918,14 +1003,15 @@
               "pairedRegion": [
                 {
                   "name": "westus2",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westus2"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus2"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southafricawest",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafricawest",
             "name": "southafricawest",
+            "type": "Region",
             "displayName": "South Africa West",
             "regionalDisplayName": "(Africa) South Africa West",
             "metadata": {
@@ -938,14 +1024,15 @@
               "pairedRegion": [
                 {
                   "name": "southafricanorth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southafricanorth"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafricanorth"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australiacentral",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiacentral",
             "name": "australiacentral",
+            "type": "Region",
             "displayName": "Australia Central",
             "regionalDisplayName": "(Asia Pacific) Australia Central",
             "metadata": {
@@ -958,14 +1045,15 @@
               "pairedRegion": [
                 {
                   "name": "australiacentral",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australiacentral"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiacentral"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australiacentral2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiacentral2",
             "name": "australiacentral2",
+            "type": "Region",
             "displayName": "Australia Central 2",
             "regionalDisplayName": "(Asia Pacific) Australia Central 2",
             "metadata": {
@@ -978,14 +1066,15 @@
               "pairedRegion": [
                 {
                   "name": "australiacentral2",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australiacentral2"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiacentral2"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australiasoutheast",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiasoutheast",
             "name": "australiasoutheast",
+            "type": "Region",
             "displayName": "Australia Southeast",
             "regionalDisplayName": "(Asia Pacific) Australia Southeast",
             "metadata": {
@@ -998,14 +1087,15 @@
               "pairedRegion": [
                 {
                   "name": "australiaeast",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/australiaeast"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiaeast"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/japanwest",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japanwest",
             "name": "japanwest",
+            "type": "Region",
             "displayName": "Japan West",
             "regionalDisplayName": "(Asia Pacific) Japan West",
             "metadata": {
@@ -1018,14 +1108,15 @@
               "pairedRegion": [
                 {
                   "name": "japaneast",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/japaneast"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japaneast"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/jioindiacentral",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiacentral",
             "name": "jioindiacentral",
+            "type": "Region",
             "displayName": "Jio India Central",
             "regionalDisplayName": "(Asia Pacific) Jio India Central",
             "metadata": {
@@ -1038,14 +1129,15 @@
               "pairedRegion": [
                 {
                   "name": "jioindiawest",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/jioindiawest"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiawest"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/koreasouth",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/koreasouth",
             "name": "koreasouth",
+            "type": "Region",
             "displayName": "Korea South",
             "regionalDisplayName": "(Asia Pacific) Korea South",
             "metadata": {
@@ -1058,14 +1150,15 @@
               "pairedRegion": [
                 {
                   "name": "koreacentral",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/koreacentral"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/koreacentral"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southindia",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southindia",
             "name": "southindia",
+            "type": "Region",
             "displayName": "South India",
             "regionalDisplayName": "(Asia Pacific) South India",
             "metadata": {
@@ -1078,14 +1171,15 @@
               "pairedRegion": [
                 {
                   "name": "centralindia",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/centralindia"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centralindia"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/westindia",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westindia",
             "name": "westindia",
+            "type": "Region",
             "displayName": "West India",
             "regionalDisplayName": "(Asia Pacific) West India",
             "metadata": {
@@ -1098,14 +1192,15 @@
               "pairedRegion": [
                 {
                   "name": "southindia",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/southindia"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southindia"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/canadaeast",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/canadaeast",
             "name": "canadaeast",
+            "type": "Region",
             "displayName": "Canada East",
             "regionalDisplayName": "(Canada) Canada East",
             "metadata": {
@@ -1118,14 +1213,15 @@
               "pairedRegion": [
                 {
                   "name": "canadacentral",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/canadacentral"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/canadacentral"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/francesouth",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/francesouth",
             "name": "francesouth",
+            "type": "Region",
             "displayName": "France South",
             "regionalDisplayName": "(Europe) France South",
             "metadata": {
@@ -1138,14 +1234,15 @@
               "pairedRegion": [
                 {
                   "name": "francecentral",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/francecentral"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/francecentral"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/germanynorth",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/germanynorth",
             "name": "germanynorth",
+            "type": "Region",
             "displayName": "Germany North",
             "regionalDisplayName": "(Europe) Germany North",
             "metadata": {
@@ -1158,14 +1255,15 @@
               "pairedRegion": [
                 {
                   "name": "germanywestcentral",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/germanywestcentral"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/germanywestcentral"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/norwaywest",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/norwaywest",
             "name": "norwaywest",
+            "type": "Region",
             "displayName": "Norway West",
             "regionalDisplayName": "(Europe) Norway West",
             "metadata": {
@@ -1178,34 +1276,15 @@
               "pairedRegion": [
                 {
                   "name": "norwayeast",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/norwayeast"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/norwayeast"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/swedensouth",
-            "name": "swedensouth",
-            "displayName": "Sweden South",
-            "regionalDisplayName": "(Europe) Sweden South",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Other",
-              "geographyGroup": "Europe",
-              "longitude": "13.0007",
-              "latitude": "55.6059",
-              "physicalLocation": "Malmo",
-              "pairedRegion": [
-                {
-                  "name": "swedencentral",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/swedencentral"
-                }
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/switzerlandwest",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/switzerlandwest",
             "name": "switzerlandwest",
+            "type": "Region",
             "displayName": "Switzerland West",
             "regionalDisplayName": "(Europe) Switzerland West",
             "metadata": {
@@ -1218,14 +1297,15 @@
               "pairedRegion": [
                 {
                   "name": "switzerlandnorth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/switzerlandnorth"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/switzerlandnorth"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/ukwest",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/ukwest",
             "name": "ukwest",
+            "type": "Region",
             "displayName": "UK West",
             "regionalDisplayName": "(Europe) UK West",
             "metadata": {
@@ -1238,14 +1318,15 @@
               "pairedRegion": [
                 {
                   "name": "uksouth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/uksouth"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uksouth"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/uaecentral",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaecentral",
             "name": "uaecentral",
+            "type": "Region",
             "displayName": "UAE Central",
             "regionalDisplayName": "(Middle East) UAE Central",
             "metadata": {
@@ -1258,14 +1339,15 @@
               "pairedRegion": [
                 {
                   "name": "uaenorth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/uaenorth"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaenorth"
                 }
               ]
             }
           },
           {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/brazilsoutheast",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazilsoutheast",
             "name": "brazilsoutheast",
+            "type": "Region",
             "displayName": "Brazil Southeast",
             "regionalDisplayName": "(South America) Brazil Southeast",
             "metadata": {
@@ -1278,27 +1360,7 @@
               "pairedRegion": [
                 {
                   "name": "brazilsouth",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/brazilsouth"
-                }
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastusslv",
-            "name": "eastusslv",
-            "displayName": "East US SLV",
-            "regionalDisplayName": "(South America) East US SLV",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Other",
-              "geographyGroup": "South America",
-              "longitude": "-43.2075",
-              "latitude": "-22.90278",
-              "physicalLocation": "Silverstone",
-              "pairedRegion": [
-                {
-                  "name": "eastusslv",
-                  "id": "/subscriptions/0accec26-d6de-4757-8e74-d080f38eaaab/locations/eastusslv"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazilsouth"
                 }
               ]
             }
@@ -1309,6 +1371,7 @@
   ],
   "Variables": {
     "RandomSeed": "447860200",
-    "SUBSCRIPTION_ID": "0accec26-d6de-4757-8e74-d080f38eaaab"
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

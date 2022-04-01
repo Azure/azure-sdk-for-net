@@ -12,6 +12,7 @@ using Microsoft.Azure.Management.Storage.Models;
 using System.Linq;
 using Xunit;
 using System;
+using System.Collections.Generic;
 
 namespace ApiManagement.Tests.ResourceProviderTests
 {
@@ -41,7 +42,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
                 // validate apiversion constraint is set
                 Assert.NotNull(createdService.ApiVersionConstraint);
                 Assert.Equal("2019-01-01", createdService.ApiVersionConstraint.MinApiVersion);
@@ -79,7 +81,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
 
                 var restoreServiceResponse = testBase.client.ApiManagementService.Restore(testBase.rgName, testBase.serviceName, parameters);
                 Assert.NotNull(restoreServiceResponse);
@@ -91,7 +94,85 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
+            }
+        }
+
+        [Fact]
+        [Trait("owner", "sasolank")]
+        public void BackupAndRestoreServiceUsingManagedIdentity()
+        {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new ApiManagementTestBase(context);
+
+                // assign user assigned identity
+                testBase.serviceProperties.Identity = new ApiManagementServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities = new Dictionary<string, UserIdentityProperties>()
+                    {
+                        { testBase.testBackupUserMsiId, new UserIdentityProperties() }
+                    }
+                };
+                var createdService = testBase.client.ApiManagementService.CreateOrUpdate(
+                    resourceGroupName: testBase.rgName,
+                    serviceName: testBase.serviceName,
+                    parameters: testBase.serviceProperties);
+
+                ValidateService(createdService,
+                    testBase.serviceName,
+                    testBase.rgName,
+                    testBase.subscriptionId,
+                    testBase.location,
+                    testBase.serviceProperties.PublisherEmail,
+                    testBase.serviceProperties.PublisherName,
+                    testBase.serviceProperties.Sku.Name,
+                    testBase.tags,
+                    PlatformVersion.Stv2);
+                Assert.NotNull(createdService.Identity);
+                Assert.NotNull(createdService.Identity.Type);
+                Assert.Equal("UserAssigned", createdService.Identity.Type);
+                Assert.NotNull(createdService.Identity.UserAssignedIdentities);
+                Assert.Equal(1, createdService.Identity.UserAssignedIdentities.Count);
+
+                const string apimBackupContainerName = "apimbackupcontainer";
+                const string apimBackupName = "apimbackup.zip";
+                var parameters = new ApiManagementServiceBackupRestoreParameters()
+                {
+                    StorageAccount = testBase.testBackupStorageAccountName,
+                    BackupName = apimBackupName,
+                    ContainerName = apimBackupContainerName,
+                    AccessType = AccessType.UserAssignedManagedIdentity,
+                    ClientId = testBase.testBackupUserMsiClientId
+                };
+
+                var backupServiceResponse = testBase.client.ApiManagementService.Backup(testBase.rgName, testBase.serviceName, parameters);
+                Assert.NotNull(backupServiceResponse);
+                ValidateService(backupServiceResponse,
+                    testBase.serviceName,
+                    testBase.rgName,
+                    testBase.subscriptionId,
+                    testBase.location,
+                    testBase.serviceProperties.PublisherEmail,
+                    testBase.serviceProperties.PublisherName,
+                    testBase.serviceProperties.Sku.Name,
+                    testBase.tags,
+                    PlatformVersion.Stv2);
+
+                var restoreServiceResponse = testBase.client.ApiManagementService.Restore(testBase.rgName, testBase.serviceName, parameters);
+                Assert.NotNull(restoreServiceResponse);
+                ValidateService(restoreServiceResponse,
+                    testBase.serviceName,
+                    testBase.rgName,
+                    testBase.subscriptionId,
+                    testBase.location,
+                    testBase.serviceProperties.PublisherEmail,
+                    testBase.serviceProperties.PublisherName,
+                    testBase.serviceProperties.Sku.Name,
+                    testBase.tags,
+                    PlatformVersion.Stv2);
             }
         }
     }

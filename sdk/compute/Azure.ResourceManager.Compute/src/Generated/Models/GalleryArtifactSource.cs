@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,6 +28,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The managed artifact. </summary>
-        public Resources.Models.SubResource ManagedImage { get; }
+        internal Resources.Models.SubResource ManagedImage { get; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier ManagedImageId
+        {
+            get => ManagedImage.Id;
+        }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -14,5 +15,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         [CodeGenMember("CreatedDateTime")]
         public DateTimeOffset CreatedOn { get; }
+
+        /// <summary>
+        /// A list of user-defined key-value tag attributes associated with the model.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
+
+        /// <summary> API version used to create this model. </summary>
+        internal string ApiVersion { get; }
     }
 }

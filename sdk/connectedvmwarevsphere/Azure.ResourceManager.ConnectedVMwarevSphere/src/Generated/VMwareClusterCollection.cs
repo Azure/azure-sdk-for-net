@@ -16,17 +16,19 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of VMwareCluster and their operations over its parent. </summary>
-    public partial class VMwareClusterCollection : ArmCollection, IEnumerable<VMwareCluster>, IAsyncEnumerable<VMwareCluster>
+    /// <summary>
+    /// A class representing a collection of <see cref="VMwareClusterResource" /> and their operations.
+    /// Each <see cref="VMwareClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VMwareClusterCollection" /> instance call the GetVMwareClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class VMwareClusterCollection : ArmCollection, IEnumerable<VMwareClusterResource>, IAsyncEnumerable<VMwareClusterResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly ClustersRestOperations _clustersRestClient;
+        private readonly ClientDiagnostics _vMwareClusterClustersClientDiagnostics;
+        private readonly ClustersRestOperations _vMwareClusterClustersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VMwareClusterCollection"/> class for mocking. </summary>
         protected VMwareClusterCollection()
@@ -34,11 +36,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Initializes a new instance of the <see cref="VMwareClusterCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal VMwareClusterCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal VMwareClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _clustersRestClient = new ClustersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _vMwareClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareClusterResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VMwareClusterResource.ResourceType, out string vMwareClusterClustersApiVersion);
+            _vMwareClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vMwareClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,68 +50,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Clusters_Create
-        /// <summary> Create Or Update cluster. </summary>
+        /// <summary>
+        /// Create Or Update cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
+        /// Operation Id: Clusters_Create
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual ClusterCreateOperation CreateOrUpdate(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VMwareClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, VMwareClusterData data = null, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.CreateOrUpdate");
+            using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _clustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken);
-                var operation = new ClusterCreateOperation(Parent, _clientDiagnostics, Pipeline, _clustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Clusters_Create
-        /// <summary> Create Or Update cluster. </summary>
-        /// <param name="clusterName"> Name of the cluster. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<ClusterCreateOperation> CreateOrUpdateAsync(bool waitForCompletion, string clusterName, VMwareClusterData body = null, CancellationToken cancellationToken = default)
-        {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _clustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ClusterCreateOperation(Parent, _clientDiagnostics, Pipeline, _clustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, body).Request, response);
-                if (waitForCompletion)
+                var response = await _vMwareClusterClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareClusterResource>(new VMwareClusterOperationSource(Client), _vMwareClusterClustersClientDiagnostics, Pipeline, _vMwareClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -118,28 +86,59 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Clusters_Get
-        /// <summary> Implements cluster GET method. </summary>
+        /// <summary>
+        /// Create Or Update cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
+        /// Operation Id: Clusters_Create
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<VMwareCluster> Get(string clusterName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VMwareClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, VMwareClusterData data = null, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Get");
+            using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _clustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
+                var response = _vMwareClusterClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareClusterResource>(new VMwareClusterOperationSource(Client), _vMwareClusterClustersClientDiagnostics, Pipeline, _vMwareClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Implements cluster GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public virtual async Task<Response<VMwareClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _vMwareClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VMwareCluster(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VMwareClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,28 +147,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Clusters_Get
-        /// <summary> Implements cluster GET method. </summary>
+        /// <summary>
+        /// Implements cluster GET method.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<VMwareCluster>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<VMwareClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Get");
+            using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _clustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
+                var response = _vMwareClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VMwareCluster(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VMwareClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,126 +176,23 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <summary>
+        /// List of clusters in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters
+        /// Operation Id: Clusters_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<VMwareCluster> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VMwareClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
+            async Task<Page<VMwareClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _clustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VMwareCluster>(null, response.GetRawResponse());
-                return Response.FromValue(new VMwareCluster(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="clusterName"> Name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<VMwareCluster>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
-        {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _clustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VMwareCluster>(null, response.GetRawResponse());
-                return Response.FromValue(new VMwareCluster(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="clusterName"> Name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
-        {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(clusterName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="clusterName"> Name of the cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
-        {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Clusters_ListByResourceGroup
-        /// <summary> List of clusters in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareCluster" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VMwareCluster> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<VMwareCluster> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetAll");
+                using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _clustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vMwareClusterClustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -305,55 +200,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            Page<VMwareCluster> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VMwareClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetAll");
+                using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _clustersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: Clusters_ListByResourceGroup
-        /// <summary> List of clusters in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareCluster" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VMwareCluster> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<VMwareCluster>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _clustersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VMwareCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _clustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareCluster(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _vMwareClusterClustersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -364,21 +218,67 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of <see cref="VMwareCluster" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// List of clusters in a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters
+        /// Operation Id: Clusters_ListByResourceGroup
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VMwareClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetAllAsGenericResources");
+            Page<VMwareClusterResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _vMwareClusterClustersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VMwareClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _vMwareClusterClustersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(VMwareCluster.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = await _vMwareClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -387,21 +287,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        /// <summary> Filters the list of <see cref="VMwareCluster" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
+        /// Operation Id: Clusters_Get
+        /// </summary>
+        /// <param name="clusterName"> Name of the cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VMwareClusterCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(VMwareCluster.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
+                var response = _vMwareClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -410,7 +314,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        IEnumerator<VMwareCluster> IEnumerable<VMwareCluster>.GetEnumerator()
+        IEnumerator<VMwareClusterResource> IEnumerable<VMwareClusterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -420,12 +324,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VMwareCluster> IAsyncEnumerable<VMwareCluster>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VMwareClusterResource> IAsyncEnumerable<VMwareClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, VMwareCluster, VMwareClusterData> Construct() { }
     }
 }

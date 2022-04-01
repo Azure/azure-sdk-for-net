@@ -234,7 +234,7 @@
       "ResponseBody": {
         "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/Default-CosmosDB-9950/providers/Microsoft.DocumentDB/databaseAccounts/cosmosdb7760/sqlDatabases/databaseName7923/containers/containerName1460/throughputSettings/default/migrateToAutoscale",
         "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/throughputSettings/migrateToAutoscale",
-        "name": "AD\u002BR",
+        "name": "AD+R",
         "properties": {
           "resource": {
             "throughput": 400,

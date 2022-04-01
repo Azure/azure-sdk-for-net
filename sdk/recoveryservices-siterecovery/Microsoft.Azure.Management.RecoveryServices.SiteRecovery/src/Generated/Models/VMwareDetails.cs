@@ -75,7 +75,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="agentExpiryDate">Agent expiry date.</param>
         /// <param name="agentVersionDetails">The agent version
         /// details.</param>
-        public VMwareDetails(IList<ProcessServer> processServers = default(IList<ProcessServer>), IList<MasterTargetServer> masterTargetServers = default(IList<MasterTargetServer>), IList<RunAsAccount> runAsAccounts = default(IList<RunAsAccount>), string replicationPairCount = default(string), string processServerCount = default(string), string agentCount = default(string), string protectedServers = default(string), string systemLoad = default(string), string systemLoadStatus = default(string), string cpuLoad = default(string), string cpuLoadStatus = default(string), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = default(string), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = default(string), string webLoad = default(string), string webLoadStatus = default(string), string databaseServerLoad = default(string), string databaseServerLoadStatus = default(string), string csServiceStatus = default(string), string ipAddress = default(string), string agentVersion = default(string), string hostName = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), System.DateTime? sslCertExpiryDate = default(System.DateTime?), int? sslCertExpiryRemainingDays = default(int?), string psTemplateVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), VersionDetails agentVersionDetails = default(VersionDetails))
+        /// <param name="switchProviderBlockingErrorDetails">The switch
+        /// provider blocking error information.</param>
+        public VMwareDetails(IList<ProcessServer> processServers = default(IList<ProcessServer>), IList<MasterTargetServer> masterTargetServers = default(IList<MasterTargetServer>), IList<RunAsAccount> runAsAccounts = default(IList<RunAsAccount>), string replicationPairCount = default(string), string processServerCount = default(string), string agentCount = default(string), string protectedServers = default(string), string systemLoad = default(string), string systemLoadStatus = default(string), string cpuLoad = default(string), string cpuLoadStatus = default(string), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = default(string), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = default(string), string webLoad = default(string), string webLoadStatus = default(string), string databaseServerLoad = default(string), string databaseServerLoadStatus = default(string), string csServiceStatus = default(string), string ipAddress = default(string), string agentVersion = default(string), string hostName = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), System.DateTime? sslCertExpiryDate = default(System.DateTime?), int? sslCertExpiryRemainingDays = default(int?), string psTemplateVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), VersionDetails agentVersionDetails = default(VersionDetails), IList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = default(IList<InMageFabricSwitchProviderBlockingErrorDetails>))
         {
             ProcessServers = processServers;
             MasterTargetServers = masterTargetServers;
@@ -109,6 +111,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             PsTemplateVersion = psTemplateVersion;
             AgentExpiryDate = agentExpiryDate;
             AgentVersionDetails = agentVersionDetails;
+            SwitchProviderBlockingErrorDetails = switchProviderBlockingErrorDetails;
             CustomInit();
         }
 
@@ -311,6 +314,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "agentVersionDetails")]
         public VersionDetails AgentVersionDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the switch provider blocking error information.
+        /// </summary>
+        [JsonProperty(PropertyName = "switchProviderBlockingErrorDetails")]
+        public IList<InMageFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; set; }
 
     }
 }

@@ -9,7 +9,7 @@ This extension provides functionality for accessing Azure Event Hubs from an Azu
 Install the Event Hubs extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.EventHubs):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.EventHubs --version 5.0.0-beta.1
+dotnet add package Microsoft.Azure.WebJobs.Extensions.EventHubs
 ```
 
 ### Prerequisites

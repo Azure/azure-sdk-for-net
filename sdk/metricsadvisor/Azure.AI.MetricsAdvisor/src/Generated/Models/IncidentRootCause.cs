@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
         /// <param name="contributionScore"> score of the root cause. </param>
         /// <param name="description"> description of the root cause. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="seriesKey"/>, <paramref name="paths"/>, or <paramref name="description"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="seriesKey"/>, <paramref name="paths"/> or <paramref name="description"/> is null. </exception>
         internal IncidentRootCause(DimensionKey seriesKey, IEnumerable<string> paths, double contributionScore, string description)
         {
             if (seriesKey == null)

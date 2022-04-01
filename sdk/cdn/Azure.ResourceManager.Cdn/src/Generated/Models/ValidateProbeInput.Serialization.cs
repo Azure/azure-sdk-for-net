@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("probeURL");
-            writer.WriteStringValue(ProbeURL);
+            writer.WriteStringValue(ProbeUri.AbsoluteUri);
             writer.WriteEndObject();
         }
     }

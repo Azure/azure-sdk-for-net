@@ -1084,7 +1084,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(expectedProperties);
 
             mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask)
                 .Verifiable("The events should have been sent using the transport producer.");
 
@@ -1134,7 +1134,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(expectedProperties);
 
             mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask)
                 .Verifiable("The events should have been sent using the transport producer.");
 
@@ -1184,7 +1184,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(expectedProperties);
 
             mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new OverflowException()));
 
             using var cancellationSource = new CancellationTokenSource();
@@ -1231,7 +1231,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(expectedProperties);
 
             mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new OverflowException()));
 
             using var cancellationSource = new CancellationTokenSource();
@@ -1269,7 +1269,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ReturnsAsync(expectedProperties);
 
             mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new OverflowException()));
 
             using var cancellationSource = new CancellationTokenSource();
@@ -1317,7 +1317,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sendCountdown = events.Length;
 
             mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.Delay(TimeSpan.FromMilliseconds(150 * (--sendCountdown))));
 
             using var cancellationSource = new CancellationTokenSource();
@@ -1925,7 +1925,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sendCountdown = batches.Length;
 
             mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.Delay(TimeSpan.FromMilliseconds(150 * (--sendCountdown))));
 
             using var cancellationSource = new CancellationTokenSource();
@@ -1982,7 +1982,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var sendCountdown = batches.Length;
 
             mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.Delay(TimeSpan.FromMilliseconds(150 * (--sendCountdown))));
 
             using var cancellationSource = new CancellationTokenSource();
@@ -2313,7 +2313,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
 
             transportProducer
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
                 .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
@@ -2324,7 +2324,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () => await producerClient.SendAsync(events, options), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
-            transportProducer.Verify(t => t.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Exactly(EventHubProducerClient.MaximumCreateProducerAttempts),
@@ -2383,7 +2383,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var numberOfCalls = 0;
 
             transportProducer
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
                 .Callback(() =>
@@ -2447,14 +2447,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
 
             transportProducer
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
                 .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             Assert.That(async () => await producerClient.SendAsync(events, options), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
-            transportProducer.Verify(t => t.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Once,
@@ -2507,7 +2507,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
 
             transportProducer
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
                 .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
@@ -2520,7 +2520,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () => await producerClient.SendAsync(events, options), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
-            transportProducer.Verify(t => t.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Once,
@@ -2578,7 +2578,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
 
             transportProducer
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
                 .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
@@ -2591,7 +2591,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () => await producerClient.SendAsync(events, options), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
-            transportProducer.Verify(t => t.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Once,
@@ -2652,7 +2652,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () => await producerClient.SendAsync(events, options, cancellationTokenSource.Token), Throws.InstanceOf<OperationCanceledException>());
 
-            transportProducer.Verify(t => t.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(),
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Never,
@@ -2794,7 +2794,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public EventDataBatch SendBatchCalledWith;
             public CreateBatchOptions CreateBatchCalledWith;
 
-            public override Task SendAsync(IEnumerable<EventData> events,
+            public override Task SendAsync(IReadOnlyCollection<EventData> events,
                                            SendEventOptions sendOptions,
                                            CancellationToken cancellationToken)
             {
@@ -2934,7 +2934,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public override long SizeInBytes { get; }
             public override TransportProducerFeatures ActiveFeatures { get; }
             public override int Count => Events.Count;
-            public override IEnumerable<T> AsEnumerable<T>() => (IEnumerable<T>)Events;
+            public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => Events as IReadOnlyCollection<T>;
             public override void Clear() => Events.Clear();
             public override void Dispose() => throw new NotImplementedException();
 

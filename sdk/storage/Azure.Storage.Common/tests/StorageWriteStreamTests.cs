@@ -251,7 +251,8 @@ namespace Azure.Storage.Tests
                       position,
                       bufferSize,
                       progressHandler,
-                      hashingOptions: default,
+                      // TODO #27253
+                      //hashingOptions: default,
                       buffer)
             {
                 ApiCalls = new List<string>();

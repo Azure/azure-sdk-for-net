@@ -189,6 +189,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ProcessorStoppingReceiveCanceledEvent = 110;
         internal const int ProcessorStoppingAcceptSessionCanceledEvent = 111;
 
+        internal const int PartitionKeyValueOverwritten = 112;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -1568,6 +1570,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(MaxMessagesExceedsPrefetchEvent, identifier, prefetchCount, maxMessages);
+            }
+        }
+
+        [Event(PartitionKeyValueOverwritten, Level = EventLevel.Warning, Message = "The PartitionKey property with value '{0}' was overwritten with value '{1}' due to setting the SessionId on message with MessageId '{2}'")]
+        public virtual void PartitionKeyOverwritten(string partitionKey, string sessionId, string messageId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(PartitionKeyValueOverwritten,partitionKey, sessionId, messageId);
             }
         }
         #endregion

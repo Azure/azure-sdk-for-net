@@ -16,12 +16,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     /// </summary>
     public static class DeploymentResourceStatus
     {
-        public const string Unknown = "Unknown";
         public const string Stopped = "Stopped";
         public const string Running = "Running";
-        public const string Failed = "Failed";
-        public const string Allocating = "Allocating";
-        public const string Upgrading = "Upgrading";
-        public const string Compiling = "Compiling";
     }
 }

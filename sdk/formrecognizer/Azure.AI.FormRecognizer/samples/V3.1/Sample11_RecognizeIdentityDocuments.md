@@ -24,7 +24,7 @@ To recognize identity documents from a URI, use the `StartRecognizeIdentityDocum
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/iddocumentfields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeIdentityDocumentsUri
-Uri sourceUri = "<sourceUri>";
+Uri sourceUri = new Uri("<sourceUri>");
 
 RecognizeIdentityDocumentsOperation operation = await client.StartRecognizeIdentityDocumentsFromUriAsync(sourceUri);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();

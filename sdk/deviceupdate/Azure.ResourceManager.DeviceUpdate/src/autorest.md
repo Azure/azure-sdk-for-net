@@ -10,6 +10,31 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/34018925632ef75ef541
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
+override-operation-name:
+  CheckNameAvailability: CheckDeviceUpdateNameAvailability
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - from: swagger-document
     where: $.definitions.GroupInformation
@@ -20,47 +45,22 @@ directive:
   - from: swagger-document
     where: $.definitions.Instance
     transform: $['x-ms-client-name'] = 'DeviceUpdateInstance'
-  - rename-operation:
-      from: Accounts_ListBySubscription
-      to: DeviceUpdateAccounts_ListBySubscription
-  - rename-operation:
-      from: Accounts_ListByResourceGroup
-      to: DeviceUpdateAccounts_ListByResourceGroup
-  - rename-operation:
-      from: Accounts_Get
-      to: DeviceUpdateAccounts_Get
-  - rename-operation:
-      from: Accounts_Create
-      to: DeviceUpdateAccounts_Create
-  - rename-operation:
-      from: Accounts_Delete
-      to: DeviceUpdateAccounts_Delete
-  - rename-operation:
-      from: Accounts_Update
-      to: DeviceUpdateAccounts_Update
-  - rename-operation:
-      from: Instances_ListByAccount
-      to: DeviceUpdateInstances_ListByAccount
-  - rename-operation:
-      from: Instances_Get
-      to: DeviceUpdateInstances_Get
-  - rename-operation:
-      from: Instances_Create
-      to: DeviceUpdateInstances_Create
-  - rename-operation:
-      from: Instances_Delete
-      to: DeviceUpdateInstances_Delete
-  - rename-operation:
-      from: Instances_Update
-      to: DeviceUpdateInstances_Update
-  - remove-operation: Accounts_Head
-  - remove-operation: Instances_Head
-  - remove-operation: Operations_List
-  - remove-operation: DeviceUpdateAccounts_Update
-  - rename-model:
-      from: AccountUpdate
-      to: DeviceUpdateAccountUpdateOptions
-  - rename-model:
-      from: TagUpdate
-      to: TagUpdateOptions
+  - from: swagger-document
+    where: $.definitions.ConnectionDetails.properties.privateIpAddress
+    transform: $['x-ms-client-name'] = 'privateIPAddress'
+  - remove-operation: Accounts_Head  # Not supported yet
+  - remove-operation: Instances_Head # Not supported yet
+  - from: swagger-document
+    where: $.definitions.AccountUpdate
+    transform: delete $['allOf']
+  - from: swagger-document
+    where: $.definitions.AccountUpdate.properties
+    transform: >
+      $['tags'] = {
+        "type": "object",
+        "description": "List of key value pairs that describe the resource. This will overwrite the existing tags.",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
 ```

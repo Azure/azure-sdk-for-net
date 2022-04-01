@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.Language.QuestionAnswering.Projects;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
@@ -11,10 +12,20 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public void CreateQuestionAnsweringClient()
         {
             #region Snippet:QuestionAnsweringClient_Create
-            Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
-            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+            Uri endpoint = new Uri("{LanguageEndpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
             QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
+            #endregion
+        }
+
+        public void CreateQuestionAnsweringProjectsClient()
+        {
+            #region Snippet:QuestionAnsweringProjectsClient_Create
+            Uri endpoint = new Uri("{LanguageEndpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+
+            QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
             #endregion
         }
 

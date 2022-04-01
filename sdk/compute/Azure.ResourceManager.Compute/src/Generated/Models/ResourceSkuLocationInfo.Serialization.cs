@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<ResourceSkuZoneDetails>> zoneDetails = default;
+            Optional<IReadOnlyList<string>> extendedLocations = default;
+            Optional<ExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -55,8 +57,33 @@ namespace Azure.ResourceManager.Compute.Models
                     zoneDetails = array;
                     continue;
                 }
+                if (property.NameEquals("extendedLocations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    extendedLocations = array;
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ExtendedLocationType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ResourceSkuLocationInfo(location.Value, Optional.ToList(zones), Optional.ToList(zoneDetails));
+            return new ResourceSkuLocationInfo(location.Value, Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type));
         }
     }
 }

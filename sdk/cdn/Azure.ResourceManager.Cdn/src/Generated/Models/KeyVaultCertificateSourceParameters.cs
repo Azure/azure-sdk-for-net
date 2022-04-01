@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class KeyVaultCertificateSourceParameters
     {
         /// <summary> Initializes a new instance of KeyVaultCertificateSourceParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="vaultName"> The name of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="secretName"> The name of Key Vault Secret (representing the full certificate PFX) in Key Vault. </param>
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
         /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="secretName"/> is null. </exception>
-        public KeyVaultCertificateSourceParameters(KeyVaultCertificateSourceParametersOdataType odataType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, UpdateRule updateRule, DeleteRule deleteRule)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
+        public KeyVaultCertificateSourceParameters(KeyVaultCertificateSourceParametersTypeName typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, UpdateRule updateRule, DeleteRule deleteRule)
         {
             if (subscriptionId == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            OdataType = odataType;
+            TypeName = typeName;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             VaultName = vaultName;
@@ -49,21 +49,42 @@ namespace Azure.ResourceManager.Cdn.Models
             DeleteRule = deleteRule;
         }
 
-        /// <summary> Gets the odata type. </summary>
-        public KeyVaultCertificateSourceParametersOdataType OdataType { get; }
+        /// <summary> Initializes a new instance of KeyVaultCertificateSourceParameters. </summary>
+        /// <param name="typeName"></param>
+        /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </param>
+        /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the SSL certificate. </param>
+        /// <param name="vaultName"> The name of the user&apos;s Key Vault containing the SSL certificate. </param>
+        /// <param name="secretName"> The name of Key Vault Secret (representing the full certificate PFX) in Key Vault. </param>
+        /// <param name="secretVersion"> The version(GUID) of Key Vault Secret in Key Vault. </param>
+        /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
+        /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
+        internal KeyVaultCertificateSourceParameters(KeyVaultCertificateSourceParametersTypeName typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, UpdateRule updateRule, DeleteRule deleteRule)
+        {
+            TypeName = typeName;
+            SubscriptionId = subscriptionId;
+            ResourceGroupName = resourceGroupName;
+            VaultName = vaultName;
+            SecretName = secretName;
+            SecretVersion = secretVersion;
+            UpdateRule = updateRule;
+            DeleteRule = deleteRule;
+        }
+
+        /// <summary> Gets or sets the type name. </summary>
+        public KeyVaultCertificateSourceParametersTypeName TypeName { get; set; }
         /// <summary> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </summary>
-        public string SubscriptionId { get; }
+        public string SubscriptionId { get; set; }
         /// <summary> Resource group of the user&apos;s Key Vault containing the SSL certificate. </summary>
-        public string ResourceGroupName { get; }
+        public string ResourceGroupName { get; set; }
         /// <summary> The name of the user&apos;s Key Vault containing the SSL certificate. </summary>
-        public string VaultName { get; }
+        public string VaultName { get; set; }
         /// <summary> The name of Key Vault Secret (representing the full certificate PFX) in Key Vault. </summary>
-        public string SecretName { get; }
+        public string SecretName { get; set; }
         /// <summary> The version(GUID) of Key Vault Secret in Key Vault. </summary>
         public string SecretVersion { get; set; }
         /// <summary> Describes the action that shall be taken when the certificate is updated in Key Vault. </summary>
-        public UpdateRule UpdateRule { get; }
+        public UpdateRule UpdateRule { get; set; }
         /// <summary> Describes the action that shall be taken when the certificate is removed from Key Vault. </summary>
-        public DeleteRule DeleteRule { get; }
+        public DeleteRule DeleteRule { get; set; }
     }
 }

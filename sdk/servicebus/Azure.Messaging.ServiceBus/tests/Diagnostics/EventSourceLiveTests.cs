@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -163,7 +163,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -436,6 +436,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
                 Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any());
             }
+        }
+
+        [Test]
+        public void LogsMessageEvents()
+        {
+            var message = new ServiceBusMessage()
+            {
+                SessionId = "sessionId1",
+                PartitionKey = "sessionId1",
+                MessageId = "messageId"
+            };
+            message.SessionId = "sessionId2";
+
+            _listener.SingleEventById(
+                ServiceBusEventSource.PartitionKeyValueOverwritten,
+                e => e.Payload.Contains("sessionId1") && e.Payload.Contains("sessionId2") && e.Payload.Contains("messageId"));
         }
     }
 }

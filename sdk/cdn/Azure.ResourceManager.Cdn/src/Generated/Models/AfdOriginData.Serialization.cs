@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
@@ -85,16 +86,22 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("enabledState");
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
+            if (Optional.IsDefined(EnforceCertificateNameCheck))
+            {
+                writer.WritePropertyName("enforceCertificateNameCheck");
+                writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static AfdOriginData DeserializeAfdOriginData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
+            SystemData systemData = default;
+            Optional<string> originGroupName = default;
             Optional<WritableSubResource> azureOrigin = default;
             Optional<string> hostName = default;
             Optional<int> httpPort = default;
@@ -102,22 +109,13 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> originHostHeader = default;
             Optional<int?> priority = default;
             Optional<int?> weight = default;
-            Optional<object> sharedPrivateLinkResource = default;
+            Optional<SharedPrivateLinkResourceProperties> sharedPrivateLinkResource = default;
             Optional<EnabledState> enabledState = default;
+            Optional<bool> enforceCertificateNameCheck = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -133,6 +131,11 @@ namespace Azure.ResourceManager.Cdn
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -142,6 +145,11 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("originGroupName"))
+                        {
+                            originGroupName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("azureOrigin"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -209,7 +217,7 @@ namespace Azure.ResourceManager.Cdn
                                 sharedPrivateLinkResource = null;
                                 continue;
                             }
-                            sharedPrivateLinkResource = property0.Value.GetObject();
+                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"))
@@ -220,6 +228,16 @@ namespace Azure.ResourceManager.Cdn
                                 continue;
                             }
                             enabledState = new EnabledState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("enforceCertificateNameCheck"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enforceCertificateNameCheck = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -246,7 +264,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdOriginData(id, name, type, systemData.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new AfdOriginData(id, name, type, systemData, originGroupName.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(enforceCertificateNameCheck), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

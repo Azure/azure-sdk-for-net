@@ -18,8 +18,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27);
 
             #region Snippet:QuestionAnsweringClient_Chat
-            string projectName = "FAQ";
-            string deploymentName = "prod";
+            string projectName = "{ProjectName}";
+            string deploymentName = "{DeploymentName}";
 #if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
             KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
@@ -54,8 +54,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             KnowledgeBaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27);
 
             #region Snippet:QuestionAnsweringClient_ChatAsync
-            string projectName = "FAQ";
-            string deploymentName = "prod";
+            string projectName = "{ProjectName}";
+            string deploymentName = "{DeploymentName}";
 #if SNIPPET
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
             KnowledgeBaseAnswer previousAnswer = answers.Answers.First();

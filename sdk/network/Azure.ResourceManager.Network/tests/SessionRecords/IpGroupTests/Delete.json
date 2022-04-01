@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -46,7 +46,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/IpGroupRG-9201?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/IpGroupRG-9201?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -119,17 +119,17 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022firewalls\u0022: [],\r\n",
-        "    \u0022firewallPolicies\u0022: [],\r\n",
-        "    \u0022ipAddresses\u0022: [],\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022\r\n",
+        "  \"properties\": {\r\n",
+        "    \"firewalls\": [],\r\n",
+        "    \"firewallPolicies\": [],\r\n",
+        "    \"ipAddresses\": [],\r\n",
+        "    \"provisioningState\": \"Updating\"\r\n",
         "  },\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/IpGroupRG-9201/providers/Microsoft.Network/ipGroups/IpGroupRG-5244\u0022,\r\n",
-        "  \u0022name\u0022: \u0022IpGroupRG-5244\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/IpGroups\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022c6bcd03a-54c6-41f6-9554-75f081246504\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus2\u0022\r\n",
+        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/IpGroupRG-9201/providers/Microsoft.Network/ipGroups/IpGroupRG-5244\",\r\n",
+        "  \"name\": \"IpGroupRG-5244\",\r\n",
+        "  \"type\": \"Microsoft.Network/IpGroups\",\r\n",
+        "  \"etag\": \"c6bcd03a-54c6-41f6-9554-75f081246504\",\r\n",
+        "  \"location\": \"westus2\"\r\n",
         "}"
       ]
     },
@@ -162,7 +162,7 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"status\": \"Succeeded\"\r\n",
         "}"
       ]
     },
@@ -182,7 +182,7 @@
         "Content-Length": "434",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Sat, 16 Oct 2021 15:17:45 GMT",
-        "ETag": "\u0022c6bcd03a-54c6-41f6-9554-75f081246504\u0022",
+        "ETag": "\"c6bcd03a-54c6-41f6-9554-75f081246504\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
@@ -195,17 +195,17 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022firewalls\u0022: [],\r\n",
-        "    \u0022firewallPolicies\u0022: [],\r\n",
-        "    \u0022ipAddresses\u0022: [],\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
+        "  \"properties\": {\r\n",
+        "    \"firewalls\": [],\r\n",
+        "    \"firewallPolicies\": [],\r\n",
+        "    \"ipAddresses\": [],\r\n",
+        "    \"provisioningState\": \"Succeeded\"\r\n",
         "  },\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/IpGroupRG-9201/providers/Microsoft.Network/ipGroups/IpGroupRG-5244\u0022,\r\n",
-        "  \u0022name\u0022: \u0022IpGroupRG-5244\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/IpGroups\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022c6bcd03a-54c6-41f6-9554-75f081246504\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus2\u0022\r\n",
+        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/IpGroupRG-9201/providers/Microsoft.Network/ipGroups/IpGroupRG-5244\",\r\n",
+        "  \"name\": \"IpGroupRG-5244\",\r\n",
+        "  \"type\": \"Microsoft.Network/IpGroups\",\r\n",
+        "  \"etag\": \"c6bcd03a-54c6-41f6-9554-75f081246504\",\r\n",
+        "  \"location\": \"westus2\"\r\n",
         "}"
       ]
     },
@@ -296,7 +296,7 @@
       "ResponseBody": {
         "error": {
           "code": "ResourceNotFound",
-          "message": "The Resource \u0027Microsoft.Network/ipGroups/IpGroupRG-5244\u0027 under resource group \u0027IpGroupRG-9201\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+          "message": "The Resource 'Microsoft.Network/ipGroups/IpGroupRG-5244' under resource group 'IpGroupRG-9201' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
         }
       }
     }

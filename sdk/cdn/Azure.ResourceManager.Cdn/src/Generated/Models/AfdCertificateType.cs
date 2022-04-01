@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CustomerCertificateValue = "CustomerCertificate";
         private const string ManagedCertificateValue = "ManagedCertificate";
+        private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
 
         /// <summary> CustomerCertificate. </summary>
         public static AfdCertificateType CustomerCertificate { get; } = new AfdCertificateType(CustomerCertificateValue);
         /// <summary> ManagedCertificate. </summary>
         public static AfdCertificateType ManagedCertificate { get; } = new AfdCertificateType(ManagedCertificateValue);
+        /// <summary> AzureFirstPartyManagedCertificate. </summary>
+        public static AfdCertificateType AzureFirstPartyManagedCertificate { get; } = new AfdCertificateType(AzureFirstPartyManagedCertificateValue);
         /// <summary> Determines if two <see cref="AfdCertificateType"/> values are the same. </summary>
         public static bool operator ==(AfdCertificateType left, AfdCertificateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AfdCertificateType"/> values are not the same. </summary>

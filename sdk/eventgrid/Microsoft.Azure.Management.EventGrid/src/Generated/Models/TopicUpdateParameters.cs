@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the TopicUpdateParameters class.
         /// </summary>
-        /// <param name="tags">Tags of the Topic resource.</param>
+        /// <param name="tags">Tags of the resource.</param>
         /// <param name="identity">Topic resource identity information.</param>
         /// <param name="publicNetworkAccess">This determines if traffic is
         /// allowed over public network. By default it is enabled.
@@ -48,15 +48,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// disable local auth. Default value is false. When the property is
         /// set to true, only AAD token will be used to authenticate if user is
         /// allowed to publish to the topic.</param>
-        /// <param name="sku">The Sku pricing tier for the topic.</param>
-        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), ResourceSku sku = default(ResourceSku))
+        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?))
         {
             Tags = tags;
             Identity = identity;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
             DisableLocalAuth = disableLocalAuth;
-            Sku = sku;
             CustomInit();
         }
 
@@ -66,7 +64,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags of the Topic resource.
+        /// Gets or sets tags of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
@@ -104,12 +102,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Sku pricing tier for the topic.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public ResourceSku Sku { get; set; }
 
     }
 }

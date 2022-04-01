@@ -24,6 +24,8 @@ namespace ExtendedLocation.Tests.ScenarioTests
                     Microsoft.Azure.Management.ExtendedLocation.Models.CustomLocation customLocation = customLocationTestBase.CreateCustomLocations();
                     Assert.True(customLocation.DisplayName == CustomLocationTestData.ResourceName);
                     Assert.True(customLocation.ProvisioningState == "Succeeded");
+                    Assert.False(String.IsNullOrEmpty(customLocation.Identity.PrincipalId));
+                    Assert.True(customLocation.Identity.Type == "SystemAssigned");
 
                     // GET ON CREATED CL
                     Console.WriteLine("\n");

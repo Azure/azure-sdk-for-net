@@ -46,7 +46,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// policy range in days</param>
         /// <param name="timeZone">TimeZone optional input as string. For
         /// example: TimeZone = "Pacific Standard Time".</param>
-        public AzureIaaSVMProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), InstantRPAdditionalDetails instantRPDetails = default(InstantRPAdditionalDetails), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), int? instantRpRetentionRangeInDays = default(int?), string timeZone = default(string))
+        /// <param name="policyType">Possible values include: 'Invalid', 'V1',
+        /// 'V2'</param>
+        public AzureIaaSVMProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), InstantRPAdditionalDetails instantRPDetails = default(InstantRPAdditionalDetails), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), int? instantRpRetentionRangeInDays = default(int?), string timeZone = default(string), string policyType = default(string))
             : base(protectedItemsCount, resourceGuardOperationRequests)
         {
             InstantRPDetails = instantRPDetails;
@@ -54,6 +56,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             RetentionPolicy = retentionPolicy;
             InstantRpRetentionRangeInDays = instantRpRetentionRangeInDays;
             TimeZone = timeZone;
+            PolicyType = policyType;
             CustomInit();
         }
 
@@ -92,6 +95,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "timeZone")]
         public string TimeZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Invalid', 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "policyType")]
+        public string PolicyType { get; set; }
 
     }
 }

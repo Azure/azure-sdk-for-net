@@ -32,26 +32,6 @@ namespace Azure.Graph.Rbac
         public RbacManagementClient(string tenantID, TokenCredential tokenCredential, RbacManagementClientOptions options = null) : this(tenantID, null, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of RbacManagementClient. </summary>
-        /// <param name="tenantID"> The tenant ID. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantID"/> is null. </exception>
-        public RbacManagementClient(string tenantID, Uri endpoint, TokenCredential tokenCredential, RbacManagementClientOptions options = null)
-        {
-            if (tenantID == null)
-            {
-                throw new ArgumentNullException(nameof(tenantID));
-            }
-            endpoint ??= new Uri("https://graph.windows.net");
-
-            options ??= new RbacManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
-            _tenantID = tenantID;
-            _endpoint = endpoint;
-        }
 
         /// <summary> Returns an instance of SignedInUserOperations. </summary>
         public virtual SignedInUserOperations SignedInUser => new SignedInUserOperations(_clientDiagnostics, _pipeline, _tenantID, _endpoint);

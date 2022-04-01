@@ -9,7 +9,7 @@ This extension provides functionality for accessing Azure Service Bus from an Az
 Install the Service Bus extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.ServiceBus/):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 5.0.0-beta.1
+dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus
 ```
 
 ### Prerequisites
@@ -198,6 +198,35 @@ public static async Task Run(
             await messageActions.CompleteMessageAsync(message);
         }
     }
+}
+```
+
+### Session triggers
+
+To receive messages from a session enabled queue or topic, you can set the `IsSessionsEnabled`
+property on the `ServiceBusTrigger` attribute. When working with sessions, you can bind to the `SessionMessageActions` to get access to the message settlement methods in addition to session-specific functionality.
+
+```C# Snippet:ServiceBusBindingToSessionMessageActions
+[FunctionName("BindingToSessionMessageActions")]
+public static async Task Run(
+    [ServiceBusTrigger("<queue_name>", Connection = "<connection_name>", IsSessionsEnabled = true)]
+    ServiceBusReceivedMessage[] messages,
+    ServiceBusSessionMessageActions sessionActions)
+{
+    foreach (ServiceBusReceivedMessage message in messages)
+    {
+        if (message.MessageId == "1")
+        {
+            await sessionActions.DeadLetterMessageAsync(message);
+        }
+        else
+        {
+            await sessionActions.CompleteMessageAsync(message);
+        }
+    }
+
+    // We can also perform session-specific operations using the actions, such as setting state that is specific to this session.
+    await sessionActions.SetSessionStateAsync(new BinaryData("<session state>"));
 }
 ```
 

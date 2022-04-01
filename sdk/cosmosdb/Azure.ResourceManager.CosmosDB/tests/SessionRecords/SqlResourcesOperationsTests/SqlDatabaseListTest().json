@@ -42,7 +42,7 @@
                 "id": "databaseName7923",
                 "_rid": "rbczAA==",
                 "_self": "dbs/rbczAA==/",
-                "_etag": "\u00220000cf0c-0000-0100-0000-612dfac40000\u0022",
+                "_etag": "\"0000cf0c-0000-0100-0000-612dfac40000\"",
                 "_colls": "colls/",
                 "_users": "users/",
                 "_ts": 1630403268
@@ -92,7 +92,7 @@
             "id": "databaseName7923",
             "_rid": "rbczAA==",
             "_self": "dbs/rbczAA==/",
-            "_etag": "\u00220000cf0c-0000-0100-0000-612dfac40000\u0022",
+            "_etag": "\"0000cf0c-0000-0100-0000-612dfac40000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1630403268

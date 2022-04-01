@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // https://aka.ms/azsdk/formrecognizer/labelingtool
 
             var adminClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            BuildModelOperation buildOperation = await adminClient.StartBuildModelAsync(trainingFileUri);
+            BuildModelOperation buildOperation = await adminClient.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 
             await buildOperation.WaitForCompletionAsync();
 
@@ -38,10 +38,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #region Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 #if SNIPPET
             string modelId = "<modelId>";
-            string fileUri = "<fileUri>";
+            Uri fileUri = new Uri("<fileUri>");
 #else
-            Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
             string modelId = customModel.ModelId;
+            Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
             AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);

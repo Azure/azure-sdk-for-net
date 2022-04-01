@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SharedGalleryList DeserializeSharedGalleryList(JsonElement element)
         {
-            IReadOnlyList<SharedGallery> value = default;
+            IReadOnlyList<SharedGalleryData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SharedGallery> array = new List<SharedGallery>();
+                    List<SharedGalleryData> array = new List<SharedGalleryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedGallery.DeserializeSharedGallery(item));
+                        array.Add(SharedGalleryData.DeserializeSharedGalleryData(item));
                     }
                     value = array;
                     continue;

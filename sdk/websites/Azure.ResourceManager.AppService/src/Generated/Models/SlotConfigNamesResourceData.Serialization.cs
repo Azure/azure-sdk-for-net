@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<IList<string>> connectionStringNames = default;
             Optional<IList<string>> appSettingNames = default;
             Optional<IList<string>> azureStorageConfigNames = default;
@@ -86,6 +88,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -146,7 +153,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SlotConfigNamesResourceData(id, name, type, kind.Value, Optional.ToList(connectionStringNames), Optional.ToList(appSettingNames), Optional.ToList(azureStorageConfigNames));
+            return new SlotConfigNamesResourceData(id, name, type, systemData, kind.Value, Optional.ToList(connectionStringNames), Optional.ToList(appSettingNames), Optional.ToList(azureStorageConfigNames));
         }
     }
 }

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -17,6 +19,11 @@ namespace Azure.ResourceManager.Compute
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation");
+                writer.WriteObjectValue(ExtendedLocation);
+            }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
             foreach (var item in Tags)
@@ -35,16 +42,28 @@ namespace Azure.ResourceManager.Compute
 
         internal static DiskAccessData DeserializeDiskAccessData(JsonElement element)
         {
+            Optional<ExtendedLocation> extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("extendedLocation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("tags"))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -73,6 +92,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -118,7 +142,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskAccessData(id, name, type, tags, location, Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToNullable(timeCreated));
+            return new DiskAccessData(id, name, type, systemData, tags, location, extendedLocation.Value, Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

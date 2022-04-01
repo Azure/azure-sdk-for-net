@@ -12,19 +12,30 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
+using Azure.Core;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryRecordedTestBase : RecordedTestBase<ContainerRegistryTestEnvironment>
     {
-        protected ContainerRegistryRecordedTestBase(bool isAsync) : base(isAsync)
+        public ContainerRegistryRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new ContainerRegistryRecordedTestSanitizer();
-        }
-
-        public ContainerRegistryRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new ContainerRegistryRecordedTestSanitizer();
+            DateTimeOffset expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromDays(365 * 30); // Never expire in software years
+            string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
+            var jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
+            BodyKeySanitizers.Add(new BodyKeySanitizer(jwtSanitizedValue)
+            {
+                JsonPath = "$..refresh_token"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
         }
 
         public ContainerRegistryClient CreateClient(bool anonymousAccess = false)

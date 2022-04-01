@@ -281,6 +281,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
+
+                if (actions.ShouldReleaseSession)
+                {
+                    args.ReleaseSession();
+                }
+
                 await _sessionMessageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
             }
         }
@@ -338,10 +344,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                     if (messages.Count > 0)
                     {
+                        var actions = _isSessionsEnabled
+                            ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver)
+                            : new ServiceBusMessageActions(receiver);
                         ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
                         ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
                             messagesArray,
-                            _isSessionsEnabled ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver) : new ServiceBusMessageActions(receiver),
+                            actions,
                             _client.Value);
 
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
@@ -382,6 +391,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 }
 
                                 await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                            }
+                        }
+
+                        if (_isSessionsEnabled)
+                        {
+                            if (((ServiceBusSessionMessageActions)actions).ShouldReleaseSession)
+                            {
+                                // Use CancellationToken.None to attempt to close the receiver even when shutting down
+                                await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                             }
                         }
                     }

@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,15 +24,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppZipUrl))
+            if (Optional.IsDefined(AppZipUri))
             {
                 writer.WritePropertyName("appZipUrl");
-                writer.WriteStringValue(AppZipUrl);
+                writer.WriteStringValue(AppZipUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ApiZipUrl))
+            if (Optional.IsDefined(ApiZipUri))
             {
                 writer.WritePropertyName("apiZipUrl");
-                writer.WriteStringValue(ApiZipUrl);
+                writer.WriteStringValue(ApiZipUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DeploymentTitle))
             {
@@ -57,8 +59,9 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> appZipUrl = default;
-            Optional<string> apiZipUrl = default;
+            SystemData systemData = default;
+            Optional<Uri> appZipUrl = default;
+            Optional<Uri> apiZipUrl = default;
             Optional<string> deploymentTitle = default;
             Optional<string> provider = default;
             Optional<string> functionLanguage = default;
@@ -84,6 +87,11 @@ namespace Azure.ResourceManager.AppService.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,12 +103,22 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("appZipUrl"))
                         {
-                            appZipUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                appZipUrl = null;
+                                continue;
+                            }
+                            appZipUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("apiZipUrl"))
                         {
-                            apiZipUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                apiZipUrl = null;
+                                continue;
+                            }
+                            apiZipUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deploymentTitle"))
@@ -122,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteZipDeploymentARMResource(id, name, type, kind.Value, appZipUrl.Value, apiZipUrl.Value, deploymentTitle.Value, provider.Value, functionLanguage.Value);
+            return new StaticSiteZipDeploymentARMResource(id, name, type, systemData, kind.Value, appZipUrl.Value, apiZipUrl.Value, deploymentTitle.Value, provider.Value, functionLanguage.Value);
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The ApiProperties. </summary>
-    public partial class ApiProperties
+    internal partial class ApiProperties
     {
         /// <summary> Initializes a new instance of ApiProperties. </summary>
         public ApiProperties()

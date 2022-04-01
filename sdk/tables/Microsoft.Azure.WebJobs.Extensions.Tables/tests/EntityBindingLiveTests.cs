@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestFramework;
 using Azure.Data.Tables;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
@@ -847,6 +848,69 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task UpdatesWhenByteArrayMutated()
+        {
+            // Arrange
+            var bytes = new byte[] { 1, 2, 3, 4 };
+            var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+            {
+                ["Value"] = bytes
+            },TableUpdateMode.Replace);
+
+            // Act
+            await CallAsync(
+                typeof(ByteArrayProgram),
+                nameof(ByteArrayProgram.PocoTableEntityChangesValue));
+
+            // Assert
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+            Assert.NotNull(entity);
+            Assert.AreNotEqual(response.Headers.ETag, entity.ETag);
+            entity.TryGetValue("Value", out var value);
+            Assert.AreEqual(new byte[] { 1, 2, 3, 5 }, value);
+        }
+
+        [RecordedTest]
+        public async Task SkipsUpdateWhenByteArrayValuesUnchanged()
+        {
+            // Arrange
+            var bytes = new byte[] { 1, 2, 3, 4 };
+            var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
+            {
+                ["Value"] = bytes
+            },TableUpdateMode.Replace);
+
+            // Act
+            await CallAsync(
+                typeof(ByteArrayProgram),
+                nameof(ByteArrayProgram.PocoTableEntityChangesReferenceToSameValue));
+
+            // Assert
+            TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
+            Assert.NotNull(entity);
+            Assert.AreEqual(response.Headers.ETag, entity.ETag);
+            entity.TryGetValue("Value", out var value);
+            Assert.AreEqual(new byte[] { 1, 2, 3, 4 }, value);
+        }
+
+        private class ByteArrayProgram
+        {
+            public static void PocoTableEntityChangesValue([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<byte[]> entity)
+            {
+                Assert.NotNull(entity);
+                entity.Value[3] = 5;
+            }
+
+            public static void PocoTableEntityChangesReferenceToSameValue([Table(TableNameExpression, PartitionKey, RowKey)] PocoTableEntity<byte[]> entity)
+            {
+                Assert.NotNull(entity);
+                var copy = new byte[entity.Value.Length];
+                Array.Copy(entity.Value, copy, entity.Value.Length);
+                entity.Value = copy;
+            }
+        }
+
         // Invalidate the entity ETag so the Replace call fails if we try to update the entity
         private class NoEntityUpdateProgram<T>
         {
@@ -1209,7 +1273,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 Assert.Ignore("Hits the rate limit");
             }
 
-            await CallAsync<InsertOverBatchLimitProgram>();
+            await CallAsync<InsertOverBatchLimitProgram>(arguments: new Dictionary<string, object> { { "test", this } });
 
             var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
             Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Count);
@@ -1219,14 +1283,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class InsertOverBatchLimitProgram
         {
-            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector)
+            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector, EntityBindingLiveTests test)
             {
                 for (int i = 0; i < TableEntityWriter.MaxBatchSize * 4; i++)
                 {
-                    await collector.AddAsync(new TableEntity(PartitionKey, i.ToString())
+                    try
                     {
-                        ["Value"] = i
-                    });
+                        await collector.AddAsync(new TableEntity(PartitionKey, i.ToString()) { ["Value"] = i });
+                    }
+                    catch (FunctionInvocationException ex) when (ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429)
+                    {
+                        await test.Delay(3000);
+                        await collector.AddAsync(new TableEntity(PartitionKey, i.ToString()) { ["Value"] = i });
+                    }
                 }
             }
         }
@@ -1235,7 +1304,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [LiveOnly]
         public async Task InsertOverPartitionLimit()
         {
-            await CallAsync<InsertOverPartitionLimitProgram>();
+            await CallAsync<InsertOverPartitionLimitProgram>(arguments: new Dictionary<string, object> { { "test", this } });
             var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
             Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Count);
             Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Select(e=> e.RowKey).Distinct().Count());
@@ -1244,14 +1313,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         private class InsertOverPartitionLimitProgram
         {
-            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector)
+            public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector, EntityBindingLiveTests test)
             {
                 for (int i = 0; i < TableEntityWriter.MaxPartitionWidth + 10; i++)
                 {
-                    await collector.AddAsync(new TableEntity(i.ToString(), i.ToString())
+                    try
                     {
-                        ["Value"] = i
-                    });
+                        await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
+                    }
+                    catch (FunctionInvocationException ex) when(ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429)
+                    {
+                        await test.Delay(3000);
+                        await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
+                    }
                 }
             }
         }

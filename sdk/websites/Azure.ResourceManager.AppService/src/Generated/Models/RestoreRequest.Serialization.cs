@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountUrl))
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl");
-                writer.WriteStringValue(StorageAccountUrl);
+                writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BlobName))
             {
@@ -93,7 +95,8 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> storageAccountUrl = default;
+            SystemData systemData = default;
+            Optional<Uri> storageAccountUrl = default;
             Optional<string> blobName = default;
             Optional<bool> overwrite = default;
             Optional<string> siteName = default;
@@ -126,6 +129,11 @@ namespace Azure.ResourceManager.AppService.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -137,7 +145,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("storageAccountUrl"))
                         {
-                            storageAccountUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageAccountUrl = null;
+                                continue;
+                            }
+                            storageAccountUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("blobName"))
@@ -229,7 +242,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new RestoreRequest(id, name, type, kind.Value, storageAccountUrl.Value, blobName.Value, Optional.ToNullable(overwrite), siteName.Value, Optional.ToList(databases), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Optional.ToNullable(operationType), Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value);
+            return new RestoreRequest(id, name, type, systemData, kind.Value, storageAccountUrl.Value, blobName.Value, Optional.ToNullable(overwrite), siteName.Value, Optional.ToList(databases), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Optional.ToNullable(operationType), Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value);
         }
     }
 }

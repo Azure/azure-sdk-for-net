@@ -49,15 +49,20 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("excludeFromLatest");
                 writer.WriteBooleanValue(ExcludeFromLatest.Value);
             }
-            if (Optional.IsDefined(EndOfLifeDate))
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate");
-                writer.WriteStringValue(EndOfLifeDate.Value, "O");
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (Optional.IsDefined(ReplicationMode))
+            {
+                writer.WritePropertyName("replicationMode");
+                writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<StorageAccountType> storageAccountType = default;
+            Optional<ReplicationMode> replicationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))
@@ -165,8 +171,18 @@ namespace Azure.ResourceManager.Compute.Models
                     storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("replicationMode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    replicationMode = new ReplicationMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), source, manageActions.Value, Optional.ToNullable(enableHealthCheck));
+            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), source, manageActions.Value, Optional.ToNullable(enableHealthCheck));
         }
     }
 }

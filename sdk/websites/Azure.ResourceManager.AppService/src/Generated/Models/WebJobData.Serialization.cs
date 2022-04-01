@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -29,15 +31,15 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("run_command");
                 writer.WriteStringValue(RunCommand);
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExtraInfoUrl))
+            if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url");
-                writer.WriteStringValue(ExtraInfoUrl);
+                writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(WebJobType))
             {
@@ -61,7 +63,11 @@ namespace Azure.ResourceManager.AppService
                 foreach (var item in Settings)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -75,13 +81,14 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> runCommand = default;
-            Optional<string> url = default;
-            Optional<string> extraInfoUrl = default;
+            Optional<Uri> url = default;
+            Optional<Uri> extraInfoUrl = default;
             Optional<WebJobType> webJobType = default;
             Optional<string> error = default;
             Optional<bool> usingSdk = default;
-            Optional<IDictionary<string, object>> settings = default;
+            Optional<IDictionary<string, BinaryData>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -104,6 +111,11 @@ namespace Azure.ResourceManager.AppService
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,12 +132,22 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("url"))
                         {
-                            url = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                url = null;
+                                continue;
+                            }
+                            url = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extra_info_url"))
                         {
-                            extraInfoUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                extraInfoUrl = null;
+                                continue;
+                            }
+                            extraInfoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("web_job_type"))
@@ -160,10 +182,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                             }
                             settings = dictionary;
                             continue;
@@ -172,7 +194,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebJobData(id, name, type, kind.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings));
+            return new WebJobData(id, name, type, systemData, kind.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings));
         }
     }
 }

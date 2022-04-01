@@ -4,12 +4,15 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest.Azure;
+    using Microsoft.Azure.Management.Compute.Models;
 
     /// <summary>
     /// VirtualMachinesOperations operations.
     /// </summary>
     public partial interface IVirtualMachinesOperations
     {
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VirtualMachine>>> ListAllWithHttpMessagesAsync(string statusOnly, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete a virtual machine.
         /// </summary>

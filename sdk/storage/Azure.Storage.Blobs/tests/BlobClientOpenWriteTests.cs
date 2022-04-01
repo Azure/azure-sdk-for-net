@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -54,14 +55,6 @@ namespace Azure.Storage.Blobs.Tests
             return InstrumentClient(container.GetBlobClient(blobName));
         }
 
-        protected override async Task InitializeResourceAsync(BlobClient client, Stream data = null)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            data ??= new MemoryStream(Array.Empty<byte>());
-            await client.UploadAsync(data);
-        }
-
         protected override async Task ModifyAsync(BlobClient client, Stream data)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -93,15 +86,27 @@ namespace Azure.Storage.Blobs.Tests
             await blockClient.CommitBlockListAsync(blockIds);
         }
 
-        protected override async Task<Stream> OpenWriteAsync(
+        protected override Task<Stream> OpenWriteAsync(
             BlobClient client,
             bool overwrite,
+            long? maxDataSize,
             int? bufferSize = null,
             BlobRequestConditions conditions = null,
             Dictionary<string, string> metadata = null,
-            Dictionary<string, string> tags = null,
             HttpHeaderParameters httpHeaders = null,
             IProgress<long> progressHandler = null)
+            => OpenWriteAsync(client, overwrite, maxDataSize, tags: default, bufferSize, conditions, metadata, httpHeaders, progressHandler);
+
+        protected override async Task<Stream> OpenWriteAsync(
+            BlobClient client,
+            bool overwrite,
+            long? maxDataSize,
+            Dictionary<string, string> tags,
+            int? bufferSize = default,
+            BlobRequestConditions conditions = default,
+            Dictionary<string, string> metadata = default,
+            HttpHeaderParameters httpHeaders = default,
+            IProgress<long> progressHandler = default)
             => await client.OpenWriteAsync(overwrite, new BlobOpenWriteOptions
                {
                    BufferSize = bufferSize,
@@ -111,6 +116,20 @@ namespace Azure.Storage.Blobs.Tests
                    HttpHeaders = httpHeaders.ToBlobHttpHeaders(),
                    ProgressHandler = progressHandler
                });
+        #endregion
+
+        #region Tests
+        [RecordedTest]
+        public async Task OpenWriteAsync_NoOverwrite()
+        {
+            // Arrange
+            BlobClient client = GetResourceClient(GetUninitializedContainerClient());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                OpenWriteAsync(client, overwrite: false, maxDataSize: Constants.KB),
+                e => Assert.AreEqual("BlockBlobClient.OpenWrite only supports overwriting", e.Message));
+        }
         #endregion
     }
 }

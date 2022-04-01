@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
-    public partial class FileSystemTokenStore
+    internal partial class FileSystemTokenStore
     {
         /// <summary> Initializes a new instance of FileSystemTokenStore. </summary>
         public FileSystemTokenStore()

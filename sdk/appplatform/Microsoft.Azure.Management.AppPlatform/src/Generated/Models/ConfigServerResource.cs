@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="properties">Properties of the Config Server
         /// resource</param>
-        public ConfigServerResource(string id = default(string), string name = default(string), string type = default(string), ConfigServerProperties properties = default(ConfigServerProperties))
-            : base(id, name, type)
+        public ConfigServerResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), ConfigServerProperties properties = default(ConfigServerProperties))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             CustomInit();

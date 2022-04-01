@@ -3,15 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public async Task RecognizeCustomEntitiesAsync()
@@ -19,7 +16,8 @@ namespace Azure.AI.TextAnalytics.Samples
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:RecognizeCustomEntitiesActionAsync
             // Create input documents.
@@ -53,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
                 {
-                    new RecognizeCustomEntitiesAction(projectName, deploymentName);
+                    new RecognizeCustomEntitiesAction(projectName, deploymentName)
                 }
             };
 #else

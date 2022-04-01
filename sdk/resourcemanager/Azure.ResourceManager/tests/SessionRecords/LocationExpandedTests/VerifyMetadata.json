@@ -1,12 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210712.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-576fe1197f94b94fbc738678a64efbd4-b4015a34a1e84842-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "4f52c5f76ae48abbda3fe7c3c3032ba1",
         "x-ms-return-client-request-id": "true"
       },
@@ -16,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 12 Jul 2021 19:43:27 GMT",
+        "Date": "Wed, 12 Jan 2022 06:12:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b9c4c0c3-d9c4-475b-9ad2-dd1febb84052",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "b9c4c0c3-d9c4-475b-9ad2-dd1febb84052",
-        "x-ms-routing-request-id": "WESTUS2:20210712T194327Z:b9c4c0c3-d9c4-475b-9ad2-dd1febb84052"
+        "x-ms-correlation-request-id": "1751f209-1f83-4f15-9f4a-4c9a0c99bd20",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "1751f209-1f83-4f15-9f4a-4c9a0c99bd20",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T061226Z:1751f209-1f83-4f15-9f4a-4c9a0c99bd20"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -46,13 +47,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-48b987aedcfae34b934a47d2758f776e-fa106bd8516bbf45-00",
-        "User-Agent": "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210712.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "44475ca62bbd1452cc8e3b87df91231b",
         "x-ms-return-client-request-id": "true"
       },
@@ -60,23 +60,24 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "27465",
+        "Content-Length": "29714",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 12 Jul 2021 19:43:28 GMT",
+        "Date": "Wed, 12 Jan 2022 06:12:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "24b2bd9a-2c48-4753-8f6c-20c228358fa0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "24b2bd9a-2c48-4753-8f6c-20c228358fa0",
-        "x-ms-routing-request-id": "WESTUS2:20210712T194328Z:24b2bd9a-2c48-4753-8f6c-20c228358fa0"
+        "x-ms-correlation-request-id": "819e053e-4a86-4d53-967f-0b9e199e9a2b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "819e053e-4a86-4d53-967f-0b9e199e9a2b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T061227Z:819e053e-4a86-4d53-967f-0b9e199e9a2b"
       },
       "ResponseBody": {
         "value": [
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus",
             "name": "eastus",
+            "type": "Region",
             "displayName": "East US",
             "regionalDisplayName": "(US) East US",
             "metadata": {
@@ -97,6 +98,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2",
             "name": "eastus2",
+            "type": "Region",
             "displayName": "East US 2",
             "regionalDisplayName": "(US) East US 2",
             "metadata": {
@@ -117,6 +119,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralus",
             "name": "southcentralus",
+            "type": "Region",
             "displayName": "South Central US",
             "regionalDisplayName": "(US) South Central US",
             "metadata": {
@@ -137,6 +140,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus2",
             "name": "westus2",
+            "type": "Region",
             "displayName": "West US 2",
             "regionalDisplayName": "(US) West US 2",
             "metadata": {
@@ -157,6 +161,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus3",
             "name": "westus3",
+            "type": "Region",
             "displayName": "West US 3",
             "regionalDisplayName": "(US) West US 3",
             "metadata": {
@@ -177,6 +182,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiaeast",
             "name": "australiaeast",
+            "type": "Region",
             "displayName": "Australia East",
             "regionalDisplayName": "(Asia Pacific) Australia East",
             "metadata": {
@@ -197,6 +203,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southeastasia",
             "name": "southeastasia",
+            "type": "Region",
             "displayName": "Southeast Asia",
             "regionalDisplayName": "(Asia Pacific) Southeast Asia",
             "metadata": {
@@ -217,6 +224,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northeurope",
             "name": "northeurope",
+            "type": "Region",
             "displayName": "North Europe",
             "regionalDisplayName": "(Europe) North Europe",
             "metadata": {
@@ -237,6 +245,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/swedencentral",
             "name": "swedencentral",
+            "type": "Region",
             "displayName": "Sweden Central",
             "regionalDisplayName": "(Europe) Sweden Central",
             "metadata": {
@@ -257,6 +266,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uksouth",
             "name": "uksouth",
+            "type": "Region",
             "displayName": "UK South",
             "regionalDisplayName": "(Europe) UK South",
             "metadata": {
@@ -277,6 +287,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westeurope",
             "name": "westeurope",
+            "type": "Region",
             "displayName": "West Europe",
             "regionalDisplayName": "(Europe) West Europe",
             "metadata": {
@@ -297,6 +308,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centralus",
             "name": "centralus",
+            "type": "Region",
             "displayName": "Central US",
             "regionalDisplayName": "(US) Central US",
             "metadata": {
@@ -317,6 +329,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northcentralus",
             "name": "northcentralus",
+            "type": "Region",
             "displayName": "North Central US",
             "regionalDisplayName": "(US) North Central US",
             "metadata": {
@@ -337,6 +350,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus",
             "name": "westus",
+            "type": "Region",
             "displayName": "West US",
             "regionalDisplayName": "(US) West US",
             "metadata": {
@@ -357,6 +371,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafricanorth",
             "name": "southafricanorth",
+            "type": "Region",
             "displayName": "South Africa North",
             "regionalDisplayName": "(Africa) South Africa North",
             "metadata": {
@@ -377,6 +392,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centralindia",
             "name": "centralindia",
+            "type": "Region",
             "displayName": "Central India",
             "regionalDisplayName": "(Asia Pacific) Central India",
             "metadata": {
@@ -397,6 +413,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastasia",
             "name": "eastasia",
+            "type": "Region",
             "displayName": "East Asia",
             "regionalDisplayName": "(Asia Pacific) East Asia",
             "metadata": {
@@ -417,6 +434,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japaneast",
             "name": "japaneast",
+            "type": "Region",
             "displayName": "Japan East",
             "regionalDisplayName": "(Asia Pacific) Japan East",
             "metadata": {
@@ -437,6 +455,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiawest",
             "name": "jioindiawest",
+            "type": "Region",
             "displayName": "Jio India West",
             "regionalDisplayName": "(Asia Pacific) Jio India West",
             "metadata": {
@@ -457,6 +476,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/koreacentral",
             "name": "koreacentral",
+            "type": "Region",
             "displayName": "Korea Central",
             "regionalDisplayName": "(Asia Pacific) Korea Central",
             "metadata": {
@@ -477,6 +497,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/canadacentral",
             "name": "canadacentral",
+            "type": "Region",
             "displayName": "Canada Central",
             "regionalDisplayName": "(Canada) Canada Central",
             "metadata": {
@@ -497,6 +518,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/francecentral",
             "name": "francecentral",
+            "type": "Region",
             "displayName": "France Central",
             "regionalDisplayName": "(Europe) France Central",
             "metadata": {
@@ -517,6 +539,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/germanywestcentral",
             "name": "germanywestcentral",
+            "type": "Region",
             "displayName": "Germany West Central",
             "regionalDisplayName": "(Europe) Germany West Central",
             "metadata": {
@@ -537,6 +560,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/norwayeast",
             "name": "norwayeast",
+            "type": "Region",
             "displayName": "Norway East",
             "regionalDisplayName": "(Europe) Norway East",
             "metadata": {
@@ -557,6 +581,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/switzerlandnorth",
             "name": "switzerlandnorth",
+            "type": "Region",
             "displayName": "Switzerland North",
             "regionalDisplayName": "(Europe) Switzerland North",
             "metadata": {
@@ -577,6 +602,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaenorth",
             "name": "uaenorth",
+            "type": "Region",
             "displayName": "UAE North",
             "regionalDisplayName": "(Middle East) UAE North",
             "metadata": {
@@ -597,6 +623,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazilsouth",
             "name": "brazilsouth",
+            "type": "Region",
             "displayName": "Brazil South",
             "regionalDisplayName": "(South America) Brazil South",
             "metadata": {
@@ -617,6 +644,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centralusstage",
             "name": "centralusstage",
+            "type": "Region",
             "displayName": "Central US (Stage)",
             "regionalDisplayName": "(US) Central US (Stage)",
             "metadata": {
@@ -628,6 +656,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastusstage",
             "name": "eastusstage",
+            "type": "Region",
             "displayName": "East US (Stage)",
             "regionalDisplayName": "(US) East US (Stage)",
             "metadata": {
@@ -639,6 +668,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2stage",
             "name": "eastus2stage",
+            "type": "Region",
             "displayName": "East US 2 (Stage)",
             "regionalDisplayName": "(US) East US 2 (Stage)",
             "metadata": {
@@ -650,6 +680,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northcentralusstage",
             "name": "northcentralusstage",
+            "type": "Region",
             "displayName": "North Central US (Stage)",
             "regionalDisplayName": "(US) North Central US (Stage)",
             "metadata": {
@@ -661,6 +692,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralusstage",
             "name": "southcentralusstage",
+            "type": "Region",
             "displayName": "South Central US (Stage)",
             "regionalDisplayName": "(US) South Central US (Stage)",
             "metadata": {
@@ -672,6 +704,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westusstage",
             "name": "westusstage",
+            "type": "Region",
             "displayName": "West US (Stage)",
             "regionalDisplayName": "(US) West US (Stage)",
             "metadata": {
@@ -683,6 +716,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westus2stage",
             "name": "westus2stage",
+            "type": "Region",
             "displayName": "West US 2 (Stage)",
             "regionalDisplayName": "(US) West US 2 (Stage)",
             "metadata": {
@@ -694,6 +728,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/asia",
             "name": "asia",
+            "type": "Region",
             "displayName": "Asia",
             "regionalDisplayName": "Asia",
             "metadata": {
@@ -704,6 +739,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/asiapacific",
             "name": "asiapacific",
+            "type": "Region",
             "displayName": "Asia Pacific",
             "regionalDisplayName": "Asia Pacific",
             "metadata": {
@@ -714,6 +750,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australia",
             "name": "australia",
+            "type": "Region",
             "displayName": "Australia",
             "regionalDisplayName": "Australia",
             "metadata": {
@@ -724,6 +761,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazil",
             "name": "brazil",
+            "type": "Region",
             "displayName": "Brazil",
             "regionalDisplayName": "Brazil",
             "metadata": {
@@ -734,6 +772,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/canada",
             "name": "canada",
+            "type": "Region",
             "displayName": "Canada",
             "regionalDisplayName": "Canada",
             "metadata": {
@@ -744,6 +783,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/europe",
             "name": "europe",
+            "type": "Region",
             "displayName": "Europe",
             "regionalDisplayName": "Europe",
             "metadata": {
@@ -752,8 +792,31 @@
             }
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/france",
+            "name": "france",
+            "type": "Region",
+            "displayName": "France",
+            "regionalDisplayName": "France",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/germany",
+            "name": "germany",
+            "type": "Region",
+            "displayName": "Germany",
+            "regionalDisplayName": "Germany",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/global",
             "name": "global",
+            "type": "Region",
             "displayName": "Global",
             "regionalDisplayName": "Global",
             "metadata": {
@@ -764,6 +827,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/india",
             "name": "india",
+            "type": "Region",
             "displayName": "India",
             "regionalDisplayName": "India",
             "metadata": {
@@ -774,6 +838,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japan",
             "name": "japan",
+            "type": "Region",
             "displayName": "Japan",
             "regionalDisplayName": "Japan",
             "metadata": {
@@ -782,8 +847,64 @@
             }
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/korea",
+            "name": "korea",
+            "type": "Region",
+            "displayName": "Korea",
+            "regionalDisplayName": "Korea",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/norway",
+            "name": "norway",
+            "type": "Region",
+            "displayName": "Norway",
+            "regionalDisplayName": "Norway",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafrica",
+            "name": "southafrica",
+            "type": "Region",
+            "displayName": "South Africa",
+            "regionalDisplayName": "South Africa",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/switzerland",
+            "name": "switzerland",
+            "type": "Region",
+            "displayName": "Switzerland",
+            "regionalDisplayName": "Switzerland",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uae",
+            "name": "uae",
+            "type": "Region",
+            "displayName": "United Arab Emirates",
+            "regionalDisplayName": "United Arab Emirates",
+            "metadata": {
+              "regionType": "Logical",
+              "regionCategory": "Other"
+            }
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uk",
             "name": "uk",
+            "type": "Region",
             "displayName": "United Kingdom",
             "regionalDisplayName": "United Kingdom",
             "metadata": {
@@ -794,6 +915,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/unitedstates",
             "name": "unitedstates",
+            "type": "Region",
             "displayName": "United States",
             "regionalDisplayName": "United States",
             "metadata": {
@@ -804,6 +926,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastasiastage",
             "name": "eastasiastage",
+            "type": "Region",
             "displayName": "East Asia (Stage)",
             "regionalDisplayName": "(Asia Pacific) East Asia (Stage)",
             "metadata": {
@@ -815,6 +938,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southeastasiastage",
             "name": "southeastasiastage",
+            "type": "Region",
             "displayName": "Southeast Asia (Stage)",
             "regionalDisplayName": "(Asia Pacific) Southeast Asia (Stage)",
             "metadata": {
@@ -826,6 +950,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centraluseuap",
             "name": "centraluseuap",
+            "type": "Region",
             "displayName": "Central US EUAP",
             "regionalDisplayName": "(US) Central US EUAP",
             "metadata": {
@@ -845,6 +970,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastus2euap",
             "name": "eastus2euap",
+            "type": "Region",
             "displayName": "East US 2 EUAP",
             "regionalDisplayName": "(US) East US 2 EUAP",
             "metadata": {
@@ -864,6 +990,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westcentralus",
             "name": "westcentralus",
+            "type": "Region",
             "displayName": "West Central US",
             "regionalDisplayName": "(US) West Central US",
             "metadata": {
@@ -884,6 +1011,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southafricawest",
             "name": "southafricawest",
+            "type": "Region",
             "displayName": "South Africa West",
             "regionalDisplayName": "(Africa) South Africa West",
             "metadata": {
@@ -904,6 +1032,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiacentral",
             "name": "australiacentral",
+            "type": "Region",
             "displayName": "Australia Central",
             "regionalDisplayName": "(Asia Pacific) Australia Central",
             "metadata": {
@@ -924,6 +1053,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiacentral2",
             "name": "australiacentral2",
+            "type": "Region",
             "displayName": "Australia Central 2",
             "regionalDisplayName": "(Asia Pacific) Australia Central 2",
             "metadata": {
@@ -944,6 +1074,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/australiasoutheast",
             "name": "australiasoutheast",
+            "type": "Region",
             "displayName": "Australia Southeast",
             "regionalDisplayName": "(Asia Pacific) Australia Southeast",
             "metadata": {
@@ -964,6 +1095,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/japanwest",
             "name": "japanwest",
+            "type": "Region",
             "displayName": "Japan West",
             "regionalDisplayName": "(Asia Pacific) Japan West",
             "metadata": {
@@ -984,6 +1116,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiacentral",
             "name": "jioindiacentral",
+            "type": "Region",
             "displayName": "Jio India Central",
             "regionalDisplayName": "(Asia Pacific) Jio India Central",
             "metadata": {
@@ -1004,6 +1137,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/koreasouth",
             "name": "koreasouth",
+            "type": "Region",
             "displayName": "Korea South",
             "regionalDisplayName": "(Asia Pacific) Korea South",
             "metadata": {
@@ -1024,6 +1158,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southindia",
             "name": "southindia",
+            "type": "Region",
             "displayName": "South India",
             "regionalDisplayName": "(Asia Pacific) South India",
             "metadata": {
@@ -1044,6 +1179,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westindia",
             "name": "westindia",
+            "type": "Region",
             "displayName": "West India",
             "regionalDisplayName": "(Asia Pacific) West India",
             "metadata": {
@@ -1064,6 +1200,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/canadaeast",
             "name": "canadaeast",
+            "type": "Region",
             "displayName": "Canada East",
             "regionalDisplayName": "(Canada) Canada East",
             "metadata": {
@@ -1084,6 +1221,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/francesouth",
             "name": "francesouth",
+            "type": "Region",
             "displayName": "France South",
             "regionalDisplayName": "(Europe) France South",
             "metadata": {
@@ -1104,6 +1242,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/germanynorth",
             "name": "germanynorth",
+            "type": "Region",
             "displayName": "Germany North",
             "regionalDisplayName": "(Europe) Germany North",
             "metadata": {
@@ -1124,6 +1263,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/norwaywest",
             "name": "norwaywest",
+            "type": "Region",
             "displayName": "Norway West",
             "regionalDisplayName": "(Europe) Norway West",
             "metadata": {
@@ -1142,28 +1282,9 @@
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/swedensouth",
-            "name": "swedensouth",
-            "displayName": "Sweden South",
-            "regionalDisplayName": "(Europe) Sweden South",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Other",
-              "geographyGroup": "Europe",
-              "longitude": "13.0007",
-              "latitude": "55.6059",
-              "physicalLocation": "Malmo",
-              "pairedRegion": [
-                {
-                  "name": "swedencentral",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/swedencentral"
-                }
-              ]
-            }
-          },
-          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/switzerlandwest",
             "name": "switzerlandwest",
+            "type": "Region",
             "displayName": "Switzerland West",
             "regionalDisplayName": "(Europe) Switzerland West",
             "metadata": {
@@ -1184,6 +1305,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/ukwest",
             "name": "ukwest",
+            "type": "Region",
             "displayName": "UK West",
             "regionalDisplayName": "(Europe) UK West",
             "metadata": {
@@ -1204,6 +1326,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaecentral",
             "name": "uaecentral",
+            "type": "Region",
             "displayName": "UAE Central",
             "regionalDisplayName": "(Middle East) UAE Central",
             "metadata": {
@@ -1224,6 +1347,7 @@
           {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazilsoutheast",
             "name": "brazilsoutheast",
+            "type": "Region",
             "displayName": "Brazil Southeast",
             "regionalDisplayName": "(South America) Brazil Southeast",
             "metadata": {
@@ -1247,6 +1371,7 @@
   ],
   "Variables": {
     "RandomSeed": "1600993272",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

@@ -11,6 +11,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentWord
     {
         /// <summary>
+        /// Initializes a new instance of DocumentWord. Use for the <see cref="DocumentAnalysisModelFactory"/>.
+        /// </summary>
+        internal DocumentWord(string content, BoundingBox boundingBox, DocumentSpan span, float confidence)
+        {
+            Content = content;
+            BoundingBox = boundingBox;
+            Span = span;
+            Confidence = confidence;
+        }
+
+        /// <summary>
         /// The quadrilateral bounding box that outlines the text of this word. Units are in pixels for
         /// images and inches for PDF. The <see cref="LengthUnit"/> type of a recognized page can be found
         /// at <see cref="DocumentPage.Unit"/>.

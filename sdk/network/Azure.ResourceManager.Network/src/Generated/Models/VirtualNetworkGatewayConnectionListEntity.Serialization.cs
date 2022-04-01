@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors");
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IpsecPolicies))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies");
                 writer.WriteStartArray();
-                foreach (var item in IpsecPolicies)
+                foreach (var item in IPsecPolicies)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> peer = default;
             Optional<bool> enableBgp = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IpsecPolicy>> ipsecPolicies = default;
+            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
             Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -354,10 +354,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpsecPolicy> array = new List<IpsecPolicy>();
+                            List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpsecPolicy.DeserializeIpsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                             }
                             ipsecPolicies = array;
                             continue;

@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="classification"></param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="classification"/>, or <paramref name="warnings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="classification"/> or <paramref name="warnings"/> is null. </exception>
         internal SingleClassificationDocument(string id, ClassificationResult classification, IEnumerable<TextAnalyticsWarningInternal> warnings)
         {
             if (id == null)

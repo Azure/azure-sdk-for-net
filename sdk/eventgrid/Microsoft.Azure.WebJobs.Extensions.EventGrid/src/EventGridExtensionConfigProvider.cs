@@ -133,13 +133,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             // which requires webapi.core...but this does not work for .netframework2.0
             // TODO change this once webjobs.script is migrated
             var functionName = HttpUtility.ParseQueryString(req.RequestUri.Query)["functionName"];
-            if (String.IsNullOrEmpty(functionName) || !_listeners.ContainsKey(functionName))
+            if (String.IsNullOrEmpty(functionName) || !_listeners.TryGetValue(functionName, out EventGridListener listener))
             {
                 _logger.LogInformation($"cannot find function: '{functionName}', available function names: [{string.Join(", ", _listeners.Keys.ToArray())}]");
                 return new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent($"cannot find function: '{functionName}'") };
             }
 
-            return await _httpRequestProcessor.ProcessAsync(req, functionName, ProcessEventsAsync, CancellationToken.None).ConfigureAwait(false);
+            return await _httpRequestProcessor.ProcessAsync(req, functionName, ProcessEventsAsync, listener.BindingType, CancellationToken.None).ConfigureAwait(false);
         }
 
         private async Task<HttpResponseMessage> ProcessEventsAsync(JArray events, string functionName, CancellationToken cancellationToken)

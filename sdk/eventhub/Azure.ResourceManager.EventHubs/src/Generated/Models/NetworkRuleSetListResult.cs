@@ -12,7 +12,7 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response of the List NetworkRuleSet operation. </summary>
-    public partial class NetworkRuleSetListResult
+    internal partial class NetworkRuleSetListResult
     {
         /// <summary> Initializes a new instance of NetworkRuleSetListResult. </summary>
         internal NetworkRuleSetListResult()

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ContinuousBackupInformation
+    internal partial class ContinuousBackupInformation
     {
         internal static ContinuousBackupInformation DeserializeContinuousBackupInformation(JsonElement element)
         {

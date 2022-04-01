@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the InstancePool data model. </summary>
-    public partial class InstancePoolData : TrackedResource
+    public partial class InstancePoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of InstancePoolData. </summary>
         /// <param name="location"> The location. </param>
@@ -24,14 +24,15 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of InstancePoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
         /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
         /// <param name="licenseType"> The license type. Possible values are &apos;LicenseIncluded&apos; (price for SQL license is included) and &apos;BasePrice&apos; (without SQL license price). </param>
-        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string subnetId, int? vCores, InstancePoolLicenseType? licenseType) : base(id, name, type, tags, location)
+        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string subnetId, int? vCores, InstancePoolLicenseType? licenseType) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             SubnetId = subnetId;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name and tier of the SKU. </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Resource ID of the subnet to place this instance pool in. </summary>
         public string SubnetId { get; set; }
         /// <summary> Count of vCores belonging to this instance pool. </summary>

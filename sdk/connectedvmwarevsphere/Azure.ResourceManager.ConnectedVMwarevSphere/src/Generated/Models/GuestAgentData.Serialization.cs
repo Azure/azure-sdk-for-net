@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static GuestAgentData DeserializeGuestAgentData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> uuid = default;
             Optional<GuestCredential> credentials = default;
             Optional<HttpProxyConfiguration> httpProxyConfig = default;
@@ -55,16 +55,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -78,6 +68,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

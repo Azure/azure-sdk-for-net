@@ -19,11 +19,13 @@
         ],
         "parameters": [
           {
-            "name": "x-recording-file",
-            "in": "header",
+            "name": "body",
+            "in": "body",
             "description": "File location of the recording.",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/StartInformation"
+            }
           }
         ],
         "responses": {
@@ -96,11 +98,13 @@
         ],
         "parameters": [
           {
-            "name": "x-recording-file",
-            "in": "header",
+            "name": "body",
+            "in": "body",
             "description": "File location of the recording.",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/StartInformation"
+            }
           }
         ],
         "responses": {
@@ -584,12 +588,14 @@
         },
         "compareBodies": {
           "type": "boolean"
+        },
+        "ignoredHeaders": {
+          "type": "string"
+        },
+        "ignoredQueryParameters": {
+          "type": "string"
         }
-      },
-      "required": [
-        "excludedHeaders",
-        "compareBodies"
-      ]
+      }
     },
     "HeaderTransform": {
       "type": "object",
@@ -717,6 +723,18 @@
           "type": "string"
         }
       }
+    },
+    "StartInformation": {
+      "type": "object",
+      "description": "Start object to be specified when starting playback or record",
+      "properties": {
+        "x-recording-file": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "x-recording-file"
+      ]
     }
   }
 }

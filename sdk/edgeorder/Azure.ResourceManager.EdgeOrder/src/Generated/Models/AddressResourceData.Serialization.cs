@@ -43,27 +43,17 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static AddressResourceData DeserializeAddressResourceData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ShippingAddress> shippingAddress = default;
             ContactDetails contactDetails = default;
             Optional<AddressValidationStatus> addressValidationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -92,6 +82,11 @@ namespace Azure.ResourceManager.EdgeOrder
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -132,7 +127,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     continue;
                 }
             }
-            return new AddressResourceData(id, name, type, tags, location, systemData, shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus));
+            return new AddressResourceData(id, name, type, systemData, tags, location, shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus));
         }
     }
 }

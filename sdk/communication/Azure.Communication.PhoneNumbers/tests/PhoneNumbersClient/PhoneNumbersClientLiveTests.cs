@@ -178,7 +178,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [AsyncOnly]
         public async Task UpdateCapabilitiesAsync()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest) {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var number = GetTestPhoneNumber();
@@ -278,7 +278,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [SyncOnly]
         public void UpdateCapabilities()
         {
-            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest) {
                 Assert.Ignore("Skip phone number live tests flag is on.");
             }
             var number = GetTestPhoneNumber();

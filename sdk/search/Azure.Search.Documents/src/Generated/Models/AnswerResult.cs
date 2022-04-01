@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of AnswerResult. </summary>
-        /// <param name="score"> The score value represents how relevant the answer is to the the query relative to other answers returned for the query. </param>
+        /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
         /// <param name="key"> The key of the document the answer was extracted from. </param>
         /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The score value represents how relevant the answer is to the the query relative to other answers returned for the query. </summary>
+        /// <summary> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </summary>
         public double? Score { get; }
         /// <summary> The key of the document the answer was extracted from. </summary>
         public string Key { get; }

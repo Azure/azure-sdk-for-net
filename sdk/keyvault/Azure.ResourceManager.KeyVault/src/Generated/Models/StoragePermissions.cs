@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string AllValue = "all";
         private const string GetValue = "get";
         private const string ListValue = "list";
         private const string DeleteValue = "delete";
@@ -37,6 +38,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string GetsasValue = "getsas";
         private const string DeletesasValue = "deletesas";
 
+        /// <summary> all. </summary>
+        public static StoragePermissions All { get; } = new StoragePermissions(AllValue);
         /// <summary> get. </summary>
         public static StoragePermissions Get { get; } = new StoragePermissions(GetValue);
         /// <summary> list. </summary>

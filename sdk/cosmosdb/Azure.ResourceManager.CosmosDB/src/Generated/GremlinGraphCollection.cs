@@ -15,16 +15,20 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of GremlinGraph and their operations over its parent. </summary>
-    public partial class GremlinGraphCollection : ArmCollection, IEnumerable<GremlinGraph>, IAsyncEnumerable<GremlinGraph>
+    /// <summary>
+    /// A class representing a collection of <see cref="GremlinGraphResource" /> and their operations.
+    /// Each <see cref="GremlinGraphResource" /> in the collection will belong to the same instance of <see cref="GremlinDatabaseResource" />.
+    /// To get a <see cref="GremlinGraphCollection" /> instance call the GetGremlinGraphs method from an instance of <see cref="GremlinDatabaseResource" />.
+    /// </summary>
+    public partial class GremlinGraphCollection : ArmCollection, IEnumerable<GremlinGraphResource>, IAsyncEnumerable<GremlinGraphResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly GremlinResourcesRestOperations _gremlinResourcesRestClient;
+        private readonly ClientDiagnostics _gremlinGraphGremlinResourcesClientDiagnostics;
+        private readonly GremlinResourcesRestOperations _gremlinGraphGremlinResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="GremlinGraphCollection"/> class for mocking. </summary>
         protected GremlinGraphCollection()
@@ -32,11 +36,13 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of the <see cref="GremlinGraphCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal GremlinGraphCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal GremlinGraphCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _gremlinResourcesRestClient = new GremlinResourcesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _gremlinGraphGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", GremlinGraphResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(GremlinGraphResource.ResourceType, out string gremlinGraphGremlinResourcesApiVersion);
+            _gremlinGraphGremlinResourcesRestClient = new GremlinResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, gremlinGraphGremlinResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -44,70 +50,33 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != GremlinDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GremlinDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != GremlinDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GremlinDatabaseResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Create or update an Azure Cosmos DB Gremlin graph. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB Gremlin graph
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}
+        /// Operation Id: GremlinResources_CreateUpdateGremlinGraph
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="createUpdateGremlinGraphParameters"> The parameters to provide for the current Gremlin graph. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="data"> The parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public virtual GremlinResourceCreateUpdateGremlinGraphOperation CreateOrUpdate(bool waitForCompletion, string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<GremlinGraphResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, GremlinGraphCreateUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (createUpdateGremlinGraphParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateGremlinGraphParameters));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
+            using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _gremlinResourcesRestClient.CreateUpdateGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters, cancellationToken);
-                var operation = new GremlinResourceCreateUpdateGremlinGraphOperation(Parent, _clientDiagnostics, Pipeline, _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update an Azure Cosmos DB Gremlin graph. </summary>
-        /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="createUpdateGremlinGraphParameters"> The parameters to provide for the current Gremlin graph. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="createUpdateGremlinGraphParameters"/> is null. </exception>
-        public async virtual Task<GremlinResourceCreateUpdateGremlinGraphOperation> CreateOrUpdateAsync(bool waitForCompletion, string graphName, GremlinGraphCreateUpdateOptions createUpdateGremlinGraphParameters, CancellationToken cancellationToken = default)
-        {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (createUpdateGremlinGraphParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateGremlinGraphParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _gremlinResourcesRestClient.CreateUpdateGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new GremlinResourceCreateUpdateGremlinGraphOperation(Parent, _clientDiagnostics, Pipeline, _gremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, createUpdateGremlinGraphParameters).Request, response);
-                if (waitForCompletion)
+                var response = await _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -118,25 +87,60 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the Gremlin graph under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB Gremlin graph
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}
+        /// Operation Id: GremlinResources_CreateUpdateGremlinGraph
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="graphName"> Cosmos DB graph name. </param>
+        /// <param name="data"> The parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public virtual Response<GremlinGraph> Get(string graphName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<GremlinGraphResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, GremlinGraphCreateUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.Get");
+            using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _gremlinResourcesRestClient.GetGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken);
+                var response = _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, data, cancellationToken);
+                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Gremlin graph under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}
+        /// Operation Id: GremlinResources_GetGremlinGraph
+        /// </summary>
+        /// <param name="graphName"> Cosmos DB graph name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        public virtual async Task<Response<GremlinGraphResource>> GetAsync(string graphName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+
+            using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _gremlinGraphGremlinResourcesRestClient.GetGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GremlinGraph(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new GremlinGraphResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,25 +149,27 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the Gremlin graph under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Gets the Gremlin graph under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}
+        /// Operation Id: GremlinResources_GetGremlinGraph
+        /// </summary>
         /// <param name="graphName"> Cosmos DB graph name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public async virtual Task<Response<GremlinGraph>> GetAsync(string graphName, CancellationToken cancellationToken = default)
+        public virtual Response<GremlinGraphResource> Get(string graphName, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
-            using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.Get");
+            using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.Get");
             scope.Start();
             try
             {
-                var response = await _gremlinResourcesRestClient.GetGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken).ConfigureAwait(false);
+                var response = _gremlinGraphGremlinResourcesRestClient.GetGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new GremlinGraph(Parent, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new GremlinGraphResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,146 +178,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="graphName"> Cosmos DB graph name. </param>
+        /// <summary>
+        /// Lists the Gremlin graph under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs
+        /// Operation Id: GremlinResources_ListGremlinGraphs
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public virtual Response<GremlinGraph> GetIfExists(string graphName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="GremlinGraphResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GremlinGraphResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
+            async Task<Page<GremlinGraphResource>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _gremlinResourcesRestClient.GetGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<GremlinGraph>(null, response.GetRawResponse());
-                return Response.FromValue(new GremlinGraph(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public async virtual Task<Response<GremlinGraph>> GetIfExistsAsync(string graphName, CancellationToken cancellationToken = default)
-        {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _gremlinResourcesRestClient.GetGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<GremlinGraph>(null, response.GetRawResponse());
-                return Response.FromValue(new GremlinGraph(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public virtual Response<bool> Exists(string graphName, CancellationToken cancellationToken = default)
-        {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(graphName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string graphName, CancellationToken cancellationToken = default)
-        {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = await GetIfExistsAsync(graphName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the Gremlin graph under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GremlinGraph" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GremlinGraph> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<GremlinGraph> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.GetAll");
+                using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _gremlinResourcesRestClient.ListGremlinGraphs(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GremlinGraph(Parent, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary> Lists the Gremlin graph under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GremlinGraph" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GremlinGraph> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<GremlinGraph>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("GremlinGraphCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _gremlinResourcesRestClient.ListGremlinGraphsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GremlinGraph(Parent, value)), null, response.GetRawResponse());
+                    var response = await _gremlinGraphGremlinResourcesRestClient.ListGremlinGraphsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GremlinGraphResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +205,88 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        IEnumerator<GremlinGraph> IEnumerable<GremlinGraph>.GetEnumerator()
+        /// <summary>
+        /// Lists the Gremlin graph under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs
+        /// Operation Id: GremlinResources_ListGremlinGraphs
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GremlinGraphResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GremlinGraphResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<GremlinGraphResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _gremlinGraphGremlinResourcesRestClient.ListGremlinGraphs(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GremlinGraphResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}
+        /// Operation Id: GremlinResources_GetGremlinGraph
+        /// </summary>
+        /// <param name="graphName"> Cosmos DB graph name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string graphName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+
+            using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = await _gremlinGraphGremlinResourcesRestClient.GetGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}
+        /// Operation Id: GremlinResources_GetGremlinGraph
+        /// </summary>
+        /// <param name="graphName"> Cosmos DB graph name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        public virtual Response<bool> Exists(string graphName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+
+            using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.Exists");
+            scope.Start();
+            try
+            {
+                var response = _gremlinGraphGremlinResourcesRestClient.GetGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<GremlinGraphResource> IEnumerable<GremlinGraphResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -332,12 +296,9 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<GremlinGraph> IAsyncEnumerable<GremlinGraph>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<GremlinGraphResource> IAsyncEnumerable<GremlinGraphResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, GremlinGraph, GremlinGraphData> Construct() { }
     }
 }

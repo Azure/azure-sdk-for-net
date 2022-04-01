@@ -120,6 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> privateLinkResourceId = default;
             Optional<string> privateLinkLocation = default;
             Optional<string> privateLinkApprovalMessage = default;
+            Optional<PrivateEndpointStatus?> privateEndpointStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -216,11 +217,21 @@ namespace Azure.ResourceManager.Cdn.Models
                             privateLinkApprovalMessage = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointStatus"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privateEndpointStatus = null;
+                                continue;
+                            }
+                            privateEndpointStatus = new PrivateEndpointStatus(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DeepCreatedOrigin(name, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value);
+            return new DeepCreatedOrigin(name, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(privateEndpointStatus));
         }
     }
 }

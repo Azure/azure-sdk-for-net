@@ -32,26 +32,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         public MachineLearningServicesManagementClient(string subscriptionId, TokenCredential tokenCredential, MachineLearningServicesManagementClientOptions options = null) : this(null, subscriptionId, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of MachineLearningServicesManagementClient. </summary>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
-        /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public MachineLearningServicesManagementClient(Uri endpoint, string subscriptionId, TokenCredential tokenCredential, MachineLearningServicesManagementClientOptions options = null)
-        {
-            endpoint ??= new Uri("https://management.azure.com");
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-
-            options ??= new MachineLearningServicesManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
-            _endpoint = endpoint;
-            _subscriptionId = subscriptionId;
-        }
 
         /// <summary> Returns an instance of Operations. </summary>
         public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);

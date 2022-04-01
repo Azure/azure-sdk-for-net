@@ -35,11 +35,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        public Resource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -65,6 +66,11 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
     }
 }

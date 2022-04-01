@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class SqlRuleAction : IUtf8JsonSerializable
+    internal partial class SqlRuleAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -45,6 +45,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="location">Resource location.</param>
+        /// <param name="eventGridResourceId">The resource ID of the event grid
+        /// that is subscribed to the storage account events.</param>
         /// <param name="tableName">The table where the data should be
         /// ingested. Optionally the table information can be added to each
         /// message.</param>
@@ -63,13 +65,23 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// type to process. Possible values include:
         /// 'Microsoft.Storage.BlobCreated',
         /// 'Microsoft.Storage.BlobRenamed'</param>
+        /// <param name="managedIdentityResourceId">The resource ID of a
+        /// managed identity (system or user assigned) to be used to
+        /// authenticate with event hub and storage account.</param>
+        /// <param name="managedIdentityObjectId">The object ID of
+        /// managedIdentityResourceId</param>
+        /// <param name="databaseRouting">Indication for database routing
+        /// information from the data connection, by default only database
+        /// routing information is allowed. Possible values include: 'Single',
+        /// 'Multi'</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
-        public EventGridDataConnection(string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), bool? ignoreFirstRecord = default(bool?), string blobStorageEventType = default(string), string provisioningState = default(string))
+        public EventGridDataConnection(string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string eventGridResourceId = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), bool? ignoreFirstRecord = default(bool?), string blobStorageEventType = default(string), string managedIdentityResourceId = default(string), string managedIdentityObjectId = default(string), string databaseRouting = default(string), string provisioningState = default(string))
             : base(id, name, type, location)
         {
             StorageAccountResourceId = storageAccountResourceId;
+            EventGridResourceId = eventGridResourceId;
             EventHubResourceId = eventHubResourceId;
             ConsumerGroup = consumerGroup;
             TableName = tableName;
@@ -77,6 +89,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
             DataFormat = dataFormat;
             IgnoreFirstRecord = ignoreFirstRecord;
             BlobStorageEventType = blobStorageEventType;
+            ManagedIdentityResourceId = managedIdentityResourceId;
+            ManagedIdentityObjectId = managedIdentityObjectId;
+            DatabaseRouting = databaseRouting;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -92,6 +107,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountResourceId")]
         public string StorageAccountResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the event grid that is subscribed
+        /// to the storage account events.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eventGridResourceId")]
+        public string EventGridResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the resource ID where the event grid is configured to
@@ -144,6 +166,28 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.blobStorageEventType")]
         public string BlobStorageEventType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of a managed identity (system or user
+        /// assigned) to be used to authenticate with event hub and storage
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedIdentityResourceId")]
+        public string ManagedIdentityResourceId { get; set; }
+
+        /// <summary>
+        /// Gets the object ID of managedIdentityResourceId
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedIdentityObjectId")]
+        public string ManagedIdentityObjectId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indication for database routing information from the
+        /// data connection, by default only database routing information is
+        /// allowed. Possible values include: 'Single', 'Multi'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseRouting")]
+        public string DatabaseRouting { get; set; }
 
         /// <summary>
         /// Gets the provisioned state of the resource. Possible values

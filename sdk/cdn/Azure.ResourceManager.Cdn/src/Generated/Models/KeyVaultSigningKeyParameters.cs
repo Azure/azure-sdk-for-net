@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class KeyVaultSigningKeyParameters
     {
         /// <summary> Initializes a new instance of KeyVaultSigningKeyParameters. </summary>
-        /// <param name="odataType"></param>
+        /// <param name="typeName"></param>
         /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the secret. </param>
         /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the secret. </param>
         /// <param name="vaultName"> The name of the user&apos;s Key Vault containing the secret. </param>
         /// <param name="secretName"> The name of secret in Key Vault. </param>
         /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/>, or <paramref name="secretVersion"/> is null. </exception>
-        public KeyVaultSigningKeyParameters(KeyVaultSigningKeyParametersOdataType odataType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
+        public KeyVaultSigningKeyParameters(KeyVaultSigningKeyParametersTypeName typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
         {
             if (subscriptionId == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new ArgumentNullException(nameof(secretVersion));
             }
 
-            OdataType = odataType;
+            TypeName = typeName;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             VaultName = vaultName;
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretVersion = secretVersion;
         }
 
-        /// <summary> Gets or sets the odata type. </summary>
-        public KeyVaultSigningKeyParametersOdataType OdataType { get; set; }
+        /// <summary> Gets or sets the type name. </summary>
+        public KeyVaultSigningKeyParametersTypeName TypeName { get; set; }
         /// <summary> Subscription Id of the user&apos;s Key Vault containing the secret. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> Resource group of the user&apos;s Key Vault containing the secret. </summary>

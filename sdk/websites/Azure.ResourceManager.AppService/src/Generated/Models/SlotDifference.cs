@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -20,7 +21,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SlotDifference. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="level"> Level of the difference: Information, Warning or Error. </param>
         /// <param name="settingType"> The type of the setting: General, AppSetting or ConnectionString. </param>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="valueInCurrentSlot"> Value of the setting in the current slot. </param>
         /// <param name="valueInTargetSlot"> Value of the setting in the target slot. </param>
         /// <param name="description"> Description of the setting difference. </param>
-        internal SlotDifference(ResourceIdentifier id, string name, ResourceType type, string kind, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description) : base(id, name, type, kind)
+        internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description) : base(id, name, resourceType, systemData, kind)
         {
             Level = level;
             SettingType = settingType;

@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Azure.ResourceManager.Core;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Tests

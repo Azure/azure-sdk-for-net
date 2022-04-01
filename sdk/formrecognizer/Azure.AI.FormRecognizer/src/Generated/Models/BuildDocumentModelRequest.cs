@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -14,8 +16,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         /// <summary> Initializes a new instance of BuildDocumentModelRequest. </summary>
         /// <param name="modelId"> Unique model name. </param>
+        /// <param name="buildMode"> Custom model build mode. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public BuildDocumentModelRequest(string modelId)
+        public BuildDocumentModelRequest(string modelId, DocumentBuildMode buildMode)
         {
             if (modelId == null)
             {
@@ -23,13 +26,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
 
             ModelId = modelId;
+            BuildMode = buildMode;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Unique model name. </summary>
         public string ModelId { get; }
         /// <summary> Model description. </summary>
         public string Description { get; set; }
+        /// <summary> Custom model build mode. </summary>
+        public DocumentBuildMode BuildMode { get; }
         /// <summary> Azure Blob Storage location containing the training data. </summary>
         public AzureBlobContentSource AzureBlobSource { get; set; }
+        /// <summary> List of key-value tag attributes associated with the model. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

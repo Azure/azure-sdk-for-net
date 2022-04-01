@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -150,12 +151,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("requestTracingEnabled");
                 }
             }
-            if (Optional.IsDefined(RequestTracingExpirationTime))
+            if (Optional.IsDefined(RequestTracingExpirationOn))
             {
-                if (RequestTracingExpirationTime != null)
+                if (RequestTracingExpirationOn != null)
                 {
                     writer.WritePropertyName("requestTracingExpirationTime");
-                    writer.WriteStringValue(RequestTracingExpirationTime.Value, "O");
+                    writer.WriteStringValue(RequestTracingExpirationOn.Value, "O");
                 }
                 else
                 {
@@ -210,12 +211,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("acrUseManagedIdentityCreds");
                 }
             }
-            if (Optional.IsDefined(AcrUserManagedIdentityID))
+            if (Optional.IsDefined(AcrUserManagedIdentityId))
             {
-                if (AcrUserManagedIdentityID != null)
+                if (AcrUserManagedIdentityId != null)
                 {
                     writer.WritePropertyName("acrUserManagedIdentityID");
-                    writer.WriteStringValue(AcrUserManagedIdentityID);
+                    writer.WriteStringValue(AcrUserManagedIdentityId);
                 }
                 else
                 {
@@ -662,13 +663,13 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("keyVaultReferenceIdentity");
                 }
             }
-            if (Optional.IsCollectionDefined(IpSecurityRestrictions))
+            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
             {
-                if (IpSecurityRestrictions != null)
+                if (IPSecurityRestrictions != null)
                 {
                     writer.WritePropertyName("ipSecurityRestrictions");
                     writer.WriteStartArray();
-                    foreach (var item in IpSecurityRestrictions)
+                    foreach (var item in IPSecurityRestrictions)
                     {
                         writer.WriteObjectValue(item);
                     }
@@ -679,13 +680,13 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("ipSecurityRestrictions");
                 }
             }
-            if (Optional.IsCollectionDefined(ScmIpSecurityRestrictions))
+            if (Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
             {
-                if (ScmIpSecurityRestrictions != null)
+                if (ScmIPSecurityRestrictions != null)
                 {
                     writer.WritePropertyName("scmIpSecurityRestrictions");
                     writer.WriteStartArray();
-                    foreach (var item in ScmIpSecurityRestrictions)
+                    foreach (var item in ScmIPSecurityRestrictions)
                     {
                         writer.WriteObjectValue(item);
                     }
@@ -696,12 +697,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("scmIpSecurityRestrictions");
                 }
             }
-            if (Optional.IsDefined(ScmIpSecurityRestrictionsUseMain))
+            if (Optional.IsDefined(ScmIPSecurityRestrictionsUseMain))
             {
-                if (ScmIpSecurityRestrictionsUseMain != null)
+                if (ScmIPSecurityRestrictionsUseMain != null)
                 {
                     writer.WritePropertyName("scmIpSecurityRestrictionsUseMain");
-                    writer.WriteBooleanValue(ScmIpSecurityRestrictionsUseMain.Value);
+                    writer.WriteBooleanValue(ScmIPSecurityRestrictionsUseMain.Value);
                 }
                 else
                 {
@@ -868,6 +869,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<int?> numberOfWorkers = default;
             Optional<IList<string>> defaultDocuments = default;
             Optional<string> netFrameworkVersion = default;
@@ -920,8 +922,8 @@ namespace Azure.ResourceManager.AppService
             Optional<int?> managedServiceIdentityId = default;
             Optional<int?> xManagedServiceIdentityId = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IList<IpSecurityRestriction>> ipSecurityRestrictions = default;
-            Optional<IList<IpSecurityRestriction>> scmIpSecurityRestrictions = default;
+            Optional<IList<IPSecurityRestriction>> ipSecurityRestrictions = default;
+            Optional<IList<IPSecurityRestriction>> scmIpSecurityRestrictions = default;
             Optional<bool?> scmIpSecurityRestrictionsUseMain = default;
             Optional<bool?> http20Enabled = default;
             Optional<SupportedTlsVersions?> minTlsVersion = default;
@@ -955,6 +957,11 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -1518,10 +1525,10 @@ namespace Azure.ResourceManager.AppService
                                 ipSecurityRestrictions = null;
                                 continue;
                             }
-                            List<IpSecurityRestriction> array = new List<IpSecurityRestriction>();
+                            List<IPSecurityRestriction> array = new List<IPSecurityRestriction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpSecurityRestriction.DeserializeIpSecurityRestriction(item));
+                                array.Add(IPSecurityRestriction.DeserializeIPSecurityRestriction(item));
                             }
                             ipSecurityRestrictions = array;
                             continue;
@@ -1533,10 +1540,10 @@ namespace Azure.ResourceManager.AppService
                                 scmIpSecurityRestrictions = null;
                                 continue;
                             }
-                            List<IpSecurityRestriction> array = new List<IpSecurityRestriction>();
+                            List<IPSecurityRestriction> array = new List<IPSecurityRestriction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpSecurityRestriction.DeserializeIpSecurityRestriction(item));
+                                array.Add(IPSecurityRestriction.DeserializeIPSecurityRestriction(item));
                             }
                             scmIpSecurityRestrictions = array;
                             continue;
@@ -1680,7 +1687,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteConfigData(id, name, type, kind.Value, Optional.ToNullable(numberOfWorkers), Optional.ToList(defaultDocuments), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityID.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, Optional.ToList(appSettings), Optional.ToList(connectionStrings), machineKey.Value, Optional.ToList(handlerMappings), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), Optional.ToList(virtualApplications), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig.Value, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, Optional.ToList(ipSecurityRestrictions), Optional.ToList(scmIpSecurityRestrictions), Optional.ToNullable(scmIpSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(minTlsVersion), Optional.ToNullable(scmMinTlsVersion), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value);
+            return new SiteConfigData(id, name, type, systemData, kind.Value, Optional.ToNullable(numberOfWorkers), Optional.ToList(defaultDocuments), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityID.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, Optional.ToList(appSettings), Optional.ToList(connectionStrings), machineKey.Value, Optional.ToList(handlerMappings), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), Optional.ToList(virtualApplications), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig.Value, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, Optional.ToList(ipSecurityRestrictions), Optional.ToList(scmIpSecurityRestrictions), Optional.ToNullable(scmIpSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(minTlsVersion), Optional.ToNullable(scmMinTlsVersion), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value);
         }
     }
 }

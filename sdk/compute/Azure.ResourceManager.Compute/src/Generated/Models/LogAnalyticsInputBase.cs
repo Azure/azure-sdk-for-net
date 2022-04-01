@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
-        public LogAnalyticsInputBase(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime)
+        public LogAnalyticsInputBase(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
             if (blobContainerSasUri == null)
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </summary>
-        public string BlobContainerSasUri { get; }
+        public Uri BlobContainerSasUri { get; }
         /// <summary> From time of the query. </summary>
         public DateTimeOffset FromTime { get; }
         /// <summary> To time of the query. </summary>

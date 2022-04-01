@@ -30,18 +30,23 @@ namespace Azure.Core.Tests
 
             var operation = await client.StartOperationAsync();
 
+            var startTime = DateTimeOffset.Now;
             await operation.WaitForCompletionAsync();
+            var timingPoint1 = DateTimeOffset.Now;
+
             await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(10), default);
+            var timingPoint2 = DateTimeOffset.Now;
 
             await operation.WaitForCompletionResponseAsync();
+            var timingPoint3 = DateTimeOffset.Now;
+
             await operation.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(10), default);
+            var timingPoint4 = DateTimeOffset.Now;
 
-            var original = GetOriginal(operation);
-
-            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[0]);
-            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[1]);
-            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[2]);
-            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[3]);
+            Assert.That((timingPoint1 - startTime).TotalSeconds, Is.EqualTo(0).Within(0.3));
+            Assert.That((timingPoint2 - timingPoint1).TotalSeconds, Is.EqualTo(0).Within(0.3));
+            Assert.That((timingPoint3 - timingPoint2).TotalSeconds, Is.EqualTo(0).Within(0.3));
+            Assert.That((timingPoint4 - timingPoint3).TotalSeconds, Is.EqualTo(0).Within(0.3));
         }
 
         [Test]
@@ -119,13 +124,17 @@ namespace Azure.Core.Tests
             public override string Id { get; }
             public override Response GetRawResponse()
             {
-                throw new NotImplementedException();
+                return new MockResponse(200);
             }
 
-            public override bool HasCompleted { get; }
+            public override bool HasCompleted { get; } = true;
             public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
             {
-                throw new NotImplementedException();
+                if (_throwOnWait)
+                {
+                    throw new RequestFailedException(400, "Operation failed");
+                }
+                return new ValueTask<Response>(new MockResponse(20));
             }
 
             public override Response UpdateStatus(CancellationToken cancellationToken = default)

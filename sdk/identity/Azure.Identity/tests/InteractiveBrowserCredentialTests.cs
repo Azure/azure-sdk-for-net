@@ -18,6 +18,9 @@ namespace Azure.Identity.Tests
         public InteractiveBrowserCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new InteractiveBrowserCredential(TenantId, ClientId, options, null, mockPublicMsalClient));
+
         [Test]
         public async Task InteractiveBrowserAcquireTokenInteractiveException()
         {
@@ -41,7 +44,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {
-            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled});
+            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
 
             Assert.NotNull(credential.Client);
             Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
@@ -237,6 +240,44 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
+        }
+
+        public class ExtendedInteractiveBrowserCredentialOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
+        {
+            private Action<PublicClientApplicationBuilder> _beforeBuildClient;
+
+            public ExtendedInteractiveBrowserCredentialOptions(Action<PublicClientApplicationBuilder> beforeBuildClient)
+            {
+                _beforeBuildClient = beforeBuildClient;
+            }
+
+            Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient { get { return _beforeBuildClient; } }
+        }
+
+        [Test]
+        public async Task InvokesBeforeBuildClientOnExtendedOptions()
+        {
+            bool beforeBuildClientInvoked = false;
+
+            var cancelSource = new CancellationTokenSource(2000);
+
+            var options = new ExtendedInteractiveBrowserCredentialOptions(builder =>
+            {
+                Assert.NotNull(builder);
+                beforeBuildClientInvoked = true;
+                cancelSource.Cancel();
+            }
+            );
+
+            var credential = InstrumentClient(new InteractiveBrowserCredential(options));
+
+            try
+            {
+                await credential.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
+            }
+            catch (OperationCanceledException) { }
+
+            Assert.True(beforeBuildClientInvoked);
         }
     }
 }

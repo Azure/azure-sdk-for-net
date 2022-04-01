@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -97,7 +96,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Describes whether the order item is returnable or not. </summary>
         public OrderItemReturnEnum? ReturnStatus { get; }
         /// <summary> Parent RP details - this returns only the first or default parent RP from the entire list. </summary>
-        public ResourceProviderDetails ManagementRpDetails { get; }
+        internal ResourceProviderDetails ManagementRpDetails { get; }
+        /// <summary> Resource provider namespace. </summary>
+        public string ManagementRpDetailsResourceProviderNamespace
+        {
+            get => ManagementRpDetails.ResourceProviderNamespace;
+        }
+
         /// <summary> List of parent RP details supported for configuration. </summary>
         public IReadOnlyList<ResourceProviderDetails> ManagementRpDetailsList { get; }
         /// <summary> Top level error for the job. </summary>

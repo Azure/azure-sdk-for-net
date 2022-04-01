@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     // Initialize the size by reserving space for the batch envelope taking into account the properties from the first
                     // message which will be used to populate properties on the batch envelope.
-                    amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(new ServiceBusMessage[] { message }, forceBatch: true);
+                    amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(message, forceBatch: true);
                 }
                 else
                 {
@@ -154,14 +154,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
-        public override IEnumerable<T> AsEnumerable<T>()
+        public override IReadOnlyCollection<T> AsReadOnly<T>()
         {
             if (typeof(T) != typeof(ServiceBusMessage))
             {
                 throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
 
-            return (IEnumerable<T>)BatchMessages;
+            return (IReadOnlyCollection<T>) BatchMessages;
         }
 
         /// <summary>

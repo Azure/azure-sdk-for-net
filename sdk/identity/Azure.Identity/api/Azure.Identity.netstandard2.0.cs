@@ -78,6 +78,18 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ClientAssertionCredential : Azure.Core.TokenCredential
+    {
+        protected ClientAssertionCredential() { }
+        public ClientAssertionCredential(string tenantId, string clientId, System.Func<string> assertionCallback, Azure.Identity.ClientAssertionCredentialOptions options = null) { }
+        public ClientAssertionCredential(string tenantId, string clientId, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<string>> assertionCallback, Azure.Identity.ClientAssertionCredentialOptions options = null) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ClientAssertionCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public ClientAssertionCredentialOptions() { }
+    }
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
         protected ClientCertificateCredential() { }
@@ -137,6 +149,7 @@ namespace Azure.Identity
         public string InteractiveBrowserCredentialClientId { get { throw null; } set { } }
         public string InteractiveBrowserTenantId { get { throw null; } set { } }
         public string ManagedIdentityClientId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
         public string SharedTokenCacheTenantId { get { throw null; } set { } }
         public string SharedTokenCacheUsername { get { throw null; } set { } }
         public string VisualStudioCodeTenantId { get { throw null; } set { } }
@@ -221,6 +234,7 @@ namespace Azure.Identity
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
         protected ManagedIdentityCredential() { }
+        public ManagedIdentityCredential(Azure.Core.ResourceIdentifier resourceId, Azure.Identity.TokenCredentialOptions options = null) { }
         public ManagedIdentityCredential(string clientId = null, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -285,10 +299,16 @@ namespace Azure.Identity
         internal TokenCacheUpdatedArgs() { }
         public System.ReadOnlyMemory<byte> UnsafeCacheData { get { throw null; } }
     }
+    public partial class TokenCredentialDiagnosticsOptions : Azure.Core.DiagnosticsOptions
+    {
+        public TokenCredentialDiagnosticsOptions() { }
+        public bool IsAccountIdentifierLoggingEnabled { get { throw null; } set { } }
+    }
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
+        public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {

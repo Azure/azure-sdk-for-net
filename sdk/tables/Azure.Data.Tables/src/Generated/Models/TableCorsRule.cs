@@ -18,7 +18,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="allowedHeaders"> The request headers that the origin domain may specify on the CORS request. </param>
         /// <param name="exposedHeaders"> The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer. </param>
         /// <param name="maxAgeInSeconds"> The maximum amount time that a browser should cache the preflight OPTIONS request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/>, <paramref name="allowedMethods"/>, <paramref name="allowedHeaders"/>, or <paramref name="exposedHeaders"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/>, <paramref name="allowedMethods"/>, <paramref name="allowedHeaders"/> or <paramref name="exposedHeaders"/> is null. </exception>
         public TableCorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds)
         {
             if (allowedOrigins == null)

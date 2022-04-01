@@ -1,6 +1,6 @@
 # Release History
 
-## 11.4.0-beta.6 (Unreleased)
+## 11.4.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.4.0-beta.7 (2022-03-08)
+
+### Features Added
+- Added support to create, update and delete aliases via the `SearchIndexClient`.
+
+## 11.4.0-beta.6 (2022-02-08)
+
+### Features Added
+- Added `Unk` as an `OcrSkillLanguage` value. The values are used to set the default language code for the [OCR cognitive skill](https://docs.microsoft.com/azure/search/cognitive-search-skill-ocr).
+- Support for [`AzureMachineLearningSkill`](https://docs.microsoft.com/azure/search/cognitive-search-aml-skill). The AML skill allows you to extend AI enrichment with a custom [Azure Machine Learning](https://docs.microsoft.com/azure/machine-learning/overview-what-is-azure-machine-learning) (AML) model. Once an AML model is [trained and deployed](https://docs.microsoft.com/azure/machine-learning/concept-azure-machine-learning-architecture#workspace), an AML skill integrates it into AI enrichment.
 
 ## 11.4.0-beta.5 (2021-11-09)
 

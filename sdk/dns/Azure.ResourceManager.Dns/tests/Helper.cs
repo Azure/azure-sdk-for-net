@@ -16,7 +16,7 @@ namespace Azure.Management.Dns.Tests
     {
         public static async Task TryRegisterResourceGroupAsync(ResourceGroupCollection resourceGroupsOperations, string location, string resourceGroupName)
         {
-            await resourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            await resourceGroupsOperations.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, new ResourceGroupData(location));
         }
         public static bool AreEqualPrereq(
             TrackedResource first,

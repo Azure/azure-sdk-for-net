@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -43,32 +44,32 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri");
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri");
-                writer.WriteStringValue(ReleaseNoteUri);
+                writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToSerialString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OsState))
+            if (Optional.IsDefined(OSState))
             {
                 writer.WritePropertyName("osState");
-                writer.WriteStringValue(OsState.Value.ToSerialString());
+                writer.WriteStringValue(OSState.Value.ToSerialString());
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration");
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(EndOfLifeDate))
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate");
-                writer.WriteStringValue(EndOfLifeDate.Value, "O");
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(Identifier))
             {
@@ -111,10 +112,11 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> description = default;
             Optional<string> eula = default;
-            Optional<string> privacyStatementUri = default;
-            Optional<string> releaseNoteUri = default;
+            Optional<Uri> privacyStatementUri = default;
+            Optional<Uri> releaseNoteUri = default;
             Optional<OperatingSystemTypes> osType = default;
             Optional<OperatingSystemStateTypes> osState = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
@@ -157,6 +159,11 @@ namespace Azure.ResourceManager.Compute
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -178,12 +185,22 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("privacyStatementUri"))
                         {
-                            privacyStatementUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privacyStatementUri = null;
+                                continue;
+                            }
+                            privacyStatementUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("releaseNoteUri"))
                         {
-                            releaseNoteUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                releaseNoteUri = null;
+                                continue;
+                            }
+                            releaseNoteUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osType"))
@@ -295,7 +312,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryImageData(id, name, type, tags, location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features));
+            return new GalleryImageData(id, name, type, systemData, tags, location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features));
         }
     }
 }
