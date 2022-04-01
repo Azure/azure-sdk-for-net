@@ -10,7 +10,6 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Files.DataLake.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
