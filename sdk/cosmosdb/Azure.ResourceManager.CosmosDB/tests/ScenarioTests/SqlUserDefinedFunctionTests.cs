@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
 
-            SqlUserDefinedFunctionCreateUpdateData updateOptions = new SqlUserDefinedFunctionCreateUpdateData(AzureLocation.WestUS, new Models.SqlUserDefinedFunctionResource(_userDefinedFunctionName)
+            var updateOptions = new SqlUserDefinedFunctionCreateOrUpdateInfo(AzureLocation.WestUS, new Models.SqlUserDefinedFunctionResource(_userDefinedFunctionName)
             {
                 Body = @"function () { var updatetext = getContext();
     var response = context.getResponse();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal async Task<SqlUserDefinedFunctionResource> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
         {
             _userDefinedFunctionName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlUserDefinedFunctionCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateData(AzureLocation.WestUS,
+            var sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateOrUpdateInfo(AzureLocation.WestUS,
                 new Models.SqlUserDefinedFunctionResource(_userDefinedFunctionName)
                 {
                     Body = @"function () {

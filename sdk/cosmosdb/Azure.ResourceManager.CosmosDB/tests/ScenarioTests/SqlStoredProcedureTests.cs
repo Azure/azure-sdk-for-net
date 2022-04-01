@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            SqlStoredProcedureCreateUpdateData updateOptions = new SqlStoredProcedureCreateUpdateData(AzureLocation.WestUS, storedProcedure.Data.Resource)
+            var updateOptions = new SqlStoredProcedureCreateOrUpdateInfo(AzureLocation.WestUS, storedProcedure.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal async Task<SqlStoredProcedureResource> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
         {
             _storedProcedureName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlStoredProcedureCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateData(AzureLocation.WestUS,
+            SqlStoredProcedureCreateOrUpdateInfo sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateOrUpdateInfo(AzureLocation.WestUS,
                 new Models.SqlStoredProcedureResource(_storedProcedureName)
                 {
                     Body = @"function () {

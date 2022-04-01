@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, DiskPoolCreate diskPoolCreatePayload)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, DiskPoolCreateOrUpdateInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.StoragePool
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(diskPoolCreatePayload);
+            content.JsonWriter.WriteObjectValue(info);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -205,18 +205,18 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
-        /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
+        /// <param name="info"> Request payload for Disk Pool create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, DiskPoolCreateOrUpdateInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
-            Argument.AssertNotNull(diskPoolCreatePayload, nameof(diskPoolCreatePayload));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, diskPoolCreatePayload);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -232,18 +232,18 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
-        /// <param name="diskPoolCreatePayload"> Request payload for Disk Pool create operation. </param>
+        /// <param name="info"> Request payload for Disk Pool create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="diskPoolCreatePayload"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string diskPoolName, DiskPoolCreate diskPoolCreatePayload, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string diskPoolName, DiskPoolCreateOrUpdateInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
-            Argument.AssertNotNull(diskPoolCreatePayload, nameof(diskPoolCreatePayload));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, diskPoolCreatePayload);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

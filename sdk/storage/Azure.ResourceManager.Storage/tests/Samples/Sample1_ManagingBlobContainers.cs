@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
             StorageKind kind = StorageKind.Storage;
             string locationStr = "westus2";
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
+            StorageAccountCreateOrUpdateInfo parameters = new StorageAccountCreateOrUpdateInfo(sku, kind, locationStr);
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
             ArmOperation<StorageAccountResource> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Started, accountName, parameters);

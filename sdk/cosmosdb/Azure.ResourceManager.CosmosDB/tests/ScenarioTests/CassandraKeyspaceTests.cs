@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraKeyspaces(keyspace, keyspace2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            CassandraKeyspaceCreateUpdateData updateOptions = new CassandraKeyspaceCreateUpdateData(AzureLocation.WestUS, keyspace.Data.Resource)
+            var updateOptions = new CassandraKeyspaceCreateOrUpdateInfo(AzureLocation.WestUS, keyspace.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+            DatabaseAccountCassandraKeyspaceThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsCreateOrUpdateInfo(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CassandraKeyspaceResource> CreateCassandraKeyspace(string name, AutoscaleSettings autoscale, CassandraKeyspaceCollection collection)
         {
-            CassandraKeyspaceCreateUpdateData cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateUpdateData(AzureLocation.WestUS,
+            var cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateOrUpdateInfo(AzureLocation.WestUS,
                 new Models.CassandraKeyspaceResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

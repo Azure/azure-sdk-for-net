@@ -64,22 +64,22 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> Management group creation parameters. </param>
+        /// <param name="info"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="options"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagementGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupId, CreateManagementGroupOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="info"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagementGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupId, ManagementGroupCreateOrUpdateInfo info, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.CreateOrUpdateAsync(groupId, options, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, options, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _managementGroupRestClient.CreateOrUpdateAsync(groupId, info, cacheControl, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, info, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,22 +100,22 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> Management group creation parameters. </param>
+        /// <param name="info"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="options"/> is null. </exception>
-        public virtual ArmOperation<ManagementGroupResource> CreateOrUpdate(WaitUntil waitUntil, string groupId, CreateManagementGroupOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="info"/> is null. </exception>
+        public virtual ArmOperation<ManagementGroupResource> CreateOrUpdate(WaitUntil waitUntil, string groupId, ManagementGroupCreateOrUpdateInfo info, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.CreateOrUpdate(groupId, options, cacheControl, cancellationToken);
-                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, options, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _managementGroupRestClient.CreateOrUpdate(groupId, info, cacheControl, cancellationToken);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, info, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

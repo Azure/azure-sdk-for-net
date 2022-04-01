@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorCreateOrUpdateInfo info, string migrate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(info);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -72,20 +72,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
+        /// <param name="info"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="migrate"> Value indicating whether connection monitor V1 should be migrated to V2 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorCreateOrUpdateInfo info, string migrate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, migrate);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName, info, migrate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,20 +102,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group containing Network Watcher. </param>
         /// <param name="networkWatcherName"> The name of the Network Watcher resource. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="parameters"> Parameters that define the operation to create a connection monitor. </param>
+        /// <param name="info"> Parameters that define the operation to create a connection monitor. </param>
         /// <param name="migrate"> Value indicating whether connection monitor V1 should be migrated to V2 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorInput parameters, string migrate = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorCreateOrUpdateInfo info, string migrate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, migrate);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName, info, migrate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

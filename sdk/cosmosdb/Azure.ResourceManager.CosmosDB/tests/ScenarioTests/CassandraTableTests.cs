@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+            DatabaseAccountCassandraKeyspaceTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsCreateOrUpdateInfo(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsFalse(exists);
         }
 
-        protected async Task<CassandraTableResource> CreateCassandraTable(CassandraTableCreateUpdateData parameters)
+        protected async Task<CassandraTableResource> CreateCassandraTable(CassandraTableCreateOrUpdateInfo parameters)
         {
             if (parameters == null)
             {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return tableLro.Value;
         }
 
-        private CassandraTableCreateUpdateData BuildCreateUpdateOptions(AutoscaleSettings autoscale)
+        private CassandraTableCreateOrUpdateInfo BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _tableName = Recording.GenerateAssetName("cassandra-table-");
-            return new CassandraTableCreateUpdateData(AzureLocation.WestUS,
+            return new CassandraTableCreateOrUpdateInfo(AzureLocation.WestUS,
                 new Models.CassandraTableResource(_tableName, default, new CassandraSchema {
                     Columns = { new CassandraColumn { Name = "columnA", CassandraColumnType = "int" }, new CassandraColumn { Name = "columnB", CassandraColumnType = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
         }
 
-        private void VerifyCassandraTableCreation(CassandraTableResource cassandraTable, CassandraTableCreateUpdateData cassandraTableCreateUpdateOptions)
+        private void VerifyCassandraTableCreation(CassandraTableResource cassandraTable, CassandraTableCreateOrUpdateInfo cassandraTableCreateUpdateOptions)
         {
             Assert.AreEqual(cassandraTable.Data.Resource.Id, cassandraTableCreateUpdateOptions.Resource.Id);
             Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns.Count, cassandraTableCreateUpdateOptions.Resource.Schema.Columns.Count);

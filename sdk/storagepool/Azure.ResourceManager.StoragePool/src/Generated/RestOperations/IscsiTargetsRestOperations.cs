@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreateOrUpdateInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StoragePool
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(iscsiTargetCreatePayload);
+            content.JsonWriter.WriteObjectValue(info);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -147,19 +147,19 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
-        /// <param name="iscsiTargetCreatePayload"> Request payload for iSCSI Target create operation. </param>
+        /// <param name="info"> Request payload for iSCSI Target create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/> or <paramref name="iscsiTargetCreatePayload"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreateOrUpdateInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
-            Argument.AssertNotNull(iscsiTargetCreatePayload, nameof(iscsiTargetCreatePayload));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, iscsiTargetCreatePayload);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -176,19 +176,19 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="iscsiTargetName"> The name of the iSCSI Target. </param>
-        /// <param name="iscsiTargetCreatePayload"> Request payload for iSCSI Target create operation. </param>
+        /// <param name="info"> Request payload for iSCSI Target create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/> or <paramref name="iscsiTargetCreatePayload"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreate iscsiTargetCreatePayload, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreateOrUpdateInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
             Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
-            Argument.AssertNotNull(iscsiTargetCreatePayload, nameof(iscsiTargetCreatePayload));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, iscsiTargetCreatePayload);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

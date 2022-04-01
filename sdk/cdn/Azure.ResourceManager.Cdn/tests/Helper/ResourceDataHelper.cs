@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         };
 
-        public static CustomDomainOptions CreateCdnCustomDomainData(string hostName) => new CustomDomainOptions
+        public static CdnCustomDomainCreateOrUpdateInfo CreateCdnCustomDomainData(string hostName) => new CdnCustomDomainCreateOrUpdateInfo
         {
             HostName = hostName
         };

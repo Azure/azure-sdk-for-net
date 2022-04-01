@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsNotNull(readOnlyKeys.PrimaryReadonlyMasterKey);
             Assert.IsNotNull(readOnlyKeys.SecondaryReadonlyMasterKey);
 
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.Primary));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.Secondary));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.PrimaryReadonly));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.SecondaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyInfo(KeyKind.Primary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyInfo(KeyKind.Secondary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyInfo(KeyKind.PrimaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyInfo(KeyKind.SecondaryReadonly));
 
             DatabaseAccountKeyList regeneratedKeys = await account.GetKeysAsync();
             if (Mode != RecordedTestMode.Playback)

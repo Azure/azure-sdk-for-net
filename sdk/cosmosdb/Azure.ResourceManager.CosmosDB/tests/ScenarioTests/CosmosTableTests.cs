@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyTables(table, table2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            TableCreateUpdateData updateOptions = new TableCreateUpdateData(AzureLocation.WestUS, table.Data.Resource)
+            var updateOptions = new CosmosTableCreateOrUpdateInfo(AzureLocation.WestUS, table.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+            DatabaseAccountTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsCreateOrUpdateInfo(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CosmosTableResource> CreateTable(string name, AutoscaleSettings autoscale, CosmosTableCollection collection)
         {
-            TableCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new TableCreateUpdateData(AzureLocation.WestUS,
+            var mongoDBDatabaseCreateUpdateOptions = new CosmosTableCreateOrUpdateInfo(AzureLocation.WestUS,
                 new TableResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

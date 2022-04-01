@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoDBDatabases(database, database2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            MongoDBDatabaseCreateUpdateData updateOptions = new MongoDBDatabaseCreateUpdateData(AzureLocation.WestUS, database.Data.Resource)
+            var updateOptions = new MongoDBDatabaseCreateOrUpdateInfo(AzureLocation.WestUS, database.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountMongodbDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+            DatabaseAccountMongodbDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsCreateOrUpdateInfo(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<MongoDBDatabaseResource> CreateMongoDBDatabase(string name, AutoscaleSettings autoscale, MongoDBDatabaseCollection collection)
         {
-            MongoDBDatabaseCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new MongoDBDatabaseCreateUpdateData(AzureLocation.WestUS,
+            var mongoDBDatabaseCreateUpdateOptions = new MongoDBDatabaseCreateOrUpdateInfo(AzureLocation.WestUS,
                 new Models.MongoDBDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

@@ -233,53 +233,11 @@ directive:
 # Rename for input parameters s/Parameters/Data/, per C# convention
 # rename parametes for cosmos-db.json
 - rename-model:
-    from: DatabaseAccountCreateUpdateParameters
-    to: DatabaseAccountCreateUpdateData
-- rename-model:
-    from: DatabaseAccountUpdateParameters
-    to: DatabaseAccountUpdateData
-- rename-model:
     from: DatabaseAccountRegenerateKeyParameters
-    to: DatabaseAccountRegenerateKeyData
+    to: DatabaseAccountRegenerateKeyInfo
 - rename-model:
     from: ThroughputSettingsUpdateParameters
-    to: ThroughputSettingsUpdateData
-- rename-model:
-    from: SqlDatabaseCreateUpdateParameters
-    to: SqlDatabaseCreateUpdateData
-- rename-model:
-    from: SqlContainerCreateUpdateParameters
-    to: SqlContainerCreateUpdateData
-- rename-model:
-    from: SqlStoredProcedureCreateUpdateParameters
-    to: SqlStoredProcedureCreateUpdateData
-- rename-model:
-    from: SqlUserDefinedFunctionCreateUpdateParameters
-    to: SqlUserDefinedFunctionCreateUpdateData
-- rename-model:
-    from: SqlTriggerCreateUpdateParameters
-    to: SqlTriggerCreateUpdateData
-- rename-model:
-    from: MongoDBDatabaseCreateUpdateParameters
-    to: MongoDBDatabaseCreateUpdateData
-- rename-model:
-    from: MongoDBCollectionCreateUpdateParameters
-    to: MongoDBCollectionCreateUpdateData
-- rename-model:
-    from: TableCreateUpdateParameters
-    to: TableCreateUpdateData
-- rename-model:
-    from: CassandraKeyspaceCreateUpdateParameters
-    to: CassandraKeyspaceCreateUpdateData
-- rename-model:
-    from: CassandraTableCreateUpdateParameters
-    to: CassandraTableCreateUpdateData
-- rename-model:
-    from: GremlinDatabaseCreateUpdateParameters
-    to: GremlinDatabaseCreateUpdateData
-- rename-model:
-    from: GremlinGraphCreateUpdateParameters
-    to: GremlinGraphCreateUpdateData
+    to: ThroughputSettingsCreateOrUpdateInfo
 # TODO: rename for notebook.json and rback.json when adding them back
 
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
