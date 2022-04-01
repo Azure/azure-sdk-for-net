@@ -32,3 +32,5 @@ extends:
       safeName: MicrosoftOpenTelemetryExporterAzureMonitor
     - name: Azure.Monitor.Query
       safeName: AzureMonitorQuery
+    - name: Azure.ResourceManager.Monitor
+      safeName: AzureResourceManagerMonitor

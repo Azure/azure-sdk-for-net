@@ -24,11 +24,23 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string LowercaseValue = "Lowercase";
         private const string UppercaseValue = "Uppercase";
+        private const string TrimValue = "Trim";
+        private const string UrlDecodeValue = "UrlDecode";
+        private const string UrlEncodeValue = "UrlEncode";
+        private const string RemoveNullsValue = "RemoveNulls";
 
         /// <summary> Lowercase. </summary>
         public static TransformCategory Lowercase { get; } = new TransformCategory(LowercaseValue);
         /// <summary> Uppercase. </summary>
         public static TransformCategory Uppercase { get; } = new TransformCategory(UppercaseValue);
+        /// <summary> Trim. </summary>
+        public static TransformCategory Trim { get; } = new TransformCategory(TrimValue);
+        /// <summary> UrlDecode. </summary>
+        public static TransformCategory UrlDecode { get; } = new TransformCategory(UrlDecodeValue);
+        /// <summary> UrlEncode. </summary>
+        public static TransformCategory UrlEncode { get; } = new TransformCategory(UrlEncodeValue);
+        /// <summary> RemoveNulls. </summary>
+        public static TransformCategory RemoveNulls { get; } = new TransformCategory(RemoveNullsValue);
         /// <summary> Determines if two <see cref="TransformCategory"/> values are the same. </summary>
         public static bool operator ==(TransformCategory left, TransformCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TransformCategory"/> values are not the same. </summary>

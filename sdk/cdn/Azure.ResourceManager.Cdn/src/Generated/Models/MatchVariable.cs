@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The name of the condition for the delivery rule. </summary>
-    public readonly partial struct MatchVariable : IEquatable<MatchVariable>
+    internal readonly partial struct MatchVariable : IEquatable<MatchVariable>
     {
         private readonly string _value;
 
@@ -36,8 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpVersionValue = "HttpVersion";
         private const string CookiesValue = "Cookies";
         private const string IsDeviceValue = "IsDevice";
-        private const string RemoteAddrValue = "RemoteAddr";
         private const string SocketAddrValue = "SocketAddr";
+        private const string ClientPortValue = "ClientPort";
+        private const string ServerPortValue = "ServerPort";
+        private const string HostNameValue = "HostName";
+        private const string SslProtocolValue = "SslProtocol";
 
         /// <summary> RemoteAddress. </summary>
         public static MatchVariable RemoteAddress { get; } = new MatchVariable(RemoteAddressValue);
@@ -67,10 +70,16 @@ namespace Azure.ResourceManager.Cdn.Models
         public static MatchVariable Cookies { get; } = new MatchVariable(CookiesValue);
         /// <summary> IsDevice. </summary>
         public static MatchVariable IsDevice { get; } = new MatchVariable(IsDeviceValue);
-        /// <summary> RemoteAddr. </summary>
-        public static MatchVariable RemoteAddr { get; } = new MatchVariable(RemoteAddrValue);
         /// <summary> SocketAddr. </summary>
         public static MatchVariable SocketAddr { get; } = new MatchVariable(SocketAddrValue);
+        /// <summary> ClientPort. </summary>
+        public static MatchVariable ClientPort { get; } = new MatchVariable(ClientPortValue);
+        /// <summary> ServerPort. </summary>
+        public static MatchVariable ServerPort { get; } = new MatchVariable(ServerPortValue);
+        /// <summary> HostName. </summary>
+        public static MatchVariable HostName { get; } = new MatchVariable(HostNameValue);
+        /// <summary> SslProtocol. </summary>
+        public static MatchVariable SslProtocol { get; } = new MatchVariable(SslProtocolValue);
         /// <summary> Determines if two <see cref="MatchVariable"/> values are the same. </summary>
         public static bool operator ==(MatchVariable left, MatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchVariable"/> values are not the same. </summary>

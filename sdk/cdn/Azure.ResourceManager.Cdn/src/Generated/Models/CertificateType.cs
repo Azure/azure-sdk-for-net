@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Type of certificate used. </summary>
-    internal readonly partial struct CertificateType : IEquatable<CertificateType>
+    public readonly partial struct CertificateType : IEquatable<CertificateType>
     {
         private readonly string _value;
 
