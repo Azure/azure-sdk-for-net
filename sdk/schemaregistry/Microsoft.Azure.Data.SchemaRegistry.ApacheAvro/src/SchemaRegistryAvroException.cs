@@ -11,52 +11,52 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
     /// Represents an exception that is thrown when Avro serialization or deserialization fails.
     /// </summary>
     [Serializable]
-    public class AvroSerializationException : Exception
+    public class SchemaRegistryAvroException : Exception
     {
         /// <summary>
-        /// The Schema Registry schema Id related to the serialized data that caused the <see cref="AvroSerializationException"/>.
+        /// The Schema Registry schema Id related to the <see cref="SchemaRegistryAvroException"/>.
         /// </summary>
-        public string SerializedSchemaId { get; set; }
+        public string SchemaId { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="AvroSerializationException"/>.
+        /// Initializes a new instance of <see cref="SchemaRegistryAvroException"/>.
         /// </summary>
-        public AvroSerializationException() : this(null, null)
+        public SchemaRegistryAvroException() : this(null, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="AvroSerializationException"/>.
+        /// Initializes a new instance of <see cref="SchemaRegistryAvroException"/>.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        public AvroSerializationException(string message) : this(message, null)
+        public SchemaRegistryAvroException(string message) : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="AvroSerializationException"/>.
+        /// Initializes a new instance of <see cref="SchemaRegistryAvroException"/>.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
-        public AvroSerializationException(string message, Exception innerException) : this(message, null, innerException)
+        public SchemaRegistryAvroException(string message, Exception innerException) : this(message, null, innerException)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="AvroSerializationException"/>.
+        /// Initializes a new instance of <see cref="SchemaRegistryAvroException"/>.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="serializedSchemaId">The Schema Registry schema Id related to the <see cref="AvroSerializationException"/>.</param>
+        /// <param name="schemaId">The Schema Registry schema Id related to the <see cref="SchemaRegistryAvroException"/>.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
-        public AvroSerializationException(string message, string serializedSchemaId, Exception innerException) : base(message, innerException)
+        public SchemaRegistryAvroException(string message, string schemaId, Exception innerException) : base(message, innerException)
         {
-            SerializedSchemaId = serializedSchemaId;
+            SchemaId = schemaId;
         }
 
         /// <inheritdoc />
-        protected AvroSerializationException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected SchemaRegistryAvroException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            SerializedSchemaId = info.GetString(nameof(SerializedSchemaId));
+            SchemaId = info.GetString(nameof(SchemaId));
         }
 
         /// <inheritdoc />
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            info.AddValue(nameof(SerializedSchemaId), SerializedSchemaId);
+            info.AddValue(nameof(SchemaId), SchemaId);
             base.GetObjectData(info, context);
         }
     }

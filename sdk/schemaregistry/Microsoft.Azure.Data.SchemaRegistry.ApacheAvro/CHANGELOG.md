@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.8 (2022-04-05)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Wrap Apache Avro exceptions with new exception type, `SchemaRegistryAvroException`.
 
 ## 1.0.0-beta.7 (2022-03-11)
 
