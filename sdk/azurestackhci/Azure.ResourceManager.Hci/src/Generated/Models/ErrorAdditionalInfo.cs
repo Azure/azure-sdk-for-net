@@ -7,11 +7,7 @@
 
 using System;
 
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/Models/ErrorAdditionalInfo.cs
 namespace Azure.ResourceManager.Hci.Models
-=======
-namespace Azure.ResourceManager.EdgeOrder.Models
->>>>>>> a60c490e67bec4d436d82878609e9973083315f0:sdk/edgeorder/Azure.ResourceManager.EdgeOrder/src/Generated/Models/ErrorAdditionalInfo.cs
 {
     /// <summary> The resource management error additional info. </summary>
     internal partial class ErrorAdditionalInfo

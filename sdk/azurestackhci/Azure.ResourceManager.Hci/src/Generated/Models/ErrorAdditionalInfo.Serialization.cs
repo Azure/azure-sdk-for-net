@@ -9,11 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/Models/ErrorAdditionalInfo.Serialization.cs
 namespace Azure.ResourceManager.Hci.Models
-=======
-namespace Azure.ResourceManager.AppConfiguration.Models
->>>>>>> a60c490e67bec4d436d82878609e9973083315f0:sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/Models/ErrorAdditionalInfo.Serialization.cs
 {
     internal partial class ErrorAdditionalInfo
     {

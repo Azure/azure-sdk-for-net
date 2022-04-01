@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.AppConfiguration.Models
 {
     internal partial class ErrorAdditionalInfo
     {
