@@ -20,11 +20,12 @@ namespace Azure.Identity
         protected MsalPublicClient()
         { }
 
-        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options, Action<PublicClientApplicationBuilder> beforeBuildClient = null)
+        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, options)
         {
             RedirectUrl = redirectUrl;
-            _beforeBuildClient = beforeBuildClient;
+
+            _beforeBuildClient = (options as IMsalPublicClientInitializerOptions)?.BeforeBuildClient;
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)

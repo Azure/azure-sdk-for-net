@@ -1,7 +1,9 @@
 # Release History
 
-## 12.0.0-preview.21 (Unreleased)
+## 12.0.0-preview.22 (Unreleased)
 - Added support for service version 2021-06-08.
+
+## 12.0.0-preview.21 (2022-03-30)
 - Fixed bug where BlobChangeFeedEvent.BlobChangeFeedEventData.AsyncOperationInfo.IsAsync was not being deserialized correctly.
 
 ## 12.0.0-preview.20 (2022-03-10)

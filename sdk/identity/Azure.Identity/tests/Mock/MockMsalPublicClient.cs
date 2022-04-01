@@ -41,8 +41,8 @@ namespace Azure.Identity.Tests.Mock
 
         public MockMsalPublicClient() { }
 
-        public MockMsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options, Action<PublicClientApplicationBuilder> beforeBuildClient = null)
-            : base(pipeline, tenantId, clientId, redirectUrl, options, beforeBuildClient) { }
+        public MockMsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options)
+            : base(pipeline, tenantId, clientId, redirectUrl, options) { }
 
         protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool async, CancellationToken cancellationToken)
         {
