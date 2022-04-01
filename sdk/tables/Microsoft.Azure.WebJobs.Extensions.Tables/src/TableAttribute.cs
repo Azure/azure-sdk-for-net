@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs
     [Binding]
     public class TableAttribute : Attribute, IConnectionProvider
     {
-        // Table Name Rules are summerized in this page https://msdn.microsoft.com/en-us/library/azure/dd179338.aspx
+        // Table Name Rules are summarized in this page https://msdn.microsoft.com/en-us/library/azure/dd179338.aspx
         // Table names may contain only alphanumeric characters, can not start with a numeric character and must be
         // 3 to 63 characters long
         private const string TableNameRegex = "^[A-Za-z][A-Za-z0-9]{2,62}$";
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs
 
         /// <summary>
         /// Gets or sets an OData table filter. <see cref="RowKey"/> should be null when setting this property.
-        /// For example to filter on a LastName and FirstName property within the entity, you might set the Filter as follows:
+        /// For example, to filter on a LastName and FirstName property within an entity, you might set the Filter as follows:
         /// <code>Filter = "LastName%20eq%20'Smith'%20and%20FirstName%20eq%20'John'"</code>
         ///
         /// To learn more about constructing OData filter strings,
