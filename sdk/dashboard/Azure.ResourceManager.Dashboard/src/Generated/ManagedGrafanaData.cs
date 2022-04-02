@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dashboard
 {
-    /// <summary> A class representing the GrafanaResource data model. </summary>
-    public partial class GrafanaResourceData : TrackedResourceData
+    /// <summary> A class representing the ManagedGrafana data model. </summary>
+    public partial class ManagedGrafanaData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GrafanaResourceData. </summary>
+        /// <summary> Initializes a new instance of ManagedGrafanaData. </summary>
         /// <param name="location"> The location. </param>
-        public GrafanaResourceData(AzureLocation location) : base(location)
+        public ManagedGrafanaData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GrafanaResourceData. </summary>
+        /// <summary> Initializes a new instance of ManagedGrafanaData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="sku"> The Sku of the grafana resource. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
         /// <param name="identity"> The managed identity of the grafana resource. </param>
-        internal GrafanaResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, GrafanaResourceProperties properties, ManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedGrafanaProperties properties, ManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Properties = properties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dashboard
         }
 
         /// <summary> Properties specific to the grafana resource. </summary>
-        public GrafanaResourceProperties Properties { get; set; }
+        public ManagedGrafanaProperties Properties { get; set; }
         /// <summary> The managed identity of the grafana resource. </summary>
         public ManagedIdentity Identity { get; set; }
     }

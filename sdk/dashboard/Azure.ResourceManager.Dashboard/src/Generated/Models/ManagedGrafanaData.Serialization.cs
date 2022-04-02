@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dashboard
 {
-    public partial class GrafanaResourceData : IUtf8JsonSerializable
+    public partial class ManagedGrafanaData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Dashboard
             writer.WriteEndObject();
         }
 
-        internal static GrafanaResourceData DeserializeGrafanaResourceData(JsonElement element)
+        internal static ManagedGrafanaData DeserializeManagedGrafanaData(JsonElement element)
         {
             Optional<ResourceSku> sku = default;
-            Optional<GrafanaResourceProperties> properties = default;
+            Optional<ManagedGrafanaProperties> properties = default;
             Optional<ManagedIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Dashboard
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = GrafanaResourceProperties.DeserializeGrafanaResourceProperties(property.Value);
+                    properties = ManagedGrafanaProperties.DeserializeManagedGrafanaProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Dashboard
                     continue;
                 }
             }
-            return new GrafanaResourceData(id, name, type, systemData, tags, location, sku.Value, properties.Value, identity.Value);
+            return new ManagedGrafanaData(id, name, type, systemData, tags, location, sku.Value, properties.Value, identity.Value);
         }
     }
 }

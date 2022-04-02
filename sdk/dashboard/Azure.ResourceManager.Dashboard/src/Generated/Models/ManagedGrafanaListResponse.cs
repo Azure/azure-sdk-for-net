@@ -11,26 +11,26 @@ using Azure.ResourceManager.Dashboard;
 
 namespace Azure.ResourceManager.Dashboard.Models
 {
-    /// <summary> The GrafanaResourceListResponse. </summary>
-    internal partial class GrafanaResourceListResponse
+    /// <summary> The ManagedGrafanaListResponse. </summary>
+    internal partial class ManagedGrafanaListResponse
     {
-        /// <summary> Initializes a new instance of GrafanaResourceListResponse. </summary>
-        internal GrafanaResourceListResponse()
+        /// <summary> Initializes a new instance of ManagedGrafanaListResponse. </summary>
+        internal ManagedGrafanaListResponse()
         {
-            Value = new ChangeTrackingList<GrafanaResourceData>();
+            Value = new ChangeTrackingList<ManagedGrafanaData>();
         }
 
-        /// <summary> Initializes a new instance of GrafanaResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of ManagedGrafanaListResponse. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal GrafanaResourceListResponse(IReadOnlyList<GrafanaResourceData> value, string nextLink)
+        internal ManagedGrafanaListResponse(IReadOnlyList<ManagedGrafanaData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<GrafanaResourceData> Value { get; }
+        public IReadOnlyList<ManagedGrafanaData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
