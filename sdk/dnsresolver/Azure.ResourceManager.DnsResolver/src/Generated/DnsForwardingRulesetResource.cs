@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ForwardingRuleResource>> GetForwardingRuleAsync(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
             return await GetForwardingRules().GetAsync(forwardingRuleName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ForwardingRuleResource> GetForwardingRule(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
             return GetForwardingRules().Get(forwardingRuleName, cancellationToken);
@@ -139,6 +141,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkLinkResource>> GetVirtualNetworkLinkAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
             return await GetVirtualNetworkLinks().GetAsync(virtualNetworkLinkName, cancellationToken).ConfigureAwait(false);
@@ -153,6 +156,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<VirtualNetworkLinkResource> GetVirtualNetworkLink(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
             return GetVirtualNetworkLinks().Get(virtualNetworkLinkName, cancellationToken);

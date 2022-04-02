@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SecurityRuleResource>> GetSecurityRuleAsync(string securityRuleName, CancellationToken cancellationToken = default)
         {
             return await GetSecurityRules().GetAsync(securityRuleName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SecurityRuleResource> GetSecurityRule(string securityRuleName, CancellationToken cancellationToken = default)
         {
             return GetSecurityRules().Get(securityRuleName, cancellationToken);
@@ -139,6 +141,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DefaultSecurityRuleResource>> GetDefaultSecurityRuleAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             return await GetDefaultSecurityRules().GetAsync(defaultSecurityRuleName, cancellationToken).ConfigureAwait(false);
@@ -153,6 +156,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<DefaultSecurityRuleResource> GetDefaultSecurityRule(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             return GetDefaultSecurityRules().Get(defaultSecurityRuleName, cancellationToken);
