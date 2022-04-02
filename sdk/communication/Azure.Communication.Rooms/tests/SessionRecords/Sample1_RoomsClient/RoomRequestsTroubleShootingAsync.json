@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "275",
         "Content-Type": "application/json",
-        "traceparent": "00-0d35411b59f244fe6fd32f5b4ef1c2c7-cbd32e026e19ccc3-00",
+        "traceparent": "00-0bb12433d7797b95d3c7b25d3d318b8b-85cc404e666dc525-00",
         "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20220401.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "afddda33834174fd0c9d3e5f39fedecc",
+        "x-ms-client-request-id": "48d93f769ba122dd6bcf19f16fa899ad",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Sat, 02 Apr 2022 02:36:08 GMT",
+        "x-ms-date": "Sat, 02 Apr 2022 03:18:37 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,17 +27,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-04-07, 2022-02-01",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 02 Apr 2022 02:36:09 GMT",
-        "Location": "99448605878091689",
-        "MS-CV": "sKYluEPeOkSNy7zSj6lliw.0",
+        "Date": "Sat, 02 Apr 2022 03:18:39 GMT",
+        "Location": "99445823098839643",
+        "MS-CV": "HH0PG4zL\u002BEW4SQinUZq3fg.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0mbZHYgAAAACGsJJejypdSKpvOLOHqdSOU0cyRURHRTI3MTYAZjA5YTRjMTMtMjFmMS00OGVjLTljZjctNjY1NDU2ODRiNjQy",
+        "X-Azure-Ref": "0jsBHYgAAAABuunEiIG/GQYG\u002Bl3BB7Gs1U0cyRURHRTI3MTUAZjA5YTRjMTMtMjFmMS00OGVjLTljZjctNjY1NDU2ODRiNjQy",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "room": {
-          "id": "99448605878091689",
-          "createdDateTime": "2022-04-02T02:36:09.4354359\u002B00:00",
+          "id": "99445823098839643",
+          "createdDateTime": "2022-04-02T03:18:39.0709659\u002B00:00",
           "validFrom": "2022-05-01T00:00:00\u002B00:00",
           "validUntil": "2022-05-02T00:00:00\u002B00:00",
           "participants": {
@@ -50,6 +50,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rooms-ppe-us.ppe.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1803378230"
+    "RandomSeed": "1436768574"
   }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Rooms.Models
 {
-    public partial class RoomModel
+    internal partial class RoomModel
     {
         internal static RoomModel DeserializeRoomModel(JsonElement element)
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Rooms.Models
 {
-    public partial class CreateRoomResponse
+    internal partial class CreateRoomResponse
     {
         internal static CreateRoomResponse DeserializeCreateRoomResponse(JsonElement element)
         {

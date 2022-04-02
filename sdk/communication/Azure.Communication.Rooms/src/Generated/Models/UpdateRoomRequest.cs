@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Communication.Rooms.Models
 {
     /// <summary> Request payload for updating a room. </summary>
-    public partial class UpdateRoomRequest
+    internal partial class UpdateRoomRequest
     {
         /// <summary> Initializes a new instance of UpdateRoomRequest. </summary>
         public UpdateRoomRequest()

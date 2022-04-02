@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Rooms.Models
 {
-    public partial class CreateRoomRequest : IUtf8JsonSerializable
+    internal partial class CreateRoomRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

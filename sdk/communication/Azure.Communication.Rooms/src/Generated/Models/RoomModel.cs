@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Communication.Rooms.Models
 {
     /// <summary> The meeting room. </summary>
-    public partial class RoomModel
+    internal partial class RoomModel
     {
         /// <summary> Initializes a new instance of RoomModel. </summary>
         internal RoomModel()

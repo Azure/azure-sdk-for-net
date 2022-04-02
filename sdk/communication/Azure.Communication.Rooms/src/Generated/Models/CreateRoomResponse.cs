@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Communication.Rooms.Models
 {
     /// <summary> Response payload for create room operation. </summary>
-    public partial class CreateRoomResponse
+    internal partial class CreateRoomResponse
     {
         /// <summary> Initializes a new instance of CreateRoomResponse. </summary>
         /// <param name="room"> The meeting room. </param>
