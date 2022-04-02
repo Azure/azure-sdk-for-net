@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Actions = new ChangeTrackingList<DeliveryRuleAction>();
         }
 
+        /// <summary> The name of the rule set containing the rule. </summary>
+        public string RuleSetName { get; }
         /// <summary> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </summary>
         public int? Order { get; set; }
         /// <summary> A list of conditions that must be matched for the actions to be executed. </summary>

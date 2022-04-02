@@ -30,13 +30,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08")
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _version = version ?? throw new ArgumentNullException(nameof(version));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)

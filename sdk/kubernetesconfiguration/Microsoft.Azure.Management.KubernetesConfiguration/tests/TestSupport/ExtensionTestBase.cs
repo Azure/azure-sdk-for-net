@@ -5,11 +5,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
 {
     using System;
     using Microsoft.Azure.Management.KubernetesConfiguration.Tests.Helpers;
-    using Microsoft.Azure.Management.KubernetesConfiguration.Extensions;
+    using Microsoft.Azure.Management.KubernetesConfiguration;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Models;
 
     /// <summary>
     /// Base class for tests of SourceControlConfiguration resource type
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
 
         public Extension Extension { get; set; }
 
-        public const string ApiVersion = "2020-09-01";
+        public const string ApiVersion = "2022-03-01";
         public const string ConfigurationType = "Extensions";
 
         public ClusterInfo Cluster { get; set; }
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
         /// <returns>The Extension object that was created.</returns>
         public Extension CreateExtension()
         {
-            return SourceControlConfigurationClient.Extensions.Create(
+            return SourceControlConfigurationClient.Extensions.BeginCreate(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
@@ -65,15 +65,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
         /// <summary>
         /// Delete an Extension
         /// </summary>
-        public void DeleteExtension()
+        public void DeleteExtension(bool force = true)
         {
-            SourceControlConfigurationClient.Extensions.Delete(
+            SourceControlConfigurationClient.Extensions.BeginDelete(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
                 extensionName: Extension.Name,
-                forceDelete: true
+                forceDelete: force
             );
         }
 

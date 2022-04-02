@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
 
@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateParameters.DeserializeAzureFirstPartyManagedCertificateParameters(element);
                     case "CustomerCertificate": return CustomerCertificateParameters.DeserializeCustomerCertificateParameters(element);
                     case "ManagedCertificate": return ManagedCertificateParameters.DeserializeManagedCertificateParameters(element);
                     case "UrlSigningKey": return UrlSigningKeyParameters.DeserializeUrlSigningKeyParameters(element);

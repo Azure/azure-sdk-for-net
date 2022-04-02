@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRoutePortOperationSource : IOperationSource<ExpressRoutePort>
+    internal class ExpressRoutePortOperationSource : IOperationSource<ExpressRoutePortResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ExpressRoutePort IOperationSource<ExpressRoutePort>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRoutePortResource IOperationSource<ExpressRoutePortResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRoutePortData.DeserializeExpressRoutePortData(document.RootElement);
-            return new ExpressRoutePort(_client, data);
+            return new ExpressRoutePortResource(_client, data);
         }
 
-        async ValueTask<ExpressRoutePort> IOperationSource<ExpressRoutePort>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRoutePortResource> IOperationSource<ExpressRoutePortResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRoutePortData.DeserializeExpressRoutePortData(document.RootElement);
-            return new ExpressRoutePort(_client, data);
+            return new ExpressRoutePortResource(_client, data);
         }
     }
 }

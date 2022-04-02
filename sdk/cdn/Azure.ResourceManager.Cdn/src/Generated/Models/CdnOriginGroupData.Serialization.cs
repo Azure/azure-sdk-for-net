@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
             Optional<HealthProbeParameters> healthProbeSettings = default;
             Optional<IList<WritableSubResource>> origins = default;

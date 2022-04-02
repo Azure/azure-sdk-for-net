@@ -28,11 +28,6 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
-            {
-                writer.WritePropertyName("originResponseTimeoutSeconds");
-                writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
-            }
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState");

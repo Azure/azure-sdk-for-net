@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PatchableKubeEnvironmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="internalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIp"> Static IP of the KubeEnvironment. </param>
+        /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
         /// <param name="arcConfiguration">
         /// Cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// app logs to a destination. Currently only &quot;log-analytics&quot; is
         /// supported
         /// </param>
-        /// <param name="aksResourceID"></param>
-        internal PatchableKubeEnvironmentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, systemData, kind)
+        /// <param name="aksResourceId"></param>
+        internal PatchableKubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceId) : base(id, name, resourceType, systemData, kind)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
             InternalLoadBalancerEnabled = internalLoadBalancerEnabled;
             DefaultDomain = defaultDomain;
-            StaticIp = staticIp;
+            StaticIP = staticIP;
             ArcConfiguration = arcConfiguration;
             AppLogsConfiguration = appLogsConfiguration;
-            AksResourceID = aksResourceID;
+            AksResourceId = aksResourceId;
         }
 
         /// <summary> Provisioning state of the Kubernetes Environment. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Default Domain Name for the cluster. </summary>
         public string DefaultDomain { get; }
         /// <summary> Static IP of the KubeEnvironment. </summary>
-        public string StaticIp { get; set; }
+        public string StaticIP { get; set; }
         /// <summary>
         /// Cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Gets or sets the aks resource id. </summary>
-        public string AksResourceID { get; set; }
+        public string AksResourceId { get; set; }
     }
 }

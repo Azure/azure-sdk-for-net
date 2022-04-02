@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("enabledState");
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
+            if (Optional.IsDefined(EnforceCertificateNameCheck))
+            {
+                writer.WritePropertyName("enforceCertificateNameCheck");
+                writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

@@ -17,14 +17,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of PatchableAfdRouteData. </summary>
         public PatchableAfdRouteData()
         {
-            CustomDomains = new ChangeTrackingList<WritableSubResource>();
+            CustomDomains = new ChangeTrackingList<ActivatedResourceReference>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
             SupportedProtocols = new ChangeTrackingList<AfdEndpointProtocols>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
+        /// <summary> The name of the endpoint which holds the route. </summary>
+        public string EndpointName { get; }
         /// <summary> Domains referenced by this endpoint. </summary>
-        public IList<WritableSubResource> CustomDomains { get; }
+        public IList<ActivatedResourceReference> CustomDomains { get; }
         /// <summary> A reference to the origin group. </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -47,10 +49,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public IList<AfdEndpointProtocols> SupportedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
-        /// <summary> compression settings. </summary>
-        public object CompressionSettings { get; set; }
-        /// <summary> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </summary>
-        public AfdQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
+        /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
+        public AfdRouteCacheConfiguration CacheConfiguration { get; set; }
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
         public ForwardingProtocol? ForwardingProtocol { get; set; }
         /// <summary> whether this route will be linked to the default endpoint domain. </summary>

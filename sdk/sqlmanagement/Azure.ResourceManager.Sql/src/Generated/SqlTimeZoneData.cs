@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlTimeZoneData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="timeZoneId"> The time zone id. </param>
         /// <param name="displayName"> The time zone display name. </param>
-        internal SqlTimeZoneData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string timeZoneId, string displayName) : base(id, name, type, systemData)
+        internal SqlTimeZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string timeZoneId, string displayName) : base(id, name, resourceType, systemData)
         {
             TimeZoneId = timeZoneId;
             DisplayName = displayName;

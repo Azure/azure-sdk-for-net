@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         //Could not use TestEnvironment.Location since Location is got dynamically
         public string Location { get; set; }
 
-        public Subscription Subscription { get; private set; }
+        public SubscriptionResource Subscription { get; private set; }
         public AccessPolicyEntry AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
         public Dictionary<string, string> Tags { get; internal set; }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public VaultCollection VaultCollection { get; set; }
         public DeletedVaultCollection DeletedVaultCollection { get; set; }
         public ManagedHsmCollection ManagedHsmCollection { get; set; }
-        public ResourceGroup ResourceGroup { get; set; }
+        public ResourceGroupResource ResourceGroupResource { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
-            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(true, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
-            ResourceGroup = rgResponse.Value;
+            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            ResourceGroupResource = rgResponse.Value;
 
-            VaultCollection = ResourceGroup.GetVaults();
+            VaultCollection = ResourceGroupResource.GetVaults();
             VaultName = Recording.GenerateAssetName("sdktest-vault-");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 
-            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
+            VaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
 
-            ManagedHsmCollection = ResourceGroup.GetManagedHsms();
+            ManagedHsmCollection = ResourceGroupResource.GetManagedHsms();
             ManagedHsmProperties = new ManagedHsmProperties();
             ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
             ManagedHsmProperties.CreateMode = CreateMode.Default;

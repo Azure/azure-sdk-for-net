@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdSecretOperationSource : IOperationSource<AfdSecret>
+    internal class AfdSecretOperationSource : IOperationSource<AfdSecretResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        AfdSecret IOperationSource<AfdSecret>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdSecretResource IOperationSource<AfdSecretResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
-            return new AfdSecret(_client, data);
+            return new AfdSecretResource(_client, data);
         }
 
-        async ValueTask<AfdSecret> IOperationSource<AfdSecret>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdSecretResource> IOperationSource<AfdSecretResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AfdSecretData.DeserializeAfdSecretData(document.RootElement);
-            return new AfdSecret(_client, data);
+            return new AfdSecretResource(_client, data);
         }
     }
 }

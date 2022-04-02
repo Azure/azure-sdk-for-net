@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector");
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CookiesMatchConditionParameters DeserializeCookiesMatchConditionParameters(JsonElement element)
         {
-            CookiesMatchConditionParametersOdataType odataType = default;
+            CookiesMatchConditionParametersTypeName typeName = default;
             Optional<string> selector = default;
             CookiesOperator @operator = default;
             Optional<bool> negateCondition = default;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IList<TransformCategory>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new CookiesMatchConditionParametersOdataType(property.Value.GetString());
+                    typeName = new CookiesMatchConditionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("selector"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CookiesMatchConditionParameters(odataType, selector.Value, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
+            return new CookiesMatchConditionParameters(typeName, selector.Value, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
         }
     }
 }

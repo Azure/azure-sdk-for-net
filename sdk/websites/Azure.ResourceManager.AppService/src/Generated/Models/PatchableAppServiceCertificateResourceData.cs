@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PatchableAppServiceCertificateResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        internal PatchableAppServiceCertificateResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState) : base(id, name, type, systemData, kind)
+        internal PatchableAppServiceCertificateResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState) : base(id, name, resourceType, systemData, kind)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;

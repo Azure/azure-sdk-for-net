@@ -14,34 +14,28 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Cdn.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
     internal partial class LogAnalyticsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of LogAnalyticsRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public LogAnalyticsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public LogAnalyticsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-09-01";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _apiVersion = apiVersion ?? "2021-06-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateGetLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
@@ -97,14 +91,14 @@ namespace Azure.ResourceManager.Cdn
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Get log report for AFD profile. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
@@ -116,32 +110,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (customDomains == null)
-            {
-                throw new ArgumentNullException(nameof(customDomains));
-            }
-            if (protocols == null)
-            {
-                throw new ArgumentNullException(nameof(protocols));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(customDomains, nameof(customDomains));
+            Argument.AssertNotNull(protocols, nameof(protocols));
 
             using var message = CreateGetLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -155,14 +132,14 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get log report for AFD profile. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
@@ -174,32 +151,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MetricsResponse> GetLogAnalyticsMetrics(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (customDomains == null)
-            {
-                throw new ArgumentNullException(nameof(customDomains));
-            }
-            if (protocols == null)
-            {
-                throw new ArgumentNullException(nameof(protocols));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(customDomains, nameof(customDomains));
+            Argument.AssertNotNull(protocols, nameof(protocols));
 
             using var message = CreateGetLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions);
             _pipeline.Send(message, cancellationToken);
@@ -213,7 +173,7 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -252,14 +212,14 @@ namespace Azure.ResourceManager.Cdn
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Get log analytics ranking report for AFD profile. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
         /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
         /// <param name="maxRanking"> The Integer to use. </param>
@@ -268,28 +228,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var message = CreateGetLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -303,14 +249,14 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get log analytics ranking report for AFD profile. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
         /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
         /// <param name="maxRanking"> The Integer to use. </param>
@@ -319,28 +265,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RankingsResponse> GetLogAnalyticsRankings(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var message = CreateGetLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains);
             _pipeline.Send(message, cancellationToken);
@@ -354,7 +286,7 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -375,30 +307,22 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Get all available location names for AFD log analytics report. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,30 +336,22 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get all available location names for AFD log analytics report. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContinentsResponse> GetLogAnalyticsLocations(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
@@ -449,7 +365,7 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -470,30 +386,22 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetLogAnalyticsResourcesRequest(subscriptionId, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -507,30 +415,22 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourcesResponse> GetLogAnalyticsResources(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetLogAnalyticsResourcesRequest(subscriptionId, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
@@ -544,7 +444,7 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -593,14 +493,14 @@ namespace Azure.ResourceManager.Cdn
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Get Waf related log analytics report for AFD profile. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
@@ -610,24 +510,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="metrics"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var message = CreateGetWafLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -641,14 +530,14 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get Waf related log analytics report for AFD profile. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
@@ -658,24 +547,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="metrics"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var message = CreateGetWafLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes);
             _pipeline.Send(message, cancellationToken);
@@ -689,7 +567,7 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -735,14 +613,14 @@ namespace Azure.ResourceManager.Cdn
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Get WAF log analytics charts for AFD profile. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
@@ -752,28 +630,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
 
             using var message = CreateGetWafLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -787,14 +651,14 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get WAF log analytics charts for AFD profile. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
@@ -804,28 +668,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WafRankingsResponse> GetWafLogAnalyticsRankings(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
 
             using var message = CreateGetWafLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes);
             _pipeline.Send(message, cancellationToken);
@@ -839,7 +689,7 @@ namespace Azure.ResourceManager.Cdn
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

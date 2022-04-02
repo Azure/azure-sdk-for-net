@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdEndpointOperationSource : IOperationSource<AfdEndpoint>
+    internal class AfdEndpointOperationSource : IOperationSource<AfdEndpointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        AfdEndpoint IOperationSource<AfdEndpoint>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdEndpointResource IOperationSource<AfdEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AfdEndpointData.DeserializeAfdEndpointData(document.RootElement);
-            return new AfdEndpoint(_client, data);
+            return new AfdEndpointResource(_client, data);
         }
 
-        async ValueTask<AfdEndpoint> IOperationSource<AfdEndpoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdEndpointResource> IOperationSource<AfdEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AfdEndpointData.DeserializeAfdEndpointData(document.RootElement);
-            return new AfdEndpoint(_client, data);
+            return new AfdEndpointResource(_client, data);
         }
     }
 }

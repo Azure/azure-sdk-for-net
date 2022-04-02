@@ -2936,7 +2936,15 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal virtual DataLakePathClient GetPathClient(string path)
+        /// <summary>
+        /// Create a new <see cref="DataLakePathClient"/> object by appending
+        /// <paramref name="path"/> to the end of <see cref="Uri"/>.  The
+        /// new <see cref="DataLakePathClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="path">The name of the directory.</param>
+        /// <returns>A new <see cref="DataLakePathClient"/> instance.</returns>
+        public virtual DataLakePathClient GetPathClient(string path)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri)
             {

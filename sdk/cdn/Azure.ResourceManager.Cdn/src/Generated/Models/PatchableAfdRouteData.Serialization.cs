@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -67,15 +67,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CompressionSettings))
+            if (Optional.IsDefined(CacheConfiguration))
             {
-                writer.WritePropertyName("compressionSettings");
-                writer.WriteObjectValue(CompressionSettings);
-            }
-            if (Optional.IsDefined(QueryStringCachingBehavior))
-            {
-                writer.WritePropertyName("queryStringCachingBehavior");
-                writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
+                if (CacheConfiguration != null)
+                {
+                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WriteObjectValue(CacheConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("cacheConfiguration");
+                }
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {

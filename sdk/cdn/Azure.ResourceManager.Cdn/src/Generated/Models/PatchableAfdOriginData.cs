@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
+        /// <summary> The name of the origin group which contains this origin. </summary>
+        public string OriginGroupName { get; }
         /// <summary> Resource reference to the Azure origin resource. </summary>
         internal WritableSubResource AzureOrigin { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -45,8 +47,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
         public int? Weight { get; set; }
         /// <summary> The properties of the private link resource for private origin. </summary>
-        public object SharedPrivateLinkResource { get; set; }
+        public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; set; }
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         public EnabledState? EnabledState { get; set; }
+        /// <summary> Whether to enable certificate name check at origin level. </summary>
+        public bool? EnforceCertificateNameCheck { get; set; }
     }
 }

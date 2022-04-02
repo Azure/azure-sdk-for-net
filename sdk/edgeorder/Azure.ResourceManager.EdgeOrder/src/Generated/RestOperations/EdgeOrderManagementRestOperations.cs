@@ -12,35 +12,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
     internal partial class EdgeOrderManagementRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of EdgeOrderManagementRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public EdgeOrderManagementRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public EdgeOrderManagementRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-12-01";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateListAddressesAtSubscriptionLevelRequest(string subscriptionId, string filter, string skipToken)
@@ -64,7 +58,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -74,12 +68,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtSubscriptionLevelAsync(string subscriptionId, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAddressesAtSubscriptionLevelRequest(subscriptionId, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,7 +85,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -103,12 +95,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceList> ListAddressesAtSubscriptionLevel(string subscriptionId, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAddressesAtSubscriptionLevelRequest(subscriptionId, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -122,7 +112,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -151,7 +141,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(productFamiliesRequest);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -162,16 +152,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductFamilies>> ListProductFamiliesAsync(string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
 
             using var message = CreateListProductFamiliesRequest(subscriptionId, productFamiliesRequest, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -185,7 +170,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -196,16 +181,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductFamilies> ListProductFamilies(string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
 
             using var message = CreateListProductFamiliesRequest(subscriptionId, productFamiliesRequest, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -219,7 +199,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -244,7 +224,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configurationsRequest);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -254,16 +234,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductConfigurations>> ListConfigurationsAsync(string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
 
             using var message = CreateListConfigurationsRequest(subscriptionId, configurationsRequest, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -277,7 +252,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -287,16 +262,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductConfigurations> ListConfigurations(string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
 
             using var message = CreateListConfigurationsRequest(subscriptionId, configurationsRequest, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -310,7 +280,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -331,7 +301,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -340,12 +310,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductFamiliesMetadata>> ListProductFamiliesMetadataAsync(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListProductFamiliesMetadataRequest(subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -359,7 +327,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -368,12 +336,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductFamiliesMetadata> ListProductFamiliesMetadata(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListProductFamiliesMetadataRequest(subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -387,7 +353,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -408,7 +374,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -417,12 +383,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtSubscriptionLevelAsync(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderAtSubscriptionLevelRequest(subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -436,7 +400,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -445,12 +409,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceList> ListOrderAtSubscriptionLevel(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderAtSubscriptionLevelRequest(subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -464,7 +426,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -493,7 +455,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -504,12 +466,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtSubscriptionLevelAsync(string subscriptionId, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderItemsAtSubscriptionLevelRequest(subscriptionId, filter, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -523,7 +483,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -534,12 +494,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtSubscriptionLevel(string subscriptionId, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderItemsAtSubscriptionLevelRequest(subscriptionId, filter, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -553,7 +511,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -580,7 +538,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -591,16 +549,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListAddressesAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -614,7 +567,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -625,16 +578,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceList> ListAddressesAtResourceGroupLevel(string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListAddressesAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -648,7 +596,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -668,7 +616,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -678,20 +626,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceData>> GetAddressByNameAsync(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var message = CreateGetAddressByNameRequest(subscriptionId, resourceGroupName, addressName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -707,7 +647,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 404:
                     return Response.FromValue((AddressResourceData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -717,20 +657,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceData> GetAddressByName(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var message = CreateGetAddressByNameRequest(subscriptionId, resourceGroupName, addressName);
             _pipeline.Send(message, cancellationToken);
@@ -746,11 +678,11 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 404:
                     return Response.FromValue((AddressResourceData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource)
+        internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -768,9 +700,9 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addressResource);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -778,29 +710,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressResource"> Address details from request body. </param>
+        /// <param name="data"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressResource == null)
-            {
-                throw new ArgumentNullException(nameof(addressResource));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, addressResource);
+            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -808,7 +729,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -816,29 +737,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="addressResource"> Address details from request body. </param>
+        /// <param name="data"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressResource == null)
-            {
-                throw new ArgumentNullException(nameof(addressResource));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, addressResource);
+            using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -846,7 +756,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -866,7 +776,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -876,20 +786,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAddressByNameAsync(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var message = CreateDeleteAddressByNameRequest(subscriptionId, resourceGroupName, addressName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -900,7 +802,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -910,20 +812,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteAddressByName(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var message = CreateDeleteAddressByNameRequest(subscriptionId, resourceGroupName, addressName);
             _pipeline.Send(message, cancellationToken);
@@ -934,7 +828,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -962,7 +856,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -974,24 +868,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, PatchableAddressResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1001,7 +884,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1013,24 +896,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, PatchableAddressResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -1040,7 +912,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1063,7 +935,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1073,16 +945,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1096,7 +963,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1106,16 +973,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceList> ListOrderAtResourceGroupLevel(string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -1129,7 +991,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1151,7 +1013,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1162,24 +1024,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceData>> GetOrderByNameAsync(string subscriptionId, string resourceGroupName, string location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
             using var message = CreateGetOrderByNameRequest(subscriptionId, resourceGroupName, location, orderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1195,7 +1046,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 404:
                     return Response.FromValue((OrderResourceData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1206,24 +1057,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceData> GetOrderByName(string subscriptionId, string resourceGroupName, string location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
             using var message = CreateGetOrderByNameRequest(subscriptionId, resourceGroupName, location, orderName);
             _pipeline.Send(message, cancellationToken);
@@ -1239,7 +1079,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 404:
                     return Response.FromValue((OrderResourceData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1270,7 +1110,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1282,16 +1122,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderItemsAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, filter, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1305,7 +1140,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1317,16 +1152,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtResourceGroupLevel(string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderItemsAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, filter, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -1340,7 +1170,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1364,7 +1194,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1375,20 +1205,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceData>> GetOrderItemByNameAsync(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var message = CreateGetOrderItemByNameRequest(subscriptionId, resourceGroupName, orderItemName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1404,7 +1226,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 404:
                     return Response.FromValue((OrderItemResourceData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1415,20 +1237,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceData> GetOrderItemByName(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var message = CreateGetOrderItemByNameRequest(subscriptionId, resourceGroupName, orderItemName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -1444,11 +1258,11 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 404:
                     return Response.FromValue((OrderItemResourceData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource)
+        internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1466,9 +1280,9 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(orderItemResource);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1476,29 +1290,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="orderItemResource"> Order item details from request body. </param>
+        /// <param name="data"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
-        public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemResource == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemResource));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, orderItemResource);
+            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1506,7 +1309,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1514,29 +1317,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="orderItemResource"> Order item details from request body. </param>
+        /// <param name="data"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
-        public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData orderItemResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemResource == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemResource));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, orderItemResource);
+            using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1544,7 +1336,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1564,7 +1356,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1574,20 +1366,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteOrderItemByNameAsync(string subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var message = CreateDeleteOrderItemByNameRequest(subscriptionId, resourceGroupName, orderItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1598,7 +1382,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1608,20 +1392,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteOrderItemByName(string subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var message = CreateDeleteOrderItemByNameRequest(subscriptionId, resourceGroupName, orderItemName);
             _pipeline.Send(message, cancellationToken);
@@ -1632,7 +1408,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1660,7 +1436,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1672,24 +1448,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, PatchableOrderItemResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1699,7 +1464,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1711,24 +1476,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, PatchableOrderItemResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -1738,7 +1492,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1763,7 +1517,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(cancellationReason);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1774,24 +1528,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, CancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (cancellationReason == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationReason));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
             using var message = CreateCancelOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, cancellationReason);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1801,7 +1544,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1812,24 +1555,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CancelOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, CancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (cancellationReason == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationReason));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
             using var message = CreateCancelOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, cancellationReason);
             _pipeline.Send(message, cancellationToken);
@@ -1839,7 +1571,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1864,7 +1596,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(returnOrderItemDetails);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1875,24 +1607,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="returnOrderItemDetails"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ReturnOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (returnOrderItemDetails == null)
-            {
-                throw new ArgumentNullException(nameof(returnOrderItemDetails));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
 
             using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, returnOrderItemDetails);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1902,7 +1623,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1913,24 +1634,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="returnOrderItemDetails"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="returnOrderItemDetails"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ReturnOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails returnOrderItemDetails, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (returnOrderItemDetails == null)
-            {
-                throw new ArgumentNullException(nameof(returnOrderItemDetails));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(returnOrderItemDetails, nameof(returnOrderItemDetails));
 
             using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, returnOrderItemDetails);
             _pipeline.Send(message, cancellationToken);
@@ -1940,7 +1650,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1954,7 +1664,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1965,16 +1675,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtSubscriptionLevelNextPageAsync(string nextLink, string subscriptionId, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1988,7 +1693,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1999,16 +1704,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceList> ListAddressesAtSubscriptionLevelNextPage(string nextLink, string subscriptionId, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2022,7 +1722,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2036,7 +1736,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2048,20 +1748,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductFamilies>> ListProductFamiliesNextPageAsync(string nextLink, string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
 
             using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, productFamiliesRequest, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2075,7 +1767,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2087,20 +1779,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="productFamiliesRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductFamilies> ListProductFamiliesNextPage(string nextLink, string subscriptionId, ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (productFamiliesRequest == null)
-            {
-                throw new ArgumentNullException(nameof(productFamiliesRequest));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(productFamiliesRequest, nameof(productFamiliesRequest));
 
             using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, productFamiliesRequest, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2114,7 +1798,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2128,7 +1812,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2139,20 +1823,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductConfigurations>> ListConfigurationsNextPageAsync(string nextLink, string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
 
             using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, configurationsRequest, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2166,7 +1842,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2177,20 +1853,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="configurationsRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductConfigurations> ListConfigurationsNextPage(string nextLink, string subscriptionId, ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (configurationsRequest == null)
-            {
-                throw new ArgumentNullException(nameof(configurationsRequest));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(configurationsRequest, nameof(configurationsRequest));
 
             using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, configurationsRequest, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2204,7 +1872,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2218,7 +1886,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2228,16 +1896,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductFamiliesMetadata>> ListProductFamiliesMetadataNextPageAsync(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2251,7 +1914,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2261,16 +1924,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductFamiliesMetadata> ListProductFamiliesMetadataNextPage(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2284,7 +1942,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2298,7 +1956,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2308,16 +1966,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtSubscriptionLevelNextPageAsync(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2331,7 +1984,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2341,16 +1994,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceList> ListOrderAtSubscriptionLevelNextPage(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2364,7 +2012,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2378,7 +2026,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2390,16 +2038,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtSubscriptionLevelNextPageAsync(string nextLink, string subscriptionId, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, filter, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2413,7 +2056,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2425,16 +2068,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtSubscriptionLevelNextPage(string nextLink, string subscriptionId, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, filter, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2448,7 +2086,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2462,7 +2100,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2474,20 +2112,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2501,7 +2131,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2513,20 +2143,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceList> ListAddressesAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2540,7 +2162,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2554,7 +2176,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2565,20 +2187,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2592,7 +2206,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2603,20 +2217,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceList> ListOrderAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2630,7 +2236,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2644,7 +2250,7 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -2657,20 +2263,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderItemsAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2684,7 +2282,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -2697,20 +2295,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderItemsAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2724,7 +2314,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

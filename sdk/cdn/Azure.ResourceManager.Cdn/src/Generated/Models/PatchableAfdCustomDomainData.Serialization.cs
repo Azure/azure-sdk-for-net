@@ -27,6 +27,18 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("azureDnsZone");
                 JsonSerializer.Serialize(writer, AzureDnsZone);
             }
+            if (Optional.IsDefined(PreValidatedCustomDomainResourceId))
+            {
+                if (PreValidatedCustomDomainResourceId != null)
+                {
+                    writer.WritePropertyName("preValidatedCustomDomainResourceId");
+                    writer.WriteObjectValue(PreValidatedCustomDomainResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("preValidatedCustomDomainResourceId");
+                }
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

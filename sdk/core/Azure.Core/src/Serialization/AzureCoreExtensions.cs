@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
@@ -40,5 +42,62 @@ namespace Azure
         ///<returns>The data converted to the specified type.</returns>
         public static async ValueTask<T?> ToObjectAsync<T>(this BinaryData data, ObjectSerializer serializer, CancellationToken cancellationToken = default) =>
             (T?)await serializer.DeserializeAsync(data.ToStream(), typeof(T), cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Converts the json value represented by <see cref="BinaryData"/> to an object of a specific type.
+        /// </summary>
+        /// <param name="data">The <see cref="BinaryData"/> instance to convert.</param>
+        /// <returns> The object value of the json value.
+        /// If the object contains a primitive type such as string, int, double, bool, or null literal, it returns that type.
+        /// Otherwise, it returns either an object[] or Dictionary&lt;string, object&gt;.
+        /// Each value in the key value pair or list will also be converted into a primitive or another complex type recursively.
+        /// </returns>
+        public static object? ToObjectFromJson(this BinaryData data)
+        {
+            JsonElement element = data.ToObjectFromJson<JsonElement>();
+            return element.GetObject();
+        }
+
+        private static object? GetObject(in this JsonElement element)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.String:
+                    return element.GetString();
+                case JsonValueKind.Number:
+                    if (element.TryGetInt32(out int intValue))
+                    {
+                        return intValue;
+                    }
+                    if (element.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    return element.GetDouble();
+                case JsonValueKind.True:
+                    return true;
+                case JsonValueKind.False:
+                    return false;
+                case JsonValueKind.Undefined:
+                case JsonValueKind.Null:
+                    return null;
+                case JsonValueKind.Object:
+                    var dictionary = new Dictionary<string, object?>();
+                    foreach (JsonProperty jsonProperty in element.EnumerateObject())
+                    {
+                        dictionary.Add(jsonProperty.Name, jsonProperty.Value.GetObject());
+                    }
+                    return dictionary;
+                case JsonValueKind.Array:
+                    var list = new List<object?>();
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        list.Add(item.GetObject());
+                    }
+                    return list.ToArray();
+                default:
+                    throw new NotSupportedException("Not supported value kind " + element.ValueKind);
+            }
+        }
     }
 }

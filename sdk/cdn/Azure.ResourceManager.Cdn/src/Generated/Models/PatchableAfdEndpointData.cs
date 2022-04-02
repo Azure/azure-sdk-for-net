@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Endpoint tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
-        public int? OriginResponseTimeoutSeconds { get; set; }
+        /// <summary> The name of the profile which holds the endpoint. </summary>
+        public string ProfileName { get; }
         /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
         public EnabledState? EnabledState { get; set; }
     }

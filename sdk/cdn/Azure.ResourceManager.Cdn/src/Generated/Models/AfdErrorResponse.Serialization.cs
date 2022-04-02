@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static AfdErrorResponse DeserializeAfdErrorResponse(JsonElement element)
         {
-            Optional<ErrorResponse> error = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
             }

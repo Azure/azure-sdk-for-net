@@ -31,18 +31,25 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions(): this(Default)
+        protected ClientOptions(): this(Default, null)
         {
         }
 
-        internal ClientOptions(ClientOptions? clientOptions)
+        /// <summary>
+        /// Creates a new instance of <see cref="ClientOptions"/> with the specificed <see cref="DiagnosticsOptions"/>.
+        /// </summary>
+        /// <param name="diagnostics"><see cref="DiagnosticsOptions"/> to be used for <see cref="Diagnostics"/>.</param>
+        protected ClientOptions(DiagnosticsOptions? diagnostics)
+            : this(Default, diagnostics)
+        {
+        }
+
+        internal ClientOptions(ClientOptions? clientOptions, DiagnosticsOptions? diagnostics)
         {
             if (clientOptions != null)
             {
                 Retry = new RetryOptions(clientOptions.Retry);
-
-                Diagnostics = new DiagnosticsOptions(clientOptions.Diagnostics);
-
+                Diagnostics = diagnostics ?? new DiagnosticsOptions(clientOptions.Diagnostics);
                 _transport = clientOptions.Transport;
                 if (clientOptions.Policies != null)
                 {
@@ -51,11 +58,12 @@ namespace Azure.Core
             }
             else
             {
-                // Intentionally leaving this null. The only consumer of this branch is
-                // DefaultAzureCredential that would re-assign the value
-                _transport = null!;
-                Diagnostics = new DiagnosticsOptions();
-                Retry = new RetryOptions();
+                // Implementation Note: this code must use the copy constructors on DiagnosticsOptions and RetryOptions specifying
+                // null as the argument rather than calling their default constructors. Calling their default constructors would result
+                // in a stack overflow as this constructor is called from a static initializer.
+                _transport = GetDefaultTransport();
+                Diagnostics = new DiagnosticsOptions(null);
+                Retry = new RetryOptions(null);
             }
         }
 
@@ -103,6 +111,19 @@ namespace Azure.Core
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
+
+        private static HttpPipelineTransport GetDefaultTransport()
+        {
+#if NETFRAMEWORK
+            if (!AppContextSwitchHelper.GetConfigValue(
+                "Azure.Core.Pipeline.DisableHttpWebRequestTransport",
+                "AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT"))
+            {
+                return HttpWebRequestTransport.Shared;
+            }
+#endif
+            return HttpClientTransport.Shared;
+        }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

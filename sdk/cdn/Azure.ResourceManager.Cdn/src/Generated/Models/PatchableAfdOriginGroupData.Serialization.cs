@@ -39,18 +39,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Optional.IsDefined(ResponseBasedAfdOriginErrorDetectionSettings))
-            {
-                if (ResponseBasedAfdOriginErrorDetectionSettings != null)
-                {
-                    writer.WritePropertyName("responseBasedAfdOriginErrorDetectionSettings");
-                    writer.WriteObjectValue(ResponseBasedAfdOriginErrorDetectionSettings);
-                }
-                else
-                {
-                    writer.WriteNull("responseBasedAfdOriginErrorDetectionSettings");
-                }
-            }
             if (Optional.IsDefined(SessionAffinityState))
             {
                 writer.WritePropertyName("sessionAffinityState");

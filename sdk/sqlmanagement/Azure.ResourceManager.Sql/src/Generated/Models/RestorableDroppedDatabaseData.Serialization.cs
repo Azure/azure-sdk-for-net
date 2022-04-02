@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static RestorableDroppedDatabaseData DeserializeRestorableDroppedDatabaseData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<SqlSku> sku = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))

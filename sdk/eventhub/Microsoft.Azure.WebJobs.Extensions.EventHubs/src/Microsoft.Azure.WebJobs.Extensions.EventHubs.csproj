@@ -13,7 +13,9 @@
 
   <ItemGroup>
     <!--
-        TEMP: Package reference is needed until the CheckpointStore is included in a release.
+        TEMP:
+            Project reference is needed until the CheckpointStore is included in a release.  Revert when
+            the 5.7.x line is released for GA.
 
     <PackageReference Include="Azure.Messaging.EventHubs" />
     -->

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Tests
         public void DefaultValueIsNull()
         {
             var defaultValue = default(ArmEnvironment);
-            Assert.IsNull(defaultValue.BaseUri);
+            Assert.IsNull(defaultValue.Endpoint);
             Assert.IsNull(defaultValue.Audience);
             Assert.IsNull(defaultValue.DefaultScope);
         }
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Tests
         [TestCase]
         public void DefaultScope()
         {
-            Assert.AreEqual("https://management.azure.com//.default", ArmEnvironment.AzureCloud.DefaultScope);
-            Assert.AreEqual("https://management.chinacloudapi.cn/.default", ArmEnvironment.AzureChinaCloud.DefaultScope);
-            Assert.AreEqual("https://management.usgovcloudapi.net/.default", ArmEnvironment.AzureUSGovernment.DefaultScope);
-            Assert.AreEqual("https://management.microsoftazure.de/.default", ArmEnvironment.AzureGermanCloud.DefaultScope);
+            Assert.AreEqual("https://management.azure.com//.default", ArmEnvironment.AzurePublicCloud.DefaultScope);
+            Assert.AreEqual("https://management.chinacloudapi.cn/.default", ArmEnvironment.AzureChina.DefaultScope);
+            Assert.AreEqual("https://management.usgovcloudapi.net/.default", ArmEnvironment.AzureGovernment.DefaultScope);
+            Assert.AreEqual("https://management.microsoftazure.de/.default", ArmEnvironment.AzureGermany.DefaultScope);
             Assert.AreEqual("https://foo.com/.default", new ArmEnvironment(new Uri("https://foo.com"), "https://foo.com").DefaultScope);
         }
     }

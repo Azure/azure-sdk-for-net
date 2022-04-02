@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create NetworkWatcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
             //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName2, networkWatcherName, properties);
 
             TopologyParameters tpProperties = new TopologyParameters() { TargetResourceGroupName = resourceGroupName1 };

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -35,6 +36,8 @@ namespace Azure.Core.TestFramework
         {
             IsAsync = isAsync;
         }
+
+        protected IReadOnlyCollection<IInterceptor> AdditionalInterceptors { get; set; }
 
         protected virtual DateTime TestStartTime => TestExecutionContext.CurrentContext.StartTime;
 
@@ -140,8 +143,19 @@ namespace Azure.Core.TestFramework
 
         protected internal virtual object InstrumentOperation(Type operationType, object operation)
         {
-            return operation;
+            var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+
+            // The assumption is that any recorded or live tests deriving from RecordedTestBase, and that any unit tests deriving directly from ClientTestBase are equivalent to playback.
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(RecordedTestMode.Playback) }).ToArray();
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                interceptorArray);
         }
+
+        protected internal T InstrumentOperation<T>(T operation) where T : Operation =>
+            (T)InstrumentOperation(typeof(T), operation);
 
         protected T GetOriginal<T>(T instrumented)
         {

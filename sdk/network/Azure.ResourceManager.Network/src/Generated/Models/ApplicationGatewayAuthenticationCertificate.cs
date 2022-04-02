@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the authentication certificate that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
-        internal ApplicationGatewayAuthenticationCertificate(string id, string name, string etag, string type, string data, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayAuthenticationCertificate(string id, string name, string etag, string resourceType, string data, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Data = data;
             ProvisioningState = provisioningState;
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Certificate public data. </summary>
         public string Data { get; set; }
         /// <summary> The provisioning state of the authentication certificate resource. </summary>
