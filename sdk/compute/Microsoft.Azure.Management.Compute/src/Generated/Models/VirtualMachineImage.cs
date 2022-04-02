@@ -48,9 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'V2'</param>
         /// <param name="disallowed">Specifies disallowed configuration for the
         /// VirtualMachine created from the image</param>
-        /// <param name="architecture">Possible values include: 'x64',
-        /// 'Arm64'</param>
-        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties), string hyperVGeneration = default(string), DisallowedConfiguration disallowed = default(DisallowedConfiguration), IList<VirtualMachineImageFeature> features = default(IList<VirtualMachineImageFeature>), string architecture = default(string))
+        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties), string hyperVGeneration = default(string), DisallowedConfiguration disallowed = default(DisallowedConfiguration), IList<VirtualMachineImageFeature> features = default(IList<VirtualMachineImageFeature>))
             : base(name, location, id, tags, extendedLocation)
         {
             Plan = plan;
@@ -60,7 +58,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             HyperVGeneration = hyperVGeneration;
             Disallowed = disallowed;
             Features = features;
-            Architecture = architecture;
             CustomInit();
         }
 
@@ -106,12 +103,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.features")]
         public IList<VirtualMachineImageFeature> Features { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'x64', 'Arm64'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.architecture")]
-        public string Architecture { get; set; }
 
         /// <summary>
         /// Validate the object.
