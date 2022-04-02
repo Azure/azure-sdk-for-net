@@ -305,8 +305,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     }
     public partial class UploadManifestOptions
     {
-        public UploadManifestOptions() { }
-        public string Tag { get { throw null; } set { } }
+        public UploadManifestOptions(string tag = null) { }
+        public string Tag { get { throw null; } }
     }
     public partial class UploadManifestResult
     {
