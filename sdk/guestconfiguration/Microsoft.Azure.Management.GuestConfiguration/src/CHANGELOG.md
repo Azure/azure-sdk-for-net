@@ -1,5 +1,5 @@
 # Microsoft.Azure.Management.GuestConfiguration release notes
-## Changes in 1.6.0
+## Changes in 2.0.0
 ### Features
 Supports Assignment Type in ARG
 
