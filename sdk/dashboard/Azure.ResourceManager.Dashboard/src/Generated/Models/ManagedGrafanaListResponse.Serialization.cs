@@ -12,11 +12,11 @@ using Azure.ResourceManager.Dashboard;
 
 namespace Azure.ResourceManager.Dashboard.Models
 {
-    internal partial class GrafanaResourceListResponse
+    internal partial class ManagedGrafanaListResponse
     {
-        internal static GrafanaResourceListResponse DeserializeGrafanaResourceListResponse(JsonElement element)
+        internal static ManagedGrafanaListResponse DeserializeManagedGrafanaListResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<GrafanaResourceData>> value = default;
+            Optional<IReadOnlyList<ManagedGrafanaData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Dashboard.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GrafanaResourceData> array = new List<GrafanaResourceData>();
+                    List<ManagedGrafanaData> array = new List<ManagedGrafanaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GrafanaResourceData.DeserializeGrafanaResourceData(item));
+                        array.Add(ManagedGrafanaData.DeserializeManagedGrafanaData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dashboard.Models
                     continue;
                 }
             }
-            return new GrafanaResourceListResponse(Optional.ToList(value), nextLink.Value);
+            return new ManagedGrafanaListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }
