@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Dns.Tests
         //public ResourcesOperations ResourcesOperations { get; set; }
         //public ProvidersOperations ResourceProvidersOperations { get; set; }
         public ResourceGroupCollection ResourceGroupsOperations { get; set; }
-        public RecordSetsOperations RecordSetsOperations { get; set; }
-        public DnsManagementClient DnsManagementClient { get; set; }
-        public ZonesOperations ZonesOperations { get; set; }
+        //public RecordSetsOperations RecordSetsOperations { get; set; }
+        //public DnsManagementClient DnsManagementClient { get; set; }
+        //public ZonesOperations ZonesOperations { get; set; }
         protected DnsManagementClientBase(bool isAsync) : base(isAsync)
         {
         }
@@ -28,34 +28,34 @@ namespace Azure.ResourceManager.Dns.Tests
         {
         }
 
-        protected async Task InitializeClients()
-        {
-            SubscriptionId = TestEnvironment.SubscriptionId;
-            ResourcesManagementClient = this.GetResourceManagementClient();
-            //ResourcesOperations = ResourcesManagementClient.Resources;
-            //ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            SubscriptionResource sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
-            ResourceGroupsOperations = sub.GetResourceGroups();
-            DnsManagementClient = this.GetDnsManagementClient();
-            RecordSetsOperations = DnsManagementClient.RecordSets;
-            ZonesOperations = DnsManagementClient.Zones;
-        }
-        protected async Task initNewRecord()
-        {
-            ResourcesManagementClient = this.GetResourceManagementClient();
-            //ResourcesOperations = ResourcesManagementClient.Resources;
-            //ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            SubscriptionResource sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
-            ResourceGroupsOperations = sub.GetResourceGroups();
-            DnsManagementClient = this.GetDnsManagementClient();
-            RecordSetsOperations = DnsManagementClient.RecordSets;
-            ZonesOperations = DnsManagementClient.Zones;
-        }
+        //protected async Task InitializeClients()
+        //{
+        //    SubscriptionId = TestEnvironment.SubscriptionId;
+        //    ResourcesManagementClient = this.GetResourceManagementClient();
+        //    //ResourcesOperations = ResourcesManagementClient.Resources;
+        //    //ResourceProvidersOperations = ResourcesManagementClient.Providers;
+        //    SubscriptionResource sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
+        //    ResourceGroupsOperations = sub.GetResourceGroups();
+        //    DnsManagementClient = this.GetDnsManagementClient();
+        //    RecordSetsOperations = DnsManagementClient.RecordSets;
+        //    ZonesOperations = DnsManagementClient.Zones;
+        //}
+        //protected async Task initNewRecord()
+        //{
+        //    ResourcesManagementClient = this.GetResourceManagementClient();
+        //    //ResourcesOperations = ResourcesManagementClient.Resources;
+        //    //ResourceProvidersOperations = ResourcesManagementClient.Providers;
+        //    SubscriptionResource sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
+        //    ResourceGroupsOperations = sub.GetResourceGroups();
+        //    DnsManagementClient = this.GetDnsManagementClient();
+        //    RecordSetsOperations = DnsManagementClient.RecordSets;
+        //    ZonesOperations = DnsManagementClient.Zones;
+        //}
 
-        internal DnsManagementClient GetDnsManagementClient()
-        {
-            return CreateClient<DnsManagementClient>(this.SubscriptionId,
-                TestEnvironment.Credential, InstrumentClientOptions(new DnsManagementClientOptions()));
-        }
+        //internal DnsManagementClient GetDnsManagementClient()
+        //{
+        //    return CreateClient<DnsManagementClient>(this.SubscriptionId,
+        //        TestEnvironment.Credential, InstrumentClientOptions(new DnsManagementClientOptions()));
+        //}
     }
 }

@@ -19,34 +19,35 @@ namespace Azure.ResourceManager.Dns.Tests.Samples
         public void ClientAuth()
         {
 #endif
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-#endregion Snippet:Readme_AuthClient
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            #endregion Snippet:Readme_AuthClient
         }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void DefaultSubscription()
-        {
-            #region Snippet:Readme_DefaultSubscription
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
-            #endregion
-        }
+        //        [Test]
+        //        [Ignore("Only verifying that the sample builds")]
+        //        public void DefaultSubscription()
+        //        {
+        //            #region Snippet:Readme_DefaultSubscription
+        //            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+        //            Subscription subscription = armClient.GetDefaultSubscription();
+        //            #endregion
+        //        }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task CreateResourceGroup()
-        {
-            #region Snippet:Readme_CreateResourceGroupCollection
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
-            // With the collection, we can create a new resource group with an specific name
-            string rgName = "myRgName";
-            AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
-            #endregion
-        }
+        //        [Test]
+        //        [Ignore("Only verifying that the sample builds")]
+        //        public async Task CreateResourceGroup()
+        //        {
+        //            #region Snippet:Readme_CreateResourceGroupCollection
+        //            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+        //            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+        //            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+        //            // With the collection, we can create a new resource group with an specific name
+        //            string rgName = "myRgName";
+        //            AzureLocation location = AzureLocation.WestUS2;
+        //            ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(rgName, new ResourceGroupData(location));
+        //            ResourceGroup resourceGroup = lro.Value;
+        //            #endregion
+        //        }
+        //    }
     }
 }
