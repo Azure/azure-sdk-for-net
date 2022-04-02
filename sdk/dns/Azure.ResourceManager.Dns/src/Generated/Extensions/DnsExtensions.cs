@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetAResource" /> object. </returns>
         public static RecordSetAResource GetRecordSetAResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetAResource>(() =>
             {
                 RecordSetAResource.ValidateResourceId(id);
                 return new RecordSetAResource(client, id);

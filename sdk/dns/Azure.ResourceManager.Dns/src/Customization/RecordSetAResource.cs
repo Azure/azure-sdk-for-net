@@ -13,8 +13,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("_data")]
-
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
@@ -23,6 +21,10 @@ namespace Azure.ResourceManager.Dns
     /// from an instance of <see cref="ArmClient" /> using the GetRecordSetAResource method.
     /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetA method.
     /// </summary>
+    [CodeGenSuppress("RecordSetDataA", typeof(RecordSetDataA))]
+    [CodeGenSuppress("_data", typeof(ResourceIdentifier))]
+    [CodeGenSuppress("RecordSetDataA", typeof(ResourceIdentifier))]
+    [CodeGenSuppress("RecordSetsRestOperations", typeof(RecordSetDataA))]
     public partial class RecordSetAResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RecordSetAResource"/> instance. </summary>
