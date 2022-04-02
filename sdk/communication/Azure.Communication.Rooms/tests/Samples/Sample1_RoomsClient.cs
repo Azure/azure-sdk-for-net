@@ -40,10 +40,7 @@ namespace Azure.Communication.Rooms.Tests.samples
             var createdRoomId = createCommunicationRoom.Id;
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
-            Dictionary<string, object?> updateRoomParticipants = new Dictionary<string, object?>();
-            updateRoomParticipants.Add("8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063e", new RoomParticipant());
-            updateRoomParticipants.Add("8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063f", null);
-            Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, updateRoomParticipants, validFrom, validUntil);
+            Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
             CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
 

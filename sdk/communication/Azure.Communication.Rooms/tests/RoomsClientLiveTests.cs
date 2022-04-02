@@ -49,19 +49,20 @@ namespace Azure.Communication.Rooms.Tests
                 updateRoomParticipants.Add(communicationUser3, new RoomParticipant());
                 updateRoomParticipants.Add(communicationUser2, null);
 
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, updateRoomParticipants, validFrom, validUntil);
+                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
                 Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
                 Assert.AreEqual(2, updateCommunicationRoom.Participants.Count, "Expected UpdateRoom participants count to be 2");
                 Assert.IsTrue(updateCommunicationRoom.Participants.ContainsKey(communicationUser1), "Expected UpdateRoom to contain user1");
-                Assert.IsTrue(updateCommunicationRoom.Participants.ContainsKey(communicationUser3), "Expected UpdateRoom to contain user3");
+                Assert.IsTrue(updateCommunicationRoom.Participants.ContainsKey(communicationUser2), "Expected UpdateRoom to contain user2");
+                Assert.AreEqual(updateCommunicationRoom.ValidUntil, updateCommunicationRoom.ValidUntil);
 
                 Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
                 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
-                Assert.AreEqual(2, updateCommunicationRoom.Participants.Count, "Expected GetRoom participants count to be 2");
-                Assert.IsTrue(updateCommunicationRoom.Participants.ContainsKey(communicationUser1), "Expected GetRoom to contain user1");
-                Assert.IsTrue(updateCommunicationRoom.Participants.ContainsKey(communicationUser3), "Expected GetRoom to contain user3");
+                Assert.AreEqual(2, getCommunicationRoom.Participants.Count, "Expected GetRoom participants count to be 2");
+                Assert.IsTrue(getCommunicationRoom.Participants.ContainsKey(communicationUser1), "Expected GetRoom to contain user1");
+                Assert.IsTrue(getCommunicationRoom.Participants.ContainsKey(communicationUser2), "Expected GetRoom to contain user2");
 
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
                 Assert.AreEqual(204, deleteRoomResponse.Status);
@@ -160,7 +161,7 @@ namespace Azure.Communication.Rooms.Tests
 
                 var createdRoomId = createCommunicationRoom.Id;
 
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, default, validFrom, validUntil);
+                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
                 Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
                 Assert.AreEqual(validFrom, updateCommunicationRoom.ValidFrom);

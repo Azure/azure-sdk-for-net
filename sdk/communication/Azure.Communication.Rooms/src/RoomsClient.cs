@@ -156,19 +156,18 @@ namespace Azure.Communication.Rooms
         /// Updates a room asynchronously.
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="participants"></param>
         /// <param name="validFrom"></param>
         /// <param name="validUntil"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<CommunicationRoom>> UpdateRoomAsync(string roomId, IReadOnlyDictionary<string, object> participants = default, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationRoom>> UpdateRoomAsync(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateRoom)}");
             scope.Start();
             try
             {
                 Response<UpdateRoomResponse> updateRoomResponse =
-                    await RoomsServiceClient.UpdateRoomAsync(roomId, _updateRoomRequest(participants, validFrom, validUntil), cancellationToken).ConfigureAwait(false);
+                    await RoomsServiceClient.UpdateRoomAsync(roomId, _updateRoomRequest(default, validFrom, validUntil), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -182,19 +181,18 @@ namespace Azure.Communication.Rooms
         /// Updates a room.
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="participants"></param>
         /// <param name="validFrom"></param>
         /// <param name="validUntil"></param>
         /// <param name="cancellationToken"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public virtual Response<CommunicationRoom> UpdateRoom(string roomId, IReadOnlyDictionary<string, object> participants = default, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationRoom> UpdateRoom(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateRoom)}");
             scope.Start();
             try
             {
                 Response<UpdateRoomResponse> updateRoomResponse =
-                    RoomsServiceClient.UpdateRoom(roomId, _updateRoomRequest(participants, validFrom, validUntil), cancellationToken);
+                    RoomsServiceClient.UpdateRoom(roomId, _updateRoomRequest(default, validFrom, validUntil), cancellationToken);
                 return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
             }
             catch (Exception ex)

@@ -41,20 +41,17 @@ namespace Azure.Communication.Rooms.Tests
             var roomId = "123";
             Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
             var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
-            var validUntil = validFrom.AddDays(1);
-            Dictionary<string, object?> updateRoomParticipants = new Dictionary<string, object?>();
-            updateRoomParticipants.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd9", new RoomParticipant());
-            updateRoomParticipants.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd8", null);
+            var validUntil = validFrom.AddDays(2);
             Response<CommunicationRoom>? expectedRoomResult = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
             mockRoomsClient
-                .Setup(roomsClient => roomsClient.UpdateRoomAsync(roomId, updateRoomParticipants, validFrom, validUntil, cancellationToken))
+                .Setup(roomsClient => roomsClient.UpdateRoomAsync(roomId, validFrom, validUntil, cancellationToken))
                 .ReturnsAsync(expectedRoomResult);
 
-            Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.UpdateRoomAsync(roomId, updateRoomParticipants, validFrom, validUntil, cancellationToken);
+            Response<CommunicationRoom> actualResponse = await mockRoomsClient.Object.UpdateRoomAsync(roomId, validFrom, validUntil, cancellationToken);
 
-            mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoomAsync(roomId, updateRoomParticipants, validFrom, validUntil, cancellationToken), Times.Once());
+            mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoomAsync(roomId, validFrom, validUntil, cancellationToken), Times.Once());
             Assert.AreEqual(expectedRoomResult, actualResponse);
         }
 
@@ -122,20 +119,17 @@ namespace Azure.Communication.Rooms.Tests
             Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
             string roomId = "123";
             var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
-            var validUntil = validFrom.AddDays(1);
-            Dictionary<string, object?> updateRoomParticipants = new Dictionary<string, object?>();
-            updateRoomParticipants.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd9", new RoomParticipant());
-            updateRoomParticipants.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd8", null);
+            var validUntil = validFrom.AddDays(2);
             Response<CommunicationRoom>? expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
             mockRoomsClient
-                .Setup(roomsClient => roomsClient.UpdateRoom(roomId, updateRoomParticipants, validFrom, validUntil, cancellationToken))
+                .Setup(roomsClient => roomsClient.UpdateRoom(roomId, validFrom, validUntil, cancellationToken))
                 .Returns(expectedRoomResult);
 
-            Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.UpdateRoom(roomId, updateRoomParticipants, validFrom, validUntil, cancellationToken);
+            Response<CommunicationRoom> actualResponse = mockRoomsClient.Object.UpdateRoom(roomId, validFrom, validUntil, cancellationToken);
 
-            mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoom(roomId, updateRoomParticipants, validFrom, validUntil, cancellationToken), Times.Once());
+            mockRoomsClient.Verify(roomsClient => roomsClient.UpdateRoom(roomId, validFrom, validUntil, cancellationToken), Times.Once());
             Assert.AreEqual(expectedRoomResult, actualResponse);
         }
 

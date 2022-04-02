@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "275",
         "Content-Type": "application/json",
-        "traceparent": "00-34f64ae6317ab03dd2daf5a5634b329d-93cf40937551acee-00",
-        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20220329.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "17a629272d225c2ff3920cc638c3b399",
+        "traceparent": "00-9bd8b49226ace941b6c33564e5f6345d-681dc3e4650df272-00",
+        "User-Agent": "azsdk-net-Communication.Rooms/1.0.0-alpha.20220401.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "71bf64396b6d10897b1974eb13375006",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 30 Mar 2022 00:07:49 GMT",
+        "x-ms-date": "Sat, 02 Apr 2022 02:36:04 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,17 +27,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-04-07, 2022-02-01",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 30 Mar 2022 00:07:50 GMT",
-        "Location": "99450171076184208",
-        "MS-CV": "HT5/FxWXvESpzJzqXVmcfQ.0",
+        "Date": "Sat, 02 Apr 2022 02:36:05 GMT",
+        "Location": "99472201854136849",
+        "MS-CV": "J3XeLpLgCUiJKdu9zPD38A.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0Vp9DYgAAAADTITvqvPNYQb6AbQazxudeVFlPMDFFREdFMjUwOABmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Azure-Ref": "0lbZHYgAAAACkBQ2ZHYWyTIqQHGJs2YdcU0cyRURHRTI3MTYAZjA5YTRjMTMtMjFmMS00OGVjLTljZjctNjY1NDU2ODRiNjQy",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "room": {
-          "id": "99450171076184208",
-          "createdDateTime": "2022-03-30T00:07:50.2816843\u002B00:00",
+          "id": "99472201854136849",
+          "createdDateTime": "2022-04-02T02:36:05.2759088\u002B00:00",
           "validFrom": "2022-05-01T00:00:00\u002B00:00",
           "validUntil": "2022-05-02T00:00:00\u002B00:00",
           "participants": {
@@ -50,6 +50,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rooms-ppe-us.ppe.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1264273491"
+    "RandomSeed": "2040179110"
   }
 }
