@@ -125,10 +125,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             var manifest = CreateManifest();
-            var uploadResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions()
-            {
-                Tag = tag
-            });
+            var uploadResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions(tag));
             var digest = uploadResult.Value.Digest;
 
             // Assert
@@ -181,10 +178,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 "}";
 
             using Stream manifest = new MemoryStream(Encoding.ASCII.GetBytes(payload));
-            var uploadResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions()
-            {
-                Tag = tag
-            });
+            var uploadResult = await client.UploadManifestAsync(manifest, new UploadManifestOptions(tag));
             var digest = uploadResult.Value.Digest;
 
             // Assert
