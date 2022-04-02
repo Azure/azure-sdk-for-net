@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //prepare a storage account
             string accountName = Recording.GenerateAssetName("storage");
             StorageSku sku = new StorageSku("Standard_LRS");
-            var storageAccountCreateParameters = new StorageAccountCreateParameters(sku, StorageKind.StorageV2, "eastus2")
+            var storageAccountCreateParameters = new StorageAccountCreateOrUpdateInfo(sku, StorageKind.StorageV2, "eastus2")
             {
                 AccessTier = AccessTier.Hot
             };
