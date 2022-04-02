@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.Management.Dns.Tests
 {
-    public class RecordSetCollectionTest : DnsManagementClientBase
+    public class RecordSetCollectionTest : DnsServiceClientTestBase
     {
         //private string location;
         //private DnsZone zone;

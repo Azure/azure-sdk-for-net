@@ -8,6 +8,5 @@ namespace Azure.ResourceManager.Dns.Tests
 {
     public class DnsManagementTestEnvironment : TestEnvironment
     {
-        public string TestDomain => GetRecordedVariable("DNS_TEST_DOMAIN");
     }
 }

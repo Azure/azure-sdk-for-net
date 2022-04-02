@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using Azure.ResourceManager;
 namespace Azure.Management.Dns.Tests
 {
-    public class DnsZoneCollectionTest : DnsManagementClientBase
+    public class DnsZoneCollectionTest : DnsServiceClientTestBase
     {
         //private string location;
         //private string resourceGroupName;

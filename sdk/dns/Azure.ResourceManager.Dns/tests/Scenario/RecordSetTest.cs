@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Azure.Management.Dns.Tests
 {
-    public class RecordSetTest : DnsManagementClientBase
+    public class RecordSetTest : DnsServiceClientTestBase
     {
         //private string location;
         //private DnsZone zone;
