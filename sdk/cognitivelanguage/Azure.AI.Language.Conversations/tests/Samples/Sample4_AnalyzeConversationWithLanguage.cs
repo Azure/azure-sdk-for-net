@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-            TextConversationItem textConversationItem = new TextConversationItem(
+            TextConversationItem input = new TextConversationItem(
                 participantId: "1",
                 id: "1",
                 text: "Tendremos 2 platos de nigiri de salmón braseado.")
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 conversationsProject);
 #else
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                textConversationItem,
+                input,
                 TestEnvironment.Project);
 #endif
 
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-            Console.WriteLine("Intents");
+            Console.WriteLine("Intents:");
             foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category: {intent.Category}");
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
-            TextConversationItem textConversationItem = new TextConversationItem(
+            TextConversationItem input = new TextConversationItem(
                 participantId: "1",
                 id: "1",
                 text: "Tendremos 2 platos de nigiri de salmón braseado.")
@@ -108,7 +108,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 conversationsProject);
 #else
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                textConversationItem,
+                input,
                 TestEnvironment.Project);
 #endif
 
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-            Console.WriteLine("Intents");
+            Console.WriteLine("Intents:");
             foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category: {intent.Category}");

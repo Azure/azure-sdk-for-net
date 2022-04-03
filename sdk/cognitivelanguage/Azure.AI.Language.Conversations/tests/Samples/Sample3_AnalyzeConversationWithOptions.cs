@@ -17,11 +17,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-            TextConversationItem textConversationItem = new TextConversationItem(
+            TextConversationItem input = new TextConversationItem(
                  participantId: "1",
                  id: "1",
                  text: "Send an email to Carol about the tomorrow's demo.");
-            ConversationAnalysisOptions analysisInput = new ConversationAnalysisOptions(textConversationItem) { IsLoggingEnabled = true, Verbose = true };
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(input)
+            {
+                IsLoggingEnabled = true,
+                Verbose = true
+            };
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -34,9 +38,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #else
 
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                textConversationItem,
+                input,
                 TestEnvironment.Project,
-                analysisInput);
+                options);
 #endif
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -45,7 +49,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-            Console.WriteLine("Intents");
+            Console.WriteLine("Intents:");
             foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category: {intent.Category}");
@@ -91,11 +95,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
-            TextConversationItem textConversationItem = new TextConversationItem(
+            TextConversationItem input = new TextConversationItem(
                  participantId: "1",
                  id: "1",
                  text: "Send an email to Carol about the tomorrow's demo.");
-            ConversationAnalysisOptions analysisInput = new ConversationAnalysisOptions(textConversationItem) { IsLoggingEnabled = true, Verbose = true };
+            ConversationAnalysisOptions options = new ConversationAnalysisOptions(input)
+            {
+                IsLoggingEnabled = true,
+                Verbose = true
+            };
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -108,9 +116,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #else
 
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                textConversationItem,
+                input,
                 TestEnvironment.Project,
-                analysisInput);
+                options);
 #endif
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -119,7 +127,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-            Console.WriteLine("Intents");
+            Console.WriteLine("Intents:");
             foreach (ConversationIntent intent in conversationPrediction.Intents)
             {
                 Console.WriteLine($"Category: {intent.Category}");
