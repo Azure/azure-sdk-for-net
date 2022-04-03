@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The input ConversationItem and its optional parameters. </summary>
-    public partial class AnalyzeConversationOptions
+    public partial class ConversationAnalysisOptions
     {
-        /// <summary> Initializes a new instance of AnalyzeConversationOptions. </summary>
+        /// <summary> Initializes a new instance of ConversationAnalysisOptions. </summary>
         /// <param name="conversationItem"> The abstract base for a user input formatted conversation (e.g., Text, Transcript). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationItem"/> is null. </exception>
-        public AnalyzeConversationOptions(ConversationItemBase conversationItem)
+        public ConversationAnalysisOptions(ConversationItemBase conversationItem)
         {
             if (conversationItem == null)
             {
