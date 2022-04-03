@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                  participantId: "1",
                  id: "1",
                  text: "Send an email to Carol about the tomorrow's demo.");
-            AnalyzeConversationOptions analysisInput = new AnalyzeConversationOptions(textConversationItem) { IsLoggingEnabled = true };
+            ConversationAnalysisOptions analysisInput = new ConversationAnalysisOptions(textConversationItem) { IsLoggingEnabled = true, Verbose = true };
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -36,8 +36,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
                 textConversationItem,
                 TestEnvironment.Project,
-                analysisInput,
-                verbose: true);
+                analysisInput);
 #endif
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -96,7 +95,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                  participantId: "1",
                  id: "1",
                  text: "Send an email to Carol about the tomorrow's demo.");
-            AnalyzeConversationOptions analysisInput = new AnalyzeConversationOptions(textConversationItem) { IsLoggingEnabled = true };
+            ConversationAnalysisOptions analysisInput = new ConversationAnalysisOptions(textConversationItem) { IsLoggingEnabled = true, Verbose = true };
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -111,8 +110,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
                 textConversationItem,
                 TestEnvironment.Project,
-                analysisInput,
-                verbose: true);
+                analysisInput);
 #endif
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
