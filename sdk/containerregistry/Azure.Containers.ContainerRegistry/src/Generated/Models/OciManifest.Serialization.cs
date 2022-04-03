@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
-    internal partial class OCIManifest : IUtf8JsonSerializable
+    [JsonConverter(typeof(OciManifestConverter))]
+    public partial class OciManifest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,11 +54,11 @@ namespace Azure.Containers.ContainerRegistry
             writer.WriteEndObject();
         }
 
-        internal static OCIManifest DeserializeOCIManifest(JsonElement element)
+        internal static OciManifest DeserializeOciManifest(JsonElement element)
         {
-            Optional<Descriptor> config = default;
-            Optional<IList<Descriptor>> layers = default;
-            Optional<Annotations> annotations = default;
+            Optional<OciBlobDescriptor> config = default;
+            Optional<IList<OciBlobDescriptor>> layers = default;
+            Optional<OciAnnotations> annotations = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,7 +69,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = Descriptor.DeserializeDescriptor(property.Value);
+                    config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -76,10 +79,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Descriptor> array = new List<Descriptor>();
+                    List<OciBlobDescriptor> array = new List<OciBlobDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Descriptor.DeserializeDescriptor(item));
+                        array.Add(OciBlobDescriptor.DeserializeOciBlobDescriptor(item));
                     }
                     layers = array;
                     continue;
@@ -91,7 +94,7 @@ namespace Azure.Containers.ContainerRegistry
                         annotations = null;
                         continue;
                     }
-                    annotations = Annotations.DeserializeAnnotations(property.Value);
+                    annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schemaVersion"))
@@ -105,7 +108,20 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OCIManifest(Optional.ToNullable(schemaVersion), config.Value, Optional.ToList(layers), annotations.Value);
+            return new OciManifest(config.Value, Optional.ToList(layers), annotations.Value, Optional.ToNullable(schemaVersion));
+        }
+
+        internal partial class OciManifestConverter : JsonConverter<OciManifest>
+        {
+            public override void Write(Utf8JsonWriter writer, OciManifest model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override OciManifest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeOciManifest(document.RootElement);
+            }
         }
     }
 }
