@@ -92,6 +92,8 @@ namespace Azure.AI.Language.Conversations
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            scope.AddAttribute("projectName", project.ProjectName);
+            scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
 
             try
@@ -124,6 +126,8 @@ namespace Azure.AI.Language.Conversations
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            scope.AddAttribute("projectName", project.ProjectName);
+            scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
 
             try
