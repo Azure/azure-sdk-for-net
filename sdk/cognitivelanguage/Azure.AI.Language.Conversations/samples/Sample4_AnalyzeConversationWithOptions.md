@@ -16,11 +16,15 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-TextConversationItem textConversationItem = new TextConversationItem(
+TextConversationItem input = new TextConversationItem(
      participantId: "1",
      id: "1",
      text: "Send an email to Carol about the tomorrow's demo.");
-AnalyzeConversationOptions analysisInput = new AnalyzeConversationOptions(textConversationItem) { IsLoggingEnabled = true };
+ConversationAnalysisOptions options = new ConversationAnalysisOptions(input)
+{
+    IsLoggingEnabled = true,
+    Verbose = true
+};
 
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
@@ -36,7 +40,7 @@ ConversationPrediction conversationPrediction = customConversationalTaskResult.R
 Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-Console.WriteLine("Intents");
+Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");
@@ -74,11 +78,15 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
-TextConversationItem textConversationItem = new TextConversationItem(
+TextConversationItem input = new TextConversationItem(
      participantId: "1",
      id: "1",
      text: "Send an email to Carol about the tomorrow's demo.");
-AnalyzeConversationOptions analysisInput = new AnalyzeConversationOptions(textConversationItem) { IsLoggingEnabled = true };
+ConversationAnalysisOptions options = new ConversationAnalysisOptions(input)
+{
+    IsLoggingEnabled = true,
+    Verbose = true
+};
 
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
@@ -94,7 +102,7 @@ ConversationPrediction conversationPrediction = customConversationalTaskResult.R
 Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-Console.WriteLine("Intents");
+Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");

@@ -79,7 +79,7 @@ The following examples show common scenarios using the `client` [created above](
 To analyze a conversation, you can call the `client.AnalyzeConversation()` method which takes a `TextConversationItem` and `ConversationsProject` as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
-TextConversationItem textConversationItem = new TextConversationItem(
+TextConversationItem input = new TextConversationItem(
     participantId: "1",
     id: "1",
     text: "Send an email to Carol about the tomorrow's demo.");
@@ -95,7 +95,7 @@ ConversationPrediction conversationPrediction = customConversationalTaskResult.R
 
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-Console.WriteLine("Intents");
+Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");
@@ -135,11 +135,15 @@ The specified parameters can also be used to initialize a `AnalyzeConversationOp
 You can also set the verbose parameter in the `AnalyzeConversation()` method.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-TextConversationItem textConversationItem = new TextConversationItem(
+TextConversationItem input = new TextConversationItem(
      participantId: "1",
      id: "1",
      text: "Send an email to Carol about the tomorrow's demo.");
-AnalyzeConversationOptions analysisInput = new AnalyzeConversationOptions(textConversationItem) { IsLoggingEnabled = true };
+ConversationAnalysisOptions options = new ConversationAnalysisOptions(input)
+{
+    IsLoggingEnabled = true,
+    Verbose = true
+};
 
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
@@ -155,7 +159,7 @@ ConversationPrediction conversationPrediction = customConversationalTaskResult.R
 Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-Console.WriteLine("Intents");
+Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");
@@ -195,7 +199,7 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 The language property in the `TextConversationItem` can be used to specify the language of the conversation.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-TextConversationItem textConversationItem = new TextConversationItem(
+TextConversationItem input = new TextConversationItem(
     participantId: "1",
     id: "1",
     text: "Tendremos 2 platos de nigiri de salmón braseado.")
@@ -215,7 +219,7 @@ ConversationPrediction conversationPrediction = customConversationalTaskResult.R
 Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-Console.WriteLine("Intents");
+Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");

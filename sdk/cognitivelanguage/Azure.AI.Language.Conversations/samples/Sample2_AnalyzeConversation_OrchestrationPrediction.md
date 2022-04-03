@@ -16,7 +16,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
-TextConversationItem textConversationItem = new TextConversationItem(
+TextConversationItem input = new TextConversationItem(
     participantId: "1",
     id: "1",
     text: "How are you?");

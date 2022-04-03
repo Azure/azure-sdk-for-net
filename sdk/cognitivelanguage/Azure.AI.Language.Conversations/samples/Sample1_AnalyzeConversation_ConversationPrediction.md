@@ -16,7 +16,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
-TextConversationItem textConversationItem = new TextConversationItem(
+TextConversationItem input = new TextConversationItem(
     participantId: "1",
     id: "1",
     text: "Send an email to Carol about the tomorrow's demo.");
@@ -32,7 +32,7 @@ ConversationPrediction conversationPrediction = customConversationalTaskResult.R
 
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-Console.WriteLine("Intents");
+Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");
@@ -70,7 +70,7 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationAsync
-TextConversationItem textConversationItem = new TextConversationItem(
+TextConversationItem input = new TextConversationItem(
     participantId: "1",
     id: "1",
     text: "Send an email to Carol about the tomorrow's demo.");
@@ -87,7 +87,7 @@ ConversationPrediction conversationPrediction = customConversationalTaskResult.R
 Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
-Console.WriteLine("Intents");
+Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");
