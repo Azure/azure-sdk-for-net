@@ -8,9 +8,9 @@
         "Content-Length": "255",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d4ce6fecab68f645913ef8a2b70afba7-f88a65b95a1bc841-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220328.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "50a50f6327635c9e9186d313c58c3a30",
+        "traceparent": "00-2365b82f74d9784b9342860f6c4a5c73-6215e9bcec056642-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220403.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "13a6eb1799780572c214dab04c372cb5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,16 +30,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8f9830e9-a56c-4749-a652-f3902fe67963",
+        "apim-request-id": "bfe2df30-f325-4ec5-a35c-4ad895c6131a",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 28 Mar 2022 14:48:34 GMT",
+        "Date": "Sun, 03 Apr 2022 14:33:26 GMT",
         "Pragma": "no-cache",
-        "request-id": "8f9830e9-a56c-4749-a652-f3902fe67963",
+        "request-id": "bfe2df30-f325-4ec5-a35c-4ad895c6131a",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "63"
+        "x-envoy-upstream-service-time": "52"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
@@ -145,8 +145,10 @@
     }
   ],
   "Variables": {
-    "CONVERSATIONS_KEY": "Sanitized",
-    "CONVERSATIONS_URI": "https://westeurope.api.cognitive.microsoft.com",
-    "RandomSeed": "1743494686"
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "ShabanTest",
+    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
+    "RandomSeed": "621331968"
   }
 }

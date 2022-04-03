@@ -44,8 +44,8 @@ namespace Azure.AI.Language.Conversations.Tests
             ConversationsProject conversationsProject = new ConversationsProject("project","deployment");
 
             // Validate query parameter first given the order the constructors get called.
-            Assert.That<Response<AnalyzeConversationTaskResult>>(() => Client.AnalyzeConversation(null, conversationsProject), Throws.ArgumentNullException.WithParamName("conversationItemBase"));
-            Assert.That<Task<Response<AnalyzeConversationTaskResult>>>(async () => await Client.AnalyzeConversationAsync(null, conversationsProject), Throws.ArgumentNullException.WithParamName("conversationItemBase"));
+            Assert.That<Response<AnalyzeConversationTaskResult>>(() => Client.AnalyzeConversation(null, conversationsProject), Throws.ArgumentNullException.WithParamName("input"));
+            Assert.That<Task<Response<AnalyzeConversationTaskResult>>>(async () => await Client.AnalyzeConversationAsync(null, conversationsProject), Throws.ArgumentNullException.WithParamName("input"));
 
             TextConversationItem textConversationItem = new TextConversationItem("1", "1", "test");
             Assert.That<Response<AnalyzeConversationTaskResult>>(() => Client.AnalyzeConversation(textConversationItem, null), Throws.ArgumentNullException.WithParamName("project"));

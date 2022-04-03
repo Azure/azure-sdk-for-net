@@ -5,13 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Connection": "keep-alive",
         "Content-Length": "249",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-33c47509f57ded4084bf2a2cd1a0a410-b507337c95ed6f4d-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220328.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "9b8088525ed055e1b286aff6f0a7fe9a",
+        "traceparent": "00-d051ae7324a7b640ab134c985a8364fa-289e317dc8317d4f-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220403.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "8228514d9c9ec4b7390597f9c14060fc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,16 +30,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7b2ab78c-1114-48d2-85a0-2c35b0ebe07f",
+        "apim-request-id": "8fd8068a-eb3b-4d82-9915-db76834bbade",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 28 Mar 2022 14:48:28 GMT",
+        "Date": "Sun, 03 Apr 2022 14:33:21 GMT",
         "Pragma": "no-cache",
-        "request-id": "7b2ab78c-1114-48d2-85a0-2c35b0ebe07f",
+        "request-id": "8fd8068a-eb3b-4d82-9915-db76834bbade",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "326"
+        "x-envoy-upstream-service-time": "86"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
@@ -111,8 +110,8 @@
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-03-29",
-                    "value": "2022-03-29"
+                    "timex": "2022-04-04",
+                    "value": "2022-04-04"
                   }
                 ],
                 "extraInformation": [
@@ -136,8 +135,10 @@
     }
   ],
   "Variables": {
-    "CONVERSATIONS_KEY": "Sanitized",
-    "CONVERSATIONS_URI": "https://westeurope.api.cognitive.microsoft.com",
-    "RandomSeed": "429348686"
+    "AZURE_CONVERSATIONS_DEPLOYMENT_NAME": "MoTest",
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "AZURE_CONVERSATIONS_PROJECT_NAME": "SampleProject",
+    "RandomSeed": "1956956566"
   }
 }
