@@ -77,19 +77,18 @@ namespace Azure.AI.Language.Conversations
         /// <param name="conversationItemBase">The abstract base for a user input formatted conversation (e.g., Text, Transcript).</param>
         /// <param name="project">Represents a project for the Conversations service.</param>
         /// <param name="analysisInput">The input ConversationItem and its optional parameters.</param>
-        /// <param name="verbose">If true, the service will return more detailed information in the response.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="conversationItemBase"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="project"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<AnalyzeConversationTaskResult>> AnalyzeConversationAsync(ConversationItemBase conversationItemBase, ConversationsProject project, AnalyzeConversationOptions analysisInput = null, bool? verbose = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeConversationTaskResult>> AnalyzeConversationAsync(ConversationItemBase conversationItemBase, ConversationsProject project, ConversationAnalysisOptions analysisInput = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(conversationItemBase, nameof(conversationItemBase));
             Argument.AssertNotNull(project, nameof(project));
 
-            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName) { Verbose = verbose };
+            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName) { Verbose = analysisInput.Verbose };
 
-            analysisInput ??= new AnalyzeConversationOptions(conversationItemBase);
+            analysisInput ??= new ConversationAnalysisOptions(conversationItemBase);
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(analysisInput, customConversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
@@ -110,19 +109,18 @@ namespace Azure.AI.Language.Conversations
         /// <param name="conversationItemBase">The abstract base for a user input formatted conversation (e.g., Text, Transcript).</param>
         /// <param name="project">Represents a project for the Conversations service.</param>
         /// <param name="analysisInput">The input ConversationItem and its optional parameters.</param>
-        /// <param name="verbose">If true, the service will return more detailed information in the response.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="conversationItemBase"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="project"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnalyzeConversationTaskResult> AnalyzeConversation(ConversationItemBase conversationItemBase, ConversationsProject project, AnalyzeConversationOptions analysisInput = null, bool? verbose = null, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeConversationTaskResult> AnalyzeConversation(ConversationItemBase conversationItemBase, ConversationsProject project, ConversationAnalysisOptions analysisInput = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(conversationItemBase, nameof(conversationItemBase));
             Argument.AssertNotNull(project, nameof(project));
 
-            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName) { Verbose = verbose };
+            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName) { Verbose = analysisInput.Verbose };
 
-            analysisInput ??= new AnalyzeConversationOptions(conversationItemBase);
+            analysisInput ??= new ConversationAnalysisOptions(conversationItemBase);
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(analysisInput, customConversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
