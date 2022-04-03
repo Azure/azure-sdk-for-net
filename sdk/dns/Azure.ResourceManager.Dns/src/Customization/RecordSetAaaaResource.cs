@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns
 
         private readonly ClientDiagnostics _recordSetAaaaRecordSetsClientDiagnostics;
         private readonly RecordSetsRestOperations _recordSetAaaaRecordSetsRestClient;
-        private readonly RecordSetData _data;
+        private readonly RecordSetDataAaaa _data;
 
         /// <summary> Initializes a new instance of the <see cref="RecordSetAaaaResource"/> class for mocking. </summary>
         protected RecordSetAaaaResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Initializes a new instance of the <see cref = "RecordSetAaaaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecordSetAaaaResource(ArmClient client, RecordSetData data) : this(client, data.Id)
+        internal RecordSetAaaaResource(ArmClient client, RecordSetDataAaaa data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RecordSetData Data
+        public virtual RecordSetDataAaaa Data
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _recordSetAaaaRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AAAA".ToRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetAaaaRecordSetsRestClient.GetAaaaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecordSetAaaaResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _recordSetAaaaRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AAAA".ToRecordType(), Id.Name, cancellationToken);
+                var response = _recordSetAaaaRecordSetsRestClient.GetAaaa(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecordSetAaaaResource(Client, response.Value), response.GetRawResponse());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _recordSetAaaaRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AAAA".ToRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetAaaaRecordSetsRestClient.DeleteAaaaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _recordSetAaaaRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AAAA".ToRecordType(), Id.Name, ifMatch, cancellationToken);
+                var response = _recordSetAaaaRecordSetsRestClient.DeleteAaaa(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<RecordSetAaaaResource>> UpdateAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordSetAaaaResource>> UpdateAsync(RecordSetDataAaaa data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _recordSetAaaaRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AAAA".ToRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetAaaaRecordSetsRestClient.UpdateAaaaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RecordSetAaaaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<RecordSetAaaaResource> Update(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<RecordSetAaaaResource> Update(RecordSetDataAaaa data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _recordSetAaaaRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AAAA".ToRecordType(), Id.Name, data, ifMatch, cancellationToken);
+                var response = _recordSetAaaaRecordSetsRestClient.UpdateAaaa(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(new RecordSetAaaaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
