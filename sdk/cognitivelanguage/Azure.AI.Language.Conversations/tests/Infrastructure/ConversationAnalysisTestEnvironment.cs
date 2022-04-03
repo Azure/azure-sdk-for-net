@@ -14,31 +14,31 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <summary>
         /// Gets the master API key.
         /// </summary>
-        public string ApiKey => GetRecordedVariable("CONVERSATIONS_KEY", options => options.IsSecret());
+        public string ApiKey => GetRecordedVariable("AZURE_CONVERSATIONS_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the primary test project name.
         /// </summary>
-        public string ProjectName => "SampleProject";
+        public string ProjectName => GetRecordedVariable("AZURE_CONVERSATIONS_PROJECT_NAME");
 
         /// <summary>
         /// Gets the deployment name.
         /// </summary>
-        public string DeploymentName => "MoTest";
+        public string DeploymentName => GetRecordedVariable("AZURE_CONVERSATIONS_DEPLOYMENT_NAME");
 
         /// <summary>
         /// Gets the orchestration test project name.
         /// </summary>
-        public string OrchestrationProjectName => "OrchestrationProject";
+        public string OrchestrationProjectName => GetRecordedVariable("AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME");
 
         /// <summary>
         /// Gets the orchestration test deploymentName name.
         /// </summary>
-        public string OrchestrationDeploymentName => "ShabanTest";
+        public string OrchestrationDeploymentName => GetRecordedVariable("AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME");
         /// <summary>
         /// Gets the endpoint.
         /// </summary>
-        public Uri Endpoint => new(GetRecordedVariable("CONVERSATIONS_URI"), UriKind.Absolute);
+        public Uri Endpoint => new(GetRecordedVariable("AZURE_CONVERSATIONS_ENDPOINT"), UriKind.Absolute);
 
         /// <summary>
         /// Gets a <see cref="ConversationsProject"/> using the <see cref="ProjectName"/> and <see cref="DeploymentName"/>.
