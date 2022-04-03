@@ -37,6 +37,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 GroupForReplace = "group"
             });
+
+            // Ignore comparison of 'Accept' header values till issue is resolved in Core test proxy code
+            IgnoredHeaders.Add("Accept");
         }
 
         public ContainerRegistryClient CreateClient(bool anonymousAccess = false)
