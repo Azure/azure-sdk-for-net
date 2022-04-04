@@ -69,14 +69,16 @@ namespace Azure.Storage.Blobs
                 await _blockBlobClient.StageBlockInternal(
                     base64BlockId: blockId,
                     content: _buffer,
-                    new BlockBlobStageBlockOptions()
-                    {
-                        // TODO #27253
-                        //TransactionalHashingOptions = _hashingOptions,
-                        Conditions = conditions,
-                        ProgressHandler = _progressHandler
-                    },
+                    // TODO #27253
+                    //new BlockBlobStageBlockOptions()
+                    //{
+                    //    TransactionalHashingOptions = _hashingOptions,
+                    //    Conditions = conditions,
+                    //    ProgressHandler = _progressHandler
+                    //},
                     blockContentTransactionalMD5: default,
+                    conditions: conditions,
+                    progressHandler: _progressHandler,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

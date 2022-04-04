@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm");
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UrlSigningActionParameters DeserializeUrlSigningActionParameters(JsonElement element)
         {
-            UrlSigningActionParametersOdataType odataType = default;
+            UrlSigningActionParametersTypeName typeName = default;
             Optional<UrlSigningAlgorithm> algorithm = default;
             Optional<IList<UrlSigningParamIdentifier>> parameterNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new UrlSigningActionParametersOdataType(property.Value.GetString());
+                    typeName = new UrlSigningActionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("algorithm"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UrlSigningActionParameters(odataType, Optional.ToNullable(algorithm), Optional.ToList(parameterNameOverride));
+            return new UrlSigningActionParameters(typeName, Optional.ToNullable(algorithm), Optional.ToList(parameterNameOverride));
         }
     }
 }

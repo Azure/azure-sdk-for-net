@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -28,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         private readonly string _consumerGroup = "TestConsumerGroup";
         private readonly string _namespace = "TestNamespace";
         private EventHubsScaleMonitor _scaleMonitor;
-        private Mock<BlobsCheckpointStore> _mockCheckpointStore;
+        private Mock<BlobCheckpointStoreInternal> _mockCheckpointStore;
         private TestLoggerProvider _loggerProvider;
         private LoggerFactory _loggerFactory;
         private Mock<IEventHubConsumerClient> _consumerClientMock;
@@ -52,9 +51,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             _consumerClientMock.Setup(client => client.GetPartitionPropertiesAsync(IsAny<string>()))
                 .Returns((string id) => Task.FromResult(_partitions.SingleOrDefault(p => p.Id == id)));
 
-            _mockCheckpointStore = new Mock<BlobsCheckpointStore>(MockBehavior.Strict);
-            _mockCheckpointStore.Setup(s => s.ListCheckpointsAsync(_namespace, _eventHubName, _consumerGroup, default))
-                .Returns(() => Task.FromResult(_checkpoints));
+            this._mockCheckpointStore = new Mock<BlobCheckpointStoreInternal>(MockBehavior.Strict);
+
+            _mockCheckpointStore.Setup(s => s.GetCheckpointAsync(_namespace, _eventHubName, _consumerGroup, It.IsAny<string>(), default))
+                .Returns<string, string, string, string, CancellationToken>((ns, hub, cg, partitionId, ct) => Task.FromResult(_checkpoints.SingleOrDefault(cp => cp.PartitionId == partitionId)));
 
             _scaleMonitor = new EventHubsScaleMonitor(
                                     _functionId,
@@ -77,9 +77,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 new TestPartitionProperties(lastSequenceNumber: 0)
             };
 
-            _checkpoints = new EventProcessorCheckpoint[]
+            this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0 }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0 }
             };
 
             var metrics = await _scaleMonitor.GetMetricsAsync();
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // Partition got its first message (Offset == null, LastEnqueued == 0)
-            _checkpoints = new EventProcessorCheckpoint[]
+            this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = null,  SequenceNumber = 0 }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = null,  SequenceNumber = 0 }
             };
 
             metrics = await _scaleMonitor.GetMetricsAsync();
@@ -101,9 +101,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // No instances assigned to process events on partition (Offset == null, LastEnqueued > 0)
-            _checkpoints = new EventProcessorCheckpoint[]
+            this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = null, SequenceNumber = 0 }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = null, SequenceNumber = 0 }
             };
 
             _partitions = new List<PartitionProperties>
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // Checkpointing is ahead of partition info (SequenceNumber > LastEnqueued)
-            _checkpoints = new EventProcessorCheckpoint[]
+            this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 25, SequenceNumber = 11 }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 25, SequenceNumber = 11 }
             };
 
             _partitions = new List<PartitionProperties>
@@ -139,11 +139,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public async Task CreateTriggerMetrics_MultiplePartitions_ReturnsExpectedResult()
         {
             // No messages processed, no messages in queue
-            _checkpoints = new EventProcessorCheckpoint[]
+            this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "1" },
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "2" },
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "3" }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "1" },
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "2" },
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 0, PartitionId = "3" }
             };
 
             _partitions = new List<PartitionProperties>
@@ -160,11 +160,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // Messages processed, Messages in queue
-            _checkpoints = new EventProcessorCheckpoint[]
+            this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 2, PartitionId = "1" },
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 3, PartitionId = "2" },
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 4, PartitionId = "3" }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 2, PartitionId = "1" },
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 3, PartitionId = "2" },
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 4, PartitionId = "3" }
             };
 
             _partitions = new List<PartitionProperties>
@@ -181,11 +181,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // One invalid sample
-            _checkpoints = new EventProcessorCheckpoint[]
+            this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 2, PartitionId = "1" },
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 3, PartitionId = "2" },
-                new BlobsCheckpointStore.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 4, PartitionId = "3" }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 2, PartitionId = "1" },
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 3, PartitionId = "2" },
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 0,  SequenceNumber = 4, PartitionId = "3" }
             };
 
             _partitions = new List<PartitionProperties>
@@ -411,8 +411,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             // StorageException
             _mockCheckpointStore
-                .Setup(c => c.ListCheckpointsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Throws(new RequestFailedException(404, "Uh oh"));
+                .Setup(c => c.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new RequestFailedException(404, "Uh oh"));
 
             _partitions = new List<PartitionProperties>
             {
@@ -427,8 +427,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             // Generic Exception
             _mockCheckpointStore
-                .Setup(c => c.ListCheckpointsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Throws(new Exception("Uh oh"));
+                .Setup(c => c.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new Exception("Uh oh"));
 
             _partitions = new List<PartitionProperties>
             {

@@ -41,10 +41,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="endTime">The operation end time</param>
         /// <param name="percentComplete">Percentage completed.</param>
         /// <param name="operationKind">The kind of the operation.</param>
+        /// <param name="provisioningState">The provisioned state of the
+        /// resource. Possible values include: 'Running', 'Creating',
+        /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
         /// <param name="operationState">The state of the operation.</param>
         /// <param name="code">The code of the error.</param>
         /// <param name="message">The error message.</param>
-        public OperationResult(string id = default(string), string name = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), double? percentComplete = default(double?), string operationKind = default(string), string operationState = default(string), string code = default(string), string message = default(string))
+        public OperationResult(string id = default(string), string name = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), double? percentComplete = default(double?), string operationKind = default(string), string provisioningState = default(string), string operationState = default(string), string code = default(string), string message = default(string))
         {
             Id = id;
             Name = name;
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             EndTime = endTime;
             PercentComplete = percentComplete;
             OperationKind = operationKind;
+            ProvisioningState = provisioningState;
             OperationState = operationState;
             Code = code;
             Message = message;
@@ -106,6 +110,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.operationKind")]
         public string OperationKind { get; set; }
+
+        /// <summary>
+        /// Gets the provisioned state of the resource. Possible values
+        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
+        /// 'Moving'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the state of the operation.

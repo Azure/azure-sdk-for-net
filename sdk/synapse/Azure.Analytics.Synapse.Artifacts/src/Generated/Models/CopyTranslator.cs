@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public CopyTranslator()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "CopyTranslator";
         }
 
         /// <summary> Initializes a new instance of CopyTranslator. </summary>
@@ -25,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CopyTranslator(string type, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "CopyTranslator";
+            Type = type;
             AdditionalProperties = additionalProperties;
         }
 

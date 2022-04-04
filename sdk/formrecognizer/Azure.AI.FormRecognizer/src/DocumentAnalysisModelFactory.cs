@@ -14,12 +14,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public static class DocumentAnalysisModelFactory
     {
         /// <summary> Initializes a new instance of AccountProperties. </summary>
-        /// <param name="count"> Number of custom models in the current resource. </param>
-        /// <param name="limit"> Maximum number of custom models supported in the current resource. </param>
+        /// <param name="documentModelCount"> Number of custom models in the current resource. </param>
+        /// <param name="documentModelLimit"> Maximum number of custom models supported in the current resource. </param>
         /// <returns> A new <see cref="DocumentAnalysis.AccountProperties"/> instance for mocking. </returns>
-        public static AccountProperties AccountProperties(int count = default, int limit = default)
+        public static AccountProperties AccountProperties(int documentModelCount = default, int documentModelLimit = default)
         {
-            return new AccountProperties(count, limit);
+            return new AccountProperties(documentModelCount, documentModelLimit);
         }
 
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
@@ -512,7 +512,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentTableCell"/> instance for mocking. </returns>
-        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = null, int rowIndex = default, int columnIndex = default, int? rowSpan = null, int? columnSpan = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind kind = default, int rowIndex = default, int columnIndex = default, int rowSpan = default, int columnSpan = default, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();

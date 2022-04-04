@@ -5,56 +5,9 @@
 
 #nullable disable
 
-using System.Text.Json;
-using Azure.Core;
-
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class AfdOriginGroupProperties : IUtf8JsonSerializable
+    internal partial class AfdOriginGroupProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(LoadBalancingSettings))
-            {
-                writer.WritePropertyName("loadBalancingSettings");
-                writer.WriteObjectValue(LoadBalancingSettings);
-            }
-            if (Optional.IsDefined(HealthProbeSettings))
-            {
-                writer.WritePropertyName("healthProbeSettings");
-                writer.WriteObjectValue(HealthProbeSettings);
-            }
-            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
-            {
-                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
-                {
-                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                    writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
-                }
-                else
-                {
-                    writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                }
-            }
-            if (Optional.IsDefined(ResponseBasedAfdOriginErrorDetectionSettings))
-            {
-                if (ResponseBasedAfdOriginErrorDetectionSettings != null)
-                {
-                    writer.WritePropertyName("responseBasedAfdOriginErrorDetectionSettings");
-                    writer.WriteObjectValue(ResponseBasedAfdOriginErrorDetectionSettings);
-                }
-                else
-                {
-                    writer.WriteNull("responseBasedAfdOriginErrorDetectionSettings");
-                }
-            }
-            if (Optional.IsDefined(SessionAffinityState))
-            {
-                writer.WritePropertyName("sessionAffinityState");
-                writer.WriteStringValue(SessionAffinityState.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
     }
 }

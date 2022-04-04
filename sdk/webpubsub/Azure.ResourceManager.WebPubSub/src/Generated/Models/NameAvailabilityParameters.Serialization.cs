@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WriteEndObject();

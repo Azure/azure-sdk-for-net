@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.5 (2021-12-28)
 
@@ -111,8 +121,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
 VirtualNetworkCollection virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
 // Create VNet
@@ -127,8 +137,8 @@ vnet.Subnets.Add(new SubnetData
     AddressPrefix = "10.0.0.0/24",
 });
 
-ArmOperation<VirtualNetwork> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(true, "_vent", vnet);
-VirtualNetwork virtualNetwork = vnetOperation.Value;
+ArmOperation<VirtualNetworkResource> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(WaitUntil.Completed, "_vent", vnet);
+VirtualNetworkResource virtualNetwork = vnetOperation.Value;
 ```
 
 #### Object Model Changes

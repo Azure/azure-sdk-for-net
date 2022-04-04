@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("signedProtocol");
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SharedAccessStartTime))
+            if (Optional.IsDefined(SharedAccessStartOn))
             {
                 writer.WritePropertyName("signedStart");
-                writer.WriteStringValue(SharedAccessStartTime.Value, "O");
+                writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
-            if (Optional.IsDefined(SharedAccessExpiryTime))
+            if (Optional.IsDefined(SharedAccessExpiryOn))
             {
                 writer.WritePropertyName("signedExpiry");
-                writer.WriteStringValue(SharedAccessExpiryTime.Value, "O");
+                writer.WriteStringValue(SharedAccessExpiryOn.Value, "O");
             }
             if (Optional.IsDefined(Identifier))
             {

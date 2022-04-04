@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Resources
             Optional<string> publisherTenantId = default;
             Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
             Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ResourcesProvisioningState> provisioningState = default;
             Optional<JitRequestState> jitRequestState = default;
-            Optional<ApplicationClientDetails> createdBy = default;
-            Optional<ApplicationClientDetails> updatedBy = default;
+            Optional<ArmApplicationDetails> createdBy = default;
+            Optional<ArmApplicationDetails> updatedBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ResourcesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("jitRequestState"))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdBy = ApplicationClientDetails.DeserializeApplicationClientDetails(property0.Value);
+                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updatedBy = ApplicationClientDetails.DeserializeApplicationClientDetails(property0.Value);
+                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
                     }

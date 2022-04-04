@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Network.Tests
             await CreateVmss(ResourceManagementClient, resourceGroupName, deploymentName);
 
             string virtualMachineScaleSetName = "vmssip";
-            AsyncPageable<PublicIPAddress> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
-            List<PublicIPAddress> vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
-            List<PublicIPAddress> vmssListAllResult = vmssListAllPageResult.ToList();
-            PublicIPAddress firstResult = vmssListAllResult.First();
+            AsyncPageable<PublicIPAddressResource> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
+            List<PublicIPAddressResource> vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
+            List<PublicIPAddressResource> vmssListAllResult = vmssListAllPageResult.ToList();
+            PublicIPAddressResource firstResult = vmssListAllResult.First();
 
             Assert.NotNull(vmssListAllResult);
             Assert.AreEqual("Succeeded", firstResult.ProvisioningState.ToString());
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Tests
             string ipConfigName = GetNameById(idItem, "ipConfigurations");
             string ipName = GetNameById(idItem, "publicIPAddresses");
 
-            AsyncPageable<PublicIPAddress> vmssListPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetVMPublicIPAddressesAsync(
+            AsyncPageable<PublicIPAddressResource> vmssListPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetVMPublicIPAddressesAsync(
                 resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName);
-            List<PublicIPAddress> vmssListPageResult = await vmssListPageResultAP.ToEnumerableAsync();
-            List<PublicIPAddress> vmssListResult = vmssListPageResult.ToList();
+            List<PublicIPAddressResource> vmssListPageResult = await vmssListPageResultAP.ToEnumerableAsync();
+            List<PublicIPAddressResource> vmssListResult = vmssListPageResult.ToList();
 
             Has.One.EqualTo(vmssListResult);
 
-            Response<PublicIPAddress> vmssGetResult = await NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressAsync(
+            Response<PublicIPAddressResource> vmssGetResult = await NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressAsync(
                 resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName, ipName);
 
             Assert.NotNull(vmssGetResult);

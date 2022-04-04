@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class SitePrivateEndpointConnectionOperationSource : IOperationSource<SitePrivateEndpointConnection>
+    internal class SitePrivateEndpointConnectionOperationSource : IOperationSource<SitePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        SitePrivateEndpointConnection IOperationSource<SitePrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        SitePrivateEndpointConnectionResource IOperationSource<SitePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
-            return new SitePrivateEndpointConnection(_client, data);
+            return new SitePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<SitePrivateEndpointConnection> IOperationSource<SitePrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SitePrivateEndpointConnectionResource> IOperationSource<SitePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
-            return new SitePrivateEndpointConnection(_client, data);
+            return new SitePrivateEndpointConnectionResource(_client, data);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace DataFactory.Tests.UnitTests
         {
             TestJsonSample<Activity>(jsonSample);
         }
-        
+
         [Fact]
         public void ExecutePipelineActivity_SDKSample()
         {
@@ -139,7 +139,8 @@ namespace DataFactory.Tests.UnitTests
                     Username = "test",
                     Password = new SecureString("fake"),
                     Type = "Basic"
-                }
+                },
+                DisableCertValidation = false
             };
 
             var handler = new RecordedDelegatingHandler();

@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Threading;
 using Castle.DynamicProxy;
 
@@ -16,28 +15,30 @@ namespace Azure.Core.TestFramework
         internal static readonly string WaitForCompletionMethodName = nameof(Operation<object>.WaitForCompletionAsync);
         internal static readonly MethodInfo WaitForCompletionResponseAsync = typeof(Operation).GetMethod(nameof(Operation.WaitForCompletionResponseAsync), new[] { typeof(TimeSpan), typeof(CancellationToken) });
 
-        private readonly bool _noWait;
+        internal static readonly string PollerWaitForCompletionAsyncName = nameof(OperationPoller.WaitForCompletionAsync);
 
-        public OperationInterceptor(bool noWait)
+        private readonly RecordedTestMode _mode;
+
+        public OperationInterceptor(RecordedTestMode mode)
         {
-            _noWait = noWait;
+            _mode = mode;
         }
 
         public void Intercept(IInvocation invocation)
         {
-            if (_noWait)
+            if (_mode == RecordedTestMode.Playback)
             {
                 if (invocation.Method.Name == WaitForCompletionMethodName)
                 {
                     CheckArguments(invocation.Arguments);
-                    invocation.ReturnValue = InvokeWaitForCompletion(invocation.InvocationTarget, invocation.TargetType, invocation.Arguments.Last());
+                    invocation.ReturnValue = InvokeWaitForCompletion(invocation.InvocationTarget, invocation.TargetType, (CancellationToken)invocation.Arguments.Last());
                     return;
                 }
 
                 if (invocation.Method.Name == WaitForCompletionResponseAsync.Name)
                 {
                     CheckArguments(invocation.Arguments);
-                    invocation.ReturnValue = InvokeWaitForCompletionResponse(invocation.InvocationTarget, invocation.Arguments.Last());
+                    invocation.ReturnValue = InvokeWaitForCompletionResponse(invocation.InvocationTarget as Operation, (CancellationToken)invocation.Arguments.Last());
                     return;
                 }
             }
@@ -45,31 +46,26 @@ namespace Azure.Core.TestFramework
             invocation.Proceed();
         }
 
-        internal static object InvokeWaitForCompletionResponse(object target, object cancellationToken)
+        internal static object InvokeWaitForCompletionResponse(Operation operation, CancellationToken cancellationToken)
         {
-            try
-            {
-                return WaitForCompletionResponseAsync.Invoke(target, new[] { NoWaitDelay, cancellationToken });
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-            }
-            return null;
+            return InjectZeroPoller().WaitForCompletionResponseAsync(operation, null, cancellationToken);
         }
 
-        internal static object InvokeWaitForCompletion(object target, Type targetType, object cancellationToken)
+        internal static object InvokeWaitForCompletion(object target, Type targetType, CancellationToken cancellationToken)
         {
-            var waitForCompletionMethod = targetType.GetMethod(WaitForCompletionMethodName, new[] { typeof(TimeSpan), typeof(CancellationToken) });
-            try
-            {
-                return waitForCompletionMethod.Invoke(target, new[] { NoWaitDelay, cancellationToken });
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-            }
-            return null;
+            // get the concrete instance of OperationPoller.ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T>, TimeSpan?, CancellationToken)
+            var poller = InjectZeroPoller();
+            var genericMethod = poller.GetType().GetMethods().Where(m => m.Name == PollerWaitForCompletionAsyncName).FirstOrDefault(m => m.GetParameters().Length == 6);
+            var method = genericMethod.MakeGenericMethod(GetOperationOfT(targetType).GetGenericArguments());
+
+            var methodParams = method.GetParameters();
+            var updateStatus = Delegate.CreateDelegate(methodParams[0].ParameterType, target, targetType.GetMethod("UpdateStatusAsync"));
+            var hasCompleted = Delegate.CreateDelegate(methodParams[1].ParameterType, target, targetType.GetMethod("get_HasCompleted"));
+            var value = Delegate.CreateDelegate(methodParams[2].ParameterType, target, targetType.GetMethod("get_Value"));
+            var getResponse = Delegate.CreateDelegate(methodParams[3].ParameterType, target, targetType.GetMethod("GetRawResponse"));
+            //need to call the method that takes in the delegates so we used the runtime versions which allows mocking
+            //public virtual async ValueTask<Response<T>> WaitForCompletionAsync<T>(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
+            return method.Invoke(poller, new object[] { updateStatus, hasCompleted, value, getResponse, null, cancellationToken});
         }
 
         private void CheckArguments(object[] invocationArguments)
@@ -84,6 +80,22 @@ namespace Azure.Core.TestFramework
                                                         $"The test framework would automatically reduce the interval in playback.");
                 }
             }
+        }
+
+        private static OperationPoller InjectZeroPoller()
+        {
+            OperationPoller poller = new OperationPoller();
+            poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(poller, new ZeroPollingStrategy());
+            return poller;
+        }
+
+        private static Type GetOperationOfT(Type type)
+        {
+            while (type != null && type.Name != typeof(Operation<object>).Name)
+            {
+                type = type.BaseType;
+            }
+            return type;
         }
     }
 }

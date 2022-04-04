@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of AzureReachabilityReportParameters. </summary>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
-        /// <param name="startTime"> The start time for the Azure reachability report. </param>
-        /// <param name="endTime"> The end time for the Azure reachability report. </param>
+        /// <param name="startOn"> The start time for the Azure reachability report. </param>
+        /// <param name="endOn"> The end time for the Azure reachability report. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="providerLocation"/> is null. </exception>
-        public AzureReachabilityReportParameters(AzureReachabilityReportLocation providerLocation, DateTimeOffset startTime, DateTimeOffset endTime)
+        public AzureReachabilityReportParameters(AzureReachabilityReportLocation providerLocation, DateTimeOffset startOn, DateTimeOffset endOn)
         {
             if (providerLocation == null)
             {
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Network.Models
             ProviderLocation = providerLocation;
             Providers = new ChangeTrackingList<string>();
             AzureLocations = new ChangeTrackingList<string>();
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary> Parameters that define a geographic location. </summary>
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Optional Azure regions to scope the query to. </summary>
         public IList<string> AzureLocations { get; }
         /// <summary> The start time for the Azure reachability report. </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartOn { get; }
         /// <summary> The end time for the Azure reachability report. </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndOn { get; }
     }
 }

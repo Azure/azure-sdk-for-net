@@ -12,6 +12,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary>
         /// The default polling interval for client methods that return an <see cref="Operation"/> when waitForCompletion is <c>true</c>.
         /// </summary>
-        public TimeSpan OperationPollingInterval { get; set; } = OperationHelpers.DefaultPollingInterval;
+        public TimeSpan OperationPollingInterval { get; set; } = ConstantDelayStrategy.DefaultPollingInterval;
     }
 }

@@ -4,4 +4,8 @@ namespace Azure.Identity.BrokeredAuthentication
     {
         public InteractiveBrowserCredentialBrokerOptions() { }
     }
+    public partial class SharedTokenCacheCredentialBrokerOptions : Azure.Identity.SharedTokenCacheCredentialOptions
+    {
+        public SharedTokenCacheCredentialBrokerOptions() { }
+    }
 }

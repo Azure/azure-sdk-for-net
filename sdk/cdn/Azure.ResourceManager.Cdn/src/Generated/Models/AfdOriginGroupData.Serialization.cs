@@ -41,18 +41,6 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Optional.IsDefined(ResponseBasedAfdOriginErrorDetectionSettings))
-            {
-                if (ResponseBasedAfdOriginErrorDetectionSettings != null)
-                {
-                    writer.WritePropertyName("responseBasedAfdOriginErrorDetectionSettings");
-                    writer.WriteObjectValue(ResponseBasedAfdOriginErrorDetectionSettings);
-                }
-                else
-                {
-                    writer.WriteNull("responseBasedAfdOriginErrorDetectionSettings");
-                }
-            }
             if (Optional.IsDefined(SessionAffinityState))
             {
                 writer.WritePropertyName("sessionAffinityState");
@@ -66,12 +54,12 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
+            Optional<string> profileName = default;
             Optional<LoadBalancingSettingsParameters> loadBalancingSettings = default;
             Optional<HealthProbeParameters> healthProbeSettings = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionParameters> responseBasedAfdOriginErrorDetectionSettings = default;
             Optional<EnabledState> sessionAffinityState = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<DeploymentStatus> deploymentStatus = default;
@@ -106,6 +94,11 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("profileName"))
+                        {
+                            profileName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("loadBalancingSettings"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -134,16 +127,6 @@ namespace Azure.ResourceManager.Cdn
                                 continue;
                             }
                             trafficRestorationTimeToHealedOrNewEndpointsInMinutes = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("responseBasedAfdOriginErrorDetectionSettings"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                responseBasedAfdOriginErrorDetectionSettings = null;
-                                continue;
-                            }
-                            responseBasedAfdOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionParameters.DeserializeResponseBasedOriginErrorDetectionParameters(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sessionAffinityState"))
@@ -180,7 +163,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdOriginGroupData(id, name, type, systemData, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedAfdOriginErrorDetectionSettings.Value, Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new AfdOriginGroupData(id, name, type, systemData, profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

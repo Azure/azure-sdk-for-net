@@ -116,8 +116,9 @@ namespace Azure.Core.TestFramework
 
         /// <summary>
         /// Whether or not to compare bodies from the request and the recorded request during playback.
+        /// The default value is <value>true</value>.
         /// </summary>
-        public bool CompareBodies { get; set; }
+        public bool CompareBodies { get; set; } = true;
 
         /// <summary>
         /// Request headers whose values can change between recording and playback without causing request matching
@@ -344,17 +345,10 @@ namespace Azure.Core.TestFramework
             return base.InstrumentClient(clientType, client, preInterceptors);
         }
 
-        protected internal T InstrumentOperation<T>(T operation) where T: Operation
-        {
-            return (T) InstrumentOperation(typeof(T), operation);
-        }
-
         protected internal override object InstrumentOperation(Type operationType, object operation)
-            => InstrumentOperationInternal(operationType, operation, Mode == RecordedTestMode.Playback);
-
-        protected object InstrumentOperationInternal(Type operationType, object operation, bool noWait, params IInterceptor[] interceptors)
         {
-            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(noWait) }).ToArray();
+            var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode) }).ToArray();
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
                 new[] { typeof(IInstrumented) },

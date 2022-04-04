@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(GatewayLoadBalancerTunnelInterfaceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(GatewayLoadBalancerTunnelInterfaceType.Value.ToString());
             }
             writer.WriteEndObject();
         }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal class SharedPrivateLinkOperationSource : IOperationSource<SharedPrivateLink>
+    internal class SharedPrivateLinkOperationSource : IOperationSource<SharedPrivateLinkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.WebPubSub
             _client = client;
         }
 
-        SharedPrivateLink IOperationSource<SharedPrivateLink>.CreateResult(Response response, CancellationToken cancellationToken)
+        SharedPrivateLinkResource IOperationSource<SharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SharedPrivateLinkData.DeserializeSharedPrivateLinkData(document.RootElement);
-            return new SharedPrivateLink(_client, data);
+            return new SharedPrivateLinkResource(_client, data);
         }
 
-        async ValueTask<SharedPrivateLink> IOperationSource<SharedPrivateLink>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SharedPrivateLinkResource> IOperationSource<SharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SharedPrivateLinkData.DeserializeSharedPrivateLinkData(document.RootElement);
-            return new SharedPrivateLink(_client, data);
+            return new SharedPrivateLinkResource(_client, data);
         }
     }
 }

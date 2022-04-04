@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        keyVaultUri = null;
                         continue;
                     }
                     keyVaultUri = new Uri(property.Value.GetString());

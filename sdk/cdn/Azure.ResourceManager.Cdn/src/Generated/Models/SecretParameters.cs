@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object containing secret parameters. </summary>
-    public partial class SecretParameters
+    internal partial class SecretParameters
     {
         /// <summary> Initializes a new instance of SecretParameters. </summary>
         public SecretParameters()
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of SecretParameters. </summary>
-        /// <param name="type"> The type of the Secret to create. </param>
-        internal SecretParameters(SecretType type)
+        /// <param name="secretType"> The type of the secret resource. </param>
+        internal SecretParameters(SecretType secretType)
         {
-            Type = type;
+            SecretType = secretType;
         }
 
-        /// <summary> The type of the Secret to create. </summary>
-        internal SecretType Type { get; set; }
+        /// <summary> The type of the secret resource. </summary>
+        internal SecretType SecretType { get; set; }
     }
 }

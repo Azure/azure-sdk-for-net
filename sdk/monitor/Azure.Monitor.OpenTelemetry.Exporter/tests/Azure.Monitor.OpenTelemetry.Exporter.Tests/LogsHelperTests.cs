@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 using Xunit;
 
@@ -41,6 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("tomato", name);
             Assert.True(properties.TryGetValue("price", out string price));
             Assert.Equal("2.99", price);
+            Assert.Equal(3, properties.Count);
         }
 
         [Fact]
@@ -70,6 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("tomato", name);
             Assert.True(properties.TryGetValue("price", out string price));
             Assert.Equal("2.99", price);
+            Assert.Equal(2, properties.Count);
         }
 
         [Fact]
@@ -97,6 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("tomato", name);
             Assert.True(properties.TryGetValue("price", out string price));
             Assert.Equal("2.99", price);
+            Assert.Equal(2, properties.Count);
         }
 
         [Fact]
@@ -124,6 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Tomato", name);
             Assert.True(properties.TryGetValue("Price", out string price));
             Assert.Equal("2.99", price);
+            Assert.Equal(2, properties.Count);
         }
 
         [Fact]
@@ -152,6 +158,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("1", eventId);
             Assert.True(properties.TryGetValue("EventName", out string eventName));
             Assert.Equal("TestEvent", eventName);
+            Assert.Equal(2, properties.Count);
         }
 
         [Fact]
@@ -163,6 +170,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(SeverityLevel.Information, LogsHelper.GetSeverityLevel(LogLevel.Information));
             Assert.Equal(SeverityLevel.Verbose, LogsHelper.GetSeverityLevel(LogLevel.Debug));
             Assert.Equal(SeverityLevel.Verbose, LogsHelper.GetSeverityLevel(LogLevel.Trace));
+        }
+
+        [Theory]
+        [InlineData("ExceptionData")]
+        [InlineData("MessageData")]
+        public void ValidateTelemetryItem(string type)
+        {
+            var logRecords = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.ParseStateValues = true;
+                    options.AddInMemoryExporter(logRecords);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+
+            if (type == "MessageData")
+            {
+                logger.LogInformation("This is a test log");
+            }
+            else
+            {
+                logger.LogWarning(new Exception("Test Exception"), "Test Exception");
+            }
+
+            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), "roleName", "roleInstance", "Ikey");
+
+            Assert.Equal(type, telemetryItem[0].Data.BaseType);
+            Assert.Equal("Ikey", telemetryItem[0].InstrumentationKey);
+            Assert.Equal("roleName", telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal("roleInstance", telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
     }
 }

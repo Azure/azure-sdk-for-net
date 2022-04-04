@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StorageMigrationOptions. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="azurefilesConnectionString"> AzureFiles connection string. </param>
         /// <param name="azurefilesShare"> AzureFiles share. </param>
         /// <param name="switchSiteAfterMigration"> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="blockWriteAccessToSite"> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal StorageMigrationOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? blockWriteAccessToSite) : base(id, name, type, systemData, kind)
+        internal StorageMigrationOptions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? blockWriteAccessToSite) : base(id, name, resourceType, systemData, kind)
         {
             AzurefilesConnectionString = azurefilesConnectionString;
             AzurefilesShare = azurefilesShare;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType.ToString());
             writer.WriteEndObject();
         }
     }

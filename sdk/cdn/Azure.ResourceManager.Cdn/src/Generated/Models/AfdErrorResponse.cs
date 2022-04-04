@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of AfdErrorResponse. </summary>
         /// <param name="error"> The error object. </param>
-        internal AfdErrorResponse(ErrorResponse error)
+        internal AfdErrorResponse(ErrorDetail error)
         {
             Error = error;
         }
 
         /// <summary> The error object. </summary>
-        public ErrorResponse Error { get; }
+        public ErrorDetail Error { get; }
     }
 }

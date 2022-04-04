@@ -12,9 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Management
+namespace Azure.ResourceManager.ManagementGroups
 {
-    internal class ManagementGroupOperationSource : IOperationSource<ManagementGroup>
+    internal class ManagementGroupOperationSource : IOperationSource<ManagementGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Management
             _client = client;
         }
 
-        ManagementGroup IOperationSource<ManagementGroup>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagementGroupResource IOperationSource<ManagementGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
-            return new ManagementGroup(_client, data);
+            return new ManagementGroupResource(_client, data);
         }
 
-        async ValueTask<ManagementGroup> IOperationSource<ManagementGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagementGroupResource> IOperationSource<ManagementGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
-            return new ManagementGroup(_client, data);
+            return new ManagementGroupResource(_client, data);
         }
     }
 }

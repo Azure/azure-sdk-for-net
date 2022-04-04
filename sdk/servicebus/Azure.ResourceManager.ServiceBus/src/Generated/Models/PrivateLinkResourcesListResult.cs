@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Result of the List private link resources operation. </summary>
-    public partial class PrivateLinkResourcesListResult
+    internal partial class PrivateLinkResourcesListResult
     {
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
         internal PrivateLinkResourcesListResult()

@@ -55,6 +55,8 @@ namespace Azure.Search.Documents.Indexes.Models
             SynonymMapCounter = synonymMapCounter;
         }
 
+        /// <summary> Total number of aliases. </summary>
+        public SearchResourceCounter AliasCounter { get; }
         /// <summary> Total number of documents across all indexes in the service. </summary>
         public SearchResourceCounter DocumentCounter { get; }
         /// <summary> Total number of indexes. </summary>

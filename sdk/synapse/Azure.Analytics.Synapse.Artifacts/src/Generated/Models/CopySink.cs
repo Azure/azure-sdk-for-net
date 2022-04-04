@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public CopySink()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "CopySink";
         }
 
         /// <summary> Initializes a new instance of CopySink. </summary>
@@ -30,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CopySink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "CopySink";
+            Type = type;
             WriteBatchSize = writeBatchSize;
             WriteBatchTimeout = writeBatchTimeout;
             SinkRetryCount = sinkRetryCount;

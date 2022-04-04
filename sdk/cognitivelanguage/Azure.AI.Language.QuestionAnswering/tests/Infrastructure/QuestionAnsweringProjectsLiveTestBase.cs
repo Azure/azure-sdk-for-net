@@ -66,13 +66,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
         protected async Task DeleteProjectAsync(string projectName)
         {
-            Operation<BinaryData> deletionOperation = await Client.DeleteProjectAsync(true, projectName);
+            Operation<BinaryData> deletionOperation = await Client.DeleteProjectAsync(WaitUntil.Completed, projectName);
         }
 
         protected void DeleteProject(string projectName)
         {
             // Insert this back when the delete LRO bug is fixed
-            Operation<BinaryData> deletionOperation = Client.DeleteProject(true, projectName);
+            Operation<BinaryData> deletionOperation = Client.DeleteProject(WaitUntil.Completed, projectName);
         }
     }
 }
