@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
         public GuestAgentProfile()
         {
-            ErrorDetails = new ChangeTrackingList<ResponseError>();
+            ErrorDetails = new ChangeTrackingList<ErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="lastStatusChange"> The time of the last status change. </param>
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
         /// <param name="errorDetails"> Details about the error state. </param>
-        internal GuestAgentProfile(string vmUuid, StatusTypes? status, DateTimeOffset? lastStatusChange, string agentVersion, IReadOnlyList<ResponseError> errorDetails)
+        internal GuestAgentProfile(string vmUuid, StatusTypes? status, DateTimeOffset? lastStatusChange, string agentVersion, IReadOnlyList<ErrorDetail> errorDetails)
         {
             VmUuid = vmUuid;
             Status = status;
@@ -45,6 +44,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> The hybrid machine agent full version. </summary>
         public string AgentVersion { get; }
         /// <summary> Details about the error state. </summary>
-        public IReadOnlyList<ResponseError> ErrorDetails { get; }
+        public IReadOnlyList<ErrorDetail> ErrorDetails { get; }
     }
 }

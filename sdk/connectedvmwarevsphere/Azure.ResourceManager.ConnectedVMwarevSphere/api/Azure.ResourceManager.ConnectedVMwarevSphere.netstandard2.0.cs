@@ -690,6 +690,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.DiskType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.DiskType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ErrorDetail
+    {
+        internal ErrorDetail() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.ErrorDetail> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
+    }
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
@@ -718,7 +726,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         public GuestAgentProfile() { }
         public string AgentVersion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> ErrorDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.ErrorDetail> ErrorDetails { get { throw null; } }
         public System.DateTimeOffset? LastStatusChange { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.StatusTypes? Status { get { throw null; } }
         public string VmUuid { get { throw null; } }
