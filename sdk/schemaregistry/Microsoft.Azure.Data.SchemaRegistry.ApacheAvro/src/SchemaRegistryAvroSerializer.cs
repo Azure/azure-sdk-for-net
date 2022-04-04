@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (AvroException ex)
             {
-                throw new AvroSerializationException("An error occurred while attempting to serialize to Avro.", ex);
+                throw new SchemaRegistryAvroException("An error occurred while attempting to serialize to Avro.", ex);
             }
         }
 
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (SchemaParseException ex)
             {
-                throw new AvroSerializationException(
+                throw new SchemaRegistryAvroException(
                     $"An error occurred while attempting to parse the schema (schema ID: {schemaId}) that was used to serialize the Avro. " +
                     $"Make sure that the schema represents valid Avro.",
                     schemaId,
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (SchemaParseException ex)
             {
-                throw new AvroSerializationException(
+                throw new SchemaRegistryAvroException(
                     "An error occurred while attempting to parse the schema that you are attempting to deserialize the data with. " +
                     "Make sure that the schema represents valid Avro.",
                     schemaId,
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (AvroException ex)
             {
-                throw new AvroSerializationException(
+                throw new SchemaRegistryAvroException(
                     "An error occurred while attempting to deserialize " +
                     $"Avro that was serialized with schemaId: {schemaId}. The schema used to deserialize the data may not be compatible with the schema that was used" +
                     $"to serialize the data. Please ensure that the schemas are compatible.",

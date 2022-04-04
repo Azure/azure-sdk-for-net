@@ -15,12 +15,12 @@ namespace GuestConfiguration.Tests.ScenarioTests
         private const string ResourceGroupName = "GuestConfigurationSDKTestRecord";
         private const string AzureVMName = "SDKTestRecordVM002";
 
-        private const string HybridRG = "gehuan-arc0010";
-        private const string HybridMachineName = "IamPretendingTo";
+        private const string HybridRG = "neela-sdk-rg";
+        private const string HybridMachineName = "LAPTOP-4B77J53J";
         private const string AssignmentName = "AuditSecureProtocol";
 
         private const string VMSSRG = "aashishDeleteRG";
-        private const string VMSSName = "vmss3";
+        private const string VMSSName = "vmss1";
         private const string VMSSAssignmentName = "EnforcePasswordHistory$pid5im35hvyml6ow";
 
         [Fact]
@@ -233,7 +233,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                     var gcVMSSAssignment = GuestConfigurationAssignmentsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentsVMSS, VMSSRG, VMSSAssignmentName, VMSSName);
                     Assert.NotNull(gcVMSSAssignment);
 
-                    var gcVMSSAssignmentReport = GuestConfigurationAssignmentReportsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentReportsVMSS, VMSSRG, VMSSAssignmentName, "93b97ae8-1e02-466e-af61-2eb6c506d9ec", VMSSName);
+                    var gcVMSSAssignmentReport = GuestConfigurationAssignmentReportsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentReportsVMSS, VMSSRG, VMSSAssignmentName, "7543003d-c624-4195-8eeb-66f113500db0", VMSSName);
                     Assert.NotNull(gcVMSSAssignmentReport);
                 }
             }

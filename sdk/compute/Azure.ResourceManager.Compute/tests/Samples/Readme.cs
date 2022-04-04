@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 #region Snippet:Readme_AuthClient
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.Core;
 #if !SNIPPET
-using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Compute.Tests.Samples
 {
