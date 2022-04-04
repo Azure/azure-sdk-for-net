@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure;
-
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Error response indicates Azure Front Door Standard or Azure Front Door Premium or CDN service is not able to process the incoming request. The reason is provided in the error message. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="error"> The error object. </param>
-        internal ErrorResponse(ResponseError error)
+        internal ErrorResponse(ErrorDetail error)
         {
             Error = error;
         }
 
         /// <summary> The error object. </summary>
-        public ResponseError Error { get; }
+        public ErrorDetail Error { get; }
     }
 }
