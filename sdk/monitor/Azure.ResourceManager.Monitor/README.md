@@ -1,4 +1,4 @@
-# Azure monitor Management client library for .NET
+# Azure Monitor Management client library for .NET
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
@@ -6,7 +6,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure monitor management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Monitor management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
 Install-Package Azure.ResourceManager.Monitor -Version 1.0.0-beta.1 
@@ -52,8 +52,7 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 
 ## Contributing
 
-For details on contributing to this repository, see the contributing
-guide.
+For details on contributing to this repository, see the [contributing guide][cg].
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
@@ -66,11 +65,14 @@ whether you need to provide a CLA and decorate the PR appropriately
 bot. You will only need to do this once across all repositories using
 our CLA.
 
-This project has adopted the Microsoft Open Source Code of Conduct. For
-more information see the Code of Conduct FAQ or contact
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
+more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
 
 <!-- LINKS -->
+[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
