@@ -1,17 +1,11 @@
 # Release History
 
-## 1.24.0-beta.1 (Unreleased)
+## 1.24.0 (2022-04-04)
 
 ### Features Added
 
 - Added the `MessageContent` type which represents a message containing a content type and data.
 - Sub classes of `ClientOptions` are now able to create sub class implementations of `DiagnosticsOptions` and set it as the implementation for the `Diagnostics` property of `ClientOptions` via a new constructor overload.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.23.0 (2022-03-21)
 
