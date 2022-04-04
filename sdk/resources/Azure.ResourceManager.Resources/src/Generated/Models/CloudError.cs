@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure;
-
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> An error response for a resource management request. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of CloudError. </summary>
         /// <param name="error"> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </param>
-        internal CloudError(ResponseError error)
+        internal CloudError(ResourcesResponseError error)
         {
             Error = error;
         }
 
         /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
-        public ResponseError Error { get; }
+        public ResourcesResponseError Error { get; }
     }
 }

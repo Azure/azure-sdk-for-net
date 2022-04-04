@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<DateTimeOffset> expirationTime = default;
-            Optional<ResponseError> error = default;
+            Optional<ResourcesResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerInstanceId"))
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    error = ResourcesResponseError.DeserializeResourcesResponseError(property.Value);
                     continue;
                 }
             }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static WhatIfOperationResult DeserializeWhatIfOperationResult(JsonElement element)
         {
             Optional<string> status = default;
-            Optional<ResponseError> error = default;
+            Optional<ResourcesResponseError> error = default;
             Optional<IReadOnlyList<WhatIfChange>> changes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    error = ResourcesResponseError.DeserializeResourcesResponseError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
