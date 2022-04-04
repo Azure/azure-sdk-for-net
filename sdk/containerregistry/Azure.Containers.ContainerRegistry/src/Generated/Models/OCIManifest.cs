@@ -8,34 +8,33 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
-    internal partial class OCIManifest : Manifest
+    public partial class OciManifest
     {
-        /// <summary> Initializes a new instance of OCIManifest. </summary>
-        public OCIManifest()
+        /// <summary> Initializes a new instance of OciManifest. </summary>
+        public OciManifest()
         {
-            Layers = new ChangeTrackingList<Descriptor>();
+            Layers = new ChangeTrackingList<OciBlobDescriptor>();
         }
 
-        /// <summary> Initializes a new instance of OCIManifest. </summary>
-        /// <param name="schemaVersion"> Schema version. </param>
+        /// <summary> Initializes a new instance of OciManifest. </summary>
         /// <param name="config"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OCIManifest(int? schemaVersion, Descriptor config, IList<Descriptor> layers, Annotations annotations) : base(schemaVersion)
+        /// <param name="schemaVersion"> Schema version. </param>
+        internal OciManifest(OciBlobDescriptor config, IList<OciBlobDescriptor> layers, OciAnnotations annotations, int? schemaVersion)
         {
             Config = config;
             Layers = layers;
             Annotations = annotations;
+            SchemaVersion = schemaVersion;
         }
 
         /// <summary> V2 image config descriptor. </summary>
-        public Descriptor Config { get; set; }
+        public OciBlobDescriptor Config { get; set; }
         /// <summary> List of V2 image layer information. </summary>
-        public IList<Descriptor> Layers { get; }
-        /// <summary> Additional information provided through arbitrary metadata. </summary>
-        public Annotations Annotations { get; set; }
+        public IList<OciBlobDescriptor> Layers { get; }
     }
 }

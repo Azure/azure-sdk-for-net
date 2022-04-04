@@ -437,5 +437,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any());
             }
         }
+
+        [Test]
+        public void LogsMessageEvents()
+        {
+            var message = new ServiceBusMessage()
+            {
+                SessionId = "sessionId1",
+                PartitionKey = "sessionId1",
+                MessageId = "messageId"
+            };
+            message.SessionId = "sessionId2";
+
+            _listener.SingleEventById(
+                ServiceBusEventSource.PartitionKeyValueOverwritten,
+                e => e.Payload.Contains("sessionId1") && e.Payload.Contains("sessionId2") && e.Payload.Contains("messageId"));
+        }
     }
 }

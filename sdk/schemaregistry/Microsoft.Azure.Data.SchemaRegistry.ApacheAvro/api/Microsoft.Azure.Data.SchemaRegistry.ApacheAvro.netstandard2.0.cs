@@ -1,13 +1,13 @@
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
-    public partial class AvroSerializationException : System.Exception
+    public partial class SchemaRegistryAvroException : System.Exception
     {
-        public AvroSerializationException() { }
-        protected AvroSerializationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public AvroSerializationException(string message) { }
-        public AvroSerializationException(string message, System.Exception innerException) { }
-        public AvroSerializationException(string message, string serializedSchemaId, System.Exception innerException) { }
-        public string SerializedSchemaId { get { throw null; } set { } }
+        public SchemaRegistryAvroException() { }
+        protected SchemaRegistryAvroException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public SchemaRegistryAvroException(string message) { }
+        public SchemaRegistryAvroException(string message, System.Exception innerException) { }
+        public SchemaRegistryAvroException(string message, string schemaId, System.Exception innerException) { }
+        public string SchemaId { get { throw null; } set { } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public partial class SchemaRegistryAvroSerializer
