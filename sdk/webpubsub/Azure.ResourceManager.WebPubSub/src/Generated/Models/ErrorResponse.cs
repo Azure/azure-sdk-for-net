@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure;
-
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="error"> The error object. </param>
-        internal ErrorResponse(ResponseError error)
+        internal ErrorResponse(ErrorDetail error)
         {
             Error = error;
         }
 
         /// <summary> The error object. </summary>
-        public ResponseError Error { get; }
+        public ErrorDetail Error { get; }
     }
 }
