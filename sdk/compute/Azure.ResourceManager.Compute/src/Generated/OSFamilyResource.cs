@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a OSFamilyResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an OSFamily along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OSFamilyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetOSFamilyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetOSFamily method.
+    /// </summary>
     public partial class OSFamilyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OSFamilyResource"/> instance. </summary>

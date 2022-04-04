@@ -8,11 +8,10 @@ steps:
     - pwsh: |
         # Find the default branch of the repo. The variable value sets in build step.
         Write-Host "Default Branch: $(DefaultBranch)"
-        $targetBranch = "$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
 
-        if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-eng/common")) -and $targetBranch -eq "$(DefaultBranch)")
+        if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-eng/common")) -and "$(System.PullRequest.TargetBranch)" -match "^(refs/heads/)?$(DefaultBranch)$")
         {
-          $filesInCommonDir  = & "eng/common/scripts/get-changedfiles.ps1" -TargetCommittish $targetBranch -DiffPath 'eng/common/*'
+          $filesInCommonDir  = & "eng/common/scripts/get-changedfiles.ps1" -DiffPath 'eng/common/*'
           if (($LASTEXITCODE -eq 0) -and ($filesInCommonDir.Count -gt 0))
           {
             Write-Host "##vso[task.LogIssue type=error;]Changes to files under 'eng/common' directory should not be made in this Repo`n${filesInCommonDir}"

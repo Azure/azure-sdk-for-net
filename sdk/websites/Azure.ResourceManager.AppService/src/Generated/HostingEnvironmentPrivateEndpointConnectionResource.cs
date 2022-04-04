@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a HostingEnvironmentPrivateEndpointConnectionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a HostingEnvironmentPrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HostingEnvironmentPrivateEndpointConnectionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHostingEnvironmentPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource" /> using the GetHostingEnvironmentPrivateEndpointConnection method.
+    /// </summary>
     public partial class HostingEnvironmentPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentPrivateEndpointConnectionResource"/> instance. </summary>

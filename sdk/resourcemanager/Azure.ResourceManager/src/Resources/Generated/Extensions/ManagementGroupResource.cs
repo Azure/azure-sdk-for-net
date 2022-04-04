@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Management
+namespace Azure.ResourceManager.ManagementGroups
 {
     public partial class ManagementGroupResource
     {

@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ManagedInstanceEncryptionProtectorResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagedInstanceEncryptionProtector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceEncryptionProtectorResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceEncryptionProtectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedInstanceEncryptionProtector method.
+    /// </summary>
     public partial class ManagedInstanceEncryptionProtectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceEncryptionProtectorResource"/> instance. </summary>

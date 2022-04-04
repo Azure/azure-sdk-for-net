@@ -110,4 +110,7 @@ directive:
   - from: communityGallery.json
     where: $.definitions.PirCommunityGalleryResource.properties.type
     transform: $["x-ms-client-name"] = "ResourceType"
+  - from: cloudService.json
+    where: $.definitions.UpdateDomain
+    transform: $["x-ms-client-name"] = "UpdateDomainIdentifier"
 ```

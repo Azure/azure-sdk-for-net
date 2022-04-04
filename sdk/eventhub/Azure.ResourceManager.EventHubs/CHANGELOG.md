@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models and methods to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.2 (2021-12-28)
 
@@ -49,7 +59,8 @@ Before upgrade:
 ```csharp
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
-
+```
+```csharp
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
 var eventHubManagementClient = new EventHubManagementClient(tokenCredentials);
 eventHubManagementClient.SubscriptionId = subscriptionId;
@@ -100,12 +111,13 @@ var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpd
 ```
 
 After upgrade:
-```C# Snippet:ChangeLog_Sample
+```C# Snippet:ChangeLog_Sample_Usings
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.Core;
-
+```
+```C# Snippet:ChangeLog_Sample
 string namespaceName = "myNamespace";
 string eventhubName = "myEventhub";
 string resourceGroupName = "myResourceGroup";

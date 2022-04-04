@@ -17,7 +17,12 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A Class representing a MsixPackageResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a MsixPackage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MsixPackageResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetMsixPackageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource" /> using the GetMsixPackage method.
+    /// </summary>
     public partial class MsixPackageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MsixPackageResource"/> instance. </summary>

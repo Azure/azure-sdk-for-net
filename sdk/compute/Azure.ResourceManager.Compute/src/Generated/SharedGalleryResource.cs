@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a SharedGalleryResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SharedGallery along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SharedGalleryResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSharedGalleryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSharedGallery method.
+    /// </summary>
     public partial class SharedGalleryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedGalleryResource"/> instance. </summary>

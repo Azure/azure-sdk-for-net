@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("subscriptionId");
             writer.WriteStringValue(SubscriptionId);
             writer.WritePropertyName("resourceGroupName");
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static KeyVaultSigningKeyParameters DeserializeKeyVaultSigningKeyParameters(JsonElement element)
         {
-            KeyVaultSigningKeyParametersOdataType odataType = default;
+            KeyVaultSigningKeyParametersTypeName typeName = default;
             string subscriptionId = default;
             string resourceGroupName = default;
             string vaultName = default;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Cdn.Models
             string secretVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new KeyVaultSigningKeyParametersOdataType(property.Value.GetString());
+                    typeName = new KeyVaultSigningKeyParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new KeyVaultSigningKeyParameters(odataType, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion);
+            return new KeyVaultSigningKeyParameters(typeName, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion);
         }
     }
 }

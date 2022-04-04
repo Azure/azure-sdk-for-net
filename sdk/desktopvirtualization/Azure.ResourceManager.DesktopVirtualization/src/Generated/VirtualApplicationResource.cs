@@ -17,7 +17,12 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A Class representing a VirtualApplicationResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a VirtualApplication along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualApplicationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetVirtualApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualApplicationGroupResource" /> using the GetVirtualApplication method.
+    /// </summary>
     public partial class VirtualApplicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualApplicationResource"/> instance. </summary>

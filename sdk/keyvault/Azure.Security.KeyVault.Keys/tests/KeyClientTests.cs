@@ -220,6 +220,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync("test", string.Empty));
             Assert.AreEqual("targetAttestationToken", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync(null));
+            Assert.AreEqual("options", ex.ParamName);
         }
 
         [Test]

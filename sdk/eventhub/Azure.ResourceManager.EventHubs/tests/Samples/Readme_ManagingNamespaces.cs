@@ -68,24 +68,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_Namespaces_GetNamespaceIfExists
-            EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetIfExistsAsync("foo");
-            if (eventHubNamespace != null)
-            {
-                Console.WriteLine("namespace 'foo' exists");
-            }
-            if (await namespaceCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("namespace 'bar' exists");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task Delete()
         {
             #region Snippet:Managing_Namespaces_DeleteNamespace

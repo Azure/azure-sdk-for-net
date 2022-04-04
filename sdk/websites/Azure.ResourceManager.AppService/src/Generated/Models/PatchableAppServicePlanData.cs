@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
         /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
         /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
-        /// <param name="spotExpirationTime"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpirationTime"> The time when the server farm free offer expires. </param>
+        /// <param name="spotExpirationOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
+        /// <param name="freeOfferExpirationOn"> The time when the server farm free offer expires. </param>
         /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
         /// <param name="reserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
-        internal PatchableAppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationTime, DateTimeOffset? freeOfferExpirationTime, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
+        internal PatchableAppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
         {
             WorkerTierName = workerTierName;
             Status = status;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.AppService.Models
             MaximumElasticWorkerCount = maximumElasticWorkerCount;
             NumberOfSites = numberOfSites;
             IsSpot = isSpot;
-            SpotExpirationTime = spotExpirationTime;
-            FreeOfferExpirationTime = freeOfferExpirationTime;
+            SpotExpirationOn = spotExpirationOn;
+            FreeOfferExpirationOn = freeOfferExpirationOn;
             ResourceGroup = resourceGroup;
             Reserved = reserved;
             IsXenon = isXenon;
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </summary>
         public bool? IsSpot { get; set; }
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
-        public DateTimeOffset? SpotExpirationTime { get; set; }
+        public DateTimeOffset? SpotExpirationOn { get; set; }
         /// <summary> The time when the server farm free offer expires. </summary>
-        public DateTimeOffset? FreeOfferExpirationTime { get; set; }
+        public DateTimeOffset? FreeOfferExpirationOn { get; set; }
         /// <summary> Resource group of the App Service plan. </summary>
         public string ResourceGroup { get; }
         /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>

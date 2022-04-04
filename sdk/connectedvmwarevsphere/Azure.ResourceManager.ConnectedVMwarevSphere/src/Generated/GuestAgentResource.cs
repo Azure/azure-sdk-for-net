@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A Class representing a GuestAgentResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a GuestAgent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GuestAgentResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetGuestAgentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineResource" /> using the GetGuestAgent method.
+    /// </summary>
     public partial class GuestAgentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GuestAgentResource"/> instance. </summary>

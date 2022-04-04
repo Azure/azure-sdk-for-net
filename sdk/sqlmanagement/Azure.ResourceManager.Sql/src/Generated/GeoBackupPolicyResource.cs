@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a GeoBackupPolicyResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a GeoBackupPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GeoBackupPolicyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetGeoBackupPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetGeoBackupPolicy method.
+    /// </summary>
     public partial class GeoBackupPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GeoBackupPolicyResource"/> instance. </summary>

@@ -89,6 +89,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             #region Snippet:ServiceBusCrossEntityTransaction
 #if SNIPPET
+            string connectionString = "<connection_string>";
             var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
             await using var client = new ServiceBusClient(connectionString, options);
 
@@ -135,6 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             #region Snippet:ServiceBusCrossEntityTransactionWrongOrder
 #if SNIPPET
+            string connectionString = "<connection_string>";
             var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
             await using var client = new ServiceBusClient(connectionString, options);
 

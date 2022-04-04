@@ -50,16 +50,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(topic.Id.Name, topicName);
 
             //validate if created successfully
-            topic = await _topicCollection.GetIfExistsAsync(topicName);
-            Assert.NotNull(topic);
             Assert.IsTrue(await _topicCollection.ExistsAsync(topicName));
+            topic = await _topicCollection.GetAsync(topicName);
 
             //delete topic
             await topic.DeleteAsync(WaitUntil.Completed);
 
             //validate
-            topic = await _topicCollection.GetIfExistsAsync(topicName);
-            Assert.Null(topic);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _topicCollection.GetAsync(topicName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _topicCollection.ExistsAsync(topicName));
         }
 

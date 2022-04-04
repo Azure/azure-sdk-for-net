@@ -51,48 +51,6 @@ namespace Azure.ResourceManager
             return GetPolicyAssignments().Get(policyAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a TagResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <returns> Returns a <see cref="TagResource" /> object. </returns>
-        public virtual TagResource GetTagResource()
-        {
-            return new TagResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Resources/tags/default"));
-        }
-
-        /// <summary> Gets a collection of PolicyExemptionResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of PolicyExemptionResources and their operations over a PolicyExemptionResource. </returns>
-        public virtual PolicyExemptionCollection GetPolicyExemptions()
-        {
-            return GetCachedClient(Client => new PolicyExemptionCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// This operation retrieves a single policy exemption, given its name and the scope it was created at.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// Operation Id: PolicyExemptions_Get
-        /// </summary>
-        /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public virtual async Task<Response<PolicyExemptionResource>> GetPolicyExemptionAsync(string policyExemptionName, CancellationToken cancellationToken = default)
-        {
-            return await GetPolicyExemptions().GetAsync(policyExemptionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This operation retrieves a single policy exemption, given its name and the scope it was created at.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
-        /// Operation Id: PolicyExemptions_Get
-        /// </summary>
-        /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public virtual Response<PolicyExemptionResource> GetPolicyExemption(string policyExemptionName, CancellationToken cancellationToken = default)
-        {
-            return GetPolicyExemptions().Get(policyExemptionName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ManagementLockResources in the ArmResource. </summary>
         /// <returns> An object representing collection of ManagementLockResources and their operations over a ManagementLockResource. </returns>
         public virtual ManagementLockCollection GetManagementLocks()

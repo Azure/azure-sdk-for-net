@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a VirtualNetworkPeeringResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a VirtualNetworkPeering along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualNetworkPeeringResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetVirtualNetworkPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualNetworkResource" /> using the GetVirtualNetworkPeering method.
+    /// </summary>
     public partial class VirtualNetworkPeeringResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualNetworkPeeringResource"/> instance. </summary>

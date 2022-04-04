@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.24.0-beta.1</Version>
+    <Version>1.24.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.23.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
@@ -57,12 +57,15 @@
     <Compile Include="Shared\ExponentialDelayStrategy.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
+    <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
+    <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\DelayStrategy.cs" />
+    <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
   </ItemGroup>
 
 </Project>

@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a LongTermRetentionPolicyResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a LongTermRetentionPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LongTermRetentionPolicyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetLongTermRetentionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetLongTermRetentionPolicy method.
+    /// </summary>
     public partial class LongTermRetentionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LongTermRetentionPolicyResource"/> instance. </summary>

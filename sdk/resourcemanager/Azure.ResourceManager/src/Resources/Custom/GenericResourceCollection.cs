@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 
 [assembly: CodeGenSuppressType("GenericResourceCollection")]
 namespace Azure.ResourceManager.Resources
@@ -184,62 +183,6 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public virtual Response<GenericResource> GetIfExists(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
-        {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
-                var response = _resourcesRestClient.GetById(resourceId, apiVersion, cancellationToken: cancellationToken);
-                return response.Value == null
-                    ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async virtual Task<Response<GenericResource>> GetIfExistsAsync(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
-        {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
-                var response = await _resourcesRestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return response.Value == null
-                    ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
-                    : Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual Response<bool> Exists(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -251,7 +194,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = GetIfExists(resourceId, cancellationToken: cancellationToken);
+                var apiVersion = GetApiVersion(new ResourceIdentifier(resourceId), cancellationToken);
+                var response = _resourcesRestClient.GetById(resourceId, apiVersion, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,7 +220,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(resourceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var apiVersion = await GetApiVersionAsync(new ResourceIdentifier(resourceId), cancellationToken).ConfigureAwait(false);
+                var response = await _resourcesRestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

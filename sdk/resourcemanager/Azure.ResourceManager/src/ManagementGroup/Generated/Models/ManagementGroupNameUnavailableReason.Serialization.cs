@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal static partial class ManagementGroupNameUnavailableReasonExtensions
     {

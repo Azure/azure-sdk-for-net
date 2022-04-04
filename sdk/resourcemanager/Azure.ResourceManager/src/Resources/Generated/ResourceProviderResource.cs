@@ -17,7 +17,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ResourceProviderResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ResourceProvider along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceProviderResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetResourceProviderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceProvider method.
+    /// </summary>
     public partial class ResourceProviderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceProviderResource"/> instance. </summary>
@@ -274,15 +279,15 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
         /// Operation Id: Providers_Register
         /// </summary>
-        /// <param name="properties"> The third party consent for S2S. </param>
+        /// <param name="options"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceProviderResource>> RegisterAsync(ResourceProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceProviderResource>> RegisterAsync(ResourceProviderRegistrationOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderResource.Register");
             scope.Start();
             try
             {
-                var response = await _resourceProviderProvidersRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceProviderProvidersRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,15 +302,15 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
         /// Operation Id: Providers_Register
         /// </summary>
-        /// <param name="properties"> The third party consent for S2S. </param>
+        /// <param name="options"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceProviderResource> Register(ResourceProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceProviderResource> Register(ResourceProviderRegistrationOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderResource.Register");
             scope.Start();
             try
             {
-                var response = _resourceProviderProvidersRestClient.Register(Id.SubscriptionId, Id.Provider, properties, cancellationToken);
+                var response = _resourceProviderProvidersRestClient.Register(Id.SubscriptionId, Id.Provider, options, cancellationToken);
                 return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
