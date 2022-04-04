@@ -188,6 +188,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 {
                     key = PocoTypeBinder.ETagKeyName;
                 }
+                // normalize casing
+                else if (nameof(TableEntity.PartitionKey).Equals(key, StringComparison.OrdinalIgnoreCase))
+                {
+                    key = nameof(TableEntity.PartitionKey);
+                }
+                // normalize casing
+                else if (nameof(TableEntity.RowKey).Equals(key, StringComparison.OrdinalIgnoreCase))
+                {
+                    key = nameof(TableEntity.RowKey);
+                }
 
                 if (property.Value is JValue value)
                 {

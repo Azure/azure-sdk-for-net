@@ -548,6 +548,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     ["RowKey"] = RowKey + "1"
                 });
             }
+
+            public static async Task JObjectCamelCase([Table(TableNameExpression)] IAsyncCollector<JObject> collector, object original, object another)
+            {
+                await collector.AddAsync(new JObject
+                {
+                    ["Value"] = JToken.FromObject(original),
+                    ["partitionKey"] = PartitionKey,
+                    ["rowKey"] = RowKey
+                });
+                await collector.AddAsync(new JObject
+                {
+                    ["Value"] = JToken.FromObject(another),
+                    ["partitionKey"] = PartitionKey,
+                    ["rowKey"] = RowKey + "1"
+                });
+            }
         }
 
         [RecordedTest]
@@ -655,6 +671,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     ["Value"] = JToken.FromObject(another),
                     ["PartitionKey"] = PartitionKey,
                     ["RowKey"] = RowKey + "1"
+                });
+            }
+
+            public static async Task JObjectCamelCase([Table(TableNameExpression)] IAsyncCollector<JObject> collector, object original, object another)
+            {
+                await collector.AddAsync(new JObject
+                {
+                    ["Value"] = JToken.FromObject(original),
+                    ["partitionKey"] = PartitionKey,
+                    ["rowKey"] = RowKey
+                });
+                await collector.AddAsync(new JObject
+                {
+                    ["Value"] = JToken.FromObject(another),
+                    ["partitionKey"] = PartitionKey,
+                    ["rowKey"] = RowKey + "1"
                 });
             }
         }
