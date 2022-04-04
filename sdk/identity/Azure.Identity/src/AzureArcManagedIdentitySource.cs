@@ -37,13 +37,17 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(IdentityEndpointInvalidUriError);
             }
 
-            return new AzureArcManagedIdentitySource(options.Pipeline, endpointUri, options.ClientId);
+            return new AzureArcManagedIdentitySource(endpointUri, options);
         }
 
-        private AzureArcManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string clientId) : base(pipeline)
+        private AzureArcManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _endpoint = endpoint;
-            _clientId = clientId;
+            _clientId = options.ClientId;
+            if (!string.IsNullOrEmpty(_clientId) || null != options.ResourceIdentifier)
+            {
+                AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("Azure Arc");
+            }
         }
 
         protected override Request CreateRequest(string[] scopes)
@@ -51,7 +55,6 @@ namespace Azure.Identity
             // arc MI endpoint doesn't support user assigned identities so if client id was specified throw AuthenticationFailedException
             if (!string.IsNullOrEmpty(_clientId))
             {
-                AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("Azure Arc");
                 throw new AuthenticationFailedException(UserAssignedNotSupportedErrorMessage);
             }
 

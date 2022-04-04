@@ -493,7 +493,7 @@ namespace Azure.Identity.Tests
             Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
             if (clientId != null)
             {
-                Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.UserAssignedManagedIdentityNotSupportedMessage, "CloudShell")));
+                Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.UserAssignedManagedIdentityNotSupportedMessage, "Cloud Shell")));
             }
             Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadata));
             Assert.AreEqual("true", actMetadata);

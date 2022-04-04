@@ -43,7 +43,7 @@ namespace Azure.Identity
             _endpoint = endpoint;
             if (!string.IsNullOrEmpty(options.ClientId) || null == options.ResourceIdentifier)
             {
-                AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("CloudShell");
+                AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("Cloud Shell");
             }
         }
 
