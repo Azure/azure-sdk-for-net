@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
         /// <param name="resourceState"> Resource status of the origin group. </param>
         /// <param name="provisioningState"> Provisioning status of the origin group. </param>
-        internal CdnOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthProbeParameters healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, string provisioningState) : base(id, name, resourceType, systemData)
+        internal CdnOriginGroupData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, HealthProbeParameters healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, string provisioningState) : base(id, name, resourceType, systemData)
         {
             HealthProbeSettings = healthProbeSettings;
             Origins = origins;

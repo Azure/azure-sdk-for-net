@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.Media.Models
     /// Describes the settings to be used when encoding the input video into a
     /// desired output bitrate layer.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("#Microsoft.Media.H265VideoLayer")]
     public partial class H265VideoLayer : Layer
     {
         /// <summary>

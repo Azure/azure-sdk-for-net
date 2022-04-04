@@ -458,9 +458,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
             Assert.AreEqual(values.Value1Base, entity["Value"]);
+            // etag should be interpreted as an Odata etag and not stored with the "etag" or "Etag" key
+            Assert.IsNull(entity["Etag"]);
+            Assert.IsNull(entity["etag"]);
             TableEntity entity2 = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey + "1");
             Assert.NotNull(entity2);
             Assert.AreEqual(values.Value2Base, entity2["Value"]);
+            Assert.IsNull(entity["Etag"]);
+            Assert.IsNull(entity["etag"]);
         }
 
         private class CanAddEntityUsingCollectorProgram<T>
@@ -539,13 +544,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 {
                     ["Value"] = JToken.FromObject(original),
                     ["PartitionKey"] = PartitionKey,
-                    ["RowKey"] = RowKey
+                    ["RowKey"] = RowKey,
+                    ["Etag"] = "*"
                 });
                 collector.Add(new JObject
                 {
                     ["Value"] = JToken.FromObject(another),
                     ["PartitionKey"] = PartitionKey,
-                    ["RowKey"] = RowKey + "1"
+                    ["RowKey"] = RowKey + "1",
+                    ["Etag"] = "*"
+                });
+            }
+
+            public static async Task JObjectCamelCase([Table(TableNameExpression)] IAsyncCollector<JObject> collector, object original, object another)
+            {
+                await collector.AddAsync(new JObject
+                {
+                    ["Value"] = JToken.FromObject(original),
+                    ["partitionKey"] = PartitionKey,
+                    ["rowKey"] = RowKey,
+                    ["etag"] = "*"
+                });
+                await collector.AddAsync(new JObject
+                {
+                    ["Value"] = JToken.FromObject(another),
+                    ["partitionKey"] = PartitionKey,
+                    ["rowKey"] = RowKey + "1",
+                    ["etag"] = "*"
                 });
             }
         }
@@ -571,9 +596,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
             Assert.NotNull(entity);
             Assert.AreEqual(values.Value1Base, entity["Value"]);
+            // etag should be interpreted as an Odata etag and not stored with the "etag" or "Etag" key
+            Assert.IsNull(entity["Etag"]);
+            Assert.IsNull(entity["etag"]);
             TableEntity entity2 = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey + "1");
             Assert.NotNull(entity2);
             Assert.AreEqual(values.Value2Base, entity2["Value"]);
+            Assert.IsNull(entity["Etag"]);
+            Assert.IsNull(entity["etag"]);
         }
 
         private class CanAddEntityUsingAsyncCollectorProgram<T>
@@ -648,13 +678,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 {
                     ["Value"] = JToken.FromObject(original),
                     ["PartitionKey"] = PartitionKey,
-                    ["RowKey"] = RowKey
+                    ["RowKey"] = RowKey,
+                    ["Etag"] = "*"
                 });
                 await collector.AddAsync(new JObject
                 {
                     ["Value"] = JToken.FromObject(another),
                     ["PartitionKey"] = PartitionKey,
-                    ["RowKey"] = RowKey + "1"
+                    ["RowKey"] = RowKey + "1",
+                    ["Etag"] = "*"
+                });
+            }
+
+            public static async Task JObjectCamelCase([Table(TableNameExpression)] IAsyncCollector<JObject> collector, object original, object another)
+            {
+                await collector.AddAsync(new JObject
+                {
+                    ["Value"] = JToken.FromObject(original),
+                    ["partitionKey"] = PartitionKey,
+                    ["rowKey"] = RowKey,
+                    ["etag"] = "*"
+                });
+                await collector.AddAsync(new JObject
+                {
+                    ["Value"] = JToken.FromObject(another),
+                    ["partitionKey"] = PartitionKey,
+                    ["rowKey"] = RowKey + "1",
+                    ["etag"] = "*"
                 });
             }
         }

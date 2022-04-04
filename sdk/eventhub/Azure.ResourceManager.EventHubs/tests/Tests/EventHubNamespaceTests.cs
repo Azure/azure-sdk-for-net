@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            eventHubNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
-            Assert.IsNull(eventHubNamespace);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 

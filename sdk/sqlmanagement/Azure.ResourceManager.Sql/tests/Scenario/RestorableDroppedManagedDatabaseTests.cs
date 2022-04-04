@@ -80,8 +80,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.IsNotNull(getDatabase);
 
             // 4.GetIfExist
-            var existDatabase = await collection.GetIfExistsAsync(databaseId);
-            Assert.IsNotNull(existDatabase);
+            Assert.IsTrue(await collection.ExistsAsync(databaseId));
         }
     }
 }

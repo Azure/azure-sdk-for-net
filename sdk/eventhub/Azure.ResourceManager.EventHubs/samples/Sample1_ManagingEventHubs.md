@@ -63,20 +63,6 @@ await foreach (EventHubResource eventHub in eventHubCollection.GetAllAsync())
 EventHubResource eventHub = await eventHubCollection.GetAsync("myEventHub");
 ```
 
-***Try to get an eventhub if it exists***
-
-```C# Snippet:Managing_EventHubs_GetEventHubIfExists
-EventHubResource eventHub = await eventHubCollection.GetIfExistsAsync("foo");
-if (eventHub != null)
-{
-    Console.WriteLine("eventHub 'foo' exists");
-}
-if (await eventHubCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("eventHub 'bar' exists");
-}
-```
-
 ***Delete an eventhub***
 
 ```C# Snippet:Managing_EventHubs_DeleteEventHub

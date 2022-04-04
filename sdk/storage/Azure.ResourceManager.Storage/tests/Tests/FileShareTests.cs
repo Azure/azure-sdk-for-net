@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Storage.Tests
             await share1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            FileShareResource fileShare3 = await _fileShareCollection.GetIfExistsAsync(fileShareName);
-            Assert.IsNull(fileShare3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _fileShareCollection.GetAsync(fileShareName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
         }
 

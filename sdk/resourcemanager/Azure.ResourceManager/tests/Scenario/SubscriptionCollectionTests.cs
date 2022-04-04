@@ -25,17 +25,6 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task TryGet()
-        {
-            var foo = await Client.GetSubscriptions().GetIfExistsAsync(new Guid().ToString()).ConfigureAwait(false);
-            Assert.IsNull(foo.Value);
-            string subscriptionId = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).Id.SubscriptionId;
-            SubscriptionResource subscription = await Client.GetSubscriptions().GetIfExistsAsync(subscriptionId).ConfigureAwait(false);
-            Assert.NotNull(subscription);
-            Assert.IsTrue(subscription.Id.SubscriptionId.Equals(subscriptionId));
-        }
-
-        [RecordedTest]
         public async Task Get()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);

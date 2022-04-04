@@ -84,21 +84,6 @@ FileShareResource fileShare = await fileShareCollection.GetAsync("myFileShare");
 Console.WriteLine(fileShare.Id.Name);
 ```
 
-***Try to get a file share if it exists***
-
-```C# Snippet:Managing_FileShares_GetFileShareIFExists
-FileShareCollection fileShareCollection = fileService.GetFileShares();
-FileShareResource fileShare = await fileShareCollection.GetIfExistsAsync("foo");
-if (fileShare != null)
-{
-    Console.WriteLine(fileShare.Id.Name);
-}
-if (await fileShareCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("file share 'bar' exists");
-}
-```
-
 ***Delete a file share***
 
 ```C# Snippet:Managing_FileShares_DeleteFileShare

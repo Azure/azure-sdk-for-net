@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("need more diagnosis")]
         public async Task StartAndStop()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();

@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Storage.Tests
             await blobContainerDeleteOperation.WaitForCompletionResponseAsync();
 
             //validate if deleted successfully
-            BlobContainerResource blobContainer3 = await _blobContainerCollection.GetIfExistsAsync(containerName);
-            Assert.IsNull(blobContainer3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _blobContainerCollection.GetAsync(containerName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _blobContainerCollection.ExistsAsync(containerName));
         }
 

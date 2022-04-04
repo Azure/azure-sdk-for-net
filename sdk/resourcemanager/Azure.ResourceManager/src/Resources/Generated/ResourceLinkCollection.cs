@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Resources
             scope0.Start();
             try
             {
-                var response = await GetIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _resourceLinkRestClient.GetAsync(_scope, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -281,56 +281,8 @@ namespace Azure.ResourceManager.Resources
             scope0.Start();
             try
             {
-                var response = GetIfExists(cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{linkId}
-        /// Operation Id: ResourceLinks_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceLinkResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope0 = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkCollection.GetIfExists");
-            scope0.Start();
-            try
-            {
-                var response = await _resourceLinkRestClient.GetAsync(_scope, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ResourceLinkResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceLinkResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{linkId}
-        /// Operation Id: ResourceLinks_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceLinkResource> GetIfExists(CancellationToken cancellationToken = default)
-        {
-            using var scope0 = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkCollection.GetIfExists");
-            scope0.Start();
-            try
-            {
                 var response = _resourceLinkRestClient.Get(_scope, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ResourceLinkResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
