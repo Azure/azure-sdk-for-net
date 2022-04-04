@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="managementRpDetails"> Parent RP details - this returns only the first or default parent RP from the entire list. </param>
         /// <param name="managementRpDetailsList"> List of parent RP details supported for configuration. </param>
         /// <param name="error"> Top level error for the job. </param>
-        internal OrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType, StageDetails currentStage, IReadOnlyList<StageDetails> orderItemStageHistory, OrderItemPreferences preferences, ForwardShippingDetails forwardShippingDetails, ReverseShippingDetails reverseShippingDetails, IList<string> notificationEmailList, string cancellationReason, OrderItemCancellationEnum? cancellationStatus, ActionStatusEnum? deletionStatus, string returnReason, OrderItemReturnEnum? returnStatus, ResourceProviderDetails managementRpDetails, IReadOnlyList<ResourceProviderDetails> managementRpDetailsList, ResponseError error)
+        internal OrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType, StageDetails currentStage, IReadOnlyList<StageDetails> orderItemStageHistory, OrderItemPreferences preferences, ForwardShippingDetails forwardShippingDetails, ReverseShippingDetails reverseShippingDetails, IList<string> notificationEmailList, string cancellationReason, OrderItemCancellationEnum? cancellationStatus, ActionStatusEnum? deletionStatus, string returnReason, OrderItemReturnEnum? returnStatus, ResourceProviderDetails managementRpDetails, IReadOnlyList<ResourceProviderDetails> managementRpDetailsList, ErrorDetail error)
         {
             ProductDetails = productDetails;
             OrderItemType = orderItemType;
@@ -107,6 +106,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> List of parent RP details supported for configuration. </summary>
         public IReadOnlyList<ResourceProviderDetails> ManagementRpDetailsList { get; }
         /// <summary> Top level error for the job. </summary>
-        public ResponseError Error { get; }
+        public ErrorDetail Error { get; }
     }
 }

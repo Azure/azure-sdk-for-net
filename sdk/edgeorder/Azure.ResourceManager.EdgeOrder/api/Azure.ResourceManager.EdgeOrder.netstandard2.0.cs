@@ -399,6 +399,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.HierarchyInformation HierarchyInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ImageInformation> ImageInformation { get { throw null; } }
     }
+    public partial class ErrorAdditionalInfo
+    {
+        internal ErrorAdditionalInfo() { }
+        public string ErrorAdditionalInfoType { get { throw null; } }
+        public System.BinaryData Info { get { throw null; } }
+    }
+    public partial class ErrorDetail
+    {
+        internal ErrorDetail() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ErrorDetail> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
+    }
     public partial class FilterableProperty
     {
         public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes supportedFilterType, System.Collections.Generic.IEnumerable<string> supportedValues) { }
@@ -561,7 +576,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.OrderItemCancellationEnum? CancellationStatus { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.StageDetails CurrentStage { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ActionStatusEnum? DeletionStatus { get { throw null; } }
-        public Azure.ResponseError Error { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.ErrorDetail Error { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ForwardShippingDetails ForwardShippingDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails> ManagementRpDetailsList { get { throw null; } }
         public string ManagementRpDetailsResourceProviderNamespace { get { throw null; } }
