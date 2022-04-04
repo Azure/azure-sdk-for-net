@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure;
-
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> An error message. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Initializes a new instance of CloudError. </summary>
         /// <param name="error"> The error message body. </param>
-        internal CloudError(ResponseError error)
+        internal CloudError(CloudErrorBody error)
         {
             Error = error;
         }
 
         /// <summary> The error message body. </summary>
-        public ResponseError Error { get; }
+        public CloudErrorBody Error { get; }
     }
 }
