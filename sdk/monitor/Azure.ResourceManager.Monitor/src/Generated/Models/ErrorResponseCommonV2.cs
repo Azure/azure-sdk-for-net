@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure;
-
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of ErrorResponseCommonV2. </summary>
         /// <param name="error"> The error object. </param>
-        internal ErrorResponseCommonV2(ResponseError error)
+        internal ErrorResponseCommonV2(ErrorDetail error)
         {
             Error = error;
         }
 
         /// <summary> The error object. </summary>
-        public ResponseError Error { get; }
+        public ErrorDetail Error { get; }
     }
 }
