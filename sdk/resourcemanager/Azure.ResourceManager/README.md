@@ -340,7 +340,7 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 ## Contributing
 
 For details on contributing to this repository, see the [contributing
-guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md).
+guide][cg].
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
@@ -357,5 +357,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
 more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
 
+[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

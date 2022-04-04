@@ -2,4 +2,8 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Dashboard.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
 </Project>

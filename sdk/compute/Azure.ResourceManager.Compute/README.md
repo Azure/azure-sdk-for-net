@@ -34,9 +34,9 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```C# Snippet:Readme_AuthClient
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.Core;
 
 // Code omitted for brevity
 
@@ -202,7 +202,7 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 
 ## Contributing
 
-For details on contributing to this repository, see the [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md).
+For details on contributing to this repository, see the [contributing guide][cg].
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
@@ -215,6 +215,11 @@ whether you need to provide a CLA and decorate the PR appropriately
 bot. You will only need to do this once across all repositories using
 our CLA.
 
-This project has adopted the Microsoft Open Source Code of Conduct. For
-more information see the Code of Conduct FAQ or contact
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
+more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
+
+<!-- LINKS -->
+[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
