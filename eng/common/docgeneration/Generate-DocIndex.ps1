@@ -86,18 +86,20 @@ function Get-TocMapping {
         
         # Define the order of "New", "Type", if not match, return the length of the array.
         $CustomOrder_New = "true", "false", ""
+        $newIndex = if ($CustomOrder_New.IndexOf($packageInfo[0].New.ToLower()) -eq -1) {
+            $CustomOrder_New.Count
+        } else {
+            $CustomOrder_New.IndexOf($packageInfo[0].New.ToLower())
+        }
         $CustomOrder_Type = "client", "mgmt", "compat", "spring", ""
+        $typeIndex = if ($CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower()) -eq -1) {
+            $CustomOrder_Type.Count
+        } else {
+            $CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower())
+        }
         $orderServiceMapping[$artifact] = [PSCustomObject][ordered]@{
-            NewIndex = if ($CustomOrder_New.IndexOf($packageInfo[0].New.ToLower()) -eq -1) {
-                $CustomOrder_New.Count
-            } else {
-                $CustomOrder_New.IndexOf($packageInfo[0].New.ToLower())
-            }
-            TypeIndex = if ($CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower()) -eq -1) {
-                $CustomOrder_Type.Count
-            } else {
-                $CustomOrder_Type.IndexOf($packageInfo[0].Type.ToLower())
-            }
+            NewIndex = $newIndex
+            TypeIndex = $typeIndex
             ServiceName = $serviceName
             DisplayName = $packageInfo[0].DisplayName.Trim()
        }
