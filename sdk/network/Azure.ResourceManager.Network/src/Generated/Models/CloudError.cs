@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An error response from the service. </summary>
@@ -19,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of CloudError. </summary>
         /// <param name="error"> Cloud error body. </param>
-        internal CloudError(ResponseError error)
+        internal CloudError(CloudErrorBody error)
         {
             Error = error;
         }
 
         /// <summary> Cloud error body. </summary>
-        public ResponseError Error { get; }
+        public CloudErrorBody Error { get; }
     }
 }
