@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.AspNetCore.Http;
@@ -444,6 +446,11 @@ namespace Azure.Identity.Tests
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
+            List<string> messages = new();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (_, message) => messages.Add(message),
+                EventLevel.Warning);
+
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
@@ -467,7 +474,7 @@ namespace Azure.Identity.Tests
             Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
             if (clientId != null)
             {
-                Assert.IsTrue(body.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
+                Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.UserAssignedManagedIdentityNotSupportedMessage, "CloudShell")));
             }
             Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadata));
             Assert.AreEqual("true", actMetadata);

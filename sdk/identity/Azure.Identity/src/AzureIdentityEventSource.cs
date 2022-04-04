@@ -33,8 +33,10 @@ namespace Azure.Identity
         private const int UsernamePasswordCredentialAcquireTokenSilentFailedEvent = 16;
         private const int TenantIdDiscoveredAndNotUsedEvent = 17;
         private const int TenantIdDiscoveredAndUsedEvent = 18;
+        private const int UserAssignedManagedIdentityNotSupportedEvent = 19;
         internal const string TenantIdDiscoveredAndNotUsedEventMessage = "A token was request for a different tenant than was configured on the credential, but the configured value was used since multi tenant authentication has been disabled. Configured TenantId: {0}, Requested TenantId {1}";
         internal const string TenantIdDiscoveredAndUsedEventMessage = "A token was requested for a different tenant than was configured on the credential, and the requested tenant id was used to authenticate. Configured TenantId: {0}, Requested TenantId {1}";
+        internal const string UserAssignedManagedIdentityNotSupportedMessage = "User assigned managed identities are not supported in the {0} environment.";
 
         private AzureIdentityEventSource() : base(EventSourceName) { }
 
@@ -296,6 +298,15 @@ namespace Azure.Identity
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
                 WriteEvent(TenantIdDiscoveredAndUsedEvent, explicitTenantId, contextTenantId);
+            }
+        }
+
+        [Event(UserAssignedManagedIdentityNotSupportedEvent, Level = EventLevel.Warning, Message = UserAssignedManagedIdentityNotSupportedMessage)]
+        public void UserAssignedManagedIdentityNotSupported(string environment)
+        {
+            if (IsEnabled(EventLevel.Warning, EventKeywords.All))
+            {
+                WriteEvent(UserAssignedManagedIdentityNotSupportedEvent, environment);
             }
         }
     }

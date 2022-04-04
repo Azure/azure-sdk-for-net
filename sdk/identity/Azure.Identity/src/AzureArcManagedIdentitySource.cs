@@ -51,6 +51,7 @@ namespace Azure.Identity
             // arc MI endpoint doesn't support user assigned identities so if client id was specified throw AuthenticationFailedException
             if (!string.IsNullOrEmpty(_clientId))
             {
+                AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("Azure Arc");
                 throw new AuthenticationFailedException(UserAssignedNotSupportedErrorMessage);
             }
 
