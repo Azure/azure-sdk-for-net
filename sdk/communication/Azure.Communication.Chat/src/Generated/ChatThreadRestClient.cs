@@ -327,7 +327,7 @@ namespace Azure.Communication.Chat
 
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="chatThreadId"> The thread id of the message. </param>
-        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. The limit can be found from https://docs.microsoft.com/en-us/azure/communication-services/concepts/service-limits.</param>
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
@@ -356,7 +356,7 @@ namespace Azure.Communication.Chat
 
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="chatThreadId"> The thread id of the message. </param>
-        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. The limit can be found from https://docs.microsoft.com/en-us/azure/communication-services/concepts/service-limits.</param>
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
@@ -1177,7 +1177,7 @@ namespace Azure.Communication.Chat
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="chatThreadId"> The thread id of the message. </param>
-        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. The limit can be found from https://docs.microsoft.com/en-us/azure/communication-services/concepts/service-limits.</param>
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
@@ -1211,7 +1211,7 @@ namespace Azure.Communication.Chat
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="chatThreadId"> The thread id of the message. </param>
-        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
+        /// <param name="maxPageSize"> The maximum number of messages to be returned per page. The limit can be found from https://docs.microsoft.com/en-us/azure/communication-services/concepts/service-limits.</param>
         /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
