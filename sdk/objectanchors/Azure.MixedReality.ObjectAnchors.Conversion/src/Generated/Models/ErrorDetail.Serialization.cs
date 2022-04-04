@@ -9,17 +9,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EdgeOrder.Models
+namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    public partial class ErrorDetail
+    internal partial class ErrorDetail
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             Optional<string> target = default;
             Optional<IReadOnlyList<ErrorDetail>> details = default;
-            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -52,23 +52,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("additionalInfo"))
+                if (property.NameEquals("innererror"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
-                    }
-                    additionalInfo = array;
+                    innererror = InnerError.DeserializeInnerError(property.Value);
                     continue;
                 }
             }
-            return new ErrorDetail(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            return new ErrorDetail(code, message, target.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }

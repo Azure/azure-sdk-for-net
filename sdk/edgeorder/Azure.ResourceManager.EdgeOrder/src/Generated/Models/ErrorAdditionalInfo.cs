@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> The resource management error additional info. </summary>
-    public partial class ErrorAdditionalInfo
+    internal partial class ErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
         internal ErrorAdditionalInfo()
