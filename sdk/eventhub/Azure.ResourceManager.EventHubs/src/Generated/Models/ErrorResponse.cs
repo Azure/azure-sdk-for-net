@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Error response indicates Event Hub service is not able to process the incoming request. The reason is provided in the error message. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="error"> The error object. </param>
-        internal ErrorResponse(ErrorDetail error)
+        internal ErrorResponse(ResponseError error)
         {
             Error = error;
         }
 
         /// <summary> The error object. </summary>
-        public ErrorDetail Error { get; }
+        public ResponseError Error { get; }
     }
 }
