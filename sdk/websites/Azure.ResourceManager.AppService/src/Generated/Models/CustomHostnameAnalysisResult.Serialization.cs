@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
             SystemData systemData = default;
             Optional<bool> isHostnameAlreadyVerified = default;
             Optional<DnsVerificationTestResult> customDomainVerificationTest = default;
-            Optional<ResponseError> customDomainVerificationFailureInfo = default;
+            Optional<ErrorEntity> customDomainVerificationFailureInfo = default;
             Optional<bool> hasConflictOnScaleUnit = default;
             Optional<bool> hasConflictAcrossSubscription = default;
             Optional<string> conflictingAppResourceId = default;
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            customDomainVerificationFailureInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.ToString());
+                            customDomainVerificationFailureInfo = ErrorEntity.DeserializeErrorEntity(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hasConflictOnScaleUnit"))

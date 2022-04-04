@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="aRecords"> A records controller can see for this hostname. </param>
         /// <param name="alternateCNameRecords"> Alternate CName records controller can see for this hostname. </param>
         /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
-        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ResponseError customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords) : base(id, name, resourceType, systemData, kind)
+        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ErrorEntity customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords) : base(id, name, resourceType, systemData, kind)
         {
             IsHostnameAlreadyVerified = isHostnameAlreadyVerified;
             CustomDomainVerificationTest = customDomainVerificationTest;
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> DNS verification test result. </summary>
         public DnsVerificationTestResult? CustomDomainVerificationTest { get; }
         /// <summary> Raw failure information if DNS verification fails. </summary>
-        public ResponseError CustomDomainVerificationFailureInfo { get; }
+        public ErrorEntity CustomDomainVerificationFailureInfo { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? HasConflictOnScaleUnit { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
