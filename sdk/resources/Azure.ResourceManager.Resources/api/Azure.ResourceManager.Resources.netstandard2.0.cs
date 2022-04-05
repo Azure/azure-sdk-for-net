@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
         public System.BinaryData Parameters { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
-        public string PublisherTenantId { get { throw null; } }
+        public System.Guid? PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris SupportUris { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails UpdatedBy { get { throw null; } }
     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.JitRequestState? JitRequestState { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.JitSchedulingPolicy JitSchedulingPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
-        public string PublisherTenantId { get { throw null; } }
+        public System.Guid? PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails UpdatedBy { get { throw null; } }
     }
     public partial class JitRequestResource : Azure.ResourceManager.ArmResource
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ArmApplicationDetails() { }
         public System.Guid? ApplicationId { get { throw null; } }
-        public System.Guid? Oid { get { throw null; } }
+        public System.Guid? ObjectId { get { throw null; } }
         public string Puid { get { throw null; } }
     }
     public partial class ArmApplicationJitAccessPolicy
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.BinaryData Parameters { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
-        public string PublisherTenantId { get { throw null; } }
+        public System.Guid? PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris SupportUris { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails UpdatedBy { get { throw null; } }
     }
