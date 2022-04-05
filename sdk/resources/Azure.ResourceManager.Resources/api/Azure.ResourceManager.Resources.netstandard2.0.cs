@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ArmApplicationDetails() { }
         public System.Guid? ApplicationId { get { throw null; } }
-        public System.Guid? Oid { get { throw null; } }
+        public System.Guid? ObjectId { get { throw null; } }
         public string Puid { get { throw null; } }
     }
     public partial class ArmApplicationJitAccessPolicy
