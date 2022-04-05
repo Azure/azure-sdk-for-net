@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Dashboard.Tests.TestsCase
         {
         }
 
-        private async Task<GrafanaResourceCollection> GetCollectionAsync()
+        private async Task<ManagedGrafanaCollection> GetCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetGrafanaResources();
+            return resourceGroup.GetManagedGrafanas();
         }
 
         [TestCase]
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dashboard.Tests.TestsCase
             var grafanaName = Recording.GenerateAssetName("sdkTestGrafana");
             var input = ResourceDataHelper.GetGrafanaResourceData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, grafanaName, input);
-            GrafanaResource actualResource = lro.Value;
+            ManagedGrafanaResource actualResource = lro.Value;
             Assert.AreEqual(grafanaName, actualResource.Data.Name);
         }
 
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Dashboard.Tests.TestsCase
             var grafanaName = Recording.GenerateAssetName("sdkTestGrafana");
             var input = ResourceDataHelper.GetGrafanaResourceData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, grafanaName, input);
-            GrafanaResource resource1 = lro.Value;
-            GrafanaResource resource2 = await container.GetAsync(grafanaName);
+            ManagedGrafanaResource resource1 = lro.Value;
+            ManagedGrafanaResource resource2 = await container.GetAsync(grafanaName);
             ResourceDataHelper.AssertGrafana(resource1.Data, resource2.Data);
         }
 

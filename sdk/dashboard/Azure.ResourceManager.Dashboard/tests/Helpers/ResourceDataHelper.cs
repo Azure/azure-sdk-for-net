@@ -10,15 +10,15 @@ namespace Azure.ResourceManager.Dashboard.Tests.Helpers
 {
     public class ResourceDataHelper
     {
-        public static GrafanaResourceData GetGrafanaResourceData(AzureLocation location)
+        public static ManagedGrafanaData GetGrafanaResourceData(AzureLocation location)
         {
-            return new GrafanaResourceData(location)
+            return new ManagedGrafanaData(location)
             {
                 Sku = new ResourceSku("Standard")
             };
         }
 
-        public static void AssertGrafana(GrafanaResourceData g1, GrafanaResourceData g2)
+        public static void AssertGrafana(ManagedGrafanaData g1, ManagedGrafanaData g2)
         {
             AssertTrackedResource(g1, g2);
         }

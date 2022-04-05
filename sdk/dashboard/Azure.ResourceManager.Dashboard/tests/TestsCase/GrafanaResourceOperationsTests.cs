@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Dashboard.Tests.TestsCase
         {
         }
 
-        private async Task<GrafanaResource> CreateGrafanaResourceAsync(string name)
+        private async Task<ManagedGrafanaResource> CreateGrafanaResourceAsync(string name)
         {
-            var container = (await CreateResourceGroupAsync()).GetGrafanaResources();
+            var container = (await CreateResourceGroupAsync()).GetManagedGrafanas();
             var input = ResourceDataHelper.GetGrafanaResourceData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             return lro.Value;
