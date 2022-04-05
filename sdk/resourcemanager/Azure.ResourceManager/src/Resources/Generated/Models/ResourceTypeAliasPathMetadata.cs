@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeAliasPathMetadata. </summary>
-        /// <param name="pathTokenType"> The type of the token that the alias path is referring to. </param>
+        /// <param name="tokenType"> The type of the token that the alias path is referring to. </param>
         /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
-        internal ResourceTypeAliasPathMetadata(ResourceTypeAliasPathTokenType? pathTokenType, ResourceTypeAliasPathAttributes? attributes)
+        internal ResourceTypeAliasPathMetadata(ResourceTypeAliasPathTokenType? tokenType, ResourceTypeAliasPathAttributes? attributes)
         {
-            PathTokenType = pathTokenType;
+            TokenType = tokenType;
             Attributes = attributes;
         }
 
         /// <summary> The type of the token that the alias path is referring to. </summary>
-        public ResourceTypeAliasPathTokenType? PathTokenType { get; }
+        public ResourceTypeAliasPathTokenType? TokenType { get; }
         /// <summary> The attributes of the token that the alias path is referring to. </summary>
         public ResourceTypeAliasPathAttributes? Attributes { get; }
     }

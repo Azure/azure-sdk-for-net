@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNatRCAction. </summary>
-        /// <param name="rcActionType"> The type of action. </param>
-        internal AzureFirewallNatRCAction(AzureFirewallNatRCActionType? rcActionType)
+        /// <param name="actionType"> The type of action. </param>
+        internal AzureFirewallNatRCAction(AzureFirewallNatRCActionType? actionType)
         {
-            RCActionType = rcActionType;
+            ActionType = actionType;
         }
 
         /// <summary> The type of action. </summary>
-        public AzureFirewallNatRCActionType? RCActionType { get; set; }
+        public AzureFirewallNatRCActionType? ActionType { get; set; }
     }
 }

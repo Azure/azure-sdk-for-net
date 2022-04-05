@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ConnStringInfo. </summary>
         /// <param name="name"> Name of connection string. </param>
         /// <param name="connectionString"> Connection string value. </param>
-        /// <param name="stringType"> Type of database. </param>
-        internal ConnStringInfo(string name, string connectionString, ConnectionStringType? stringType)
+        /// <param name="connectionStringType"> Type of database. </param>
+        internal ConnStringInfo(string name, string connectionString, ConnectionStringType? connectionStringType)
         {
             Name = name;
             ConnectionString = connectionString;
-            StringType = stringType;
+            ConnectionStringType = connectionStringType;
         }
 
         /// <summary> Name of connection string. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Connection string value. </summary>
         public string ConnectionString { get; set; }
         /// <summary> Type of database. </summary>
-        public ConnectionStringType? StringType { get; set; }
+        public ConnectionStringType? ConnectionStringType { get; set; }
     }
 }

@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(StringType))
+            if (Optional.IsDefined(ConnectionStringType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(StringType.Value.ToSerialString());
+                writer.WriteStringValue(ConnectionStringType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }
