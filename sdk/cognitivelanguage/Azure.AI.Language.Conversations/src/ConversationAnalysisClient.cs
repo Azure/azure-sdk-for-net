@@ -82,12 +82,14 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual async Task<Response<AnalyzeConversationTaskResult>> AnalyzeConversationAsync(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(utterance));
+            Argument.AssertNotNull(utterance, nameof(utterance));
             Argument.AssertNotNull(project, nameof(project));
 
             CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName) { Verbose = options?.Verbose };
 
-            options ??= new AnalyzeConversationOptions(utterance);
+            TextConversationItem textConversationItem = new TextConversationItem("1", "1", utterance);
+
+            options ??= new AnalyzeConversationOptions(textConversationItem);
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
@@ -120,7 +122,9 @@ namespace Azure.AI.Language.Conversations
 
             CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName) { Verbose = options?.Verbose };
 
-            options ??= new AnalyzeConversationOptions(input);
+            TextConversationItem textConversationItem = new TextConversationItem("1", "1", utterance);
+
+            options ??= new AnalyzeConversationOptions(textConversationItem);
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
