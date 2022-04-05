@@ -1,14 +1,10 @@
 # Release History
 
-## 4.10.0-beta.1 (Unreleased)
+## 4.10.0 (2022-04-05)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added Healthcare events
 
 ## 4.9.0 (2022-03-08)
 
