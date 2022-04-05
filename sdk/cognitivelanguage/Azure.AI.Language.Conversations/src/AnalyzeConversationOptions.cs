@@ -7,7 +7,9 @@ using Azure.Core;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The request body. </summary>
-    public partial class ConversationAnalysisOptions
+    [CodeGenModel("ConversationAnalysisOptions")]
+    [CodeGenSuppress("AnalyzeConversationOptions", typeof(string))]
+    public partial class AnalyzeConversationOptions
     {
         /// <summary> The conversation utterance to be analyzed. </summary>
         [CodeGenMember("Verbose")]
