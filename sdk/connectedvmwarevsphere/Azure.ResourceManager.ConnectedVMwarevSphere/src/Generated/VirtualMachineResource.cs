@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<HybridIdentityMetadataResource>> GetHybridIdentityMetadataAsync(string metadataName, CancellationToken cancellationToken = default)
         {
             return await GetAllHybridIdentityMetadata().GetAsync(metadataName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<HybridIdentityMetadataResource> GetHybridIdentityMetadata(string metadataName, CancellationToken cancellationToken = default)
         {
             return GetAllHybridIdentityMetadata().Get(metadataName, cancellationToken);
@@ -140,6 +142,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<MachineExtensionResource>> GetMachineExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             return await GetMachineExtensions().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
@@ -154,6 +157,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<MachineExtensionResource> GetMachineExtension(string extensionName, CancellationToken cancellationToken = default)
         {
             return GetMachineExtensions().Get(extensionName, cancellationToken);
@@ -175,6 +179,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<GuestAgentResource>> GetGuestAgentAsync(string name, CancellationToken cancellationToken = default)
         {
             return await GetGuestAgents().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -189,6 +194,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<GuestAgentResource> GetGuestAgent(string name, CancellationToken cancellationToken = default)
         {
             return GetGuestAgents().Get(name, cancellationToken);

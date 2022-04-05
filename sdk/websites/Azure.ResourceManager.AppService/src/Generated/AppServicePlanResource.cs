@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelayResource>> GetServerfarmHybridConnectionNamespaceRelayAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             return await GetServerfarmHybridConnectionNamespaceRelays().GetAsync(namespaceName, relayName, cancellationToken).ConfigureAwait(false);
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServerfarmHybridConnectionNamespaceRelayResource> GetServerfarmHybridConnectionNamespaceRelay(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             return GetServerfarmHybridConnectionNamespaceRelays().Get(namespaceName, relayName, cancellationToken);
@@ -150,6 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerfarmVirtualNetworkConnectionResource>> GetServerfarmVirtualNetworkConnectionAsync(string vnetName, CancellationToken cancellationToken = default)
         {
             return await GetServerfarmVirtualNetworkConnections().GetAsync(vnetName, cancellationToken).ConfigureAwait(false);
@@ -164,6 +167,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServerfarmVirtualNetworkConnectionResource> GetServerfarmVirtualNetworkConnection(string vnetName, CancellationToken cancellationToken = default)
         {
             return GetServerfarmVirtualNetworkConnections().Get(vnetName, cancellationToken);
