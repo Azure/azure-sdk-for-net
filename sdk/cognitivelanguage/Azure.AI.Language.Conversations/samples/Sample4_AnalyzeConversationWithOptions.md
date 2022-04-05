@@ -31,8 +31,7 @@ ConversationsProject conversationsProject = new ConversationsProject("Menu", "pr
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     textConversationItem,
     conversationsProject,
-    analysisInput,
-    verbose: true);
+    options);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
@@ -88,10 +87,9 @@ AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-    textConversationItem,
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject,
-    analysisInput,
-    verbose: true);
+    options);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;

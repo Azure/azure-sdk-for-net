@@ -16,13 +16,9 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
-TextConversationItem input = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "How are you?");
 ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    textConversationItem,
+    "How are you?",
     orchestrationProject);
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
@@ -31,13 +27,9 @@ var orchestratorPrediction = customConversationalTaskResult.Results.Prediction a
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-TextConversationItem textConversationItem = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "How are you?");
 ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
 Response<AnalyzeConversationResult> response =  await client.AnalyzeConversationAsync(
-    textConversationItem,
+    "How are you?",
     orchestrationProject);
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;

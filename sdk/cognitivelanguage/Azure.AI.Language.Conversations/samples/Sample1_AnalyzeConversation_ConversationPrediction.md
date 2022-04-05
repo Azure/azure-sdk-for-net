@@ -16,15 +16,10 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
-TextConversationItem input = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "Send an email to Carol about the tomorrow's demo.");
-
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-    textConversationItem,
+     "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -67,15 +62,10 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 ## Asynchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationAsync
-TextConversationItem input = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "Send an email to Carol about the tomorrow's demo.");
-
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-    textConversationItem,
+     "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;

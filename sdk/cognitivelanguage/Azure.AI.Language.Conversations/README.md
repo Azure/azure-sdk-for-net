@@ -79,15 +79,10 @@ The following examples show common scenarios using the `client` [created above](
 To analyze a conversation, you can call the `client.AnalyzeConversation()` method which takes a `TextConversationItem` and `ConversationsProject` as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
-TextConversationItem input = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "Send an email to Carol about the tomorrow's demo.");
-
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-    textConversationItem,
+     "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -147,8 +142,7 @@ ConversationsProject conversationsProject = new ConversationsProject("Menu", "pr
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     textConversationItem,
     conversationsProject,
-    analysisInput,
-    verbose: true);
+    options);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
@@ -194,18 +188,20 @@ The language property in the `TextConversationItem` can be used to specify the l
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 TextConversationItem input = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "Tendremos 2 platos de nigiri de salmón braseado.")
+     participantId: "1",
+     id: "1",
+     text: "Tendremos 2 platos de nigiri de salmón braseado.")
 {
     Language = "es"
 };
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(input);
 
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     textConversationItem,
-    conversationsProject);
+    conversationsProject,
+    options);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
 ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
@@ -347,9 +343,8 @@ For example, if you submit a utterance to a non-existant project, a `400` error 
 try
 {
     ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
-    TextConversationItem textConversationItem = new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo");
     Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-        textConversationItem,
+        "Send an email to Carol about the tomorrow's demo",
         conversationsProject);
 }
 catch (RequestFailedException ex)
