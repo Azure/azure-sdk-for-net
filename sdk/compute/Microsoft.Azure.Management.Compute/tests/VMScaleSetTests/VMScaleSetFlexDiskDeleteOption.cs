@@ -49,6 +49,21 @@ namespace Compute.Tests
                     publicipConfiguration.Name = "pip1";
                     publicipConfiguration.IdleTimeoutInMinutes = 10;
 
+                    VirtualMachineScaleSetOSDisk osDisk = new VirtualMachineScaleSetOSDisk
+                    {
+                        Caching = CachingTypes.None,
+                        CreateOption = DiskCreateOptionTypes.FromImage,
+                        DeleteOption = DiskDeleteOptionTypes.Detach,
+                    };
+
+                    VirtualMachineScaleSetDataDisk dataDisk = new VirtualMachineScaleSetDataDisk
+                    {
+                        Lun = 1,
+                        CreateOption = DiskCreateOptionTypes.Empty,
+                        DeleteOption = DiskDeleteOptionTypes.Detach,
+                        DiskSizeGB = 128,
+                    };
+
                     VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
                         rgName: rgName,
                         vmssName: vmssName,
@@ -57,6 +72,8 @@ namespace Compute.Tests
                         inputVMScaleSet: out inputVMScaleSet,
                         singlePlacementGroup: false,
                         createWithManagedDisks: true,
+                        createWithPublicIpAddress: false,
+                        subnet: vmssSubnet,
                         vmScaleSetCustomizer:
                             (virtualMachineScaleSet) => {
                                 virtualMachineScaleSet.UpgradePolicy = null;
@@ -66,16 +83,16 @@ namespace Compute.Tests
                                 virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile
                                     .NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration = publicipConfiguration;
                                 virtualMachineScaleSet.OrchestrationMode = OrchestrationMode.Flexible.ToString();
-                                virtualMachineScaleSet.VirtualMachineProfile.StorageProfile.DataDisks = null;
-                            },
-                        createWithPublicIpAddress: false,
-                        subnet: vmssSubnet);
+                                virtualMachineScaleSet.VirtualMachineProfile.StorageProfile.OsDisk = osDisk;
+                                virtualMachineScaleSet.VirtualMachineProfile.StorageProfile.DataDisks = new List<VirtualMachineScaleSetDataDisk> { dataDisk };
+                                }
+                            );
 
-                    Assert.Equal(DiskDeleteOptionTypes.Delete, vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.DeleteOption);
+                    Assert.Equal(DiskDeleteOptionTypes.Detach, vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk.DeleteOption);
 
                     foreach (VirtualMachineScaleSetDataDisk disk in vmScaleSet.VirtualMachineProfile.StorageProfile.DataDisks)
                     {
-                        Assert.Equal(DiskDeleteOptionTypes.Delete, disk.DeleteOption);
+                        Assert.Equal(DiskDeleteOptionTypes.Detach, disk.DeleteOption);
                     }
                     passed = true;
                     m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
