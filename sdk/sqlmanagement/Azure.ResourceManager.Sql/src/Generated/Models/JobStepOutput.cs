@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of JobStepOutput. </summary>
-        /// <param name="jobStepOutputType"> The output destination type. </param>
+        /// <param name="outputType"> The output destination type. </param>
         /// <param name="subscriptionId"> The output destination subscription id. </param>
         /// <param name="resourceGroupName"> The output destination resource group. </param>
         /// <param name="serverName"> The output destination server name. </param>
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="schemaName"> The output destination schema. </param>
         /// <param name="tableName"> The output destination table. </param>
         /// <param name="credential"> The resource ID of the credential to use to connect to the output destination. </param>
-        internal JobStepOutput(JobStepOutputType? jobStepOutputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential)
+        internal JobStepOutput(JobStepOutputType? outputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential)
         {
-            JobStepOutputType = jobStepOutputType;
+            OutputType = outputType;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             ServerName = serverName;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The output destination type. </summary>
-        public JobStepOutputType? JobStepOutputType { get; set; }
+        public JobStepOutputType? OutputType { get; set; }
         /// <summary> The output destination subscription id. </summary>
         public Guid? SubscriptionId { get; set; }
         /// <summary> The output destination resource group. </summary>

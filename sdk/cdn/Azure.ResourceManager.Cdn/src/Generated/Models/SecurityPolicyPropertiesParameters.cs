@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyPropertiesParameters. </summary>
-        /// <param name="securityPolicyType"> The type of the Security policy to create. </param>
-        internal SecurityPolicyPropertiesParameters(SecurityPolicyType securityPolicyType)
+        /// <param name="policyType"> The type of the Security policy to create. </param>
+        internal SecurityPolicyPropertiesParameters(SecurityPolicyType policyType)
         {
-            SecurityPolicyType = securityPolicyType;
+            PolicyType = policyType;
         }
 
         /// <summary> The type of the Security policy to create. </summary>
-        internal SecurityPolicyType SecurityPolicyType { get; set; }
+        internal SecurityPolicyType PolicyType { get; set; }
     }
 }
