@@ -9,8 +9,6 @@ namespace Azure.Communication.Identity.Tests
     {
         public const string CommunicationClientIdEnvironmentVariableName = "COMMUNICATION_CLIENT_ID";
         public const string CommunicationObjectIdEnvironmentVariableName = "COMMUNICATION_OBJECT_ID";
-        public const string CommunicationWrongClientIdEnvironmentVariableName = "COMMUNICATION_WRONG_CLIENT_ID";
-        public const string CommunicationWrongObjectIdEnvironmentVariableName = "COMMUNICATION_WRONG_OBJECT_ID";
         public const string CommunicationMsalUsernameEnvironmentVariableName = "COMMUNICATION_MSAL_USERNAME";
         public const string CommunicationMsalPasswordEnvironmentVariableName  = "COMMUNICATION_MSAL_PASSWORD";
         public const string CommunicationM365AppIdEnvironmentVariableName  = "COMMUNICATION_M365_APP_ID";
@@ -23,9 +21,6 @@ namespace Azure.Communication.Identity.Tests
 
         public string CommunicationAppId => GetOptionalVariable(CommunicationClientIdEnvironmentVariableName) ?? "Sanitized";
         public string CommunicationUserId => GetOptionalVariable(CommunicationObjectIdEnvironmentVariableName) ?? "Sanitized";
-        public string CommunicationWrongAppId => GetOptionalVariable(CommunicationClientIdEnvironmentVariableName) ?? "Sanitized";
-        public string CommunicationWrongUserId => GetOptionalVariable(CommunicationObjectIdEnvironmentVariableName) ?? "Sanitized";
-
         public string CommunicationMsalUsername => GetOptionalVariable(CommunicationMsalUsernameEnvironmentVariableName) ?? "Sanitized";
 
         public string CommunicationMsalPassword => GetOptionalVariable(CommunicationMsalPasswordEnvironmentVariableName) ?? "Sanitized";
