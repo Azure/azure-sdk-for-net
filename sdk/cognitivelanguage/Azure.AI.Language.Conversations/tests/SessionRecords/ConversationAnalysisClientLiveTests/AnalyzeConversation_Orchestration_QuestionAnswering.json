@@ -8,9 +8,9 @@
         "Content-Length": "219",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-9c92b3a8b6f9044aa8537dbd4a9bfe2f-191479cacf6f9e49-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220403.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "e4b49f6c12c13562e8af1ad20bcdfa14",
+        "traceparent": "00-e1334142fab80bc91a0528304f8d98fa-6bf2b94c0d182a86-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET 6.0.3; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "2a9dfafa8d81a40995c97a70b1f69113",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,16 +30,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "80b6a09e-8260-45d8-a3d1-5e984660f0a7",
+        "apim-request-id": "29f768a6-8a01-442f-ba30-ecf2e2ae39f4",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 03 Apr 2022 14:33:22 GMT",
+        "Date": "Tue, 05 Apr 2022 11:01:37 GMT",
         "Pragma": "no-cache",
-        "request-id": "80b6a09e-8260-45d8-a3d1-5e984660f0a7",
+        "request-id": "29f768a6-8a01-442f-ba30-ecf2e2ae39f4",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "182"
+        "x-envoy-upstream-service-time": "236"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
@@ -127,6 +127,6 @@
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "ShabanTest",
     "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "1108628890"
+    "RandomSeed": "1954821936"
   }
 }

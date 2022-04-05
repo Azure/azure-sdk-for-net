@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.QuestionAnswering", "Azure.AI.Language.QuestionAnswering\src\Azure.AI.Language.QuestionAnswering.csproj", "{9507A18C-F21A-4305-80B8-8E9DB4E5D351}"
 EndProject
@@ -20,8 +20,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.Conversations.Tests", "Azure.AI.Language.Conversations\tests\Azure.AI.Language.Conversations.Tests.csproj", "{E30B7233-76F8-4966-9CDC-86D9C5B37462}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{7DBAEA65-0607-404C-A326-8089FC2887CF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker", "..\cognitiveservices\Knowledge.QnAMaker\src\Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.csproj", "{46AFA6FD-6AC0-4B23-8620-7340120BAA18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,18 +139,6 @@ Global
 		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|x64.Build.0 = Release|Any CPU
 		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|x86.ActiveCfg = Release|Any CPU
 		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|x86.Build.0 = Release|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Debug|x64.Build.0 = Debug|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Debug|x86.Build.0 = Debug|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Release|x64.ActiveCfg = Release|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Release|x64.Build.0 = Release|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Release|x86.ActiveCfg = Release|Any CPU
-		{46AFA6FD-6AC0-4B23-8620-7340120BAA18}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

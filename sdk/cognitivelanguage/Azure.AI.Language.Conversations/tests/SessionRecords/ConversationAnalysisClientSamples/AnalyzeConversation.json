@@ -8,8 +8,8 @@
         "Content-Length": "250",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220403.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "a7edeef0777de39112590bce20a844a2",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET 6.0.3; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "c19661551b3bee8c04740c94debd1802",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,16 +29,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "43c0aff9-69c1-4f26-a21f-dfdf30b74718",
+        "apim-request-id": "b097bc0e-4f7c-41d0-b76c-5929c0f5c5c3",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 03 Apr 2022 14:33:24 GMT",
+        "Date": "Tue, 05 Apr 2022 11:01:39 GMT",
         "Pragma": "no-cache",
-        "request-id": "43c0aff9-69c1-4f26-a21f-dfdf30b74718",
+        "request-id": "b097bc0e-4f7c-41d0-b76c-5929c0f5c5c3",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "76"
+        "x-envoy-upstream-service-time": "77"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
@@ -109,8 +109,8 @@
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-04-04",
-                    "value": "2022-04-04"
+                    "timex": "2022-04-06",
+                    "value": "2022-04-06"
                   }
                 ],
                 "extraInformation": [
@@ -138,6 +138,6 @@
     "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_PROJECT_NAME": "SampleProject",
-    "RandomSeed": "1966966706"
+    "RandomSeed": "21226689"
   }
 }

@@ -8,9 +8,9 @@
         "Content-Length": "260",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2e4437a614fdf640b2050e270a8a626a-efbaf57c48296241-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220403.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "c9eeabc9bd37c3d2dbb7c78c2a2758df",
+        "traceparent": "00-2f452e06c7fdff93af5a16a4c236bf12-e33557b46280b516-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET 6.0.3; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "0f9ffdda0125512c79bd780e2211581d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,16 +30,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "750cd7d2-c18f-4326-943e-0a09f5dc0a81",
+        "apim-request-id": "39d28b1c-4f73-4f95-8e15-ac7251e88004",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 03 Apr 2022 14:33:23 GMT",
+        "Date": "Tue, 05 Apr 2022 11:01:38 GMT",
         "Pragma": "no-cache",
-        "request-id": "750cd7d2-c18f-4326-943e-0a09f5dc0a81",
+        "request-id": "39d28b1c-4f73-4f95-8e15-ac7251e88004",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "116"
+        "x-envoy-upstream-service-time": "123"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
@@ -137,8 +137,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-04-04",
-                            "value": "2022-04-04"
+                            "timex": "2022-04-06",
+                            "value": "2022-04-06"
                           }
                         ],
                         "extraInformation": [
@@ -158,8 +158,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-04-04",
-                            "value": "2022-04-04"
+                            "timex": "2022-04-06",
+                            "value": "2022-04-06"
                           }
                         ],
                         "extraInformation": [
@@ -207,6 +207,6 @@
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "ShabanTest",
     "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "765459293"
+    "RandomSeed": "937901654"
   }
 }

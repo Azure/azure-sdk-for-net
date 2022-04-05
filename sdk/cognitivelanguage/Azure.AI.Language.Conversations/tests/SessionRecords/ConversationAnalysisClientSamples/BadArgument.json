@@ -8,8 +8,8 @@
         "Content-Length": "255",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220403.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "1feb37201138305bda8693cf4caf4533",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET 6.0.3; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "42b1ba126d309f72246bae9139498d85",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,16 +29,16 @@
       },
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "415fb566-425f-4cd2-bd74-510793cca14e",
+        "apim-request-id": "f084f6a5-fb23-4656-a7cb-c4f15d84c05b",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Sun, 03 Apr 2022 14:33:25 GMT",
+        "Date": "Tue, 05 Apr 2022 11:01:40 GMT",
         "Pragma": "no-cache",
-        "request-id": "415fb566-425f-4cd2-bd74-510793cca14e",
+        "request-id": "f084f6a5-fb23-4656-a7cb-c4f15d84c05b",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
         "error": {
@@ -55,6 +55,6 @@
   "Variables": {
     "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "1528019922"
+    "RandomSeed": "675654070"
   }
 }
