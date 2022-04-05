@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Monitor.Query;
+using Azure.Core;
 
 namespace Azure.Data.Tables
 {
