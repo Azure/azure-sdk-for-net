@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Conversations
             /// <summary>
             /// Service version "2022-03-01-preview".
             /// </summary>
-            V2022_03_01_Preview = 2
+            V2022_03_01_Preview = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
