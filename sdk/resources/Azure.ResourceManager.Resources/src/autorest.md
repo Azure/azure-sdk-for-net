@@ -199,6 +199,7 @@ directive:
       $.ApplicationAuthorization.properties.principalId.format = 'uuid';
       $.JitAuthorizationPolicies.properties.principalId.format = 'uuid';
       $.ApplicationClientDetails['x-ms-client-name'] = 'ArmApplicationDetails';
+      $.ApplicationClientDetails.properties.oid['x-ms-client-name'] = 'ObjectId';
       $.ApplicationClientDetails.properties.oid.format = 'uuid';
       $.ApplicationClientDetails.properties.applicationId.format = 'uuid';
       $.ApplicationDefinitionArtifact['x-ms-client-name'] = 'ArmApplicationDefinitionArtifact';
