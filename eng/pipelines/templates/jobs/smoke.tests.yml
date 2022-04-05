@@ -13,6 +13,7 @@ parameters:
     default: 60
 
 jobs:
+dependsOn: PublishPackage
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
       pool:
