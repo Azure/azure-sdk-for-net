@@ -113,18 +113,15 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
-    if (entity.Resolutions != null)
+    foreach (BaseResolution resolution in entity.Resolutions)
     {
-        foreach (BaseResolution resolution in entity.Resolutions)
+        if (resolution is DateTimeResolution)
         {
-            if (resolution is DateTimeResolution)
-            {
-                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                Console.WriteLine();
-            }
+            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
         }
     }
 }
@@ -139,7 +136,7 @@ TextConversationItem input = new TextConversationItem(
      participantId: "1",
      id: "1",
      text: "Send an email to Carol about the tomorrow's demo.");
-ConversationAnalysisOptions options = new ConversationAnalysisOptions(input)
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
     IsLoggingEnabled = true,
     Verbose = true
@@ -177,18 +174,15 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
-    if (entity.Resolutions != null)
+    foreach (BaseResolution resolution in entity.Resolutions)
     {
-        foreach (BaseResolution resolution in entity.Resolutions)
+        if (resolution is DateTimeResolution)
         {
-            if (resolution is DateTimeResolution)
-            {
-                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                Console.WriteLine();
-            }
+            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
         }
     }
 }
@@ -237,18 +231,15 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
-    if (entity.Resolutions != null)
+    foreach (BaseResolution resolution in entity.Resolutions)
     {
-        foreach (BaseResolution resolution in entity.Resolutions)
+        if (resolution is DateTimeResolution)
         {
-            if (resolution is DateTimeResolution)
-            {
-                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                Console.WriteLine();
-            }
+            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
         }
     }
 }
@@ -290,21 +281,16 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
         Console.WriteLine($"Length: {entity.Length}");
         Console.WriteLine();
 
-        if (entity.Resolutions != null)
+        foreach (BaseResolution resolution in entity.Resolutions)
         {
-            Console.WriteLine($"Resolutions:");
-            foreach (BaseResolution resolution in entity.Resolutions)
+            if (resolution is DateTimeResolution)
             {
-                if (resolution is DateTimeResolution)
-                {
-                    DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
-                    Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                    Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                    Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                    Console.WriteLine();
-                }
+                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                Console.WriteLine();
             }
-            Console.WriteLine();
         }
     }
 }
