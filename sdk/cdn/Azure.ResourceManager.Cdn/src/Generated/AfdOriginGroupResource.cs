@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AfdOriginResource>> GetAfdOriginAsync(string originName, CancellationToken cancellationToken = default)
         {
             return await GetAfdOrigins().GetAsync(originName, cancellationToken).ConfigureAwait(false);
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<AfdOriginResource> GetAfdOrigin(string originName, CancellationToken cancellationToken = default)
         {
             return GetAfdOrigins().Get(originName, cancellationToken);

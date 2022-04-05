@@ -9,14 +9,14 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
+namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    /// <summary> Error details. </summary>
-    public partial class ErrorDetail
+    /// <summary> Represents an error. </summary>
+    internal partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> The error&apos;s code. </param>
-        /// <param name="message"> A human readable error message. </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorDetail(string code, string message)
         {
@@ -35,25 +35,29 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> The error&apos;s code. </param>
-        /// <param name="message"> A human readable error message. </param>
-        /// <param name="target"> Indicates which property in the request is responsible for the error. </param>
-        /// <param name="details"> Additional error details. </param>
-        internal ErrorDetail(string code, string message, string target, IReadOnlyList<ErrorDetail> details)
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The target of the error. </param>
+        /// <param name="details"></param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        internal ErrorDetail(string code, string message, string target, IReadOnlyList<ErrorDetail> details, InnerError innererror)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            Innererror = innererror;
         }
 
-        /// <summary> The error&apos;s code. </summary>
+        /// <summary> The error code. </summary>
         public string Code { get; }
-        /// <summary> A human readable error message. </summary>
+        /// <summary> The error message. </summary>
         public string Message { get; }
-        /// <summary> Indicates which property in the request is responsible for the error. </summary>
+        /// <summary> The target of the error. </summary>
         public string Target { get; }
-        /// <summary> Additional error details. </summary>
+        /// <summary> Gets the details. </summary>
         public IReadOnlyList<ErrorDetail> Details { get; }
+        /// <summary> An object containing more specific information than the current object about the error. </summary>
+        public InnerError Innererror { get; }
     }
 }

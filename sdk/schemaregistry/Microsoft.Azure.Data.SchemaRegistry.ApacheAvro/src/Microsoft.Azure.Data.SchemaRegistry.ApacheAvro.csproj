@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Apache.Avro" />
     <PackageReference Include="Azure.Data.SchemaRegistry" />
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

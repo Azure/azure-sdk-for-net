@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicAuthorizationRuleResource>> GetNamespaceTopicAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return await GetNamespaceTopicAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<NamespaceTopicAuthorizationRuleResource> GetNamespaceTopicAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return GetNamespaceTopicAuthorizationRules().Get(authorizationRuleName, cancellationToken);
@@ -137,6 +139,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusSubscriptionResource>> GetServiceBusSubscriptionAsync(string subscriptionName, CancellationToken cancellationToken = default)
         {
             return await GetServiceBusSubscriptions().GetAsync(subscriptionName, cancellationToken).ConfigureAwait(false);
@@ -151,6 +154,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServiceBusSubscriptionResource> GetServiceBusSubscription(string subscriptionName, CancellationToken cancellationToken = default)
         {
             return GetServiceBusSubscriptions().Get(subscriptionName, cancellationToken);

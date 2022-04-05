@@ -110,6 +110,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SqlContainerResource>> GetSqlContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
             return await GetSqlContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SqlContainerResource> GetSqlContainer(string containerName, CancellationToken cancellationToken = default)
         {
             return GetSqlContainers().Get(containerName, cancellationToken);

@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetCommunicationServices().GetAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<CommunicationServiceResource> GetCommunicationService(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetCommunicationServices().Get(communicationServiceName, cancellationToken);

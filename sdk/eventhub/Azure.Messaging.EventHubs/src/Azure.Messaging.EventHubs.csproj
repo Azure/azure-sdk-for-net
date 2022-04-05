@@ -15,13 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-     <!--
-        TEMP: Move Core to a project reference until BinaryContent is shipped in Azure.Core.Experimental.
-
-        <PackageReference Include="Azure.Core" />
-    -->
-    <!-- END TEMP -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />

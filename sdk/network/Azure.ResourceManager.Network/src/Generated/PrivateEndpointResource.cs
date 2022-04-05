@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateDnsZoneGroupResource>> GetPrivateDnsZoneGroupAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             return await GetPrivateDnsZoneGroups().GetAsync(privateDnsZoneGroupName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateDnsZoneGroupResource> GetPrivateDnsZoneGroup(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
             return GetPrivateDnsZoneGroups().Get(privateDnsZoneGroupName, cancellationToken);
