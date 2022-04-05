@@ -17,20 +17,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversation
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Send an email to Carol about the tomorrow's demo.");
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                textConversationItem,
+                 "Send an email to Carol about the tomorrow's demo.",
                 conversationsProject);
 #else
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                input,
+                "Send an email to Carol about the tomorrow's demo.",
                 TestEnvironment.Project);
 #endif
 
@@ -83,20 +79,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Send an email to Carol about the tomorrow's demo.");
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                textConversationItem,
+                 "Send an email to Carol about the tomorrow's demo.",
                 conversationsProject);
 #else
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                input,
+                "Send an email to Carol about the tomorrow's demo.",
                 TestEnvironment.Project);
 #endif
 

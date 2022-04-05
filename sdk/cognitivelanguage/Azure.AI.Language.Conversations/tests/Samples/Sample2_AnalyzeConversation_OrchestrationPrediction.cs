@@ -19,18 +19,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "How are you?");
 #if SNIPPET
             ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
             Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                textConversationItem,
+                "How are you?",
                 orchestrationProject);
 #else
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                input,
+                "How are you?",
                 TestEnvironment.OrchestrationProject);
 #endif
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -68,14 +64,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void AnalyzeConversationOrchestrationPredictionConversation()
         {
             ConversationAnalysisClient client = Client;
-
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Send an email to Carol about the tomorrow's demo");
-
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                input,
+                "Send an email to Carol about the tomorrow's demo",
                 TestEnvironment.OrchestrationProject);
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -135,13 +125,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Reserve a table for 2 at the Italian restaurant.");
-
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                input,
+                "Reserve a table for 2 at the Italian restaurant.",
                 TestEnvironment.OrchestrationProject);
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -171,18 +156,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-            TextConversationItem textConversationItem = new TextConversationItem(
-                            participantId: "1",
-                            id: "1",
-                            text: "How are you?");
 #if SNIPPET
             ConversationsProject orchestrationProject = new ConversationsProject("DomainOrchestrator", "production");
             Response<AnalyzeConversationResult> response =  await client.AnalyzeConversationAsync(
-                textConversationItem,
+                "How are you?",
                 orchestrationProject);
 #else
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                textConversationItem,
+                "How are you?",
                 TestEnvironment.OrchestrationProject);
 #endif
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -219,13 +200,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Send an email to Carol about the tomorrow's demo");
-
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                input,
+                "Send an email to Carol about the tomorrow's demo",
                 TestEnvironment.OrchestrationProject);
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -284,13 +260,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Reserve a table for 2 at the Italian restaurant.");
-
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                input,
+                "Reserve a table for 2 at the Italian restaurant.",
                 TestEnvironment.OrchestrationProject);
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;

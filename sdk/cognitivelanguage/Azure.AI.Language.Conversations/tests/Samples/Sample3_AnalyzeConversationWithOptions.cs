@@ -33,12 +33,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
                 textConversationItem,
                 conversationsProject,
-                analysisInput,
-                verbose: true);
+                options);
 #else
 
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                input,
+                "Send an email to Carol about the tomorrow's demo.",
                 TestEnvironment.Project,
                 options);
 #endif
@@ -106,14 +105,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                textConversationItem,
+                "Send an email to Carol about the tomorrow's demo.",
                 conversationsProject,
-                analysisInput,
-                verbose: true);
+                options);
 #else
 
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                input,
+                "Send an email to Carol about the tomorrow's demo.",
                 TestEnvironment.Project,
                 options);
 #endif

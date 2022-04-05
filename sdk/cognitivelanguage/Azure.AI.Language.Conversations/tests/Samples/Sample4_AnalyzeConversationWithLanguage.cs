@@ -18,13 +18,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Tendremos 2 platos de nigiri de salmón braseado.")
-            {
-                Language = "es"
-            };
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -34,7 +27,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 conversationsProject);
 #else
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                input,
+                "Tendremos 2 platos de nigiri de salmón braseado.",
                 TestEnvironment.Project);
 #endif
 
@@ -89,13 +82,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Tendremos 2 platos de nigiri de salmón braseado.")
-            {
-                Language = "es"
-            };
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
@@ -105,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 conversationsProject);
 #else
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                input,
+                "Tendremos 2 platos de nigiri de salmón braseado.",
                 TestEnvironment.Project);
 #endif
 
