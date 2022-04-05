@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using Azure.Core;
 using Azure.Data.Tables;
-using Azure.Monitor.Query;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables
 {
