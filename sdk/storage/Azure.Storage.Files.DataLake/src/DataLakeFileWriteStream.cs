@@ -58,6 +58,7 @@ namespace Azure.Storage.Files.DataLake
                     rangeContentMD5: default,
                     leaseId: _conditions.LeaseId,
                     progressHandler: _progressHandler,
+                    flush: null,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
