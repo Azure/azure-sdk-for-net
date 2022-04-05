@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                  participantId: "1",
                  id: "1",
                  text: "Send an email to Carol about the tomorrow's demo.");
-            ConversationAnalysisOptions options = new ConversationAnalysisOptions(input)
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
             {
                 IsLoggingEnabled = true,
                 Verbose = true
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                  participantId: "1",
                  id: "1",
                  text: "Send an email to Carol about the tomorrow's demo.");
-            ConversationAnalysisOptions options = new ConversationAnalysisOptions(input)
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
             {
                 IsLoggingEnabled = true,
                 Verbose = true
