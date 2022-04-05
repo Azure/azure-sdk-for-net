@@ -4306,7 +4306,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ResourceSkuRestrictions() { }
         public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionInfo RestrictionInfo { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsType? SkuRestrictionsType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsType? RestrictionsType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     public enum ResourceSkuRestrictionsReasonCode
@@ -4581,8 +4581,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class SharingProfileGroup
     {
         public SharingProfileGroup() { }
+        public Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes? GroupType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Ids { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes? ProfileGroupType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SharingProfileGroupTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.SharingProfileGroupTypes>

@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ArmApplicationArtifact
     {
         internal ArmApplicationArtifact() { }
-        public Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType ApplicationArtifactType { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType ArtifactType { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName Name { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
     }
@@ -455,8 +455,8 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ArmApplicationDefinitionArtifact
     {
-        public ArmApplicationDefinitionArtifact(Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName name, System.Uri uri, Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType applicationArtifactType) { }
-        public Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType ApplicationArtifactType { get { throw null; } set { } }
+        public ArmApplicationDefinitionArtifact(Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName name, System.Uri uri, Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType artifactType) { }
+        public Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType ArtifactType { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName Name { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ArmApplicationManagedIdentity
     {
         public ArmApplicationManagedIdentity() { }
-        public Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentityType? ManagedIdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentityType? IdentityType { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ArmDeploymentScriptManagedIdentity
     {
         public ArmDeploymentScriptManagedIdentity() { }
-        public Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType? ManagedIdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType? IdentityType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
@@ -785,13 +785,13 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public ErrorDeployment() { }
         public string DeploymentName { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ErrorDeploymentType? ErrorDeploymentType { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ErrorDeploymentType? DeploymentType { get { throw null; } set { } }
     }
     public partial class ErrorDeploymentExtended
     {
         internal ErrorDeploymentExtended() { }
         public string DeploymentName { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ErrorDeploymentType? ErrorDeploymentType { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ErrorDeploymentType? DeploymentType { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
     }
     public enum ErrorDeploymentType
@@ -840,9 +840,9 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class JitApprover
     {
         public JitApprover(string id) { }
+        public Azure.ResourceManager.Resources.Models.JitApproverType? ApproverType { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.JitApproverType? JitApproverType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitApproverType : System.IEquatable<Azure.ResourceManager.Resources.Models.JitApproverType>
@@ -894,9 +894,9 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class JitSchedulingPolicy
     {
-        public JitSchedulingPolicy(Azure.ResourceManager.Resources.Models.JitSchedulingType jitSchedulingType, System.TimeSpan duration, System.DateTimeOffset startOn) { }
+        public JitSchedulingPolicy(Azure.ResourceManager.Resources.Models.JitSchedulingType schedulingType, System.TimeSpan duration, System.DateTimeOffset startOn) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.JitSchedulingType JitSchedulingType { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.JitSchedulingType SchedulingType { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
