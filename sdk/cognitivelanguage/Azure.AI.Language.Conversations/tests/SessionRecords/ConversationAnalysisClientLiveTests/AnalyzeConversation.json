@@ -8,9 +8,9 @@
         "Content-Length": "249",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c5553f836f2ea86a22b0990659be2df9-4bc67986222e2381-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET 6.0.3; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "d7036dd3ea1defce017f59ef7f5da470",
+        "traceparent": "00-09d37088ad665948959781bd075c48fa-ab1e383256b2bf4e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220405.1 (.NET Core 3.1.23; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "07bcfa64cfcfca8768c8cd26f7304e87",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,16 +30,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3693a608-7527-49f5-97b2-a9ca8c2beac4",
+        "apim-request-id": "95957452-c8cc-403a-81ff-73cebdd075d8",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 05 Apr 2022 11:01:36 GMT",
+        "Date": "Tue, 05 Apr 2022 11:06:06 GMT",
         "Pragma": "no-cache",
-        "request-id": "3693a608-7527-49f5-97b2-a9ca8c2beac4",
+        "request-id": "95957452-c8cc-403a-81ff-73cebdd075d8",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "92"
+        "x-envoy-upstream-service-time": "85"
       },
       "ResponseBody": {
         "kind": "CustomConversationResult",
@@ -139,6 +139,6 @@
     "AZURE_CONVERSATIONS_ENDPOINT": "https://westeurope.api.cognitive.microsoft.com",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_PROJECT_NAME": "SampleProject",
-    "RandomSeed": "846469361"
+    "RandomSeed": "1540842956"
   }
 }
