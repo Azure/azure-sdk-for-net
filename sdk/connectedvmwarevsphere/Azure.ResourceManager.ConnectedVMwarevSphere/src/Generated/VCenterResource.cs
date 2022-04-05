@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<InventoryItemResource>> GetInventoryItemAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             return await GetInventoryItems().GetAsync(inventoryItemName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<InventoryItemResource> GetInventoryItem(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             return GetInventoryItems().Get(inventoryItemName, cancellationToken);

@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusRuleResource>> GetServiceBusRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             return await GetServiceBusRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServiceBusRuleResource> GetServiceBusRule(string ruleName, CancellationToken cancellationToken = default)
         {
             return GetServiceBusRules().Get(ruleName, cancellationToken);

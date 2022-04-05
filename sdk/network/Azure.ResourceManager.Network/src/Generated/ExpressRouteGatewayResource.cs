@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteConnectionResource>> GetExpressRouteConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             return await GetExpressRouteConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ExpressRouteConnectionResource> GetExpressRouteConnection(string connectionName, CancellationToken cancellationToken = default)
         {
             return GetExpressRouteConnections().Get(connectionName, cancellationToken);

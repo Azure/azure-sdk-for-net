@@ -126,6 +126,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ResourceProviderResource>> GetResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             return await GetResourceProviders().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
@@ -141,6 +142,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ResourceProviderResource> GetResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetResourceProviders().Get(resourceProviderNamespace, expand, cancellationToken);
@@ -162,6 +164,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGroupResource>> GetResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             return await GetResourceGroups().GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
@@ -176,6 +179,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ResourceGroupResource> GetResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             return GetResourceGroups().Get(resourceGroupName, cancellationToken);
@@ -197,6 +201,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionPolicyDefinitionResource>> GetSubscriptionPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             return await GetSubscriptionPolicyDefinitions().GetAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
@@ -211,6 +216,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SubscriptionPolicyDefinitionResource> GetSubscriptionPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
@@ -232,6 +238,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetSubscriptionPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             return await GetSubscriptionPolicySetDefinitions().GetAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
@@ -246,6 +253,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SubscriptionPolicySetDefinitionResource> GetSubscriptionPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionPolicySetDefinitions().Get(policySetDefinitionName, cancellationToken);

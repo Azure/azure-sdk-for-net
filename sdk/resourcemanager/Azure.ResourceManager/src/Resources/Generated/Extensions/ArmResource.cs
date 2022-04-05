@@ -32,6 +32,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PolicyAssignmentResource>> GetPolicyAssignmentAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             return await GetPolicyAssignments().GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PolicyAssignmentResource> GetPolicyAssignment(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             return GetPolicyAssignments().Get(policyAssignmentName, cancellationToken);
@@ -67,6 +69,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagementLockResource>> GetManagementLockAsync(string lockName, CancellationToken cancellationToken = default)
         {
             return await GetManagementLocks().GetAsync(lockName, cancellationToken).ConfigureAwait(false);
@@ -81,6 +84,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ManagementLockResource> GetManagementLock(string lockName, CancellationToken cancellationToken = default)
         {
             return GetManagementLocks().Get(lockName, cancellationToken);

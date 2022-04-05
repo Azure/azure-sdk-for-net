@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadClassifierResource>> GetWorkloadClassifierAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             return await GetWorkloadClassifiers().GetAsync(workloadClassifierName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<WorkloadClassifierResource> GetWorkloadClassifier(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             return GetWorkloadClassifiers().Get(workloadClassifierName, cancellationToken);

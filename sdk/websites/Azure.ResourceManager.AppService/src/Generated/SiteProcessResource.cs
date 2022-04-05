@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteProcessModuleResource>> GetSiteProcessModuleAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             return await GetSiteProcessModules().GetAsync(baseAddress, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteProcessModuleResource> GetSiteProcessModule(string baseAddress, CancellationToken cancellationToken = default)
         {
             return GetSiteProcessModules().Get(baseAddress, cancellationToken);
