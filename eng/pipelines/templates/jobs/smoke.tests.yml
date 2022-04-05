@@ -13,9 +13,9 @@ parameters:
     default: 60
 
 jobs:
-dependsOn: PublishPackage
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
+      dependsOn: PublishPackage
       pool:
         name: "azsdk-pool-mms-ubuntu-2004-general"
         vmImage: "MMSUbuntu20.04"
