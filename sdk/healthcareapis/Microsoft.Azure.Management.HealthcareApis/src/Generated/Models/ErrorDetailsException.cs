@@ -28,11 +28,6 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         public HttpResponseMessageWrapper Response { get; set; }
 
         /// <summary>
-        /// Gets or sets the body object.
-        /// </summary>
-        public ErrorDetails Body { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the ErrorDetailsException class.
         /// </summary>
         public ErrorDetailsException()

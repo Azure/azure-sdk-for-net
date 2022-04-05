@@ -10,9 +10,9 @@
 
 namespace Microsoft.Azure.Management.HealthcareApis
 {
+    using Microsoft.Azure.Management.HealthcareApis.Models;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Models;
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading;

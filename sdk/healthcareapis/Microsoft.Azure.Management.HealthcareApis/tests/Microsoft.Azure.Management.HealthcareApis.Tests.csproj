@@ -8,6 +8,10 @@
     <Authors>Microsoft Corporation</Authors>
     <Version>1.1.0</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" Version="1.23.0" />
+    <PackageReference Include="Azure.Identity" Version="1.5.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="1.13.3" />

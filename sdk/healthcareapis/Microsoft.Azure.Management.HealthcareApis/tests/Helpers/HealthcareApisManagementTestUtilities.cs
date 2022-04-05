@@ -11,6 +11,7 @@ using System.Net.Http;
 using Xunit;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Azure.Identity;
 
 namespace HealthcareApis.Tests.Helpers
 {
@@ -21,8 +22,8 @@ namespace HealthcareApis.Tests.Helpers
         private static Uri testUri = null;
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "westus";
-        public static Kind DefaultKind = Kind.Fhir;
+        public static string DefaultLocation = IsTestTenant ? null : "westus2";
+        public static Kind DefaultKind = Kind.FhirR4;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
             {
                 {"key1","value1"},
@@ -53,14 +54,12 @@ namespace HealthcareApis.Tests.Helpers
             HealthcareApisManagementClient healthcareApisManagementClient;
             if (IsTestTenant)
             {
-                healthcareApisManagementClient = new HealthcareApisManagementClient(new TokenCredentials("xyz"), GetHandler());
-                healthcareApisManagementClient.SubscriptionId = "testSubscription";
-                healthcareApisManagementClient.BaseUri = testUri;
+                healthcareApisManagementClient = new HealthcareApisManagementClient("testSubscription", testUri, new DefaultAzureCredential());
             }
             else
             {
                 handler.IsPassThrough = true;
-                healthcareApisManagementClient = context.GetServiceClient<HealthcareApisManagementClient>(handlers: handler);
+                healthcareApisManagementClient = context.GetServiceClienWithoutHandler<HealthcareApisManagementClient>(new DefaultAzureCredential());
             }
             return healthcareApisManagementClient;
         }
@@ -79,14 +78,13 @@ namespace HealthcareApis.Tests.Helpers
 
         public static ServicesPatchDescription GetServicePatchDescription()
         {
-            var servicePatchDescription = new ServicesPatchDescription(UpdateTags);
+            var servicePatchDescription = new ServicesPatchDescription();
             return servicePatchDescription;
         }
 
         public static ServicesDescription GetServiceDescriptionWithProperties()
         {
-            var serviceProperties = GetServiceProperties();
-            var serviceDescription = new ServicesDescription(DefaultKind, DefaultLocation, default(string), default(string), default(string), DefaultTags, default(string), default(ServicesResourceIdentity), serviceProperties);
+            var serviceDescription = new ServicesDescription(DefaultKind, DefaultLocation);
             return serviceDescription;
         }
 
@@ -95,12 +93,17 @@ namespace HealthcareApis.Tests.Helpers
             IList<ServiceAccessPolicyEntry> accessPolicies = new List<ServiceAccessPolicyEntry>();
             accessPolicies.Add(new ServiceAccessPolicyEntry(objectId));
 
-            string provisioningState = "Succeeded";
+            ServiceCosmosDbConfigurationInfo cosmosDbConfigurationInfo = new ServiceCosmosDbConfigurationInfo();
+            cosmosDbConfigurationInfo.OfferThroughput = offerThroughput;
+            cosmosDbConfigurationInfo.KeyVaultKeyUri = keyVaultKeyUri;
+            ServiceAuthenticationConfigurationInfo authenticationConfigurationInfo = new ServiceAuthenticationConfigurationInfo();
+            authenticationConfigurationInfo.Authority = authority;
+            authenticationConfigurationInfo.Audience = audience;
+            authenticationConfigurationInfo.SmartProxyEnabled = smartOnFhirEnabled;
 
-            ServiceCosmosDbConfigurationInfo cosmosDbConfigurationInfo = new ServiceCosmosDbConfigurationInfo(offerThroughput, keyVaultKeyUri);
-            ServiceAuthenticationConfigurationInfo authenticationConfigurationInfo = new ServiceAuthenticationConfigurationInfo(authority, audience, smartOnFhirEnabled);
-
-            var serviceProperties = new ServicesProperties(provisioningState, accessPolicies, cosmosDbConfigurationInfo, authenticationConfigurationInfo);
+            var serviceProperties = new ServicesProperties();
+            serviceProperties.CosmosDbConfiguration = cosmosDbConfigurationInfo;
+            serviceProperties.AuthenticationConfiguration = authenticationConfigurationInfo;
 
             return serviceProperties;
         }
@@ -111,7 +114,7 @@ namespace HealthcareApis.Tests.Helpers
             string accountName = TestUtilities.GenerateName("hca");
 
             // Create healthcareApis account
-            var createdAccount = healthcareApisManagementClient.Services.CreateOrUpdate(rgname, accountName, GetServiceDescriptionWithProperties());
+            var createdAccount = healthcareApisManagementClient.Services.StartCreateOrUpdate(rgname, accountName, GetServiceDescriptionWithProperties());
 
             return accountName;
         }

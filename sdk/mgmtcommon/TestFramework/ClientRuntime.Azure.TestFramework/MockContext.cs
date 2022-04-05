@@ -97,6 +97,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             return GetServiceClient<T>(TestFxEnvironment, internalBaseUri, handlers);
         }
 
+        public T GetServiceClienWithoutHandler<T>(object credential) where T : class
+        {
+            return GetClientWithoutHandler<T>(TestFxEnvironment, credential);
+        }
+
         /// <summary>
         /// Get a test environment, allowing the test to customize the creation options
         /// </summary>
@@ -261,6 +266,43 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 tenantId.SetValue(client, currentEnvironment.Tenant);
             }
+            SetLongRunningOperationTimeouts(client);
+            return client;
+        }
+
+        public T GetClientWithoutHandler<T>(
+            TestEnvironment currentEnvironment,
+            object credential) where T : class
+        {
+            T client;
+            var constructors = typeof(T).GetConstructors(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
+
+            ConstructorInfo constructor = null;
+
+            foreach (var c in constructors)
+            {
+                var parameters = c.GetParameters();
+                if (parameters.Length == 3 &&
+                    parameters[0].ParameterType.Name == "String" &&
+                    parameters[1].ParameterType.Name == "TokenCredential" &&
+                    parameters[2].ParameterType.Name == "HealthcareApisManagementClientOptions")
+                {
+                    constructor = c;
+                    break;
+                }
+            }
+            if (constructor == null)
+            {
+                throw new InvalidOperationException(
+                    "can't find constructor (string, TokenCredential, HealthcareApisManagementClientOptions) to create client");
+            }
+            client = constructor.Invoke(new object[]
+            {
+                    currentEnvironment.SubscriptionId,
+                    credential,
+                    null
+            }) as T;
+
             SetLongRunningOperationTimeouts(client);
             return client;
         }
