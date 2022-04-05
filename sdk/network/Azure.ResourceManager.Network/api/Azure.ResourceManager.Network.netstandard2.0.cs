@@ -5356,7 +5356,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallApplicationRuleCollection : Azure.ResourceManager.Network.Models.SubResource
     {
         public AzureFirewallApplicationRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? AzureFirewallRCActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? ActionType { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -5447,7 +5447,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallNatRuleCollection : Azure.ResourceManager.Network.Models.SubResource
     {
         public AzureFirewallNatRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType? AzureFirewallNatRCActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType? ActionType { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -5470,7 +5470,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallNetworkRuleCollection : Azure.ResourceManager.Network.Models.SubResource
     {
         public AzureFirewallNetworkRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? AzureFirewallRCActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? ActionType { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -5782,14 +5782,14 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ConnectionMonitorEndpointFilter
     {
         public ConnectionMonitorEndpointFilter() { }
-        public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType? ConnectionMonitorEndpointFilterType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType? FilterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItem> Items { get { throw null; } }
     }
     public partial class ConnectionMonitorEndpointFilterItem
     {
         public ConnectionMonitorEndpointFilterItem() { }
         public string Address { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType? ConnectionMonitorEndpointFilterItemType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType? ItemType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionMonitorEndpointFilterItemType : System.IEquatable<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterItemType>
@@ -6849,7 +6849,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class FirewallPolicyFilterRuleCollection : Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollection
     {
         public FirewallPolicyFilterRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType? FirewallPolicyFilterRuleCollectionActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.FirewallPolicyFilterRuleCollectionActionType? ActionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6961,7 +6961,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class FirewallPolicyNatRuleCollection : Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollection
     {
         public FirewallPolicyNatRuleCollection() { }
-        public Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType? FirewallPolicyNatRuleCollectionActionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType? ActionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7064,7 +7064,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class FlowLogFormatParameters
     {
         public FlowLogFormatParameters() { }
-        public Azure.ResourceManager.Network.Models.FlowLogFormatType? FlowLogFormatType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.FlowLogFormatType? FormatType { get { throw null; } set { } }
         public int? Version { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7102,8 +7102,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class GatewayLoadBalancerTunnelInterface
     {
         public GatewayLoadBalancerTunnelInterface() { }
-        public Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType? GatewayLoadBalancerTunnelInterfaceType { get { throw null; } set { } }
         public int? Identifier { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterfaceType? InterfaceType { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelProtocol? Protocol { get { throw null; } set { } }
     }
@@ -9424,8 +9424,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal VirtualWanSecurityProvider() { }
         public string Name { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? ProviderType { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType? VirtualWanSecurityProviderType { get { throw null; } }
     }
     public partial class VirtualWanSecurityProviders
     {

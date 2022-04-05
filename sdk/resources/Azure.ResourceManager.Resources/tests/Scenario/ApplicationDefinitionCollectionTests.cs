@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Assert.AreEqual(model.Name, getResult.Name);
             Assert.AreEqual(model.Uri, getResult.Uri);
-            Assert.AreEqual(model.ArmApplicationArtifactType, getResult.ArmApplicationArtifactType);
+            Assert.AreEqual(model.ArtifactType, getResult.ArtifactType);
         }
 
         private static void AssertValidPolicy(ArmApplicationPolicy model, ArmApplicationPolicy getResult)
