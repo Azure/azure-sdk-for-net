@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
         /// </summary>
         /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to the service.</param>

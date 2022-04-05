@@ -56,6 +56,96 @@ namespace Azure.AI.MetricsAdvisor
         {
         }
 
+        #region TimeSeries
+
+        /// <summary>
+        /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
+        /// </summary>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="dimensionName">The name of the <see cref="DataFeedDimension"/>.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of values the specified <see cref="DataFeedDimension"/> can assume.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
+
+            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+            MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
+            {
+                DimensionValueFilter = options?.DimensionValueFilter
+            };
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
+            RequestContext context = new RequestContext()
+            {
+                CancellationToken = cancellationToken,
+            };
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricDimensionValues)}");
+            scope.Start();
+
+            try
+            {
+                RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
+                AsyncPageable<BinaryData> pageableBindaryData = GetMetricDimensionAsync(metricGuid, content, skip, maxPageSize, context);
+                return PageableHelpers.Select(pageableBindaryData, response => MetricDimensionList.FromResponse(response).Value);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
+        /// </summary>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="dimensionName">The name of the <see cref="DataFeedDimension"/>.</param>
+        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of values the specified <see cref="DataFeedDimension"/> can assume.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
+        [ForwardsClientCalls]
+        public virtual Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
+
+            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
+            MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
+            {
+                DimensionValueFilter = options?.DimensionValueFilter
+            };
+            int? skip = options?.Skip;
+            int? maxPageSize = options?.MaxPageSize;
+            RequestContext context = new RequestContext()
+            {
+                CancellationToken = cancellationToken,
+            };
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricDimensionValues)}");
+            scope.Start();
+
+            try
+            {
+                RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
+                Pageable<BinaryData> pageableBindaryData = GetMetricDimension(metricGuid, content, skip, maxPageSize, context);
+                return PageableHelpers.Select(pageableBindaryData, response => MetricDimensionList.FromResponse(response).Value);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion TimeSeries
+
         #region MetricFeedback
 
         /// <summary>
@@ -328,95 +418,5 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         #endregion MetricFeedback
-
-        #region TimeSeries
-
-        /// <summary>
-        /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
-        /// </summary>
-        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
-        /// <param name="dimensionName">The name of the <see cref="DataFeedDimension"/>.</param>
-        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of values the specified <see cref="DataFeedDimension"/> can assume.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
-
-            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-            MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
-            {
-                DimensionValueFilter = options?.DimensionValueFilter
-            };
-            int? skip = options?.Skip;
-            int? maxPageSize = options?.MaxPageSize;
-            RequestContext context = new RequestContext()
-            {
-                CancellationToken = cancellationToken,
-            };
-
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricDimensionValues)}");
-            scope.Start();
-
-            try
-            {
-                RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
-                AsyncPageable<BinaryData> pageableBindaryData = GetMetricDimensionAsync(metricGuid, content, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBindaryData, response => MetricDimensionList.FromResponse(response).Value);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
-        /// </summary>
-        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
-        /// <param name="dimensionName">The name of the <see cref="DataFeedDimension"/>.</param>
-        /// <param name="options">An optional set of options used to configure the request's behavior.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of values the specified <see cref="DataFeedDimension"/> can assume.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metricId"/> or <paramref name="dimensionName"/> is empty; or <paramref name="metricId"/> is not a valid GUID.</exception>
-        [ForwardsClientCalls]
-        public virtual Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, GetMetricDimensionValuesOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
-
-            Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-            MetricDimensionQueryOptions queryOptions = new MetricDimensionQueryOptions(dimensionName)
-            {
-                DimensionValueFilter = options?.DimensionValueFilter
-            };
-            int? skip = options?.Skip;
-            int? maxPageSize = options?.MaxPageSize;
-            RequestContext context = new RequestContext()
-            {
-                CancellationToken = cancellationToken,
-            };
-
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetMetricDimensionValues)}");
-            scope.Start();
-
-            try
-            {
-                RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
-                Pageable<BinaryData> pageableBindaryData = GetMetricDimension(metricGuid, content, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBindaryData, response => MetricDimensionList.FromResponse(response).Value);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #endregion TimeSeries
     }
 }
