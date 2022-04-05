@@ -17,14 +17,12 @@ namespace Azure.AI.Language.Conversations.Perf.Scenarios
 
         public override void Run(CancellationToken cancellationToken)
         {
-            TextConversationItem textConversationItem = new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo");
-            Client.AnalyzeConversation(textConversationItem, TestEnvironment.Project);
+            Client.AnalyzeConversation("Send an email to Carol about the tomorrow's demo", TestEnvironment.Project);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            TextConversationItem textConversationItem = new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo");
-            await Client.AnalyzeConversationAsync(textConversationItem, TestEnvironment.Project);
+            await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.Project);
         }
 
         public class ConversationAnalysisClient : PerfOptions

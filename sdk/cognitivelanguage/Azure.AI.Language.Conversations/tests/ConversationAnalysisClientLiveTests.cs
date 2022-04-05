@@ -19,8 +19,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            TextConversationItem textConversationItem = new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo");
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync(textConversationItem, TestEnvironment.Project);
+            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.Project);
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -47,8 +46,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_Conversation()
         {
-            TextConversationItem textConversationItem = new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo");
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync(textConversationItem, TestEnvironment.OrchestrationProject);
+            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.OrchestrationProject);
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -85,8 +83,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_Luis()
         {
-            TextConversationItem textConversationItem = new TextConversationItem("1", "1", "Reserve a table for 2 at the Italian restaurant");
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync(textConversationItem, TestEnvironment.OrchestrationProject);
+            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Reserve a table for 2 at the Italian restaurant", TestEnvironment.OrchestrationProject);
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -119,8 +116,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_QuestionAnswering()
         {
-            TextConversationItem textConversationItem = new TextConversationItem("1", "1", "How are you?");
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync(textConversationItem, TestEnvironment.OrchestrationProject);
+            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("How are you?", TestEnvironment.OrchestrationProject);
 
             // assert - main object
             Assert.IsNotNull(response);

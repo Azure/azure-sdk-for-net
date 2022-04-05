@@ -18,17 +18,27 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
+            TextConversationItem input = new TextConversationItem(
+                 participantId: "1",
+                 id: "1",
+                 text: "Tendremos 2 platos de nigiri de salmón braseado.")
+            {
+                Language = "es"
+            };
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(input);
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
                 textConversationItem,
-                conversationsProject);
+                conversationsProject,
+                options);
 #else
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
                 "Tendremos 2 platos de nigiri de salmón braseado.",
-                TestEnvironment.Project);
+                TestEnvironment.Project,
+                options);
 #endif
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -82,17 +92,27 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
+            TextConversationItem input = new TextConversationItem(
+                 participantId: "1",
+                 id: "1",
+                 text: "Tendremos 2 platos de nigiri de salmón braseado.")
+            {
+                Language = "es"
+            };
+            AnalyzeConversationOptions options = new AnalyzeConversationOptions(input);
 
 #if SNIPPET
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
                 textConversationItem,
-                conversationsProject);
+                conversationsProject,
+                options);
 #else
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
                 "Tendremos 2 platos de nigiri de salmón braseado.",
-                TestEnvironment.Project);
+                TestEnvironment.Project,
+                options);
 #endif
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
