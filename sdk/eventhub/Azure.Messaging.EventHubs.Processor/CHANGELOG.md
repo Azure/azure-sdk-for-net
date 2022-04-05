@@ -1,16 +1,10 @@
 # Release History
 
-## 5.7.0-beta.5 (Unreleased)
+## 5.7.0-beta.5 (2022-04-05)
 
 ### Features Added
 
 - The `BlobCheckpointStore` implementation used internally by the processor has been made public and now conforms to the `CheckpointStore` contract, allowing it to be used with custom processor implementations.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 5.7.0-beta.4 (2022-03-11)
 
