@@ -59,7 +59,7 @@ namespace HealthcareApis.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                healthcareApisManagementClient = context.GetServiceClienWithoutHandler<HealthcareApisManagementClient>(new DefaultAzureCredential());
+                healthcareApisManagementClient = context.GetServiceClientWithoutHandler<HealthcareApisManagementClient>(new DefaultAzureCredential());
             }
             return healthcareApisManagementClient;
         }
@@ -84,7 +84,9 @@ namespace HealthcareApis.Tests.Helpers
 
         public static ServicesDescription GetServiceDescriptionWithProperties()
         {
+            var serviceProperties = GetServiceProperties();
             var serviceDescription = new ServicesDescription(DefaultKind, DefaultLocation);
+            serviceDescription.Properties = serviceProperties;
             return serviceDescription;
         }
 

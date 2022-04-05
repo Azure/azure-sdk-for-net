@@ -97,7 +97,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             return GetServiceClient<T>(TestFxEnvironment, internalBaseUri, handlers);
         }
 
-        public T GetServiceClienWithoutHandler<T>(object credential) where T : class
+        public T GetServiceClientWithoutHandler<T>(object credential) where T : class
         {
             return GetClientWithoutHandler<T>(TestFxEnvironment, credential);
         }

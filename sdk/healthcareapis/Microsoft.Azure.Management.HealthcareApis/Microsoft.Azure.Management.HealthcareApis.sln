@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.HealthcareApis", "src\Microsoft.Azure.Management.HealthcareApis.csproj", "{6F4E6681-FA47-4FFC-8E02-32212FDEDDC9}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.HealthcareApis.Tests", "tests\Microsoft.Azure.Management.HealthcareApis.Tests.csproj", "{FC36BDC8-F7B8-474D-BC49-15C11CA3C46A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{76878F38-EB0A-4532-A98F-40438D4B2DCF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{B905F333-3856-462E-8972-9A2F061B5A4A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.HealthcareApis", "src\Microsoft.Azure.Management.HealthcareApis.csproj", "{3F350956-D6AA-4434-A03D-31F7FA3500CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F4E6681-FA47-4FFC-8E02-32212FDEDDC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4E6681-FA47-4FFC-8E02-32212FDEDDC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4E6681-FA47-4FFC-8E02-32212FDEDDC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4E6681-FA47-4FFC-8E02-32212FDEDDC9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FC36BDC8-F7B8-474D-BC49-15C11CA3C46A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC36BDC8-F7B8-474D-BC49-15C11CA3C46A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC36BDC8-F7B8-474D-BC49-15C11CA3C46A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,10 +33,6 @@ Global
 		{B905F333-3856-462E-8972-9A2F061B5A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B905F333-3856-462E-8972-9A2F061B5A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B905F333-3856-462E-8972-9A2F061B5A4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F350956-D6AA-4434-A03D-31F7FA3500CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F350956-D6AA-4434-A03D-31F7FA3500CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F350956-D6AA-4434-A03D-31F7FA3500CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F350956-D6AA-4434-A03D-31F7FA3500CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
