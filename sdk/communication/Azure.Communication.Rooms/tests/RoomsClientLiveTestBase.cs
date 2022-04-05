@@ -7,7 +7,8 @@ using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
+using Azure.Communication.Identity;
+using System.Threading.Tasks;
 
 namespace Azure.Communication.Rooms.Tests
 {
@@ -30,27 +31,17 @@ namespace Azure.Communication.Rooms.Tests
             return InstrumentClient(client);
         }
 
-        // TODO: Add Live Tests covering tokenCredential case when supported
-        public RoomsClient CreateRoomsClientWithToken()
-        {
-            Uri endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-            TokenCredential tokenCredential;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                tokenCredential = new MockCredential();
-            }
-            else
-            {
-                #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomsClientWithToken
-                //@@ string endpoint = "<endpoint_url>";
-                //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
-                /*@@*/tokenCredential = new DefaultAzureCredential();
-                //@@ RoomsClient client = new RoomsClient(new Uri(endpoint), tokenCredential);
-                #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomsClientWithToken
-            }
-            RoomsClient client = new RoomsClient(endpoint, tokenCredential, CreateRoomsClientOptionsWithCorrelationVectorLogs());
-            return InstrumentClient(client);
-        }
+        /// <summary>
+        /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="CommunicationIdentityClient" />.</returns>
+        protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
+            => InstrumentClient(
+                new CommunicationIdentityClient(
+                    TestEnvironment.LiveTestDynamicConnectionString,
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
+
         private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs()
         {
             RoomsClientOptions roomsClientOptions = new RoomsClientOptions();

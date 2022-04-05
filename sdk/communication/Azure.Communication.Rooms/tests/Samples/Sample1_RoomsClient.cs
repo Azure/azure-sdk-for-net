@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Communication.Identity;
 using Azure.Communication.Rooms.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -24,13 +25,16 @@ namespace Azure.Communication.Rooms.Tests.samples
         public async Task AcsRoomRequestSample()
         {
             RoomsClient roomsClient = CreateInstrumentedRoomsClient();
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
             var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
             var validUntil = validFrom.AddDays(1);
             Dictionary<string, object> createRoomParticipants = new Dictionary<string, object>();
-            createRoomParticipants.Add("8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063e", new RoomParticipant());
-            createRoomParticipants.Add("8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063f", new RoomParticipant());
+            createRoomParticipants.Add(communicationUser1, new RoomParticipant());
+            createRoomParticipants.Add(communicationUser2, new RoomParticipant());
             Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(createRoomParticipants, validFrom, validUntil);
             CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
@@ -68,11 +72,16 @@ namespace Azure.Communication.Rooms.Tests.samples
         public async Task AddRemoveParticipantsExample()
         {
             RoomsClient roomsClient = CreateInstrumentedRoomsClient();
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+
             var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
             var validUntil = validFrom.AddDays(1);
             Dictionary<string, object> createRoomParticipants = new Dictionary<string, object>();
-            createRoomParticipants.Add("8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063e", new RoomParticipant());
-            createRoomParticipants.Add("8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063f", new RoomParticipant());
+            createRoomParticipants.Add(communicationUser1, new RoomParticipant());
+            createRoomParticipants.Add(communicationUser2, new RoomParticipant());
             Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(createRoomParticipants, validFrom, validUntil);
             CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
@@ -81,10 +90,6 @@ namespace Azure.Communication.Rooms.Tests.samples
             var createdRoomId = createCommunicationRoom.Id;
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_AddParticipants
-
-            var communicationUser1 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063e";
-            var communicationUser2 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c6-f5d9-79ee-a427-0e9b917c063e";
-            var communicationUser3 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c6-f5d9-80ee-a427-0e9b917c063e";
 
             List<string> toAddCommunicationUsers = new List<string>();
             toAddCommunicationUsers.Add(communicationUser1);
@@ -117,11 +122,14 @@ namespace Azure.Communication.Rooms.Tests.samples
             #region Snippet:Azure_Communication_RoomsClient_Tests_Troubleshooting
             try
             {
+                CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+                var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+                var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
                 var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
                 var validUntil = validFrom.AddDays(1);
                 Dictionary<string, object> createRoomParticipants = new Dictionary<string, object>();
-                createRoomParticipants.Add("8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063e", new RoomParticipant());
-                createRoomParticipants.Add("8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063f", new RoomParticipant());
+                createRoomParticipants.Add(communicationUser1, new RoomParticipant());
+                createRoomParticipants.Add(communicationUser2, new RoomParticipant());
                 Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(createRoomParticipants, validFrom, validUntil);
                 CommunicationRoom createRoomResult = createRoomResponse.Value;
             }

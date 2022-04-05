@@ -8,6 +8,7 @@ using System.Linq;
 //@@ using Azure.Communication.Rooms
 #endregion Snippet:Azure_Communication_Rooms_Tests_UsingStatements
 using System.Threading.Tasks;
+using Azure.Communication.Identity;
 using Azure.Communication.Rooms.Models;
 using NUnit.Framework;
 
@@ -23,9 +24,11 @@ namespace Azure.Communication.Rooms.Tests
         public async Task AcsRoomRequestLiveTest()
         {
             RoomsClient roomsClient = CreateInstrumentedRoomsClient();
-            var communicationUser1 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063e";
-            var communicationUser2 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c2-f5d9-49ee-a427-0e9b917c063e";
-            var communicationUser3 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c3-f5d9-49ee-a427-0e9b917c063e";
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+
+            var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
 
             var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
             var validUntil = validFrom.AddDays(1);
@@ -81,11 +84,12 @@ namespace Azure.Communication.Rooms.Tests
         [Test]
         public async Task AcsRoomParticipantsMethodLiveTest()
         {
-            var communicationUser1 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c1-f5d9-49ee-a427-0e9b917c063e";
-            var communicationUser2 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c2-f5d9-49ee-a427-0e9b917c063e";
-            var communicationUser4 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c4-f5d9-49ee-a427-0e9b917c063e";
-            var communicationUser5 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c5-f5d9-49ee-a427-0e9b917c063e";
-            var communicationUser6 = "8:acs:db75ed0c-e801-41a3-99a4-66a0a119a06c_be3a83c6-f5d9-49ee-a427-0e9b917c063e";
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser4 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser5 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+            var communicationUser6 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
 
             RoomsClient roomsClient = CreateInstrumentedRoomsClient();
 

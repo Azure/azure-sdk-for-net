@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Identity;
 using Azure.Communication.Rooms.Models;
 using Moq;
 using NUnit.Framework;
@@ -20,8 +21,9 @@ namespace Azure.Communication.Rooms.Tests
             var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
             var validUntil = validFrom.AddDays(1);
             Dictionary<string, object> createRoomParticipants = new Dictionary<string, object>();
-            createRoomParticipants.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd9", new RoomParticipant());
-            createRoomParticipants.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd8", new RoomParticipant());
+
+            createRoomParticipants.Add("mockAcsUserIdentityString1", new RoomParticipant());
+            createRoomParticipants.Add("mockAcsUserIdentityString2", new RoomParticipant());
             Response<CommunicationRoom>? expectedRoomResult = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
@@ -98,8 +100,8 @@ namespace Azure.Communication.Rooms.Tests
             var validFrom = new DateTime(2022, 05, 01, 00, 00, 00, DateTimeKind.Utc);
             var validUntil = validFrom.AddDays(1);
             Dictionary<string, object> createRoomParticipants = new Dictionary<string, object>();
-            createRoomParticipants.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd9", new RoomParticipant());
-            createRoomParticipants.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd8", new RoomParticipant());
+            createRoomParticipants.Add("mockAcsUserIdentityString1", new RoomParticipant());
+            createRoomParticipants.Add("mockAcsUserIdentityString2", new RoomParticipant());
             Response<CommunicationRoom>? expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
@@ -175,9 +177,9 @@ namespace Azure.Communication.Rooms.Tests
             Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
             string roomId = "123";
             List<string> communicationUsers = new List<string>();
-            communicationUsers.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000002e-3240-55cf-9806-113a0d001dd9");
-            communicationUsers.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000003e-3240-55cf-9806-113a0d001dd9");
-            communicationUsers.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000004e-3240-55cf-9806-113a0d001dd9");
+            communicationUsers.Add("mockAcsUserIdentityString1");
+            communicationUsers.Add("mockAcsUserIdentityString2");
+            communicationUsers.Add("mockAcsUserIdentityString3");
 
             Response<CommunicationRoom>? expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
@@ -198,9 +200,9 @@ namespace Azure.Communication.Rooms.Tests
             Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
             string roomId = "123";
             List<string> communicationUsers = new List<string>();
-            communicationUsers.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000005e-3240-55cf-9806-113a0d001dd9");
-            communicationUsers.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000006e-3240-55cf-9806-113a0d001dd9");
-            communicationUsers.Add("8:acs:71ec590b-cbad-490c-99c5-b578bdacde54_0000007e-3240-55cf-9806-113a0d001dd9");
+            communicationUsers.Add("mockAcsUserIdentityString1");
+            communicationUsers.Add("mockAcsUserIdentityString2");
+            communicationUsers.Add("mockAcsUserIdentityString3");
 
             Response<CommunicationRoom>? expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
