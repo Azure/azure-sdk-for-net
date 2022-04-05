@@ -106,6 +106,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<CapacityReservationResource>> GetCapacityReservationAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             return await GetCapacityReservations().GetAsync(capacityReservationName, expand, cancellationToken).ConfigureAwait(false);
@@ -121,6 +122,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<CapacityReservationResource> GetCapacityReservation(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             return GetCapacityReservations().Get(capacityReservationName, expand, cancellationToken);

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("originGroup");
             JsonSerializer.Serialize(writer, OriginGroup); writer.WriteEndObject();
         }
 
         internal static OriginGroupOverrideActionParameters DeserializeOriginGroupOverrideActionParameters(JsonElement element)
         {
-            OriginGroupOverrideActionParametersOdataType odataType = default;
+            OriginGroupOverrideActionParametersTypeName typeName = default;
             WritableSubResource originGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new OriginGroupOverrideActionParametersOdataType(property.Value.GetString());
+                    typeName = new OriginGroupOverrideActionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("originGroup"))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new OriginGroupOverrideActionParameters(odataType, originGroup);
+            return new OriginGroupOverrideActionParameters(typeName, originGroup);
         }
     }
 }

@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ArcExtensionResource>> GetArcExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             return await GetArcExtensions().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ArcExtensionResource> GetArcExtension(string extensionName, CancellationToken cancellationToken = default)
         {
             return GetArcExtensions().Get(extensionName, cancellationToken);

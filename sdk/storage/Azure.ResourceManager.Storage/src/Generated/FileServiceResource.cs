@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<FileShareResource>> GetFileShareAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             return await GetFileShares().GetAsync(shareName, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
@@ -120,6 +121,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<FileShareResource> GetFileShare(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
             return GetFileShares().Get(shareName, expand, xMsSnapshot, cancellationToken);

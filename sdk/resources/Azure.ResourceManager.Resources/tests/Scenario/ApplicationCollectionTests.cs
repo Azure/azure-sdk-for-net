@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources.Tests
             {
                 Assert.NotNull(model.Data.CreatedBy);
                 Assert.NotNull(getResult.Data.CreatedBy);
-                Assert.AreEqual(model.Data.CreatedBy.Oid, getResult.Data.CreatedBy.Oid);
+                Assert.AreEqual(model.Data.CreatedBy.ObjectId, getResult.Data.CreatedBy.ObjectId);
                 Assert.AreEqual(model.Data.CreatedBy.Puid, getResult.Data.CreatedBy.Puid);
                 Assert.AreEqual(model.Data.CreatedBy.ApplicationId, getResult.Data.CreatedBy.ApplicationId);
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Resources.Tests
             {
                 Assert.NotNull(model.Data.UpdatedBy);
                 Assert.NotNull(getResult.Data.UpdatedBy);
-                Assert.AreEqual(model.Data.UpdatedBy.Oid, getResult.Data.UpdatedBy.Oid);
+                Assert.AreEqual(model.Data.UpdatedBy.ObjectId, getResult.Data.UpdatedBy.ObjectId);
                 Assert.AreEqual(model.Data.UpdatedBy.Puid, getResult.Data.UpdatedBy.Puid);
                 Assert.AreEqual(model.Data.UpdatedBy.ApplicationId, getResult.Data.UpdatedBy.ApplicationId);
             }

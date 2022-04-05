@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DataCenterResource>> GetDataCenterResourceAsync(string dataCenterName, CancellationToken cancellationToken = default)
         {
             return await GetDataCenterResources().GetAsync(dataCenterName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<DataCenterResource> GetDataCenterResource(string dataCenterName, CancellationToken cancellationToken = default)
         {
             return GetDataCenterResources().Get(dataCenterName, cancellationToken);

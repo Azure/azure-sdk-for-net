@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContainerResource>> GetBlobContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
             return await GetBlobContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<BlobContainerResource> GetBlobContainer(string containerName, CancellationToken cancellationToken = default)
         {
             return GetBlobContainers().Get(containerName, cancellationToken);

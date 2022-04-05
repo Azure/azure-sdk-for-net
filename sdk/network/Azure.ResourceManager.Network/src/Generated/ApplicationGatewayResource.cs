@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationGatewayPrivateEndpointConnectionResource>> GetApplicationGatewayPrivateEndpointConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             return await GetApplicationGatewayPrivateEndpointConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
@@ -123,6 +124,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ApplicationGatewayPrivateEndpointConnectionResource> GetApplicationGatewayPrivateEndpointConnection(string connectionName, CancellationToken cancellationToken = default)
         {
             return GetApplicationGatewayPrivateEndpointConnections().Get(connectionName, cancellationToken);

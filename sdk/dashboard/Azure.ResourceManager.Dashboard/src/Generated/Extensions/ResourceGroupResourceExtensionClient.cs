@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Dashboard
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of GrafanaResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of GrafanaResources and their operations over a GrafanaResource. </returns>
-        public virtual GrafanaResourceCollection GetGrafanaResources()
+        /// <summary> Gets a collection of ManagedGrafanaResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ManagedGrafanaResources and their operations over a ManagedGrafanaResource. </returns>
+        public virtual ManagedGrafanaCollection GetManagedGrafanas()
         {
-            return GetCachedClient(Client => new GrafanaResourceCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedGrafanaCollection(Client, Id));
         }
     }
 }

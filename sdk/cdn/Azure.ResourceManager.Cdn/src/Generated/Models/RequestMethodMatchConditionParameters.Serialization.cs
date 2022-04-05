@@ -16,14 +16,24 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WritePropertyName("typeName");
+            writer.WriteStringValue(TypeName.ToString());
             writer.WritePropertyName("operator");
             writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition");
                 writer.WriteBooleanValue(NegateCondition.Value);
+            }
+            if (Optional.IsCollectionDefined(Transforms))
+            {
+                writer.WritePropertyName("transforms");
+                writer.WriteStartArray();
+                foreach (var item in Transforms)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(MatchValues))
             {
@@ -40,15 +50,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestMethodMatchConditionParameters DeserializeRequestMethodMatchConditionParameters(JsonElement element)
         {
-            RequestMethodMatchConditionParametersOdataType odataType = default;
+            RequestMethodMatchConditionParametersTypeName typeName = default;
             RequestMethodOperator @operator = default;
             Optional<bool> negateCondition = default;
+            Optional<IList<TransformCategory>> transforms = default;
             Optional<IList<RequestMethodMatchConditionParametersMatchValuesItem>> matchValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("typeName"))
                 {
-                    odataType = new RequestMethodMatchConditionParametersOdataType(property.Value.GetString());
+                    typeName = new RequestMethodMatchConditionParametersTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operator"))
@@ -64,6 +75,21 @@ namespace Azure.ResourceManager.Cdn.Models
                         continue;
                     }
                     negateCondition = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("transforms"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<TransformCategory> array = new List<TransformCategory>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new TransformCategory(item.GetString()));
+                    }
+                    transforms = array;
                     continue;
                 }
                 if (property.NameEquals("matchValues"))
@@ -82,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RequestMethodMatchConditionParameters(odataType, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues));
+            return new RequestMethodMatchConditionParameters(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(transforms), Optional.ToList(matchValues));
         }
     }
 }

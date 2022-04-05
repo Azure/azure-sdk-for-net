@@ -153,6 +153,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DiskPoolResource>> GetDiskPoolAsync(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetDiskPools().GetAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
@@ -168,6 +169,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DiskPoolResource> GetDiskPool(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetDiskPools().Get(diskPoolName, cancellationToken);

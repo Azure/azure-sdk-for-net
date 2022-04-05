@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class PatchableProfileData : IUtf8JsonSerializable
+    public partial class PatchableProfileData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,6 +26,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
+            {
+                writer.WritePropertyName("originResponseTimeoutSeconds");
+                writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

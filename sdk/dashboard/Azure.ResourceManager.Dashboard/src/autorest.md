@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Dashboard
 namespace: Azure.ResourceManager.Dashboard
-require: https://github.com/Azure/azure-rest-api-specs/blob/ef5677519414f25524105ae9e792d660d65bfb81/specification/dashboard/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a1a224b54f05debfa94fd19477ed820c64f0f9fc/specification/dashboard/resource-manager/readme.md
 tag: package-2021-09-01-preview
 output-folder: Generated/
 clear-output-folder: true

@@ -108,6 +108,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotConfigSnapshotResource>> GetSiteSlotConfigSnapshotAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotConfigSnapshots().GetAsync(snapshotId, cancellationToken).ConfigureAwait(false);
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotConfigSnapshotResource> GetSiteSlotConfigSnapshot(string snapshotId, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotConfigSnapshots().Get(snapshotId, cancellationToken);

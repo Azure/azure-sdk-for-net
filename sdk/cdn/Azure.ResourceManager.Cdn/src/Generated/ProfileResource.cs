@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Cdn
 
         private readonly ClientDiagnostics _profileClientDiagnostics;
         private readonly ProfilesRestOperations _profileRestClient;
+        private readonly ClientDiagnostics _afdProfilesClientDiagnostics;
+        private readonly AfdProfilesRestOperations _afdProfilesRestClient;
+        private readonly ClientDiagnostics _logAnalyticsClientDiagnostics;
+        private readonly LogAnalyticsRestOperations _logAnalyticsRestClient;
         private readonly ProfileData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ProfileResource"/> class for mocking. </summary>
@@ -60,13 +64,17 @@ namespace Azure.ResourceManager.Cdn
             _profileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string profileApiVersion);
             _profileRestClient = new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion);
+            _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _afdProfilesRestClient = new AfdProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _logAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _logAnalyticsRestClient = new LogAnalyticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles";
+        public static readonly Core.ResourceType ResourceType = "Microsoft.Cdn/profiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -89,6 +97,228 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of AfdCustomDomainResources in the Profile. </summary>
+        /// <returns> An object representing collection of AfdCustomDomainResources and their operations over a AfdCustomDomainResource. </returns>
+        public virtual AfdCustomDomainCollection GetAfdCustomDomains()
+        {
+            return GetCachedClient(Client => new AfdCustomDomainCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Get
+        /// </summary>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AfdCustomDomainResource>> GetAfdCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
+        {
+            return await GetAfdCustomDomains().GetAsync(customDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}
+        /// Operation Id: AfdCustomDomains_Get
+        /// </summary>
+        /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AfdCustomDomainResource> GetAfdCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
+        {
+            return GetAfdCustomDomains().Get(customDomainName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AfdEndpointResources in the Profile. </summary>
+        /// <returns> An object representing collection of AfdEndpointResources and their operations over a AfdEndpointResource. </returns>
+        public virtual AfdEndpointCollection GetAfdEndpoints()
+        {
+            return GetCachedClient(Client => new AfdEndpointCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}
+        /// Operation Id: AfdEndpoints_Get
+        /// </summary>
+        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AfdEndpointResource>> GetAfdEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            return await GetAfdEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}
+        /// Operation Id: AfdEndpoints_Get
+        /// </summary>
+        /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AfdEndpointResource> GetAfdEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        {
+            return GetAfdEndpoints().Get(endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AfdOriginGroupResources in the Profile. </summary>
+        /// <returns> An object representing collection of AfdOriginGroupResources and their operations over a AfdOriginGroupResource. </returns>
+        public virtual AfdOriginGroupCollection GetAfdOriginGroups()
+        {
+            return GetCachedClient(Client => new AfdOriginGroupCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing origin group within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}
+        /// Operation Id: AfdOriginGroups_Get
+        /// </summary>
+        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AfdOriginGroupResource>> GetAfdOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetAfdOriginGroups().GetAsync(originGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing origin group within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}
+        /// Operation Id: AfdOriginGroups_Get
+        /// </summary>
+        /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AfdOriginGroupResource> GetAfdOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetAfdOriginGroups().Get(originGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AfdRuleSetResources in the Profile. </summary>
+        /// <returns> An object representing collection of AfdRuleSetResources and their operations over a AfdRuleSetResource. </returns>
+        public virtual AfdRuleSetCollection GetAfdRuleSets()
+        {
+            return GetCachedClient(Client => new AfdRuleSetCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}
+        /// Operation Id: AfdRuleSets_Get
+        /// </summary>
+        /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AfdRuleSetResource>> GetAfdRuleSetAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        {
+            return await GetAfdRuleSets().GetAsync(ruleSetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}
+        /// Operation Id: AfdRuleSets_Get
+        /// </summary>
+        /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AfdRuleSetResource> GetAfdRuleSet(string ruleSetName, CancellationToken cancellationToken = default)
+        {
+            return GetAfdRuleSets().Get(ruleSetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AfdSecurityPolicyResources in the Profile. </summary>
+        /// <returns> An object representing collection of AfdSecurityPolicyResources and their operations over a AfdSecurityPolicyResource. </returns>
+        public virtual AfdSecurityPolicyCollection GetAfdSecurityPolicies()
+        {
+            return GetCachedClient(Client => new AfdSecurityPolicyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing security policy within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}
+        /// Operation Id: AfdSecurityPolicies_Get
+        /// </summary>
+        /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AfdSecurityPolicyResource>> GetAfdSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetAfdSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing security policy within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}
+        /// Operation Id: AfdSecurityPolicies_Get
+        /// </summary>
+        /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AfdSecurityPolicyResource> GetAfdSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetAfdSecurityPolicies().Get(securityPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AfdSecretResources in the Profile. </summary>
+        /// <returns> An object representing collection of AfdSecretResources and their operations over a AfdSecretResource. </returns>
+        public virtual AfdSecretCollection GetAfdSecrets()
+        {
+            return GetCachedClient(Client => new AfdSecretCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing Secret within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Get
+        /// </summary>
+        /// <param name="secretName"> Name of the Secret under the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AfdSecretResource>> GetAfdSecretAsync(string secretName, CancellationToken cancellationToken = default)
+        {
+            return await GetAfdSecrets().GetAsync(secretName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing Secret within a profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}
+        /// Operation Id: AfdSecrets_Get
+        /// </summary>
+        /// <param name="secretName"> Name of the Secret under the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AfdSecretResource> GetAfdSecret(string secretName, CancellationToken cancellationToken = default)
+        {
+            return GetAfdSecrets().Get(secretName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CdnEndpointResources in the Profile. </summary>
         /// <returns> An object representing collection of CdnEndpointResources and their operations over a CdnEndpointResource. </returns>
         public virtual CdnEndpointCollection GetCdnEndpoints()
@@ -105,6 +335,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<CdnEndpointResource>> GetCdnEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             return await GetCdnEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
@@ -119,13 +350,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<CdnEndpointResource> GetCdnEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
             return GetCdnEndpoints().Get(endpointName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a CDN profile with the specified profile name under the specified subscription and resource group.
+        /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Get
         /// </summary>
@@ -149,7 +381,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Gets a CDN profile with the specified profile name under the specified subscription and resource group.
+        /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Get
         /// </summary>
@@ -173,7 +405,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains.
+        /// Deletes an existing  Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Delete
         /// </summary>
@@ -199,7 +431,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains.
+        /// Deletes an existing  Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified parameters. Deleting a profile will result in the deletion of all of the sub-resources including endpoints, origins and custom domains.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Delete
         /// </summary>
@@ -216,6 +448,556 @@ namespace Azure.ResourceManager.Cdn
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
+        /// Operation Id: Profiles_Update
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Profile properties needed to update an existing profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ProfileResource>> UpdateAsync(WaitUntil waitUntil, PatchableProfileData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<ProfileResource>(new ProfileOperationSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
+        /// Operation Id: Profiles_Update
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Profile properties needed to update an existing profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ProfileResource> Update(WaitUntil waitUntil, PatchableProfileData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new CdnArmOperation<ProfileResource>(new ProfileOperationSource(Client), _profileClientDiagnostics, Pipeline, _profileRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages
+        /// Operation Id: AfdProfiles_ListResourceUsage
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnUsage> GetResourceUsageAfdProfilesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                scope.Start();
+                try
+                {
+                    var response = await _afdProfilesRestClient.ListResourceUsageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                scope.Start();
+                try
+                {
+                    var response = await _afdProfilesRestClient.ListResourceUsageNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages
+        /// Operation Id: AfdProfiles_ListResourceUsage
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnUsage> GetResourceUsageAfdProfiles(CancellationToken cancellationToken = default)
+        {
+            Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                scope.Start();
+                try
+                {
+                    var response = _afdProfilesRestClient.ListResourceUsage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                scope.Start();
+                try
+                {
+                    var response = _afdProfilesRestClient.ListResourceUsageNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability
+        /// Operation Id: AfdProfiles_CheckHostNameAvailability
+        /// </summary>
+        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckAfdProfileHostNameAvailabilityAsync(CheckHostNameAvailabilityInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkHostNameAvailabilityInput, nameof(checkHostNameAvailabilityInput));
+
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckAfdProfileHostNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await _afdProfilesRestClient.CheckHostNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability
+        /// Operation Id: AfdProfiles_CheckHostNameAvailability
+        /// </summary>
+        /// <param name="checkHostNameAvailabilityInput"> Custom domain to be validated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="checkHostNameAvailabilityInput"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityOutput> CheckAfdProfileHostNameAvailability(CheckHostNameAvailabilityInput checkHostNameAvailabilityInput, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkHostNameAvailabilityInput, nameof(checkHostNameAvailabilityInput));
+
+            using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.CheckAfdProfileHostNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = _afdProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, checkHostNameAvailabilityInput, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get log report for AFD profile
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsMetrics
+        /// Operation Id: LogAnalytics_GetLogAnalyticsMetrics
+        /// </summary>
+        /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="granularity"> The LogMetricsGranularity to use. </param>
+        /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
+        /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
+        /// <param name="groupBy"> The ArrayOfLogMetricsGroupBy to use. </param>
+        /// <param name="continents"> The ArrayOfGet9ItemsItem to use. </param>
+        /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
+        public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(customDomains, nameof(customDomains));
+            Argument.AssertNotNull(protocols, nameof(protocols));
+
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
+            scope.Start();
+            try
+            {
+                var response = await _logAnalyticsRestClient.GetLogAnalyticsMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get log report for AFD profile
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsMetrics
+        /// Operation Id: LogAnalytics_GetLogAnalyticsMetrics
+        /// </summary>
+        /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="granularity"> The LogMetricsGranularity to use. </param>
+        /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
+        /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
+        /// <param name="groupBy"> The ArrayOfLogMetricsGroupBy to use. </param>
+        /// <param name="continents"> The ArrayOfGet9ItemsItem to use. </param>
+        /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
+        public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(customDomains, nameof(customDomains));
+            Argument.AssertNotNull(protocols, nameof(protocols));
+
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
+            scope.Start();
+            try
+            {
+                var response = _logAnalyticsRestClient.GetLogAnalyticsMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get log analytics ranking report for AFD profile
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsRankings
+        /// Operation Id: LogAnalytics_GetLogAnalyticsRankings
+        /// </summary>
+        /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
+        /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
+        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="customDomains"> The ArrayOfString to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
+        public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
+            scope.Start();
+            try
+            {
+                var response = await _logAnalyticsRestClient.GetLogAnalyticsRankingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get log analytics ranking report for AFD profile
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsRankings
+        /// Operation Id: LogAnalytics_GetLogAnalyticsRankings
+        /// </summary>
+        /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
+        /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
+        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="customDomains"> The ArrayOfString to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
+        public virtual Response<RankingsResponse> GetLogAnalyticsRankings(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
+            scope.Start();
+            try
+            {
+                var response = _logAnalyticsRestClient.GetLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all available location names for AFD log analytics report.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsLocations
+        /// Operation Id: LogAnalytics_GetLogAnalyticsLocations
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsLocations");
+            scope.Start();
+            try
+            {
+                var response = await _logAnalyticsRestClient.GetLogAnalyticsLocationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all available location names for AFD log analytics report.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsLocations
+        /// Operation Id: LogAnalytics_GetLogAnalyticsLocations
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContinentsResponse> GetLogAnalyticsLocations(CancellationToken cancellationToken = default)
+        {
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsLocations");
+            scope.Start();
+            try
+            {
+                var response = _logAnalyticsRestClient.GetLogAnalyticsLocations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all endpoints and custom domains available for AFD log report
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsResources
+        /// Operation Id: LogAnalytics_GetLogAnalyticsResources
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsResources");
+            scope.Start();
+            try
+            {
+                var response = await _logAnalyticsRestClient.GetLogAnalyticsResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all endpoints and custom domains available for AFD log report
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getLogAnalyticsResources
+        /// Operation Id: LogAnalytics_GetLogAnalyticsResources
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ResourcesResponse> GetLogAnalyticsResources(CancellationToken cancellationToken = default)
+        {
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsResources");
+            scope.Start();
+            try
+            {
+                var response = _logAnalyticsRestClient.GetLogAnalyticsResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get Waf related log analytics report for AFD profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getWafLogAnalyticsMetrics
+        /// Operation Id: LogAnalytics_GetWafLogAnalyticsMetrics
+        /// </summary>
+        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="granularity"> The WafGranularity to use. </param>
+        /// <param name="actions"> The ArrayOfWafAction to use. </param>
+        /// <param name="groupBy"> The ArrayOfWafRankingGroupBy to use. </param>
+        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
+        public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(metrics, nameof(metrics));
+
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
+            scope.Start();
+            try
+            {
+                var response = await _logAnalyticsRestClient.GetWafLogAnalyticsMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get Waf related log analytics report for AFD profile.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getWafLogAnalyticsMetrics
+        /// Operation Id: LogAnalytics_GetWafLogAnalyticsMetrics
+        /// </summary>
+        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="granularity"> The WafGranularity to use. </param>
+        /// <param name="actions"> The ArrayOfWafAction to use. </param>
+        /// <param name="groupBy"> The ArrayOfWafRankingGroupBy to use. </param>
+        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
+        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(metrics, nameof(metrics));
+
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
+            scope.Start();
+            try
+            {
+                var response = _logAnalyticsRestClient.GetWafLogAnalyticsMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get WAF log analytics charts for AFD profile
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getWafLogAnalyticsRankings
+        /// Operation Id: LogAnalytics_GetWafLogAnalyticsRankings
+        /// </summary>
+        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
+        /// <param name="actions"> The ArrayOfWafAction to use. </param>
+        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
+        public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
+
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
+            scope.Start();
+            try
+            {
+                var response = await _logAnalyticsRestClient.GetWafLogAnalyticsRankingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get WAF log analytics charts for AFD profile
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/getWafLogAnalyticsRankings
+        /// Operation Id: LogAnalytics_GetWafLogAnalyticsRankings
+        /// </summary>
+        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
+        /// <param name="actions"> The ArrayOfWafAction to use. </param>
+        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
+        public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
+
+            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
+            scope.Start();
+            try
+            {
+                var response = _logAnalyticsRestClient.GetWafLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -313,7 +1095,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkResourceUsage
         /// Operation Id: Profiles_ListResourceUsage
         /// </summary>
@@ -355,7 +1137,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door Standard or Azure Front Door Premium or CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkResourceUsage
         /// Operation Id: Profiles_ListResourceUsage
         /// </summary>

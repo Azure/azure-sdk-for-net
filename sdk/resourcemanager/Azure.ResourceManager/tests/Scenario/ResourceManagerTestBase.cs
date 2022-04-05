@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.Tests
             return lro.Value;
         }
 
-        protected async Task<PolicyExemptionResource> CreatePolicyExemption(ArmResource armResource, PolicyAssignmentResource policyAssignment, string policyExemptionName)
-        {
-            PolicyExemptionData input = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
-            ArmOperation<PolicyExemptionResource> lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, input);
-            return lro.Value;
-        }
+        //protected async Task<PolicyExemptionResource> CreatePolicyExemption(ArmResource armResource, PolicyAssignmentResource policyAssignment, string policyExemptionName)
+        //{
+        //    PolicyExemptionData input = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
+        //    ArmOperation<PolicyExemptionResource> lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, input);
+        //    return lro.Value;
+        //}
 
         protected async Task<SubscriptionPolicySetDefinitionResource> CreatePolicySetDefinitionAtSubscription(SubscriptionResource subscription, SubscriptionPolicyDefinitionResource policyDefinition, string policySetDefinitionName)
         {

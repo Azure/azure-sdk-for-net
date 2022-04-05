@@ -247,6 +247,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AddressResource>> GetAddressResourceAsync(this ResourceGroupResource resourceGroupResource, string addressName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAddressResources().GetAsync(addressName, cancellationToken).ConfigureAwait(false);
@@ -262,6 +263,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AddressResource> GetAddressResource(this ResourceGroupResource resourceGroupResource, string addressName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAddressResources().Get(addressName, cancellationToken);
@@ -286,6 +288,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<OrderResource>> GetOrderResourceAsync(this ResourceGroupResource resourceGroupResource, string location, string orderName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetOrderResources().GetAsync(location, orderName, cancellationToken).ConfigureAwait(false);
@@ -302,6 +305,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<OrderResource> GetOrderResource(this ResourceGroupResource resourceGroupResource, string location, string orderName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetOrderResources().Get(location, orderName, cancellationToken);
@@ -326,6 +330,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<OrderItemResource>> GetOrderItemResourceAsync(this ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetOrderItemResources().GetAsync(orderItemName, expand, cancellationToken).ConfigureAwait(false);
@@ -342,6 +347,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<OrderItemResource> GetOrderItemResource(this ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetOrderItemResources().Get(orderItemName, expand, cancellationToken);

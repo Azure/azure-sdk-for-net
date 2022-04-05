@@ -1,14 +1,10 @@
 # Release History
 
-## 0.1.0-preview.22 (Unreleased)
-
-### Features Added
+## 0.1.0-preview.22 (2022-04-04)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `MessageWithMetadata` has been moved into the `Azure.Core` package.
 
 ## 0.1.0-preview.21 (2022-03-09)
 
