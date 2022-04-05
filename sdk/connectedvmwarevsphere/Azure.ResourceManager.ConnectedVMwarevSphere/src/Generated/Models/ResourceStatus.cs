@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of ResourceStatus. </summary>
-        /// <param name="statusType"> The type of the condition. </param>
+        /// <param name="resourceStatusType"> The type of the condition. </param>
         /// <param name="status"> Status of the condition. </param>
         /// <param name="reason"> The reason for the condition&apos;s status. </param>
         /// <param name="message"> A human readable message indicating details about the status. </param>
         /// <param name="severity"> Severity with which to treat failures of this type of condition. </param>
         /// <param name="lastUpdatedOn"> The last update time for this condition. </param>
-        internal ResourceStatus(string statusType, string status, string reason, string message, string severity, DateTimeOffset? lastUpdatedOn)
+        internal ResourceStatus(string resourceStatusType, string status, string reason, string message, string severity, DateTimeOffset? lastUpdatedOn)
         {
-            StatusType = statusType;
+            ResourceStatusType = resourceStatusType;
             Status = status;
             Reason = reason;
             Message = message;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> The type of the condition. </summary>
-        public string StatusType { get; }
+        public string ResourceStatusType { get; }
         /// <summary> Status of the condition. </summary>
         public string Status { get; }
         /// <summary> The reason for the condition&apos;s status. </summary>

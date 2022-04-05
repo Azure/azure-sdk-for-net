@@ -5097,11 +5097,11 @@ namespace Azure.ResourceManager.Sql.Models
         internal InstancePoolUsage() { }
         public int? CurrentValue { get { throw null; } }
         public string Id { get { throw null; } }
+        public string InstancePoolUsageType { get { throw null; } }
         public int? Limit { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.UsageName Name { get { throw null; } }
         public int? RequestedLimit { get { throw null; } }
         public string Unit { get { throw null; } }
-        public string UsageType { get { throw null; } }
     }
     public partial class InstancePoolVcoresCapability
     {

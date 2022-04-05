@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var resourcePoolBody = new ResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-87733";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var resourcePoolBody = new ResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-87735";
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var resourcePoolBody = new ResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-87730";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var resourcePoolBody = new ResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-119001";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var resourcePoolBody = new ResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-89261";

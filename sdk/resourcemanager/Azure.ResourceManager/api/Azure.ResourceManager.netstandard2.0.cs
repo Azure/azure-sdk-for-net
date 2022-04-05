@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
-        public Azure.ResourceManager.Resources.Models.ExtendedLocationType? LocationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class PredefinedTagCount
     {
         internal PredefinedTagCount() { }
-        public string CountType { get { throw null; } }
+        public string PredefinedTagCountType { get { throw null; } }
         public int? Value { get { throw null; } }
     }
     public partial class PredefinedTagValue
@@ -1425,7 +1425,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal ProviderExtendedLocation() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string LocationType { get { throw null; } }
+        public string ProviderExtendedLocationType { get { throw null; } }
     }
     public partial class ProviderPermission
     {

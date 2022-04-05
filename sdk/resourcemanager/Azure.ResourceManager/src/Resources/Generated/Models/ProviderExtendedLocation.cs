@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>
         /// <param name="location"> The azure location. </param>
-        /// <param name="locationType"> The extended location type. </param>
+        /// <param name="providerExtendedLocationType"> The extended location type. </param>
         /// <param name="extendedLocations"> The extended locations for the azure location. </param>
-        internal ProviderExtendedLocation(AzureLocation? location, string locationType, IReadOnlyList<string> extendedLocations)
+        internal ProviderExtendedLocation(AzureLocation? location, string providerExtendedLocationType, IReadOnlyList<string> extendedLocations)
         {
             Location = location;
-            LocationType = locationType;
+            ProviderExtendedLocationType = providerExtendedLocationType;
             ExtendedLocations = extendedLocations;
         }
 
         /// <summary> The azure location. </summary>
         public AzureLocation? Location { get; }
         /// <summary> The extended location type. </summary>
-        public string LocationType { get; }
+        public string ProviderExtendedLocationType { get; }
         /// <summary> The extended locations for the azure location. </summary>
         public IReadOnlyList<string> ExtendedLocations { get; }
     }

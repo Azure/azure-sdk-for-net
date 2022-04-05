@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public partial class FilterableProperty
     {
         /// <summary> Initializes a new instance of FilterableProperty. </summary>
-        /// <param name="filterType"> Type of product filter. </param>
+        /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportedValues"/> is null. </exception>
-        public FilterableProperty(SupportedFilterTypes filterType, IEnumerable<string> supportedValues)
+        public FilterableProperty(SupportedFilterTypes supportedFilterType, IEnumerable<string> supportedValues)
         {
             if (supportedValues == null)
             {
                 throw new ArgumentNullException(nameof(supportedValues));
             }
 
-            FilterType = filterType;
+            SupportedFilterType = supportedFilterType;
             SupportedValues = supportedValues.ToList();
         }
 
         /// <summary> Initializes a new instance of FilterableProperty. </summary>
-        /// <param name="filterType"> Type of product filter. </param>
+        /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
-        internal FilterableProperty(SupportedFilterTypes filterType, IList<string> supportedValues)
+        internal FilterableProperty(SupportedFilterTypes supportedFilterType, IList<string> supportedValues)
         {
-            FilterType = filterType;
+            SupportedFilterType = supportedFilterType;
             SupportedValues = supportedValues;
         }
 
         /// <summary> Type of product filter. </summary>
-        public SupportedFilterTypes FilterType { get; set; }
+        public SupportedFilterTypes SupportedFilterType { get; set; }
         /// <summary> Values to be filtered. </summary>
         public IList<string> SupportedValues { get; }
     }

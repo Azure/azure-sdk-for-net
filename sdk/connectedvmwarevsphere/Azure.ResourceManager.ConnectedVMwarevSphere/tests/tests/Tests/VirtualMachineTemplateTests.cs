@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var virtualMachineTemplateBody = new VirtualMachineTemplateData(DefaultLocation);
             virtualMachineTemplateBody.MoRefId = "vm-70";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var virtualMachineTemplateBody = new VirtualMachineTemplateData(DefaultLocation);
             virtualMachineTemplateBody.MoRefId = "vm-74";
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var virtualMachineTemplateBody = new VirtualMachineTemplateData(DefaultLocation);
             virtualMachineTemplateBody.MoRefId = "vm-72";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var virtualMachineTemplateBody = new VirtualMachineTemplateData(DefaultLocation);
             virtualMachineTemplateBody.MoRefId = "vm-11788";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                LocationType = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var virtualMachineTemplateBody = new VirtualMachineTemplateData(DefaultLocation);
             virtualMachineTemplateBody.MoRefId = "vm-75";

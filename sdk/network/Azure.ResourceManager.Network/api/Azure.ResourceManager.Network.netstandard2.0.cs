@@ -6043,7 +6043,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal ConnectivityHop() { }
         public string Address { get { throw null; } }
-        public string HopType { get { throw null; } }
+        public string ConnectivityHopType { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectivityIssue> Issues { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.HopLink> Links { get { throw null; } }
@@ -6110,7 +6110,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ContainerNetworkInterfaceIPConfiguration
     {
         internal ContainerNetworkInterfaceIPConfiguration() { }
-        public string ConfigurationType { get { throw null; } }
+        public string ContainerNetworkInterfaceIpConfigurationType { get { throw null; } }
         public string Etag { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -6820,7 +6820,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
-        public Azure.ResourceManager.Network.Models.ExtendedLocationTypes? LocationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.ExtendedLocationTypes? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

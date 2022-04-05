@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ColumnType))
+            if (Optional.IsDefined(CassandraColumnType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ColumnType);
+                writer.WriteStringValue(CassandraColumnType);
             }
             writer.WriteEndObject();
         }

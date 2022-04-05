@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public ShareablePrivateLinkProperties() { }
         public string Description { get { throw null; } set { } }
         public string GroupId { get { throw null; } set { } }
-        public string PropertiesType { get { throw null; } set { } }
+        public string ShareablePrivateLinkPropertiesType { get { throw null; } set { } }
     }
     public partial class ShareablePrivateLinkType
     {

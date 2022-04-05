@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
         /// <param name="extendedLocations"> The names of extended locations. </param>
-        /// <param name="locationType"> The type of the extended location. </param>
-        internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? locationType)
+        /// <param name="extendedLocationType"> The type of the extended location. </param>
+        internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
             ExtendedLocations = extendedLocations;
-            LocationType = locationType;
+            ExtendedLocationType = extendedLocationType;
         }
 
         /// <summary> Location of the SKU. </summary>
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The names of extended locations. </summary>
         public IReadOnlyList<string> ExtendedLocations { get; }
         /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType? LocationType { get; }
+        public ExtendedLocationType? ExtendedLocationType { get; }
     }
 }
