@@ -298,18 +298,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/checkNameAvailability
         /// Operation Id: ManagementGroups_CheckNameAvailability
         /// </summary>
-        /// <param name="info"> Management group name availability check parameters. </param>
+        /// <param name="options"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckManagementGroupNameAvailabilityAsync(ManagementGroupNameAvailabilityInfo info, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckManagementGroupNameAvailabilityAsync(ManagementGroupNameAvailabilityOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckManagementGroupNameAvailability");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.CheckNameAvailabilityAsync(info, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.CheckNameAvailabilityAsync(options, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -324,18 +324,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/checkNameAvailability
         /// Operation Id: ManagementGroups_CheckNameAvailability
         /// </summary>
-        /// <param name="info"> Management group name availability check parameters. </param>
+        /// <param name="options"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
-        public virtual Response<ManagementGroupNameAvailabilityResult> CheckManagementGroupNameAvailability(ManagementGroupNameAvailabilityInfo info, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<ManagementGroupNameAvailabilityResult> CheckManagementGroupNameAvailability(ManagementGroupNameAvailabilityOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckManagementGroupNameAvailability");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.CheckNameAvailability(info, cancellationToken);
+                var response = _managementGroupRestClient.CheckNameAvailability(options, cancellationToken);
                 return response;
             }
             catch (Exception e)
