@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<OrderItemReturnEnum> returnStatus = default;
             Optional<ResourceProviderDetails> managementRpDetails = default;
             Optional<IReadOnlyList<ResourceProviderDetails>> managementRpDetailsList = default;
-            Optional<ErrorDetail> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productDetails"))
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
             }
