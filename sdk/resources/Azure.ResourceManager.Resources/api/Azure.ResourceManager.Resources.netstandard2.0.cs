@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContainerGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Outputs { get { throw null; } }
+        public System.BinaryData Outputs { get { throw null; } }
         public System.Uri PrimaryScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan RetentionInterval { get { throw null; } set { } }
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContainerGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Outputs { get { throw null; } }
+        public System.BinaryData Outputs { get { throw null; } }
         public System.Uri PrimaryScriptUri { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptProvisioningState? ProvisioningState { get { throw null; } }
         public System.TimeSpan RetentionInterval { get { throw null; } set { } }

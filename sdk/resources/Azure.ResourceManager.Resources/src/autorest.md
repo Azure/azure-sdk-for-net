@@ -324,6 +324,10 @@ directive:
     where: $.definitions.DeploymentProperties.properties.onErrorDeployment
     transform: >
       $["x-ms-client-name"] = "ErrorDeployment"
+  - from: deploymentScripts.json
+    where: $.definitions.DeploymentScriptPropertiesBase.properties.outputs
+    transform: >
+      $.additionalProperties = undefined
 ```
 
 ### Tag: package-track2-preview
