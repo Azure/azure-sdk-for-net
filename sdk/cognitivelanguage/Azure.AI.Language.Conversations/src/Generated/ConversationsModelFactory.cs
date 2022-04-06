@@ -268,7 +268,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="value"> The actual time that the extracted text denote. </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
         /// <returns> A new <see cref="Conversations.DateTimeResolution"/> instance for mocking. </returns>
-        public static DateTimeResolution DateTimeResolution(ResolutionKind resolutionKind = default, string timex = null, DateTimeSubKind dateTimeSubKind = default, string value = null, Modifier? modifier = null)
+        public static DateTimeResolution DateTimeResolution(ResolutionKind resolutionKind = default, string timex = null, DateTimeSubKind dateTimeSubKind = default, string value = null, TemporalModifier? modifier = null)
         {
             return new DateTimeResolution(resolutionKind, timex, dateTimeSubKind, value, modifier);
         }
@@ -301,7 +301,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
         /// <returns> A new <see cref="Conversations.TemporalSpanResolution"/> instance for mocking. </returns>
-        public static TemporalSpanResolution TemporalSpanResolution(ResolutionKind resolutionKind = default, string begin = null, string end = null, string duration = null, Modifier? modifier = null)
+        public static TemporalSpanResolution TemporalSpanResolution(ResolutionKind resolutionKind = default, string begin = null, string end = null, string duration = null, TemporalModifier? modifier = null)
         {
             return new TemporalSpanResolution(resolutionKind, begin, end, duration, modifier);
         }

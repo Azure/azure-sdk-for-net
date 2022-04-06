@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
-        internal DateTimeResolution(ResolutionKind resolutionKind, string timex, DateTimeSubKind dateTimeSubKind, string value, Modifier? modifier) : base(resolutionKind)
+        internal DateTimeResolution(ResolutionKind resolutionKind, string timex, DateTimeSubKind dateTimeSubKind, string value, TemporalModifier? modifier) : base(resolutionKind)
         {
             Timex = timex;
             DateTimeSubKind = dateTimeSubKind;
@@ -56,6 +56,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The actual time that the extracted text denote. </summary>
         public string Value { get; }
         /// <summary> An optional modifier of a date/time instance. </summary>
-        public Modifier? Modifier { get; }
+        public TemporalModifier? Modifier { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations
             string timex = default;
             DateTimeSubKind dateTimeSubKind = default;
             string value = default;
-            Optional<Modifier> modifier = default;
+            Optional<TemporalModifier> modifier = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modifier = new Modifier(property.Value.GetString());
+                    modifier = new TemporalModifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resolutionKind"))

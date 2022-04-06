@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="end"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
-        internal TemporalSpanResolution(ResolutionKind resolutionKind, string begin, string end, string duration, Modifier? modifier) : base(resolutionKind)
+        internal TemporalSpanResolution(ResolutionKind resolutionKind, string begin, string end, string duration, TemporalModifier? modifier) : base(resolutionKind)
         {
             Begin = begin;
             End = end;
@@ -38,6 +38,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </summary>
         public string Duration { get; }
         /// <summary> An optional modifier of a date/time instance. </summary>
-        public Modifier? Modifier { get; }
+        public TemporalModifier? Modifier { get; }
     }
 }

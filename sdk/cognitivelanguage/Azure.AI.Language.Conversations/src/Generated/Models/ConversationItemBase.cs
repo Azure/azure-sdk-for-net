@@ -38,6 +38,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The input language of a ConversationItem in BCP 47 language representation. </summary>
         public string Language { get; set; }
         /// <summary> The modality (format) of ConversationItem (e.g., Text, Transcript). </summary>
-        internal Modality Modality { get; set; }
+        internal InputModality Modality { get; set; }
     }
 }
