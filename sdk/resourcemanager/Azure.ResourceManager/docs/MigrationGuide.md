@@ -1,6 +1,6 @@
 # Migrating from old to preview management SDK.
 
-There are several differences between the old sdk and this preview. Here's an example of how to create a Virtual Machine with both SDKs:
+There are several differences between the old sdk and this new. Here's an example of how to create a Virtual Machine with both SDKs:
 
 ## Create a Virtual Machine example
 
@@ -20,8 +20,8 @@ using System.Threading.Tasks;
 ```C# Snippet:Using_Statements
 using System;
 using System.Linq;
-using Azure.Identity;
 using Azure.Core;
+using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;

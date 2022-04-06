@@ -1,14 +1,15 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
-
-### Features Added
+## 1.0.0 (2022-04-07)
+This is the first stable release of the Azure Resources management core library. 
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+Minor changes since the public beta release:
+- All `Tag` methods have been removed from `SubscriptionResource` as the service doesn't support these operations.
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+- Tweaked some properties to right type.
 
 ## 1.0.0-beta.9 (2022-03-31)
 
