@@ -150,49 +150,49 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             ThrowIfDisposed();
 
+            _logger.LogDebug($"Attempting to stop ServiceBus listener ({_details.Value})");
+
             _concurrencyUpdateManager?.Stop();
 
             await _stopAsyncSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
             {
-                try
+                if (!_started)
                 {
-                    if (!_started)
-                    {
-                        throw new InvalidOperationException("The listener has not yet been started or has already been stopped.");
-                    }
+                    throw new InvalidOperationException("The listener has not yet been started or has already been stopped.");
+                }
 
-                    _cancellationTokenSource.Cancel();
+                _cancellationTokenSource.Cancel();
 
-                    // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
-                    if (_singleDispatch)
+                // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
+                if (_singleDispatch)
+                {
+                    if (_isSessionsEnabled)
                     {
-                        if (_isSessionsEnabled)
-                        {
-                            await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            await _messageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
-                        }
+                        await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        await _batchLoop.ConfigureAwait(false);
-                        await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
+                        await _messageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
+                }
+                else
+                {
+                    await _batchLoop.ConfigureAwait(false);
+                    await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
+                }
 
-                    _started = false;
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, $"ServiceBus listener exception during stopping ({_details.Value})");
-                    throw;
-                }
-                finally
-                {
-                    _stopAsyncSemaphore.Release();
-                    _logger.LogDebug($"ServiceBus listener stopped ({_details.Value})");
-                }
+                _started = false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"ServiceBus listener exception during stopping ({_details.Value})");
+                throw;
+            }
+            finally
+            {
+                _stopAsyncSemaphore.Release();
+                _logger.LogDebug($"ServiceBus listener stopped ({_details.Value})");
             }
         }
 
@@ -209,6 +209,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 return;
             }
+
+            _logger.LogDebug($"Attempting to dispose ServiceBus listener ({_details.Value})");
 
             // Running callers might still be using the cancellation token.
             // Mark it canceled but don't dispose of the source while the callers are running.
@@ -243,10 +245,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _concurrencyUpdateManager?.Dispose();
 
             _disposed = true;
+
+            _logger.LogDebug($"ServiceBus listener disposed({_details.Value})");
         }
 
         internal async Task ProcessMessageAsync(ProcessMessageEventArgs args)
         {
+            if (!EnsureIsRunning())
+            {
+                return;
+            }
+
             _concurrencyUpdateManager?.MessageProcessed();
 
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
@@ -267,6 +276,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         internal async Task ProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
+            if (!EnsureIsRunning())
+            {
+                return;
+            }
+
             _concurrencyUpdateManager?.MessageProcessed();
 
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
@@ -289,6 +303,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 await _sessionMessageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
             }
+        }
+
+        private bool EnsureIsRunning()
+        {
+            if (!_started)
+            {
+                _logger.LogWarning($"Message received for a listener that is not in started state ({_details.Value})");
+                return false;
+            }
+
+            if (_disposed)
+            {
+                _logger.LogWarning($"Message received for a listener that is in disposed state ({_details.Value})");
+                return false;
+            }
+
+            return true;
         }
 
         private async Task RunBatchReceiveLoopAsync(CancellationToken cancellationToken)
