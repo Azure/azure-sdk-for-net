@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dashboard.Models
 {
     /// <summary> The parameters for a PATCH request to a grafana resource. </summary>
-    public partial class GrafanaResourcePatch
+    public partial class ManagedGrafanaPatch
     {
-        /// <summary> Initializes a new instance of GrafanaResourcePatch. </summary>
-        public GrafanaResourcePatch()
+        /// <summary> Initializes a new instance of ManagedGrafanaPatch. </summary>
+        public ManagedGrafanaPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

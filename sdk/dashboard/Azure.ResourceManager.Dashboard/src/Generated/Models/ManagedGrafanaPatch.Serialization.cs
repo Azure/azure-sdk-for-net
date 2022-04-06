@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dashboard.Models
 {
-    public partial class GrafanaResourcePatch : IUtf8JsonSerializable
+    public partial class ManagedGrafanaPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
