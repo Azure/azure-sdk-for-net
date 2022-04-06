@@ -562,6 +562,44 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region SqlRoleDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SqlRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlRoleDefinitionResource" /> object. </returns>
+        public static SqlRoleDefinitionResource GetSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlRoleDefinitionResource.ValidateResourceId(id);
+                return new SqlRoleDefinitionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SqlRoleAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlRoleAssignmentResource" /> object. </returns>
+        public static SqlRoleAssignmentResource GetSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlRoleAssignmentResource.ValidateResourceId(id);
+                return new SqlRoleAssignmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region MongoDBDatabaseResource
         /// <summary>
         /// Gets an object representing a <see cref="MongoDBDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
