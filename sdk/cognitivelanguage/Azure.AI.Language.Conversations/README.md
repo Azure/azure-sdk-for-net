@@ -82,7 +82,7 @@ To analyze a conversation, you can call the `client.AnalyzeConversation()` metho
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-     "Send an email to Carol about the tomorrow's demo.",
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -110,9 +110,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");
@@ -128,9 +127,9 @@ You can also set the verbose parameter in the `AnalyzeConversation()` method.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 TextConversationItem input = new TextConversationItem(
-     participantId: "1",
-     id: "1",
-     text: "Send an email to Carol about the tomorrow's demo.");
+    participantId: "1",
+    id: "1",
+    text: "Send an email to Carol about the tomorrow's demo.");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
     IsLoggingEnabled = true,
@@ -140,7 +139,7 @@ AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-    textConversationItem,
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject,
     options);
 
@@ -170,9 +169,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");
@@ -188,9 +186,9 @@ The language property in the `TextConversationItem` can be used to specify the l
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 TextConversationItem input = new TextConversationItem(
-     participantId: "1",
-     id: "1",
-     text: "Tendremos 2 platos de nigiri de salmón braseado.")
+    participantId: "1",
+    id: "1",
+    text: "Tendremos 2 platos de nigiri de salmón braseado.")
 {
     Language = "es"
 };
@@ -229,9 +227,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");
@@ -279,9 +276,8 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
 
         foreach (BaseResolution resolution in entity.Resolutions)
         {
-            if (resolution is DateTimeResolution)
+            if (resolution is DateTimeResolution dateTimeResolution)
             {
-                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
                 Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
                 Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
                 Console.WriteLine($"Value: {dateTimeResolution.Value}");

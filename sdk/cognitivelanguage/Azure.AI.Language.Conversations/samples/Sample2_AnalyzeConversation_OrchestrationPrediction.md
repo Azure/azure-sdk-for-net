@@ -98,9 +98,8 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
 
         foreach (BaseResolution resolution in entity.Resolutions)
         {
-            if (resolution is DateTimeResolution)
+            if (resolution is DateTimeResolution dateTimeResolution)
             {
-                DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
                 Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
                 Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
                 Console.WriteLine($"Value: {dateTimeResolution.Value}");

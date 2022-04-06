@@ -19,7 +19,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-     "Send an email to Carol about the tomorrow's demo.",
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -47,9 +47,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");
@@ -65,7 +64,7 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-     "Send an email to Carol about the tomorrow's demo.",
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
@@ -94,9 +93,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");

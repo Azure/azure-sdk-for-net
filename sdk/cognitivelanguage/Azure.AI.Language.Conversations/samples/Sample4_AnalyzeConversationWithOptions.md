@@ -17,9 +17,9 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 TextConversationItem input = new TextConversationItem(
-     participantId: "1",
-     id: "1",
-     text: "Send an email to Carol about the tomorrow's demo.");
+    participantId: "1",
+    id: "1",
+    text: "Send an email to Carol about the tomorrow's demo.");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
     IsLoggingEnabled = true,
@@ -29,7 +29,7 @@ AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
 Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-    textConversationItem,
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject,
     options);
 
@@ -59,9 +59,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");
@@ -75,9 +74,9 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
 TextConversationItem input = new TextConversationItem(
-     participantId: "1",
-     id: "1",
-     text: "Send an email to Carol about the tomorrow's demo.");
+    participantId: "1",
+    id: "1",
+    text: "Send an email to Carol about the tomorrow's demo.");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
     IsLoggingEnabled = true,
@@ -117,9 +116,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");

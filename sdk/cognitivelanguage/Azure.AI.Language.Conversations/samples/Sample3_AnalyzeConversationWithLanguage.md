@@ -17,9 +17,9 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 TextConversationItem input = new TextConversationItem(
-     participantId: "1",
-     id: "1",
-     text: "Tendremos 2 platos de nigiri de salmón braseado.")
+    participantId: "1",
+    id: "1",
+    text: "Tendremos 2 platos de nigiri de salmón braseado.")
 {
     Language = "es"
 };
@@ -58,9 +58,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");
@@ -74,9 +73,9 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
 TextConversationItem input = new TextConversationItem(
-     participantId: "1",
-     id: "1",
-     text: "Tendremos 2 platos de nigiri de salmón braseado.")
+    participantId: "1",
+    id: "1",
+    text: "Tendremos 2 platos de nigiri de salmón braseado.")
 {
     Language = "es"
 };
@@ -115,9 +114,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 
     foreach (BaseResolution resolution in entity.Resolutions)
     {
-        if (resolution is DateTimeResolution)
+        if (resolution is DateTimeResolution dateTimeResolution)
         {
-            DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
             Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
             Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
             Console.WriteLine($"Value: {dateTimeResolution.Value}");
