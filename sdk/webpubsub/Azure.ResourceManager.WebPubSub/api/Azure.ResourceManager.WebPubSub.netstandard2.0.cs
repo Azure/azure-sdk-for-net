@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class ManagedIdentity
     {
         public ManagedIdentity() { }
-        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? ManagedIdentityType { get { throw null; } set { } }
+        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? IdentityType { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
@@ -457,8 +457,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class UpstreamAuthSettings
     {
         public UpstreamAuthSettings() { }
+        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? AuthType { get { throw null; } set { } }
         public string ManagedIdentityResource { get { throw null; } set { } }
-        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? UpstreamAuthType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UpstreamAuthType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType>

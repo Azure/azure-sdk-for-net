@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StorageQueueResource>> GetStorageQueueAsync(string queueName, CancellationToken cancellationToken = default)
         {
             return await GetStorageQueues().GetAsync(queueName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StorageQueueResource> GetStorageQueue(string queueName, CancellationToken cancellationToken = default)
         {
             return GetStorageQueues().Get(queueName, cancellationToken);

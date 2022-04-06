@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<GalleryImageResource>> GetGalleryImageAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             return await GetGalleryImages().GetAsync(galleryImageName, cancellationToken).ConfigureAwait(false);
@@ -123,6 +124,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<GalleryImageResource> GetGalleryImage(string galleryImageName, CancellationToken cancellationToken = default)
         {
             return GetGalleryImages().Get(galleryImageName, cancellationToken);
@@ -144,6 +146,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<GalleryApplicationResource>> GetGalleryApplicationAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             return await GetGalleryApplications().GetAsync(galleryApplicationName, cancellationToken).ConfigureAwait(false);
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<GalleryApplicationResource> GetGalleryApplication(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             return GetGalleryApplications().Get(galleryApplicationName, cancellationToken);
@@ -271,19 +275,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Galleries_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters supplied to the update Shared Image Gallery operation. </param>
+        /// <param name="patch"> Parameters supplied to the update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GalleryResource>> UpdateAsync(WaitUntil waitUntil, PatchableGalleryData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<GalleryResource>> UpdateAsync(WaitUntil waitUntil, GalleryPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _galleryClientDiagnostics.CreateScope("GalleryResource.Update");
             scope.Start();
             try
             {
-                var response = await _galleryRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryResource>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _galleryRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<GalleryResource>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -301,19 +305,19 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Galleries_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters supplied to the update Shared Image Gallery operation. </param>
+        /// <param name="patch"> Parameters supplied to the update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GalleryResource> Update(WaitUntil waitUntil, PatchableGalleryData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<GalleryResource> Update(WaitUntil waitUntil, GalleryPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _galleryClientDiagnostics.CreateScope("GalleryResource.Update");
             scope.Start();
             try
             {
-                var response = _galleryRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryResource>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _galleryRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new ComputeArmOperation<GalleryResource>(new GalleryOperationSource(Client), _galleryClientDiagnostics, Pipeline, _galleryRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

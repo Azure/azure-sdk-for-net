@@ -194,18 +194,18 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Update
         /// </summary>
-        /// <param name="data"> The updatable fields of an existing Custom Location. </param>
+        /// <param name="patch"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<CustomLocationResource>> UpdateAsync(PatchableCustomLocationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<CustomLocationResource>> UpdateAsync(CustomLocationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.Update");
             scope.Start();
             try
             {
-                var response = await _customLocationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _customLocationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Update
         /// </summary>
-        /// <param name="data"> The updatable fields of an existing Custom Location. </param>
+        /// <param name="patch"> The updatable fields of an existing Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<CustomLocationResource> Update(PatchableCustomLocationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<CustomLocationResource> Update(CustomLocationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.Update");
             scope.Start();
             try
             {
-                var response = _customLocationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _customLocationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

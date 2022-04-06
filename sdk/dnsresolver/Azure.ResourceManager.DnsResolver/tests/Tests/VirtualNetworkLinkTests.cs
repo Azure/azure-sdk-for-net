@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var patchableVirtualNetworkLinkData = new PatchableVirtualNetworkLinkData();
+            var patchableVirtualNetworkLinkData = new VirtualNetworkLinkPatch();
             patchableVirtualNetworkLinkData.Metadata.Add(newTagKey, newTagValue);
 
             // ACT

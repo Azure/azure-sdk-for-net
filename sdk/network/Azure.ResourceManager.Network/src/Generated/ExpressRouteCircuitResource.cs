@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitAuthorizationResource>> GetExpressRouteCircuitAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
             return await GetExpressRouteCircuitAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitAuthorizationResource> GetExpressRouteCircuitAuthorization(string authorizationName, CancellationToken cancellationToken = default)
         {
             return GetExpressRouteCircuitAuthorizations().Get(authorizationName, cancellationToken);
@@ -140,6 +142,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitPeeringResource>> GetExpressRouteCircuitPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
         {
             return await GetExpressRouteCircuitPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
@@ -154,6 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitPeeringResource> GetExpressRouteCircuitPeering(string peeringName, CancellationToken cancellationToken = default)
         {
             return GetExpressRouteCircuitPeerings().Get(peeringName, cancellationToken);

@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IscsiTargetResource>> GetIscsiTargetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
             return await GetIscsiTargets().GetAsync(iscsiTargetName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<IscsiTargetResource> GetIscsiTarget(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
             return GetIscsiTargets().Get(iscsiTargetName, cancellationToken);
@@ -230,19 +232,19 @@ namespace Azure.ResourceManager.StoragePool
         /// Operation Id: DiskPools_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Request payload for Disk Pool update operation. </param>
+        /// <param name="patch"> Request payload for Disk Pool update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DiskPoolResource>> UpdateAsync(WaitUntil waitUntil, PatchableDiskPoolData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<DiskPoolResource>> UpdateAsync(WaitUntil waitUntil, DiskPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolResource.Update");
             scope.Start();
             try
             {
-                var response = await _diskPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _diskPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -260,19 +262,19 @@ namespace Azure.ResourceManager.StoragePool
         /// Operation Id: DiskPools_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Request payload for Disk Pool update operation. </param>
+        /// <param name="patch"> Request payload for Disk Pool update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DiskPoolResource> Update(WaitUntil waitUntil, PatchableDiskPoolData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<DiskPoolResource> Update(WaitUntil waitUntil, DiskPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolResource.Update");
             scope.Start();
             try
             {
-                var response = _diskPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _diskPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

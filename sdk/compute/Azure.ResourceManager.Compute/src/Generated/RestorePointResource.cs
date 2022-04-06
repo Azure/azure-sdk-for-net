@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DiskRestorePointResource>> GetDiskRestorePointAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             return await GetDiskRestorePoints().GetAsync(diskRestorePointName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<DiskRestorePointResource> GetDiskRestorePoint(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             return GetDiskRestorePoints().Get(diskRestorePointName, cancellationToken);

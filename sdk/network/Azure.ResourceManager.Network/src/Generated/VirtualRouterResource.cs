@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<VirtualRouterPeeringResource>> GetVirtualRouterPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
         {
             return await GetVirtualRouterPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<VirtualRouterPeeringResource> GetVirtualRouterPeering(string peeringName, CancellationToken cancellationToken = default)
         {
             return GetVirtualRouterPeerings().Get(peeringName, cancellationToken);

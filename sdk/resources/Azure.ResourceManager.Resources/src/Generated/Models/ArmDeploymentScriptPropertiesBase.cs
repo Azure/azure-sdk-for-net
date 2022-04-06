@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -17,7 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDeploymentScriptPropertiesBase. </summary>
         internal ArmDeploymentScriptPropertiesBase()
         {
-            Outputs = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Container settings. </summary>
@@ -38,6 +35,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
         /// <summary> List of script outputs. </summary>
-        public IReadOnlyDictionary<string, BinaryData> Outputs { get; }
+        public BinaryData Outputs { get; }
     }
 }

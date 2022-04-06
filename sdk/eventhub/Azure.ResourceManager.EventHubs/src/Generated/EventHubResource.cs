@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<EventHubAuthorizationRuleResource>> GetEventHubAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return await GetEventHubAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<EventHubAuthorizationRuleResource> GetEventHubAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return GetEventHubAuthorizationRules().Get(authorizationRuleName, cancellationToken);
@@ -137,6 +139,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ConsumerGroupResource>> GetConsumerGroupAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
             return await GetConsumerGroups().GetAsync(consumerGroupName, cancellationToken).ConfigureAwait(false);
@@ -151,6 +154,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ConsumerGroupResource> GetConsumerGroup(string consumerGroupName, CancellationToken cancellationToken = default)
         {
             return GetConsumerGroups().Get(consumerGroupName, cancellationToken);

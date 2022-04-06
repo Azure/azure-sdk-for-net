@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceUpdate.Models.PatchableDeviceUpdateAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceUpdate.Models.PatchableDeviceUpdateAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class DeviceUpdateExtensions
     {
@@ -274,6 +274,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string MemberName { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
     }
+    public partial class DeviceUpdateAccountPatch
+    {
+        public DeviceUpdateAccountPatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
     public partial class DiagnosticStorageProperties
     {
         public DiagnosticStorageProperties(Azure.ResourceManager.DeviceUpdate.Models.AuthenticationType authenticationType, string resourceId) { }
@@ -316,13 +323,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string EventHubConnectionString { get { throw null; } set { } }
         public string IoTHubConnectionString { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
-    }
-    public partial class PatchableDeviceUpdateAccountData
-    {
-        public PatchableDeviceUpdateAccountData() { }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProvisioningState>

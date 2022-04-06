@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RouteFilterRuleResource>> GetRouteFilterRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             return await GetRouteFilterRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<RouteFilterRuleResource> GetRouteFilterRule(string ruleName, CancellationToken cancellationToken = default)
         {
             return GetRouteFilterRules().Get(ruleName, cancellationToken);

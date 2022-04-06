@@ -5,13 +5,13 @@
 
   <PropertyGroup>
     <Description>Microsoft Azure Container Instance Management Library</Description>
-    <Version>6.0.0</Version>
+    <Version>7.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.ContainerInstance</AssemblyName>
     <PackageId>Microsoft.Azure.Management.ContainerInstance</PackageId>
-    <PackageTags>Microsoft Azure Container Instance Management;Container Instance;2021-09-01;</PackageTags>
+    <PackageTags>Microsoft Azure Container Instance Management;Container Instance;2021-10-01;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a release of the Azure Container Instance SDK. Included with this release is the addition of the Zones property to support Availability Zones.
+        This is a release of the Azure Container Instance SDK. Included with this release is the addition of the Deterministic Name Label Reuse Policy.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

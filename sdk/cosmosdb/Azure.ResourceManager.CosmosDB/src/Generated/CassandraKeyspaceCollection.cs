@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
-        /// <param name="data"> The parameters to provide for the current Cassandra keyspace. </param>
+        /// <param name="content"> The parameters to provide for the current Cassandra keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CassandraKeyspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateUpdateData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CassandraKeyspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cassandraKeyspaceCassandraResourcesRestClient.CreateUpdateCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _cassandraKeyspaceCassandraResourcesRestClient.CreateUpdateCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
-        /// <param name="data"> The parameters to provide for the current Cassandra keyspace. </param>
+        /// <param name="content"> The parameters to provide for the current Cassandra keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CassandraKeyspaceResource> CreateOrUpdate(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateUpdateData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CassandraKeyspaceResource> CreateOrUpdate(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cassandraKeyspaceCassandraResourcesRestClient.CreateUpdateCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _cassandraKeyspaceCassandraResourcesRestClient.CreateUpdateCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, content, cancellationToken);
+                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

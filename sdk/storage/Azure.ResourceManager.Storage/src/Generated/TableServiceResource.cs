@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<TableResource>> GetTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
             return await GetTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<TableResource> GetTable(string tableName, CancellationToken cancellationToken = default)
         {
             return GetTables().Get(tableName, cancellationToken);

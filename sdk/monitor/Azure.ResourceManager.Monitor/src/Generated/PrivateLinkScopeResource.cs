@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkAsync(string groupName, CancellationToken cancellationToken = default)
         {
             return await GetPrivateLinks().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateLinkResource> GetPrivateLink(string groupName, CancellationToken cancellationToken = default)
         {
             return GetPrivateLinks().Get(groupName, cancellationToken);
@@ -139,6 +141,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -153,6 +156,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -174,6 +178,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ScopedPrivateLinkResource>> GetScopedPrivateLinkAsync(string name, CancellationToken cancellationToken = default)
         {
             return await GetScopedPrivateLinks().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -188,6 +193,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ScopedPrivateLinkResource> GetScopedPrivateLink(string name, CancellationToken cancellationToken = default)
         {
             return GetScopedPrivateLinks().Get(name, cancellationToken);

@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceDatabaseSchemaTableColumnResource>> GetManagedInstanceDatabaseSchemaTableColumnAsync(string columnName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceDatabaseSchemaTableColumns().GetAsync(columnName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedInstanceDatabaseSchemaTableColumn(string columnName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceDatabaseSchemaTableColumns().Get(columnName, cancellationToken);
