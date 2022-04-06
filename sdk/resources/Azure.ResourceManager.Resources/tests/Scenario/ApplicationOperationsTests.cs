@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task RemoveTag()
         {
-            await AddTag();
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-5-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
@@ -85,7 +84,6 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task SetTags()
         {
-            await AddTag();
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-5-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
