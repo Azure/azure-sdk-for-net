@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetAResource" /> object. </returns>
         public static RecordSetAResource GetRecordSetAResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetAResource>(() =>
             {
                 RecordSetAResource.ValidateResourceId(id);
                 return new RecordSetAResource(client, id);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetAaaaResource" /> object. </returns>
         public static RecordSetAaaaResource GetRecordSetAaaaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetAaaaResource>(() =>
             {
                 RecordSetAaaaResource.ValidateResourceId(id);
                 return new RecordSetAaaaResource(client, id);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetCaaResource" /> object. </returns>
         public static RecordSetCaaResource GetRecordSetCaaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetCaaResource>(() =>
             {
                 RecordSetCaaResource.ValidateResourceId(id);
                 return new RecordSetCaaResource(client, id);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetCnameResource" /> object. </returns>
         public static RecordSetCnameResource GetRecordSetCnameResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetCnameResource>(() =>
             {
                 RecordSetCnameResource.ValidateResourceId(id);
                 return new RecordSetCnameResource(client, id);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetMxResource" /> object. </returns>
         public static RecordSetMxResource GetRecordSetMxResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetMxResource>(() =>
             {
                 RecordSetMxResource.ValidateResourceId(id);
                 return new RecordSetMxResource(client, id);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetNsResource" /> object. </returns>
         public static RecordSetNsResource GetRecordSetNsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetNsResource>(() =>
             {
                 RecordSetNsResource.ValidateResourceId(id);
                 return new RecordSetNsResource(client, id);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetPtrResource" /> object. </returns>
         public static RecordSetPtrResource GetRecordSetPtrResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetPtrResource>(() =>
             {
                 RecordSetPtrResource.ValidateResourceId(id);
                 return new RecordSetPtrResource(client, id);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetSoaResource" /> object. </returns>
         public static RecordSetSoaResource GetRecordSetSoaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetSoaResource>(() =>
             {
                 RecordSetSoaResource.ValidateResourceId(id);
                 return new RecordSetSoaResource(client, id);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetSrvResource" /> object. </returns>
         public static RecordSetSrvResource GetRecordSetSrvResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetSrvResource>(() =>
             {
                 RecordSetSrvResource.ValidateResourceId(id);
                 return new RecordSetSrvResource(client, id);
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetTxtResource" /> object. </returns>
         public static RecordSetTxtResource GetRecordSetTxtResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<RecordSetTxtResource>(() =>
             {
                 RecordSetTxtResource.ValidateResourceId(id);
                 return new RecordSetTxtResource(client, id);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsZoneResource" /> object. </returns>
         public static DnsZoneResource GetDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<DnsZoneResource>(() =>
             {
                 DnsZoneResource.ValidateResourceId(id);
                 return new DnsZoneResource(client, id);
