@@ -229,13 +229,12 @@ namespace Azure.ResourceManager.Tests
 
         protected async Task<ResourceLinkResource> CreateResourceLink(TenantResource tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
         {
-            ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
             ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);
             ResourceLinkData data = new ResourceLinkData()
             {
                 Properties = properties
             };
-            ArmOperation<ResourceLinkResource> lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ResourceLinkResource> lro = await vn1.GetResourceLinks().CreateOrUpdateAsync(WaitUntil.Completed, resourceLinkName, data);
             return lro.Value;
         }
     }

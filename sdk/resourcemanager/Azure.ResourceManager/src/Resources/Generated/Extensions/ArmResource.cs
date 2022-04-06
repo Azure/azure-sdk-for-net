@@ -89,5 +89,42 @@ namespace Azure.ResourceManager
         {
             return GetManagementLocks().Get(lockName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of ResourceLinkResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of ResourceLinkResources and their operations over a ResourceLinkResource. </returns>
+        public virtual ResourceLinkCollection GetResourceLinks()
+        {
+            return GetCachedClient(Client => new ResourceLinkCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a resource link with the specified ID.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/links/{name}
+        /// Operation Id: ResourceLinks_Get
+        /// </summary>
+        /// <param name="name"> The name of resource link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ResourceLinkResource>> GetResourceLinkAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await GetResourceLinks().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a resource link with the specified ID.
+        /// Request Path: /{scope}/providers/Microsoft.Resources/links/{name}
+        /// Operation Id: ResourceLinks_Get
+        /// </summary>
+        /// <param name="name"> The name of resource link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ResourceLinkResource> GetResourceLink(string name, CancellationToken cancellationToken = default)
+        {
+            return GetResourceLinks().Get(name, cancellationToken);
+        }
     }
 }

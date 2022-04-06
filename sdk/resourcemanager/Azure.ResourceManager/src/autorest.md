@@ -125,7 +125,6 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
-  - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
   # subscription does not have name and type
@@ -137,14 +136,12 @@ request-path-to-resource-data:
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
-  /{scope}/providers/Microsoft.Resources/links: /{linkId}
   /subscriptions: /subscriptions/{subscriptionId}
   /tenants: /
   /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
   /subscriptions/{subscriptionId}/providers: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
 request-path-to-resource-type:
-  /{linkId}: Microsoft.Resources/links
   /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
   /tenants: Microsoft.Resources/tenants
   /: Microsoft.Resources/tenants
@@ -164,7 +161,6 @@ operation-groups-to-omit:
   - AuthorizationOperations
   - ResourceCheck
 override-operation-name:
-  ResourceLinks_ListAtSourceScope: GetAll
   Tags_List: GetAllPredefinedTags
   Tags_DeleteValue: DeletePredefinedTagValue
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
@@ -229,6 +225,7 @@ directive:
   - remove-operation: Resources_Get
   - remove-operation: Resources_Delete
   - remove-operation: Providers_RegisterAtManagementGroupScope
+  - remove-operation: ResourceLinks_ListAtSubscription
   # Deduplicate
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
@@ -593,6 +590,73 @@ directive:
     where: $.definitions.ProviderExtendedLocation.properties.location
     transform: >
       $["x-ms-format"] = "azure-location"
+  # the resource link resource is not using the regular pattern of resources, instead, it is using `/{linkId}` as its creation path
+  # this gives very little information to our generator and make it to behave weirdly
+  # this directive changes its path to a normal scope resource path
+  - from: links.json
+    where: $.paths
+    transform: >
+      var oldLinkResource = $["/{linkId}"];
+      delete $["/{linkId}"];
+      $["/{scope}/providers/Microsoft.Resources/links/{name}"] = oldLinkResource;
+      for (var r in oldLinkResource) {
+          var things = oldLinkResource[r];
+          var parameters = things.parameters;
+          // remove the parameter with the name of "linkId", and add two new parameters "scope" and "name"
+          if (r == "put") {
+            things.parameters = [
+                {
+                    "name": "scope",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                    "description": "The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink",
+                    "x-ms-skip-url-encoding": true
+                },
+                {
+                    "name": "name",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                    "description": "The name of resource link"
+                },
+                {
+                    "name": "parameters",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                    "$ref": "#/definitions/ResourceLink"
+                    },
+                    "description": "Parameters for creating or updating a resource link."
+                },
+                {
+                    "$ref": "#/parameters/ApiVersionParameter"
+                }
+            ]
+          } else {
+            things.parameters = [
+                {
+                    "name": "scope",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                    "description": "The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink",
+                    "x-ms-skip-url-encoding": true
+                },
+                {
+                    "name": "name",
+                    "in": "path",
+                    "required": true,
+                    "type": "string",
+                    "description": "The name of resource link"
+                },
+                {
+                    "$ref": "#/parameters/ApiVersionParameter"
+                }
+            ]
+          }
+          
+      }
 ```
 
 ### Tag: package-management

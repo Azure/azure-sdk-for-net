@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Tests
             string resourceLinkName = Recording.GenerateAssetName("link-");
             ResourceLinkResource resourceLink = await CreateResourceLink(tenant, vn1, vn2, resourceLinkName);
             Assert.AreEqual(resourceLinkName, resourceLink.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks(null).CreateOrUpdateAsync(WaitUntil.Completed, null));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks().CreateOrUpdateAsync(WaitUntil.Completed, "name", null));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await tenant.GetResourceLinks().CreateOrUpdateAsync(WaitUntil.Completed, "", null));
         }
 
         [TestCase]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
             _ = await CreateResourceLink(tenant, vn1, vn2, resourceLinkName1);
             _ = await CreateResourceLink(tenant, vn1, vn3, resourceLinkName2);
             int count = 0;
-            await foreach (var resourceLink in tenant.GetResourceLinks(vn1.Id).GetAllAsync())
+            await foreach (var resourceLink in vn1.GetResourceLinks().GetAllAsync())
             {
                 count++;
             }
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Tests
             GenericResource vn2 = await CreateGenericVirtualNetwork(subscription, rg, vnName2);
             string resourceLinkName = Recording.GenerateAssetName("link-");
             ResourceLinkResource resourceLink = await CreateResourceLink(tenant, vn1, vn2, resourceLinkName);
-            ResourceLinkResource getResourceLink = await tenant.GetResourceLinks(resourceLink.Id).GetAsync();
+            ResourceLinkResource getResourceLink = await Client.GetResourceLinkResource(resourceLink.Id).GetAsync();
             AssertValidResourceLink(resourceLink, getResourceLink);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks(null).GetAsync());
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await tenant.GetResourceLinks().GetAsync(null));
         }
 
         private void AssertValidResourceLink(ResourceLinkResource model, ResourceLinkResource getResult)

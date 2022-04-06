@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Resources
     /// A Class representing a ResourceLink along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetResourceLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetResourceLink method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetResourceLink method.
     /// </summary>
     public partial class ResourceLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceLinkResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string linkId)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string name)
         {
-            var resourceId = $"{linkId}";
+            var resourceId = $"{scope}/providers/Microsoft.Resources/links/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets a resource link with the specified ID.
-        /// Request Path: /{linkId}
+        /// Request Path: /{scope}/providers/Microsoft.Resources/links/{name}
         /// Operation Id: ResourceLinks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _resourceLinkRestClient.GetAsync(Id, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceLinkRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceLinkResource(Client, response.Value), response.GetRawResponse());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets a resource link with the specified ID.
-        /// Request Path: /{linkId}
+        /// Request Path: /{scope}/providers/Microsoft.Resources/links/{name}
         /// Operation Id: ResourceLinks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _resourceLinkRestClient.Get(Id, cancellationToken);
+                var response = _resourceLinkRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceLinkResource(Client, response.Value), response.GetRawResponse());
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Deletes a resource link with the specified ID.
-        /// Request Path: /{linkId}
+        /// Request Path: /{scope}/providers/Microsoft.Resources/links/{name}
         /// Operation Id: ResourceLinks_Delete
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _resourceLinkRestClient.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceLinkRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Deletes a resource link with the specified ID.
-        /// Request Path: /{linkId}
+        /// Request Path: /{scope}/providers/Microsoft.Resources/links/{name}
         /// Operation Id: ResourceLinks_Delete
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _resourceLinkRestClient.Delete(Id, cancellationToken);
+                var response = _resourceLinkRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
                 var operation = new ResourcesArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
