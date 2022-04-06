@@ -1860,15 +1860,37 @@ namespace Azure.Messaging.EventGrid
             return new ApiManagementApiReleaseDeletedEventData(resourceUri);
         }
 
-        /// <summary> Initializes a new instance of HealthcareFhirResourceEventBaseProperties. </summary>
-        /// <param name="resourceType"> Type of HL7 FHIR resource. </param>
-        /// <param name="resourceFhirAccount"> Domain name of FHIR account for this resource. </param>
-        /// <param name="resourceFhirId"> Id of HL7 FHIR resource. </param>
-        /// <param name="resourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
-        /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceEventBaseProperties"/> instance for mocking. </returns>
-        public static HealthcareFhirResourceEventBaseProperties HealthcareFhirResourceEventBaseProperties(HealthcareFhirResourceType? resourceType = null, string resourceFhirAccount = null, string resourceFhirId = null, long? resourceVersionId = null)
+        /// <summary> Initializes a new instance of HealthcareFhirResourceCreatedEventData. </summary>
+        /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
+        /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
+        /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
+        /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceCreatedEventData"/> instance for mocking. </returns>
+        public static HealthcareFhirResourceCreatedEventData HealthcareFhirResourceCreatedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
         {
-            return new HealthcareFhirResourceEventBaseProperties(resourceType, resourceFhirAccount, resourceFhirId, resourceVersionId);
+            return new HealthcareFhirResourceCreatedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareFhirResourceUpdatedEventData. </summary>
+        /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
+        /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
+        /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
+        /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceUpdatedEventData"/> instance for mocking. </returns>
+        public static HealthcareFhirResourceUpdatedEventData HealthcareFhirResourceUpdatedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
+        {
+            return new HealthcareFhirResourceUpdatedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareFhirResourceDeletedEventData. </summary>
+        /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
+        /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
+        /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
+        /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceDeletedEventData"/> instance for mocking. </returns>
+        public static HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
+        {
+            return new HealthcareFhirResourceDeletedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId);
         }
     }
 }
