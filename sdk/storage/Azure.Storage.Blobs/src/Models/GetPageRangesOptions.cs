@@ -4,9 +4,9 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for PageRangeClient.GetPageRangesDiff().
+    /// Optional parameters for PageBlobClient.GetPageRanges().
     /// </summary>
-    public class PageBlobGetPageRangesDiffOptions
+    public class GetPageRangesOptions
     {
         /// <summary>
         /// Optionally specifies the range of bytes over which to list ranges,
@@ -21,15 +21,6 @@ namespace Azure.Storage.Blobs.Models
         /// Create a snapshot of a blob</see>.
         /// </summary>
         public string Snapshot { get; set; }
-
-        /// <summary>
-        /// Specifies that the response will contain only pages that were
-        /// changed between target blob and previous snapshot.  Changed pages
-        /// include both updated and cleared pages. The target blob may be a
-        /// snapshot, as long as the snapshot specified by
-        /// <see cref="PreviousSnapshot"/> is the older of the two.
-        /// </summary>
-        public string PreviousSnapshot { get; set; }
 
         /// <summary>
         /// Optional <see cref="PageBlobRequestConditions"/> to add

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -2521,6 +2522,32 @@ namespace Azure.Storage.Files.Shares.Tests
                     initalPropertiesResponse.Value.SmbProperties.FileLastWrittenOn,
                     propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
             }
+        }
+
+        [RecordedTest]
+        public async Task UploadRangeAsync_MD5()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient fileClient = test.File;
+            byte[] data = GetRandomBuffer(Constants.KB);
+            Stream stream = new MemoryStream(data);
+
+            byte[] md5 = MD5.Create().ComputeHash(data);
+
+            ShareFileUploadRangeOptions options = new ShareFileUploadRangeOptions
+            {
+                TransactionalContentHash = md5
+            };
+
+            // Act
+            Response<ShareFileUploadInfo> response = await fileClient.UploadRangeAsync(
+                range: new HttpRange(0, Constants.KB),
+                content: stream,
+                options: options);
+
+            // Assert
+            Assert.AreEqual(md5, response.Value.ContentHash);
         }
 
         [RecordedTest]

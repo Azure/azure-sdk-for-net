@@ -6,9 +6,9 @@ using Azure.Storage.Blobs.Specialized;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Represents a range of bytes returned by <see cref="PageBlobClient.GetPageRangesAsync(PageBlobGetPageRangesOptions, System.Threading.CancellationToken)"/>.
+    /// Represents a range of bytes returned by <see cref="PageBlobClient.GetAllPageRangesAsync(GetPageRangesOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
-    public class PageBlobRange
+    public class PageRangeItem
     {
         /// <summary>
         /// Range in bytes of this PageBlobRange.
