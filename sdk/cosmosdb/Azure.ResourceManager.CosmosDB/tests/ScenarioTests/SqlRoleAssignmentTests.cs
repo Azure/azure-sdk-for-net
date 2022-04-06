@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlRoleAssignments(assignment, assignment2);
 
             var roleDefinition2 = await SqlRoleDefinitionTests.CreateSqlRoleDefinition(RoleDefinitionId2, Recording.GenerateAssetName("sql-role-def-"), $"{_databaseAccount.Id}/dbs/{_sqlDatabase.Data.Name}", _databaseAccount.GetSqlRoleDefinitions());
-            var updateParameters = new SqlRoleAssignmentCreateUpdateData
+            var updateParameters = new SqlRoleAssignmentCreateOrUpdateContent
             {
                 RoleDefinitionId = roleDefinition2.Id,
                 Scope = SqlRoleAssignmentScope,
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         protected async Task<SqlRoleAssignmentResource> CreateSqlRoleAssignment()
         {
-            var parameters = new SqlRoleAssignmentCreateUpdateData
+            var parameters = new SqlRoleAssignmentCreateOrUpdateContent
             {
                 RoleDefinitionId = _roleDefinition.Id,
                 Scope = SqlRoleAssignmentScope,

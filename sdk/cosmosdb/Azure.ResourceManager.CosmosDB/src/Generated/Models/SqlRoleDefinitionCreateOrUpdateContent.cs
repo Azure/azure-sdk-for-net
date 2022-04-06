@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update an Azure Cosmos DB SQL Role Definition. </summary>
-    public partial class SqlRoleDefinitionCreateUpdateData
+    public partial class SqlRoleDefinitionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SqlRoleDefinitionCreateUpdateData. </summary>
-        public SqlRoleDefinitionCreateUpdateData()
+        /// <summary> Initializes a new instance of SqlRoleDefinitionCreateOrUpdateContent. </summary>
+        public SqlRoleDefinitionCreateOrUpdateContent()
         {
             AssignableScopes = new ChangeTrackingList<string>();
             Permissions = new ChangeTrackingList<Permission>();

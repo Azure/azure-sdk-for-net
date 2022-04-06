@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ThroughputSettingsCreateOrUpdateInfo : IUtf8JsonSerializable
+    public partial class ThroughputSettingsUpdateData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static ThroughputSettingsCreateOrUpdateInfo DeserializeThroughputSettingsCreateOrUpdateInfo(JsonElement element)
+        internal static ThroughputSettingsUpdateData DeserializeThroughputSettingsUpdateData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ThroughputSettingsCreateOrUpdateInfo(id, name, type, systemData, tags, location, resource);
+            return new ThroughputSettingsUpdateData(id, name, type, systemData, tags, location, resource);
         }
     }
 }

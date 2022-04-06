@@ -186,6 +186,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SqlRoleDefinitionResource>> GetSqlRoleDefinitionAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
             return await GetSqlRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
@@ -200,6 +201,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SqlRoleDefinitionResource> GetSqlRoleDefinition(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
             return GetSqlRoleDefinitions().Get(roleDefinitionId, cancellationToken);
@@ -221,6 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SqlRoleAssignmentResource>> GetSqlRoleAssignmentAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
             return await GetSqlRoleAssignments().GetAsync(roleAssignmentId, cancellationToken).ConfigureAwait(false);
@@ -235,6 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SqlRoleAssignmentResource> GetSqlRoleAssignment(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
             return GetSqlRoleAssignments().Get(roleAssignmentId, cancellationToken);

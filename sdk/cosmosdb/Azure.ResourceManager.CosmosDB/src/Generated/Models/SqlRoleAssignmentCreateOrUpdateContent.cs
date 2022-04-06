@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to create and update an Azure Cosmos DB SQL Role Assignment. </summary>
-    public partial class SqlRoleAssignmentCreateUpdateData
+    public partial class SqlRoleAssignmentCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SqlRoleAssignmentCreateUpdateData. </summary>
-        public SqlRoleAssignmentCreateUpdateData()
+        /// <summary> Initializes a new instance of SqlRoleAssignmentCreateOrUpdateContent. </summary>
+        public SqlRoleAssignmentCreateOrUpdateContent()
         {
         }
 

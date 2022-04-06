@@ -13,13 +13,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to update Cosmos DB resource throughput. </summary>
-    public partial class ThroughputSettingsCreateOrUpdateInfo : TrackedResourceData
+    public partial class ThroughputSettingsUpdateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ThroughputSettingsCreateOrUpdateInfo. </summary>
+        /// <summary> Initializes a new instance of ThroughputSettingsUpdateData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public ThroughputSettingsCreateOrUpdateInfo(AzureLocation location, ThroughputSettingsResource resource) : base(location)
+        public ThroughputSettingsUpdateData(AzureLocation location, ThroughputSettingsResource resource) : base(location)
         {
             if (resource == null)
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Resource = resource;
         }
 
-        /// <summary> Initializes a new instance of ThroughputSettingsCreateOrUpdateInfo. </summary>
+        /// <summary> Initializes a new instance of ThroughputSettingsUpdateData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
-        internal ThroughputSettingsCreateOrUpdateInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ThroughputSettingsResource resource) : base(id, name, resourceType, systemData, tags, location)
+        internal ThroughputSettingsUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ThroughputSettingsResource resource) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
         }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(_roleDefinition.Data.Name, definition2.Data.Name);
             VerifySqlRoleDefinitions(definition, definition2);
 
-            var updateParameters = new SqlRoleDefinitionCreateUpdateData
+            var updateParameters = new SqlRoleDefinitionCreateOrUpdateContent
             {
                 RoleName = _roleDefinition.Data.Name,
                 RoleDefinitionType = RoleDefinitionType.CustomRole,
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal static async Task<SqlRoleDefinitionResource> CreateSqlRoleDefinition(string roleDefinitionId, string name, string assignableScope, SqlRoleDefinitionCollection definitionCollection)
         {
             //RoleDefinitionId = Recording.GenerateAssetName("sql-role-");
-            var parameters = new SqlRoleDefinitionCreateUpdateData
+            var parameters = new SqlRoleDefinitionCreateOrUpdateContent
             {
                 RoleName = name,
                 RoleDefinitionType = RoleDefinitionType.CustomRole,
