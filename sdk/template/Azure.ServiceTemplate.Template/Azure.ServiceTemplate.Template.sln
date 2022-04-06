@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ServiceTemplate.Template", "src\Azure.ServiceTemplate.Template.csproj", "{511762C4-6660-4AA8-9381-125BE87A11CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ServiceTemplate.Template.Tests", "tests\Azure.ServiceTemplate.Template.Tests.csproj", "{2DDB6D1B-6AF9-4115-80C0-38C2556FA413B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ServiceTemplate.Template.Perf", "perf\Azure.ServiceTemplate.Template.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ServiceTemplate.Template.Tests", "tests\Azure.ServiceTemplate.Template.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ServiceTemplate.Template.Stress", "stress\Azure.ServiceTemplate.Template.Stress.csproj", "{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

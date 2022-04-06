@@ -18,24 +18,7 @@ namespace Azure.ServiceTemplate.Template.Tests
         {
         }
 
-        /* Greate the client and instrument it as following. */
-        // private TemplateClient CreateClient()
-        // {
-        //     var httpHandler = new HttpClientHandler();
-        //     httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
-        //     {
-        //         return true;
-        //     };
-        //     var options = new TemplateClientOptions { Transport = new HttpClientTransport(httpHandler) };
-        //     var client = InstrumentClient(
-        //         new TemplateClient(TestEnvironment.Endpoint, TestEnvironment.<other-client-parameters>, TestEnvironment.Credential, InstrumentClientOptions(options)));
-        //     return client;
-        // }
-        // Add Test here as following.
-        // [RecordedTest]
-        // public async Task TestOperation()
-        // {
-        // }
+        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
         [RecordedTest]
         public void TestOperation()
