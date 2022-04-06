@@ -245,7 +245,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async Task ProcessMessageAsync_LogsWarning_Stopped()
+        public void ProcessMessageAsync_LogsWarning_Stopped()
         {
             try
             {
@@ -259,11 +259,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 var receiver = new Mock<ServiceBusReceiver>().Object;
                 var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
 
-                await _listener.ProcessMessageAsync(args);
+                Assert.That(
+                    async () => await _listener.ProcessMessageAsync(args),
+                    Throws.InstanceOf<InvalidOperationException>());
 
                 Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Message received for a listener that is not in started state") &&
-                                          x.Level == LogLevel.Warning));
+                    .SingleOrDefault(
+                        x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
+                                                           "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
             }
             finally
             {
@@ -273,7 +276,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async Task ProcessMessageAsync_LogsWarning_Disposed()
+        public void ProcessMessageAsync_LogsWarning_Disposed()
         {
             try
             {
@@ -287,11 +290,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 var receiver = new Mock<ServiceBusReceiver>().Object;
                 var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
 
-                await _listener.ProcessMessageAsync(args);
+                Assert.That(
+                    async () => await _listener.ProcessMessageAsync(args),
+                    Throws.InstanceOf<InvalidOperationException>());
 
                 Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Message received for a listener that is in disposed state") &&
-                                          x.Level == LogLevel.Warning));
+                    .SingleOrDefault(
+                        x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
+                                                           "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
             }
             finally
             {
@@ -301,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async Task ProcessMessageAsync_LogsWarning_Stopped_Session()
+        public void ProcessMessageAsync_LogsWarning_Stopped_Session()
         {
             try
             {
@@ -316,11 +322,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 var receiver = new Mock<ServiceBusSessionReceiver>().Object;
                 var args = new ProcessSessionMessageEventArgs(message, receiver, CancellationToken.None);
 
-                await _listener.ProcessSessionMessageAsync(args);
+                Assert.That(
+                    async () => await _listener.ProcessSessionMessageAsync(args),
+                    Throws.InstanceOf<InvalidOperationException>());
 
                 Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Message received for a listener that is not in started state") &&
-                                          x.Level == LogLevel.Warning));
+                    .SingleOrDefault(
+                        x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
+                                                           "and instead will be abandoned. (Listener started = False, Listener disposed = False") && x.Level == LogLevel.Warning));
             }
             finally
             {
@@ -330,7 +339,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         }
 
         [Test]
-        public async Task ProcessMessageAsync_LogsWarning_Disposed_Session()
+        public void ProcessMessageAsync_LogsWarning_Disposed_Session()
         {
             try
             {
@@ -345,11 +354,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 var receiver = new Mock<ServiceBusSessionReceiver>().Object;
                 var args = new ProcessSessionMessageEventArgs(message, receiver, CancellationToken.None);
 
-                await _listener.ProcessSessionMessageAsync(args);
+                Assert.That(
+                    async () => await _listener.ProcessSessionMessageAsync(args),
+                    Throws.InstanceOf<InvalidOperationException>());
 
                 Assert.NotNull(_loggerProvider.GetAllLogMessages()
-                    .SingleOrDefault(x => x.FormattedMessage.StartsWith("Message received for a listener that is in disposed state") &&
-                                          x.Level == LogLevel.Warning));
+                    .SingleOrDefault(
+                        x => x.FormattedMessage.StartsWith("Message received for a listener that is not in a running state. The message will not be delivered to the function, " +
+                                                           "and instead will be abandoned. (Listener started = True, Listener disposed = True") && x.Level == LogLevel.Warning));
             }
             finally
             {
