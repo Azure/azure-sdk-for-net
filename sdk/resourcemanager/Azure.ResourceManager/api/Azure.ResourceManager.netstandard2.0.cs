@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         public ManagementGroupNameAvailabilityOptions() { }
         public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
     }
     public partial class ManagementGroupNameAvailabilityResult
     {

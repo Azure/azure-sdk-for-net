@@ -237,7 +237,7 @@ namespace Azure.Storage.Files.DataLake
         /// file system's previously-acquired lease.
         ///
         /// The lease can be renewed if the leaseId
-        /// matches that associated with the path or file system.  Note that the]
+        /// matches that associated with the path or file system.  Note that the
         /// lease may be renewed even if it has expired as long as the path or
         /// file system has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
