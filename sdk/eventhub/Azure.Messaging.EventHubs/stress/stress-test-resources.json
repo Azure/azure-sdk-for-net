@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1318.3566",
-      "templateHash": "4106843170222062093"
+      "templateHash": "9384248727093035271"
     }
   },
   "parameters": {
@@ -57,7 +57,7 @@
     "ehBasicPublish": "basicpublishreadtest",
     "ehEmptyProcessor": "processoremptyreadtest",
     "ehEventProducer": "eventproducertest",
-    "ehTrasnportProducer": "transportproducerpooltest"
+    "ehTransportProducer": "transportproducerpooltest"
   },
   "resources": [
     {
@@ -121,7 +121,7 @@
     {
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
-      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehTrasnportProducer'))]",
+      "name": "[format('{0}/{1}', variables('eventHubsNamespace_var'), variables('ehTransportProducer'))]",
       "properties": {
         "messageRetentionInDays": 7,
         "partitionCount": 1
@@ -291,7 +291,7 @@
     },
     "EVENTHUB_NAME_TPPT": {
       "type": "string",
-      "value": "[variables('ehTrasnportProducer')]"
+      "value": "[variables('ehTransportProducer')]"
     }
   }
 }

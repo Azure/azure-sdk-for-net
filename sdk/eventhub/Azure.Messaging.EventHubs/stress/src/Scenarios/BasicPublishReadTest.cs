@@ -1,4 +1,7 @@
-﻿using System;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 
-namespace Azure.Messaging.EventHubs.StressTests
+namespace Azure.Messaging.EventHubs.Stress
 {
     public class BasicPublishReadTest
     {
@@ -23,17 +26,22 @@ namespace Azure.Messaging.EventHubs.StressTests
         private int corruptedBodyFailureCount;
         private int corruptedPropertiesFailureCount;
 
+        private Metrics metrics;
+
         private readonly Random RandomNumberGenerator = new Random(Environment.TickCount);
-        private readonly string LogPath = Path.Combine(Environment.CurrentDirectory, "log.txt");
 
         private DateTimeOffset StartDate;
         private ConcurrentDictionary<string, EventData> MissingEvents;
         private ConcurrentDictionary<string, long> LastReceivedSequenceNumber;
-        private TextWriter Log;
 
-        public async Task Run(string connectionString, string eventHubName, TimeSpan duration)
+        public async Task Run(string connectionString, string eventHubName, string appInsightsKey, int durationInHours)
         {
-            Console.WriteLine($"Setting up.");
+            // Want to remove these?
+            //Console.WriteLine($"Setting up.");
+
+            metrics = new Metrics(appInsightsKey);
+
+            var duration = TimeSpan.FromHours(durationInHours);
 
             consumersToConnect = 0;
             batchesCount = 0;
@@ -47,102 +55,91 @@ namespace Azure.Messaging.EventHubs.StressTests
             MissingEvents = new ConcurrentDictionary<string, EventData>();
             LastReceivedSequenceNumber = new ConcurrentDictionary<string, long>();
 
-            using (var streamWriter = File.CreateText(LogPath))
+            Task sendTask;
+            Dictionary<string, Task> receiveTasks = new Dictionary<string, Task>();
+
+            CancellationToken timeoutToken = (new CancellationTokenSource(duration)).Token;
+            Exception capturedException;
+            var producerClient = new EventHubProducerClient(connectionString, eventHubName);
+
+            foreach (var partitionId in await producerClient.GetPartitionIdsAsync())
             {
-                Log = TextWriter.Synchronized(streamWriter);
-
-                Task sendTask;
-                Dictionary<string, Task> receiveTasks = new Dictionary<string, Task>();
-                List<Task> reportTasks = new List<Task>();
-
-                CancellationToken timeoutToken = (new CancellationTokenSource(duration)).Token;
-                Exception capturedException;
-                var producerClient = new EventHubProducerClient(connectionString, eventHubName);
-
-                foreach (var partitionId in await producerClient.GetPartitionIdsAsync())
-                {
-                    receiveTasks[partitionId] = BackgroundReceive(connectionString, eventHubName, partitionId, timeoutToken);
-                    Interlocked.Increment(ref consumersToConnect);
-                }
-
-                while (consumersToConnect > 0)
-                {
-                    await Task.Delay(TimeSpan.FromMilliseconds(200));
-                }
-
-                await Task.Delay(5000);
-                sendTask = BackgroundSend(producerClient, timeoutToken);
-
-                Console.WriteLine($"Starting a { duration.ToString(@"dd\.hh\:mm\:ss") } run.\n");
-                Console.WriteLine($"Log output can be found at '{ LogPath }'.\n");
-
-                StartDate = DateTimeOffset.UtcNow;
-                Stopwatch reportStatus = Stopwatch.StartNew();
-
-                while (!timeoutToken.IsCancellationRequested)
-                {
-                    if (sendTask.IsCompleted && !timeoutToken.IsCancellationRequested)
-                    {
-                        capturedException = null;
-
-                        try
-                        {
-                            await sendTask;
-                        }
-                        catch (Exception ex)
-                        {
-                            capturedException = ex;
-                        }
-
-                        reportTasks.Add(ReportProducerFailure(capturedException));
-                        sendTask = BackgroundSend(producerClient, timeoutToken);
-                    }
-
-                    foreach (var kvp in receiveTasks.ToList())
-                    {
-                        var receiveTask = kvp.Value;
-
-                        if (receiveTask.IsCompleted && !timeoutToken.IsCancellationRequested)
-                        {
-                            capturedException = null;
-
-                            try
-                            {
-                                await receiveTask;
-                            }
-                            catch (Exception ex)
-                            {
-                                capturedException = ex;
-                            }
-
-                            reportTasks.Add(ReportConsumerFailure(kvp.Key, capturedException));
-                            receiveTasks[kvp.Key] = BackgroundReceive(connectionString, eventHubName, kvp.Key, timeoutToken);
-                        }
-                    }
-
-                    if (reportStatus.Elapsed > TimeSpan.FromSeconds(30))
-                    {
-                        reportTasks.Add(ReportStatus());
-                        reportStatus = Stopwatch.StartNew();
-                    }
-
-                    await Task.Delay(1000);
-                }
-
-                await sendTask;
-                await Task.WhenAll(receiveTasks.Values.ToList());
-
-                foreach (var eventData in GetLostEvents())
-                {
-                    reportTasks.Add(ReportLostEvent(eventData));
-                }
-
-                reportTasks.Add(ReportStatus(true));
-
-                await Task.WhenAll(reportTasks);
-
-                Console.WriteLine($"Log output can be found at '{ LogPath }'.");
+                receiveTasks[partitionId] = BackgroundReceive(connectionString, eventHubName, partitionId, timeoutToken);
+                Interlocked.Increment(ref consumersToConnect);
             }
+
+            while (consumersToConnect > 0)
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds(200));
+            }
+
+            await Task.Delay(5000);
+            sendTask = BackgroundSend(producerClient, timeoutToken);
+
+            //Console.WriteLine($"Starting a { duration.ToString(@"dd\.hh\:mm\:ss") } run.\n");
+
+            StartDate = DateTimeOffset.UtcNow;
+            Stopwatch reportStatus = Stopwatch.StartNew();
+
+            while (!timeoutToken.IsCancellationRequested)
+            {
+                if (sendTask.IsCompleted && !timeoutToken.IsCancellationRequested)
+                {
+                    capturedException = null;
+
+                try
+                {
+                    await sendTask;
+                }
+                catch (Exception ex)
+                {
+                    capturedException = ex;
+                }
+
+                ReportProducerFailure(capturedException);
+                sendTask = BackgroundSend(producerClient, timeoutToken);
+            }
+
+            foreach (var kvp in receiveTasks.ToList())
+            {
+                var receiveTask = kvp.Value;
+
+                if (receiveTask.IsCompleted && !timeoutToken.IsCancellationRequested)
+                {
+                    capturedException = null;
+
+                    try
+                    {
+                        await receiveTask;
+                    }
+                    catch (Exception ex)
+                    {
+                        capturedException = ex;
+                    }
+
+                    ReportConsumerFailure(kvp.Key, capturedException);
+                    receiveTasks[kvp.Key] = BackgroundReceive(connectionString, eventHubName, kvp.Key, timeoutToken);
+                }
+            }
+
+            if (reportStatus.Elapsed > TimeSpan.FromSeconds(30))
+            {
+                ReportStatus(true);
+                reportStatus = Stopwatch.StartNew();
+            }
+
+            await Task.Delay(1000);
+        }
+
+        await sendTask;
+        await Task.WhenAll(receiveTasks.Values.ToList());
+
+        foreach (var eventData in GetLostEvents())
+        {
+            ReportLostEvent(eventData);
+        }
+
+        ReportStatus(true);
         }
 
         private async Task BackgroundSend(EventHubProducerClient producer, CancellationToken cancellationToken)
@@ -187,8 +184,6 @@ namespace Azure.Messaging.EventHubs.StressTests
 
         private async Task BackgroundReceive(string connectionString, string eventHubName, string partitionId, CancellationToken cancellationToken)
         {
-            var reportTasks = new List<Task>();
-
             EventPosition eventPosition;
 
             if (LastReceivedSequenceNumber.TryGetValue(partitionId, out long sequenceNumber))
@@ -218,12 +213,12 @@ namespace Azure.Messaging.EventHubs.StressTests
                             }
                             else
                             {
-                                reportTasks.Add(ReportCorruptedPropertiesEvent(partitionId, expectedEvent, receivedEvent.Data));
+                                ReportCorruptedPropertiesEvent(partitionId, expectedEvent, receivedEvent.Data);
                             }
                         }
                         else
                         {
-                            reportTasks.Add(ReportCorruptedBodyEvent(partitionId, receivedEvent.Data));
+                            ReportCorruptedBodyEvent(partitionId, receivedEvent.Data);
                         }
 
                         LastReceivedSequenceNumber[partitionId] = receivedEvent.Data.SequenceNumber;
@@ -235,8 +230,6 @@ namespace Azure.Messaging.EventHubs.StressTests
                     }
                 }
             }
-
-            await Task.WhenAll(reportTasks);
         }
 
         private List<EventData> GetLostEvents()
@@ -289,7 +282,7 @@ namespace Azure.Messaging.EventHubs.StressTests
             }
         }
 
-        private Task ReportCorruptedBodyEvent(string partitionId, EventData eventData)
+        private void ReportCorruptedBodyEvent(string partitionId, EventData eventData)
         {
             Interlocked.Increment(ref corruptedBodyFailureCount);
 
@@ -297,10 +290,11 @@ namespace Azure.Messaging.EventHubs.StressTests
                 $"Partition '{ partitionId }' received an event that has not been sent (corrupted body)." + Environment.NewLine +
                 GetPrintableEvent(eventData);
 
-            return Log.WriteLineAsync(output);
+            metrics.Client.GetMetric(metrics.CorruptedBodyFailureCount).TrackValue(1);
+            metrics.Client.TrackTrace(output);
         }
 
-        private Task ReportCorruptedPropertiesEvent(string partitionId, EventData expectedEvent, EventData receivedEvent)
+        private void ReportCorruptedPropertiesEvent(string partitionId, EventData expectedEvent, EventData receivedEvent)
         {
             Interlocked.Increment(ref corruptedPropertiesFailureCount);
 
@@ -311,10 +305,11 @@ namespace Azure.Messaging.EventHubs.StressTests
                 $"Received:" +
                 GetPrintableEvent(receivedEvent);
 
-            return Log.WriteLineAsync(output);
+            metrics.Client.GetMetric(metrics.CorruptedPropertiesFailureCount).TrackValue(1);
+            metrics.Client.TrackTrace(output);
         }
 
-        private Task ReportProducerFailure(Exception ex)
+        private void ReportProducerFailure(Exception ex)
         {
             Interlocked.Increment(ref producerFailureCount);
 
@@ -322,10 +317,11 @@ namespace Azure.Messaging.EventHubs.StressTests
                 $"The producer has stopped unexpectedly." + Environment.NewLine +
                 GetPrintableException(ex);
 
-            return Log.WriteLineAsync(output);
+            metrics.Client.GetMetric(metrics.ProducerFailureCount).TrackValue(1);
+            metrics.Client.TrackTrace(output);
         }
 
-        private Task ReportConsumerFailure(string partitionId, Exception ex)
+        private void ReportConsumerFailure(string partitionId, Exception ex)
         {
             Interlocked.Increment(ref consumerFailureCount);
 
@@ -333,19 +329,20 @@ namespace Azure.Messaging.EventHubs.StressTests
                 $"The consumer associated with partition '{ partitionId }' has stopped unexpectedly." + Environment.NewLine +
                 GetPrintableException(ex);
 
-            return Log.WriteLineAsync(output);
+            metrics.Client.GetMetric(metrics.ConsumerFailureCount).TrackValue(1);
+            metrics.Client.TrackTrace(output);
         }
 
-        private Task ReportLostEvent(EventData eventData)
+        private void ReportLostEvent(EventData eventData)
         {
             var output =
                 $"The following event was sent but it hasn't been received." + Environment.NewLine +
                 GetPrintableEvent(eventData);
 
-            return Log.WriteLineAsync(output);
+            metrics.Client.TrackTrace(output);
         }
 
-        private Task ReportStatus(bool log = false)
+        private void ReportStatus(bool log = false)
         {
             var elapsedTime = DateTimeOffset.UtcNow.Subtract(StartDate);
 
@@ -360,11 +357,12 @@ namespace Azure.Messaging.EventHubs.StressTests
                 $"Producer failure: { producerFailureCount }" + Environment.NewLine +
                 $"Consumer failure: { consumerFailureCount }" + Environment.NewLine;
 
-            Console.WriteLine(output);
+            //Console.WriteLine(output);
 
-            return log
-                ? Log.WriteLineAsync(output)
-                : Task.CompletedTask;
+            if (log)
+            {
+                metrics.Client.TrackTrace(output);
+            }
         }
     }
 }
