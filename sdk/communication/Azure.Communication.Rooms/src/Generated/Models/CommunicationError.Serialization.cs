@@ -19,7 +19,7 @@ namespace Azure.Communication.Rooms.Models
             string message = default;
             Optional<string> target = default;
             Optional<IReadOnlyList<CommunicationError>> details = default;
-            Optional<CommunicationError> innererror = default;
+            Optional<CommunicationError> innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -52,18 +52,18 @@ namespace Azure.Communication.Rooms.Models
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innerError"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innererror = DeserializeCommunicationError(property.Value);
+                    innerError = DeserializeCommunicationError(property.Value);
                     continue;
                 }
             }
-            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innerError.Value);
         }
     }
 }

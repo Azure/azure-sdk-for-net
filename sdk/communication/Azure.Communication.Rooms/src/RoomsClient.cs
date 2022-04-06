@@ -32,7 +32,7 @@ namespace Azure.Communication.Rooms
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 new RoomsClientOptions())
-        {}
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoomsClient"/> class.
@@ -43,7 +43,7 @@ namespace Azure.Communication.Rooms
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new RoomsClientOptions())
-        {}
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoomsClient"/> class.
@@ -111,7 +111,7 @@ namespace Azure.Communication.Rooms
         /// <param name="validUntil"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(IReadOnlyDictionary<string, object> participants = default, DateTimeOffset? validFrom=default, DateTimeOffset? validUntil=default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(IEnumerable<RoomParticipant> participants = default, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
@@ -135,7 +135,7 @@ namespace Azure.Communication.Rooms
         /// <param name="participants"></param>
         /// <param name="validUntil"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<CommunicationRoom> CreateRoom(IReadOnlyDictionary<string, object> participants = default, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationRoom> CreateRoom(IEnumerable<RoomParticipant> participants = default, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
@@ -295,18 +295,18 @@ namespace Azure.Communication.Rooms
         /// Add room participants.
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="communicationUsers"></param>
+        /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<CommunicationRoom> AddParticipants(string roomId, IEnumerable<string> communicationUsers, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationRoom> AddParticipants(string roomId, IEnumerable<RoomParticipant> participants, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddParticipants)}");
             scope.Start();
             try
             {
                 UpdateRoomRequest request = new UpdateRoomRequest();
-                foreach (string communicationUser in communicationUsers)
+                foreach (var participant in participants)
                 {
-                    request.Participants.Add(communicationUser, new RoomParticipant());
+                    request.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
                 }
 
                 Response<UpdateRoomResponse> updateRoomResponse =
@@ -324,18 +324,76 @@ namespace Azure.Communication.Rooms
         /// Add room participants async.
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="communicationUsers"></param>
+        /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task<Response<CommunicationRoom>> AddParticipantsAsync(string roomId, IEnumerable<string> communicationUsers, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationRoom>> AddParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddParticipants)}");
             scope.Start();
             try
             {
                 UpdateRoomRequest request = new UpdateRoomRequest();
-                foreach (string communicationUser in communicationUsers)
+                foreach (var participant in participants)
                 {
-                    request.Participants.Add(communicationUser, new RoomParticipant());
+                    request.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
+                }
+
+                Response<UpdateRoomResponse> updateRoomResponse =
+                    await RoomsServiceClient.UpdateRoomAsync(roomId, request, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update room participants.
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="participants"></param>
+        /// <param name="cancellationToken"></param>
+        public virtual Response<CommunicationRoom> UpdateParticipants(string roomId, IEnumerable<RoomParticipant> participants, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateParticipants)}");
+            scope.Start();
+            try
+            {
+                UpdateRoomRequest request = new UpdateRoomRequest();
+                foreach (var participant in participants)
+                {
+                    request.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
+                }
+
+                Response<UpdateRoomResponse> updateRoomResponse =
+                    RoomsServiceClient.UpdateRoom(roomId, request, cancellationToken);
+                return Response.FromValue(new CommunicationRoom(updateRoomResponse), updateRoomResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update room participants async.
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="participants"></param>
+        /// <param name="cancellationToken"></param>
+        public virtual async Task<Response<CommunicationRoom>> UpdateParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpdateParticipants)}");
+            scope.Start();
+            try
+            {
+                UpdateRoomRequest request = new UpdateRoomRequest();
+                foreach (var participant in participants)
+                {
+                    request.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
                 }
 
                 Response<UpdateRoomResponse> updateRoomResponse =
@@ -362,7 +420,7 @@ namespace Azure.Communication.Rooms
             try
             {
                 UpdateRoomRequest request = new UpdateRoomRequest();
-                foreach (string communicationUser in communicationUsers)
+                foreach (var communicationUser in communicationUsers)
                 {
                     request.Participants.Add(communicationUser, null);
                 }
@@ -391,7 +449,7 @@ namespace Azure.Communication.Rooms
             try
             {
                 UpdateRoomRequest request = new UpdateRoomRequest();
-                foreach (string communicationUser in communicationUsers)
+                foreach (var communicationUser in communicationUsers)
                 {
                     request.Participants.Add(communicationUser, null);
                 }
@@ -408,7 +466,7 @@ namespace Azure.Communication.Rooms
         }
         #endregion
 
-        private static CreateRoomRequest _createRoomRequest(IReadOnlyDictionary<string, object> participants = default, DateTimeOffset ? validFrom=default, DateTimeOffset? validUntil=default)
+        private static CreateRoomRequest _createRoomRequest(IEnumerable<RoomParticipant> participants = default, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default)
         {
             CreateRoomRequest createRoomRequest = new CreateRoomRequest();
 
@@ -426,14 +484,14 @@ namespace Azure.Communication.Rooms
             {
                 foreach (var participant in participants)
                 {
-                    createRoomRequest.Participants.Add(participant.Key, participant.Value);
+                    createRoomRequest.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
                 }
             }
 
             return createRoomRequest;
         }
 
-        private static UpdateRoomRequest _updateRoomRequest(IReadOnlyDictionary<string, object> participants = default, DateTimeOffset ? validFrom = default, DateTimeOffset? validUntil = default)
+        private static UpdateRoomRequest _updateRoomRequest(IEnumerable<RoomParticipant> participants = default, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default)
         {
             UpdateRoomRequest updateRoomRequest = new UpdateRoomRequest();
 
@@ -451,7 +509,7 @@ namespace Azure.Communication.Rooms
             {
                 foreach (var participant in participants)
                 {
-                    updateRoomRequest.Participants.Add(participant.Key, participant.Value);
+                    updateRoomRequest.Participants.Add(participant.Identifier, participant.ToRoomParticipantInternal());
                 }
             }
 

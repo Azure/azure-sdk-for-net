@@ -20,7 +20,7 @@ namespace Azure.Communication.Rooms.Models
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> validFrom = default;
             Optional<DateTimeOffset> validUntil = default;
-            Optional<IReadOnlyDictionary<string, object>> participants = default;
+            Optional<IReadOnlyDictionary<string, RoomParticipantInternal>> participants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -65,10 +65,10 @@ namespace Azure.Communication.Rooms.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, RoomParticipantInternal> dictionary = new Dictionary<string, RoomParticipantInternal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, RoomParticipantInternal.DeserializeRoomParticipantInternal(property0.Value));
                     }
                     participants = dictionary;
                     continue;

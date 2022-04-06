@@ -9,7 +9,7 @@ This package contains a C# SDK for the Rooms Service of Azure Communication Serv
 Install the Azure Communication Rooms client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Rooms --version 1.0.0-beta.1
+dotnet add package Azure.Communication.Rooms --version 1.0.1-alpha.1
 ``` 
 
 ### Prerequisites
@@ -34,15 +34,6 @@ Rooms clients can be authenticated using the connection string acquired from an 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomsClient
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
 RoomsClient client = new RoomsClient(connectionString);
-```
-
-Alternatively, Rooms clients can also be authenticated using a valid token credential. With this option,
-`AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication. 
-
-```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomsClientWithToken
-string endpoint = "<endpoint_url>";
-TokenCredential tokenCredential = new DefaultAzureCredential();
-RoomsClient client = new RoomsClient(new Uri(endpoint), tokenCredential);
 ```
 
 ## Examples

@@ -14,16 +14,16 @@ namespace Azure.Communication.Rooms.Models
     {
         internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
         {
-            CommunicationError error = default;
+            CommunicationError communicationError = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("communicationError"))
                 {
-                    error = CommunicationError.DeserializeCommunicationError(property.Value);
+                    communicationError = CommunicationError.DeserializeCommunicationError(property.Value);
                     continue;
                 }
             }
-            return new CommunicationErrorResponse(error);
+            return new CommunicationErrorResponse(communicationError);
         }
     }
 }

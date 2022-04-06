@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.Rooms.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.Communication.Rooms.Models
         /// <param name="validUntil"></param>
         /// <param name="participants"></param>
         internal CommunicationRoom(string id, DateTimeOffset createdDateTime, DateTimeOffset validFrom, DateTimeOffset validUntil,
-             IReadOnlyDictionary<string, object> participants)
+             IEnumerable<RoomParticipant> participants)
         {
             Id = id;
             CreatedDateTime = createdDateTime;
@@ -35,7 +36,7 @@ namespace Azure.Communication.Rooms.Models
             CreatedDateTime = createRoomResponse.Room.CreatedDateTime;
             ValidFrom = createRoomResponse.Room.ValidFrom;
             ValidUntil = createRoomResponse.Room.ValidUntil;
-            Participants = createRoomResponse.Room.Participants;
+            Participants = translateFromDictionary(createRoomResponse.Room.Participants);
         }
 
         internal CommunicationRoom(UpdateRoomResponse updateRoomResponse)
@@ -44,8 +45,8 @@ namespace Azure.Communication.Rooms.Models
             CreatedDateTime = updateRoomResponse.Room.CreatedDateTime;
             ValidFrom = updateRoomResponse.Room.ValidFrom;
             ValidUntil = updateRoomResponse.Room.ValidUntil;
-            Participants = updateRoomResponse.Room.Participants;
-       }
+            Participants = translateFromDictionary(updateRoomResponse.Room.Participants);
+        }
 
         internal CommunicationRoom(RoomModel roomModel)
         {
@@ -53,7 +54,7 @@ namespace Azure.Communication.Rooms.Models
             CreatedDateTime = roomModel.CreatedDateTime;
             ValidFrom = roomModel.ValidFrom;
             ValidUntil = roomModel.ValidUntil;
-            Participants = roomModel.Participants;
+            Participants = translateFromDictionary(roomModel.Participants);
         }
 
         /// <summary> Unique identifier of a room. This id is server generated. </summary>
@@ -65,6 +66,16 @@ namespace Azure.Communication.Rooms.Models
         /// <summary> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ValidUntil { get; }
         /// <summary> Collection of identities invited to the room. </summary>
-        public IReadOnlyDictionary<string, object> Participants { get; }
+        public IEnumerable<RoomParticipant> Participants { get; }
+
+        private static IEnumerable<RoomParticipant> translateFromDictionary(IReadOnlyDictionary<string, RoomParticipantInternal> participants)
+        {
+            List<RoomParticipant> roomParticipants = new List<RoomParticipant>();
+            foreach (var participant in participants)
+            {
+                roomParticipants.Add(new RoomParticipant(participant.Key, participant.Value.Role));
+            }
+            return roomParticipants;
+        }
     }
 }

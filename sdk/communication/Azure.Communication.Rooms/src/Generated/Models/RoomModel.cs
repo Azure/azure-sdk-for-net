@@ -17,7 +17,7 @@ namespace Azure.Communication.Rooms.Models
         /// <summary> Initializes a new instance of RoomModel. </summary>
         internal RoomModel()
         {
-            Participants = new ChangeTrackingDictionary<string, object>();
+            Participants = new ChangeTrackingDictionary<string, RoomParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of RoomModel. </summary>
@@ -26,7 +26,7 @@ namespace Azure.Communication.Rooms.Models
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="participants"> Collection of identities invited to the room. </param>
-        internal RoomModel(string id, DateTimeOffset? createdDateTime, DateTimeOffset? validFrom, DateTimeOffset? validUntil, IReadOnlyDictionary<string, object> participants)
+        internal RoomModel(string id, DateTimeOffset? createdDateTime, DateTimeOffset? validFrom, DateTimeOffset? validUntil, IReadOnlyDictionary<string, RoomParticipantInternal> participants)
         {
             Id = id;
             CreatedDateTime = createdDateTime;
@@ -44,6 +44,6 @@ namespace Azure.Communication.Rooms.Models
         /// <summary> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ValidUntil { get; }
         /// <summary> Collection of identities invited to the room. </summary>
-        public IReadOnlyDictionary<string, object> Participants { get; }
+        public IReadOnlyDictionary<string, RoomParticipantInternal> Participants { get; }
     }
 }

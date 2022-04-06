@@ -16,7 +16,7 @@ namespace Azure.Communication.Rooms.Models
         internal static CreateRoomResponse DeserializeCreateRoomResponse(JsonElement element)
         {
             RoomModel room = default;
-            Optional<IReadOnlyDictionary<string, object>> invalidParticipants = default;
+            Optional<IReadOnlyDictionary<string, RoomParticipantInternal>> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("room"))
@@ -31,10 +31,10 @@ namespace Azure.Communication.Rooms.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, RoomParticipantInternal> dictionary = new Dictionary<string, RoomParticipantInternal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, RoomParticipantInternal.DeserializeRoomParticipantInternal(property0.Value));
                     }
                     invalidParticipants = dictionary;
                     continue;

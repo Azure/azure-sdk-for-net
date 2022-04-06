@@ -13,19 +13,19 @@ namespace Azure.Communication.Rooms.Models
     internal partial class CommunicationErrorResponse
     {
         /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
-        /// <param name="error"> The Communication Services error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal CommunicationErrorResponse(CommunicationError error)
+        /// <param name="communicationError"> The Communication Services error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationError"/> is null. </exception>
+        internal CommunicationErrorResponse(CommunicationError communicationError)
         {
-            if (error == null)
+            if (communicationError == null)
             {
-                throw new ArgumentNullException(nameof(error));
+                throw new ArgumentNullException(nameof(communicationError));
             }
 
-            Error = error;
+            CommunicationError = communicationError;
         }
 
         /// <summary> The Communication Services error. </summary>
-        public CommunicationError Error { get; }
+        public CommunicationError CommunicationError { get; }
     }
 }

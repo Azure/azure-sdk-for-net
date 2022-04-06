@@ -25,13 +25,13 @@ namespace Azure.Communication.Rooms.Models
             }
 
             Room = room;
-            InvalidParticipants = new ChangeTrackingDictionary<string, object>();
+            InvalidParticipants = new ChangeTrackingDictionary<string, RoomParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of UpdateRoomResponse. </summary>
         /// <param name="room"> The meeting room. </param>
         /// <param name="invalidParticipants"> Collection of participants failed to be added to the room. </param>
-        internal UpdateRoomResponse(RoomModel room, IReadOnlyDictionary<string, object> invalidParticipants)
+        internal UpdateRoomResponse(RoomModel room, IReadOnlyDictionary<string, RoomParticipantInternal> invalidParticipants)
         {
             Room = room;
             InvalidParticipants = invalidParticipants;
@@ -40,6 +40,6 @@ namespace Azure.Communication.Rooms.Models
         /// <summary> The meeting room. </summary>
         public RoomModel Room { get; }
         /// <summary> Collection of participants failed to be added to the room. </summary>
-        public IReadOnlyDictionary<string, object> InvalidParticipants { get; }
+        public IReadOnlyDictionary<string, RoomParticipantInternal> InvalidParticipants { get; }
     }
 }

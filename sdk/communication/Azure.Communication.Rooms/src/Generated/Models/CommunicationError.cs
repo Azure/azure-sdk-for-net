@@ -37,9 +37,9 @@ namespace Azure.Communication.Rooms.Models
         /// <summary> Initializes a new instance of CommunicationError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
-        /// <param name="target"> The error target. </param>
+        /// <param name="target"> If applicable, would be used to indicate the property causing the error. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
-        /// <param name="innerError"> The inner error if any. </param>
+        /// <param name="innerError"> The Communication Services error. </param>
         internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError)
         {
             Code = code;
@@ -53,11 +53,11 @@ namespace Azure.Communication.Rooms.Models
         public string Code { get; }
         /// <summary> The error message. </summary>
         public string Message { get; }
-        /// <summary> The error target. </summary>
+        /// <summary> If applicable, would be used to indicate the property causing the error. </summary>
         public string Target { get; }
         /// <summary> Further details about specific errors that led to this error. </summary>
         public IReadOnlyList<CommunicationError> Details { get; }
-        /// <summary> The inner error if any. </summary>
+        /// <summary> The Communication Services error. </summary>
         public CommunicationError InnerError { get; }
     }
 }
