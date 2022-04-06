@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
-            PatchableProfileData updateOptions = new PatchableProfileData();
+            ProfilePatch updateOptions = new ProfilePatch();
             updateOptions.Tags.Add("newTag", "newValue");
             var lro = await afdProfile.UpdateAsync(WaitUntil.Completed, updateOptions);
             ProfileResource updatedAfdProfile = lro.Value;

@@ -108,6 +108,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitConnectionResource>> GetExpressRouteCircuitConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             return await GetExpressRouteCircuitConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitConnectionResource> GetExpressRouteCircuitConnection(string connectionName, CancellationToken cancellationToken = default)
         {
             return GetExpressRouteCircuitConnections().Get(connectionName, cancellationToken);
@@ -143,6 +145,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PeerExpressRouteCircuitConnectionResource>> GetPeerExpressRouteCircuitConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             return await GetPeerExpressRouteCircuitConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
@@ -157,6 +160,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PeerExpressRouteCircuitConnectionResource> GetPeerExpressRouteCircuitConnection(string connectionName, CancellationToken cancellationToken = default)
         {
             return GetPeerExpressRouteCircuitConnections().Get(connectionName, cancellationToken);

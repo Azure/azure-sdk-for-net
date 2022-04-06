@@ -194,18 +194,18 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
         /// Operation Id: AutoscaleSettings_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the operation. </param>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<AutoscaleSettingResource>> UpdateAsync(PatchableAutoscaleSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<AutoscaleSettingResource>> UpdateAsync(AutoscaleSettingPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _autoscaleSettingRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _autoscaleSettingRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}
         /// Operation Id: AutoscaleSettings_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the operation. </param>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<AutoscaleSettingResource> Update(PatchableAutoscaleSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<AutoscaleSettingResource> Update(AutoscaleSettingPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _autoscaleSettingRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _autoscaleSettingRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

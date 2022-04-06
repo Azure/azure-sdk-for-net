@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DeviceUpdateInstanceResource>> GetDeviceUpdateInstanceAsync(string instanceName, CancellationToken cancellationToken = default)
         {
             return await GetDeviceUpdateInstances().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<DeviceUpdateInstanceResource> GetDeviceUpdateInstance(string instanceName, CancellationToken cancellationToken = default)
         {
             return GetDeviceUpdateInstances().Get(instanceName, cancellationToken);
@@ -140,6 +142,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -154,6 +157,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -175,6 +179,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkAsync(string groupId, CancellationToken cancellationToken = default)
         {
             return await GetPrivateLinks().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
@@ -189,6 +194,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateLinkResource> GetPrivateLink(string groupId, CancellationToken cancellationToken = default)
         {
             return GetPrivateLinks().Get(groupId, cancellationToken);
@@ -210,6 +216,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateEndpointConnectionProxyResource>> GetPrivateEndpointConnectionProxyAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
             return await GetPrivateEndpointConnectionProxies().GetAsync(privateEndpointConnectionProxyId, cancellationToken).ConfigureAwait(false);
@@ -224,6 +231,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateEndpointConnectionProxyResource> GetPrivateEndpointConnectionProxy(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
             return GetPrivateEndpointConnectionProxies().Get(privateEndpointConnectionProxyId, cancellationToken);
@@ -335,19 +343,19 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// Operation Id: Accounts_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Updated Account. </param>
+        /// <param name="patch"> Updated Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeviceUpdateAccountResource>> UpdateAsync(WaitUntil waitUntil, PatchableDeviceUpdateAccountData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<DeviceUpdateAccountResource>> UpdateAsync(WaitUntil waitUntil, DeviceUpdateAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _deviceUpdateAccountAccountsClientDiagnostics.CreateScope("DeviceUpdateAccountResource.Update");
             scope.Start();
             try
             {
-                var response = await _deviceUpdateAccountAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccountResource>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _deviceUpdateAccountAccountsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccountResource>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -365,19 +373,19 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// Operation Id: Accounts_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Updated Account. </param>
+        /// <param name="patch"> Updated Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DeviceUpdateAccountResource> Update(WaitUntil waitUntil, PatchableDeviceUpdateAccountData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<DeviceUpdateAccountResource> Update(WaitUntil waitUntil, DeviceUpdateAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _deviceUpdateAccountAccountsClientDiagnostics.CreateScope("DeviceUpdateAccountResource.Update");
             scope.Start();
             try
             {
-                var response = _deviceUpdateAccountAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccountResource>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _deviceUpdateAccountAccountsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccountResource>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -262,6 +262,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ResourcePoolResource>> GetResourcePoolAsync(this ResourceGroupResource resourceGroupResource, string resourcePoolName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetResourcePools().GetAsync(resourcePoolName, cancellationToken).ConfigureAwait(false);
@@ -277,6 +278,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ResourcePoolResource> GetResourcePool(this ResourceGroupResource resourceGroupResource, string resourcePoolName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetResourcePools().Get(resourcePoolName, cancellationToken);
@@ -300,6 +302,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VMwareClusterResource>> GetVMwareClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVMwareClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
@@ -315,6 +318,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VMwareClusterResource> GetVMwareCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVMwareClusters().Get(clusterName, cancellationToken);
@@ -338,6 +342,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VMwareHostResource>> GetVMwareHostAsync(this ResourceGroupResource resourceGroupResource, string hostName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVMwareHosts().GetAsync(hostName, cancellationToken).ConfigureAwait(false);
@@ -353,6 +358,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VMwareHostResource> GetVMwareHost(this ResourceGroupResource resourceGroupResource, string hostName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVMwareHosts().Get(hostName, cancellationToken);
@@ -376,6 +382,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VMwareDatastoreResource>> GetVMwareDatastoreAsync(this ResourceGroupResource resourceGroupResource, string datastoreName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVMwareDatastores().GetAsync(datastoreName, cancellationToken).ConfigureAwait(false);
@@ -391,6 +398,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VMwareDatastoreResource> GetVMwareDatastore(this ResourceGroupResource resourceGroupResource, string datastoreName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVMwareDatastores().Get(datastoreName, cancellationToken);
@@ -414,6 +422,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VCenterResource>> GetVCenterAsync(this ResourceGroupResource resourceGroupResource, string vcenterName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVCenters().GetAsync(vcenterName, cancellationToken).ConfigureAwait(false);
@@ -429,6 +438,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VCenterResource> GetVCenter(this ResourceGroupResource resourceGroupResource, string vcenterName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVCenters().Get(vcenterName, cancellationToken);
@@ -452,6 +462,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
@@ -467,6 +478,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVirtualMachines().Get(virtualMachineName, cancellationToken);
@@ -490,6 +502,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VirtualMachineTemplateResource>> GetVirtualMachineTemplateAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVirtualMachineTemplates().GetAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
@@ -505,6 +518,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VirtualMachineTemplateResource> GetVirtualMachineTemplate(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVirtualMachineTemplates().Get(virtualMachineTemplateName, cancellationToken);
@@ -528,6 +542,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
@@ -543,6 +558,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<VirtualNetworkResource> GetVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetVirtualNetworks().Get(virtualNetworkName, cancellationToken);

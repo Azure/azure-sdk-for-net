@@ -21,6 +21,16 @@ namespace Azure.Storage.Blobs.Models
         public string BlobContainerName { get; internal set; }
 
         /// <summary>
+        /// VersionId.
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
+        /// IsCurrentVersion.
+        /// </summary>
+        public bool? IsLatestVersion { get; internal set; }
+
+        /// <summary>
         /// Blob Tags.
         /// </summary>
         public Tags Tags { get; internal set; }

@@ -355,8 +355,8 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> Update(Azure.ResourceManager.ServiceBus.Models.PatchableServiceBusNamespaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> UpdateAsync(Azure.ResourceManager.ServiceBus.Models.PatchableServiceBusNamespaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> Update(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> UpdateAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceBusQueueCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusQueueResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusQueueResource>, System.Collections.IEnumerable
     {
@@ -752,22 +752,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
-    public partial class PatchableServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public PatchableServiceBusNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public bool? DisableLocalAuth { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string MetricId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
-        public string ServiceBusEndpoint { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
-        public string Status { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-        public bool? ZoneRedundant { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateLinkConnectionStatus : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.PrivateLinkConnectionStatus>
     {
@@ -837,6 +821,22 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string ClientId { get { throw null; } set { } }
         public bool? IsDurable { get { throw null; } set { } }
         public bool? IsShared { get { throw null; } set { } }
+    }
+    public partial class ServiceBusNamespacePatch : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public ServiceBusNamespacePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public bool? DisableLocalAuth { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string MetricId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.PrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public string ServiceBusEndpoint { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
+        public string Status { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        public bool? ZoneRedundant { get { throw null; } set { } }
     }
     public partial class ServiceBusSku
     {

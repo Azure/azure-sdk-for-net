@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, PatchableStaticSiteARMResourceData data)
+        internal HttpMessage CreateUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -516,18 +516,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site to create or update. </param>
-        /// <param name="data"> A JSON representation of the staticsite properties. See example. </param>
+        /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteARMResourceData>> UpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, PatchableStaticSiteARMResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteARMResourceData>> UpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -548,18 +548,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site to create or update. </param>
-        /// <param name="data"> A JSON representation of the staticsite properties. See example. </param>
+        /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteARMResourceData> UpdateStaticSite(string subscriptionId, string resourceGroupName, string name, PatchableStaticSiteARMResourceData data, CancellationToken cancellationToken = default)
+        public Response<StaticSiteARMResourceData> UpdateStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

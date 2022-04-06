@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             return await GetHostingEnvironmentDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
@@ -135,6 +136,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             return GetHostingEnvironmentDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
@@ -170,6 +172,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> GetHostingEnvironmentWorkerPoolAsync(string workerPoolName, CancellationToken cancellationToken = default)
         {
             return await GetHostingEnvironmentWorkerPools().GetAsync(workerPoolName, cancellationToken).ConfigureAwait(false);
@@ -184,6 +187,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<HostingEnvironmentWorkerPoolResource> GetHostingEnvironmentWorkerPool(string workerPoolName, CancellationToken cancellationToken = default)
         {
             return GetHostingEnvironmentWorkerPools().Get(workerPoolName, cancellationToken);
@@ -205,6 +209,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<HostingEnvironmentPrivateEndpointConnectionResource>> GetHostingEnvironmentPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetHostingEnvironmentPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -219,6 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<HostingEnvironmentPrivateEndpointConnectionResource> GetHostingEnvironmentPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetHostingEnvironmentPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -242,6 +248,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<HostingEnvironmentRecommendationResource>> GetHostingEnvironmentRecommendationAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             return await GetHostingEnvironmentRecommendations().GetAsync(name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
@@ -258,6 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<HostingEnvironmentRecommendationResource> GetHostingEnvironmentRecommendation(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             return GetHostingEnvironmentRecommendations().Get(name, updateSeen, recommendationId, cancellationToken);
@@ -370,18 +378,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Update
         /// </summary>
-        /// <param name="data"> Configuration details of the App Service Environment. </param>
+        /// <param name="patch"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<AppServiceEnvironmentResource>> UpdateAsync(PatchableAppServiceEnvironmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<AppServiceEnvironmentResource>> UpdateAsync(AppServiceEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _appServiceEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,18 +404,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Update
         /// </summary>
-        /// <param name="data"> Configuration details of the App Service Environment. </param>
+        /// <param name="patch"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<AppServiceEnvironmentResource> Update(PatchableAppServiceEnvironmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<AppServiceEnvironmentResource> Update(AppServiceEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Update");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _appServiceEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

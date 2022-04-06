@@ -120,6 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedDatabaseResource>> GetManagedDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             return await GetManagedDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
@@ -134,6 +135,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ManagedDatabaseResource> GetManagedDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
             return GetManagedDatabases().Get(databaseName, cancellationToken);
@@ -153,6 +155,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceAdministratorResource>> GetManagedInstanceAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
@@ -165,6 +168,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceAdministratorResource> GetManagedInstanceAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceAdministrators().Get(administratorName, cancellationToken);
@@ -184,6 +188,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceAzureADOnlyAuthenticationResource>> GetManagedInstanceAzureADOnlyAuthenticationAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceAzureADOnlyAuthentications().GetAsync(authenticationName, cancellationToken).ConfigureAwait(false);
@@ -196,6 +201,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceAzureADOnlyAuthenticationResource> GetManagedInstanceAzureADOnlyAuthentication(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceAzureADOnlyAuthentications().Get(authenticationName, cancellationToken);
@@ -215,6 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceEncryptionProtectorResource>> GetManagedInstanceEncryptionProtectorAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceEncryptionProtectors().GetAsync(encryptionProtectorName, cancellationToken).ConfigureAwait(false);
@@ -227,6 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceEncryptionProtectorResource> GetManagedInstanceEncryptionProtector(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceEncryptionProtectors().Get(encryptionProtectorName, cancellationToken);
@@ -248,6 +256,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceKeyResource>> GetManagedInstanceKeyAsync(string keyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceKeys().GetAsync(keyName, cancellationToken).ConfigureAwait(false);
@@ -262,6 +271,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceKeyResource> GetManagedInstanceKey(string keyName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceKeys().Get(keyName, cancellationToken);
@@ -281,6 +291,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceOperationResource>> GetManagedInstanceOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceOperations().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
@@ -293,6 +304,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"> The Uuid to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceOperationResource> GetManagedInstanceOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceOperations().Get(operationId, cancellationToken);
@@ -314,6 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstancePrivateEndpointConnectionResource>> GetManagedInstancePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstancePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -328,6 +341,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstancePrivateEndpointConnectionResource> GetManagedInstancePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstancePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -349,6 +363,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstancePrivateLinkResource>> GetManagedInstancePrivateLinkAsync(string groupName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstancePrivateLinks().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
@@ -363,6 +378,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstancePrivateLinkResource> GetManagedInstancePrivateLink(string groupName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstancePrivateLinks().Get(groupName, cancellationToken);
@@ -382,6 +398,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceVulnerabilityAssessmentResource>> GetManagedInstanceVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
@@ -394,6 +411,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceVulnerabilityAssessmentResource> GetManagedInstanceVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
@@ -413,6 +431,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedServerSecurityAlertPolicyResource>> GetManagedServerSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedServerSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
@@ -425,6 +444,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedServerSecurityAlertPolicyResource> GetManagedServerSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return GetManagedServerSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
@@ -446,6 +466,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recoverableDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RecoverableManagedDatabaseResource>> GetRecoverableManagedDatabaseAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
             return await GetRecoverableManagedDatabases().GetAsync(recoverableDatabaseName, cancellationToken).ConfigureAwait(false);
@@ -460,6 +481,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recoverableDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<RecoverableManagedDatabaseResource> GetRecoverableManagedDatabase(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
             return GetRecoverableManagedDatabases().Get(recoverableDatabaseName, cancellationToken);
@@ -488,6 +510,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RestorableDroppedManagedDatabaseResource>> GetRestorableDroppedManagedDatabaseAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
             return await GetRestorableDroppedManagedDatabases().GetAsync(restorableDroppedDatabaseId, cancellationToken).ConfigureAwait(false);
@@ -502,6 +525,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<RestorableDroppedManagedDatabaseResource> GetRestorableDroppedManagedDatabase(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
             return GetRestorableDroppedManagedDatabases().Get(restorableDroppedDatabaseId, cancellationToken);
@@ -615,19 +639,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedInstances_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The requested managed instance resource state. </param>
+        /// <param name="patch"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedInstanceResource>> UpdateAsync(WaitUntil waitUntil, PatchableManagedInstanceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedInstanceResource>> UpdateAsync(WaitUntil waitUntil, ManagedInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = await _managedInstanceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedInstanceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -645,19 +669,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedInstances_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The requested managed instance resource state. </param>
+        /// <param name="patch"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ManagedInstanceResource> Update(WaitUntil waitUntil, PatchableManagedInstanceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ManagedInstanceResource> Update(WaitUntil waitUntil, ManagedInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = _managedInstanceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _managedInstanceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

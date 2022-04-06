@@ -865,6 +865,7 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FileLastWrittenMode? FileLastWrittenMode { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public byte[] TransactionalContentHash { get { throw null; } set { } }
     }
     public partial class ShareInfo
     {

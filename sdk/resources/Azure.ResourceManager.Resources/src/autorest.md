@@ -172,6 +172,8 @@ directive:
       $["Identity"]["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
       $["Identity"]["properties"]["principalId"]["format"] = "uuid";
       $["Identity"]["properties"]["tenantId"]["format"] = "uuid";
+      $["JitRequestProperties"]["properties"]["publisherTenantId"]["format"] = "uuid";
+      $["ApplicationProperties"]["properties"]["publisherTenantId"]["format"] = "uuid";
       $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResourceData";
       $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
       $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
@@ -197,6 +199,7 @@ directive:
       $.ApplicationAuthorization.properties.principalId.format = 'uuid';
       $.JitAuthorizationPolicies.properties.principalId.format = 'uuid';
       $.ApplicationClientDetails['x-ms-client-name'] = 'ArmApplicationDetails';
+      $.ApplicationClientDetails.properties.oid['x-ms-client-name'] = 'ObjectId';
       $.ApplicationClientDetails.properties.oid.format = 'uuid';
       $.ApplicationClientDetails.properties.applicationId.format = 'uuid';
       $.ApplicationDefinitionArtifact['x-ms-client-name'] = 'ArmApplicationDefinitionArtifact';
@@ -254,6 +257,9 @@ directive:
       $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
       $.Dependency["x-ms-client-name"] = "ArmDependency";
       $.BasicDependency["x-ms-client-name"] = "BasicArmDependency";
+      $.Dependency.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.BasicDependency.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.TargetResource.properties.resourceType['x-ms-format'] = 'resource-type';
       $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
       $.DeploymentPropertiesExtended.properties.onErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
@@ -321,6 +327,10 @@ directive:
     where: $.definitions.DeploymentProperties.properties.onErrorDeployment
     transform: >
       $["x-ms-client-name"] = "ErrorDeployment"
+  - from: deploymentScripts.json
+    where: $.definitions.DeploymentScriptPropertiesBase.properties.outputs
+    transform: >
+      $.additionalProperties = undefined
 ```
 
 ### Tag: package-track2-preview

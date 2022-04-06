@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_UpdateAtScope
         /// </summary>
-        /// <param name="data"> The PatchableTagResourceData to use. </param>
+        /// <param name="patch"> The TagResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<TagResource>> UpdateAsync(PatchableTagResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<TagResource>> UpdateAsync(TagResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
             scope.Start();
             try
             {
-                var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
+                var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,18 +218,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_UpdateAtScope
         /// </summary>
-        /// <param name="data"> The PatchableTagResourceData to use. </param>
+        /// <param name="patch"> The TagResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<TagResource> Update(PatchableTagResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<TagResource> Update(TagResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
             scope.Start();
             try
             {
-                var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, data, cancellationToken);
+                var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, patch, cancellationToken);
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

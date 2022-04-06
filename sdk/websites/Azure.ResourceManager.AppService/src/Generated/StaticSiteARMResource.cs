@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StaticSitePrivateEndpointConnectionResource>> GetStaticSitePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSitePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StaticSitePrivateEndpointConnectionResource> GetStaticSitePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetStaticSitePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -140,6 +142,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteBuildARMResource>> GetStaticSiteBuildARMResourceAsync(string environmentName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSiteBuildARMResources().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
@@ -154,6 +157,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StaticSiteBuildARMResource> GetStaticSiteBuildARMResource(string environmentName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteBuildARMResources().Get(environmentName, cancellationToken);
@@ -175,6 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteUserProvidedFunctionAppResource>> GetStaticSiteUserProvidedFunctionAppAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSiteUserProvidedFunctionApps().GetAsync(functionAppName, cancellationToken).ConfigureAwait(false);
@@ -189,6 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StaticSiteUserProvidedFunctionAppResource> GetStaticSiteUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
@@ -210,6 +216,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetStaticSiteCustomDomainOverviewARMResourceAsync(string domainName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSiteCustomDomainOverviewARMResources().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
@@ -224,6 +231,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StaticSiteCustomDomainOverviewARMResource> GetStaticSiteCustomDomainOverviewARMResource(string domainName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteCustomDomainOverviewARMResources().Get(domainName, cancellationToken);
@@ -334,18 +342,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_UpdateStaticSite
         /// </summary>
-        /// <param name="data"> A JSON representation of the staticsite properties. See example. </param>
+        /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<StaticSiteARMResource>> UpdateAsync(PatchableStaticSiteARMResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<StaticSiteARMResource>> UpdateAsync(StaticSiteARMResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.Update");
             scope.Start();
             try
             {
-                var response = await _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StaticSiteARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -360,18 +368,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_UpdateStaticSite
         /// </summary>
-        /// <param name="data"> A JSON representation of the staticsite properties. See example. </param>
+        /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<StaticSiteARMResource> Update(PatchableStaticSiteARMResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<StaticSiteARMResource> Update(StaticSiteARMResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _staticSiteARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteARMResource.Update");
             scope.Start();
             try
             {
-                var response = _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _staticSiteARMResourceStaticSitesRestClient.UpdateStaticSite(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new StaticSiteARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

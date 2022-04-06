@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<SourceControlResource>> GetSourceControlAsync(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
             return await tenantResource.GetSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<SourceControlResource> GetSourceControl(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
             return tenantResource.GetSourceControls().Get(sourceControlType, cancellationToken);
@@ -339,6 +341,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<TopLevelDomainResource>> GetTopLevelDomainAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetTopLevelDomains().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -354,6 +357,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<TopLevelDomainResource> GetTopLevelDomain(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetTopLevelDomains().Get(name, cancellationToken);
@@ -377,6 +381,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DeletedSiteResource>> GetDeletedSiteAsync(this SubscriptionResource subscriptionResource, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetDeletedSites().GetAsync(deletedSiteId, cancellationToken).ConfigureAwait(false);
@@ -392,6 +397,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DeletedSiteResource> GetDeletedSite(this SubscriptionResource subscriptionResource, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetDeletedSites().Get(deletedSiteId, cancellationToken);
@@ -1296,6 +1302,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AppServiceCertificateOrderResource>> GetAppServiceCertificateOrderAsync(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAppServiceCertificateOrders().GetAsync(certificateOrderName, cancellationToken).ConfigureAwait(false);
@@ -1311,6 +1318,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AppServiceCertificateOrderResource> GetAppServiceCertificateOrder(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAppServiceCertificateOrders().Get(certificateOrderName, cancellationToken);
@@ -1334,6 +1342,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAppServiceDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
@@ -1349,6 +1358,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AppServiceDomainResource> GetAppServiceDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAppServiceDomains().Get(domainName, cancellationToken);
@@ -1372,6 +1382,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAppServiceEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1387,6 +1398,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAppServiceEnvironments().Get(name, cancellationToken);
@@ -1410,6 +1422,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAppServicePlans().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1425,6 +1438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AppServicePlanResource> GetAppServicePlan(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAppServicePlans().Get(name, cancellationToken);
@@ -1448,6 +1462,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<CertificateResource>> GetCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1463,6 +1478,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<CertificateResource> GetCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetCertificates().Get(name, cancellationToken);
@@ -1486,6 +1502,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetKubeEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1501,6 +1518,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<KubeEnvironmentResource> GetKubeEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetKubeEnvironments().Get(name, cancellationToken);
@@ -1524,6 +1542,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<StaticSiteARMResource>> GetStaticSiteARMResourceAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetStaticSiteARMResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1539,6 +1558,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<StaticSiteARMResource> GetStaticSiteARMResource(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetStaticSiteARMResources().Get(name, cancellationToken);
@@ -1562,6 +1582,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<WebSiteResource>> GetWebSiteAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetWebSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -1577,6 +1598,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<WebSiteResource> GetWebSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetWebSites().Get(name, cancellationToken);

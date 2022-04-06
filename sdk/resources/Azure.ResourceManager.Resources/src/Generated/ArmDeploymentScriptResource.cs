@@ -206,18 +206,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
         /// Operation Id: DeploymentScripts_Update
         /// </summary>
-        /// <param name="data"> Deployment script resource with the tags to be updated. </param>
+        /// <param name="patch"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ArmDeploymentScriptResource>> UpdateAsync(PatchableArmDeploymentScriptData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ArmDeploymentScriptResource>> UpdateAsync(ArmDeploymentScriptPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _armDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("ArmDeploymentScriptResource.Update");
             scope.Start();
             try
             {
-                var response = await _armDeploymentScriptDeploymentScriptsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentScriptDeploymentScriptsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ArmDeploymentScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -232,18 +232,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
         /// Operation Id: DeploymentScripts_Update
         /// </summary>
-        /// <param name="data"> Deployment script resource with the tags to be updated. </param>
+        /// <param name="patch"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ArmDeploymentScriptResource> Update(PatchableArmDeploymentScriptData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ArmDeploymentScriptResource> Update(ArmDeploymentScriptPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _armDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("ArmDeploymentScriptResource.Update");
             scope.Start();
             try
             {
-                var response = _armDeploymentScriptDeploymentScriptsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _armDeploymentScriptDeploymentScriptsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ArmDeploymentScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -111,6 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SqlStoredProcedureResource>> GetSqlStoredProcedureAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             return await GetSqlStoredProcedures().GetAsync(storedProcedureName, cancellationToken).ConfigureAwait(false);
@@ -125,6 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SqlStoredProcedureResource> GetSqlStoredProcedure(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             return GetSqlStoredProcedures().Get(storedProcedureName, cancellationToken);
@@ -146,6 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SqlUserDefinedFunctionResource>> GetSqlUserDefinedFunctionAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             return await GetSqlUserDefinedFunctions().GetAsync(userDefinedFunctionName, cancellationToken).ConfigureAwait(false);
@@ -160,6 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SqlUserDefinedFunctionResource> GetSqlUserDefinedFunction(string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             return GetSqlUserDefinedFunctions().Get(userDefinedFunctionName, cancellationToken);
@@ -181,6 +185,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SqlTriggerResource>> GetSqlTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             return await GetSqlTriggers().GetAsync(triggerName, cancellationToken).ConfigureAwait(false);
@@ -195,6 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SqlTriggerResource> GetSqlTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             return GetSqlTriggers().Get(triggerName, cancellationToken);
