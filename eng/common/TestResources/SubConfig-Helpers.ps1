@@ -2,6 +2,17 @@ function BuildServiceDirectoryPrefix([string]$serviceName) {
     return $serviceName.ToUpperInvariant() + "_"
 }
 
+# If the ServiceDirectory has multiple segments use the last directory name
+# e.g. D:\foo\bar -> bar or foo/bar -> bar
+function GetServiceName([string]$serviceDirectory) {
+    $serviceName = if (Split-Path $serviceDirectory) {
+        Split-Path -Leaf $serviceDirectory
+    } else {
+        $serviceDirectory.Trim('/')
+    }
+    return $serviceName
+}
+
 function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())
 {
     $logOutputNonSecret = @(
