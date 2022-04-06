@@ -253,10 +253,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         internal async Task ProcessMessageAsync(ProcessMessageEventArgs args)
         {
-            if (!EnsureIsRunning())
-            {
-                return;
-            }
+            EnsureIsRunning();
 
             _concurrencyUpdateManager?.MessageProcessed();
 
@@ -278,10 +275,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         internal async Task ProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
-            if (!EnsureIsRunning())
-            {
-                return;
-            }
+            EnsureIsRunning();
 
             _concurrencyUpdateManager?.MessageProcessed();
 
@@ -307,21 +301,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
         }
 
-        private bool EnsureIsRunning()
+        private void EnsureIsRunning()
         {
-            if (!Started)
+            if (!Started || Disposed)
             {
-                _logger.LogWarning($"Message received for a listener that is not in started state ({_details.Value})");
-                return false;
+                var message =
+                    $"Message received for a listener that is not in a running state. The message will not be delivered to the function, and instead will be abandoned. " +
+                    $"(Listener started = {Started}, Listener disposed = {Disposed}, {_details.Value})";
+                _logger.LogWarning(message);
+                throw new InvalidOperationException(message);
             }
-
-            if (Disposed)
-            {
-                _logger.LogWarning($"Message received for a listener that is in disposed state ({_details.Value})");
-                return false;
-            }
-
-            return true;
         }
 
         private async Task RunBatchReceiveLoopAsync(CancellationToken cancellationToken)
