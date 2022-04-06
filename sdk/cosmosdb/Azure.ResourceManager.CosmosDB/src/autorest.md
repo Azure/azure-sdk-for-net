@@ -239,14 +239,8 @@ directive:
 # Rename for input parameters s/Parameters/Data/, per C# convention
 # rename parametes for cosmos-db.json
 - rename-model:
-    from: DatabaseAccountCreateUpdateParameters
-    to: DatabaseAccountCreateUpdateData
-- rename-model:
-    from: DatabaseAccountUpdateParameters
-    to: DatabaseAccountUpdateData
-- rename-model:
     from: DatabaseAccountRegenerateKeyParameters
-    to: DatabaseAccountRegenerateKeyData
+    to: DatabaseAccountRegenerateKeyInfo
 - rename-model:
     from: ThroughputSettingsUpdateParameters
     to: ThroughputSettingsUpdateData

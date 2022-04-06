@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             string afdOriginName = Recording.GenerateAssetName("AFDOrigin-");
             AfdOriginResource afdOriginInstance = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
-            PatchableAfdOriginData updateOptions = new PatchableAfdOriginData
+            AfdOriginPatch updateOptions = new AfdOriginPatch
             {
                 Priority = 1,
                 Weight = 150

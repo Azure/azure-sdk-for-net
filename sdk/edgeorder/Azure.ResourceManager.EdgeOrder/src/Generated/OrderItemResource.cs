@@ -197,20 +197,20 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: UpdateOrderItem
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> order item update parameters from request body. </param>
+        /// <param name="patch"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<OrderItemResource>> UpdateAsync(WaitUntil waitUntil, PatchableOrderItemResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<OrderItemResource>> UpdateAsync(WaitUntil waitUntil, OrderItemResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.Update");
             scope.Start();
             try
             {
-                var response = await _orderItemResourceRestClient.UpdateOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _orderItemResourceRestClient.UpdateOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -228,20 +228,20 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: UpdateOrderItem
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> order item update parameters from request body. </param>
+        /// <param name="patch"> order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<OrderItemResource> Update(WaitUntil waitUntil, PatchableOrderItemResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<OrderItemResource> Update(WaitUntil waitUntil, OrderItemResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _orderItemResourceClientDiagnostics.CreateScope("OrderItemResource.Update");
             scope.Start();
             try
             {
-                var response = _orderItemResourceRestClient.UpdateOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _orderItemResourceRestClient.UpdateOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
+                var operation = new EdgeOrderArmOperation<OrderItemResource>(new OrderItemResourceOperationSource(Client), _orderItemResourceClientDiagnostics, Pipeline, _orderItemResourceRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

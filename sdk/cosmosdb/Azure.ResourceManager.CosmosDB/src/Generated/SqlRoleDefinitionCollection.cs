@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
-        /// <param name="data"> The properties required to create or update a Role Definition. </param>
+        /// <param name="content"> The properties required to create or update a Role Definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlRoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleDefinitionId, SqlRoleDefinitionCreateUpdateData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlRoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleDefinitionId, SqlRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _sqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("SqlRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlRoleDefinitionSqlResourcesRestClient.CreateUpdateSqlRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<SqlRoleDefinitionResource>(new SqlRoleDefinitionOperationSource(Client), _sqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _sqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlRoleDefinitionSqlResourcesRestClient.CreateUpdateSqlRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<SqlRoleDefinitionResource>(new SqlRoleDefinitionOperationSource(Client), _sqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _sqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
-        /// <param name="data"> The properties required to create or update a Role Definition. </param>
+        /// <param name="content"> The properties required to create or update a Role Definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SqlRoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string roleDefinitionId, SqlRoleDefinitionCreateUpdateData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SqlRoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string roleDefinitionId, SqlRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _sqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("SqlRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlRoleDefinitionSqlResourcesRestClient.CreateUpdateSqlRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<SqlRoleDefinitionResource>(new SqlRoleDefinitionOperationSource(Client), _sqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _sqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlRoleDefinitionSqlResourcesRestClient.CreateUpdateSqlRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content, cancellationToken);
+                var operation = new CosmosDBArmOperation<SqlRoleDefinitionResource>(new SqlRoleDefinitionOperationSource(Client), _sqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _sqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

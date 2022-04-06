@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateMongoDBDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateData data)
+        internal HttpMessage CreateCreateUpdateMongoDBDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -235,19 +235,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="data"> The parameters to provide for the current MongoDB database. </param>
+        /// <param name="content"> The parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateMongoDBDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateMongoDBDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, data);
+            using var message = CreateCreateUpdateMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -264,19 +264,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="data"> The parameters to provide for the current MongoDB database. </param>
+        /// <param name="content"> The parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateMongoDBDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateUpdateData data, CancellationToken cancellationToken = default)
+        public Response CreateUpdateMongoDBDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MongoDBDatabaseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, data);
+            using var message = CreateCreateUpdateMongoDBDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -472,9 +472,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateMongoDBCollectionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateData data)
+        internal HttpMessage CreateCreateUpdateMongoDBCollectionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -891,9 +891,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -904,20 +904,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
-        /// <param name="data"> The parameters to provide for the current MongoDB Collection. </param>
+        /// <param name="content"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateMongoDBCollectionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateMongoDBCollectionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName, data);
+            using var message = CreateCreateUpdateMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -935,20 +935,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
-        /// <param name="data"> The parameters to provide for the current MongoDB Collection. </param>
+        /// <param name="content"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateMongoDBCollection(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateUpdateData data, CancellationToken cancellationToken = default)
+        public Response CreateUpdateMongoDBCollection(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, MongoDBCollectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName, data);
+            using var message = CreateCreateUpdateMongoDBCollectionRequest(subscriptionId, resourceGroupName, accountName, databaseName, collectionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1158,9 +1158,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1415,9 +1415,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(location);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(location);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }

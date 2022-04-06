@@ -642,12 +642,6 @@ override-operation-name:
   ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
   - rename-model:
-      from: PatchManagementGroupRequest
-      to: PatchManagementGroupOptions
-  - rename-model:
-      from: CreateManagementGroupRequest
-      to: CreateManagementGroupOptions
-  - rename-model:
       from: CreateManagementGroupChildInfo
       to: ManagementGroupChildOptions
   - rename-model:

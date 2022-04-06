@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.ForwardingRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.ForwardingRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DnsResolver.ForwardingRuleResource> Update(Azure.ResourceManager.DnsResolver.Models.PatchableForwardingRuleData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.ForwardingRuleResource>> UpdateAsync(Azure.ResourceManager.DnsResolver.Models.PatchableForwardingRuleData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DnsResolver.ForwardingRuleResource> Update(Azure.ResourceManager.DnsResolver.Models.ForwardingRulePatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.ForwardingRuleResource>> UpdateAsync(Azure.ResourceManager.DnsResolver.Models.ForwardingRulePatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class InboundEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DnsResolver.InboundEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.InboundEndpointResource>, System.Collections.IEnumerable
     {
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.VirtualNetworkLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.VirtualNetworkLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.VirtualNetworkLinkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.PatchableVirtualNetworkLinkData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.VirtualNetworkLinkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.PatchableVirtualNetworkLinkData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.VirtualNetworkLinkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.VirtualNetworkLinkPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.VirtualNetworkLinkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.VirtualNetworkLinkPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -296,6 +296,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.DnsResolverState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DnsResolver.Models.DnsResolverState left, Azure.ResourceManager.DnsResolver.Models.DnsResolverState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ForwardingRulePatch
+    {
+        public ForwardingRulePatch() { }
+        public Azure.ResourceManager.DnsResolver.Models.ForwardingRuleState? ForwardingRuleState { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer> TargetDnsServers { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ForwardingRuleState : System.IEquatable<Azure.ResourceManager.DnsResolver.Models.ForwardingRuleState>
@@ -340,18 +347,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public Azure.ResourceManager.DnsResolver.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
-    public partial class PatchableForwardingRuleData
-    {
-        public PatchableForwardingRuleData() { }
-        public Azure.ResourceManager.DnsResolver.Models.ForwardingRuleState? ForwardingRuleState { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DnsResolver.Models.TargetDnsServer> TargetDnsServers { get { throw null; } }
-    }
-    public partial class PatchableVirtualNetworkLinkData
-    {
-        public PatchableVirtualNetworkLinkData() { }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.DnsResolver.Models.ProvisioningState>
     {
@@ -385,5 +380,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         internal VirtualNetworkDnsForwardingRuleset() { }
         public string Id { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkLinkId { get { throw null; } set { } }
+    }
+    public partial class VirtualNetworkLinkPatch
+    {
+        public VirtualNetworkLinkPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
 }

@@ -194,18 +194,18 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the operation. </param>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ActivityLogAlertResource>> UpdateAsync(PatchableActivityLogAlertData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ActivityLogAlertResource>> UpdateAsync(ActivityLogAlertPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertResource.Update");
             scope.Start();
             try
             {
-                var response = await _activityLogAlertRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _activityLogAlertRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.Monitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the operation. </param>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ActivityLogAlertResource> Update(PatchableActivityLogAlertData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ActivityLogAlertResource> Update(ActivityLogAlertPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertResource.Update");
             scope.Start();
             try
             {
-                var response = _activityLogAlertRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _activityLogAlertRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

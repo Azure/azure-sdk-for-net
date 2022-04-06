@@ -235,18 +235,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}
         /// Operation Id: DedicatedHostGroups_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the Update Dedicated Host Group operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update Dedicated Host Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<DedicatedHostGroupResource>> UpdateAsync(PatchableDedicatedHostGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<DedicatedHostGroupResource>> UpdateAsync(DedicatedHostGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dedicatedHostGroupClientDiagnostics.CreateScope("DedicatedHostGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _dedicatedHostGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _dedicatedHostGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DedicatedHostGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,18 +261,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}
         /// Operation Id: DedicatedHostGroups_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the Update Dedicated Host Group operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update Dedicated Host Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<DedicatedHostGroupResource> Update(PatchableDedicatedHostGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<DedicatedHostGroupResource> Update(DedicatedHostGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dedicatedHostGroupClientDiagnostics.CreateScope("DedicatedHostGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _dedicatedHostGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _dedicatedHostGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new DedicatedHostGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
