@@ -82,10 +82,13 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual async Task<Response<AnalyzeConversationTaskResult>> AnalyzeConversationAsync(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(utterance, nameof(utterance));
+            Argument.AssertNotNullOrEmpty(utterance, nameof(utterance));
             Argument.AssertNotNull(project, nameof(project));
 
-            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName) { Verbose = options?.Verbose };
+            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName)
+            {
+                Verbose = options?.Verbose,
+            };
 
             TextConversationItem textConversationItem = new TextConversationItem("1", "1", utterance);
 
@@ -117,10 +120,13 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual Response<AnalyzeConversationTaskResult> AnalyzeConversation(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(utterance, nameof(utterance));
+            Argument.AssertNotNullOrEmpty(utterance, nameof(utterance));
             Argument.AssertNotNull(project, nameof(project));
 
-            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName) { Verbose = options?.Verbose };
+            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName)
+            {
+                Verbose = options?.Verbose,
+            };
 
             TextConversationItem textConversationItem = new TextConversationItem("1", "1", utterance);
 
