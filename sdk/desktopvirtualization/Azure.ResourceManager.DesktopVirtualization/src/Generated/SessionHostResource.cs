@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<UserSessionResource>> GetUserSessionAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
             return await GetUserSessions().GetAsync(userSessionId, cancellationToken).ConfigureAwait(false);
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<UserSessionResource> GetUserSession(string userSessionId, CancellationToken cancellationToken = default)
         {
             return GetUserSessions().Get(userSessionId, cancellationToken);

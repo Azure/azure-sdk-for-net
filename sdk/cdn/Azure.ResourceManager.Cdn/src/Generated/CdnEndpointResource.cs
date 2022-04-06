@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<CdnOriginResource>> GetCdnOriginAsync(string originName, CancellationToken cancellationToken = default)
         {
             return await GetCdnOrigins().GetAsync(originName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<CdnOriginResource> GetCdnOrigin(string originName, CancellationToken cancellationToken = default)
         {
             return GetCdnOrigins().Get(originName, cancellationToken);
@@ -139,6 +141,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<CdnOriginGroupResource>> GetCdnOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
             return await GetCdnOriginGroups().GetAsync(originGroupName, cancellationToken).ConfigureAwait(false);
@@ -153,6 +156,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<CdnOriginGroupResource> GetCdnOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
         {
             return GetCdnOriginGroups().Get(originGroupName, cancellationToken);
@@ -174,6 +178,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<CdnCustomDomainResource>> GetCdnCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             return await GetCdnCustomDomains().GetAsync(customDomainName, cancellationToken).ConfigureAwait(false);
@@ -188,6 +193,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<CdnCustomDomainResource> GetCdnCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
         {
             return GetCdnCustomDomains().Get(customDomainName, cancellationToken);

@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceDisasterRecoveryAuthorizationRuleResource>> GetNamespaceDisasterRecoveryAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return await GetNamespaceDisasterRecoveryAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<NamespaceDisasterRecoveryAuthorizationRuleResource> GetNamespaceDisasterRecoveryAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return GetNamespaceDisasterRecoveryAuthorizationRules().Get(authorizationRuleName, cancellationToken);

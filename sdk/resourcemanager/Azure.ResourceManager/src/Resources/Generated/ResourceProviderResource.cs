@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<FeatureResource>> GetFeatureAsync(string featureName, CancellationToken cancellationToken = default)
         {
             return await GetFeatures().GetAsync(featureName, cancellationToken).ConfigureAwait(false);
@@ -121,6 +122,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<FeatureResource> GetFeature(string featureName, CancellationToken cancellationToken = default)
         {
             return GetFeatures().Get(featureName, cancellationToken);

@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StaticSitePrivateEndpointConnectionResource>> GetStaticSitePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSitePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StaticSitePrivateEndpointConnectionResource> GetStaticSitePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetStaticSitePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -140,6 +142,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteBuildARMResource>> GetStaticSiteBuildARMResourceAsync(string environmentName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSiteBuildARMResources().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
@@ -154,6 +157,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StaticSiteBuildARMResource> GetStaticSiteBuildARMResource(string environmentName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteBuildARMResources().Get(environmentName, cancellationToken);
@@ -175,6 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteUserProvidedFunctionAppResource>> GetStaticSiteUserProvidedFunctionAppAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSiteUserProvidedFunctionApps().GetAsync(functionAppName, cancellationToken).ConfigureAwait(false);
@@ -189,6 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StaticSiteUserProvidedFunctionAppResource> GetStaticSiteUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
@@ -210,6 +216,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteCustomDomainOverviewARMResource>> GetStaticSiteCustomDomainOverviewARMResourceAsync(string domainName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSiteCustomDomainOverviewARMResources().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
@@ -224,6 +231,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<StaticSiteCustomDomainOverviewARMResource> GetStaticSiteCustomDomainOverviewARMResource(string domainName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteCustomDomainOverviewARMResources().Get(domainName, cancellationToken);

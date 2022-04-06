@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotVirtualNetworkConnectionGatewayResource>> GetSiteSlotVirtualNetworkConnectionGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotVirtualNetworkConnectionGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotVirtualNetworkConnectionGatewayResource> GetSiteSlotVirtualNetworkConnectionGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotVirtualNetworkConnectionGateways().Get(gatewayName, cancellationToken);

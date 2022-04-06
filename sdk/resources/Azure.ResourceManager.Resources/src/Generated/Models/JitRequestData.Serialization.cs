@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Resources
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> applicationResourceId = default;
-            Optional<string> publisherTenantId = default;
+            Optional<Guid> publisherTenantId = default;
             Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
             Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
             Optional<ResourcesProvisioningState> provisioningState = default;
@@ -123,7 +124,12 @@ namespace Azure.ResourceManager.Resources
                         }
                         if (property0.NameEquals("publisherTenantId"))
                         {
-                            publisherTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publisherTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("jitAuthorizationPolicies"))
@@ -195,7 +201,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new JitRequestData(id, name, type, systemData, tags, location, applicationResourceId.Value, publisherTenantId.Value, Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
+            return new JitRequestData(id, name, type, systemData, tags, location, applicationResourceId.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
         }
     }
 }

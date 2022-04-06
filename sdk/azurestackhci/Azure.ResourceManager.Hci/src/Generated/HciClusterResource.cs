@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ArcSettingResource>> GetArcSettingAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
             return await GetArcSettings().GetAsync(arcSettingName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ArcSettingResource> GetArcSetting(string arcSettingName, CancellationToken cancellationToken = default)
         {
             return GetArcSettings().Get(arcSettingName, cancellationToken);

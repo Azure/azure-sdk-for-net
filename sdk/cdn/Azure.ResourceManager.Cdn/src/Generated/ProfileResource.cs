@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AfdCustomDomainResource>> GetAfdCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             return await GetAfdCustomDomains().GetAsync(customDomainName, cancellationToken).ConfigureAwait(false);
@@ -127,6 +128,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<AfdCustomDomainResource> GetAfdCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
         {
             return GetAfdCustomDomains().Get(customDomainName, cancellationToken);
@@ -148,6 +150,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AfdEndpointResource>> GetAfdEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             return await GetAfdEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
@@ -162,6 +165,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<AfdEndpointResource> GetAfdEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
             return GetAfdEndpoints().Get(endpointName, cancellationToken);
@@ -183,6 +187,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AfdOriginGroupResource>> GetAfdOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
             return await GetAfdOriginGroups().GetAsync(originGroupName, cancellationToken).ConfigureAwait(false);
@@ -197,6 +202,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<AfdOriginGroupResource> GetAfdOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
         {
             return GetAfdOriginGroups().Get(originGroupName, cancellationToken);
@@ -218,6 +224,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AfdRuleSetResource>> GetAfdRuleSetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             return await GetAfdRuleSets().GetAsync(ruleSetName, cancellationToken).ConfigureAwait(false);
@@ -232,6 +239,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<AfdRuleSetResource> GetAfdRuleSet(string ruleSetName, CancellationToken cancellationToken = default)
         {
             return GetAfdRuleSets().Get(ruleSetName, cancellationToken);
@@ -253,6 +261,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AfdSecurityPolicyResource>> GetAfdSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetAfdSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
@@ -267,6 +276,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<AfdSecurityPolicyResource> GetAfdSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             return GetAfdSecurityPolicies().Get(securityPolicyName, cancellationToken);
@@ -288,6 +298,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AfdSecretResource>> GetAfdSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
             return await GetAfdSecrets().GetAsync(secretName, cancellationToken).ConfigureAwait(false);
@@ -302,6 +313,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<AfdSecretResource> GetAfdSecret(string secretName, CancellationToken cancellationToken = default)
         {
             return GetAfdSecrets().Get(secretName, cancellationToken);
@@ -323,6 +335,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<CdnEndpointResource>> GetCdnEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             return await GetCdnEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
@@ -337,6 +350,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<CdnEndpointResource> GetCdnEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
             return GetCdnEndpoints().Get(endpointName, cancellationToken);

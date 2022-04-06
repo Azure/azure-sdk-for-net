@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <param name="armApplicationManagedIdentityType"> The identity type. </param>
+        /// <param name="identityType"> The identity type. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </param>
-        internal ArmApplicationManagedIdentity(Guid? principalId, Guid? tenantId, ArmApplicationManagedIdentityType? armApplicationManagedIdentityType, IDictionary<string, ArmApplicationUserAssignedIdentity> userAssignedIdentities)
+        internal ArmApplicationManagedIdentity(Guid? principalId, Guid? tenantId, ArmApplicationManagedIdentityType? identityType, IDictionary<string, ArmApplicationUserAssignedIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
-            ArmApplicationManagedIdentityType = armApplicationManagedIdentityType;
+            IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The tenant ID of resource. </summary>
         public Guid? TenantId { get; }
         /// <summary> The identity type. </summary>
-        public ArmApplicationManagedIdentityType? ArmApplicationManagedIdentityType { get; set; }
+        public ArmApplicationManagedIdentityType? IdentityType { get; set; }
         /// <summary> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
         public IDictionary<string, ArmApplicationUserAssignedIdentity> UserAssignedIdentities { get; }
     }

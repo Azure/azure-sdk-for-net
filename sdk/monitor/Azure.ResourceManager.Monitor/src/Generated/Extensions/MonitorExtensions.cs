@@ -111,6 +111,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<LogProfileResource>> GetLogProfileAsync(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetLogProfiles().GetAsync(logProfileName, cancellationToken).ConfigureAwait(false);
@@ -126,6 +127,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<LogProfileResource> GetLogProfile(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetLogProfiles().Get(logProfileName, cancellationToken);
@@ -498,6 +500,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AutoscaleSettingResource>> GetAutoscaleSettingAsync(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAutoscaleSettings().GetAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
@@ -513,6 +516,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AutoscaleSettingResource> GetAutoscaleSetting(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAutoscaleSettings().Get(autoscaleSettingName, cancellationToken);
@@ -536,6 +540,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<AlertRuleResource>> GetAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetAlertRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
@@ -551,6 +556,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<AlertRuleResource> GetAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetAlertRules().Get(ruleName, cancellationToken);
@@ -574,6 +580,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ActionGroupResource>> GetActionGroupAsync(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetActionGroups().GetAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
@@ -589,6 +596,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ActionGroupResource> GetActionGroup(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetActionGroups().Get(actionGroupName, cancellationToken);
@@ -612,6 +620,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<MetricAlertResource>> GetMetricAlertAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetMetricAlerts().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
@@ -627,6 +636,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<MetricAlertResource> GetMetricAlert(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetMetricAlerts().Get(ruleName, cancellationToken);
@@ -650,6 +660,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<LogSearchRuleResource>> GetLogSearchRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetLogSearchRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
@@ -665,6 +676,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<LogSearchRuleResource> GetLogSearchRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetLogSearchRules().Get(ruleName, cancellationToken);
@@ -688,6 +700,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<PrivateLinkScopeResource>> GetPrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetPrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
@@ -703,6 +716,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<PrivateLinkScopeResource> GetPrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetPrivateLinkScopes().Get(scopeName, cancellationToken);
@@ -726,6 +740,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ActivityLogAlertResource>> GetActivityLogAlertAsync(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetActivityLogAlerts().GetAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
@@ -741,6 +756,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ActivityLogAlertResource> GetActivityLogAlert(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetActivityLogAlerts().Get(activityLogAlertName, cancellationToken);
@@ -764,6 +780,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DataCollectionEndpointResource>> GetDataCollectionEndpointAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetDataCollectionEndpoints().GetAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
@@ -779,6 +796,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DataCollectionEndpointResource> GetDataCollectionEndpoint(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetDataCollectionEndpoints().Get(dataCollectionEndpointName, cancellationToken);
@@ -802,6 +820,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DataCollectionRuleResource>> GetDataCollectionRuleAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetDataCollectionRules().GetAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
@@ -817,6 +836,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DataCollectionRuleResource> GetDataCollectionRule(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetDataCollectionRules().Get(dataCollectionRuleName, cancellationToken);
@@ -883,6 +903,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DiagnosticSettingsResource>> GetDiagnosticSettingsAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
         {
             return await armResource.GetDiagnosticSettings().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -898,6 +919,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DiagnosticSettingsResource> GetDiagnosticSettings(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
         {
             return armResource.GetDiagnosticSettings().Get(name, cancellationToken);
@@ -921,6 +943,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
         {
             return await armResource.GetDiagnosticSettingsCategories().GetAsync(name, cancellationToken).ConfigureAwait(false);
@@ -936,6 +959,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
         {
             return armResource.GetDiagnosticSettingsCategories().Get(name, cancellationToken);
@@ -967,6 +991,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DataCollectionRuleAssociationResource>> GetDataCollectionRuleAssociationAsync(this ArmResource armResource, string associationName, CancellationToken cancellationToken = default)
         {
             return await armResource.GetDataCollectionRuleAssociations().GetAsync(associationName, cancellationToken).ConfigureAwait(false);
@@ -982,6 +1007,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociation(this ArmResource armResource, string associationName, CancellationToken cancellationToken = default)
         {
             return armResource.GetDataCollectionRuleAssociations().Get(associationName, cancellationToken);

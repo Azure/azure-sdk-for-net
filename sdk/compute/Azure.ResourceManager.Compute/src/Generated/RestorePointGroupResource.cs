@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RestorePointResource>> GetRestorePointAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
             return await GetRestorePoints().GetAsync(restorePointName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<RestorePointResource> GetRestorePoint(string restorePointName, CancellationToken cancellationToken = default)
         {
             return GetRestorePoints().Get(restorePointName, cancellationToken);

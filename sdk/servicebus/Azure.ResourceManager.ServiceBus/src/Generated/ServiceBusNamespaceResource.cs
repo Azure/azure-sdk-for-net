@@ -121,6 +121,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -135,6 +136,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -156,6 +158,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DisasterRecoveryResource>> GetDisasterRecoveryAsync(string @alias, CancellationToken cancellationToken = default)
         {
             return await GetDisasterRecoveries().GetAsync(alias, cancellationToken).ConfigureAwait(false);
@@ -170,6 +173,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<DisasterRecoveryResource> GetDisasterRecovery(string @alias, CancellationToken cancellationToken = default)
         {
             return GetDisasterRecoveries().Get(alias, cancellationToken);
@@ -191,6 +195,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceAuthorizationRuleResource>> GetNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return await GetNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
@@ -205,6 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<NamespaceAuthorizationRuleResource> GetNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return GetNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
@@ -224,6 +230,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<MigrationConfigPropertiesResource>> GetMigrationConfigPropertiesAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
             return await GetMigrationConfigProperties().GetAsync(configName, cancellationToken).ConfigureAwait(false);
@@ -236,6 +243,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<MigrationConfigPropertiesResource> GetMigrationConfigProperties(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
             return GetMigrationConfigProperties().Get(configName, cancellationToken);
@@ -257,6 +265,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusQueueResource>> GetServiceBusQueueAsync(string queueName, CancellationToken cancellationToken = default)
         {
             return await GetServiceBusQueues().GetAsync(queueName, cancellationToken).ConfigureAwait(false);
@@ -271,6 +280,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServiceBusQueueResource> GetServiceBusQueue(string queueName, CancellationToken cancellationToken = default)
         {
             return GetServiceBusQueues().Get(queueName, cancellationToken);
@@ -292,6 +302,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusTopicResource>> GetServiceBusTopicAsync(string topicName, CancellationToken cancellationToken = default)
         {
             return await GetServiceBusTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
@@ -306,6 +317,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServiceBusTopicResource> GetServiceBusTopic(string topicName, CancellationToken cancellationToken = default)
         {
             return GetServiceBusTopics().Get(topicName, cancellationToken);

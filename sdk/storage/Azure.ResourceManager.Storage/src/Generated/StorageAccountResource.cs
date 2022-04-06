@@ -114,6 +114,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobInventoryPolicyResource>> GetBlobInventoryPolicyAsync(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetBlobInventoryPolicies().GetAsync(blobInventoryPolicyName, cancellationToken).ConfigureAwait(false);
@@ -126,6 +127,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<BlobInventoryPolicyResource> GetBlobInventoryPolicy(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
         {
             return GetBlobInventoryPolicies().Get(blobInventoryPolicyName, cancellationToken);
@@ -147,6 +149,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -161,6 +164,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -182,6 +186,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ObjectReplicationPolicyResource>> GetObjectReplicationPolicyAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
             return await GetObjectReplicationPolicies().GetAsync(objectReplicationPolicyId, cancellationToken).ConfigureAwait(false);
@@ -196,6 +201,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="objectReplicationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ObjectReplicationPolicyResource> GetObjectReplicationPolicy(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
             return GetObjectReplicationPolicies().Get(objectReplicationPolicyId, cancellationToken);
@@ -217,6 +223,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<LocalUserResource>> GetLocalUserAsync(string username, CancellationToken cancellationToken = default)
         {
             return await GetLocalUsers().GetAsync(username, cancellationToken).ConfigureAwait(false);
@@ -231,6 +238,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<LocalUserResource> GetLocalUser(string username, CancellationToken cancellationToken = default)
         {
             return GetLocalUsers().Get(username, cancellationToken);
@@ -252,6 +260,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<EncryptionScopeResource>> GetEncryptionScopeAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             return await GetEncryptionScopes().GetAsync(encryptionScopeName, cancellationToken).ConfigureAwait(false);
@@ -266,6 +275,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="encryptionScopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<EncryptionScopeResource> GetEncryptionScope(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             return GetEncryptionScopes().Get(encryptionScopeName, cancellationToken);

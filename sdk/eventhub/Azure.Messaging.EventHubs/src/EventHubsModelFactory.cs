@@ -60,11 +60,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="ownerLevel">The owner level associated with the partition.</param>
         /// <param name="lastPublishedSequenceNumber">The sequence number assigned to the event that was last successfully published to the partition.</param>
         ///
-        internal static PartitionPublishingPropertiesInternal PartitionPublishingProperties(bool isIdempotentPublishingEnabled,
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PartitionPublishingProperties PartitionPublishingProperties(bool isIdempotentPublishingEnabled,
                                                                                     long? producerGroupId,
                                                                                     short? ownerLevel,
                                                                                     int? lastPublishedSequenceNumber) =>
-            new PartitionPublishingPropertiesInternal(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
+            new PartitionPublishingProperties(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.

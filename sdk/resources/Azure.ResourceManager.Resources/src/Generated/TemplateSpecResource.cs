@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<TemplateSpecVersionResource>> GetTemplateSpecVersionAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             return await GetTemplateSpecVersions().GetAsync(templateSpecVersion, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<TemplateSpecVersionResource> GetTemplateSpecVersion(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
             return GetTemplateSpecVersions().Get(templateSpecVersion, cancellationToken);

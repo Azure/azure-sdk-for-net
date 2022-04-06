@@ -4780,10 +4780,10 @@ namespace Azure.ResourceManager.AppService.Models
         public AzureStorageInfoValue() { }
         public string AccessKey { get { throw null; } set { } }
         public string AccountName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureStorageType? AzureStorageType { get { throw null; } set { } }
         public string MountPath { get { throw null; } set { } }
         public string ShareName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AzureStorageState? State { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AzureStorageType? StorageType { get { throw null; } set { } }
     }
     public partial class AzureStoragePropertyDictionaryResource : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {

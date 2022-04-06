@@ -110,6 +110,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetworkInterfaceIPConfigurationResource>> GetNetworkInterfaceIPConfigurationAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             return await GetNetworkInterfaceIPConfigurations().GetAsync(ipConfigurationName, cancellationToken).ConfigureAwait(false);
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<NetworkInterfaceIPConfigurationResource> GetNetworkInterfaceIPConfiguration(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             return GetNetworkInterfaceIPConfigurations().Get(ipConfigurationName, cancellationToken);
@@ -145,6 +147,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetworkInterfaceTapConfigurationResource>> GetNetworkInterfaceTapConfigurationAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
             return await GetNetworkInterfaceTapConfigurations().GetAsync(tapConfigurationName, cancellationToken).ConfigureAwait(false);
@@ -159,6 +162,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<NetworkInterfaceTapConfigurationResource> GetNetworkInterfaceTapConfiguration(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
             return GetNetworkInterfaceTapConfigurations().Get(tapConfigurationName, cancellationToken);

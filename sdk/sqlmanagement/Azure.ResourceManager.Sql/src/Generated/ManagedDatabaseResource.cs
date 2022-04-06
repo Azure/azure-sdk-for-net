@@ -123,6 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceDatabaseSchemaResource>> GetManagedInstanceDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceDatabaseSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
@@ -137,6 +138,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceDatabaseSchemaResource> GetManagedInstanceDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceDatabaseSchemas().Get(schemaName, cancellationToken);
@@ -156,6 +158,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceDatabaseVulnerabilityAssessmentResource>> GetManagedInstanceDatabaseVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceDatabaseVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
@@ -168,6 +171,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceDatabaseVulnerabilityAssessmentResource> GetManagedInstanceDatabaseVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceDatabaseVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
@@ -187,6 +191,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>> GetManagedInstanceDatabaseBackupShortTermRetentionPolicyAsync(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceDatabaseBackupShortTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
@@ -199,6 +204,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> GetManagedInstanceDatabaseBackupShortTermRetentionPolicy(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceDatabaseBackupShortTermRetentionPolicies().Get(policyName, cancellationToken);
@@ -218,6 +224,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedDatabaseRestoreDetailsResultResource>> GetManagedDatabaseRestoreDetailsResultAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             return await GetManagedDatabaseRestoreDetailsResults().GetAsync(restoreDetailsName, cancellationToken).ConfigureAwait(false);
@@ -230,6 +237,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedDatabaseRestoreDetailsResultResource> GetManagedDatabaseRestoreDetailsResult(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             return GetManagedDatabaseRestoreDetailsResults().Get(restoreDetailsName, cancellationToken);
@@ -249,6 +257,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicyResource>> GetManagedDatabaseSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedDatabaseSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
@@ -261,6 +270,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedDatabaseSecurityAlertPolicyResource> GetManagedDatabaseSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return GetManagedDatabaseSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
@@ -280,6 +290,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedTransparentDataEncryptionResource>> GetManagedTransparentDataEncryptionAsync(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
             return await GetManagedTransparentDataEncryptions().GetAsync(tdeName, cancellationToken).ConfigureAwait(false);
@@ -292,6 +303,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="tdeName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedTransparentDataEncryptionResource> GetManagedTransparentDataEncryption(TransparentDataEncryptionName tdeName, CancellationToken cancellationToken = default)
         {
             return GetManagedTransparentDataEncryptions().Get(tdeName, cancellationToken);
@@ -311,6 +323,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceLongTermRetentionPolicyResource>> GetManagedInstanceLongTermRetentionPolicyAsync(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceLongTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
@@ -323,6 +336,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceLongTermRetentionPolicyResource> GetManagedInstanceLongTermRetentionPolicy(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceLongTermRetentionPolicies().Get(policyName, cancellationToken);

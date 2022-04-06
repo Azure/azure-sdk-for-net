@@ -82,7 +82,7 @@
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Common" Version="1.1.0" />
-    <PackageReference Update="Azure.Core" Version="1.23.0" />
+    <PackageReference Update="Azure.Core" Version="1.24.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.21" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.1.0" />
@@ -91,7 +91,7 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.9.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.7.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
-    <PackageReference Update="Azure.Identity" Version="1.5.0" />
+    <PackageReference Update="Azure.Identity" Version="1.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
@@ -268,7 +268,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20220316.3</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20220404.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

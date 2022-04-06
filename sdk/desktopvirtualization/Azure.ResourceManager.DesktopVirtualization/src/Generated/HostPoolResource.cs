@@ -120,6 +120,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SessionHostResource>> GetSessionHostAsync(string sessionHostName, CancellationToken cancellationToken = default)
         {
             return await GetSessionHosts().GetAsync(sessionHostName, cancellationToken).ConfigureAwait(false);
@@ -134,6 +135,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SessionHostResource> GetSessionHost(string sessionHostName, CancellationToken cancellationToken = default)
         {
             return GetSessionHosts().Get(sessionHostName, cancellationToken);
@@ -155,6 +157,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<MsixPackageResource>> GetMsixPackageAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
             return await GetMsixPackages().GetAsync(msixPackageFullName, cancellationToken).ConfigureAwait(false);
@@ -169,6 +172,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<MsixPackageResource> GetMsixPackage(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
             return GetMsixPackages().Get(msixPackageFullName, cancellationToken);

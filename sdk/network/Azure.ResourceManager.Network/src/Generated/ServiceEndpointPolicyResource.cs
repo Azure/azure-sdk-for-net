@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServiceEndpointPolicyDefinitionResource>> GetServiceEndpointPolicyDefinitionAsync(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
             return await GetServiceEndpointPolicyDefinitions().GetAsync(serviceEndpointPolicyDefinitionName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServiceEndpointPolicyDefinitionResource> GetServiceEndpointPolicyDefinition(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
             return GetServiceEndpointPolicyDefinitions().Get(serviceEndpointPolicyDefinitionName, cancellationToken);
