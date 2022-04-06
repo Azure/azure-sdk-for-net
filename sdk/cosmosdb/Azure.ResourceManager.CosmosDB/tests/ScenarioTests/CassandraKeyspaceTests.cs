@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraKeyspaces(keyspace, keyspace2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            var updateOptions = new CassandraKeyspaceCreateOrUpdateInfo(AzureLocation.WestUS, keyspace.Data.Resource)
+            var updateOptions = new CassandraKeyspaceCreateOrUpdateContent(AzureLocation.WestUS, keyspace.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CassandraKeyspaceResource> CreateCassandraKeyspace(string name, AutoscaleSettings autoscale, CassandraKeyspaceCollection collection)
         {
-            var cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateOrUpdateInfo(AzureLocation.WestUS,
+            var cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.CassandraKeyspaceResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

@@ -194,18 +194,18 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Update
         /// </summary>
-        /// <param name="data"> The PatchableGrafanaResourceData to use. </param>
+        /// <param name="patch"> The GrafanaResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<GrafanaResource>> UpdateAsync(PatchableGrafanaResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<GrafanaResource>> UpdateAsync(GrafanaResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _grafanaResourceGrafanaClientDiagnostics.CreateScope("GrafanaResource.Update");
             scope.Start();
             try
             {
-                var response = await _grafanaResourceGrafanaRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaResourceGrafanaRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Update
         /// </summary>
-        /// <param name="data"> The PatchableGrafanaResourceData to use. </param>
+        /// <param name="patch"> The GrafanaResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<GrafanaResource> Update(PatchableGrafanaResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<GrafanaResource> Update(GrafanaResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _grafanaResourceGrafanaClientDiagnostics.CreateScope("GrafanaResource.Update");
             scope.Start();
             try
             {
-                var response = _grafanaResourceGrafanaRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _grafanaResourceGrafanaRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new GrafanaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

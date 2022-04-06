@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Dashboard
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource> Update(Azure.ResourceManager.Dashboard.Models.PatchableGrafanaResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource>> UpdateAsync(Azure.ResourceManager.Dashboard.Models.PatchableGrafanaResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource> Update(Azure.ResourceManager.Dashboard.Models.GrafanaResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource>> UpdateAsync(Azure.ResourceManager.Dashboard.Models.GrafanaResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GrafanaResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dashboard.GrafanaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dashboard.GrafanaResource>, System.Collections.IEnumerable
     {
@@ -54,6 +54,12 @@ namespace Azure.ResourceManager.Dashboard
 }
 namespace Azure.ResourceManager.Dashboard.Models
 {
+    public partial class GrafanaResourcePatch
+    {
+        public GrafanaResourcePatch() { }
+        public Azure.ResourceManager.Dashboard.Models.ManagedIdentity Identity { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
     public partial class GrafanaResourceProperties
     {
         public GrafanaResourceProperties() { }
@@ -87,12 +93,6 @@ namespace Azure.ResourceManager.Dashboard.Models
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
-    public partial class PatchableGrafanaResourceData
-    {
-        public PatchableGrafanaResourceData() { }
-        public Azure.ResourceManager.Dashboard.Models.ManagedIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Dashboard.Models.ProvisioningState>

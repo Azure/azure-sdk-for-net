@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         protected async Task<CdnCustomDomainResource> CreateCdnCustomDomain(CdnEndpointResource endpoint, string customDomainName, string hostName)
         {
-            CdnCustomDomainCreateOrUpdateInfo input = ResourceDataHelper.CreateCdnCustomDomainData(hostName);
+            CdnCustomDomainCreateOrUpdateContent input = ResourceDataHelper.CreateCdnCustomDomainData(hostName);
             var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, customDomainName, input);
             return lro.Value;
         }

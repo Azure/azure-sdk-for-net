@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountResource account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account, account2);
 
-            var updateOptions = new PatchableDatabaseAccountData()
+            var updateOptions = new DatabaseAccountPatch()
             {
                 IsVirtualNetworkFilterEnabled = false,
                 EnableAutomaticFailover = true,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccountResource databaseAccount, PatchableDatabaseAccountData parameters)
+        private void VerifyCosmosDBAccount(DatabaseAccountResource databaseAccount, DatabaseAccountPatch parameters)
         {
             Assert.True(databaseAccount.Data.Tags.SequenceEqual(parameters.Tags));
             Assert.AreEqual(databaseAccount.Data.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);

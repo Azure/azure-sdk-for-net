@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             VaultProperties.EnableSoftDelete = null;
 
-            var parameters = new VaultCreateOrUpdateInfo(Location, VaultProperties);
+            var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
 
             var rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);
             createdVault.Properties.Sku.Name = KeyVaultSkuName.Premium;
 
-            parameters = new VaultCreateOrUpdateInfo(Location, createdVault.Properties);
+            parameters = new VaultCreateOrUpdateContent(Location, createdVault.Properties);
             parameters.Tags.InitializeFrom(Tags);
             var rawUpdateVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             AccessPolicy.ApplicationId = Guid.Parse(TestEnvironment.ClientId);
             VaultProperties.EnableSoftDelete = null;
 
-            var parameters = new VaultCreateOrUpdateInfo(Location, VaultProperties);
+            var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
 
             var createVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             for (int i = 0; i < n; i++)
             {
                 string vaultName = Recording.GenerateAssetName("sdktest-vault-");
-                var parameters = new VaultCreateOrUpdateInfo(Location, VaultProperties);
+                var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
                 parameters.Tags.InitializeFrom(Tags);
                 var createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
                 var vaultValue = createdVault.Value;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [Test]
         public async Task KeyVaultManagementRecoverDeletedVault()
         {
-            var parameters = new VaultCreateOrUpdateInfo(Location, VaultProperties);
+            var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             var createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
             var vaultValue = createdVault.Value;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 await VaultCollection.GetAsync(VaultName);
             });
 
-            parameters = new VaultCreateOrUpdateInfo(Location, VaultProperties);
+            parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             // Recover in default mode
             var recoveredRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName,parameters).ConfigureAwait(false);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             await getResult.Value.DeleteAsync(WaitUntil.Completed);
 
             VaultProperties.CreateMode = CreateMode.Recover;
-            parameters = new VaultCreateOrUpdateInfo(Location, VaultProperties);
+            parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
 
             // Recover in recover mode
             var recoveredRawVault2 = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             int n = 3;
             List<string> resourceIds = new List<string>();
             List<VaultResource> vaultList = new List<VaultResource>();
-            var parameters = new VaultCreateOrUpdateInfo(Location, VaultProperties);
+            var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             for (int i = 0; i < n; i++)
             {

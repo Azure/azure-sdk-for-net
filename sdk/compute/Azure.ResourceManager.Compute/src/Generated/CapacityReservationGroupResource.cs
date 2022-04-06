@@ -233,18 +233,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}
         /// Operation Id: CapacityReservationGroups_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the Update capacity reservation Group operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update capacity reservation Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<CapacityReservationGroupResource>> UpdateAsync(PatchableCapacityReservationGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<CapacityReservationGroupResource>> UpdateAsync(CapacityReservationGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _capacityReservationGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _capacityReservationGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CapacityReservationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -259,18 +259,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}
         /// Operation Id: CapacityReservationGroups_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to the Update capacity reservation Group operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update capacity reservation Group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<CapacityReservationGroupResource> Update(PatchableCapacityReservationGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<CapacityReservationGroupResource> Update(CapacityReservationGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _capacityReservationGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _capacityReservationGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new CapacityReservationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

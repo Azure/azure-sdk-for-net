@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="info"> The parameters to provide for the current Gremlin graph. </param>
+        /// <param name="content"> The parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="info"/> is null. </exception>
-        public virtual async Task<ArmOperation<GremlinGraphResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, GremlinGraphCreateOrUpdateInfo info, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<GremlinGraphResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, GremlinGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
-            Argument.AssertNotNull(info, nameof(info));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, info, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, info).Request, response, OperationFinalStateVia.Location);
+                var response = await _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="graphName"> Cosmos DB graph name. </param>
-        /// <param name="info"> The parameters to provide for the current Gremlin graph. </param>
+        /// <param name="content"> The parameters to provide for the current Gremlin graph. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="info"/> is null. </exception>
-        public virtual ArmOperation<GremlinGraphResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, GremlinGraphCreateOrUpdateInfo info, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<GremlinGraphResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, GremlinGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
-            Argument.AssertNotNull(info, nameof(info));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, info, cancellationToken);
-                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, info).Request, response, OperationFinalStateVia.Location);
+                var response = _gremlinGraphGremlinResourcesRestClient.CreateUpdateGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, content, cancellationToken);
+                var operation = new CosmosDBArmOperation<GremlinGraphResource>(new GremlinGraphOperationSource(Client), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, _gremlinGraphGremlinResourcesRestClient.CreateCreateUpdateGremlinGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

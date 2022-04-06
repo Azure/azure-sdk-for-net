@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyGremlinDatabases(database, database2);
 
-            var updateOptions = new GremlinDatabaseCreateOrUpdateInfo(database.Id, _databaseName, database.Data.ResourceType, null,
+            var updateOptions = new GremlinDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<GremlinDatabaseResource> CreateGremlinDatabase(string name, AutoscaleSettings autoscale, GremlinDatabaseCollection collection)
         {
-            var cassandraKeyspaceCreateUpdateOptions = new GremlinDatabaseCreateOrUpdateInfo(AzureLocation.WestUS,
+            var cassandraKeyspaceCreateUpdateOptions = new GremlinDatabaseCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.GremlinDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

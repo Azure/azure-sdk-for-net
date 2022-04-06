@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlTriggers(trigger, trigger2);
 
-            var updateOptions = new SqlTriggerCreateOrUpdateInfo(AzureLocation.WestUS, new Models.SqlTriggerResource(_triggerName)
+            var updateOptions = new SqlTriggerCreateOrUpdateContent(AzureLocation.WestUS, new Models.SqlTriggerResource(_triggerName)
             {
                 TriggerOperation = TriggerOperation.Create,
                 TriggerType = TriggerType.Post,
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal async Task<SqlTriggerResource> CreateSqlTrigger(AutoscaleSettings autoscale)
         {
             _triggerName = Recording.GenerateAssetName("sql-trigger-");
-            var sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateOrUpdateInfo(AzureLocation.WestUS,
+            var sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.SqlTriggerResource(_triggerName)
                 {
                     TriggerOperation = TriggerOperation.All,

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
         }
 
-        public static StorageAccountCreateOrUpdateInfo GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
+        public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
         {
             StorageSku skuParameters = sku ?? DefaultSkuNameStandardGRS;
             StorageKind kindParameters = kind ?? DefaultKindStorage;
             string locationParameters = location ?? DefaultLocationString;
-            StorageAccountCreateOrUpdateInfo parameters = new StorageAccountCreateOrUpdateInfo(skuParameters, kindParameters, locationParameters);
+            StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(skuParameters, kindParameters, locationParameters);
             parameters.Tags.InitializeFrom(DefaultTags);
             parameters.Identity = identity;
             return parameters;

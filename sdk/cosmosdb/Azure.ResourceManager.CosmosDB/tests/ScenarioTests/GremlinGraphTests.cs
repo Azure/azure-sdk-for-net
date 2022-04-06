@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsFalse(exists);
         }
 
-        protected async Task<GremlinGraphResource> CreateGremlinGraph(GremlinGraphCreateOrUpdateInfo parameters)
+        protected async Task<GremlinGraphResource> CreateGremlinGraph(GremlinGraphCreateOrUpdateContent parameters)
         {
             if (parameters == null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return graphLro.Value;
         }
 
-        private GremlinGraphCreateOrUpdateInfo BuildCreateUpdateOptions(AutoscaleSettings autoscale)
+        private GremlinGraphCreateOrUpdateContent BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _graphName = Recording.GenerateAssetName("gremlin-graph-");
 
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "");
 
-            return new GremlinGraphCreateOrUpdateInfo(AzureLocation.WestUS, new Models.GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
+            return new GremlinGraphCreateOrUpdateContent(AzureLocation.WestUS, new Models.GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
         }
 
-        private void VerifyGremlinGraphCreation(GremlinGraphResource graph, GremlinGraphCreateOrUpdateInfo gremlinGraphCreateUpdateOptions)
+        private void VerifyGremlinGraphCreation(GremlinGraphResource graph, GremlinGraphCreateOrUpdateContent gremlinGraphCreateUpdateOptions)
         {
             Assert.AreEqual(graph.Data.Resource.Id, gremlinGraphCreateUpdateOptions.Resource.Id);
             Assert.AreEqual(graph.Data.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower(), gremlinGraphCreateUpdateOptions.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower());

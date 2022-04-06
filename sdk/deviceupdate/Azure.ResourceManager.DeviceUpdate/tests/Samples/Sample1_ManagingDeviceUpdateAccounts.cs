@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // Now we can get the account with GetAsync()
             DeviceUpdateAccountResource account = await accountCollection.GetAsync("myAccount");
             // With UpdateAsync(), we can update the account
-            PatchableDeviceUpdateAccountData updateOptions = new PatchableDeviceUpdateAccountData()
+            DeviceUpdateAccountPatch updateOptions = new DeviceUpdateAccountPatch()
             {
                 Location = AzureLocation.WestUS2,
                 Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)

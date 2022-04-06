@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyMongoDBCollections(collection, collection2);
 
-            var updateOptions = new MongoDBCollectionCreateOrUpdateInfo(collection.Id, _collectionName, collection.Data.ResourceType, null,
+            var updateOptions = new MongoDBCollectionCreateOrUpdateContent(collection.Id, _collectionName, collection.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, collection.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
         internal static async Task<MongoDBCollectionResource> CreateMongoDBCollection(string name, AutoscaleSettings autoscale, MongoDBCollectionCollection mongoDBContainerCollection)
         {
-            var mongoDBDatabaseCreateUpdateOptions = new MongoDBCollectionCreateOrUpdateInfo(AzureLocation.WestUS,
+            var mongoDBDatabaseCreateUpdateOptions = new MongoDBCollectionCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.MongoDBCollectionResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
