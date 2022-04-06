@@ -738,4 +738,9 @@ directive:
     where: $.definitions.ManagementGroupProperties.properties.tenantId
     transform: >
       $['format'] = "uuid"
+  - from: management.json
+    where: $.definitions
+    transform: >
+      $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.ManagementGroupNameAvailabilityOptions.properties.type['x-ms-format'] = 'resource-type';
 ```
