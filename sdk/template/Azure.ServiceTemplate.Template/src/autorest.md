@@ -7,11 +7,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- $(this-folder)/swagger/mini-secrets.json
-namespace: Azure.Template
+- SwaggerFileLink
+namespace: Azure.ServiceTemplate.Template
 public-clients: true
 data-plane: true
-security: AADToken
-security-scopes: https://api.adu.microsoft.com/.default
- 
+securityTypes
+securityScopePrefix securityScopes
+securityHeaderNamePrefix securityHeaderName
 ```

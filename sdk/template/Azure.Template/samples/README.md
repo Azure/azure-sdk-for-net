@@ -11,4 +11,4 @@ description: Samples for the Azure.Template client library.
 
 # Azure.Template Samples
 
-- [Getting secrets](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/Sample1_HelloWorld.md)
+- [Creating Resource](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.Template/samples/Sample1_CreateResource.md)

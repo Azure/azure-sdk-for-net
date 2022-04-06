@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "azhang@microsoft.com",
+  "classifications": [ "Azure", "ClassLibrary" ],
+  "identity": "Azure.Management.TemplateProject",
+  "name": "Azure Management SDK template: client project",
+  "shortName": "azuremgmt",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "Azure.ResourceManager.Template",
+  "preferNameDirectory": true,
+  "guids": [
+    "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC",
+    "FC7B9325-C8EA-4740-AB3B-723EB6549AAD",
+    "227B2010-BBFC-46F8-84BB-236E9F3A0176",
+    "3123B983-4452-4B29-8E9A-849867BEC1E6",
+    "61FB8E18-94E3-4A8F-B6B3-E765F85000F5",
+    "11EAD7A0-B5E6-4145-B1F1-37A2D9091E07"
+  ],
+  "sources": [
+    {
+      "source": "./",
+      "target": "./",
+      "modifiers": [
+        {
+          "exclude": [
+            "content/**/*"
+          ]
+        }
+      ]
+    },
+    {
+      "source": "./content",
+      "target": "../",
+      "condition": "(includeCI)"
+    }
+  ],
+  "symbols": {
+    "provider": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": true,
+      "description": "The Azure provider name. ie. Microsoft.Network or Microsoft.Compute",
+      "replaces": "ProviderFullName"
+    },
+    "tagVersion": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "The optional parameter specifies the tag in the README.MD. If empty, the default tag in the README.MD is used.",
+      "defaultValue": "",
+      "replaces": "SwaggerVersionTag"
+    },
+    "includeCI": {
+      "type": "parameter",
+      "datatype": "bool",
+      "isRequired": false,
+      "description": "The optional parameter specifies whether generate related pipline ci.yml and test-resources.json in parent folder.",
+      "defaultValue": "false"
+    },
+    "ProviderShortNameLowercase": {
+      "type": "derived",
+      "datatype": "text",
+      "valueSource": "provider",
+      "valueTransform": "ProviderShortNameLowerForm",
+      "replaces": "ProviderNameLowercase"
+    },
+    "ProviderShortName": {
+      "type": "derived",
+      "datatype": "text",
+      "valueSource": "provider",
+      "valueTransform": "ProviderShortNameForm",
+      "replaces": "ProviderShortName",
+      "fileRename": "ProviderShortName"
+    },
+    "TemplateSafeName": {
+      "type": "generated",
+      "generator": "regex",
+      "datatype": "text",
+      "replaces": "AzureManagementTemplateSafeName",
+      "parameters": {
+        "action": "replace",
+        "source": "name",
+        "steps": [
+          { "regex": "\\.", "replacement": "" }
+        ]
+      }
+    },
+    "tagPrefix": {
+      "type": "generated",
+      "generator": "switch",
+      "replaces": "tagPrefix",
+      "parameters": {
+        "evaluator": "MSBUILD",
+        "datatype": "string",
+        "cases": [
+          {
+            "condition": "('tagVersion' == '')",
+            "value": ""
+          },
+          {
+            "condition": "('tagVersion' != '')",
+            "value": "tag:"
+          }
+        ]
+      }
+    }
+  },
+  "forms": {
+    "ProviderShortNameForm": {
+      "identifier": "replace",
+      "pattern": "^[mM]icrosoft\\.",
+      "replacement": ""
+    },
+    "ProviderShortNameLowerForm": {
+      "identifier": "chain",
+      "steps": [
+        "ProviderShortNameForm",
+        "lowerCase"
+      ]
+    }
+  }
+}

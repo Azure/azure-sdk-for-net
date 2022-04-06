@@ -1,4 +1,4 @@
-namespace Azure.Template
+namespace Azure.ServiceTemplate.Template
 {
     public partial class TemplateClient
     {
