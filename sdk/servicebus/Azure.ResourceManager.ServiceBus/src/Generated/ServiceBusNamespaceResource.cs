@@ -428,18 +428,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to update a namespace resource. </param>
+        /// <param name="patch"> Parameters supplied to update a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ServiceBusNamespaceResource>> UpdateAsync(PatchableServiceBusNamespaceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceBusNamespaceResource>> UpdateAsync(ServiceBusNamespacePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceBusNamespaceNamespacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusNamespaceNamespacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceBusNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,18 +454,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Update
         /// </summary>
-        /// <param name="data"> Parameters supplied to update a namespace resource. </param>
+        /// <param name="patch"> Parameters supplied to update a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ServiceBusNamespaceResource> Update(PatchableServiceBusNamespaceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceBusNamespaceResource> Update(ServiceBusNamespacePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceBusNamespaceNamespacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _serviceBusNamespaceNamespacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ServiceBusNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

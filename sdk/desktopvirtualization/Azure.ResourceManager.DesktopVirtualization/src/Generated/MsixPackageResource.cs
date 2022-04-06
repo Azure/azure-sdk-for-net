@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}
         /// Operation Id: MSIXPackages_Update
         /// </summary>
-        /// <param name="data"> Object containing MSIX Package definitions. </param>
+        /// <param name="patch"> Object containing MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<MsixPackageResource>> UpdateAsync(PatchableMsixPackageData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<MsixPackageResource>> UpdateAsync(MsixPackagePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageResource.Update");
             scope.Start();
             try
             {
-                var response = await _msixPackageMSIXPackagesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _msixPackageMSIXPackagesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,18 +218,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}
         /// Operation Id: MSIXPackages_Update
         /// </summary>
-        /// <param name="data"> Object containing MSIX Package definitions. </param>
+        /// <param name="patch"> Object containing MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<MsixPackageResource> Update(PatchableMsixPackageData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<MsixPackageResource> Update(MsixPackagePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageResource.Update");
             scope.Start();
             try
             {
-                var response = _msixPackageMSIXPackagesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _msixPackageMSIXPackagesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

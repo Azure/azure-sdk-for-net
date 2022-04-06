@@ -194,19 +194,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: FailoverGroups_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The failover group parameters. </param>
+        /// <param name="patch"> The failover group parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<FailoverGroupResource>> UpdateAsync(WaitUntil waitUntil, PatchableFailoverGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<FailoverGroupResource>> UpdateAsync(WaitUntil waitUntil, FailoverGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _failoverGroupClientDiagnostics.CreateScope("FailoverGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _failoverGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<FailoverGroupResource>(new FailoverGroupOperationSource(Client), _failoverGroupClientDiagnostics, Pipeline, _failoverGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _failoverGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<FailoverGroupResource>(new FailoverGroupOperationSource(Client), _failoverGroupClientDiagnostics, Pipeline, _failoverGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -224,19 +224,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: FailoverGroups_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The failover group parameters. </param>
+        /// <param name="patch"> The failover group parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<FailoverGroupResource> Update(WaitUntil waitUntil, PatchableFailoverGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<FailoverGroupResource> Update(WaitUntil waitUntil, FailoverGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _failoverGroupClientDiagnostics.CreateScope("FailoverGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _failoverGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<FailoverGroupResource>(new FailoverGroupOperationSource(Client), _failoverGroupClientDiagnostics, Pipeline, _failoverGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _failoverGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new SqlArmOperation<FailoverGroupResource>(new FailoverGroupOperationSource(Client), _failoverGroupClientDiagnostics, Pipeline, _failoverGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

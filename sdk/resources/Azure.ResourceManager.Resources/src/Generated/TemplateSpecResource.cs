@@ -232,18 +232,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
         /// Operation Id: TemplateSpecs_Update
         /// </summary>
-        /// <param name="data"> Template Spec resource with the tags to be updated. </param>
+        /// <param name="patch"> Template Spec resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<TemplateSpecResource>> UpdateAsync(PatchableTemplateSpecData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<TemplateSpecResource>> UpdateAsync(TemplateSpecPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecResource.Update");
             scope.Start();
             try
             {
-                var response = await _templateSpecRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _templateSpecRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new TemplateSpecResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -258,18 +258,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}
         /// Operation Id: TemplateSpecs_Update
         /// </summary>
-        /// <param name="data"> Template Spec resource with the tags to be updated. </param>
+        /// <param name="patch"> Template Spec resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<TemplateSpecResource> Update(PatchableTemplateSpecData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<TemplateSpecResource> Update(TemplateSpecPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecResource.Update");
             scope.Start();
             try
             {
-                var response = _templateSpecRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _templateSpecRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new TemplateSpecResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

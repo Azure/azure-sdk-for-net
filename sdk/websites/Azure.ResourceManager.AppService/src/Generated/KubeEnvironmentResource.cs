@@ -194,18 +194,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Update
         /// </summary>
-        /// <param name="data"> Configuration details of the Kubernetes Environment. </param>
+        /// <param name="patch"> Configuration details of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<KubeEnvironmentResource>> UpdateAsync(PatchableKubeEnvironmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<KubeEnvironmentResource>> UpdateAsync(KubeEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _kubeEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _kubeEnvironmentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Update
         /// </summary>
-        /// <param name="data"> Configuration details of the Kubernetes Environment. </param>
+        /// <param name="patch"> Configuration details of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<KubeEnvironmentResource> Update(PatchableKubeEnvironmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<KubeEnvironmentResource> Update(KubeEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentResource.Update");
             scope.Start();
             try
             {
-                var response = _kubeEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _kubeEnvironmentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -639,19 +639,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedInstances_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The requested managed instance resource state. </param>
+        /// <param name="patch"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedInstanceResource>> UpdateAsync(WaitUntil waitUntil, PatchableManagedInstanceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedInstanceResource>> UpdateAsync(WaitUntil waitUntil, ManagedInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = await _managedInstanceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedInstanceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -669,19 +669,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedInstances_Update
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The requested managed instance resource state. </param>
+        /// <param name="patch"> The requested managed instance resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ManagedInstanceResource> Update(WaitUntil waitUntil, PatchableManagedInstanceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ManagedInstanceResource> Update(WaitUntil waitUntil, ManagedInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = _managedInstanceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _managedInstanceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new SqlArmOperation<ManagedInstanceResource>(new ManagedInstanceOperationSource(Client), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
