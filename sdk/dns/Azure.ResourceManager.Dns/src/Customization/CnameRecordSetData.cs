@@ -13,17 +13,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the CaaRecordSet data model. </summary>
-    public partial class CaaRecordSetData : ResourceData
+    /// <summary> A class representing the CnameRecordSet data model. </summary>
+    public partial class CnameRecordSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of CaaRecordSetData. </summary>
-        public CaaRecordSetData()
+        /// <summary> Initializes a new instance of CnameRecordSetData. </summary>
+        public CnameRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            CaaRecords = new ChangeTrackingList<CaaRecord>();
         }
 
-        /// <summary> Initializes a new instance of CaaRecordSetData. </summary>
+        /// <summary> Initializes a new instance of CnameRecordSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,8 +33,8 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal CaaRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<CaaRecord> caaRecords) : base(id, name, resourceType, systemData)
+        /// <param name="cnameRecord"> The CNAME record in the  record set. </param>
+        internal CnameRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, CnameRecord cnameRecord) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             Metadata = metadata;
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Dns
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
-            CaaRecords = caaRecords;
+            CnameRecord = cnameRecord;
         }
 
         /// <summary> The etag of the record set. </summary>
@@ -70,7 +69,18 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> The list of CAA records in the record set. </summary>
-        public IList<CaaRecord> CaaRecords { get; }
+        /// <summary> The CNAME record in the  record set. </summary>
+        internal CnameRecord CnameRecord { get; set; }
+        /// <summary> The canonical name for this CNAME record. </summary>
+        public string Cname
+        {
+            get => CnameRecord is null ? default : CnameRecord.Cname;
+            set
+            {
+                if (CnameRecord is null)
+                    CnameRecord = new CnameRecord();
+                CnameRecord.Cname = value;
+            }
+        }
     }
 }
