@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                 "Send an email to Carol about the tomorrow's demo.",
+                "Send an email to Carol about the tomorrow's demo.",
                 conversationsProject);
 #else
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                 "Send an email to Carol about the tomorrow's demo.",
+                "Send an email to Carol about the tomorrow's demo.",
                 conversationsProject);
 #else
             Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(

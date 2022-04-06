@@ -19,9 +19,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
             TextConversationItem input = new TextConversationItem(
-                 participantId: "1",
-                 id: "1",
-                 text: "Tendremos 2 platos de nigiri de salmón braseado.")
+                participantId: "1",
+                id: "1",
+                text: "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };
@@ -92,9 +92,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
             TextConversationItem input = new TextConversationItem(
-                 participantId: "1",
-                 id: "1",
-                 text: "Tendremos 2 platos de nigiri de salmón braseado.")
+                participantId: "1",
+                id: "1",
+                text: "Tendremos 2 platos de nigiri de salmón braseado.")
             {
                 Language = "es"
             };

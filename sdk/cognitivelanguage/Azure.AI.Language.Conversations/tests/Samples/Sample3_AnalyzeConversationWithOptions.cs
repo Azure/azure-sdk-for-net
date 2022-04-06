@@ -18,9 +18,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
             TextConversationItem input = new TextConversationItem(
-                 participantId: "1",
-                 id: "1",
-                 text: "Send an email to Carol about the tomorrow's demo.");
+                participantId: "1",
+                id: "1",
+                text: "Send an email to Carol about the tomorrow's demo.");
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
             {
                 IsLoggingEnabled = true,
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
             Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                textConversationItem,
+                "Send an email to Carol about the tomorrow's demo.",
                 conversationsProject,
                 options);
 #else
@@ -91,9 +91,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
             TextConversationItem input = new TextConversationItem(
-                 participantId: "1",
-                 id: "1",
-                 text: "Send an email to Carol about the tomorrow's demo.");
+                participantId: "1",
+                id: "1",
+                text: "Send an email to Carol about the tomorrow's demo.");
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
             {
                 IsLoggingEnabled = true,
