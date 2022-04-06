@@ -10,16 +10,16 @@ using CommandLine;
 
 namespace Azure.Template.Stress
 {
-    public class MiniSecretClientTest : StressTest<MiniSecretClientTest.MiniSecretClientOptions, MiniSecretClientTest.MiniSecretClientMetrics>
+    public class TemplateClientTest : StressTest<TemplateClientTest.TemplateClientStressOptions, TemplateClientTest.TemplateClientStressMetrics>
     {
-        public MiniSecretClientTest(MiniSecretClientOptions options, MiniSecretClientMetrics metrics) : base(options, metrics)
+        public TemplateClientTest(TemplateClientStressOptions options, TemplateClientStressMetrics metrics) : base(options, metrics)
         {
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             var keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
-            var client = new MiniSecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
+            var client = new TemplateClient(keyVaultUri, new DefaultAzureCredential());
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -28,7 +28,7 @@ namespace Azure.Template.Stress
                     // Throttle requests to avoid exceeding service limits
                     await Task.Delay(TimeSpan.FromMilliseconds(Options.Delay), cancellationToken);
 
-                    var secret = await client.GetSecretAsync(Options.SecretName, cancellationToken);
+                    var secret = await client.GetSecretValueAsync(Options.SecretName, cancellationToken);
                     Interlocked.Increment(ref Metrics.SecretsReceived);
 
                     if (secret.Value.Value == "TestValue")
@@ -50,14 +50,14 @@ namespace Azure.Template.Stress
             }
         }
 
-        public class MiniSecretClientMetrics : StressMetrics
+        public class TemplateClientStressMetrics : StressMetrics
         {
             public long SecretsReceived;
             public long CorrectValues;
             public long IncorrectValues;
         }
 
-        public class MiniSecretClientOptions : StressOptions
+        public class TemplateClientStressOptions : StressOptions
         {
             [Option("secret-name", Default = "TestSecret", HelpText = "Name of secret to get")]
             public string SecretName { get; set; }

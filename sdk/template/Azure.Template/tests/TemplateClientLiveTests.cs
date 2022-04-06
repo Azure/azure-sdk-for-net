@@ -10,9 +10,9 @@ namespace Azure.Template.Tests
 {
     // When necessary, use the [ClientTestFixture] to test multiple versions.
     // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#support-multi-service-version-testing.
-    public class MiniSecretClientLiveTests: RecordedTestBase<MiniSecretClientTestEnvironment>
+    public class TemplateClientLiveTests: RecordedTestBase<TemplateClientTestEnvironment>
     {
-        public MiniSecretClientLiveTests(bool isAsync)
+        public TemplateClientLiveTests(bool isAsync)
             // Delete null and the opening comment to re-record, or change to debug live tests.
             // You can also change eng/nunit.runsettings to set the TestMode parameter.
             // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#test-settings.
@@ -20,23 +20,33 @@ namespace Azure.Template.Tests
         {
         }
 
-        private MiniSecretClient CreateClient()
+        private TemplateClient CreateClient()
         {
-            return InstrumentClient(new MiniSecretClient(
-                new Uri(TestEnvironment.KeyVaultUri),
+            return InstrumentClient(new TemplateClient(
+                TestEnvironment.KeyVaultUri,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MiniSecretClientOptions())
+                InstrumentClientOptions(new TemplateClientOptions())
             ));
         }
 
         [RecordedTest]
-        public async Task CanGetSecret()
+        public async Task CanGetSecretAsync()
         {
             var client = CreateClient();
 
-            var secret = await client.GetSecretAsync("TestSecret");
+            var secret = await client.GetSecretValueAsync("TestSecret");
 
             Assert.AreEqual("Very secret value", secret.Value.Value);
+        }
+
+        [RecordedTest]
+        public void CanGetSecret()
+        {
+            var client = CreateClient();
+
+            var secret = client.GetSecretValueAsync("TestSecret");
+
+            Assert.AreEqual("Very secret value", secret);
         }
     }
 }

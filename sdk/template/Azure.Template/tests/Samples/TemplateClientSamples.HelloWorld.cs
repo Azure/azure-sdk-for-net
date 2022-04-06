@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
-    public class MiniSecretClientSamples: SamplesBase<MiniSecretClientTestEnvironment>
+    public class TemplateClientSamples: SamplesBase<TemplateClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
@@ -24,9 +24,9 @@ namespace Azure.Template.Tests.Samples
 #if SNIPPET
             string endpoint = "https://myvault.vault.azure.net";
 #endif
-            var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new TemplateClient(endpoint, new DefaultAzureCredential());
 
-            SecretBundle secret = client.GetSecret("TestSecret");
+            SecretBundle secret = client.GetSecretValue("TestSecret");
 
             Console.WriteLine(secret.Value);
             #endregion
@@ -44,9 +44,9 @@ namespace Azure.Template.Tests.Samples
 #if SNIPPET
             string endpoint = "https://myvault.vault.azure.net";
 #endif
-            var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new TemplateClient(endpoint, new DefaultAzureCredential());
 
-            SecretBundle secret = await client.GetSecretAsync("TestSecret");
+            SecretBundle secret = await client.GetSecretValueAsync("TestSecret");
 
             Console.WriteLine(secret.Value);
             #endregion

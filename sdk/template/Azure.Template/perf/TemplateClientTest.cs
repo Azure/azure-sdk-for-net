@@ -10,14 +10,14 @@ using CommandLine;
 
 namespace Azure.Template.Perf
 {
-    public class MiniSecretClientTest : PerfTest<MiniSecretClientTest.MiniSecretClientOptions>
+    public class TemplateClientTest : PerfTest<TemplateClientTest.TemplateClientPerfOptions>
     {
-        private readonly MiniSecretClient _miniSecretClient;
+        private readonly TemplateClient _templateClient;
 
-        public MiniSecretClientTest(MiniSecretClientOptions options) : base(options)
+        public TemplateClientTest(TemplateClientPerfOptions options) : base(options)
         {
             var keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
-            _miniSecretClient = new MiniSecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
+            _templateClient = new TemplateClient(keyVaultUri, new DefaultAzureCredential());
         }
 
         public override void Run(CancellationToken cancellationToken)
@@ -25,7 +25,7 @@ namespace Azure.Template.Perf
             // Throttle requests to avoid exceeding service limits
             Thread.Sleep(TimeSpan.FromMilliseconds(Options.Delay));
 
-            _miniSecretClient.GetSecret(Options.SecretName, cancellationToken);
+            _templateClient.GetSecretValue(Options.SecretName, cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
@@ -33,10 +33,10 @@ namespace Azure.Template.Perf
             // Throttle requests to avoid exceeding service limits
             await Task.Delay(TimeSpan.FromMilliseconds(Options.Delay), cancellationToken);
 
-            await _miniSecretClient.GetSecretAsync(Options.SecretName, cancellationToken);
+            await _templateClient.GetSecretValueAsync(Options.SecretName, cancellationToken);
         }
 
-        public class MiniSecretClientOptions : PerfOptions
+        public class TemplateClientPerfOptions : PerfOptions
         {
             [Option("secret-name", Default = "TestSecret", HelpText = "Name of secret to get")]
             public string SecretName { get; set; }

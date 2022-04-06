@@ -21,7 +21,7 @@ namespace Azure.Template
         /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecretBundle>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecretBundle>> GetSecretValueAsync(string secretName, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecret");
             scope.Start();
@@ -46,7 +46,7 @@ namespace Azure.Template
         /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecretBundle> GetSecret(string secretName, CancellationToken cancellationToken = default)
+        public virtual Response<SecretBundle> GetSecretValue(string secretName, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecret");
             scope.Start();
