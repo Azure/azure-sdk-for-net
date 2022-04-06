@@ -3,8 +3,10 @@
 
 #pragma warning disable SA1402  // File may only contain a single type
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -13,21 +15,26 @@ namespace Azure.Storage.Blobs.Models
         private readonly BlobServiceClient _serviceClient;
         private readonly BlobContainerClient _containerClient;
         private readonly string _expression;
+        private readonly BlobStates _blobStates;
 
         public FilterBlobsAsyncCollection(
             BlobServiceClient serviceClient,
-            string expression)
+            string expression,
+            BlobStates states)
         {
             _serviceClient = serviceClient;
             _expression = expression;
+            _blobStates = states;
         }
 
         public FilterBlobsAsyncCollection(
             BlobContainerClient containerClient,
-            string expression)
+            string expression,
+            BlobStates states)
         {
             _containerClient = containerClient;
             _expression = expression;
+            _blobStates = states;
         }
 
         public override async ValueTask<Page<TaggedBlobItem>> GetNextPageAsync(
@@ -42,6 +49,7 @@ namespace Azure.Storage.Blobs.Models
                 response = await _serviceClient.FindBlobsByTagsInternal(
                     marker: continuationToken,
                     expression: _expression,
+                    states: _blobStates,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -52,6 +60,7 @@ namespace Azure.Storage.Blobs.Models
                 response = await _containerClient.FindBlobsByTagsInternal(
                     marker: continuationToken,
                     expression: _expression,
+                    states: _blobStates,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -62,6 +71,22 @@ namespace Azure.Storage.Blobs.Models
                 response.Value.Blobs.ToBlobTagItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
+        }
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobExtensions
+    {
+        internal static IEnumerable<FilterBlobsIncludeItem> AsIncludeItems(BlobStates states)
+        {
+            List<FilterBlobsIncludeItem> items = new List<FilterBlobsIncludeItem>();
+            if ((states & BlobStates.Version) == BlobStates.Version)
+            {
+                items.Add(FilterBlobsIncludeItem.Versions);
+            }
+            return items.Count > 0 ? items : null;
         }
     }
 }
