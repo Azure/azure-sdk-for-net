@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns
             TryGetApiVersion(RecordSetAResource.ResourceType, out string recordSetARecordSetsApiVersion);
             _recordSetARecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetARecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RecordSetAResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, RecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RecordSetAResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, ARecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _recordSetARecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetARecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation<RecordSetAResource>(Response.FromValue(new RecordSetAResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RecordSetAResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, RecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RecordSetAResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, ARecordSetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _recordSetARecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var response = _recordSetARecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
                 var operation = new DnsArmOperation<RecordSetAResource>(Response.FromValue(new RecordSetAResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _recordSetARecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetARecordSetsRestClient.GetARecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecordSetAResource(Client, response.Value), response.GetRawResponse());
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _recordSetARecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), relativeRecordSetName, cancellationToken);
+                var response = _recordSetARecordSetsRestClient.GetARecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecordSetAResource(Client, response.Value), response.GetRawResponse());
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetARecordSetsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _recordSetARecordSetsRestClient.ListARecordByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetARecordSetsRestClient.ListByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _recordSetARecordSetsRestClient.ListARecordByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var response = _recordSetARecordSetsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _recordSetARecordSetsRestClient.ListARecordByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Dns
                 scope.Start();
                 try
                 {
-                    var response = _recordSetARecordSetsRestClient.ListByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    var response = _recordSetARecordSetsRestClient.ListARecordByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = await _recordSetARecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetARecordSetsRestClient.GetARecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Dns
             scope.Start();
             try
             {
-                var response = _recordSetARecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "A".ToRecordType(), relativeRecordSetName, cancellationToken: cancellationToken);
+                var response = _recordSetARecordSetsRestClient.GetARecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
