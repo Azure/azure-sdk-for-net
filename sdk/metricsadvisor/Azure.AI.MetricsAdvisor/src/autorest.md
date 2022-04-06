@@ -21,7 +21,7 @@ directive:
   transform: $.title = "MetricsAdvisor";
 ```
 
-### Generate MetricsAdvisorAdministration client and move methods 
+### Generate MetricsAdvisorAdministrationClient
 ```yaml
 directive:
   - from: swagger-document

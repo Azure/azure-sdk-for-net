@@ -12,7 +12,7 @@ In this experiment, we have updated configurations in autorest.md, manually adde
 We have updated the following configurations in the autorest.md:
 * In order to generate DPG, we have added `data-plane: true` flag.
 * For AAD authentication, we have defined `security` and `security-scopes` configurations.
-* There are two clients, i.e. `MetricsAdvisorAdministrationClient` and `MetricsAdvisorClient` in the released Metrics Advisor library but Swagger spec doesn't define operation group in `operationId`, so only one client `MetricsAdvisorClient` is generated. In order to generate `MetricsAdvisorAdministrationClient` client, we have added [Generate MetricsAdvisorAdministration client and move methods](https://github.com/ShivangiReja/azure-sdk-for-net/blob/MetricsAdvisor-Experiment/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/autorest.md#generate-metricsadvisoradministration-client-and-move-methods) configuration.
+* There are two clients, i.e. `MetricsAdvisorAdministrationClient` and `MetricsAdvisorClient` in the released Metrics Advisor library but Swagger spec doesn't define operation group in `operationId`, so only one client `MetricsAdvisorClient` is generated. In order to generate `MetricsAdvisorAdministrationClient` client, we have added [Generate MetricsAdvisorAdministrationClient](https://github.com/ShivangiReja/azure-sdk-for-net/blob/MetricsAdvisor-Experiment/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/autorest.md#generate-metricsadvisoradministrationclient) configuration.
 
 For more details, please refer to [`autorest.md`](https://github.com/ShivangiReja/azure-sdk-for-net/blob/MetricsAdvisor-Experiment/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/autorest.md) for the configuration.
 
