@@ -91,8 +91,8 @@ namespace Azure.AI.MetricsAdvisor
             try
             {
                 RequestContent content = MetricDimensionQueryOptions.ToRequestContent(queryOptions);
-                AsyncPageable<BinaryData> pageableBindaryData = GetMetricDimensionAsync(metricGuid, content, skip, maxPageSize, context);
-                return PageableHelpers.Select(pageableBindaryData, response => MetricDimensionList.FromResponse(response).Value);
+                AsyncPageable<BinaryData> pageableBinaryData = GetMetricDimensionAsync(metricGuid, content, skip, maxPageSize, context);
+                return PageableHelpers.Select(pageableBinaryData, response => MetricDimensionList.FromResponse(response).Value);
             }
             catch (Exception e)
             {

@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-#pragma warning disable CS0419 // Ambiguous reference in cref attribute
     /// <summary>
     /// A data feed is the entry point of data for the Metrics Advisor service and, therefore, the first
     /// entity to be created when setting up your resource. It periodically ingests data from a
@@ -19,10 +19,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// In order to create a data feed, you must set up at least the properties <see cref="Name"/>,
     /// <see cref="DataSource"/>, <see cref="Granularity"/>, <see cref="IngestionSettings"/>, and
     /// <see cref="Schema"/>, and pass this instance to the method
-    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataFeedAsync"/>.
+    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataFeedAsync(DataFeed, CancellationToken)"/>.
     /// </remarks>
     public class DataFeed
-#pragma warning restore CS0419 // Ambiguous reference in cref attribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeed"/> class.
