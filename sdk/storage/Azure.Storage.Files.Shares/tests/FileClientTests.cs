@@ -1341,7 +1341,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27564")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
         public async Task StartCopyAsync_ChangeTime()
         {
@@ -1635,7 +1634,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27564")]
         public async Task StartCopyAsync_CopySourceFileChanagedOnError()
         {
             // Arrange
@@ -1725,10 +1723,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 sourcePropertiesResponse.Value.SmbProperties.FileAttributes,
                 destPropertiesResponse.Value.SmbProperties.FileAttributes);
 
-            //TODO https://github.com/Azure/azure-sdk-for-net/issues/27564
-            //Assert.AreEqual(
-            //    sourcePropertiesResponse.Value.SmbProperties.FileChangedOn,
-            //    destPropertiesResponse.Value.SmbProperties.FileChangedOn);
+            Assert.AreEqual(
+                sourcePropertiesResponse.Value.SmbProperties.FileChangedOn,
+                destPropertiesResponse.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]
