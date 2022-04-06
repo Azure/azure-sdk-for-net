@@ -122,9 +122,9 @@
     <PackageReference Update="Apache.Avro" Version="1.11.0" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.16.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.16.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.16.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.16.1" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.16.1" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.16.1" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.6.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.31" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
