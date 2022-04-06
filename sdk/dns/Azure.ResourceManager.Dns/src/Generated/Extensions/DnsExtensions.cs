@@ -115,6 +115,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DnsZoneResource>> GetDnsZoneAsync(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetDnsZones().GetAsync(zoneName, cancellationToken).ConfigureAwait(false);
@@ -130,6 +131,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DnsZoneResource> GetDnsZone(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetDnsZones().Get(zoneName, cancellationToken);
@@ -145,7 +147,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="RecordSetAResource" /> object. </returns>
         public static RecordSetAResource GetRecordSetAResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<RecordSetAResource>(() =>
+            return client.GetResourceClient(() =>
             {
                 RecordSetAResource.ValidateResourceId(id);
                 return new RecordSetAResource(client, id);
