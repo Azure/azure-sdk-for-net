@@ -35,8 +35,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly Lazy<ServiceBusScaleMonitor> _scaleMonitor;
         private readonly ConcurrencyUpdateManager _concurrencyUpdateManager;
 
-        private volatile bool _disposed;
-        private volatile bool _started;
+        // internal for testing
+        internal volatile bool Disposed;
+        internal volatile bool Started;
+
         // Serialize execution of StopAsync to avoid calling Unregister* concurrently
         private readonly SemaphoreSlim _stopAsyncSemaphore = new SemaphoreSlim(1, 1);
         private readonly string _functionId;
@@ -117,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             ThrowIfDisposed();
 
-            if (_started)
+            if (Started)
             {
                 throw new InvalidOperationException("The listener has already been started.");
             }
@@ -141,7 +143,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
             }
-            _started = true;
+            Started = true;
 
             _logger.LogDebug($"ServiceBus listener started ({_details.Value})");
         }
@@ -157,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             await _stopAsyncSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                if (!_started)
+                if (!Started)
                 {
                     throw new InvalidOperationException("The listener has not yet been started or has already been stopped.");
                 }
@@ -182,7 +184,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
                 }
 
-                _started = false;
+                Started = false;
             }
             catch (Exception ex)
             {
@@ -205,7 +207,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         [SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", MessageId = "_cancellationTokenSource")]
         public void Dispose()
         {
-            if (_disposed)
+            if (Disposed)
             {
                 return;
             }
@@ -244,7 +246,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _batchReceiveRegistration.Dispose();
             _concurrencyUpdateManager?.Dispose();
 
-            _disposed = true;
+            Disposed = true;
 
             _logger.LogDebug($"ServiceBus listener disposed({_details.Value})");
         }
@@ -307,13 +309,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private bool EnsureIsRunning()
         {
-            if (!_started)
+            if (!Started)
             {
                 _logger.LogWarning($"Message received for a listener that is not in started state ({_details.Value})");
                 return false;
             }
 
-            if (_disposed)
+            if (Disposed)
             {
                 _logger.LogWarning($"Message received for a listener that is in disposed state ({_details.Value})");
                 return false;
@@ -479,7 +481,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private void ThrowIfDisposed()
         {
-            if (_disposed)
+            if (Disposed)
             {
                 throw new ObjectDisposedException(null);
             }
