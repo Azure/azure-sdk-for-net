@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.BasicArmDependency> DependsOn { get { throw null; } }
         public string Id { get { throw null; } }
         public string ResourceName { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     public partial class ArmDeploymentExportResult
     {
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal BasicArmDependency() { }
         public string Id { get { throw null; } }
         public string ResourceName { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     public partial class ErrorDeployment
     {
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal TargetResource() { }
         public string Id { get { throw null; } }
         public string ResourceName { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
     }
     public partial class TemplateHashResult
     {

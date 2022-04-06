@@ -257,6 +257,9 @@ directive:
       $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
       $.Dependency["x-ms-client-name"] = "ArmDependency";
       $.BasicDependency["x-ms-client-name"] = "BasicArmDependency";
+      $.Dependency.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.BasicDependency.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.TargetResource.properties.resourceType['x-ms-format'] = 'resource-type';
       $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
       $.DeploymentPropertiesExtended.properties.onErrorDeployment['x-ms-client-name'] = 'ErrorDeployment';
