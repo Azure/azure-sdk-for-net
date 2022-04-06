@@ -32,7 +32,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
     public partial class BlobChangeFeedEventData
     {
         internal BlobChangeFeedEventData() { }
-        public Azure.Storage.Blobs.ChangeFeed.BlobOperationResult AsyncOperationInfo { get { throw null; } }
         public Azure.Storage.Blobs.Models.AccessTier? BlobAccessTier { get { throw null; } }
         public Azure.Storage.Blobs.ChangeFeed.BlobOperationName BlobOperationName { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } }
@@ -44,6 +43,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public string ContentType { get { throw null; } }
         public System.Uri DestinationUri { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
+        public Azure.Storage.Blobs.ChangeFeed.BlobOperationResult LongRunningOperationInfo { get { throw null; } }
         public Azure.Storage.Blobs.ChangeFeed.ChangeFeedEventPreviousInfo PreviousInfo { get { throw null; } }
         public bool? Recursive { get { throw null; } }
         public System.Guid RequestId { get { throw null; } }
