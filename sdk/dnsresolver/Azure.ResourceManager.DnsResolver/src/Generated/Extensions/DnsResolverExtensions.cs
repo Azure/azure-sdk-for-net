@@ -112,6 +112,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DnsResolverResource>> GetDnsResolverAsync(this ResourceGroupResource resourceGroupResource, string dnsResolverName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetDnsResolvers().GetAsync(dnsResolverName, cancellationToken).ConfigureAwait(false);
@@ -127,6 +128,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DnsResolverResource> GetDnsResolver(this ResourceGroupResource resourceGroupResource, string dnsResolverName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetDnsResolvers().Get(dnsResolverName, cancellationToken);
@@ -150,6 +152,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DnsForwardingRulesetResource>> GetDnsForwardingRulesetAsync(this ResourceGroupResource resourceGroupResource, string dnsForwardingRulesetName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetDnsForwardingRulesets().GetAsync(dnsForwardingRulesetName, cancellationToken).ConfigureAwait(false);
@@ -165,6 +168,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DnsForwardingRulesetResource> GetDnsForwardingRuleset(this ResourceGroupResource resourceGroupResource, string dnsForwardingRulesetName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetDnsForwardingRulesets().Get(dnsForwardingRulesetName, cancellationToken);

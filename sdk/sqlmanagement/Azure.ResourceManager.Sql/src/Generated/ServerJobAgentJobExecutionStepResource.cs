@@ -100,6 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerJobAgentJobExecutionStepTargetResource>> GetServerJobAgentJobExecutionStepTargetAsync(Guid targetId, CancellationToken cancellationToken = default)
         {
             return await GetServerJobAgentJobExecutionStepTargets().GetAsync(targetId, cancellationToken).ConfigureAwait(false);
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ServerJobAgentJobExecutionStepTargetResource> GetServerJobAgentJobExecutionStepTarget(Guid targetId, CancellationToken cancellationToken = default)
         {
             return GetServerJobAgentJobExecutionStepTargets().Get(targetId, cancellationToken);

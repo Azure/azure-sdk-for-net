@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RecommendedActionResource>> GetRecommendedActionAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             return await GetRecommendedActions().GetAsync(recommendedActionName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<RecommendedActionResource> GetRecommendedAction(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             return GetRecommendedActions().Get(recommendedActionName, cancellationToken);

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResourcesProvisioningState> provisioningState = default;
             Optional<ArmApplicationBillingDetails> billingDetails = default;
             Optional<ArmApplicationJitAccessPolicy> jitAccessPolicy = default;
-            Optional<string> publisherTenantId = default;
+            Optional<Guid> publisherTenantId = default;
             Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
             Optional<ArmApplicationManagementMode> managementMode = default;
             Optional<ArmApplicationPackageContact> customerSupport = default;
@@ -269,7 +269,12 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("publisherTenantId"))
                         {
-                            publisherTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publisherTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("authorizations"))
@@ -356,7 +361,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new PatchableArmApplicationData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new PatchableArmApplicationData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
         }
     }
 }

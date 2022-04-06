@@ -4679,10 +4679,10 @@ namespace Azure.ResourceManager.AppService.Models
         public AzureStorageInfoValue() { }
         public string AccessKey { get { throw null; } set { } }
         public string AccountName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureStorageType? AzureStorageType { get { throw null; } set { } }
         public string MountPath { get { throw null; } set { } }
         public string ShareName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AzureStorageState? State { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AzureStorageType? StorageType { get { throw null; } set { } }
     }
     public partial class AzureStoragePropertyDictionaryResource : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -5133,7 +5133,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<string> ARecords { get { throw null; } }
         public System.Collections.Generic.IList<string> CNameRecords { get { throw null; } }
         public string ConflictingAppResourceId { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ErrorEntity CustomDomainVerificationFailureInfo { get { throw null; } }
+        public Azure.ResponseError CustomDomainVerificationFailureInfo { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DnsVerificationTestResult? CustomDomainVerificationTest { get { throw null; } }
         public bool? HasConflictAcrossSubscription { get { throw null; } }
         public bool? HasConflictOnScaleUnit { get { throw null; } }
@@ -5420,18 +5420,6 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsAccessible { get { throw null; } }
         public double? Latency { get { throw null; } }
         public int? Port { get { throw null; } }
-    }
-    public partial class ErrorEntity
-    {
-        internal ErrorEntity() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ErrorEntity> Details { get { throw null; } }
-        public string ExtendedCode { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ErrorEntity> InnerErrors { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string MessageTemplate { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Parameters { get { throw null; } }
-        public string Target { get { throw null; } }
     }
     public partial class ExtendedLocation
     {
@@ -6071,7 +6059,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal OperationInformation() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ErrorEntity> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpirationOn { get { throw null; } }
         public System.Guid? GeoMasterOperationId { get { throw null; } }
         public string Id { get { throw null; } }
@@ -6595,7 +6583,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData
     {
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection() { }
-        public Azure.ResourceManager.AppService.Models.ErrorEntity Error { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } }
         public string Location { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ArmPlan Plan { get { throw null; } }

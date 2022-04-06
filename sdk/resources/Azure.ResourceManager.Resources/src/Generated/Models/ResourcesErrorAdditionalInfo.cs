@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource management error additional info. </summary>
-    public partial class ResourcesErrorAdditionalInfo
+    internal partial class ResourcesErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of ResourcesErrorAdditionalInfo. </summary>
         internal ResourcesErrorAdditionalInfo()

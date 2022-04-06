@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AfdRuleResource>> GetAfdRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             return await GetAfdRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<AfdRuleResource> GetAfdRule(string ruleName, CancellationToken cancellationToken = default)
         {
             return GetAfdRules().Get(ruleName, cancellationToken);

@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<VirtualApplicationResource>> GetVirtualApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             return await GetVirtualApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
@@ -123,6 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<VirtualApplicationResource> GetVirtualApplication(string applicationName, CancellationToken cancellationToken = default)
         {
             return GetVirtualApplications().Get(applicationName, cancellationToken);
@@ -144,6 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<VirtualDesktopResource>> GetVirtualDesktopAsync(string desktopName, CancellationToken cancellationToken = default)
         {
             return await GetVirtualDesktops().GetAsync(desktopName, cancellationToken).ConfigureAwait(false);
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<VirtualDesktopResource> GetVirtualDesktop(string desktopName, CancellationToken cancellationToken = default)
         {
             return GetVirtualDesktops().Get(desktopName, cancellationToken);

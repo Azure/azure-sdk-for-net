@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment scripts error response. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of ArmDeploymentScriptsError. </summary>
         /// <param name="error"> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </param>
-        internal ArmDeploymentScriptsError(ResourcesResponseError error)
+        internal ArmDeploymentScriptsError(ResponseError error)
         {
             Error = error;
         }
 
         /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
-        public ResourcesResponseError Error { get; }
+        public ResponseError Error { get; }
     }
 }
