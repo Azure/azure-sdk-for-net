@@ -14,6 +14,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Dns.Models;
 
+[assembly: CodeGenSuppressType("RecordSetsRestOperations")]
+
 namespace Azure.ResourceManager.Dns
 {
     internal partial class RecordSetsRestOperations

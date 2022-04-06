@@ -13,6 +13,8 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
+[assembly: CodeGenSuppressType("RecordSetAResource")]
+
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>

@@ -17,6 +17,8 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
+[assembly: CodeGenSuppressType("DnsZoneResource")]
+
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
