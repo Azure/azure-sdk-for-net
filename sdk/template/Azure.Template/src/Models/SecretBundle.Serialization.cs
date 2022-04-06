@@ -71,5 +71,11 @@ namespace Azure.Template.Models
             }
             return new SecretBundle(value.Value, id.Value, contentType.Value, Optional.ToDictionary(tags), kid.Value, Optional.ToNullable(managed));
         }
+
+        internal static SecretBundle FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSecretBundle(document.RootElement);
+        }
     }
 }
