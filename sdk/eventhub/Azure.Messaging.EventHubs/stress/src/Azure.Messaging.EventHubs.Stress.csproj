@@ -8,14 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.ApplicationInsights" />
-    <PackageReference Include="CommandLineParser" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.Messaging.EventHubs.csproj" />
   </ItemGroup>
 
   <!-- Import Azure.Core shared source -->

@@ -1,5 +1,2 @@
 scenarios:
 - "BasicPublishReadTest"
-- "BasicEventProcessorTest"
-- "ProcessorEmptyReadTest"
-- "EventProducerTest"

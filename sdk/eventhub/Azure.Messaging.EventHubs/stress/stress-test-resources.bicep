@@ -39,7 +39,7 @@ var ehBasicProcessor = 'basiceventprocessortest'
 var ehBasicPublish = 'basicpublishreadtest'
 var ehEmptyProcessor = 'processoremptyreadtest'
 var ehEventProducer = 'eventproducertest'
-var ehTrasnportProducer = 'transportproducerpooltest'
+var ehTransportProducer = 'transportproducerpooltest'
 
 // Event Hubs Namespace Creation
 resource eventHubsNamespace 'Microsoft.EventHub/Namespaces@2015-08-01' = {
@@ -90,7 +90,7 @@ resource eventHubEventProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-
 
 resource eventHubTransportProducer 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   parent: eventHubsNamespace
-  name: ehTrasnportProducer
+  name: ehTransportProducer
   properties: {
     messageRetentionInDays: 7
     partitionCount: 1
