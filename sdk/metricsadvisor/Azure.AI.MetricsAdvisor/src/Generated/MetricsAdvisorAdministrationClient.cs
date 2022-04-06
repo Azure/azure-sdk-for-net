@@ -2964,16 +2964,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetDataFeedsAsync(string dataFeedName = null, string dataSourceType = null, string granularityName = null, string status = null, string creator = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDataFeedsValuesAsync(string dataFeedName = null, string dataSourceType = null, string granularityName = null, string status = null, string creator = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorAdministrationClient.GetDataFeeds");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorAdministrationClient.GetDataFeedsValues");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context)
-                        : CreateGetDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
+                        ? CreateGetDataFeedsValuesRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context)
+                        : CreateGetDataFeedsValuesNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "@nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -3050,16 +3050,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetDataFeeds(string dataFeedName = null, string dataSourceType = null, string granularityName = null, string status = null, string creator = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDataFeedsValues(string dataFeedName = null, string dataSourceType = null, string granularityName = null, string status = null, string creator = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorAdministrationClient.GetDataFeeds");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorAdministrationClient.GetDataFeedsValues");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context)
-                        : CreateGetDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
+                        ? CreateGetDataFeedsValuesRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context)
+                        : CreateGetDataFeedsValuesNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "@nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -3680,7 +3680,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetDataFeedsRequest(string dataFeedName, string dataSourceType, string granularityName, string status, string creator, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDataFeedsValuesRequest(string dataFeedName, string dataSourceType, string granularityName, string status, string creator, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3986,7 +3986,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetDataFeedsNextPageRequest(string nextLink, string dataFeedName, string dataSourceType, string granularityName, string status, string creator, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDataFeedsValuesNextPageRequest(string nextLink, string dataFeedName, string dataSourceType, string granularityName, string status, string creator, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

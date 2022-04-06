@@ -796,7 +796,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedCount = 0;
 
-            await foreach (DataFeed dataFeed in adminClient.GetDataFeedsAsync(new GetDataFeedsOptions()))
+            await foreach (DataFeed dataFeed in adminClient.GetDataFeedsAsync())
             {
                 Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
                 Assert.That(dataFeed.Name, Is.Not.Null.And.Not.Empty);
