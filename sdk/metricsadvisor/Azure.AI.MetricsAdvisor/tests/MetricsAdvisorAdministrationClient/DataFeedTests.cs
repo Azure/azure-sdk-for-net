@@ -39,8 +39,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 IngestionSettings = ingestionSettings
             };
 
-            Assert.That(() => adminClient.CreateDataFeedAsync(null, cancellationToken: default), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.CreateDataFeed(null, cancellationToken: default), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.CreateDataFeedAsync((DataFeed)null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.CreateDataFeed((DataFeed)null), Throws.InstanceOf<ArgumentNullException>());
 
             Assert.That(() => adminClient.CreateDataFeedAsync(dataFeed), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateDataFeed(dataFeed), Throws.InstanceOf<ArgumentNullException>());
