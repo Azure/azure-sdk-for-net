@@ -68,9 +68,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
                 foreach (BaseResolution resolution in entity.Resolutions)
                 {
-                    if (resolution is DateTimeResolution)
+                    if (resolution is DateTimeResolution dateTimeResolution)
                     {
-                        DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
                         Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
                         Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
                         Console.WriteLine($"Value: {dateTimeResolution.Value}");
@@ -142,9 +141,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
                 foreach (BaseResolution resolution in entity.Resolutions)
                 {
-                    if (resolution is DateTimeResolution)
+                    if (resolution is DateTimeResolution dateTimeResolution)
                     {
-                        DateTimeResolution dateTimeResolution = resolution as DateTimeResolution;
                         Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
                         Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
                         Console.WriteLine($"Value: {dateTimeResolution.Value}");
