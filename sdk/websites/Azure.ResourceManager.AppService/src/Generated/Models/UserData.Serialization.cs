@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                scmUri = null;
                                 continue;
                             }
                             scmUri = new Uri(property0.Value.GetString());

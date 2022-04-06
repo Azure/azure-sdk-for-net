@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 { "key", "value" }
             });
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, input);
-            AvailabilitySet set1 = lro.Value;
-            AvailabilitySet set2 = await collection.GetAsync(setName);
+            AvailabilitySetResource set1 = lro.Value;
+            AvailabilitySetResource set2 = await collection.GetAsync(setName);
 
             ResourceDataHelper.AssertAvailabilitySet(set1.Data, set2.Data);
         }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName1, input);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName2, input);
 
-            AvailabilitySet set1 = null, set2 = null;
+            AvailabilitySetResource set1 = null, set2 = null;
             await foreach (var availabilitySet in DefaultSubscription.GetAvailabilitySetsAsync())
             {
                 if (availabilitySet.Data.Name == setName1)

@@ -22,16 +22,28 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedCertificateParameters DeserializeManagedCertificateParameters(JsonElement element)
         {
+            Optional<string> subject = default;
+            Optional<string> expirationDate = default;
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("subject"))
+                {
+                    subject = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("expirationDate"))
+                {
+                    expirationDate = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = new SecretType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ManagedCertificateParameters(type);
+            return new ManagedCertificateParameters(type, subject.Value, expirationDate.Value);
         }
     }
 }

@@ -36,9 +36,15 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='watchlistAlias'>
             /// Watchlist Alias
             /// </param>
-            public static IPage<WatchlistItem> List(this IWatchlistItemsOperations operations, string resourceGroupName, string workspaceName, string watchlistAlias)
+            /// <param name='skipToken'>
+            /// Skiptoken is only used if a previous operation returned a partial result.
+            /// If a previous response contains a nextLink element, the value of the
+            /// nextLink element will include a skiptoken parameter that specifies a
+            /// starting point to use for subsequent calls. Optional.
+            /// </param>
+            public static IPage<WatchlistItem> List(this IWatchlistItemsOperations operations, string resourceGroupName, string workspaceName, string watchlistAlias, string skipToken = default(string))
             {
-                return operations.ListAsync(resourceGroupName, workspaceName, watchlistAlias).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, watchlistAlias, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,12 +62,18 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='watchlistAlias'>
             /// Watchlist Alias
             /// </param>
+            /// <param name='skipToken'>
+            /// Skiptoken is only used if a previous operation returned a partial result.
+            /// If a previous response contains a nextLink element, the value of the
+            /// nextLink element will include a skiptoken parameter that specifies a
+            /// starting point to use for subsequent calls. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<WatchlistItem>> ListAsync(this IWatchlistItemsOperations operations, string resourceGroupName, string workspaceName, string watchlistAlias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WatchlistItem>> ListAsync(this IWatchlistItemsOperations operations, string resourceGroupName, string workspaceName, string watchlistAlias, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, watchlistAlias, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, watchlistAlias, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

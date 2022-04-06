@@ -297,8 +297,9 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   and <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSendsPerPartition" /> both set to 1, the handler will be invoked
         ///   concurrently.
         ///
-        ///   It is safe to attempt resending the events by calling <see cref="EnqueueEventAsync(EventData, CancellationToken)" /> or <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> from within
-        ///   this handler.  It is important to note that doing so will place them at the end of the buffer; the original order will not be maintained.
+        ///   It is safe to attempt resending the events by calling <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
+        ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" /> from within this handler.  It is important
+        ///   to note that doing so will place them at the end of the buffer; the original order will not be maintained.
         ///
         ///   This handler will be awaited after failure to publish the batch; the publishing operation is not considered complete until the
         ///   handler call returns.  It is advised that no long-running operations be performed in the handler to avoid negatively impacting throughput.
@@ -381,7 +382,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubBufferedProducerClient(string connectionString) : this(connectionString, null, null)
         {
@@ -403,7 +404,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubBufferedProducerClient(string connectionString,
                                               EventHubBufferedProducerClientOptions clientOptions) : this(connectionString, null, clientOptions)
@@ -423,7 +424,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubBufferedProducerClient(string connectionString,
                                               string eventHubName) : this(connectionString, eventHubName, default)
@@ -444,7 +445,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubBufferedProducerClient(string connectionString,
                                               string eventHubName,

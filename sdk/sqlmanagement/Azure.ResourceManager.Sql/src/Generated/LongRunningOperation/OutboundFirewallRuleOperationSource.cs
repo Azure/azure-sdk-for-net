@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class OutboundFirewallRuleOperationSource : IOperationSource<OutboundFirewallRule>
+    internal class OutboundFirewallRuleOperationSource : IOperationSource<OutboundFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        OutboundFirewallRule IOperationSource<OutboundFirewallRule>.CreateResult(Response response, CancellationToken cancellationToken)
+        OutboundFirewallRuleResource IOperationSource<OutboundFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement);
-            return new OutboundFirewallRule(_client, data);
+            return new OutboundFirewallRuleResource(_client, data);
         }
 
-        async ValueTask<OutboundFirewallRule> IOperationSource<OutboundFirewallRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OutboundFirewallRuleResource> IOperationSource<OutboundFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement);
-            return new OutboundFirewallRule(_client, data);
+            return new OutboundFirewallRuleResource(_client, data);
         }
     }
 }

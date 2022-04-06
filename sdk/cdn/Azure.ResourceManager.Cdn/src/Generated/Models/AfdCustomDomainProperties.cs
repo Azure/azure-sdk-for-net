@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of AfdCustomDomainProperties. </summary>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public AfdCustomDomainProperties(string hostName)
+        internal AfdCustomDomainProperties(string hostName)
         {
             if (hostName == null)
             {

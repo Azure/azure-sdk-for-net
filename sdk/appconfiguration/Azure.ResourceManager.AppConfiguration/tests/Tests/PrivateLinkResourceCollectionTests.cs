@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class PrivateLinkResourceCollectionTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
-        private ConfigurationStore ConfigStore { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
+        private ConfigurationStoreResource ConfigStore { get; set; }
 
         public PrivateLinkResourceCollectionTests(bool isAsync)
             : base(isAsync)
@@ -47,15 +47,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetTest()
         {
             PrivateLinkResource linkResource = await ConfigStore.GetPrivateLinkResources().GetAsync("configurationStores");
-
-            Assert.NotNull(linkResource);
-        }
-
-        [Ignore("Error resource id without '/' in the beginning")]
-        [Test]
-        public async Task GetIfExistsTest()
-        {
-            PrivateLinkResource linkResource = await ConfigStore.GetPrivateLinkResources().GetIfExistsAsync("configurationStores");
 
             Assert.NotNull(linkResource);
         }

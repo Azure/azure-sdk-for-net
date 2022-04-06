@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        scriptUri = null;
                         continue;
                     }
                     scriptUri = new Uri(property.Value.GetString());

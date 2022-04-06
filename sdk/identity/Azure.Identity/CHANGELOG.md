@@ -1,14 +1,17 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
+## 1.6.0 (2022-04-05)
 
 ### Features Added
-
-### Breaking Changes
+- Added a new property under the `Diagnostics` options available on `TokenCredentialOptions` and all sub-types. If set to `true`, we try to log the account identifiers by parsing the received access token. The account identifiers we try to log are the:
+  - Application or Client Identifier
+  - User Principal Name
+  - Tenant Identifier
+  - Object Identifier of the authenticated user or app
+- `ManagedIdentityCredential` now attempts to use the newest "2019-08-01" api version for App Service Managed Identity sources. The newer API version will be used if the `IDENTITY_ENDPOINT` and `IDENTITY_HEADER` environment variables are set.
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed an issue where the x5c header is not sent for `OnBehalfOfCredential` when the `SendCertificateChain` option is set. [#27679](https://github.com/Azure/azure-sdk-for-net/issues/27679)
 
 ## 1.6.0-beta.1 (2022-02-11)
 

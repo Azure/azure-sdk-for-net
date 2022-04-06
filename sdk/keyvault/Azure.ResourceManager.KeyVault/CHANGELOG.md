@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.7 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- Removed `GetIfExists` methods from all the resource classes.
+- All properties of the type `object` were changed to `BinaryData`.
 
 ## 1.0.0-beta.6 (2022-01-29)
 
@@ -80,11 +90,14 @@ The package name has been changed from `Microsoft.Azure.Management.KeyVault` to 
 Example: Create a Key Vault Instance:
 
 Before upgrade:
+
 ```C#
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Rest;
+```
 
+```C#
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
 var keyVaultManagementClient = new KeyVaultManagementClient(tokenCredentials);
 var vault = await keyVaultManagementClient.Vaults.BeginCreateOrUpdateAsync
@@ -96,23 +109,28 @@ var vault = await keyVaultManagementClient.Vaults.BeginCreateOrUpdateAsync
 ```
 
 After upgrade:
-```C# Snippet:Changelog_NewCode
+
+```C# Snippet:Changelog_Namespaces
+using System;
+using Azure;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using System;
-using Azure.Core;
+```
+
+```C# Snippet:Changelog_NewCode
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
+VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
 
-ArmOperation<Vault> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
-Vault vault = lro.Value;
+ArmOperation<VaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
+VaultResource vault = lro.Value;
 ```
 
 #### Object Model Changes
@@ -120,13 +138,15 @@ Vault vault = lro.Value;
 Example: Create a Permissions Model
 
 Before upgrade:
+
 ```C#
 VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
 VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
 ```
 
 After upgrade:
+
 ```C# Snippet:Changelog_CreateModel
 VaultProperties properties = new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, properties);
+VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, properties);
 ```

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
     {
         public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-        protected Subscription DefaultSubscription;
+        protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
 
         public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
-        public async Task<ResourceGroup> CreateResourceGroupAsync()
+        public async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("testeventhubRG-");
-            ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ArmOperation<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckNameAvailabilityNamespaceAsync(new CheckNameAvailabilityOptions(namespaceName));
+                CheckNameAvailabilityResult res = await DefaultSubscription.CheckEventHubNameAvailabilityAsync(new CheckNameAvailabilityOptions(namespaceName));
                 if (res.NameAvailable==true)
                 {
                     return namespaceName;
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             return namespaceName;
         }
 
-        public static void VerifyNamespaceProperties(EventHubNamespace eventHubNamespace, bool useDefaults)
+        public static void VerifyNamespaceProperties(EventHubNamespaceResource eventHubNamespace, bool useDefaults)
         {
             Assert.NotNull(eventHubNamespace);
             Assert.NotNull(eventHubNamespace.Id);
             Assert.NotNull(eventHubNamespace.Id.Name);
             Assert.NotNull(eventHubNamespace.Data);
             Assert.NotNull(eventHubNamespace.Data.Location);
-            Assert.NotNull(eventHubNamespace.Data.CreatedAt);
+            Assert.NotNull(eventHubNamespace.Data.CreatedOn);
             Assert.NotNull(eventHubNamespace.Data.Sku);
             if (useDefaults)
             {

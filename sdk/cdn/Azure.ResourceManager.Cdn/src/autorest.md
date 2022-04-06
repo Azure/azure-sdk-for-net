@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
-require: 
-  - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/readme.md
+title: CdnManagementClient
+require: https://github.com/Azure/azure-rest-api-specs/blob/a0c83df51e02f4e0b21ff3ae72c5a1ac52f72586/specification/cdn/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
@@ -15,7 +15,9 @@ operation-id-mappings:
   CdnEndpoint:
       profileName: Microsoft.Cdn/operationresults/profileresults
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
-
+modelerfour:
+  naming:
+    preserve-uppercase-max-length: 2
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -26,6 +28,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -42,9 +45,12 @@ no-property-type-replacement:
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - AfdCustomDomainHttpsParametersSecret
+  - AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
+  - ManagedServiceIdentity
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
+  AfdProfiles_CheckHostNameAvailability: CheckAfdProfileHostNameAvailability
   LogAnalytics_GetLogAnalyticsMetrics: GetLogAnalyticsMetrics
   LogAnalytics_GetLogAnalyticsRankings: GetLogAnalyticsRankings
   LogAnalytics_GetLogAnalyticsResources: GetLogAnalyticsResources
@@ -105,65 +111,18 @@ directive:
             }
         }
   - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}'].patch
+    where: $.definitions.AFDDomainUpdatePropertiesParameters.properties
     transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}'].patch
-    transform: >
-      $['x-ms-long-running-operation-options'] = {
-          "final-state-via": "original-uri"
-      }
+        $.preValidatedCustomDomainResourceId = {
+            "description": "Resource reference to the Azure resource where custom domain ownership was prevalidated",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Resource ID."
+                }
+            }
+        }
   - from: swagger-document
     where: $.definitions.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup
     transform: $['x-nullable'] = true
@@ -204,7 +163,7 @@ directive:
     where: $.definitions.*.properties.weight
     transform: $['x-nullable'] = true
   - from: swagger-document
-    where: $.definitions.OriginProperties.properties.privateEndpointStatus
+    where: $.definitions.*.properties.privateEndpointStatus
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.definitions.WafMetricsResponse.properties.series.items.properties.groups
@@ -223,16 +182,34 @@ directive:
     transform: $['x-nullable'] = true
   - from: swagger-document
     where: $.definitions.policySettings.properties.defaultCustomBlockResponseStatusCode
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.ProfileProperties.properties.originResponseTimeoutSeconds
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.CustomDomainProperties.properties.customHttpsParameters
     transform: $['x-nullable'] = true  
+  - from: swagger-document
+    where: $.definitions.AFDDomainUpdatePropertiesParameters.properties.preValidatedCustomDomainResourceId
+    transform: $['x-nullable'] = true 
+  - from: swagger-document
+    where: $.definitions.RouteConfigurationOverrideActionParameters.properties.originGroupOverride
+    transform: $['x-nullable'] = true
+  - from: swagger-document
+    where: $.definitions.RouteUpdatePropertiesParameters.properties.cacheConfiguration
+    transform: $['x-nullable'] = true 
+  - from: swagger-document
+    where: $.definitions.CacheConfiguration.properties.cacheDuration
+    transform: $['x-nullable'] = true 
+  - from: swagger-document
+    where: $.definitions.AFDEndpointProperties.properties.autoGeneratedDomainNameLabelScope
+    transform: $['x-nullable'] = true 
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'].put.parameters[3]
     transform: $['x-ms-client-name'] = 'endpointInput'
-  - remove-operation: AFDProfiles_CheckHostNameAvailability
-  - remove-operation: Secrets_Update
-  - remove-operation: Validate_Secret
   - from: swagger-document
     where: $.definitions.AFDEndpointProtocols
     transform: >
@@ -268,7 +245,7 @@ directive:
               const newKey = 'Afd' + key;
               $[key]['x-ms-client-name'] = newKey
           }
-          if (['AfdPurgeParameters', 'CdnManagedHttpsParameters', 'CdnWebApplicationFirewallPolicyPatchParameters', 'CustomDomainHttpsParameters', 'CustomDomainParameters', 'EndpointUpdateParameters', 'LoadParameters', 'OriginGroupUpdateParameters', 'OriginUpdateParameters', 'ProfileUpdateParameters', 'PurgeParameters', 'RouteUpdateParameters', 'RuleUpdateParameters', 'UserManagedHttpsParameters'].includes(key)) {
+          if (['AfdPurgeParameters', 'CdnManagedHttpsParameters', 'CdnWebApplicationFirewallPolicyPatchParameters', 'CustomDomainHttpsParameters', 'CustomDomainParameters', 'EndpointUpdateParameters', 'LoadParameters', 'OriginGroupUpdateParameters', 'OriginUpdateParameters', 'ProfileUpdateParameters', 'PurgeParameters', 'RouteUpdateParameters', 'RuleUpdateParameters', 'UserManagedHttpsParameters', 'SecurityPolicyUpdateParameters'].includes(key)) {
               const newKey = key.replace('Parameters', 'Options');
               $[key]['x-ms-client-name'] = newKey
           }
@@ -319,4 +296,17 @@ directive:
     transform: >
       $["format"] = "duration";
       $["x-ms-format"] = "duration-constant";
+  - from: cdn.json
+    where: $.definitions.CacheConfiguration.properties.cacheDuration
+    transform: >
+      $["format"] = "duration";
+      $["x-ms-format"] = "duration-constant";
+  - from: swagger-document
+    where: $.definitions.ValidateSecretOutput.properties.status
+    transform: >
+      $['x-ms-enum'] = {
+          "name": "validationStatus",
+          "modelAsString": true
+      }
+  - remove-operation: Validate_Secret
 ```

@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Models
         public ManagedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType)
         {
             ManagedServiceIdentityType = managedServiceIdentityType;
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         [SerializationConstructor]
-        internal ManagedServiceIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal ManagedServiceIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType managedServiceIdentityType, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -44,6 +43,6 @@ namespace Azure.ResourceManager.Models
         /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
         public ManagedServiceIdentityType ManagedServiceIdentityType { get; set; }
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
+        public IDictionary<ResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

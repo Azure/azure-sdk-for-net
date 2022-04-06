@@ -39,6 +39,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         public static readonly H265VideoProfile Main = "Main";
 
+        /// <summary>
+        /// Main 10 profile
+        /// (https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding#Main_10)
+        /// </summary>
+        public static readonly H265VideoProfile Main10 = "Main10";
+
 
         /// <summary>
         /// Underlying value of enum H265VideoProfile

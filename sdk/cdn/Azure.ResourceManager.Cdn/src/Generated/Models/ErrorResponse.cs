@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Error response indicates CDN service is not able to process the incoming request. The reason is provided in the error message. </summary>
+    /// <summary> Error response indicates Azure Front Door Standard or Azure Front Door Premium or CDN service is not able to process the incoming request. The reason is provided in the error message. </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
@@ -16,17 +18,13 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message indicating why the operation failed. </param>
-        internal ErrorResponse(string code, string message)
+        /// <param name="error"> The error object. </param>
+        internal ErrorResponse(ResponseError error)
         {
-            Code = code;
-            Message = message;
+            Error = error;
         }
 
-        /// <summary> Error code. </summary>
-        public string Code { get; }
-        /// <summary> Error message indicating why the operation failed. </summary>
-        public string Message { get; }
+        /// <summary> The error object. </summary>
+        public ResponseError Error { get; }
     }
 }

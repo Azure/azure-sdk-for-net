@@ -1,4 +1,13 @@
 # Microsoft.Azure.Management.GuestConfiguration release notes
+## Changes in 2.0.0
+### Features
+Supports Assignment Type in ARG
+
+### Bug fixes
+None  
+
+### REST API version
+This version of the GuestConfiguration .NET client library targets version 2021-01-25 of the Azure GuestConfiguration REST API.
 
 ## Changes in 1.2.0
 ### Features

@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     internal partial class MsixPackagesRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-07-12";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName)
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackageData msixPackage)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackageData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,9 +145,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(msixPackage);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -157,19 +156,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="msixPackage"> Object containing  MSIX Package definitions. </param>
+        /// <param name="data"> Object containing  MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="msixPackageFullName"/> or <paramref name="msixPackage"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="msixPackageFullName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MsixPackageData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackageData msixPackage, CancellationToken cancellationToken = default)
+        public async Task<Response<MsixPackageData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
             Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-            Argument.AssertNotNull(msixPackage, nameof(msixPackage));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, msixPackageFullName, msixPackage);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, msixPackageFullName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,19 +190,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="msixPackage"> Object containing  MSIX Package definitions. </param>
+        /// <param name="data"> Object containing  MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="msixPackageFullName"/> or <paramref name="msixPackage"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="msixPackageFullName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MsixPackageData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackageData msixPackage, CancellationToken cancellationToken = default)
+        public Response<MsixPackageData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
             Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-            Argument.AssertNotNull(msixPackage, nameof(msixPackage));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, msixPackageFullName, msixPackage);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, msixPackageFullName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, PatchableMsixPackageData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackagePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -316,9 +315,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -327,19 +326,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="data"> Object containing MSIX Package definitions. </param>
+        /// <param name="patch"> Object containing MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="msixPackageFullName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="msixPackageFullName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MsixPackageData>> UpdateAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, PatchableMsixPackageData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MsixPackageData>> UpdateAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
             Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, msixPackageFullName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, msixPackageFullName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -360,19 +359,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="data"> Object containing MSIX Package definitions. </param>
+        /// <param name="patch"> Object containing MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="msixPackageFullName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="msixPackageFullName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MsixPackageData> Update(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, PatchableMsixPackageData data, CancellationToken cancellationToken = default)
+        public Response<MsixPackageData> Update(string subscriptionId, string resourceGroupName, string hostPoolName, string msixPackageFullName, MsixPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
             Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, msixPackageFullName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, hostPoolName, msixPackageFullName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -405,7 +404,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -477,7 +476,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

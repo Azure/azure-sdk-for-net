@@ -27,14 +27,16 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="ruleSetName"> The name of the rule set containing the rule. </param>
         /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
         /// <param name="conditions"> A list of conditions that must be matched for the actions to be executed. </param>
         /// <param name="actions"> A list of actions that are executed when all the conditions of a rule are satisfied. </param>
         /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? order, IList<DeliveryRuleCondition> conditions, IList<DeliveryRuleAction> actions, MatchProcessingBehavior? matchProcessingBehavior, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        internal AfdRuleData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string ruleSetName, int? order, IList<DeliveryRuleCondition> conditions, IList<DeliveryRuleAction> actions, MatchProcessingBehavior? matchProcessingBehavior, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
+            RuleSetName = ruleSetName;
             Order = order;
             Conditions = conditions;
             Actions = actions;
@@ -43,6 +45,8 @@ namespace Azure.ResourceManager.Cdn
             DeploymentStatus = deploymentStatus;
         }
 
+        /// <summary> The name of the rule set containing the rule. </summary>
+        public string RuleSetName { get; }
         /// <summary> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </summary>
         public int? Order { get; set; }
         /// <summary> A list of conditions that must be matched for the actions to be executed. </summary>

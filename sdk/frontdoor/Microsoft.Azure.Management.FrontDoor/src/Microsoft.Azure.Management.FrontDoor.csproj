@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.FrontDoor</PackageId>
 		<Description>Provides management capabilities for Front Door services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.FrontDoor</AssemblyName>
-		<Version>4.0.0</Version>
+		<Version>4.0.1</Version>
 		<PackageTags>Microsoft Azure Front Door management;FrontDoor;Front Door management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[

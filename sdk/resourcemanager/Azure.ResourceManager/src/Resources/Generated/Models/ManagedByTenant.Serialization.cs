@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,16 +15,21 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ManagedByTenant DeserializeManagedByTenant(JsonElement element)
         {
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new ManagedByTenant(tenantId.Value);
+            return new ManagedByTenant(Optional.ToNullable(tenantId));
         }
     }
 }

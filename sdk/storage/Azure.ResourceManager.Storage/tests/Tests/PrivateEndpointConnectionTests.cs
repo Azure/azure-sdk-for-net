@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class PrivateEndpointConnectionTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private StorageAccount _storageAccount;
+        private ResourceGroupResource _resourceGroup;
+        private StorageAccountResource _storageAccount;
         private PrivateEndpointConnectionCollection _privateEndpointConnectionCollection { get => _storageAccount.GetPrivateEndpointConnections(); }
         public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
         {
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Storage.Tests
         [TearDown]
         public async Task TearDown()
         {
-            List<PrivateEndpointConnection> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            foreach (PrivateEndpointConnection connection in privateEndpointConnections)
+            List<PrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            foreach (PrivateEndpointConnectionResource connection in privateEndpointConnections)
             {
                 await connection.DeleteAsync(WaitUntil.Completed);
             }
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Storage.Tests
         [Ignore("can pass locally, cost too much time on pipeline")]
         public async Task CreatePrivateEndpointConnection()
         {
-            PrivateEndpoint privateEndpoint = await CreatePrivateEndpoint();
-            List<PrivateEndpointConnection> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            PrivateEndpointConnection privateEndpointConnection = privateEndpointConnections[0];
+            PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
+            List<PrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            PrivateEndpointConnectionResource privateEndpointConnection = privateEndpointConnections[0];
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
             Assert.AreEqual(PrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
 
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Storage.Tests
         [Ignore("can pass locally, cost too much time on pipeline")]
         public async Task GetAllPrivateEndpointConnection()
         {
-            PrivateEndpoint privateEndpoint = await CreatePrivateEndpoint();
+            PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
             Assert.AreEqual(privateEndpoint.Data.ManualPrivateLinkServiceConnections.Count, 1);
 
-            List<PrivateEndpointConnection> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            List<PrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, privateEndpointConnections.Count);
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections[0]);
         }
@@ -84,9 +84,12 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             await CreatePrivateEndpoint();
 
-            List<PrivateEndpointConnection> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            PrivateEndpointConnection privateEndpointConnection = await _privateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
-            Assert.IsNotNull(privateEndpointConnection);
+            List<PrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            string name = privateEndpointConnections[0].Data.Name;
+            Assert.IsTrue(await _privateEndpointConnectionCollection.ExistsAsync(name));
+            var id = _privateEndpointConnectionCollection.Id;
+            id = PrivateEndpointConnectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, name);
+            PrivateEndpointConnectionResource privateEndpointConnection = Client.GetPrivateEndpointConnectionResource(id);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
             //should return 404 rather than 400
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Tests
             privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, privateEndpointConnections.Count);
         }
-        protected async Task<PrivateEndpoint> CreatePrivateEndpoint()
+        protected async Task<PrivateEndpointResource> CreatePrivateEndpoint()
         {
             var vnetName = Recording.GenerateAssetName("vnet-");
             var vnet = new VirtualNetworkData()
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.Storage.Tests
             vnet.AddressPrefixes.Add("10.0.0.0/16");
             vnet.DhcpOptionsDnsServers.Add("10.1.1.1");
             vnet.DhcpOptionsDnsServers.Add("10.1.2.4");
-            VirtualNetwork virtualNetwork = await _resourceGroup.GetVirtualNetworks().CreateOrUpdate(WaitUntil.Started, vnetName, vnet).WaitForCompletionAsync();
+            VirtualNetworkResource virtualNetwork = await _resourceGroup.GetVirtualNetworks().CreateOrUpdate(WaitUntil.Started, vnetName, vnet).WaitForCompletionAsync();
 
             var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
@@ -133,7 +136,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             return await _resourceGroup.GetPrivateEndpoints().CreateOrUpdate(WaitUntil.Started, name, privateEndpointData).WaitForCompletionAsync();
         }
-        private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, PrivateEndpointConnection actualValue)
+        private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, PrivateEndpointConnectionResource actualValue)
         {
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);

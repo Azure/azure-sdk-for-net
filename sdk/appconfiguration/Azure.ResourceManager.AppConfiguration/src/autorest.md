@@ -6,12 +6,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d302c82f32daec0feb68cd7d68d45ba898b67ee7/specification/appconfiguration/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d0b5e9937f89a600dd25c1aa450b42fe911e067d/specification/appconfiguration/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 no-property-type-replacement: RegenerateKeyOptions
-modelerfour:
-  flatten-payloads: false
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -32,6 +31,9 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  
+request-path-to-parent:
+  /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
 directive:
   - rename-model:
       from: ConfigurationStoreUpdateParameters

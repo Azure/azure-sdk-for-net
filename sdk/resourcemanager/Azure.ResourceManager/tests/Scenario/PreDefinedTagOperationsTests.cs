@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Tests
     public class PredefinedTagOperationsTests : ResourceManagerTestBase
     {
         private string _tagName;
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
         public PredefinedTagOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)

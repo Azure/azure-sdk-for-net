@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of SecretParameters. </summary>
-        /// <param name="secretType"> The type of the Secret to create. </param>
+        /// <param name="secretType"> The type of the secret resource. </param>
         internal SecretParameters(SecretType secretType)
         {
             SecretType = secretType;
         }
 
-        /// <summary> The type of the Secret to create. </summary>
+        /// <summary> The type of the secret resource. </summary>
         internal SecretType SecretType { get; set; }
     }
 }

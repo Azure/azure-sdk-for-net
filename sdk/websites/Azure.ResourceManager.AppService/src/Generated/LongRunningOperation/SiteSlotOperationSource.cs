@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class SiteSlotOperationSource : IOperationSource<SiteSlot>
+    internal class SiteSlotOperationSource : IOperationSource<SiteSlotResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        SiteSlot IOperationSource<SiteSlot>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteSlotResource IOperationSource<SiteSlotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WebSiteData.DeserializeWebSiteData(document.RootElement);
-            return new SiteSlot(_client, data);
+            return new SiteSlotResource(_client, data);
         }
 
-        async ValueTask<SiteSlot> IOperationSource<SiteSlot>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteSlotResource> IOperationSource<SiteSlotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WebSiteData.DeserializeWebSiteData(document.RootElement);
-            return new SiteSlot(_client, data);
+            return new SiteSlotResource(_client, data);
         }
     }
 }

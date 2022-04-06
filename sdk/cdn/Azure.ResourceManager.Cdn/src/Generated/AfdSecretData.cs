@@ -26,11 +26,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
+        /// <param name="profileName"> The name of the profile which holds the secret. </param>
         /// <param name="parameters"> object which contains secret parameters. </param>
-        internal AfdSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, SecretParameters parameters) : base(id, name, resourceType, systemData)
+        internal AfdSecretData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, string profileName, SecretParameters parameters) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
+            ProfileName = profileName;
             Parameters = parameters;
         }
 
@@ -38,9 +40,11 @@ namespace Azure.ResourceManager.Cdn
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
         public DeploymentStatus? DeploymentStatus { get; }
+        /// <summary> The name of the profile which holds the secret. </summary>
+        public string ProfileName { get; }
         /// <summary> object which contains secret parameters. </summary>
         internal SecretParameters Parameters { get; set; }
-        /// <summary> The type of the Secret to create. </summary>
+        /// <summary> The type of the secret resource. </summary>
         internal SecretType ParametersSecretType
         {
             get => Parameters is null ? default : Parameters.SecretType;

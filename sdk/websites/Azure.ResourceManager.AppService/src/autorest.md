@@ -102,11 +102,30 @@ override-operation-name:
   StaticSites_UpdateStaticSiteUser: UpdateUser
   CheckNameAvailability: CheckAppServiceNameAvailability
 
-mgmt-debug:
-  show-request-path: true
-
 no-property-type-replacement:
 - ApiManagementConfig
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
       
 directive:
 # rename model

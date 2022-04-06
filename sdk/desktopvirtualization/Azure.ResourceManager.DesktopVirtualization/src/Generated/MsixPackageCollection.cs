@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of MsixPackage and their operations over its parent. </summary>
-    public partial class MsixPackageCollection : ArmCollection, IEnumerable<MsixPackage>, IAsyncEnumerable<MsixPackage>
+    /// <summary>
+    /// A class representing a collection of <see cref="MsixPackageResource" /> and their operations.
+    /// Each <see cref="MsixPackageResource" /> in the collection will belong to the same instance of <see cref="HostPoolResource" />.
+    /// To get a <see cref="MsixPackageCollection" /> instance call the GetMsixPackages method from an instance of <see cref="HostPoolResource" />.
+    /// </summary>
+    public partial class MsixPackageCollection : ArmCollection, IEnumerable<MsixPackageResource>, IAsyncEnumerable<MsixPackageResource>
     {
         private readonly ClientDiagnostics _msixPackageMSIXPackagesClientDiagnostics;
         private readonly MsixPackagesRestOperations _msixPackageMSIXPackagesRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MsixPackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _msixPackageMSIXPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", MsixPackage.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(MsixPackage.ResourceType, out string msixPackageMSIXPackagesApiVersion);
-            _msixPackageMSIXPackagesRestClient = new MsixPackagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, msixPackageMSIXPackagesApiVersion);
+            _msixPackageMSIXPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", MsixPackageResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MsixPackageResource.ResourceType, out string msixPackageMSIXPackagesApiVersion);
+            _msixPackageMSIXPackagesRestClient = new MsixPackagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, msixPackageMSIXPackagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HostPool.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HostPool.ResourceType), nameof(id));
+            if (id.ResourceType != HostPoolResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HostPoolResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -57,21 +60,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="msixPackage"> Object containing  MSIX Package definitions. </param>
+        /// <param name="data"> Object containing  MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> or <paramref name="msixPackage"/> is null. </exception>
-        public virtual async Task<ArmOperation<MsixPackage>> CreateOrUpdateAsync(WaitUntil waitUntil, string msixPackageFullName, MsixPackageData msixPackage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<MsixPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string msixPackageFullName, MsixPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-            Argument.AssertNotNull(msixPackage, nameof(msixPackage));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _msixPackageMSIXPackagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, msixPackage, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<MsixPackage>(Response.FromValue(new MsixPackage(Client, response), response.GetRawResponse()));
+                var response = await _msixPackageMSIXPackagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DesktopVirtualizationArmOperation<MsixPackageResource>(Response.FromValue(new MsixPackageResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,21 +93,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="msixPackage"> Object containing  MSIX Package definitions. </param>
+        /// <param name="data"> Object containing  MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> or <paramref name="msixPackage"/> is null. </exception>
-        public virtual ArmOperation<MsixPackage> CreateOrUpdate(WaitUntil waitUntil, string msixPackageFullName, MsixPackageData msixPackage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<MsixPackageResource> CreateOrUpdate(WaitUntil waitUntil, string msixPackageFullName, MsixPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-            Argument.AssertNotNull(msixPackage, nameof(msixPackage));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _msixPackageMSIXPackagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, msixPackage, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<MsixPackage>(Response.FromValue(new MsixPackage(Client, response), response.GetRawResponse()));
+                var response = _msixPackageMSIXPackagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, data, cancellationToken);
+                var operation = new DesktopVirtualizationArmOperation<MsixPackageResource>(Response.FromValue(new MsixPackageResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
-        public virtual async Task<Response<MsixPackage>> GetAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MsixPackageResource>> GetAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
 
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = await _msixPackageMSIXPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MsixPackage(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
-        public virtual Response<MsixPackage> Get(string msixPackageFullName, CancellationToken cancellationToken = default)
+        public virtual Response<MsixPackageResource> Get(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
 
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = _msixPackageMSIXPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MsixPackage(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +183,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: MSIXPackages_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MsixPackage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MsixPackage> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MsixPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MsixPackageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MsixPackage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MsixPackageResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _msixPackageMSIXPackagesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MsixPackage(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MsixPackageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +201,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<MsixPackage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MsixPackageResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _msixPackageMSIXPackagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MsixPackage(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MsixPackageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +225,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: MSIXPackages_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MsixPackage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MsixPackage> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MsixPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MsixPackageResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MsixPackage> FirstPageFunc(int? pageSizeHint)
+            Page<MsixPackageResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _msixPackageMSIXPackagesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MsixPackage(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MsixPackageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +243,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<MsixPackage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MsixPackageResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _msixPackageMSIXPackagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MsixPackage(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MsixPackageResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,7 +278,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(msixPackageFullName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _msixPackageMSIXPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,7 +305,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = GetIfExists(msixPackageFullName, cancellationToken: cancellationToken);
+                var response = _msixPackageMSIXPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,65 +315,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}
-        /// Operation Id: MSIXPackages_Get
-        /// </summary>
-        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
-        public virtual async Task<Response<MsixPackage>> GetIfExistsAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-
-            using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _msixPackageMSIXPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<MsixPackage>(null, response.GetRawResponse());
-                return Response.FromValue(new MsixPackage(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}
-        /// Operation Id: MSIXPackages_Get
-        /// </summary>
-        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
-        public virtual Response<MsixPackage> GetIfExists(string msixPackageFullName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-
-            using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _msixPackageMSIXPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<MsixPackage>(null, response.GetRawResponse());
-                return Response.FromValue(new MsixPackage(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<MsixPackage> IEnumerable<MsixPackage>.GetEnumerator()
+        IEnumerator<MsixPackageResource> IEnumerable<MsixPackageResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +325,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MsixPackage> IAsyncEnumerable<MsixPackage>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MsixPackageResource> IAsyncEnumerable<MsixPackageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

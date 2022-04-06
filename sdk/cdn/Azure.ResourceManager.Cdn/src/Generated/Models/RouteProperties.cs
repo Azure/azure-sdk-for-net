@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class RouteProperties : RouteUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RouteProperties. </summary>
-        public RouteProperties()
+        internal RouteProperties()
         {
         }
 

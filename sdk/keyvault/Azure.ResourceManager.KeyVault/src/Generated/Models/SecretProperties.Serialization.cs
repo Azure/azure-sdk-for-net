@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        secretUri = null;
                         continue;
                     }
                     secretUri = new Uri(property.Value.GetString());

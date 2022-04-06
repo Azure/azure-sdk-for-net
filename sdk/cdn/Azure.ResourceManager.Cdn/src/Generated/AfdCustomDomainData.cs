@@ -25,17 +25,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="profileName"> The name of the profile which holds the domain. </param>
         /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
         /// <param name="azureDnsZone"> Resource reference to the Azure DNS zone. </param>
+        /// <param name="preValidatedCustomDomainResourceId"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
         /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
-        internal AfdCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdCustomDomainHttpsParameters tlsSettings, WritableSubResource azureDnsZone, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
+        internal AfdCustomDomainData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string profileName, AfdCustomDomainHttpsParameters tlsSettings, WritableSubResource azureDnsZone, AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
         {
+            ProfileName = profileName;
             TlsSettings = tlsSettings;
             AzureDnsZone = azureDnsZone;
+            PreValidatedCustomDomainResourceId = preValidatedCustomDomainResourceId;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             DomainValidationState = domainValidationState;
@@ -43,6 +47,8 @@ namespace Azure.ResourceManager.Cdn
             ValidationProperties = validationProperties;
         }
 
+        /// <summary> The name of the profile which holds the domain. </summary>
+        public string ProfileName { get; }
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
         public AfdCustomDomainHttpsParameters TlsSettings { get; set; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
@@ -56,6 +62,20 @@ namespace Azure.ResourceManager.Cdn
                 if (AzureDnsZone is null)
                     AzureDnsZone = new WritableSubResource();
                 AzureDnsZone.Id = value;
+            }
+        }
+
+        /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
+        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResourceId { get; set; }
+        /// <summary> Resource ID. </summary>
+        public string PreValidatedCustomDomainResourceIdId
+        {
+            get => PreValidatedCustomDomainResourceId is null ? default : PreValidatedCustomDomainResourceId.Id;
+            set
+            {
+                if (PreValidatedCustomDomainResourceId is null)
+                    PreValidatedCustomDomainResourceId = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
+                PreValidatedCustomDomainResourceId.Id = value;
             }
         }
 

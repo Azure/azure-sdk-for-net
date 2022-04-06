@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             await afdProfile.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdProfile.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -36,23 +36,25 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Update()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
-            var lro = await afdProfile.AddTagAsync("newTag", "newValue");
-            Profile updatedAfdProfile = lro.Value;
-            ResourceDataHelper.AssertProfileUpdate(updatedAfdProfile, "newTag", "newValue");
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfilePatch updateOptions = new ProfilePatch();
+            updateOptions.Tags.Add("newTag", "newValue");
+            var lro = await afdProfile.UpdateAsync(WaitUntil.Completed, updateOptions);
+            ProfileResource updatedAfdProfile = lro.Value;
+            ResourceDataHelper.AssertProfileUpdate(updatedAfdProfile, updateOptions);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task CheckResourceUsage()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             int count = 0;
             await foreach (var tempUsage in afdProfile.GetResourceUsageAfdProfilesAsync())
             {
@@ -67,10 +69,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetLogAnalyticsLocations()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             ContinentsResponse continentsResponse = await afdProfile.GetLogAnalyticsLocationsAsync();
             Assert.AreEqual(continentsResponse.Continents.Count, 7);
         }
@@ -79,9 +81,9 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetLogAnalyticsMetrics()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             List<LogMetric> metric = new List<LogMetric>() { LogMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
@@ -96,9 +98,9 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetLogAnalyticsRankings()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             List<LogRanking> rankings = new List<LogRanking>() { LogRanking.Url };
             List<LogRankingMetric> metric = new List<LogRankingMetric>() { LogRankingMetric.ClientRequestCount };
             int maxRankings = 5;
@@ -114,21 +116,21 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetLogAnalyticsResources()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
             ResourcesResponse resourcesResponse = await afdProfile.GetLogAnalyticsResourcesAsync();
-            Assert.AreEqual(resourcesResponse.CustomDomains.Count, 0);
-            Assert.AreEqual(resourcesResponse.Endpoints.Count, 1);
+            Assert.AreEqual(resourcesResponse.CustomDomains.Count, 1);
+            Assert.AreEqual(resourcesResponse.Endpoints.Count, 2);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task GetWafLogAnalyticsMetrics()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
             List<WafMetric> metric = new List<WafMetric>() { WafMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
@@ -144,9 +146,9 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetWafLogAnalyticsRankings()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
             List<WafMetric> metric = new List<WafMetric>() { WafMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
@@ -156,6 +158,19 @@ namespace Azure.ResourceManager.Cdn.Tests
             Assert.AreEqual(wafRankingsResponse.Groups.Count, 1);
             Assert.AreEqual(wafRankingsResponse.Groups[0], WafRankingType.UserAgent.ToString());
             Assert.AreEqual(wafRankingsResponse.Data.Count, 0);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CheckHostNameAvailability()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            CheckHostNameAvailabilityInput input = new CheckHostNameAvailabilityInput("customdomain4afdtest.azuretest.net");
+            CheckNameAvailabilityOutput result = await afdProfile.CheckAfdProfileHostNameAvailabilityAsync(input);
+            Assert.AreEqual(result.NameAvailable, true);
         }
     }
 }

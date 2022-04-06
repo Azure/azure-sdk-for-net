@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -45,10 +46,10 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepositoryUrl))
+            if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl");
-                writer.WriteStringValue(RepositoryUrl);
+                writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> defaultHostname = default;
-            Optional<string> repositoryUrl = default;
+            Optional<Uri> repositoryUrl = default;
             Optional<string> branch = default;
             Optional<IReadOnlyList<string>> customDomains = default;
             Optional<string> repositoryToken = default;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             Optional<StaticSiteTemplateOptions> templateProperties = default;
             Optional<string> contentDistributionEndpoint = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
+            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
             Optional<string> provider = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -187,7 +188,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("repositoryUrl"))
                         {
-                            repositoryUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                repositoryUrl = null;
+                                continue;
+                            }
+                            repositoryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("branch"))
@@ -287,10 +293,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.StaticSiteUserProvidedFunctionApp> array = new List<Models.StaticSiteUserProvidedFunctionApp>();
+                            List<StaticSiteUserProvidedFunctionApp> array = new List<StaticSiteUserProvidedFunctionApp>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item));
+                                array.Add(StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item));
                             }
                             userProvidedFunctionApps = array;
                             continue;

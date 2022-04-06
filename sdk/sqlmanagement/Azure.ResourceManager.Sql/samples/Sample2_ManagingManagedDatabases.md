@@ -21,20 +21,20 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.GetDefaultSubscription();
+SubscriptionResource subscription = armClient.GetDefaultSubscription();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
 
 ```C# Snippet:Readme_GetResourceGroupCollection
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = lro.Value;
+ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = lro.Value;
 ```
 
 Now that we have the resource group created, we can manage the managed instance inside this resource group.
@@ -51,7 +51,7 @@ ManagedDatabaseData data = new ManagedDatabaseData(AzureLocation.WestUS2)
 };
 string databaseName = "myDatabase";
 var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
-ManagedDatabase managedDatabase = managedDatabaseLro.Value;
+ManagedDatabaseResource managedDatabase = managedDatabaseLro.Value;
 ```
 
 ***List all managed databases***
@@ -59,8 +59,8 @@ ManagedDatabase managedDatabase = managedDatabaseLro.Value;
 ```C# Snippet:Managing_Sql_ListAllManagedDatabases
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-AsyncPageable<ManagedDatabase> response = managedDatabaseCollection.GetAllAsync();
-await foreach (ManagedDatabase managedDatabase in response)
+AsyncPageable<ManagedDatabaseResource> response = managedDatabaseCollection.GetAllAsync();
+await foreach (ManagedDatabaseResource managedDatabase in response)
 {
     Console.WriteLine(managedDatabase.Data.Name);
 }
@@ -71,25 +71,8 @@ await foreach (ManagedDatabase managedDatabase in response)
 ```C# Snippet:Managing_Sql_GetAManagedDatabases
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedDatabase");
+ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetAsync("myManagedDatabase");
 Console.WriteLine(managedDatabase.Data.Name);
-```
-
-***Try to get a managed databases if it exists***
-
-```C# Snippet:Managing_Sql_GetAManagedDatabasesIfExists
-ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
-
-ManagedDatabase managedDatabase = await managedDatabaseCollection.GetIfExistsAsync("foo");
-if (managedInstance != null)
-{
-    Console.WriteLine(managedDatabase.Data.Name);
-}
-
-if (await managedDatabaseCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Virtual network 'bar' exists.");
-}
 ```
 
 ***Delete a managed databases***
@@ -97,6 +80,6 @@ if (await managedDatabaseCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_Sql_DeleteAManagedDatabases
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
+ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
 await managedDatabase.DeleteAsync(WaitUntil.Completed);
 ```

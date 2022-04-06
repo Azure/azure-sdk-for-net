@@ -17,10 +17,21 @@ namespace Azure.ResourceManager.Cdn.Models
             ProtocolType = protocolType;
         }
 
+        /// <summary> Initializes a new instance of CustomDomainHttpsOptions. </summary>
+        /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
+        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
+        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        internal CustomDomainHttpsOptions(CertificateSource certificateSource, ProtocolType protocolType, MinimumTlsVersion? minimumTlsVersion)
+        {
+            CertificateSource = certificateSource;
+            ProtocolType = protocolType;
+            MinimumTlsVersion = minimumTlsVersion;
+        }
+
         /// <summary> Defines the source of the SSL certificate. </summary>
         internal CertificateSource CertificateSource { get; set; }
         /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
-        public ProtocolType ProtocolType { get; }
+        public ProtocolType ProtocolType { get; set; }
         /// <summary> TLS protocol version that will be used for Https. </summary>
         public MinimumTlsVersion? MinimumTlsVersion { get; set; }
     }

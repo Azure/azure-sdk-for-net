@@ -11,22 +11,19 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class SecretProperties : AfdStateProperties
     {
         /// <summary> Initializes a new instance of SecretProperties. </summary>
-        public SecretProperties()
+        internal SecretProperties()
         {
         }
 
+        /// <summary> The name of the profile which holds the secret. </summary>
+        public string ProfileName { get; }
         /// <summary> object which contains secret parameters. </summary>
-        internal SecretParameters Parameters { get; set; }
-        /// <summary> The type of the Secret to create. </summary>
+        internal SecretParameters Parameters { get; }
+        /// <summary> The type of the secret resource. </summary>
         internal SecretType ParametersSecretType
         {
-            get => Parameters is null ? default : Parameters.SecretType;
-            set
-            {
-                if (Parameters is null)
-                    Parameters = new SecretParameters();
-                Parameters.SecretType = value;
-            }
+            get => Parameters.SecretType;
+            set => Parameters.SecretType = value;
         }
     }
 }

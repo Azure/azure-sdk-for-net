@@ -17,10 +17,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of ManagedCertificateParameters. </summary>
-        /// <param name="secretType"> The type of the Secret to create. </param>
-        internal ManagedCertificateParameters(SecretType secretType) : base(secretType)
+        /// <param name="secretType"> The type of the secret resource. </param>
+        /// <param name="subject"> Subject name in the certificate. </param>
+        /// <param name="expirationDate"> Certificate expiration date. </param>
+        internal ManagedCertificateParameters(SecretType secretType, string subject, string expirationDate) : base(secretType)
         {
+            Subject = subject;
+            ExpirationDate = expirationDate;
             SecretType = secretType;
         }
+
+        /// <summary> Subject name in the certificate. </summary>
+        public string Subject { get; }
+        /// <summary> Certificate expiration date. </summary>
+        public string ExpirationDate { get; }
     }
 }

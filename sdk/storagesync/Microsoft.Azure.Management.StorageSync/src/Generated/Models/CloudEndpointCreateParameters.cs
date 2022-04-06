@@ -40,14 +40,16 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="storageAccountResourceId">Storage Account Resource
         /// Id</param>
         /// <param name="azureFileShareName">Azure file share name</param>
         /// <param name="storageAccountTenantId">Storage Account Tenant
         /// Id</param>
         /// <param name="friendlyName">Friendly Name</param>
-        public CloudEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string azureFileShareName = default(string), string storageAccountTenantId = default(string), string friendlyName = default(string))
-            : base(id, name, type)
+        public CloudEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string storageAccountResourceId = default(string), string azureFileShareName = default(string), string storageAccountTenantId = default(string), string friendlyName = default(string))
+            : base(id, name, type, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             AzureFileShareName = azureFileShareName;

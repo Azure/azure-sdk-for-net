@@ -14,8 +14,6 @@ skip-csproj: true
 output-folder: Generated/
 clear-output-folder: true
 
-modelerfour:
-  lenient-model-deduplication: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
@@ -24,6 +22,8 @@ flatten-payloads: false
 resource-model-requires-type: false
 
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -31,6 +31,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -39,6 +40,8 @@ rename-rules:
   Ipv4: IPv4
   Ipv6: IPv6
   Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:

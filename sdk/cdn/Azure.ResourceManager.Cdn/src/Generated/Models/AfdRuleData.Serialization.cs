@@ -58,8 +58,9 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             SystemData systemData = default;
+            Optional<string> ruleSetName = default;
             Optional<int> order = default;
             Optional<IList<DeliveryRuleCondition>> conditions = default;
             Optional<IList<DeliveryRuleAction>> actions = default;
@@ -97,6 +98,11 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("ruleSetName"))
+                        {
+                            ruleSetName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("order"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new AfdRuleData(id, name, type, systemData, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new AfdRuleData(id, name, type, systemData, ruleSetName.Value, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }
