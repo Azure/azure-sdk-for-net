@@ -140,25 +140,37 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
-            string name = options?.Filter?.Name;
-            DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
-            DataFeedGranularityType? granularityType = options?.Filter?.GranularityType;
-            DataFeedStatus? status = options?.Filter?.Status;
-            string sourceKindValue = sourceKind.HasValue ? sourceKind.Value.ToString() : null;
-            string granularityTypeValue = granularityType.HasValue ? granularityType.Value.ToString() : null;
-            string statusValue = status.HasValue ? status.Value.ToString() : null;
-            RequestContext context = new RequestContext()
-            {
-                CancellationToken = cancellationToken,
-            };
-            string creator = options?.Filter?.Creator;
-            int? skip = options?.Skip;
-            int? maxPageSize = options?.MaxPageSize;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeeds)}");
+            scope.Start();
 
-            AsyncPageable<BinaryData> pageableBindaryData = GetDataFeedsValuesAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
-            return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
+            try
+            {
+                string name = options?.Filter?.Name;
+                DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
+                DataFeedGranularityType? granularityType = options?.Filter?.GranularityType;
+                DataFeedStatus? status = options?.Filter?.Status;
+                string sourceKindValue = sourceKind.HasValue ? sourceKind.Value.ToString() : null;
+                string granularityTypeValue = granularityType.HasValue ? granularityType.Value.ToString() : null;
+                string statusValue = status.HasValue ? status.Value.ToString() : null;
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                string creator = options?.Filter?.Creator;
+                int? skip = options?.Skip;
+                int? maxPageSize = options?.MaxPageSize;
+
+                AsyncPageable<BinaryData> pageableBindaryData = GetDataFeedsValuesAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+                return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -168,25 +180,37 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
+        [ForwardsClientCalls]
         public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
-            string name = options?.Filter?.Name;
-            DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
-            DataFeedGranularityType? granularityType = options?.Filter?.GranularityType;
-            DataFeedStatus? status = options?.Filter?.Status;
-            string sourceKindValue = sourceKind.HasValue ? sourceKind.Value.ToString() : null;
-            string granularityTypeValue = granularityType.HasValue ? granularityType.Value.ToString() : null;
-            string statusValue = status.HasValue ? status.Value.ToString() : null;
-            RequestContext context = new RequestContext()
-            {
-                CancellationToken = cancellationToken,
-            };
-            string creator = options?.Filter?.Creator;
-            int? skip = options?.Skip;
-            int? maxPageSize = options?.MaxPageSize;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeeds)}");
+            scope.Start();
 
-            Pageable<BinaryData> pageableBindaryData = GetDataFeedsValues(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
-            return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
+            try
+            {
+                string name = options?.Filter?.Name;
+                DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
+                DataFeedGranularityType? granularityType = options?.Filter?.GranularityType;
+                DataFeedStatus? status = options?.Filter?.Status;
+                string sourceKindValue = sourceKind.HasValue ? sourceKind.Value.ToString() : null;
+                string granularityTypeValue = granularityType.HasValue ? granularityType.Value.ToString() : null;
+                string statusValue = status.HasValue ? status.Value.ToString() : null;
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                string creator = options?.Filter?.Creator;
+                int? skip = options?.Skip;
+                int? maxPageSize = options?.MaxPageSize;
+
+                Pageable<BinaryData> pageableBindaryData = GetDataFeedsValues(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
+                return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
