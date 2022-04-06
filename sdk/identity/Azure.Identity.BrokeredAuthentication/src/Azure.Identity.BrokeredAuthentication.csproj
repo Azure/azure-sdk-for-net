@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity.BrokeredAuthentication Component</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageTags>Microsoft Azure Identity Broker;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks);net461</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
