@@ -2,18 +2,46 @@
 Convenience API is an additive layer on top of protocol mathod so it could produce improved user experience.
 
 To add a convenience API that takes and returns strongly-typed input and output models instead of raw JSON, steps are:
-1. [Create the convenience method with new signature](#create-the-convenience-method-with-new-signature)
+1. [Create the models](#create-the-models)
+2. [Create the convenience method with new signature](#create-the-convenience-method-with-new-signature)
 - [Replace input parameters](#replace-input-parameters)
 - [Replace output value](#replace-output-value)
 - [Rename method if needed](#rename-method-if-needed)
-2. [Create the models](#create-the-models)
 3. [Implement the method](#implement-the-method)
 - [Implement GET method](#implement-get-method)
 - [Implement POST method](#implement-post-method)
 - [Implement GET paging method](#implement-get-paging-method)
 
+## Create the models
+Currently the models should be created manually. We will support generate it automatically. So, to avoid the models overwritten, we suggest putting the models under folder {sdk folder}/Models which is the same layer as folder {sdk folder}/Generated.
+
+After you create the models you want, you also need to add the helper methods mapping between raw response and model. Examples for model `MetricFeedback` (Models/MetricFeedback/MetricFeedback.cs) are:
+```C#
+namespace Azure.AI.MetricsAdvisor
+{
+    public partial class MetricFeedback
+    {
+        // Mapping raw response to model
+        internal static MetricFeedback FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            // Add your deserialization logic in DeserializeMetricFeedback
+            return DeserializeMetricFeedback(document.RootElement);
+        }
+
+        // Mapping model to raw request
+        internal static RequestContent ToRequestContent(MetricFeedback metricFeedback)
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(metricFeedback);
+            return content;
+        }
+    }
+}
+```
+
 ## Create the convenience method with new signature
-To create a convenience method on top of the protocol method, you should not modify generated code. The convenience methods should be added in a saparate file as partial class of the class containing protocol methods. You could check out the full examples in [Implement the method](#implement-the-method).
+To create a convenience method on top of the protocol method, you should not modify generated code. The convenience methods should be added in a separate file as partial class of the class containing protocol methods. You could check out the full examples in [Implement the method](#implement-the-method).
 
 Below is how you could create the convenience signature from protocol method. Here is an example of your generated protocol method.
 ```C#
@@ -67,33 +95,7 @@ public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackValuesAsync
 **If this name doesn't make sense, pick the best name**
 
 If the suggested rename does not apply to your scenario, you could pick the best name fitting your API.
-## Create the models
-Currently the models should be created manually. We will support generate it automatically. So, to avoid the models overwritten, we suggest putting the models under folder {sdk folder}/Models which is the same layer as folder {sdk folder}/Generated.
 
-After you create the models, you also need to add the helper methods mapping between raw response and model. Examples for model `MetricFeedback` (Models/MetricFeedback/MetricFeedback.cs) are:
-```C#
-namespace Azure.AI.MetricsAdvisor
-{
-    public partial class MetricFeedback
-    {
-        // Mapping raw response to model
-        internal static MetricFeedback FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            // Add your deserialization logic in DeserializeMetricFeedback
-            return DeserializeMetricFeedback(document.RootElement);
-        }
-
-        // Mapping model to raw request
-        internal static RequestContent ToRequestContent(MetricFeedback metricFeedback)
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(metricFeedback);
-            return content;
-        }
-    }
-}
-```
 ## Implement the method
 You could call the protocol method inside your convenience method and map the returned raw response to model. See different scenarios and corresponding examples below. 
 
@@ -111,7 +113,7 @@ namespace Azure.AI.MetricsAdvisor
     }
 }
 ```
-**Improve the GET method (MetricsAdvisorClient.cs):**
+**Improve the GET method ({Other manual folder}/MetricsAdvisorClient.cs):**
 ``` C#
 namespace Azure.AI.MetricsAdvisor
 {
@@ -143,7 +145,7 @@ namespace Azure.AI.MetricsAdvisor
     }
 }
 ```
-**Improve the POST method (MetricsAdvisorClient.cs):**
+**Improve the POST method ({Other manual folder}/MetricsAdvisorClient.cs):**
 ``` C#
 namespace Azure.AI.MetricsAdvisor
 {
@@ -179,7 +181,7 @@ namespace Azure.AI.MetricsAdvisor
     }
 }
 ```
-**Improve the GET paging method (MetricsAdvisorClient.cs):**
+**Improve the GET paging method ({Other manual folder}/MetricsAdvisorClient.cs):**
 ``` C#
 namespace Azure.AI.MetricsAdvisor
 {
