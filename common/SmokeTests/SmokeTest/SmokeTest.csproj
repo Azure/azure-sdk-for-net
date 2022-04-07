@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.1'">
-    <!-- This package is supports netcoreapp3.1 -->
+    <!-- This package supports netcoreapp3.1 -->
     <PackageReference Remove="Microsoft.Azure.WebPubSub.AspNetCore" />
   </ItemGroup>
 </Project>
