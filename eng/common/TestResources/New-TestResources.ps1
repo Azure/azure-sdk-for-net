@@ -368,18 +368,13 @@ try {
         exit
     }
 
-    $UserName =  if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-    # Remove spaces, etc. that may be in $UserName
-    $UserName = $UserName -replace '\W'
+    $UserName = GetUserName
 
-    # Make sure $BaseName is set.
     if ($CI) {
         $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
         Log "Generated base name '$BaseName' for CI build"
     } elseif (!$BaseName) {
-        # Handle service directories in nested directories, e.g. `data/aztables`
-        $serviceDirectorySafeName = $ServiceDirectory -replace '[/\\]', ''
-        $BaseName = "$UserName$serviceDirectorySafeName"
+        $BaseName = GetBaseName $UserName $ServiceDirectory
         Log "BaseName was not set. Using default base name '$BaseName'"
     }
 

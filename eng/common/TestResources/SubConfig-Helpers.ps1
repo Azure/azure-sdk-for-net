@@ -8,6 +8,19 @@ function GetServiceName([string]$serviceDirectory) {
     return Split-Path -Leaf $serviceDirectory
 }
 
+function GetUserName() {
+    $UserName = $env:USER ?? $env:USERNAME
+    # Remove spaces, etc. that may be in $UserName
+    $UserName = $UserName -replace '\W'
+    return $UserName
+}
+
+function GetBaseName([string]$user, [string]$serviceDirectoryName) {
+    # Handle service directories in nested directories, e.g. `data/aztables`
+    $serviceDirectorySafeName = $serviceDirectoryName -replace '[/\\]', ''
+    return "$user$serviceDirectorySafeName"
+}
+
 function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())
 {
     $logOutputNonSecret = @(

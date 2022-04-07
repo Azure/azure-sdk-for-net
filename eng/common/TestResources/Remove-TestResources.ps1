@@ -139,13 +139,9 @@ if (!$ResourceGroupName) {
             exit 1
         }
     } else {
-        # Make sure $BaseName is set.
         if (!$BaseName) {
-            $UserName = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-            # Remove spaces, etc. that may be in $UserName
-            $UserName = $UserName -replace '\W'
-
-            $BaseName = "$UserName$ServiceDirectory"
+            $UserName = GetUserName
+            $BaseName = GetBaseName $UserName $ServiceDirectory
             Log "BaseName was not set. Using default base name '$BaseName'"
         }
 
