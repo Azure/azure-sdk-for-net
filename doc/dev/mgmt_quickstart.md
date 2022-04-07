@@ -11,7 +11,7 @@ You can find the details of those new libraries
 [here](https://azure.github.io/azure-sdk/releases/latest/mgmt/dotnet.html)
 
 In this basic quickstart guide, we will walk you through how to
-authenticate to Azure using the preview libraries and start interacting
+authenticate to Azure using the libraries and start interacting
 with Azure resources. There are several possible approaches to
 authentication. This document illustrates the most common scenario.
 
@@ -314,7 +314,7 @@ More code samples for using the management library for .NET can be found in the 
 
 - File an issue via [Github
   Issues](https://github.com/Azure/azure-sdk-for-net/issues) and
-  make sure you add the "Preview" label to the issue
+  make sure you add the "Mgmt" label to the issue
 - Check [previous
   questions](https://stackoverflow.com/questions/tagged/azure+.net)
   or ask new ones on StackOverflow using azure and .NET tags.
