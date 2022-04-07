@@ -239,7 +239,7 @@ directive:
       $.DeploymentPropertiesExtended.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
       $.DeploymentExtended['x-ms-client-name'] = 'ArmDeployment';
       $.DeploymentExtended.properties.location["x-ms-format"] = "azure-location";
-      $.Deployment['x-ms-client-name'] = 'ArmDeploymentInput';
+      $.Deployment['x-ms-client-name'] = 'ArmDeploymentContent';
       $.Deployment.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentExportResult['x-ms-client-name'] = 'ArmDeploymentExportResult';
       $.DeploymentExtendedFilter['x-ms-client-name'] = 'ArmDeploymentExtendedFilter';
@@ -249,7 +249,7 @@ directive:
       $.DeploymentOperationProperties.properties.provisioningOperation['x-ms-enum'].name = 'ProvisioningOperationKind';
       $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
       $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
-      $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIf';
+      $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIfContent';
       $.DeploymentWhatIf.properties.location["x-ms-format"] = "azure-location";
       $.DeploymentWhatIfSettings['x-ms-client-name'] = 'ArmDeploymentWhatIfSettings';
       $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';

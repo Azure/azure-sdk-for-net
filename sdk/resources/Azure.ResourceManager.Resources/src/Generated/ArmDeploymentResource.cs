@@ -243,19 +243,19 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Deployments_ValidateAtScope
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> Parameters to validate. </param>
+        /// <param name="content"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual async Task<ArmOperation<ArmDeploymentValidateResult>> ValidateAsync(WaitUntil waitUntil, ArmDeploymentInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ArmDeploymentValidateResult>> ValidateAsync(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
             scope.Start();
             try
             {
-                var response = await _armDeploymentDeploymentsRestClient.ValidateAtScopeAsync(Id.Parent, Id.Name, input, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, input).Request, response, OperationFinalStateVia.Location);
+                var response = await _armDeploymentDeploymentsRestClient.ValidateAtScopeAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -273,19 +273,19 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Deployments_ValidateAtScope
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> Parameters to validate. </param>
+        /// <param name="content"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual ArmOperation<ArmDeploymentValidateResult> Validate(WaitUntil waitUntil, ArmDeploymentInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ArmDeploymentValidateResult> Validate(WaitUntil waitUntil, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
             scope.Start();
             try
             {
-                var response = _armDeploymentDeploymentsRestClient.ValidateAtScope(Id.Parent, Id.Name, input, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, input).Request, response, OperationFinalStateVia.Location);
+                var response = _armDeploymentDeploymentsRestClient.ValidateAtScope(Id.Parent, Id.Name, content, cancellationToken);
+                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -353,12 +353,12 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Deployments_WhatIf
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="armDeploymentWhatIf"> Parameters to validate. </param>
+        /// <param name="content"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="armDeploymentWhatIf"/> is null. </exception>
-        public virtual async Task<ArmOperation<WhatIfOperationResult>> WhatIfAsync(WaitUntil waitUntil, ArmDeploymentWhatIf armDeploymentWhatIf, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<WhatIfOperationResult>> WhatIfAsync(WaitUntil waitUntil, ArmDeploymentWhatIfContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(armDeploymentWhatIf, nameof(armDeploymentWhatIf));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.WhatIf");
             scope.Start();
@@ -366,32 +366,32 @@ namespace Azure.ResourceManager.Resources
             {
                 if (Id.Parent.ResourceType == TenantResource.ResourceType)
                 {
-                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtTenantScopeAsync(Id.Name, armDeploymentWhatIf, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, armDeploymentWhatIf).Request, response, OperationFinalStateVia.Location);
+                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtTenantScopeAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ManagementGroupResource.ResourceType)
                 {
-                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, armDeploymentWhatIf, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, armDeploymentWhatIf).Request, response, OperationFinalStateVia.Location);
+                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == SubscriptionResource.ResourceType)
                 {
-                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, armDeploymentWhatIf, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, armDeploymentWhatIf).Request, response, OperationFinalStateVia.Location);
+                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
                 {
-                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, armDeploymentWhatIf, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, armDeploymentWhatIf).Request, response, OperationFinalStateVia.Location);
+                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -420,12 +420,12 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Deployments_WhatIf
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="armDeploymentWhatIf"> Parameters to validate. </param>
+        /// <param name="content"> Parameters to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="armDeploymentWhatIf"/> is null. </exception>
-        public virtual ArmOperation<WhatIfOperationResult> WhatIf(WaitUntil waitUntil, ArmDeploymentWhatIf armDeploymentWhatIf, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<WhatIfOperationResult> WhatIf(WaitUntil waitUntil, ArmDeploymentWhatIfContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(armDeploymentWhatIf, nameof(armDeploymentWhatIf));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.WhatIf");
             scope.Start();
@@ -433,32 +433,32 @@ namespace Azure.ResourceManager.Resources
             {
                 if (Id.Parent.ResourceType == TenantResource.ResourceType)
                 {
-                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtTenantScope(Id.Name, armDeploymentWhatIf, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, armDeploymentWhatIf).Request, response, OperationFinalStateVia.Location);
+                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtTenantScope(Id.Name, content, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ManagementGroupResource.ResourceType)
                 {
-                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, armDeploymentWhatIf, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, armDeploymentWhatIf).Request, response, OperationFinalStateVia.Location);
+                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, content, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == SubscriptionResource.ResourceType)
                 {
-                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, armDeploymentWhatIf, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, armDeploymentWhatIf).Request, response, OperationFinalStateVia.Location);
+                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, content, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
                 {
-                    var response = _armDeploymentDeploymentsRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, armDeploymentWhatIf, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, armDeploymentWhatIf).Request, response, OperationFinalStateVia.Location);
+                    var response = _armDeploymentDeploymentsRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
