@@ -15,19 +15,23 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ## Synchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPrediction
+```C# Snippet:ConversationAnalysis_AnalyzeConversation
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "We'll have 2 plates of seared salmon nigiri.",
+
+Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
-ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
-    Console.WriteLine($"Category:{intent.Category}");
-    Console.WriteLine($"Confidence:{intent.Confidence}");
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
     Console.WriteLine();
 }
 
@@ -40,24 +44,40 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     Console.WriteLine($"Length: {entity.Length}");
     Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
+
+    foreach (BaseResolution resolution in entity.Resolutions)
+    {
+        if (resolution is DateTimeResolution dateTimeResolution)
+        {
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
+        }
+    }
 }
 ```
 
 ## Asynchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithConversationPredictionAsync
+```C# Snippet:ConversationAnalysis_AnalyzeConversationAsync
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-    "We'll have 2 plates of seared salmon nigiri.",
+
+Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
-ConversationPrediction conversationPrediction = response.Value.Prediction as ConversationPrediction;
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
 foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
-    Console.WriteLine($"Category:{intent.Category}");
-    Console.WriteLine($"Confidence:{intent.Confidence}");
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
     Console.WriteLine();
 }
 
@@ -70,5 +90,16 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     Console.WriteLine($"Length: {entity.Length}");
     Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
+
+    foreach (BaseResolution resolution in entity.Resolutions)
+    {
+        if (resolution is DateTimeResolution dateTimeResolution)
+        {
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
+        }
+    }
 }
 ```
