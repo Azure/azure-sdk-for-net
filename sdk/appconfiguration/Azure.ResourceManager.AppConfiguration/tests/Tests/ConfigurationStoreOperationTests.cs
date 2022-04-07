@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             List<ApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
             ApiKey orignalKey = keys.FirstOrDefault();
 
-            RegenerateKeyOptions regenerateKeyOptions = new RegenerateKeyOptions() { Id = orignalKey.Id };
+            RegenerateKeyContent regenerateKeyOptions = new RegenerateKeyContent() { Id = orignalKey.Id };
             ApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyOptions);
             keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 

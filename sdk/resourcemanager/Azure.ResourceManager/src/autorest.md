@@ -120,11 +120,9 @@ input-file:
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
-  - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
   # subscription does not have name and type
@@ -136,14 +134,12 @@ request-path-to-resource-data:
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
-  /{scope}/providers/Microsoft.Resources/links: /{linkId}
   /subscriptions: /subscriptions/{subscriptionId}
   /tenants: /
   /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
   /subscriptions/{subscriptionId}/providers: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
 request-path-to-resource-type:
-  /{linkId}: Microsoft.Resources/links
   /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
   /tenants: Microsoft.Resources/tenants
   /: Microsoft.Resources/tenants
@@ -163,7 +159,6 @@ operation-groups-to-omit:
   - AuthorizationOperations
   - ResourceCheck
 override-operation-name:
-  ResourceLinks_ListAtSourceScope: GetAll
   Tags_List: GetAllPredefinedTags
   Tags_DeleteValue: DeletePredefinedTagValue
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
@@ -330,9 +325,6 @@ directive:
   - rename-model:
       from: ResourcesMoveInfo
       to: ResourcesMoveContent
-  - rename-model:
-      from: ProviderRegistrationRequest
-      to: ResourceProviderRegistrationOptions
   - from: resources.json
     where: $.definitions.Provider
     transform:
@@ -640,8 +632,6 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-override-operation-name:
-  ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
   - rename-model:
       from: CreateManagementGroupChildInfo
@@ -655,7 +645,7 @@ directive:
       $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityOptions
+      to: ManagementGroupNameAvailabilityRequest
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -665,10 +655,6 @@ directive:
   - rename-operation:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
-  - from: management.json
-    where: $.parameters.CheckNameAvailabilityParameter
-    transform: >
-      $['name'] = "checkNameAvailabilityOptions"
   - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
@@ -744,5 +730,5 @@ directive:
     where: $.definitions
     transform: >
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
-      $.ManagementGroupNameAvailabilityOptions.properties.type['x-ms-format'] = 'resource-type';
+      $.ManagementGroupNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

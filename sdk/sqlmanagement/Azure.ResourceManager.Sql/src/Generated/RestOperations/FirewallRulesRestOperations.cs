@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateReplaceRequest(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList parameters)
+        internal HttpMessage CreateReplaceRequest(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList firewallRuleList)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(firewallRuleList);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -402,18 +402,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="parameters"> The FirewallRuleList to use. </param>
+        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleList"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirewallRuleData>> ReplaceAsync(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<FirewallRuleData>> ReplaceAsync(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(firewallRuleList, nameof(firewallRuleList));
 
-            using var message = CreateReplaceRequest(subscriptionId, resourceGroupName, serverName, parameters);
+            using var message = CreateReplaceRequest(subscriptionId, resourceGroupName, serverName, firewallRuleList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -435,18 +435,18 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="parameters"> The FirewallRuleList to use. </param>
+        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleList"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirewallRuleData> Replace(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList parameters, CancellationToken cancellationToken = default)
+        public Response<FirewallRuleData> Replace(string subscriptionId, string resourceGroupName, string serverName, FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(firewallRuleList, nameof(firewallRuleList));
 
-            using var message = CreateReplaceRequest(subscriptionId, resourceGroupName, serverName, parameters);
+            using var message = CreateReplaceRequest(subscriptionId, resourceGroupName, serverName, firewallRuleList);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -11,7 +11,7 @@ steps:
   - pwsh: |
       $version = $(Get-Content "$(Build.SourcesDirectory)/eng/common/testproxy/target_version.txt" -Raw).Trim()
       $overrideVersion = "${{ parameters.targetVersion }}"
-      
+
       if($overrideVersion) {
         Write-Host "Overriding default target proxy version of '$version' with override $overrideVersion."
         $version = $overrideVersion
@@ -47,3 +47,18 @@ steps:
       displayName: "Run the testproxy - linux/mac"
       condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))
       workingDirectory: "${{ parameters.rootFolder }}"
+
+    - pwsh: |
+        for ($i = 0; $i -lt 10; $i++) {
+            try {
+                Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
+                exit 0
+            } catch {
+                Write-Warning "Failed to successfully connect to test proxy. Retrying..."
+                Start-Sleep 6
+            }
+        }
+        Write-Error "Could not connect to test proxy."
+        exit 1
+      displayName: Test Proxy IsAlive
+

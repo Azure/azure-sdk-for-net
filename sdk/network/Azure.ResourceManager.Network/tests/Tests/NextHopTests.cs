@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Network.Tests
                                                             .FirstOrDefault().PrivateIPAddress;
 
             //Use DestinationIPAddress from RouteResource Table
-            NextHopParameters nhProperties1 = new NextHopParameters(vm.Id, sourceIPAddress, "10.1.3.6");
+            NextHopContent nhProperties1 = new NextHopContent(vm.Id, sourceIPAddress, "10.1.3.6");
 
-            NextHopParameters nhProperties2 = new NextHopParameters(vm.Id, sourceIPAddress, "12.11.12.14");
+            NextHopContent nhProperties2 = new NextHopContent(vm.Id, sourceIPAddress, "12.11.12.14");
 
             var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
             var networkWatcherResponse = await networkWatcherCollection.GetAsync("NetworkWatcher_westus2");
