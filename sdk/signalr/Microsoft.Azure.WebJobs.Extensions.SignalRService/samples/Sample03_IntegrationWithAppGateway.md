@@ -25,7 +25,7 @@ Related docs:
 * [Azure Application Identity](https://docs.microsoft.com/azure/azure-signalr/signalr-howto-authorize-application#azure-functions-signalr-bindings)
 * [Managed identity](https://docs.microsoft.com/azure/azure-signalr/signalr-howto-authorize-managed-identity#azure-functions-signalr-bindings)
 
-## Option 3: Dependency injection
+## Option 3: Dependency injection (In-Process Model Runtime Only)
 This is the most flexible way for C# in-process model functions. Configure `SignalROptions.ServiceEndpoints` in your startup class as follows:
 
 ```cs
